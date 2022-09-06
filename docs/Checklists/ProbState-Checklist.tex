@@ -1,0 +1,78 @@
+\documentclass[12pt]{article}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=blue,
+    urlcolor=blue,
+    unicode=false}
+\urlstyle{same}
+
+\usepackage{enumitem,amssymb}
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\newcommand{\done}{\rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\cmark}}%
+\hspace{-2.5pt}}
+\newcommand{\wontfix}{\rlap{$\square$}{\large\hspace{1pt}\xmark}}
+
+\begin{document}
+
+\title{Problem Statement Checklist}
+\author{Spencer Smith}
+\date{\today}
+
+\maketitle
+
+% Show an item is done by   \item[\done] Frame the problem
+% Show an item will not be fixed by   \item[\wontfix] profit
+
+\begin{itemize}
+  
+\item Uses the provided \texttt{tex} file as a base
+  \begin{todolist}
+  \item Includes the input for \texttt{Comments}
+  \item Includes a title
+  \item Revision history included for major revisions
+  \item Remove, or comment out, the original contents of the problem statement (like
+    \verb|\wss{comment}|) if the contents (comments) are not used
+  \end{todolist}
+
+\item Follows writing checklist (full checklist provided in a separate document)
+  \begin{todolist}
+  \item \LaTeX{} points
+  \item Structure
+  \item Spelling, grammar, attention to detail
+  \item Avoid low information content phrases
+  \item Writing style
+  \item Use the provided \texttt{.gitignore} file
+  \item Hard-wrap at 80 characters per line
+  \end{todolist}
+
+\item Overall qualities of documentation
+  \begin{todolist}
+  \item Scope is clear
+  \item Document is abstract (for instance, it does not mention the programming
+    language (unless this is a true constraint) or the numerical algorithm
+    choice (unless the algorithm is the ``what'' rather than the ``how''))
+  \item Output of software is unambiguous
+  \item Inputs to software are unambiguous
+  \item Document is simple (for instance, there is no need for a table of
+    contents)
+\end{todolist}
+
+\item Problem statement review issue is created correctly
+  \begin{todolist}
+  \item Issue includes a link the file to be reviewed, or the commit hash where
+    the latest version is found
+  \item Issue is assigned to \texttt{smiths}
+  \item Your user info on GitHub includes your name, since some GitHub ids do
+    not clearly show which student in the class is the owner of the id.
+\end{todolist}
+
+\end{itemize}
+
+\end{document}
