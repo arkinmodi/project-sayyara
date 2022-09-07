@@ -1,8 +1,8 @@
 # Project Name
 
-Developer Names:
+Developer Names: Arkin Modi, Joy Xiao, Leon So, Timothy Choy
 
-Date of project start:
+Date of project start: September 6, 2022
 
 This project is ...
 
