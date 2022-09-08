@@ -9,7 +9,7 @@
     unicode=false}
 \urlstyle{same}
 
-\usepackage{enumitem,amssymb}
+\usepackage{enumitem, amssymb}
 \newlist{todolist}{itemize}{2}
 \setlist[todolist]{label=$\square$}
 \usepackage{pifont}
@@ -21,7 +21,7 @@
 
 \begin{document}
 
-\title{Problem Statement Checklist}
+\title{Problem Statement and Goals Checklist}
 \author{Spencer Smith}
 \date{\today}
 
@@ -35,42 +35,29 @@
 \item Uses the provided \texttt{tex} file as a base
   \begin{todolist}
   \item Includes the input for \texttt{Comments}
-  \item Includes a title
+  \item Includes a title in \texttt{Common.tex}
+  \item Includes author names in \texttt{Common.tex}
   \item Revision history included for major revisions
-  \item Remove, or comment out, the original contents of the problem statement (like
-    \verb|\wss{comment}|) if the contents (comments) are not used
+  \item Use \verb+\newif\ifcomments\commentsfalse+ to remove comments
   \end{todolist}
 
-\item Follows writing checklist (full checklist provided in a separate document)
-  \begin{todolist}
-  \item \LaTeX{} points
-  \item Structure
-  \item Spelling, grammar, attention to detail
-  \item Avoid low information content phrases
-  \item Writing style
-  \item Use the provided \texttt{.gitignore} file
-  \item Hard-wrap at 80 characters per line
-  \end{todolist}
+\item Follows \href{https://github.com/smiths/capTemplate/blob/main/docs/Checklists/Writing-Checklist.pdf} {writing checklist}
 
 \item Overall qualities of documentation
   \begin{todolist}
   \item Scope is clear
   \item Document is abstract (for instance, it does not mention the programming
-    language (unless this is a true constraint) or the numerical algorithm
-    choice (unless the algorithm is the ``what'' rather than the ``how''))
+    language (unless this is a true constraint) or the algorithm
+    choices (unless the algorithm is the ``what'' rather than the ``how''))
   \item Output of software is unambiguous
   \item Inputs to software are unambiguous
   \item Document is simple (for instance, there is no need for a table of
     contents)
-\end{todolist}
-
-\item Problem statement review issue is created correctly
-  \begin{todolist}
-  \item Issue includes a link the file to be reviewed, or the commit hash where
-    the latest version is found
-  \item Issue is assigned to \texttt{smiths}
-  \item Your user info on GitHub includes your name, since some GitHub ids do
-    not clearly show which student in the class is the owner of the id.
+  \item Stakeholders are clearly identified
+  \item Environment is clearly identified
+  \item Importance of the problem is convincingly stated
+  \item Goals provide selling features of the product
+  \item Goals are measurable
 \end{todolist}
 
 \end{itemize}
