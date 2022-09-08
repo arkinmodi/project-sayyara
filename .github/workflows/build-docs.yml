@@ -4,32 +4,18 @@ on:
     branches:
       - main
     paths:
-      - "docs/Design/MG/**"
-      - "docs/Design/MIS/**"
-      - "docs/DevelopmentPlan/**"
-      - "docs/HazardAnalysis/**"
-      - "docs/ProblemStatementAndGoals/**"
-      - "docs/Reflection/**"
-      - "docs/SRS/**"
-      - "docs/UserGuide/**"
-      - "docs/VnVPlan/**"
-      - "docs/VnVReport/**"
+    - docs/**
+    - refs/References.bib
   push:
     branches:
       - main
     paths:
-      - "docs/Design/MG/**"
-      - "docs/Design/MIS/**"
-      - "docs/DevelopmentPlan/**"
-      - "docs/HazardAnalysis/**"
-      - "docs/ProblemStatementAndGoals/**"
-      - "docs/Reflection/**"
-      - "docs/SRS/**"
-      - "docs/UserGuide/**"
-      - "docs/VnVPlan/**"
-      - "docs/VnVReport/**"
+    - docs/**
+    - refs/References.bib
 
 env:
+  COMMENTS_PATH: docs/Comments.tex
+  COMMON_PATH: docs/Common.tex
   MG_FILENAME: MG.pdf
   MG_DIR: docs/Design/MG
   MIS_FILENAME: MIS.pdf
@@ -40,6 +26,7 @@ env:
   HAZA_DIR: docs/HazardAnalysis
   PS_FILENAME: ProblemStatement.pdf
   PS_DIR: docs/ProblemStatementAndGoals
+  REFERENCES_PATH: refs/References.bib
   REFL_FILENAME: Reflection.pdf
   REFL_DIR: docs/Reflection
   SRS_FILENAME: SRS.pdf
@@ -77,25 +64,41 @@ jobs:
         id: filter
         with:
           filters: |
+            common: &common
+              - '${{ env.COMMENTS_PATH }}'
+              - '${{ env.COMMON_PATH }}'
+            references: &references
+              - '${{ env.REFERENCES_PATH }}'
             module_guide:
+              - *common
               - '${{ env.MG_DIR }}/**'
             module_interface_spec:
+              - *common
               - '${{ env.MIS_DIR }}/**'
             dev_plan:
+              - *common
               - '${{ env.DEVP_DIR }}/**'
             hazard_analysis:
+              - *common
               - '${{ env.HAZA_DIR }}/**'
             problem_statement:
+              - *common
               - '${{ env.PS_DIR }}/**'
             reflection:
+              - *common
               - '${{ env.REFL_DIR }}/**'
             srs:
+              - *common
+              - *references
               - '${{ env.SRS_DIR }}/**'
             user_guide:
+              - *common
               - '${{ env.UGDE_DIR }}/**'
             vnv_plan:
+              - *common
               - '${{ env.VNVP_DIR }}/**'
             vnv_report:
+              - *common
               - '${{ env.VNVR_DIR }}/**'
 
   build_module_guide:
