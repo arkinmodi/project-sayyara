@@ -2,6 +2,7 @@
 
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{float}
 
 \title{Development Plan\\\progname}
 
@@ -20,9 +21,7 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
-... & ... & ...\\
+September 23, 2022 & Arkin Modi & Create workflow plan\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -41,11 +40,80 @@ Date2 & Name(s) & Description of changes\\
 
 \section{Workflow Plan}
 
-\begin{itemize}
-	\item How will you be using git, including branches, pull request, etc.?
-	\item How will you be managing issues, including template issues, issue
-	classificaiton, etc.?
-\end{itemize}
+% \begin{itemize}
+%   \item How will you be using git, including branches, pull request, etc.?
+%   \item How will you be managing issues, including template issues, issue
+%   classification, etc.?
+% \end{itemize}
+
+\subsection{Development Workflow}
+
+The team will be using Git as their version control system and the repository will be hosted
+publicly on GitHub. The most stable up to date version of our application will be on ``main''
+branch. The team will update the main branch using a feature branch workflow. The feature branch
+workflow entails the developer to:
+
+\begin{enumerate}
+  \item Create a new feature branch
+  \item Push changes to the new branch
+  \item Open a pull request against the main branch
+  \item Link the pull request to an issue (if appropriate)
+  \item Add ``need review'' label (if ready for review)
+  \item Assign assignees and reviewers
+  \item Pass any pull request pipelines in our CICD setup
+  \item Receive reviews from other team members
+  \item Address any comments or change requests
+  \item Merge or close the pull request
+\end{enumerate}
+
+To prevent naming conflicts, the team will follow a branch naming convention of
+``$<$GitHub username$>$/$<$branch name$>$''. The merge strategy used for pull requests will be
+``squash and merge''. Using this merge strategy increases traceability on the main branch's commit
+history by having every commit represented by a working/passing pull request and prevents adding
+broken commits to the main branch's commit history.
+
+All team members are listed as code owners of everything in the repository (defined in
+.github/CODEOWNERS). GitHub will read this and automatically assigned all team members to every pull
+request opened in the repository. Every pull request should receive, at minimum, one review before
+merging.
+
+\subsection{Project Management Workflow}
+
+The team will be using GitHub's issue tracker and GitHub Projects to manage the project. The issue
+tracker will track work that needs to be done. For each task that isn't trivial, an issue will be
+open to track the contribution and progress. Examples of trivial tasks include spelling corrections,
+dependency version updates, base repository template updates. Each issue will also be assigned to
+team member who will then assume responsibility for said issue.
+
+Labels, as described in Table \ref{issueLabels}, will used to organize issues. The GitHub Project
+board will be used to visualize the progress of each issue and track overall progress.
+
+\begin{table}[H]
+  \centering
+  \caption{Issue Labels}
+  \vspace{5pt}
+  \begin{tabular}{|p{0.2\textwidth}|p{0.7\textwidth}|}
+      \hline
+      \textbf{Name} & \textbf{Description}\\
+      \hline
+      documentation & These issues are related to documentation or reports for course deliverables.\\
+      \hline
+      Epic & These issues are tracking a collection of other issues. For example, an issues a report
+      has sub-issues for each section.\\
+      \hline
+      meeting needed & A team meeting is needed to discuss details related to the issue.\\
+      \hline
+      meeting notes & This issue contains notes from a completed meeting.\\
+      \hline
+      needs breakdown & This issue needs further breakdown into smaller issues/steps.\\
+      \hline
+      tech foundation & This issue is not contributing towards any course deliverables.\\
+      \hline
+  \end{tabular}
+
+  \label{issueLabels}
+\end{table}
+
 
 \section{Proof of Concept Demonstration Plan}
 
