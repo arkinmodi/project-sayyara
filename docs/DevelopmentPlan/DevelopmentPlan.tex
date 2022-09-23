@@ -72,17 +72,18 @@ both the core Next.js team and the core React team recommending Next.js for
 ``production-ready projects'', we see this as a good choice. We will be using NPM as our package
 manager and the packages next-auth and next-pwa. NextAuth is a package built for Next.js to quickly
 enable authentication with many out of the box adaptors for providers and databases. Next-PWA is a
-package to quickly enable the creating of PWA's in Next.js. We have decided to create a PWA since
-this was one of the key application attributes that the supervisor required.
+package to quickly enable the creating of Progressive Web App (PWA)'s in Next.js. We have decided to
+create a PWA since this was one of the key application attributes that the supervisor required.
 
 For our user interface, we have chose to use Blueprint JS as our component library along side CSS. A
 team member has previous experience with this library and recommended using it.
 
-We will be using Prisma as our ORM (Object-relational mapping) and MySQL as our database. We have
-decided to use a SQL database due to our data having relations. MySQL was specifically chosen due to
-past experience within the team. In a NoSQL database, relations are harder to maintain and/or
-inefficient to query. The use of Prisma is due to past experience within the team and a strong
-reputation within the web development world.
+We will be using Prisma as our ORM (Object-relational mapping) and MySQL as our database management
+system. We have decided to use a SQL database due to our data having relations. MySQL was
+specifically chosen due to past experience within the team. In a NoSQL database, relations are
+harder to maintain and/or possibly inefficient to query. SQL databases also provide the assurances
+of ACID compliance, fewer consistency issues, and enforced field constraints. The use of Prisma is
+due to past experience within the team and a strong reputation within the web development world.
 
 Jest and React Testing Library will be used for our unit tests, integration tests, and code
 coverage. Most of the team does not have much experience with frontend testing, therefore we have
@@ -99,7 +100,7 @@ With high performance not being a primary goal with this project, we will not us
 performance benchmarking tools. We will be maintaining a Google Lighthouse score of greater than
 90\%.
 
-All CICD pipelines will be created using GitHub Actions. This was chosen due to GitHub Actions
+All CI/CD pipelines will be created using GitHub Actions. This was chosen due to GitHub Actions
 having great integration with GitHub, a generous free and pro tier, past experience within the team,
 and ease of use.
 
@@ -112,11 +113,11 @@ also be using Docker for easy setup of external dependencies (e.g., TeX Live, My
 \section{Coding Standard}
 
 To ensure consistent code styling and code quality, the application code will be formatted using
-Prettier. Prettier is an industry standard code formatter and wide agreed upon default
+Prettier. Prettier is an industry standard code formatter and widely agreed upon default
 configuration.
 
 For our \LaTeX{} docs, we will be using latexindent.pl. latexindent.pl is a popular \LaTeX{} code
-formatted. The primary use will be for managing our whitespace to ensure consistent readability in
+formatter. The primary use will be for managing our whitespace to ensure consistent readability in
 our source files. The primary reason behind this choice was latexindent.pl's code formatter
 capabilities to automatically apply fixes.
 
