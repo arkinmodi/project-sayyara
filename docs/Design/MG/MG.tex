@@ -44,11 +44,11 @@
 \section{Revision History}
 
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-  \toprule {\bf Date} & {\bf Version} & {\bf Notes} \\
-  \midrule
-  Date 1              & 1.0           & Notes       \\
-  Date 2              & 1.1           & Notes       \\
-  \bottomrule
+	\toprule {\bf Date} & {\bf Version} & {\bf Notes} \\
+	\midrule
+	Date 1              & 1.0           & Notes       \\
+	Date 2              & 1.1           & Notes       \\
+	\bottomrule
 \end{tabularx}
 
 \newpage
@@ -61,21 +61,21 @@ This section records information for easy reference.
 
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l}
-  \toprule
-  \textbf{symbol} & \textbf{description}                \\
-  \midrule
-  AC              & Anticipated Change                  \\
-  DAG             & Directed Acyclic Graph              \\
-  M               & Module                              \\
-  MG              & Module Guide                        \\
-  OS              & Operating System                    \\
-  R               & Requirement                         \\
-  SC              & Scientific Computing                \\
-  SRS             & Software Requirements Specification \\
-  \progname       & Explanation of program name         \\
-  UC              & Unlikely Change                     \\
-  \wss{etc.}      & \wss{...}                           \\
-  \bottomrule
+	\toprule
+	\textbf{symbol} & \textbf{description}                \\
+	\midrule
+	AC              & Anticipated Change                  \\
+	DAG             & Directed Acyclic Graph              \\
+	M               & Module                              \\
+	MG              & Module Guide                        \\
+	OS              & Operating System                    \\
+	R               & Requirement                         \\
+	SC              & Scientific Computing                \\
+	SRS             & Software Requirements Specification \\
+	\progname       & Explanation of program name         \\
+	UC              & Unlikely Change                     \\
+	\wss{etc.}      & \wss{...}                           \\
+	\bottomrule
 \end{tabular}\\
 
 \newpage
@@ -101,10 +101,10 @@ initial development as the solution space is explored.
 
 Our design follows the rules layed out by \citet{ParnasEtAl1984}, as follows:
 \begin{itemize}
-  \item System details that are likely to change independently should be the secrets of separate modules.
-  \item Each data structure is implemented in only one module.
-  \item Any other program that requires information stored in a module's data structures must obtain it by
-        calling access programs belonging to that module.
+	\item System details that are likely to change independently should be the secrets of separate modules.
+	\item Each data structure is implemented in only one module.
+	\item Any other program that requires information stored in a module's data structures must obtain it by
+	      calling access programs belonging to that module.
 \end{itemize}
 
 After completing the first stage of the design, the Software Requirements Specification (SRS), the
@@ -113,14 +113,14 @@ the system and is intended to allow both designers and maintainers to easily ide
 the software. The potential readers of this document are as follows:
 
 \begin{itemize}
-  \item New project members: This document can be a guide for a new project member to easily understand the
-        overall structure and quickly find the relevant modules they are searching for.
-  \item Maintainers: The hierarchical structure of the module guide improves the maintainers' understanding
-        when they need to make changes to the system. It is important for a maintainer to update the
-        relevant sections of the document after changes have been made.
-  \item Designers: Once the module guide has been written, it can be used to check for consistency,
-        feasibility and flexibility. Designers can verify the system in various ways, such as consistency
-        among modules, feasibility of the decomposition, and flexibility of the design.
+	\item New project members: This document can be a guide for a new project member to easily understand the
+	      overall structure and quickly find the relevant modules they are searching for.
+	\item Maintainers: The hierarchical structure of the module guide improves the maintainers' understanding
+	      when they need to make changes to the system. It is important for a maintainer to update the
+	      relevant sections of the document after changes have been made.
+	\item Designers: Once the module guide has been written, it can be used to check for consistency,
+	      feasibility and flexibility. Designers can verify the system in various ways, such as consistency
+	      among modules, feasibility of the decomposition, and flexibility of the design.
 \end{itemize}
 
 The rest of the document is organized as follows. Section \ref{SecChange} lists the anticipated and
@@ -145,11 +145,11 @@ Ideally, changing one of the anticipated changes will only require changing the 
 hides the associated decision. The approach adapted here is called design for change.
 
 \begin{description}
-  \item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-    hardware on which the software is running.
-  \item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-    initial input data.
-  \item ...
+	\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
+		hardware on which the software is running.
+	\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
+		initial input data.
+	\item ...
 \end{description}
 
 \subsection{Unlikely Changes} \label{SecUchange}
@@ -161,9 +161,9 @@ many parts of the design will potentially need to be modified. Hence, it is not 
 decisions will be changed.
 
 \begin{description}
-  \item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-    (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-  \item ...
+	\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
+		(Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
+	\item ...
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -173,38 +173,38 @@ decomposed by secrets in Table \ref{TblMH}. The modules listed below, which are 
 hierarchy tree, are the modules that will actually be implemented.
 
 \begin{description}
-  \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-  \item ...
+	\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
+	\item ...
 \end{description}
 
 \begin{table}[h!]
-  \centering
-  \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
-    \toprule
-    \textbf{Level 1}                                      & \textbf{Level 2} \\
-    \midrule
+	\centering
+	\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+		\toprule
+		\textbf{Level 1}                                      & \textbf{Level 2} \\
+		\midrule
 
-    {Hardware-Hiding Module}                              & ~                \\
-    \midrule
+		{Hardware-Hiding Module}                              & ~                \\
+		\midrule
 
-    \multirow{7}{0.3\textwidth}{Behaviour-Hiding Module}  & ?                \\
-                                                          & ?                \\
-                                                          & ?                \\
-                                                          & ?                \\
-                                                          & ?                \\
-                                                          & ?                \\
-                                                          & ?                \\
-                                                          & ?                \\
-    \midrule
+		\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module}  & ?                \\
+		                                                      & ?                \\
+		                                                      & ?                \\
+		                                                      & ?                \\
+		                                                      & ?                \\
+		                                                      & ?                \\
+		                                                      & ?                \\
+		                                                      & ?                \\
+		\midrule
 
-    \multirow{3}{0.3\textwidth}{Software Decision Module} & {?}              \\
-                                                          & ?                \\
-                                                          & ?                \\
-    \bottomrule
+		\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}              \\
+		                                                      & ?                \\
+		                                                      & ?                \\
+		\bottomrule
 
-  \end{tabular}
-  \caption{Module Hierarchy}
-  \label{TblMH}
+	\end{tabular}
+	\caption{Module Hierarchy}
+	\label{TblMH}
 \end{table}
 
 \section{Connection Between Requirements and Design} \label{SecConnection}
@@ -214,13 +214,13 @@ stage, the system is decomposed into modules. The connection between requirement
 listed in Table \ref{TblRT}.
 
 \wss{The intention of this section is to document decisions that are made
-  ``between'' the requirements and the design.  To satisfy some requirements,
-  design decisions need to be made.  Rather than make these decisions implicit,
-  they are explicitly recorded here.  For instance, if a program has security
-  requirements, a specific design decision may be made to satisfy those
-  requirements with a password.  In scientific examples, the choice of algorithm
-  could potentially go here, if that is a decision that is exposed by the
-  interface.}
+	``between'' the requirements and the design.  To satisfy some requirements,
+	design decisions need to be made.  Rather than make these decisions implicit,
+	they are explicitly recorded here.  For instance, if a program has security
+	requirements, a specific design decision may be made to satisfy those
+	requirements with a password.  In scientific examples, the choice of algorithm
+	could potentially go here, if that is a decision that is exposed by the
+	interface.}
 
 \section{Module Decomposition} \label{SecMD}
 
@@ -238,32 +238,32 @@ means that the module is not a leaf and will not have to be implemented.
 \subsection{Hardware Hiding Modules (\mref{mHH})}
 
 \begin{description}
-  \item[Secrets:]The data structure and algorithm used to implement the virtual hardware.
-  \item[Services:]Serves as a virtual hardware used by the rest of the system. This module provides the
-  interface between the hardware and the software. So, the system can use it to display outputs or to
-  accept inputs.
-  \item[Implemented By:] OS
+	\item[Secrets:]The data structure and algorithm used to implement the virtual hardware.
+	\item[Services:]Serves as a virtual hardware used by the rest of the system. This module provides the
+	interface between the hardware and the software. So, the system can use it to display outputs or to
+	accept inputs.
+	\item[Implemented By:] OS
 \end{description}
 
 \subsection{Behaviour-Hiding Module}
 
 \begin{description}
-  \item[Secrets:]The contents of the required behaviours.
-  \item[Services:]Includes programs that provide externally visible behaviour of the system as specified in
-  the software requirements specification (SRS) documents. This module serves as a communication
-  layer between the hardware-hiding module and the software decision module. The programs in this
-  module will need to change if there are changes in the SRS.
-  \item[Implemented By:] --
+	\item[Secrets:]The contents of the required behaviours.
+	\item[Services:]Includes programs that provide externally visible behaviour of the system as specified in
+	the software requirements specification (SRS) documents. This module serves as a communication
+	layer between the hardware-hiding module and the software decision module. The programs in this
+	module will need to change if there are changes in the SRS.
+	\item[Implemented By:] --
 \end{description}
 
 \subsubsection{Input Format Module (\mref{mInput})}
 
 \begin{description}
-  \item[Secrets:]The format and structure of the input data.
-  \item[Services:]Converts the input data into the data structure used by the input parameters module.
-  \item[Implemented By:] [Your Program Name Here]
-  \item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type] [Information to include
-    for leaf modules in the decomposition by secrets tree.]
+	\item[Secrets:]The format and structure of the input data.
+	\item[Services:]Converts the input data into the data structure used by the input parameters module.
+	\item[Implemented By:] [Your Program Name Here]
+	\item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type] [Information to include
+		for leaf modules in the decomposition by secrets tree.]
 \end{description}
 
 \subsubsection{Etc.}
@@ -271,13 +271,13 @@ means that the module is not a leaf and will not have to be implemented.
 \subsection{Software Decision Module}
 
 \begin{description}
-  \item[Secrets:] The design decision based on mathematical theorems, physical facts, or programming
-    considerations. The secrets of this module are \emph{not} described in the SRS.
-  \item[Services:] Includes data structure and algorithms used in the system that do not provide direct
-    interaction with the user.
-    % Changes in these modules are more likely to be motivated by a desire to
-    % improve performance than by externally imposed changes.
-  \item[Implemented By:] --
+	\item[Secrets:] The design decision based on mathematical theorems, physical facts, or programming
+		considerations. The secrets of this module are \emph{not} described in the SRS.
+	\item[Services:] Includes data structure and algorithms used in the system that do not provide direct
+		interaction with the user.
+		% Changes in these modules are more likely to be motivated by a desire to
+		% improve performance than by externally imposed changes.
+	\item[Implemented By:] --
 \end{description}
 
 \subsubsection{Etc.}
@@ -290,50 +290,50 @@ the modules and the anticipated changes.
 % the table should use mref, the requirements should be named, use something
 % like fref
 \begin{table}[H]
-  \centering
-  \begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
-    \toprule
-    \textbf{Req.} & \textbf{Modules}                                                                           \\
-    \midrule
-    R1            & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}                                 \\
-    R2            & \mref{mInput}, \mref{mParams}                                                              \\
-    R3            & \mref{mVerify}                                                                             \\
-    R4            & \mref{mOutput}, \mref{mControl}                                                            \\
-    R5            & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot} \\
-    R6            & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot} \\
-    R7            & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}               \\
-    R8            & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}               \\
-    R9            & \mref{mVerifyOut}                                                                          \\
-    R10           & \mref{mOutput}, \mref{mODEs}, \mref{mControl}                                              \\
-    R11           & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}                              \\
-    \bottomrule
-  \end{tabular}
-  \caption{Trace Between Requirements and Modules}
-  \label{TblRT}
+	\centering
+	\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+		\toprule
+		\textbf{Req.} & \textbf{Modules}                                                                           \\
+		\midrule
+		R1            & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}                                 \\
+		R2            & \mref{mInput}, \mref{mParams}                                                              \\
+		R3            & \mref{mVerify}                                                                             \\
+		R4            & \mref{mOutput}, \mref{mControl}                                                            \\
+		R5            & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot} \\
+		R6            & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot} \\
+		R7            & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}               \\
+		R8            & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}               \\
+		R9            & \mref{mVerifyOut}                                                                          \\
+		R10           & \mref{mOutput}, \mref{mODEs}, \mref{mControl}                                              \\
+		R11           & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}                              \\
+		\bottomrule
+	\end{tabular}
+	\caption{Trace Between Requirements and Modules}
+	\label{TblRT}
 \end{table}
 
 \begin{table}[H]
-  \centering
-  \begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
-    \toprule
-    \textbf{AC}         & \textbf{Modules}  \\
-    \midrule
-    \acref{acHardware}  & \mref{mHH}        \\
-    \acref{acInput}     & \mref{mInput}     \\
-    \acref{acParams}    & \mref{mParams}    \\
-    \acref{acVerify}    & \mref{mVerify}    \\
-    \acref{acOutput}    & \mref{mOutput}    \\
-    \acref{acVerifyOut} & \mref{mVerifyOut} \\
-    \acref{acODEs}      & \mref{mODEs}      \\
-    \acref{acEnergy}    & \mref{mEnergy}    \\
-    \acref{acControl}   & \mref{mControl}   \\
-    \acref{acSeqDS}     & \mref{mSeqDS}     \\
-    \acref{acSolver}    & \mref{mSolver}    \\
-    \acref{acPlot}      & \mref{mPlot}      \\
-    \bottomrule
-  \end{tabular}
-  \caption{Trace Between Anticipated Changes and Modules}
-  \label{TblACT}
+	\centering
+	\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+		\toprule
+		\textbf{AC}         & \textbf{Modules}  \\
+		\midrule
+		\acref{acHardware}  & \mref{mHH}        \\
+		\acref{acInput}     & \mref{mInput}     \\
+		\acref{acParams}    & \mref{mParams}    \\
+		\acref{acVerify}    & \mref{mVerify}    \\
+		\acref{acOutput}    & \mref{mOutput}    \\
+		\acref{acVerifyOut} & \mref{mVerifyOut} \\
+		\acref{acODEs}      & \mref{mODEs}      \\
+		\acref{acEnergy}    & \mref{mEnergy}    \\
+		\acref{acControl}   & \mref{mControl}   \\
+		\acref{acSeqDS}     & \mref{mSeqDS}     \\
+		\acref{acSolver}    & \mref{mSolver}    \\
+		\acref{acPlot}      & \mref{mPlot}      \\
+		\bottomrule
+	\end{tabular}
+	\caption{Trace Between Anticipated Changes and Modules}
+	\label{TblACT}
 \end{table}
 
 \section{Use Hierarchy Between Modules} \label{SecUse}
@@ -348,10 +348,10 @@ the system, and modules in the higher level of the hierarchy are essentially sim
 use modules from the lower levels.
 
 \begin{figure}[H]
-  \centering
-  %\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
-  \caption{Use hierarchy among modules}
-  \label{FigUH}
+	\centering
+	%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+	\caption{Use hierarchy among modules}
+	\label{FigUH}
 \end{figure}
 
 %\section*{References}
@@ -366,8 +366,8 @@ The information in this section will be used to evaluate the team members on the
 of Lifelong Learning. Please answer the following questions:
 
 \begin{enumerate}
-  \item
-  \item
+	\item
+	\item
 \end{enumerate}
 
 \end{document}
