@@ -24,7 +24,9 @@
 \midrule
 September 20, 2022 & Joy Xiao & Problem statement and stakeholders\\
 September 23, 2022 & Leon So & Update problem\\
-September 23, 2022 & Joy Xiao & Add project goals\\
+September 23, 2022 & Joy Xiao & Add stretch goals and update stakeholders\\
+September 23, 2022 & Leon So & Add inputs and outputs\\
+September 25, 2022 & Joy Xiao & Add project goals\\
 ... & ... & ...\\
 \bottomrule
 \end{tabularx}
@@ -49,13 +51,44 @@ Currently, one of the only ways to compare repair shops is by manually searching
 This process can often be repetitive and time-consuming.
 
 \subsection{Inputs and Outputs}
-
-\wss{Characterize the problem in terms of ``high level'' inputs and outputs.  
-Use abstraction so that you can avoid details.}
+\subsubsection{Inputs}
+\begin{enumerate}
+    \item Auto repair shop account details including shop name, shop owner first and last name, address, phone number, email, password, and hours of operation
+    \item Customer information including full name, phone number, email, and password
+    \item List of available services for each auto repair shop
+    \item Schedule of availability for auto repair shops
+    \item Quote request details including car make and model, problem description, images
+    \item Selected time slot for service appointments
+    \item Estimate information including price and estimated time
+    \item Work order information including estimated time, progress, parts used, cost of labour and parts
+    \item Chat messages between auto repair shop and customers
+    \item Search keywords for filtering service providers
+    \item Customer's location for searching and filtering for nearby auto repair shops
+\end{enumerate}
+\subsubsection{Outputs}
+\begin{enumerate}
+    \item View of appointments booked for shop owners
+    \item View of quote request for shop owners
+    \item View of appointments booked for customers
+    \item View of quote request submitted for customers
+    \item List of auto repair shops based on search keywords and filters inputted by customers
+    \item View of work orders and corresponding details for shop owners
+    \item View of work orders, corresponding details, and progress updates for customer
+    \item Chat view for both shop owners and customers
+    \item {[Stretch Goal]} Notifications to auto repair shops when a quote request is received
+    \item {[Stretch Goal]} Notifications to vehicle owners when a quote is received, work is completed/assigned, 
+    or an appointment has been created or updated
+\end{enumerate}
 
 \subsection{Stakeholders}
-- Automobile owners
-- Independent shop mechanics
+\begin{itemize}
+    \item Vehicle owners
+    \item Auto repair shop owner
+    \item Auto repair shop employees
+    \item Sayyara (the company)
+    \item Nabeel Ibrahim (project supervisor)
+    \item Tiny Coders (developers of the project)
+\end{itemize}
 
 \subsection{Environment}
 
@@ -80,5 +113,10 @@ Use abstraction so that you can avoid details.}
 \end{itemize}
 
 \section{Stretch Goals}
+\begin{itemize}
+    \item Deploy application and server to the cloud.
+    \item Have a notification system to notify when a quote has been requested, when appointments are created or updated, and when a service job is completed/assigned to a technician.
+    \item Include a reviews component to create reviews and view auto shop reviews. This way customers can see past reviews before determining if they want to book an appointment with a specific shop.
+\end{itemize}
 
 \end{document}
