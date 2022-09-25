@@ -1,0 +1,5 @@
+defaultIndent: "  "
+onlyOneBackUp: 1
+modifyLineBreaks:
+    textWrapOptions:
+        columns: 100
