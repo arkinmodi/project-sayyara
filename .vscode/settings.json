@@ -1,0 +1,35 @@
+{
+  "cSpell.words": [
+    "arkin",
+    "arkinmodi",
+    "behaviour",
+    "choy",
+    "CICD",
+    "Colour",
+    "dotenv",
+    "latexindent",
+    "mechatronics",
+    "microservices",
+    "neighbour",
+    "progname",
+    "sfwreng",
+    "Valgrind",
+    "Xiao"
+  ],
+  "cSpell.showAutocompleteSuggestions": true,
+  "latex-workshop.latex.autoBuild.run": "never",
+  "latex-workshop.latex.outDir": "./out",
+  "latex-workshop.latexindent.path": "latexindent",
+  "latex-workshop.latexindent.args": [
+    "-modifylinebreaks",
+    "-c",
+    "%DIR%/",
+    "%TMPFILE%",
+    "-y=onlyOneBackUp:1,modifyLineBreaks:textWrapOptions:columns:100"
+  ],
+  "latex-workshop.synctex.afterBuild.enabled": true,
+  "latex-workshop.view.pdf.viewer": "tab",
+  "workbench.editorAssociations": {
+    "*.pdf": "latex-workshop-pdf-hook"
+  }
+}
