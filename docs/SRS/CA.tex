@@ -79,7 +79,7 @@
 
 \begin{document}
 
-\title{Program Family Title \plt{\famname should appear in the title}} 
+\title{Program Family Title \plt{\famname should appear in the title}}
 \author{\authname}
 \date{\today}
 
@@ -89,10 +89,9 @@
 
 \pagenumbering{roman}
 
-\plt{The CA template is related to the SRS template.  Many of the 
-sections are in common.  The notes and advice for the SRS template are
-not reproduced here. Please have a look at the SRS template for advice.}
-
+\plt{The CA template is related to the SRS template.  Many of the
+  sections are in common.  The notes and advice for the SRS template are
+  not reproduced here. Please have a look at the SRS template for advice.}
 
 \plt{This CA template is based on \citet{Smith2006}.  An example for a family of
   material models is given in \citet{SmithMcCutchanAndCarette2017}.  This
@@ -108,66 +107,63 @@ not reproduced here. Please have a look at the SRS template for advice.}
 \section{Revision History}
 
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
-\midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
-\bottomrule
+  \toprule {\bf Date} & {\bf Version} & {\bf Notes} \\
+  \midrule
+  Date 1              & 1.0           & Notes       \\
+  Date 2              & 1.1           & Notes       \\
+  \bottomrule
 \end{tabularx}
 
 ~\newpage
-	
+
 \section{Reference Material}
 
 This section records information for easy reference.
 
 \subsection{Table of Units}
 
-Throughout this document SI (Syst\`{e}me International d'Unit\'{e}s) is employed
-as the unit system.  In addition to the basic units, several derived units are
-used as described below.  For each unit, the symbol is given followed by a
-description of the unit and the SI name.
-~\newline
+Throughout this document SI (Syst\`{e}me International d'Unit\'{e}s) is employed as the unit
+system. In addition to the basic units, several derived units are used as described below. For each
+unit, the symbol is given followed by a description of the unit and the SI name. ~\newline
 
 \renewcommand{\arraystretch}{1.2}
 %\begin{table}[ht]
-  \noindent \begin{tabular}{l l l} 
-    \toprule		
-    \textbf{symbol} & \textbf{unit} & \textbf{SI}\\
-    \midrule 
-    \si{\metre} & length & metre\\
-    \si{\kilogram} & mass	& kilogram\\
-    \si{\second} & time & second\\
-    \si{\celsius} & temperature & centigrade\\
-    \si{\joule} & energy & Joule\\
-    \si{\watt} & power & Watt (W = \si{\joule\per\second})\\
-    \bottomrule
-  \end{tabular}
-  %	\caption{Provide a caption}
+\noindent \begin{tabular}{l l l}
+  \toprule
+  \textbf{symbol} & \textbf{unit} & \textbf{SI}                       \\
+  \midrule
+  \si{\metre}     & length        & metre                             \\
+  \si{\kilogram}  & mass          & kilogram                          \\
+  \si{\second}    & time          & second                            \\
+  \si{\celsius}   & temperature   & centigrade                        \\
+  \si{\joule}     & energy        & Joule                             \\
+  \si{\watt}      & power         & Watt (W = \si{\joule\per\second}) \\
+  \bottomrule
+\end{tabular}
+%	\caption{Provide a caption}
 %\end{table}
 
 \plt{Only include the units that your CA actually uses.  If there are no units
   for your problem, like for a general purpose library, you should still include
-the heading, with the content ``not applicable'' (or similar).}
+  the heading, with the content ``not applicable'' (or similar).}
 
 \subsection{Table of Symbols}
 
-The table that follows summarizes the symbols used in this document along with
-their units.  The choice of symbols was made to be consistent with the heat
-transfer literature and with existing documentation for solar water heating
-systems.  The symbols are listed in alphabetical order.
+The table that follows summarizes the symbols used in this document along with their units. The
+choice of symbols was made to be consistent with the heat transfer literature and with existing
+documentation for solar water heating systems. The symbols are listed in alphabetical order.
 
 \renewcommand{\arraystretch}{1.2}
 %\noindent \begin{tabularx}{1.0\textwidth}{l l X}
 \noindent \begin{longtable*}{l l p{12cm}} \toprule
-\textbf{symbol} & \textbf{unit} & \textbf{description}\\
-\midrule 
-$A_C$ & \si[per-mode=symbol] {\square\metre} & coil surface area
-\\
-$A_\text{in}$ & \si[per-mode=symbol] {\square\metre} & surface area over 
-which heat is transferred in
-\\ 
-\bottomrule
+  \textbf{symbol} & \textbf{unit} & \textbf{description}\\
+  \midrule
+  $A_C$ & \si[per-mode=symbol] {\square\metre} & coil surface area
+  \\
+  $A_\text{in}$ & \si[per-mode=symbol] {\square\metre} & surface area over
+  which heat is transferred in
+  \\
+  \bottomrule
 \end{longtable*}
 \plt{Use your problems actual symbols.  The si package is a good idea to use for
   units.}
@@ -178,21 +174,21 @@ which heat is transferred in
 \subsection{Abbreviations and Acronyms}
 
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
-  \toprule		
-  \textbf{symbol} & \textbf{description}\\
-  \midrule 
-  A & Assumption\\
-  DD & Data Definition\\
-  GD & General Definition\\
-  GS & Goal Statement\\
-  IM & Instance Model\\
-  LC & Likely Change\\
-  PS & Physical System Description\\
-  R & Requirement\\
-  SRS & Software Requirements Specification\\
-  \famname{} & \plt{put your famram name here}\\
-  T & Theoretical Model\\
+\begin{tabular}{l l}
+  \toprule
+  \textbf{symbol} & \textbf{description}                \\
+  \midrule
+  A               & Assumption                          \\
+  DD              & Data Definition                     \\
+  GD              & General Definition                  \\
+  GS              & Goal Statement                      \\
+  IM              & Instance Model                      \\
+  LC              & Likely Change                       \\
+  PS              & Physical System Description         \\
+  R               & Requirement                         \\
+  SRS             & Software Requirements Specification \\
+  \famname{}      & \plt{put your famram name here}     \\
+  T               & Theoretical Model                   \\
   \bottomrule
 \end{tabular}\\
 
@@ -220,17 +216,16 @@ which heat is transferred in
 
 \subsection{Purpose of Document}
 
-\subsection{Scope of the Family} 
+\subsection{Scope of the Family}
 
-\subsection{Characteristics of Intended Reader} 
+\subsection{Characteristics of Intended Reader}
 
 \subsection{Organization of Document}
 
 \section{General System Description}
 
-This section identifies the interfaces between the system and its environment,
-describes the potential user characteristics and lists the potential system
-constraints.
+This section identifies the interfaces between the system and its environment, describes the
+potential user characteristics and lists the potential system constraints.
 
 \subsection{Potential System Contexts}
 
@@ -238,22 +233,20 @@ constraints.
   responsibilities}
 
 \begin{itemize}
-\item User Responsibilities:
-\begin{itemize}
-\item 
-\end{itemize}
-\item \famname{} Responsibilities:
-\begin{itemize}
-\item Detect data type mismatch, such as a string of characters instead of a
-  floating point number
-\item 
-\end{itemize}
+  \item User Responsibilities:
+        \begin{itemize}
+          \item
+        \end{itemize}
+  \item \famname{} Responsibilities:
+        \begin{itemize}
+          \item Detect data type mismatch, such as a string of characters instead of a floating point number \item
+        \end{itemize}
 \end{itemize}
 
 \subsection{Potential User Characteristics} \label{SecUserCharacteristics}
 
-The end user of \famname{} should have an understanding of undergraduate Level
-1 Calculus and Physics.
+The end user of \famname{} should have an understanding of undergraduate Level 1 Calculus and
+Physics.
 
 \subsection{Potential System Constraints}
 
@@ -261,7 +254,7 @@ The end user of \famname{} should have an understanding of undergraduate Level
 
 \plt{If you need to make design decisions for your family, these decisions will
   be made here as constraints.  For instance, if all inputs will have to use the
-same file format, this would be a constraint that would be included here.}
+  same file format, this would be a constraint that would be included here.}
 
 \plt{You should generally limit the number of constraints, to keep the CA
   abstract.}
@@ -272,59 +265,48 @@ same file format, this would be a constraint that would be included here.}
 
 \subsection{Terminology and  Definitions}
 
-This subsection provides a list of terms that are used in the subsequent
-sections and their meaning, with the purpose of reducing ambiguity and making it
-easier to correctly understand the requirements:
+This subsection provides a list of terms that are used in the subsequent sections and their
+meaning, with the purpose of reducing ambiguity and making it easier to correctly understand the
+requirements:
 
 \begin{itemize}
 
-\item 
+  \item
 
 \end{itemize}
 
 \subsection{Data Definitions} \label{sec_datadef}
 
-This section collects and defines all the data needed to build the instance
-models. The dimension of each quantity is also given.  \plt{Modify the examples
-  below for your problem, and add additional definitions as appropriate.}
+This section collects and defines all the data needed to build the instance models. The dimension
+of each quantity is also given. \plt{Modify the examples below for your problem, and add additional
+  definitions as appropriate.}
 
 ~\newline
 
 \noindent
 \begin{minipage}{\textwidth}
-\renewcommand*{\arraystretch}{1.5}
-\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-\hline
-\rowcolor[gray]{0.9}
-Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{FluxCoil}\\
-\hline
-Label& \bf Heat flux out of coil\\
-\hline
-Symbol &$q_C$\\
-\hline
-% Units& $Mt^{-3}$\\
-% \hline
-  SI Units & \si{\watt\per\square\metre}\\
-  \hline
-  Equation&$q_C(t) = h_C (T_C - T_W(t))$, over area $A_C$\\
-  \hline
-  Description & 
-                $T_C$ is the temperature of the coil (\si{\celsius}).  $T_W$ is the temperature of the water (\si{\celsius}).  
-                The heat flux out of the coil, $q_C$ (\si{\watt\per\square\metre}), is found by
-                assuming that Newton's Law 
-                of Cooling applies (\aref{A_Newt_coil}).  This law (\dref{NL}) is used on the surface of
-                the coil, which has area $A_C$ (\si{\square\metre}) and heat 
-                transfer coefficient $h_C$
-                (\si{\watt\per\square\metre\per\celsius}).  This equation
-                assumes that the temperature of the coil is constant over time (\aref{A_tcoil}) and that it does not vary along the length
-                of the coil (\aref{A_tlcoil}).
-  \\
-  \hline
-  Sources& Citation here\\
-  \hline
-  Ref.\ By & \iref{ewat}\\
-  \hline
-\end{tabular}
+  \renewcommand*{\arraystretch}{1.5}
+  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+    \hline
+    \rowcolor[gray]{0.9}
+    Number   & DD\refstepcounter{datadefnum}\thedatadefnum \label{FluxCoil} \\
+    \hline
+    Label    & \bf Heat flux out of coil                                    \\
+    \hline
+    Symbol   & $q_C$                                                        \\
+    \hline
+    % Units& $Mt^{-3}$\\
+    % \hline
+    SI Units & \si{\watt\per\square\metre}                                  \\ \hline Equation & $q_C(t) = h_C (T_C - T_W(t))$, over
+    area $A_C$                                                              \\ \hline Description & $T_C$ is the temperature of the coil (\si{\celsius}). $T_W$ is
+       the temperature of the water (\si{\celsius}). The heat flux out of the coil, $q_C$
+       (\si{\watt\per\square\metre}), is found by assuming that Newton's Law of Cooling applies
+       (\aref{A_Newt_coil}). This law (\dref{NL}) is used on the surface of the coil, which has area $A_C$
+       (\si{\square\metre}) and heat transfer coefficient $h_C$ (\si{\watt\per\square\metre\per\celsius}).
+       This equation assumes that the temperature of the coil is constant over time (\aref{A_tcoil}) and
+    that it does not vary along the length of the coil (\aref{A_tlcoil}).   \\ \hline Sources & Citation
+    here                                                                    \\ \hline Ref.\ By & \iref{ewat}\\ \hline
+  \end{tabular}
 \end{minipage}\\
 
 \subsection{Goal Statements}
@@ -333,50 +315,42 @@ Symbol &$q_C$\\
 
 \begin{itemize}
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] \plt{One
-    sentence description of the goal.  There may be more than one.  Each Goal
-    should have a meaningful label.}
+  \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] \plt{One sentence description of
+      the goal. There may be more than one. Each Goal should have a meaningful label.}
 
 \end{itemize}
 
 \subsection{Theoretical Models} \label{sec_theoretical}
 
-This section focuses on the general equations and laws that \famname{} is based
-on.  \plt{Modify the examples below for your problem, and add additional models
-  as appropriate.}
+This section focuses on the general equations and laws that \famname{} is based on. \plt{Modify the
+  examples below for your problem, and add additional models as appropriate.}
 
 ~\newline
 
 \noindent
 \begin{minipage}{\textwidth}
-\renewcommand*{\arraystretch}{1.5}
-\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-  \hline
-  \rowcolor[gray]{0.9}
-  Number& T\refstepcounter{theorynum}\thetheorynum \label{T_COE}\\
-  \hline
-  Label&\bf Conservation of thermal energy\\
-  \hline
-  Equation&  $-{\bf \nabla \cdot q} + g$ = $\rho C \frac{\partial T}{\partial t}$\\
-  \hline
-  Description & 
-                The above equation gives the conservation of energy for transient heat transfer in a material
-                of specific heat capacity $C$ (\si{\joule\per\kilogram\per\celsius}) and density $\rho$ 
-                (\si{\kilogram\per\cubic\metre}), where $\bf q$ is the thermal flux vector (\si{\watt\per\square\metre}),
-                $g$ is the volumetric heat generation
-                (\si{\watt\per\cubic\metre}), $T$ is the temperature
-                (\si{\celsius}),  $t$ is time (\si{\second}), and $\nabla$ is
-                the gradient operator.  For this equation to apply, other forms
-                of energy, such as mechanical energy, are assumed to be negligible in the
-                system (\aref{A_OnlyThermalEnergy}).  In general, the material properties ($\rho$ and $C$) depend on temperature.\\
-  \hline
-  Source &
-           \url{http://www.efunda.com/formulae/heat_transfer/conduction/overview_cond.cfm}\\
-  % The above web link should be replaced with a proper citation to a publication
-  \hline
-  Ref.\ By & \dref{ROCT}\\
-  \hline
-\end{tabular}
+  \renewcommand*{\arraystretch}{1.5}
+  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+    \hline
+    \rowcolor[gray]{0.9}
+    Number   & T\refstepcounter{theorynum}\thetheorynum \label{T_COE}               \\
+    \hline
+    Label    & \bf Conservation of thermal energy                                   \\
+    \hline
+    Equation & $-{\bf \nabla \cdot q} + g$ = $\rho C \frac{\partial T}{\partial t}$ \\ \hline Description & The above equation gives the conservation of energy for transient
+       heat transfer in a material of specific heat capacity $C$ (\si{\joule\per\kilogram\per\celsius})
+       and density $\rho$ (\si{\kilogram\per\cubic\metre}), where $\bf q$ is the thermal flux vector
+       (\si{\watt\per\square\metre}), $g$ is the volumetric heat generation (\si{\watt\per\cubic\metre}),
+       $T$ is the temperature (\si{\celsius}), $t$ is time (\si{\second}), and $\nabla$ is the gradient
+       operator. For this equation to apply, other forms of energy, such as mechanical energy, are assumed
+       to be negligible in the system (\aref{A_OnlyThermalEnergy}). In general, the material properties
+    ($\rho$ and $C$) depend on temperature.                                         \\ \hline Source &
+    \url{http://www.efunda.com/formulae/heat_transfer/conduction/overview_cond.cfm} \\
+    % The above web link should be replaced with a proper citation to a publication
+    \hline
+    Ref.\ By & \dref{ROCT}                                                          \\
+    \hline
+  \end{tabular}
 \end{minipage}\\
 
 ~\newline
@@ -401,10 +375,9 @@ on.  \plt{Modify the examples below for your problem, and add additional models
 
 \begin{itemize}
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:]
-  \plt{Short description of each assumption.  Each assumption
-    should have a meaningful label.  Use cross-references to identify the
-    appropriate traceability to T, GD, DD etc., using commands like dref, ddref etc.}
+  \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] \plt{Short description of each
+      assumption. Each assumption should have a meaningful label. Use cross-references to identify the
+      appropriate traceability to T, GD, DD etc., using commands like dref, ddref etc.}
 
 \end{itemize}
 
@@ -425,13 +398,13 @@ on.  \plt{Modify the examples below for your problem, and add additional models
 \plt{Algorithmic variations would go here as well, but as for data structures,
   they should be separated from the more abstract variabilities.}
 
-\subsection{Output} \label{sec_Output}    
+\subsection{Output} \label{sec_Output}
 
 \section{Requirements}
 
-This section provides the functional requirements, the business tasks that the
-software is expected to complete, and the nonfunctional requirements, the
-qualities that the software is expected to exhibit.
+This section provides the functional requirements, the business tasks that the software is expected
+to complete, and the nonfunctional requirements, the qualities that the software is expected to
+exhibit.
 
 \subsection{Family of Functional Requirements}
 
@@ -443,22 +416,18 @@ qualities that the software is expected to exhibit.
 
 \noindent \begin{itemize}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] \plt{Requirements
-    for the inputs that are supplied by the user.  This information has to be
-    explicit.}
+  \item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] \plt{Requirements for the inputs that are
+      supplied by the user. This information has to be explicit.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] \plt{It isn't
-    always required, but often echoing the inputs as part of the output is a
-    good idea.}
+  \item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] \plt{It isn't always required, but
+      often echoing the inputs as part of the output is a good idea.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] \plt{Calculation
-    related requirements.}
+  \item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] \plt{Calculation related requirements.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:]
-  \plt{Verification related requirements.}
+  \item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:] \plt{Verification related
+      requirements.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] \plt{Output related
-    requirements.}
+  \item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] \plt{Output related requirements.}
 
 \end{itemize}
 
@@ -474,13 +443,13 @@ qualities that the software is expected to exhibit.
 \plt{List your nonfunctional requirements.  You may consider using a fit
   criterion to make them verifiable.}
 
-\section{Likely Changes}    
+\section{Likely Changes}
 
 \noindent \begin{itemize}
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] \plt{If
-    there is a ranking of variabilities, or combinations of variabilities, that
-    are more likely, this information can be included here.}
+  \item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] \plt{If there is a ranking of
+      variabilities, or combinations of variabilities, that are more likely, this information can be
+      included here.}
 
 \end{itemize}
 
@@ -498,51 +467,47 @@ qualities that the software is expected to exhibit.
 \section{Appendix}
 
 \plt{Your report may require an appendix.  For instance, this is a good point to
-show the values of the symbolic parameters introduced in the report.}
+  show the values of the symbolic parameters introduced in the report.}
 
 \subsection{Symbolic Parameters}
 
 \plt{The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.}
+  Their values are defined in this section for easy maintenance.}
 
 \noindent \plt{Advice on using the template:
-\begin{itemize}
-\item Assumptions have to be invoked somewhere
-\item ``Referenced by'' implies that there is an explicit reference
-\item Think of traceability matrix, list of assumption invocations and list of
-  reference by fields as automatically generatable
-\item If you say the format of the output (plot, table etc), then your
-  requirement could be more abstract
-\item For families the notion of binding time should be introduced
-\item Think of families as a library, not as a single program
-\end{itemize}
+  \begin{itemize}
+    \item Assumptions have to be invoked somewhere
+    \item ``Referenced by'' implies that there is an explicit reference
+    \item Think of traceability matrix, list of assumption invocations and list of reference by fields as
+          automatically generatable
+    \item If you say the format of the output (plot, table etc), then your requirement could be more abstract
+    \item For families the notion of binding time should be introduced
+    \item Think of families as a library, not as a single program
+  \end{itemize}
 }
 
 \subsection{First Stage of Implementation}
 
 \plt{In this section specify the family member, or sub-family, that you will be
-  implementing.  You should specify the value for all of your
-  variabilities, along with the binding time.  A tabular representation will
+implementing.  You should specify the value for all of your
+variabilities, along with the binding time.  A tabular representation will
 
 \newpage{}
 
 \subsection{Reflection}
 
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Lifelong Learning.  Please answer the following questions:
+The information in this section will be used to evaluate the team members on the graduate attribute
+of Lifelong Learning. Please answer the following questions:
 
 \begin{enumerate}
-  \item What knowledge and skills will the team collectively need to acquire to
-  successfully complete this capstone project?  Examples of possible knowledge
-  to acquire include domain specific knowledge from the domain of your
-  application, or software engineering knowledge, mechatronics knowledge or
-  computer science knowledge.  Skills may be related to technology, or writing,
-  or presentation, or team management, etc.  You should look to identify at
-  least one item for each team member.
-  \item For each of the knowledge areas and skills identified in the previous
-  question, what are at least two approaches to acquiring the knowledge or
-  mastering the skill?  Of the identified approaches, which will each team
-  member pursue, and why did they make this choice?
+  \item What knowledge and skills will the team collectively need to acquire to successfully complete this
+        capstone project? Examples of possible knowledge to acquire include domain specific knowledge from
+        the domain of your application, or software engineering knowledge, mechatronics knowledge or
+        computer science knowledge. Skills may be related to technology, or writing, or presentation, or
+        team management, etc. You should look to identify at least one item for each team member.
+  \item For each of the knowledge areas and skills identified in the previous question, what are at least
+        two approaches to acquiring the knowledge or mastering the skill? Of the identified approaches,
+        which will each team member pursue, and why did they make this choice?
 \end{enumerate}
 
 \end{document}
