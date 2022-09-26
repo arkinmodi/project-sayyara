@@ -2,7 +2,6 @@
 
 \usepackage{booktabs}
 \usepackage{tabularx}
-\usepackage{multirow}
 \usepackage{float}
 
 \title{Development Plan\\\progname}
@@ -41,27 +40,45 @@ September 23, 2022 & Arkin Modi & Create workflow plan\\
 
 \section{Team Member Roles and Responsibilities}
 
-Every member in the group will be responsible for contributing to the full stack 
-development of the project, as well as the related tasks of writing tests, and 
-contributing to the relevant documentation. Furthermore, every member will also 
-be responsible for code reviews, through the use of approvals in pull requests. 
-
-For specific roles:
 \begin{table}
 	\centering
-	\caption{Team Member Roles}
+	\caption{Specific Member Roles}
 	\vspace{5pt}
-	\begin{tabular}{|p{0.1\textwidth}|p{0.2\textwidth}|p{0.7\textwidth}|}
+	\begin{tabular}{|p{0.3\textwidth}|p{0.2\textwidth}|p{0.5\textwidth}|}
 		\hline
-		\textbf{Team Member} & \textbf{Role(s)} & \textbf{Responsibilities} \\ \hline
-		Arkin Modi & Point-of-contact & Act as our point-of-contact between the 
-		professors/TA and the team \\
+		\textbf{Team Member} & \textbf{Role(s)} & \textbf{Responsibilities} \\ 
 		\hline
-		Joy Xiao & \multirow{3}{*}{Developer} & \\
-		Leon So & & \\
-		Timothy Choy & & \\
+		Arkin Modi & Point of Contact & The liaison between the professor/TAs 
+		and the team \\
+		\cline{2-3}
+		& Issue Tracker Manager & Manages issue tracker, keeps the issues 
+		organized\\
+		\cline{2-3}
+		& Database, Deployment \& CI/CD Lead & Manages the database component of the application, as 
+		well as the deployment and CI/CD process \\
+		\hline
+		Joy Xiao & Front End Lead & Manages the front end components of the application \\
+		\hline
+		Leon So & Server Lead & Manages the server components of the application \\
+		\hline
+		Timothy Choy & Meeting Facilitator & Organizes team meetings and creates meeting agendas \\
+		\cline{2-3}
+		& Front End Lead & Manages the front end components of the application \\
+		\hline
 	\end{tabular}
 \end{table}
+
+Furthermore, every member will have the following responsibilities:
+
+\begin{itemize}
+	\item Contribute to full stack development, not just components the member is leading
+	\item Write tests for their code
+	\item Contribute to relevant documentation
+	\item Code reviews through approvals in pull requests
+	\item Follow guidelines set for updating the main branch, stated in Contributing.md
+	\item Attend meetings, or giving adequate time to let the team know if they cannot attend
+	\item Communicate with the supervisor of the project
+\end{itemize}
 
 \section{Workflow Plan}
 
