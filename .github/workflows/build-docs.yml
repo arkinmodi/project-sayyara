@@ -352,7 +352,7 @@ jobs:
       - name: 🛎 Checkout
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }} # Set to expire May 1, 2023
 
       - name: 📥 Download PDFs
         uses: actions/download-artifact@v3.0.0
