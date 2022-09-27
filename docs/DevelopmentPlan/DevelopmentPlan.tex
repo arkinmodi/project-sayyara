@@ -38,29 +38,29 @@ September 26, 2022 & Timothy Choy & Add introductory blurb\\
 \maketitle
 
 % \wss{Put your introductory blurb here.}
-This document outlines our team's development plan moving forward. This document will 
-include our plans for meeting and communicating with one another and our supervisor. 
-Furthermore, this document also includes each members' roles and responsibilities. On 
-the technical side, this document will state the technologies used, our workflow plan, 
-our coding standards and what we will be demonstrating in our proof of concept demo.
+This document outlines the team's development plan moving forward. This document will 
+include the plans for meeting, and communications between team members and the capstone project 
+supervisor. Furthermore, this document also includes each members' roles and responsibilities. On 
+the technical side, this document will state the technologies used, workflow plan, 
+coding standards and what Tiny Coders will be demonstrating in the proof of concept demo.
 
 \section{Team Meeting Plan}
 
-The team will have weekly team meetings, currently set to 10 am every Friday, though it can be 
-flexible and will be subject to change in the winter semester. These meetings will be held on 
-Discord. The purpose of these meetings are to realign the team to the current deliverables and to 
-assign tasks to each team member. An agenda of every team meeting will be written as a GitHub 
-issue, and tagged with the meeting number and meeting date. Each meeting will be archived and can 
-be easily accessed by searching for issues with the ``meeting notes'' tag. Additional meetings with 
-the supervisor will be held on a need to meet basis.
+The team will have weekly team meetings, currently scheduled to recur every Friday at 10:00am. The 
+weekly meetng time will remain flexible and will be subject to change in the winter semester. These 
+meetings will be held on Discord. The purpose of these meetings are to realign the team to the current 
+deliverables and to assign tasks to each team member. An agenda of every team meeting will be written 
+as a GitHub issue, and tagged with the meeting number and meeting date. Each meeting will be archived and 
+can be easily accessed by searching for issues with the ``meeting notes'' tag. Additional meetings with 
+the supervisor will be held on an as-needed basis.
 
 \section{Team Communication Plan}
 
 The team will communicate primarily through Discord, Messenger, and GitHub Issues. Discord 
 and Messenger will be used for quick communication between the team members, with the added 
-benefit that our supervisor will also use Discord. Team meetings will also be hosted on Discord. For 
-general communication, organization, and job delegation, GitHub Issues will be used. We have set up 
-GitHub Projects to further organize our issues into categories such as ``Todo'', ``In Progress'', 
+benefit that the supervisor will also use Discord. Team meetings will also be hosted on Discord. For 
+general communication, organization, and job delegation, GitHub Issues will be used. The team has set up 
+GitHub Projects to further organize issues into categories such as ``Todo'', ``In Progress'', 
 ``Review/QA'', and ``Done''.
 
 \section{Team Member Roles and Responsibilities}
@@ -78,7 +78,7 @@ Every member will have the following responsibilities:
 	\item Communicate with the supervisor of the project
 \end{itemize}
 
-Furthermore, each member has specific roles as shown in the table below. Though we have assigned 
+Furthermore, each member has specific roles as shown in the table below. Though the team has assigned 
 specific people to each role, they are subject to change and can be moved around from member to 
 member.
 
@@ -125,7 +125,7 @@ member.
 \subsection{Development Workflow}
 
 The team will be using Git as their version control system and the repository will be hosted
-publicly on GitHub. The most stable up-to-date version of our application will be on the ``main''
+publicly on GitHub. The most stable up-to-date version of the application will be on the ``main''
 branch. The team will update the main branch using a feature branch workflow. The feature branch
 workflow entails the developer to:
 
@@ -136,7 +136,7 @@ workflow entails the developer to:
   \item Link the pull request to an issue (if appropriate)
   \item Add ``needs review'' label (if ready for review)
   \item Assign assignees and reviewers
-  \item Pass any pull request pipelines in our CI/CD setup
+  \item Pass any pull request pipelines in the CI/CD setup
   \item Receive reviews from other team members
   \item Address any comments or change requests
   \item Merge or close the pull request
@@ -205,10 +205,10 @@ There are several risks that will determine the success or failure of the projec
 	\item Responsiveness of the PWA to different devices and screen resolutions
 	\item Peering problems between multiple editors (e.g., race conditions)
 	\item Integration testing
-	\item We are unfamiliar with PWAs, as this will be our team's first time working on one
+	\item The team is unfamiliar with PWAs, as this will be the team's first time working on one
 \end{itemize}
 
-To prove that we will be able to overcome these risks and have a successful project, we will be showing 
+To prove that the team will be able to overcome these risks and have a successful project, the team will be showing 
 several aspects in the proof of concept demo:
 
 \begin{itemize}
@@ -232,27 +232,27 @@ several aspects in the proof of concept demo:
 % \end{itemize}
 
 The project will written in TypeScript using the Next.js framework. Next.js is a React framework
-that provides both a frontend and a backend interface. The team is comfortable with React and with
+that provides both a frontend and a backend interface. The team is comfortable with React, and with
 both the core Next.js team and the core React team recommending Next.js for
-``production-ready projects'', we see this as a good choice. We will be using NPM as our package
+``production-ready projects'', the team sees this as a good choice. Tiny Coders will be using NPM as the package
 manager and the packages next-auth and next-pwa. NextAuth is a package built for Next.js to quickly
 enable authentication with many out of the box adaptors for providers and databases. Next-PWA is a
-package to quickly enable the creating of Progressive Web App (PWA)'s in Next.js. We have decided to
+package to quickly enable the creating of Progressive Web App (PWA)'s in Next.js. The team has decided to
 create a PWA since this was one of the key application attributes that the supervisor required.
 
-For our user interface, we have chose to use Blueprint JS as our component library along side CSS. A
+For the user interface, the team has chosen to use Blueprint JS as the component library along side CSS. A
 team member has previous experience with this library and recommended using it.
 
-We will be using Prisma as our ORM (Object-relational mapping) and MySQL as our database management
-system. We have decided to use a SQL database due to our data having relations. MySQL was
+The team will be using Prisma for ORM (Object-relational mapping) and MySQL as the database management
+system. The team has decided to use a SQL database due to the data having relations. MySQL was
 specifically chosen due to past experience within the team. In a NoSQL database, relations are
 harder to maintain and/or possibly inefficient to query. SQL databases also provide the assurances
 of ACID compliance, fewer consistency issues, and enforced field constraints. The use of Prisma is
 due to past experience within the team and a strong reputation within the web development world.
 
-Jest and React Testing Library will be used for our unit tests, integration tests, and code
-coverage. Most of the team does not have much experience with frontend testing, therefore we have
-decided to go with the libraries recommended by Next.js. We have decided against using any
+Jest and React Testing Library will be used for unit tests, integration tests, and code
+coverage. Most of the team does not have much experience with frontend testing, therefore the team has
+decided to go with the libraries recommended by Next.js. The team have decided against using any
 end-to-end testing frameworks (e.g., Cypress, Playwright) due to lack of domain knowledge within the
 team and time constraints.
 
@@ -261,18 +261,18 @@ was chosen due to course requirements and past experience.
 
 Documentation will be written in a mix of \LaTeX{} and Markdown.
 
-With high performance not being a primary goal with this project, we will not use using any
-performance benchmarking tools. We will be maintaining a Google Lighthouse score of greater than
+With high performance not being a primary goal for this project, the team will not use using any
+performance benchmarking tools. The team will be maintaining a Google Lighthouse score of greater than
 90\%.
 
 All CI/CD pipelines will be created using GitHub Actions. This was chosen due to GitHub Actions
 having great integration with GitHub, a generous free and pro tier, past experience within the team,
 and ease of use.
 
-The development environment for any developer is a highly personal decision and while we will not be
-enforcing the use any specific local dev tooling, we will be recommending to all developers to use
-Visual Studio Code for easy interoperability between developers. We will also have a list of
-recommended extensions and setting for Visual Studio Code available in the .vscode folder. We will
+The development environment for any developer is a highly personal decision and while the team will not be
+enforcing the use any specific local dev tooling, the team will be recommending to all developers to use
+Visual Studio Code for easy interoperability between developers. The team will also have a list of
+recommended extensions and setting for Visual Studio Code available in the .vscode folder. The team will
 also be using Docker for easy setup of external dependencies (e.g., TeX Live, MySQL).
 
 \section{Coding Standard}
@@ -281,9 +281,9 @@ To ensure consistent code styling and code quality, the application code will be
 Prettier. Prettier is an industry standard code formatter and widely agreed upon default
 configuration.
 
-For our \LaTeX{} docs, we will be using latexindent.pl. latexindent.pl is a popular \LaTeX{} code
-formatter. The primary use will be for managing our whitespace to ensure consistent readability in
-our source files. The primary reason behind this choice was latexindent.pl's code formatter
+For \LaTeX{} docs, the team will be using latexindent.pl. latexindent.pl is a popular \LaTeX{} code
+formatter. The primary use will be for managing whitespace to ensure consistent readability in
+source files. The primary reason behind this choice was latexindent.pl's code formatter
 capabilities to automatically apply fixes.
 
 \section{Project Scheduling}
@@ -292,7 +292,7 @@ capabilities to automatically apply fixes.
 
 The project schedule will primarily follow the course calendar with development of the application
 starting in October 2022. Progress of the project will be tracked using a GitHub Project board. The
-deliverables due date will act as our milestones and will be tracked with GitHub Milestones.
+deliverables due date will act as milestones and will be tracked with GitHub Milestones.
 
 Decomposition of large tasks into smaller tasks for documentation deliverables will done by breaking
 down the reports by section. Sections will be determined by consulting provided templates, rubrics,
