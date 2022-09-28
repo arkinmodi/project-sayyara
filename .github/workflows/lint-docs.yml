@@ -9,7 +9,7 @@ on:
 jobs:
   latex_indent:
     name: 🧽 Lint LaTeX
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     container: ghcr.io/cmhughes/latexindent.pl:latest
     steps:
       - name: 🛎 Checkout
