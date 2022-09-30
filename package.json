@@ -2,7 +2,7 @@
   "name": "project-sayyara",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://sayyara.arkinmodi.com",
+  "homepage": "https://sayyara.vercel.app",
   "repository": "https://github.com/arkinmodi/project-sayyara",
   "scripts": {
     "dev": "next dev",
