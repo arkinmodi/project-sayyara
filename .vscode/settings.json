@@ -20,7 +20,6 @@
   ],
   "cSpell.showAutocompleteSuggestions": true,
   "latex-workshop.latex.autoBuild.run": "never",
-  "latex-workshop.latex.outDir": "./out",
   "latex-workshop.latexindent.path": "latexindent",
   "latex-workshop.latexindent.args": [
     "-modifylinebreaks",

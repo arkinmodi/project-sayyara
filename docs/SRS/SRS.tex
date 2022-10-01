@@ -144,9 +144,10 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}      & \textbf{Developer(s)} & \textbf{Change}        \\
+		\textbf{Date}      & \textbf{Developer(s)} & \textbf{Change}                           \\
 		\midrule
-		September 30, 2022 & Leon So               & Add purpose of project \\
+		September 30, 2022 & Leon So               & Add purpose of project                    \\
+		September 30, 2022 & Arkin Modi            & Add open issues and new problems sections \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -157,7 +158,7 @@
 
 This document describes the requirements for .... The template for the Software Requirements
 Specification (SRS) is a subset of the Volere template~\citep{RobertsonAndRobertson2012}. If you
-make further modifications to the template, you should explicity state what modifications were
+make further modifications to the template, you should explicitly state what modifications were
 made.
 
 \section{Project Drivers}
@@ -242,9 +243,52 @@ be considered for every engineering project.
 
 \subsection{Open Issues}
 
+There are currently no known open issues that may lead to significant change to the product or its
+design.
+
 \subsection{Off-the-Shelf Solutions}
 
+\subsubsection{Ready-Made Products}
+\subsubsection{Resuable Components}
+\subsubsection{Products That Can Be Copied}
+
 \subsection{New Problems}
+
+\subsubsection{Effects on the Current Environment}
+
+This application will change the way certain processes are preformed and these changes will impact
+the users.
+
+\textbf{Work Orders}
+
+The work order system will affect the way automotive mechanics document their work. The data will
+be inputted into the application therefore any failures can result in data loss.
+
+\textbf{Appointments}
+
+% todo: what can happen if failure?
+The appointments system will affect the way that both the customers and the receptionists schedule
+appointments. The application will track daily appointment schedules and report time conflicts. The
+application shall not lock the receptionist out of overriding the schedule.
+
+\textbf{Searching}
+
+% todo: add what has changed?, what the system should not do?, and what can happen if failure?
+The work order system will affect the way customers search for automotive repair shops.
+
+\textbf{Quotes}
+
+% todo: add what has changed?, what the system should not do?, and what can happen if failure?
+The appointments system will affect the way that both the customers and automotive repair shops
+communicate quotes.
+
+\subsubsection{Effects on the Installed Systems}
+
+\subsubsection{Potential User Problems}
+
+\subsubsection{Limitations in the Anticipated Implementation Environment That May Inhibit the New Product}
+
+\subsubsection{Follow-Up Problems}
 
 \subsection{Tasks}
 
