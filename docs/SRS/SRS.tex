@@ -144,10 +144,11 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}      & \textbf{Developer(s)} & \textbf{Change}                           \\
+		\textbf{Date}      & \textbf{Developer(s)} & \textbf{Change}                                                                \\
 		\midrule
-		September 30, 2022 & Leon So               & Add purpose of project                    \\
-		September 30, 2022 & Arkin Modi            & Add open issues and new problems sections \\
+		September 30, 2022 & Leon So               & Add purpose of project                                                         \\
+		September 30, 2022 & Arkin Modi            & Add open issues and new problems sections (effects on the current environment) \\
+		October 1, 2022    & Arkin Modi            & Add ideas for solutions section                                                \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -291,18 +292,40 @@ communicate quotes.
 \subsubsection{Follow-Up Problems}
 
 \subsection{Tasks}
+\subsubsection{Project Planning}
+\subsubsection{Planning of the Development Phases}
 
 \subsection{Migration to the New Product}
+\subsubsection{Requirements for Migration to the New Product}
+\subsubsection{Data That Has to Be Modified or Translated for the New System}
 
 \subsection{Risks}
 
 \subsection{Costs}
 
 \subsection{User Documentation and Training}
+\subsubsection{User Documentation Requirements}
+\subsubsection{Training Requirements}
 
 \subsection{Waiting Room}
 
 \subsection{Ideas for Solutions}
+
+During the requirements collection and understanding phase, some ideas with regard to what tooling
+will be used have occurred.
+
+\begin{itemize}
+	\item Form
+	      \begin{itemize}
+		      \item With the constraint of this application to be a PWA, the idea of using a React based framework,
+		            specifically Next.js.
+	      \end{itemize}
+	\item Authentication
+	      \begin{itemize}
+		      \item To handle authentication, using emails and passwords, with the package NextAuth.js.
+		      \item Creating a dedicated endpoint in the backend for looking up user information.
+	      \end{itemize}
+\end{itemize}
 
 \newpage
 
