@@ -1,4 +1,9 @@
-# Project Sayyara
+<div align="center" >
+  <img src="https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png" width="500px" height="100px" alt="Logo for Sayyara" />
+  <br />
+  <h1>Sayyara</h1>
+  <p>A Platform for the Automotive Repair Industry</p>
+</div>
 
 Developer Names: Arkin Modi, Joy Xiao, Leon So, Timothy Choy
 
