@@ -16,6 +16,7 @@
 \usepackage{caption}
 \usepackage{pdflscape}
 \usepackage{afterpage}
+\usepackage{placeins}
 
 \usepackage[round]{natbib}
 
@@ -140,14 +141,22 @@
 
 ~\newpage
 
-\section*{Revision History}
-
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-	\toprule {\bf Date} & {\bf Version} & {\bf Notes} \\
-	\midrule
-	Oct 1, 2022 & Timothy Choy & Add mandated constraints \\
-	\bottomrule
-\end{tabularx}
+\begin{table}[hp]
+	\caption{Revision History} \label{TblRevisionHistory}
+	\begin{tabularx}{\textwidth}{llX}
+		\toprule
+		\textbf{Date}      & \textbf{Developer(s)} & \textbf{Change}                                    \\
+		\midrule
+		September 30, 2022 & Leon So               & Add purpose of project                             \\
+		September 30, 2022 & Joy Xiao              & Add stakeholders                                   \\
+		September 30, 2022 & Leon So               & Add functional requirements for authentication     \\
+    October 1, 2022    & Timothy Choy          & Add mandated constraints                           \\
+		October 2, 2022    & Leon So               & Add current situation and appointment diagram      \\
+		October 2, 2022    & Joy Xiao              & Add current situation quote and invitation diagram \\
+		October 3, 2022    & Leon So               & Add current situation work order diagram           \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
 
 \newpage
 
@@ -162,13 +171,42 @@ made.
 
 \subsection{The Purpose of the Project}
 
+Independent auto repair shops do not have an efficient way of reaching and interacting with new
+customers. Currently, many independent shop owners rely on word-of-mouth referrals as a main
+channel to acquiring new customers. Independent auto repair shops are also spending a significant
+amount of their time on administrative work such as managing appointments and providing quotes. As
+a result, independent auto repair shops have a difficult time competing with larger repair shops
+which have dedicated systems and services in place.
+
+On the other hand, customers do not have an effective way to find and compare auto repair shops.
+Currently, one of the only ways to compare repair shops is by manually searching or reaching out to
+repair shops one-by-one. This process can often be repetitive and time-consuming.
+
+Sayyara is a progressive web application (PWA) which will act as a single platform for independent
+auto repair shops and vehicle owners. This platform will allow independent auto repair shops and
+vehicle owners to interact in a more efficient and effective manner. Vehicle owners can search for
+auto repair shops and services based on a variety of search filters; request quotes for service;
+book, view, and manage service appointments. On the application, auto repair shop owners will have
+full shop management capabilities such as: adding and managing a list of employees; managing a list
+of service types and corresponding service appointment availabilities; managing store information
+such as location, hours of operation, and contact information. Auto repair shop owners and
+employees will be able to manage quotes, service appointments, and work orders from a single
+application. Ultimately, Sayyara will significantly improve the auto repair experience for both
+independent auto repair shops and vehicle owners.
+
 \subsection{The Stakeholders}
 
 \subsubsection{The Client}
+The client of the project is Nabeel Ibrahim. Nabeel will be the point of contact throughout the
+development of the project.
 
 \subsubsection{The Customers}
+The customers of Sayyara will be independent auto repair shop owners, shop employees, and vehicle
+owners who are looking for a vehicle repair or maintenance service.
 
 \subsubsection{Other Stakeholders}
+Other stakeholders of the project are the developers, Tiny Coders, who are designing and
+implementing the project.
 
 \subsection{Mandated Constraints}
 
@@ -253,13 +291,111 @@ User characteristics should go under assumptions.
 
 \subsection{The Scope of the Work and the Product}
 
-\subsubsection{The Context of the Work}
+\subsubsection{The Current Situation}
+The current interactions between independent auto repair shop owners, employees, and customers
+(i.e., vehicle owners), are often a manual process. Outlined below are models for interactions
+between the independent auto repair shop owners, employees, customers, and the proposed system.
+\begin{figure}[!hbp]
+	\centering
+	\includegraphics[width=\linewidth/2]{./diagrams/Appointments.png}
+	\caption{Service Appointments}
+\end{figure}
+\FloatBarrier
+\begin{figure}[!hbp]
+	\centering
+	\includegraphics[width=\linewidth/2]{./diagrams/Quotes.png}
+	\caption{Service Quotes}
+\end{figure}
+\FloatBarrier
+\begin{figure}[!hbp]
+	\centering
+	\includegraphics[width=\linewidth/2]{./diagrams/Invitation.png}
+	\caption{Employee Invitation to Join Auto Repair Shop}
+\end{figure}
+\FloatBarrier
+\begin{figure}[!hbp]
+	\centering
+	\includegraphics[width=\linewidth/2]{./diagrams/WorkOrder.png}
+	\caption{Work Orders}
+\end{figure}
+\FloatBarrier
 
 \subsubsection{Work Partitioning}
 
 \subsubsection{Individual Product Use Cases}
 
 \subsection{Functional Requirements}
+\subsubsection{Authentication}
+\begin{enumerate}
+	\item [{BE}1.] The user wants to sign up for an account
+	      \begin{enumerate}
+		      \item [{VP1}.1] Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter an email and password
+			            \item The system shall allow the user to enter their name
+			            \item The system shall allow the user to enter their phone number
+			            \item The system shall transition to the vehicle owner landing page after the registration process is
+			                  complete and successful
+			            \item The system shall allow the user to cancel and exit the registration process
+		            \end{enumerate}
+	      \end{enumerate}
+	      \begin{enumerate}
+		      \item [{VP1}.2] Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter an email and password
+			            \item The system shall allow the user to enter their name
+			            \item The system shall allow the user to enter their phone number
+			            \item The system shall allow the user to enter the shop name
+			            \item The system shall allow the user to enter the shop address
+			            \item The system shall allow the user to enter the shop phone number
+			            \item The system shall transition to the shop owner landing page after the registration process is
+			                  complete and successful
+			            \item The system shall allow the user to cancel and exit the registration process
+		            \end{enumerate}
+	      \end{enumerate}
+	      \begin{enumerate}
+		      \item [{VP1}.3] Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter an email and password
+			            \item The system shall allow the user to enter their name
+			            \item The system shall allow the user to enter their phone number
+			            \item The system shall transition to the employee landing page after the registration process is complete
+			                  and successful
+			            \item The system shall allow the user to cancel and exit the registration process
+		            \end{enumerate}
+	      \end{enumerate}
+\end{enumerate}
+
+\begin{enumerate}
+	\item [{BE}2.] The user wants to login to their account
+	      \begin{enumerate}
+		      \item [{VP1}.1] Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter their email and password
+			            \item The system shall transition to the vehicle owner landing page after the login process is complete
+			                  and successful
+			            \item The system shall allow the user to cancel and exit the login process
+		            \end{enumerate}
+	      \end{enumerate}
+	      \begin{enumerate}
+		      \item [{VP1}.2] Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter their email and password
+			            \item The system shall transition to the shop owner landing page after the login process is complete and
+			                  successful
+			            \item The system shall allow the user to cancel and exit the login process
+		            \end{enumerate}
+	      \end{enumerate}
+	      \begin{enumerate}
+		      \item [{VP1}.3] Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter their email and password
+			            \item The system shall transition to the employee landing page after the login process is complete and
+			                  successful
+			            \item The system shall allow the user to cancel and exit the login process
+		            \end{enumerate}
+	      \end{enumerate}
+\end{enumerate}
 
 \section{Non-functional Requirements}
 
