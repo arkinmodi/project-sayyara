@@ -156,7 +156,7 @@
 		October 2, 2022    & Leon So               & Add current situation and appointment diagram                                      \\
 		October 2, 2022    & Joy Xiao              & Add current situation quote and invitation diagram                                 \\
 		October 3, 2022    & Leon So               & Add current situation work order diagram                                           \\
-		October 3, 2022    & Arkin Modi            & Add planning of the development phases section                                     \\
+		October 3, 2022    & Arkin Modi            & Add planning of the development phases and new problems sections                   \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -379,29 +379,33 @@ be inputted into the application therefore any failures can result in data loss.
 
 \textbf{Appointments}
 
-% todo: what can happen if failure?
 The appointments system will affect the way that both the customers and the receptionists schedule
 appointments. The application will track daily appointment schedules and report time conflicts. The
 application shall not lock the receptionist out of overriding the schedule.
 
-\textbf{Searching}
-
-% todo: add what has changed?, what the system should not do?, and what can happen if failure?
-The work order system will affect the way customers search for automotive repair shops.
-
 \textbf{Quotes}
 
-% todo: add what has changed?, what the system should not do?, and what can happen if failure?
-The appointments system will affect the way that both the customers and automotive repair shops
-communicate quotes.
+The quotes system will affect the way that both the customers and automotive repair shops
+communicate quotes. The quotes will now be communicated partially or completely through the
+application instead of completely in-person. Failure in this system may lead to a loss in data.
 
 \subsubsection{Effects on the Installed Systems}
 
+The application will be standing completely alone and will not be interfacing with any existing
+systems. The existing system may continue to coexist with the application at the user's discretion.
+
 \subsubsection{Potential User Problems}
+
+Any potential adverse reactions to using computer would extend to the use of this application. The
+application will not introduce any new adverse reactions to the user.
 
 \subsubsection{Limitations in the Anticipated Implementation Environment That May Inhibit the New Product}
 
+The database is not able to sustain the number of connections to serve all requests.
+
 \subsubsection{Follow-Up Problems}
+
+There are no forseeable follow up problems that may cause the application to fail.
 
 \subsection{Tasks}
 \subsubsection{Project Planning}
