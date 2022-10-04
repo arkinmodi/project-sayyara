@@ -154,6 +154,7 @@
 		October 2, 2022    & Joy Xiao              & Add current situation quote and invitation diagram \\
 		October 3, 2022    & Leon So               & Add current situation work order diagram           \\
 		October 4, 2022    & Leon So               & Add context of work diagram                        \\
+		October 4, 2022    & Joy Xiao              & Add services FRs                                   \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -332,6 +333,62 @@ external systems and services.
 			            \item The system shall transition to the employee landing page after the login process is complete and
 			                  successful
 			            \item The system shall allow the user to cancel and exit the login process
+		            \end{enumerate}
+	      \end{enumerate}
+\end{enumerate}
+
+\subsubsection{Services}
+\begin{enumerate}[resume*=business_events]
+	\item The user wants to add available auto shop services to the shop profile
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter the name of the service
+			            \item The system shall allow the user to enter a description for the service
+			            \item The system shall allow the user to enter the estimated time for the service
+			            \item The system shall allow the user to enter the parts used for the service including quantity,
+			                  condition, build, and cost per part
+			            \item The system shall allow the user to enter the total price for the service
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to search for shop services
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall display the service details
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall display the service details
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall display the service details
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to edit a service
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to update the details of a particular service
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
 		            \end{enumerate}
 	      \end{enumerate}
 \end{enumerate}
