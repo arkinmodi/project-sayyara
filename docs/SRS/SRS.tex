@@ -17,6 +17,7 @@
 \usepackage{pdflscape}
 \usepackage{afterpage}
 \usepackage{placeins}
+\usepackage[shortlabels]{enumitem}
 
 \usepackage[round]{natbib}
 
@@ -254,10 +255,10 @@ between the independent auto repair shop owners, employees, customers, and the p
 
 \subsection{Functional Requirements}
 \subsubsection{Authentication}
-\begin{enumerate}
-	\item [{BE}1.] The user wants to sign up for an account
-	      \begin{enumerate}
-		      \item [{VP1}.1] Viewpoint: Vehicle Owner
+\begin{enumerate}[label=BE\arabic*., series=business_events]
+	\item The user wants to sign up for an account
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter an email and password
 			            \item The system shall allow the user to enter their name
@@ -266,9 +267,8 @@ between the independent auto repair shop owners, employees, customers, and the p
 			                  complete and successful
 			            \item The system shall allow the user to cancel and exit the registration process
 		            \end{enumerate}
-	      \end{enumerate}
-	      \begin{enumerate}
-		      \item [{VP1}.2] Viewpoint: Auto Repair Shop Owner
+
+		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter an email and password
 			            \item The system shall allow the user to enter their name
@@ -280,9 +280,8 @@ between the independent auto repair shop owners, employees, customers, and the p
 			                  complete and successful
 			            \item The system shall allow the user to cancel and exit the registration process
 		            \end{enumerate}
-	      \end{enumerate}
-	      \begin{enumerate}
-		      \item [{VP1}.3] Viewpoint: Auto Repair Shop Employee
+
+		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter an email and password
 			            \item The system shall allow the user to enter their name
@@ -292,35 +291,50 @@ between the independent auto repair shop owners, employees, customers, and the p
 			            \item The system shall allow the user to cancel and exit the registration process
 		            \end{enumerate}
 	      \end{enumerate}
-\end{enumerate}
 
-\begin{enumerate}
-	\item [{BE}2.] The user wants to login to their account
-	      \begin{enumerate}
-		      \item [{VP1}.1] Viewpoint: Vehicle Owner
+	\item The user wants to login to their account
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter their email and password
 			            \item The system shall transition to the vehicle owner landing page after the login process is complete
 			                  and successful
 			            \item The system shall allow the user to cancel and exit the login process
 		            \end{enumerate}
-	      \end{enumerate}
-	      \begin{enumerate}
-		      \item [{VP1}.2] Viewpoint: Auto Repair Shop Owner
+
+		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter their email and password
 			            \item The system shall transition to the shop owner landing page after the login process is complete and
 			                  successful
 			            \item The system shall allow the user to cancel and exit the login process
 		            \end{enumerate}
-	      \end{enumerate}
-	      \begin{enumerate}
-		      \item [{VP1}.3] Viewpoint: Auto Repair Shop Employee
+
+		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter their email and password
 			            \item The system shall transition to the employee landing page after the login process is complete and
 			                  successful
 			            \item The system shall allow the user to cancel and exit the login process
+		            \end{enumerate}
+	      \end{enumerate}
+\end{enumerate}
+
+\subsubsection{Work Orders}
+\begin{enumerate}[resume*=business_events]
+	\item ...
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item ...
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item ...
 		            \end{enumerate}
 	      \end{enumerate}
 \end{enumerate}
@@ -420,7 +434,7 @@ This section has been added to the Volere template. This is where you can place 
 information.
 
 \newpage{}
-\section*{Appendix --- Reflection}
+\subsection{Reflection}
 
 The information in this section will be used to evaluate the team members on the graduate attribute
 of Lifelong Learning. Please answer the following questions:
