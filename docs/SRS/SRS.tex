@@ -17,6 +17,7 @@
 \usepackage{pdflscape}
 \usepackage{afterpage}
 \usepackage{placeins}
+\usepackage[shortlabels]{enumitem}
 
 \usepackage[round]{natbib}
 
@@ -156,6 +157,7 @@
 		October 3, 2022    & Leon So               & Add current situation work order diagram           \\
 		October 4, 2022    & Leon So               & Add context of work diagram                        \\
 		October 4, 2022    & Leon So               & Add SRS subtitle                                   \\
+		October 4, 2022    & Arkin Modi            & Add functional requirements for quotes             \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -267,10 +269,10 @@ external systems and services.
 
 \subsection{Functional Requirements}
 \subsubsection{Authentication}
-\begin{enumerate}
-	\item [{BE}1.] The user wants to sign up for an account
-	      \begin{enumerate}
-		      \item [{VP1}.1] Viewpoint: Vehicle Owner
+\begin{enumerate}[label=BE\arabic*., series=business_events]
+	\item The user wants to sign up for an account
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter an email and password
 			            \item The system shall allow the user to enter their name
@@ -279,9 +281,8 @@ external systems and services.
 			                  complete and successful
 			            \item The system shall allow the user to cancel and exit the registration process
 		            \end{enumerate}
-	      \end{enumerate}
-	      \begin{enumerate}
-		      \item [{VP1}.2] Viewpoint: Auto Repair Shop Owner
+
+		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter an email and password
 			            \item The system shall allow the user to enter their name
@@ -293,9 +294,8 @@ external systems and services.
 			                  complete and successful
 			            \item The system shall allow the user to cancel and exit the registration process
 		            \end{enumerate}
-	      \end{enumerate}
-	      \begin{enumerate}
-		      \item [{VP1}.3] Viewpoint: Auto Repair Shop Employee
+
+		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter an email and password
 			            \item The system shall allow the user to enter their name
@@ -305,35 +305,54 @@ external systems and services.
 			            \item The system shall allow the user to cancel and exit the registration process
 		            \end{enumerate}
 	      \end{enumerate}
-\end{enumerate}
 
-\begin{enumerate}
-	\item [{BE}2.] The user wants to login to their account
-	      \begin{enumerate}
-		      \item [{VP1}.1] Viewpoint: Vehicle Owner
+	\item The user wants to login to their account
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter their email and password
 			            \item The system shall transition to the vehicle owner landing page after the login process is complete
 			                  and successful
 			            \item The system shall allow the user to cancel and exit the login process
 		            \end{enumerate}
-	      \end{enumerate}
-	      \begin{enumerate}
-		      \item [{VP1}.2] Viewpoint: Auto Repair Shop Owner
+
+		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter their email and password
 			            \item The system shall transition to the shop owner landing page after the login process is complete and
 			                  successful
 			            \item The system shall allow the user to cancel and exit the login process
 		            \end{enumerate}
-	      \end{enumerate}
-	      \begin{enumerate}
-		      \item [{VP1}.3] Viewpoint: Auto Repair Shop Employee
+
+		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter their email and password
 			            \item The system shall transition to the employee landing page after the login process is complete and
 			                  successful
 			            \item The system shall allow the user to cancel and exit the login process
+		            \end{enumerate}
+	      \end{enumerate}
+\end{enumerate}
+
+\subsection{Quotes}
+\begin{enumerate}[resume*=business_events]
+	\item The customer wants to request a quote
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall automatically populate car details and contact details if present in the user's
+			                  profile
+			            \item The system shall allow the user to enter their car details, contact details, desired services,
+			                  replacement parts condition and source, extra notes, file attachments and time availability
+			            \item The system shall confirm to the user that the request has been submitted
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall notify the user of the quote request
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall notify the user of the quote request
 		            \end{enumerate}
 	      \end{enumerate}
 \end{enumerate}
