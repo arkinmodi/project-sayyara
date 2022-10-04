@@ -335,8 +335,9 @@ external systems and services.
 \end{enumerate}
 
 \subsection{Quotes}
+\subsubsection{Quotes Request}
 \begin{enumerate}[resume*=business_events]
-	\item The customer wants to request a quote
+	\item The user wants to request a quote
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
@@ -348,11 +349,44 @@ external systems and services.
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item A quote request has been created
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
 			            \item The system shall notify the user of the quote request
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item The system shall notify the user of the quote request
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants cancel a quote request
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall list active quotes
+			            \item The system shall allow the user to cancel a quote
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
 		            \end{enumerate}
 	      \end{enumerate}
 \end{enumerate}
