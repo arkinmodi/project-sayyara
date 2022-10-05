@@ -274,21 +274,29 @@ external systems and services.
 	\centering
 	\caption{Product Use Case (PUC) Table}
 	\vspace{5pt}
-	\begin{tabular}{|p{0.1\textwidth}|p{0.4\textwidth}|p{0.2\textwidth}|p{0.2\textwidth}|}
+	\begin{tabular}{|p{0.1\textwidth}|p{0.3\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
 		\hline
-		\textbf{PUC No} & \textbf{PUC Name}       & \textbf{Actor(s)}         & \textbf{Input and Output}  \\
+		\textbf{PUC No} & \textbf{PUC Name}                 & \textbf{Actor(s)}         & \textbf{Input and Output}   \\
 		\hline
-		1               & Create shop account     & Auto repair shop owner    & Shop information (in)      \\
+		1               & Create shop account               & Auto repair shop owner    & Shop information (in)       \\
 		\hline
-		2               & Create employee profile & Auto repair shop owner    & Employee information (in)  \\
-		                &                         & Auto repair shop employee &                            \\
+		2               & Create employee profile           & Auto repair shop owner    & Employee information (in)   \\
+		                &                                   & Auto repair shop employee &                             \\
 		\hline
-		3               & Login                   & Auto repair shop owner    & Username and password (in) \\
-		                &                         & Auto repair shop employee & Authentication (out)
+		3               & Login                             & Auto repair shop owner    & Username and password (in)  \\
+		                &                                   & Auto repair shop employee & Authentication (out)
 		\hline
-		4               & Create services         & Auto repair shop owner    & Service information (in)   \\
+		4               & Create services                   & Auto repair shop owner    & Service information (in)    \\
 		\hline
-		5               & Create availabilities   & Auto repair shop owner    & Dates of availability (in) \\
+		5               & View services                     & Auto repair shop owner    & List of services (out)      \\
+		                &                                   & Auto repair shop employee &                             \\
+		                &                                   & Vehicle owner             &                             \\
+		\hline
+		6               & Create appointment availabilities & Auto repair shop owner    & Dates of availability (in)  \\
+		\hline
+		7               & View appointment availabilities   & Auto repair shop owner    & Dates of availability (out) \\
+		                &                                   & Auto repair shop employee &                             \\
+		                &                                   & Vehicle owner             &                             \\
 		\hline
 	\end{tabular}
 \end{table}
