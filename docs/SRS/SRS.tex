@@ -17,6 +17,7 @@
 \usepackage{pdflscape}
 \usepackage{afterpage}
 \usepackage{placeins}
+\usepackage[shortlabels]{enumitem}
 
 \usepackage[round]{natbib}
 
@@ -127,7 +128,8 @@
 
 \begin{document}
 
-\title{Software Requirements Specification for \progname: subtitle describing software}
+\title{Software Requirements Specification for \progname: Progressive Web Application for Independent
+	Automotive Repair Shop Industry}
 \author{\authname}
 \date{\today}
 
@@ -153,7 +155,9 @@
 		October 2, 2022    & Leon So               & Add current situation and appointment diagram      \\
 		October 2, 2022    & Joy Xiao              & Add current situation quote and invitation diagram \\
 		October 3, 2022    & Leon So               & Add current situation work order diagram           \\
+		October 3, 2022    & Arkin Modi            & Add functional requirements for work orders        \\
 		October 4, 2022    & Leon So               & Add context of work diagram                        \\
+		October 4, 2022    & Leon So               & Add SRS subtitle                                   \\
 		October 4, 2022    & Joy Xiao              & Add non functional requirements                    \\
 		\bottomrule
 	\end{tabularx}
@@ -266,10 +270,10 @@ external systems and services.
 
 \subsection{Functional Requirements}
 \subsubsection{Authentication}
-\begin{enumerate}
-	\item [{BE}1.] The user wants to sign up for an account
-	      \begin{enumerate}
-		      \item [{VP1}.1] Viewpoint: Vehicle Owner
+\begin{enumerate}[label=BE\arabic*., series=business_events]
+	\item The user wants to sign up for an account
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter an email and password
 			            \item The system shall allow the user to enter their name
@@ -278,9 +282,8 @@ external systems and services.
 			                  complete and successful
 			            \item The system shall allow the user to cancel and exit the registration process
 		            \end{enumerate}
-	      \end{enumerate}
-	      \begin{enumerate}
-		      \item [{VP1}.2] Viewpoint: Auto Repair Shop Owner
+
+		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter an email and password
 			            \item The system shall allow the user to enter their name
@@ -292,9 +295,8 @@ external systems and services.
 			                  complete and successful
 			            \item The system shall allow the user to cancel and exit the registration process
 		            \end{enumerate}
-	      \end{enumerate}
-	      \begin{enumerate}
-		      \item [{VP1}.3] Viewpoint: Auto Repair Shop Employee
+
+		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter an email and password
 			            \item The system shall allow the user to enter their name
@@ -304,30 +306,26 @@ external systems and services.
 			            \item The system shall allow the user to cancel and exit the registration process
 		            \end{enumerate}
 	      \end{enumerate}
-\end{enumerate}
 
-\begin{enumerate}
-	\item [{BE}2.] The user wants to login to their account
-	      \begin{enumerate}
-		      \item [{VP1}.1] Viewpoint: Vehicle Owner
+	\item The user wants to login to their account
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter their email and password
 			            \item The system shall transition to the vehicle owner landing page after the login process is complete
 			                  and successful
 			            \item The system shall allow the user to cancel and exit the login process
 		            \end{enumerate}
-	      \end{enumerate}
-	      \begin{enumerate}
-		      \item [{VP1}.2] Viewpoint: Auto Repair Shop Owner
+
+		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter their email and password
 			            \item The system shall transition to the shop owner landing page after the login process is complete and
 			                  successful
 			            \item The system shall allow the user to cancel and exit the login process
 		            \end{enumerate}
-	      \end{enumerate}
-	      \begin{enumerate}
-		      \item [{VP1}.3] Viewpoint: Auto Repair Shop Employee
+
+		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item The system shall allow the user to enter their email and password
 			            \item The system shall transition to the employee landing page after the login process is complete and
@@ -335,6 +333,156 @@ external systems and services.
 			            \item The system shall allow the user to cancel and exit the login process
 		            \end{enumerate}
 	      \end{enumerate}
+\end{enumerate}
+
+\subsubsection{Work Orders}
+\begin{enumerate}[resume*=business_events]
+	\item An appointment has been scheduled
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall create a work order
+			            \item The system shall populate the customer data and vehicle data from the quote
+			            \item The system shall populate the customer data and vehicle data from the appointment if the quote is
+			                  not available
+			            \item The system shall populate expected services performed and parts needed from the quote
+			            \item The system shall populate expected services performed and parts needed from the appointment if the
+			                  quote not available
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall create a work order
+			            \item The system shall populate the customer data and vehicle data from the quote
+			            \item The system shall populate the customer data and vehicle data from the appointment if the quote is
+			                  not available
+			            \item The system shall populate expected services performed and parts needed from the quote
+			            \item The system shall populate expected services performed and parts needed from the appointment if the
+			                  quote not available
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item An appointment has been cancelled
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall delete the associated work order
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall delete the associated work order
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to search for a work order
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter the customer name, assigned employee, service type, and a
+			                  date range
+			            \item The system shall list the work order matching the inputted criteria
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter the customer name, assigned employee, service type, and a
+			                  date range
+			            \item The system shall list the work order matching the inputted criteria
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to view past work orders
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall list the past work orders
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall list the past work orders
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants update an work order
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall list the open work orders
+			            \item The system shall allow the user to edit the services performed, parts required, odometer readings,
+			                  customer details, employee assigned, car details, discounts, digital vehicle inspection, and extra
+			                  notes
+			            \item The system shall update the work order with the entered values
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall list the open work orders
+			            \item The system shall allow the user to edit the services performed, parts required, odometer readings,
+			                  customer details, employee assigned, car details, discounts, digital vehicle inspection, and extra
+			                  notes
+			            \item The system shall update the work order with the entered values
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The customer has paid for the work done on their vehicle
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall send a copy of the work order to the assigned customer's email
+			            \item The system shall mark the work order as ``Completed''
+			            \item The system shall mark the associated appointment as ``Completed''
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall send a copy of the work order to the assigned customer's email
+			            \item The system shall mark the work order as ``Completed''
+			            \item The system shall mark the associated appointment as ``Completed''
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to view the details of a work order
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall list the shop details, services to be performed with their individual bill rates
+			                  and expected number of hours for completion, parts required and their cost, odometer reading before
+			                  and after service, customer details, assigned employee, car details, any applied discounts, final
+			                  balance for the customer, warranty information, digital vehicle inspection, and any extra notes
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall list the shop details, services to be performed with their individual bill rates
+			                  and expected number of hours for completion, parts required and their cost, odometer reading before
+			                  and after service, customer details, assigned employee, car details, any applied discounts, final
+			                  balance for the customer, warranty information, digital vehicle inspection, and any extra notes
+		            \end{enumerate}
+	      \end{enumerate}
+
 \end{enumerate}
 
 \section{Non-functional Requirements}
@@ -457,7 +605,7 @@ This section has been added to the Volere template. This is where you can place 
 information.
 
 \newpage{}
-\section*{Appendix --- Reflection}
+\subsection{Reflection}
 
 The information in this section will be used to evaluate the team members on the graduate attribute
 of Lifelong Learning. Please answer the following questions:
