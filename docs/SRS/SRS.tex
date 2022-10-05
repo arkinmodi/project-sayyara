@@ -152,6 +152,7 @@
 		September 30, 2022 & Leon So               & Add purpose of project                               \\
 		September 30, 2022 & Joy Xiao              & Add stakeholders                                     \\
 		September 30, 2022 & Leon So               & Add functional requirements for authentication       \\
+		October 1, 2022    & Timothy Choy          & Add mandated constraints                             \\
 		October 2, 2022    & Leon So               & Add current situation and appointment diagram        \\
 		October 2, 2022    & Joy Xiao              & Add current situation quote and invitation diagram   \\
 		October 3, 2022    & Leon So               & Add current situation work order diagram             \\
@@ -217,6 +218,90 @@ Other stakeholders of the project are the developers, Tiny Coders, who are desig
 implementing the project.
 
 \subsection{Mandated Constraints}
+
+\subsubsection{Solution Constraints}
+\emph{Description:} The product shall be built as a Progressive Web Application (PWA)\\
+\emph{Rationale:} The supervisor wants the application to be a PWA\\
+\emph{Fit Criterion:} The product shall be written using the Next.js PWA plugin
+
+\emph{Description:} The product shall be able to function on a variety of devices, such as on a computer, on tablets and on most modern phones\\
+\emph{Rationale:} Users will be accessing this product in a variety of scenarios, and will have access to different devices\\
+\emph{Fit Criterion:} The product shall be tested to function properly on Chrome's device toolbar, which includes the following devices:
+\begin{itemize}
+	\item iPhone SE
+	\item iPhone XR
+	\item iPhone 12 Pro
+	\item Pixel 5
+	\item Samsung Galaxy S8+
+	\item Samsung Galaxy S20 Ultra
+	\item iPad Air
+	\item iPad Mini
+	\item Surface Pro 7
+	\item Surface Duo
+	\item Galaxy Fold
+	\item Samsung Galaxy A51/71
+	\item Nest Hub
+	\item Nest Hub Max
+\end{itemize}
+However, due to timing constraints, testing will only be run on the most popular cases, which would include the iPhone, Pixel and Samsung phones, as well as iPad and Galaxy tablets.
+
+\subsubsection{Implementation Environment of the Current System}
+In the current design of the product, the product shall be implemented in a cloud hosted serverless
+environment. In this specific case, it shall be AWS Lambda. The product itself shall also be able
+to function properly with any web browser and operating system.
+
+\subsubsection{Partner or Collaborative Applications}
+In the current design of the product, there are no partner or collaborative applications that will
+work along with the product. Therefore, there are no partner or collaborative constraints.
+
+\subsubsection{Off-the-Shelf Software}
+The following off-the-shelf software will be utilized:
+\begin{itemize}
+	\item Next.js (and Next PWA)
+\end{itemize}
+
+\subsubsection{Anticipated Workplace Environment}
+The anticipated workplace environment will be very broad. The product can be used from anywhere the
+user has access to a device and internet to run the application.
+
+\subsubsection{Schedule Constraints}
+As stated in the SFWRENG 4G06 course outline, the schedule constraints are as follows:
+\begin{table}[H]
+	\centering
+	\caption{Schedule Constraints}
+	\vspace{5pt}
+	\begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+		\hline
+		\textbf{Date}   & \textbf{Deliverable}               \\
+		\hline
+		Oct 19, 2022    & Hazard Analysis                    \\
+		\hline
+		Nov 2, 2022     & Verification and Validation Plan   \\
+		\hline
+		Nov 14-25, 2022 & Proof of Concept Demo              \\
+		\hline
+		Jan 18, 2023    & Design Document                    \\
+		\hline
+		Feb 6-17, 2023  & Revision 0 Demo                    \\
+		\hline
+		Mar 8, 2023     & Verification and Validation Report \\
+		\hline
+		Mar 20-31, 2023 & Final Demo (Rev 1)                 \\
+		\hline
+		Apr 5, 2023     & Final Documentation                \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Budget Constraints}
+The project has no monetary budget. If there are any necessary purchases for development, the cost
+shall be paid by the project members and reimbursed by the supervisor. Furthermore, these purchases
+may not exceed \$750.
+
+\subsubsection{Enterprise Constraints}
+The project will require authentication in the form of users logging in. The current implementation
+of the project will require users to authenticate with a username and password. In the future, SSO
+may be used.
 
 \subsection{Naming Conventions and Terminology}
 
