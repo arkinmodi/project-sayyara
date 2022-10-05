@@ -594,20 +594,27 @@ design.
 
 \subsubsection{Ready-Made Products}
 
-There are existing services that solve many of the problems that this application aims to fix.
-These include AutoLeap (https://autoleap.com), Sayaaraa (https://sayaaraa.com/), and KUKUI
-(https://www.kukui.com/). These are all paid services and most offer a trial period.
+There are existing services that solve many of the problems that this application aims to address.
+These include AutoLeap (https://autoleap.com), Sayaaraa (https://sayaaraa.com), and KUKUI
+(https://www.kukui.com). These are all paid services and most offer a trial period. Additional,
+these app only address the shop management aspect of the problem. Openbay (https://app.openbay.com)
+is an existing application that focuses on vehicle owner's needs. This application exclusively
+operates in the United States of America.
 
 \subsubsection{Resuable Components}
 
 There are many libraries and frameworks available that can be reused to accelerate the building
-process of the application. Next.js can be used to provide a framework in which to build the
-application. Next.js comes with many out-of-box solutions for common website development problems.
-NextAuth.js is a library designed to help simplify the authentication process. Prisma is a library
-designed to help simplify the communication between the application and the database. Next-PWA is a
-library designed to quickly bootstrap a Next.js application into a progressive web application.
+process of the application. Next.js can be used to provide a framework to build the application.
+Next.js comes with many out-of-box solutions for common website development problems. NextAuth.js
+is a library designed to help simplify the authentication process. Prisma is a library designed to
+help simplify the communication between the application and the database. Next-PWA is a library
+designed to quickly bootstrap a Next.js application into a progressive web application.
 
-All libraries and frameworks list above are free to use for private and commercial use.
+A runtime and ecosystem that is available to use is Node.js. This runtime comes with a large
+ecosystem of packages that can be reused and leveraged for common application components, including
+the libraries listed previously.
+
+All components listed above are free to use for private and commercial use.
 
 \subsubsection{Products That Can Be Copied}
 
@@ -634,17 +641,19 @@ application shall not lock the receptionist out of overriding the schedule.
 \textbf{Quotes}
 
 The quotes system will affect the way that both the customers and automotive repair shops
-communicate quotes. The quotes will now be communicated partially or completely through the
-application instead of completely in-person. Failure in this system may lead to a loss in data.
+communicate in the service quotation process. The quotes will now be communicated partially or
+completely through the application instead of completely in-person. Failure in this system may lead
+to a loss in data.
 
 \subsubsection{Effects on the Installed Systems}
 
-The application will be standing completely alone and will not be interfacing with any existing
+The application will be completely stand alone and will not be interfacing with any existing
 systems. The existing system may continue to coexist with the application at the user's discretion.
 
 \subsubsection{Potential User Problems}
 
-Any potential adverse reactions to using computer would extend to the use of this application. The
+Any potential adverse reactions related to using the device in which application is being launched
+on (e.g., computer, mobile device, tablet, etc.) would extend to the use of this application. The
 application will not introduce any new adverse reactions to the user.
 
 \subsubsection{Limitations in the Anticipated Implementation Environment That May Inhibit the New Product}
@@ -653,7 +662,11 @@ The database is not able to sustain the number of connections to serve all reque
 
 \subsubsection{Follow-Up Problems}
 
-There are no forseeable follow up problems that may cause the application to fail.
+If any of the third-party integrations cease functioning, various components of the application
+will not be able to operate. These integrations include the database service provider, the email
+server, and websocket provider. Additionally, this application will be dealing with user data. As
+privacy laws around the world are getting stricter, there is a possibility application violates
+these future laws that do not currently exist.
 
 \subsection{Tasks}
 \subsubsection{Project Planning}
@@ -714,10 +727,10 @@ No data needs to be modified or translated to the new system.
 \subsection{Risks}
 
 \begin{itemize}
-	\item Failures in the work orders and quotes work flow may lead to data loss.
-	\item Failures in the appointments work flow may lead to a loss in appointment or conflicting
+	\item Failures in the work orders and quotes workflow may lead to data loss.
+	\item Failures in the appointments workflow may lead to a loss in appointment or conflicting
 	      appointments.
-	\item Failure to meet deadlines will cause set backs in project's timeline. In the event of this, lower
+	\item Failure to meet deadlines will cause setbacks in project's timeline. In the event of this, lower
 	      priority requirements may need to be dropped.
 \end{itemize}
 
@@ -747,13 +760,13 @@ There are currently no requirements that are not part of the initial release.
 
 \subsection{Ideas for Solutions}
 
-During the requirements collection and understanding phase, some ideas with regard to what tooling
-will be used have occurred.
+During the requirements collection and understanding phase, there were also ideas on how to
+implement the solution.
 
 \begin{itemize}
 	\item Form
 	      \begin{itemize}
-		      \item With the constraint of this application to be a PWA, the idea of using a React based framework,
+		      \item With the constraint that this application to be a PWA, the idea of using a React-based framework,
 		            specifically Next.js.
 	      \end{itemize}
 	\item Authentication
