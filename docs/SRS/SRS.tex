@@ -160,6 +160,7 @@
 		October 3, 2022    & Arkin Modi            & Add functional requirements for work orders          \\
 		October 4, 2022    & Leon So               & Add context of work diagram                          \\
 		October 4, 2022    & Leon So               & Add SRS subtitle                                     \\
+		October 4, 2022    & Joy Xiao              & Add service functional requirements                  \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -646,6 +647,80 @@ external systems and services.
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item The system shall revoke the removed employee's access to the auto repair shop employee controls
+		            \end{enumerate}
+	      \end{enumerate}
+\end{enumerate}
+
+\subsubsection{Services}
+\begin{enumerate}[resume*=business_events]
+	\item The user wants to add available auto shop services to the shop profile
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter the name of the service
+			            \item The system shall allow the user to enter a description for the service
+			            \item The system shall allow the user to enter the estimated time for the service
+			            \item The system shall allow the user to enter the parts used for the service including quantity,
+			                  condition (new or used), build (OEM or aftermarket), and cost per part (before tax cost)
+			            \item The system shall allow the user to enter the total price for the service (before tax price)
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to search for auto repair or maintenance services
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall display the service details
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall display the service details
+			            \item The system shall allow the user to search for a specific service type
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall display the service details
+			            \item The system shall allow the user to search for a specific service type
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to edit a service type
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to update the details of a particular service
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to delete a service type
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to delete the service from their shop page
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
 		            \end{enumerate}
 	      \end{enumerate}
 \end{enumerate}
