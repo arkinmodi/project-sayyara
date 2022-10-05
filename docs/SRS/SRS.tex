@@ -1030,11 +1030,19 @@ external systems and services.
 
 \subsubsection{Shop Lookup}
 \begin{enumerate}[resume*=business_events]
-	\item The user wants to look up auto repair shops
+	\item The user wants to search for auto repair shops
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
-			            \item
+			            \item The system shall allow the user to enter a distance range
+			            \item The system shall allow the user to enter a postal code
+			            \item The system shall allow the user to enter a shop name
+			            \item The system shall display all auto repair shops within the distance provided, or any shops at a
+			                  postal code, or any shops which match the shop's name within the specified distance
+			            \item The system shall show the user's distance to each shop provided
+			            \item The system shall provide a method to quickly contact the shop
+			            \item The system shall allow the user to access additional information about a specific shop
+			            \item The system shall allow a method to quickly refresh the results list for the latest availability
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
