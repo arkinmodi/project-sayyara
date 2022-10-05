@@ -162,6 +162,7 @@
 		October 4, 2022    & Leon So               & Add context of work diagram                          \\
 		October 4, 2022    & Leon So               & Add SRS subtitle                                     \\
 		October 4, 2022    & Joy Xiao              & Add service functional requirements                  \\
+		October 4, 2022    & Arkin Modi            & Add functional requirements for quotes               \\
 		October 5, 2022    & Leon So               & Add functional requirements for password reset       \\
 		\bottomrule
 	\end{tabularx}
@@ -540,6 +541,189 @@ external systems and services.
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item[] N/A
+		            \end{enumerate}
+	      \end{enumerate}
+\end{enumerate}
+
+\subsubsection{Quotes}
+\begin{enumerate}[resume*=business_events]
+	\item The user wants view past quotes
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall list all quotes
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter the quote ID, customer phone number, and customer name
+			            \item The system shall list all quotes matching the inputted criteria
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter the quote ID, customer phone number, and customer name
+			            \item The system shall list all quotes matching the inputted criteria
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants view details about a quote
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to view the car details, contact details, desired services,
+			                  replacement parts condition and source, extra notes, file attachments and time availability from
+			                  the quote request
+			            \item The system shall allow the user to view the estimated price, a list of services, the estimated
+			                  time, a list of required parts, and discounts from the quote response
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to view the car details, contact details, desired services,
+			                  replacement parts condition and source, extra notes, file attachments and time availability from
+			                  the quote request
+			            \item The system shall allow the user to view the estimated price, a list of services, the estimated
+			                  time, a list of required parts, and discounts from the quote response
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall allow the user to view the car details, contact details, desired services,
+			                  replacement parts condition and source, extra notes, file attachments and time availability from
+			                  the quote request
+			            \item The system shall allow the user to view the estimated price, a list of services, the estimated
+			                  time, a list of required parts, and discounts from the quote response
+		            \end{enumerate}
+	      \end{enumerate}
+\end{enumerate}
+
+\begin{enumerate}[resume*=business_events]
+	\item The user wants to request a quote
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall automatically populate car details and contact details if present in the user's
+			                  profile
+			            \item The system shall allow the user to enter their car details, contact details, desired services,
+			                  replacement parts condition and source, extra notes, file attachments and time availability
+			            \item The system shall confirm to the user that the request has been submitted
+			            \item The system shall generate a quote ID and assign it to the newly created quote
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall notify the user of the newly created quote request by the vehicle owner
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall notify the user of the newly created quote request by the vehicle owner
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants cancel a quote request
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall list active quotes
+			            \item The system shall allow the user to cancel a quote
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants update a quote request
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall list active quotes
+			            \item The system shall allow the user to update a quote
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall notify the user of the updated quote request
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall notify the user of the updated quote request
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to copy an existing quote request
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to create a new quote request using the data from an existing quote
+			                  request
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to respond to a quote request
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall notify the user of the quote response from the automotive repair shop
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter the estimated price, a list of services, the estimated
+			                  time, a list of required parts, and discounts
+			            \item The system shall automatically apply local taxes
+			            \item The system shall send the quote to the customer
+			            \item The system shall send a notification to the customer
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter the estimated price, a list of services, the estimated
+			                  time, a list of required parts, and discounts
+			            \item The system shall automatically apply local taxes
+			            \item The system shall send the quote to the customer
+			            \item The system shall send a notification to the customer
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user would like to accept a quote response
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to accept a quote response
+			            \item The system shall navigate the user to the appointment booking process
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user would like to request additional information
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to send messages to the automotive repair shop
+			            \item The system shall allow the user to receive messages from the automotive repair shop
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to send messages to the customer
+			            \item The system shall allow the user to receive messages from the customer
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall allow the user to send messages to the customer
+			            \item The system shall allow the user to receive messages from the customer
 		            \end{enumerate}
 	      \end{enumerate}
 \end{enumerate}
