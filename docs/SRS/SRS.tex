@@ -158,6 +158,7 @@
 		October 2, 2022    & Leon So               & Add current situation and appointment diagram                                      \\
 		October 2, 2022    & Joy Xiao              & Add current situation quote and invitation diagram                                 \\
 		October 3, 2022    & Leon So               & Add current situation work order diagram                                           \\
+		October 3, 2022    & Leon So               & Add functional requirements for employees management                               \\
 		October 3, 2022    & Arkin Modi            & Add planning of the development phases and new problems sections                   \\
 		October 3, 2022    & Arkin Modi            & Add off-the-shelf solutions sections                                               \\
 		October 3, 2022    & Arkin Modi            & Add functional requirements for work orders                                        \\
@@ -487,6 +488,76 @@ external systems and services.
 		            \end{enumerate}
 	      \end{enumerate}
 
+\end{enumerate}
+
+\subsubsection{Employee Management}
+\begin{enumerate}[resume*=business_events]
+	\item The shop owner wants to invite an employee to their shop
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter employee email(s) to invite
+			            \item The system shall send an invitation email to the invited employee(s)
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall allow the user to accept an invitation
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The shop owner wants to search for an employee
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter search text to search for an employee
+			            \item The system shall display a list of employees whose name or email matches the search text
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The shop owner wants to view the list of employees
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall display a list of employees
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The shop owner wants to remove an employee
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to remove an employee
+			            \item The system shall revoke the removed employee's access to the auto repair shop employee controls
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall revoke the removed employee's access to the auto repair shop employee controls
+		            \end{enumerate}
+	      \end{enumerate}
 \end{enumerate}
 
 \section{Non-functional Requirements}
