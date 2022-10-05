@@ -156,6 +156,7 @@
 		October 2, 2022    & Joy Xiao              & Add current situation quote and invitation diagram   \\
 		October 3, 2022    & Leon So               & Add current situation work order diagram             \\
 		October 3, 2022    & Leon So               & Add functional requirements for employees management \\
+		October 3, 2022    & Joy Xiao              & Add appointment FRs                                  \\
 		October 3, 2022    & Arkin Modi            & Add functional requirements for work orders          \\
 		October 4, 2022    & Leon So               & Add context of work diagram                          \\
 		October 4, 2022    & Leon So               & Add SRS subtitle                                     \\
@@ -331,6 +332,100 @@ external systems and services.
 			            \item The system shall transition to the employee landing page after the login process is complete and
 			                  successful
 			            \item The system shall allow the user to cancel and exit the login process
+		            \end{enumerate}
+	      \end{enumerate}
+\end{enumerate}
+
+\subsubsection{Appointments}
+\begin{enumerate}[resume*=business_events]
+	\item The user wants to book an appointment
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall populate the service request information from the quote
+			            \item The system shall populate the service request information from the if a canned job is selected
+			            \item The system shall allow the user to filter available appointments times
+			            \item The system shall display dates and times where appointments are available
+			            \item The system shall allow the user to select an appointment time slot to book
+			            \item The system shall allow the user to sync the appointment time to their calendar
+			            \item The system shall transition to the view appointments page
+			            \item The system shall allow the user to cancel and exit the appointment process
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter a name
+			            \item The system shall allow the user to enter a phone number
+			            \item The system shall allow the user to enter service details
+			            \item The system shall allow the user to select an available time slot
+			            \item The system shall transition to the view appointments page
+			            \item The system shall allow the user to cancel and exit the appointment process
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter a name
+			            \item The system shall allow the user to enter a phone number
+			            \item The system shall allow the user to enter service details
+			            \item The system shall allow the user to select an available time slot
+			            \item The system shall transition to the view appointments page
+			            \item The system shall allow the user to cancel and exit the appointment process
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to edit an appointment
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to select a scheduled appointment
+			            \item The system shall allow the user to select another available timeslot
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to select a scheduled appointment
+			            \item The system shall allow the user to update service details
+			            \item The system shall allow the user to select another available timeslot
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall allow the user to select a scheduled appointment
+			            \item The system shall allow the user to update service details
+			            \item The system shall allow the user to select another available timeslot
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to cancel an appointment
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to select a scheduled appointment
+			            \item The system shall allow the user to cancel the appointment
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to select a scheduled appointment
+			            \item The system shall allow the user to cancel the appointment
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall allow the user to select a scheduled appointment
+			            \item The system shall allow the user to cancel the appointment
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to set appointment availability
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to set the days that appointments can be made
+			            \item The system shall allow the user to set the hours that appointments can be made
+			            \item The system shall allow the user to set the number of appointments that can be booked every hour
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
 		            \end{enumerate}
 	      \end{enumerate}
 \end{enumerate}
