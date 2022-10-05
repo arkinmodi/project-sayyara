@@ -443,8 +443,28 @@ external systems and services.
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item The system shall show the user details of their shop including the shop's location, the shop's
-			                  contact information, and a brief description of the shop
+			            \item The system shall show the user the shop's address
+			            \item The system shall show the user the shop's phone number
+			            \item The system shall show the user the shop's email
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall show the user the shop's address
+			            \item The system shall show the user the shop's phone number
+			            \item The system shall show the user the shop's email
+		            \end{enumerate}
+	      \end{enumerate}
+	\item The user wants to add or update their shop's profile
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to add and update the shop's address
+			            \item The system shall allow the user to add and update the shop's phone number
+			            \item The system shall allow the user to add and update the shop's email
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
@@ -463,12 +483,67 @@ external systems and services.
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item[] N/A
+			            \item The system shall show the user all employees who currently are registered under the user's shop
+			            \item The system shall allow the user to select an employee to see more in-depth detail of the specific
+			                  employee
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
-			            \item The system shall show the user details of their employee profile, which includes the user's name,
-			                  employer details (shop name, employer name), and their position in the auto shop
+			            \item The system shall show the user their own employee information
+			            \item The system shall not show the user any other employee information
+		            \end{enumerate}
+	      \end{enumerate}
+	\item The user wants to add an employee to the shop
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter a name
+			            \item The system shall allow the user to enter a phone number
+			            \item The system shall allow the user to enter an email
+			            \item The system shall create a profile for the employee, based on the fields above
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+	      \end{enumerate}
+	\item The user wants to delete an employee from the shop
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to select an employee
+			            \item The system shall prompt the user if they want to proceed with deleting the selected employee
+			            \item The system shall remove the employee from the list of employees associated with the shop
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+	      \end{enumerate}
+	\item The user wants to update an employee profile
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to change the email of any employee that works for their shop
+			            \item The system shall allow the user to change the phone number of any employee that works for their
+			                  shop
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall allow the user to change the email of their own employee profile
+			            \item The system shall allow the user to change the phone number of their own employee profile
 		            \end{enumerate}
 	      \end{enumerate}
 \end{enumerate}
