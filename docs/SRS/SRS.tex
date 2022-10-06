@@ -366,45 +366,55 @@ external systems and services.
 	\centering
 	\begin{tabular}{|c|p{3.5cm}|c|p{3.5cm}|}
 		\hline
+		\textbf{Event Number} & \centering\textbf{Event Name}  & \textbf{Input} & \textbf{Output}    \\
+		\hline
+		1                     & Sign up for account            & User           & Database           \\
+		\hline
+		2                     & Login to account               & User           & Database           \\
+		\hline
+		3                     & Reset password                 & User           & Database           \\
+		\hline
+		4                     & Book appointment               & Database       & Database           \\
+		\hline
+		5                     & Edit appointment               & Database       & Database           \\
+		\hline
+		6                     & Cancel appointment             & Database       & Database           \\
+		\hline
+		7                     & Set appointment availability   & Database       & Database           \\
+		\hline
+		8                     & View past quotes               & User           & Database           \\
+		\hline
+		9                     & View quote details             & User           & Database           \\
+		\hline
+		10                    & Request a quote                & Web Socket     & Database           \\
+		\hline
+		11                    & Cancel quote request           & User           & Database           \\
+		\hline
+		12                    & Update quote request           & User           & Database/Websocket \\
+		\hline
+		13                    & Copy a quote request           & Database       & Database/Websocket \\
+		\hline
+		14                    & Respond to quote request       & Websocket      & Database           \\
+		\hline
+		15                    & Accept quote response          & Websocket      & Database           \\
+		\hline
+		16                    & Request additional information & Websocket      & Database           \\
+		\hline
+		17                    & Appointment scheduled          & User           & Database           \\
+		\hline
+		18                    & Appointment cancelled          & User           & Database           \\
+		\hline
+		19                    & Search for work order          & User           & Database           \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\caption{Work Partitioning Events Continued}
+	\centering
+	\begin{tabular}{|c|p{3.5cm}|c|p{3.5cm}|}
+		\hline
 		\textbf{Event Number} & \centering\textbf{Event Name}     & \textbf{Input} & \textbf{Output}        \\
-		\hline
-		1                     & Sign up for account               & User           & Database               \\
-		\hline
-		2                     & Login to account                  & User           & Database               \\
-		\hline
-		3                     & Reset password                    & User           & Database               \\
-		\hline
-		4                     & Book appointment                  & Database       & Database               \\
-		\hline
-		5                     & Edit appointment                  & Database       & Database               \\
-		\hline
-		6                     & Cancel appointment                & Database       & Database               \\
-		\hline
-		7                     & Set appointment availability      & Database       & Database               \\
-		\hline
-		8                     & View past quotes                  & User           & Database               \\
-		\hline
-		9                     & View quote details                & User           & Database               \\
-		\hline
-		10                    & Request a quote                   & Web Socket     & Database               \\
-		\hline
-		11                    & Cancel quote request              & User           & Database               \\
-		\hline
-		12                    & Update quote request              & User           & Database/Websocket     \\
-		\hline
-		13                    & Copy a quote request              & Database       & Database/Websocket     \\
-		\hline
-		14                    & Respond to quote request          & Websocket      & Database               \\
-		\hline
-		15                    & Accept quote response             & Websocket      & Database               \\
-		\hline
-		16                    & Request additional information    & Websocket      & Database               \\
-		\hline
-		17                    & Appointment scheduled             & User           & Database               \\
-		\hline
-		18                    & Appointment cancelled             & User           & Database               \\
-		\hline
-		19                    & Search for work order             & User           & Database               \\
 		\hline
 		20                    & View past work orders             & User           & Database               \\
 		\hline
