@@ -1540,15 +1540,15 @@ external systems and services.
 \subsubsection{Formal Specifications}
 In regards to identifying roles of users:
 
-$$(\exists a, b \in \text{users} \and a.\text{role},
+$(\exists a, b \in \text{users} \and a.\text{role},
 	b.\text{role} \in \text{employee} | a \neq b \bullet a.\text{view}(b.\text{profile}) \implies
-	false)$$
+	false)$
 Employees cannot view one another's profiles
 
-$$(\exists a \in \text{users} \and a.\text{role}, b.\text{role} \in \text{employee} | a \neq b \bullet a.\text{edit}(b) \implies false)$$
+$(\exists a \in \text{users} \and a.\text{role}, b.\text{role} \in \text{employee} | a \neq b \bullet a.\text{edit}(b) \implies false)$
 Employees cannot modify or edit another user
 
-$$(\exists a \in \text{users} \and a.\text{role} \in \text{owner} | \forall x \in \users, x.\text{shop} = a.\text{shop} \bullet a.edit(x) \and a.view(x.\text{profile}) \implies true)$$
+$(\exists a \in \text{users} \and a.\text{role} \in \text{owner} | \forall x \in \users, x.\text{shop} = a.\text{shop} \bullet a.edit(x) \and a.view(x.\text{profile}) \implies true)$
 Owners can view and modify all other employees that work under them
 
 \section{Non-functional Requirements}
