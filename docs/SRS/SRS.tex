@@ -169,6 +169,7 @@
 		October 4, 2022    & Joy Xiao              & Add service functional requirements                                                \\
 		October 4, 2022    & Arkin Modi            & Add functional requirements for quotes                                             \\
 		October 5, 2022    & Leon So               & Add functional requirements for password reset                                     \\
+		October 4, 2022    & Joy Xiao              & Add non functional requirements                                                    \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -1101,25 +1102,52 @@ external systems and services.
 \section{Non-functional Requirements}
 
 \subsection{Look and Feel Requirements}
+\begin{enumerate}[LF\arabic*.]
+	\item The system shall adjust and scale to fit the physical screen size
+	\item The system shall have fonts and colours that will allow users to easily read the text
+	\item The system shall display dollar amounts rounded to 2 decimal places
+\end{enumerate}
 
 \subsection{Usability and Humanity Requirements}
+\begin{enumerate}[UH\arabic*.]
+	\item The system shall accessible by any desktop or mobile device and any operating system
+	\item The system shall be accessible through the web browser and when the device is connected to internet
+\end{enumerate}
 
 \subsection{Performance Requirements}
+\begin{enumerate}[PR\arabic*.]
+	\item The system shall respond to the user's interactions within 0.5 seconds
+\end{enumerate}
 
 \subsection{Operational and Environmental Requirements}
+\begin{enumerate}[OE\arabic*.]
+	\item The system shall be able to operate on desktops and mobile devices
+\end{enumerate}
 
 \subsection{Maintainability and Support Requirements}
+\begin{enumerate}[MS\arabic*.]
+	\item The system shall be well documented
+\end{enumerate}
 
 \subsection{Security Requirements}
+\begin{enumerate}[SR\arabic*.]
+	\item The system shall keep user's data private
+	\item The system shall limit the data shown to user's on a needs to know basis
+\end{enumerate}
 
 \subsection{Cultural Requirements}
+\begin{enumerate}[CR\arabic*.]
+	\item The system shall not use any text or images that will offend anyone that will use it
+	\item The system will use Canadian English
+\end{enumerate}
 
 \subsection{Legal Requirements}
+\begin{enumerate}[LR\arabic*.]
+	\item The system shall not contain any assets which infringe on copyright claims
+\end{enumerate}
 
 \subsection{Health and Safety Requirements}
-
-This section is not in the original Volere template, but health and safety are issues that should
-be considered for every engineering project.
+N/A
 
 \section{Project Issues}
 
@@ -1322,48 +1350,47 @@ implement the solution.
 
 \newpage
 
-\noindent \plt{The following is not part of the template, just some things to consider
-	when filing in the template.}
+% \noindent \plt{The following is not part of the template, just some things to consider
+% 	when filing in the template.}
 
-\noindent \plt{Grammar, flow and \LaTeX advice:
-	\begin{itemize}
-		\item For Mac users \texttt{*.DS\_Store} should be in \texttt{.gitignore}
-		\item \LaTeX{} and formatting rules
-		      \begin{itemize}
-			      \item Variables are italic, everything else not, includes subscripts (link to document)
-			            \begin{itemize}
-				            \item \href{https://physics.nist.gov/cuu/pdf/typefaces.pdf}{Conventions}
-				            \item Watch out for implied multiplication
-			            \end{itemize}
-			      \item Use BibTeX
-			      \item Use cross-referencing
-		      \end{itemize}
-		\item Grammar and writing rules
-		      \begin{itemize}
-			      \item Acronyms expanded on first usage (not just in table of acronyms)
-			      \item ``In order to'' should be ``to''
-		      \end{itemize}
-	\end{itemize}}
+% \noindent \plt{Grammar, flow and \LaTeX advice:
+% 	\begin{itemize}
+% 		\item For Mac users \texttt{*.DS\_Store} should be in \texttt{.gitignore}
+% 		\item \LaTeX{} and formatting rules
+% 		      \begin{itemize}
+% 			      \item Variables are italic, everything else not, includes subscripts (link to document)
+% 			            \begin{itemize}
+% 				            \item \href{https://physics.nist.gov/cuu/pdf/typefaces.pdf}{Conventions}
+% 				            \item Watch out for implied multiplication
+% 			            \end{itemize}
+% 			      \item Use BibTeX
+% 			      \item Use cross-referencing
+% 		      \end{itemize}
+% 		\item Grammar and writing rules
+% 		      \begin{itemize}
+% 			      \item Acronyms expanded on first usage (not just in table of acronyms)
+% 			      \item ``In order to'' should be ``to''
+% 		      \end{itemize}
+% 	\end{itemize}}
 
-\noindent \plt{Advice on using the template:
-	\begin{itemize}
-		\item Difference between physical and software constraints
-		\item Properties of a correct solution means \emph{additional} properties, not a restating of the
-		      requirements (may be ``not applicable'' for your problem). If you have a table of output
-		      constraints, then these are properties of a correct solution.
-		\item Assumptions have to be invoked somewhere
-		\item ``Referenced by'' implies that there is an explicit reference
-		\item Think of traceability matrix, list of assumption invocations and list of reference by fields as
-		      automatically generatable
-		\item If you say the format of the output (plot, table etc), then your requirement could be more abstract
-	\end{itemize}
-}
+% \noindent \plt{Advice on using the template:
+% 	\begin{itemize}
+% 		\item Difference between physical and software constraints
+% 		\item Properties of a correct solution means \emph{additional} properties, not a restating of the
+% 		      requirements (may be ``not applicable'' for your problem). If you have a table of output
+% 		      constraints, then these are properties of a correct solution.
+% 		\item Assumptions have to be invoked somewhere
+% 		\item ``Referenced by'' implies that there is an explicit reference
+% 		\item Think of traceability matrix, list of assumption invocations and list of reference by fields as
+% 		      automatically generatable
+% 		\item If you say the format of the output (plot, table etc), then your requirement could be more abstract
+% 	\end{itemize}
+% }
 \section{Appendix}
 
-This section has been added to the Volere template. This is where you can place additional
-information.
+% This section has been added to the Volere template. This is where you can place additional
+% information.
 
-\newpage{}
 \subsection{Reflection}
 
 The information in this section will be used to evaluate the team members on the graduate attribute
