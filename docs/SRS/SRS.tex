@@ -1539,7 +1539,10 @@ external systems and services.
 
 \subsubsection{Formal Specifications}
 In regards to identifying roles of users:
-$$(\exists a, b \in \text{users} \and a.\text{role}, b.\text{role} \in \text{employee} | a \neq b \bullet a.\text{view}(b.\text{profile}) \implies false)$$
+
+$$(\exists a, b \in \text{users} \and a.\text{role},
+	b.\text{role} \in \text{employee} | a \neq b \bullet a.\text{view}(b.\text{profile}) \implies
+	false)$$
 Employees cannot view one another's profiles
 
 $$(\exists a \in \text{users} \and a.\text{role}, b.\text{role} \in \text{employee} | a \neq b \bullet a.\text{edit}(b) \implies false)$$
