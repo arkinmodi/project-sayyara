@@ -169,6 +169,7 @@
 		October 4, 2022    & Joy Xiao              & Add service functional requirements                                                \\
 		October 4, 2022    & Arkin Modi            & Add functional requirements for quotes                                             \\
 		October 5, 2022    & Leon So               & Add functional requirements for password reset                                     \\
+		October 5, 2022    & Leon So               & Add relevant facts and assumptions                                                 \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -312,8 +313,41 @@ may be used.
 \subsection{Naming Conventions and Terminology}
 
 \subsection{Relevant Facts and Assumptions}
-
-User characteristics should go under assumptions.
+\subsubsection{Users}
+\begin{enumerate}
+	\item It is assumed that users have a valid email address.
+	\item It is assumed that the user will have internet connection when using the application.
+	\item It is assumed that the user is located in Canada.
+\end{enumerate}
+\subsubsubsection{Vehicle Owners}
+\begin{enumerate}
+	\item It is assumed that users looking for auto repair or maintenance own at least one vehicle.
+\end{enumerate}
+\subsubsubsection{Auto Repair Shop Owners}
+\begin{enumerate}
+	\item For the initial version of Sayyara, there can only be one owner account per auto repair shop.
+	\item It is assumed that the auto repair shop is located in Canada.
+\end{enumerate}
+\subsubsubsection{Auto Repair Shop Employees}
+\begin{enumerate}
+	\item It is assumed that employees only for one auto repair shop.
+\end{enumerate}
+\subsubsection{Services}
+\begin{enumerate}
+	\item It is assumed that only auto repair shop owners can add and edit the list of services.
+\end{enumerate}
+\subsubsection{Employee Management}
+\begin{enumerate}
+	\item For the initial version of the application, employees can only sign up and complete registration
+	      after receiving an email invitation.
+	\item For the initial version of the application, only auto repair shop owners can send an invitation to
+	      employees.
+	\item It is assumed that only the auto repair shop owner can add and edit employees.
+\end{enumerate}
+\subsubsection{Other}
+\begin{enumerate}
+	\item For the initial version of the application, Sayyara will not process any payment transactions.
+\end{enumerate}
 
 \section{Functional Requirements}
 
