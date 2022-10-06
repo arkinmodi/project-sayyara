@@ -168,8 +168,9 @@
 		October 4, 2022    & Leon So               & Add SRS subtitle                                                                   \\
 		October 4, 2022    & Joy Xiao              & Add service functional requirements                                                \\
 		October 4, 2022    & Arkin Modi            & Add functional requirements for quotes                                             \\
-		October 5, 2022    & Leon So               & Add functional requirements for password reset                                     \\
 		October 4, 2022    & Joy Xiao              & Add non functional requirements                                                    \\
+		October 5, 2022    & Leon So               & Add functional requirements for password reset                                     \\
+		October 5, 2022    & Timothy Choy          & Add functional requirements for shop lookup                                        \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -1020,6 +1021,33 @@ external systems and services.
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
 			            \item The system shall allow the user to delete the service from their shop page
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+	      \end{enumerate}
+\end{enumerate}
+
+\subsubsection{Shop Lookup}
+\begin{enumerate}[resume*=business_events]
+	\item The user wants to search for auto repair shops
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter a distance range
+			            \item The system shall allow the user to enter a postal code
+			            \item The system shall allow the user to enter a shop name
+			            \item The system shall display all auto repair shops within the distance provided, or any shops at a
+			                  postal code, or any shops which match the shop's name within the specified distance
+			            \item The system shall show the user's distance to each shop provided
+			            \item The system shall provide a method to quickly contact the shop
+			            \item The system shall allow the user to access additional information about a specific shop
+			            \item The system shall allow a method to quickly refresh the results list for the latest availability
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item[] N/A
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
