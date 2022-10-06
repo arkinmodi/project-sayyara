@@ -270,41 +270,9 @@ external systems and services.
 \subsubsection{Work Partitioning}
 
 \subsubsection{Individual Product Use Cases}
-% \begin{table}[H]
-% 	\centering
-% 	\caption{Product Use Case (PUC) Table}
-% 	\vspace{5pt}
-% 	\begin{tabular}{|p{0.1\textwidth}|p{0.3\textwidth}|p{0.3\textwidth}|p{0.2\textwidth}|}
-% 		\hline
-% 		\textbf{PUC No} & \textbf{PUC Name}                 & \textbf{Actor(s)}         & \textbf{Input \& Output}    \\
-% 		\hline
-% 		1               & Create shop account               & Auto repair shop owner    & Shop information (in)       \\
-% 		\hline
-% 		2               & Create employee profile           & Auto repair shop owner    & Employee information (in)   \\
-% 		                &                                   & Auto repair shop employee &                             \\
-% 		\hline
-% 		3               & Login                             & Auto repair shop owner    & Username and password (in)  \\
-% 		                &                                   & Auto repair shop employee & Authentication (out)        \\
-% 		\hline
-% 		4               & Create services                   & Auto repair shop owner    & Service information (in)    \\
-% 		\hline
-% 		5               & View services                     & Auto repair shop owner    & List of services (out)      \\
-% 		                &                                   & Auto repair shop employee &                             \\
-% 		                &                                   & Vehicle owner             &                             \\
-% 		\hline
-% 		6               & Create appointment availabilities & Auto repair shop owner    & Dates of availability (in)  \\
-% 		\hline
-% 		7               & View appointment availabilities   & Auto repair shop owner    & Dates of availability (out) \\
-% 		                &                                   & Auto repair shop employee &                             \\
-% 		                &                                   & Vehicle owner             &                             \\
-% 		\hline
-% 		8 &  & & \\
-% 		\hline
-% 	\end{tabular}
-% \end{table}
 \textbf{Title:} Creating an account for an auto repair shop\\
 \textbf{Trigger:} Auto repair shop owner adds their shop to Sayyara\\
-\textbf{Pre-condition:} Auto repair shop exists\\
+\textbf{Pre-condition:} The physical auto repair shop exists\\
 \textbf{Outcome:}
 \begin{enumerate}
 	\item User creates an account with a username and password
@@ -394,23 +362,144 @@ external systems and services.
 \textbf{Pre-condition:} Auto repair shop exists\\
 \textbf{Outcome:}
 \begin{enumerate}
-	\item System displays information about the shop, such as the shop's name, address, phone number and email
+	\item System displays information about the shop, such as the shop's name, address, phone number and
+	      email
 \end{enumerate}
 
 \textbf{Title:} Viewing an employee profile\\
-\textbf{Trigger:} 
-\textbf{Pre-condition:} 
+\textbf{Trigger:} User navigates to their employee profile\\
+\textbf{Pre-condition:} Auto repair shop and employee exist\\
 \textbf{Outcome:}
 \begin{enumerate}
-	\item 
+	\item System checks role of employee
+	\item If role of employee is owner, system will allow user to view all employees working in the shop
+	\item If role of employee is employee, system will allow user to view only their profile
+	\item System will display the name, phone number and email of the employee
 \end{enumerate}
 
 \textbf{Title:} Deleting an employee profile\\
-\textbf{Trigger:} 
-\textbf{Pre-condition:} 
+\textbf{Trigger:} Auto repair shop owner selects an employee and selects the delete option\\
+\textbf{Pre-condition:} Auto repair shop and employee exist\\
 \textbf{Outcome:}
 \begin{enumerate}
-	\item 
+	\item System prompts user if they want to delete the employee
+	\item User selects delete
+	\item System removes employee from list of employees of the shop and deletes all information about the
+	      employee
+\end{enumerate}
+
+\textbf{Title:} Creating appointment availabilities\\
+\textbf{Trigger:} Auto repair shop owner navigates to the availabilities section\\
+\textbf{Pre-condition:} Auto repair shop exists\\
+\textbf{Outcome:}
+\begin{enumerate}
+	\item System present user with a calendar
+	\item User marks time slots for availabilities
+	\item System updates the shop with updated time slots for availabilities
+\end{enumerate}
+
+\textbf{Title:} Creating a quote\\
+\textbf{Trigger:} User navigates to their quotes and selects a new quote\\
+\textbf{Pre-condition:} Sayyara is installed\\
+\textbf{Outcome:}
+\begin{enumerate}
+	\item User enters the customer's information (name, phone number, email)
+	\item User enters the car's information (year, make, model, VIM, license)
+	\item User enters description of work to be done
+	\item User enters preference on parts (e.g., new/used)
+	\item User attaches photos of vehicle
+	\item System compiles the information into a quote and sends it to auto repair shops
+\end{enumerate}
+
+\textbf{Title:} Viewing quotes\\
+\textbf{Trigger:} User navigates to their quotes\\
+\textbf{Pre-condition:} Quote exists, auto repair shops exist\\
+\textbf{Outcome:}
+\begin{enumerate}
+	\item System displays quote details, including car and customer information, description of issue
+	\item System displays a list of auto repair shops and their quotes for the service
+	\item System displays a method to chat with the auto repair shops
+\end{enumerate}
+
+\textbf{Title:} Updating a quote\\
+\textbf{Trigger:} User navigates to existing quote and selects edit\\
+\textbf{Pre-condition:} Quote exists\\
+\textbf{Outcome:}
+\begin{enumerate}
+	\item User edits fields in the quote, such as customer information or car information
+	\item User edits fields as shown in creating a quote
+	\item System updates the fields for the quote
+	\item System sends the updated quote to auto repair shops
+\end{enumerate}
+
+\textbf{Title:} Cancelling a quote\\
+\textbf{Trigger:} User navigates to existing quote and selects cancel\\
+\textbf{Pre-condition:} Quote exists\\
+\textbf{Outcome:}
+\begin{enumerate}
+	\item System prompts user if they want to cancel the quote
+	\item User selects cancel
+	\item System cancels the quote and removes it from all auto repair shops
+\end{enumerate}
+
+\textbf{Title:} Creating an appointment\\
+\textbf{Trigger:} User navigates to a shop and creates an appointment for a service\\
+\textbf{Pre-condition:} Auto repair shop exists, service exists, selected time slot is available\\
+\textbf{Outcome:}
+\begin{enumerate}
+	\item User creates a customer bio, which includes the customer's name, phone number, email
+	\item User enters the year, make, model, VIN, License of the car
+	\item User selects a service or attaches a quote
+	\item System present user with a list of time slots for the appointment
+	\item User selects a time slot
+	\item System creates a work order based off of the appointment
+	\item Auto repair shop owner assigns an employee to the work order
+\end{enumerate}
+
+\textbf{Title:} Viewing appointments\\
+\textbf{Trigger:} Auto repair shop owner or employee navigates to list of appointments\\
+\textbf{Pre-condition:} Auto repair shop exists, employee account exists, services exist\\
+\textbf{Outcome:}
+\begin{enumerate}
+	\item User enters filters for the list of appointments, such as service type, customer name, employee
+	      assigned, or appointment time
+	\item System displays a list of appointments for the shop
+\end{enumerate}
+
+\textbf{Title:} Editing/updating appointments\\
+\textbf{Trigger:} User navigates to existing appointment and selects edit\\
+\textbf{Pre-condition:} Auto repair shop exists, service exists, appointment exists, selected time slot is available\\
+\textbf{Outcome:}
+\begin{enumerate}
+	\item User changes fields related to the existing appointment, such as time slot or service type
+	\item System updates the appointment with new information
+	\item System notifies the auto shop owner and employee assigned to appointment about the changes
+\end{enumerate}
+
+\textbf{Title:} Deleting an appointment\\
+\textbf{Trigger:} User navigates to an existing appointment and selects delete\\
+\textbf{Pre-condition:} Auto repair shop exists, appointment exists
+\textbf{Outcome:}
+\begin{enumerate}
+	\item System prompts user if they want to delete the appointment
+	\item User selects delete
+	\item System deletes appointment, and updates the availabilities to match
+	\item System deletes related work order
+	\item System notifies auto shop owner and employee about the deletion of an appointment
+\end{enumerate}
+
+\textbf{Title:} Viewing a work order\\
+\textbf{Trigger:} User navigates to work orders\\
+\textbf{Pre-condition:} Work order exists\\
+\textbf{Outcome:}
+\begin{enumerate}
+	\item System displays shop details
+	\item System displays services to do, the rate and time required and the total amount for the service
+	\item System displays a list of parts needed
+	\item System displays the odometer reading for before and after the service
+	\item System displays the customer information, car information and employee assigned
+	\item System displays any discounts applied and sums up all the costs to provide a grand total
+	\item System displays a notes section for any additional notes from the shop
 \end{enumerate}
 
 \subsection{Functional Requirements}
