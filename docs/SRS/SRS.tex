@@ -143,7 +143,7 @@
 
 ~\newpage
 
-\begin{table}[hp]
+\begin{table}[H]
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
@@ -178,6 +178,7 @@
 		October 5, 2022    & Leon So               & Add personas                                                                       \\
 		October 5, 2022    & Timothy Choy          & Add functional requirements for shop lookup                                        \\
 		October 5, 2022    & Timothy Choy          & Add individual product use cases                                                   \\
+		October 5, 2022    & Timothy Choy          & Add formal specifications                                                          \\
 		October 5, 2022    & Leon So               & Add relevant facts and assumptions                                                 \\
 		October 5, 2022    & Arkin Modi            & Add reflection                                                                     \\
 		October 5, 2022    & Leon So               & Add reflection                                                                     \\
@@ -193,7 +194,8 @@
 
 This document describes the requirements for Sayyara. The template for the Software Requirements
 Specification (SRS) is a subset of the Volere template~\citep{RobertsonAndRobertson2012}. This
-template has been modified to include personas to represent different user types.
+template has been modified to include personas to represent different user types. It has also been
+modified to add formal specifications.
 
 \section{Project Drivers}
 
@@ -1578,6 +1580,20 @@ external systems and services.
 		            \end{enumerate}
 	      \end{enumerate}
 \end{enumerate}
+
+\subsection{Formal Specifications}
+In regards to identifying roles of users:
+
+$(\exists a, b \in \text{users} \wedge a.\text{role},
+	b.\text{role} \in \text{employee} | a \neq b \bullet a.\text{view}(b.\text{profile}) \Rightarrow
+	false)$\\
+Employees cannot view one another's profiles
+
+$(\exists a \in \text{users} \wedge a.\text{role}, b.\text{role} \in \text{employee} | a \neq b \bullet a.\text{edit}(b) \Rightarrow false)$\\
+Employees cannot modify or edit another user
+
+$(\exists a \in \text{users} \wedge a.\text{role} \in \text{owner} | \forall x \in \text{users} | x.\text{shop} = a.\text{shop} \bullet a.\text{edit}(x) \wedge a.\text{view}(x.\text{profile}) \Rightarrow true)$\\
+Owners can view and modify all other employees that work under them
 
 \section{Non-functional Requirements}
 
