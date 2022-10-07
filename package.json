@@ -8,9 +8,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "test": "jest --verbose test",
-    "prettify": "prettier --write '**/*.{ts,tsx,json,js,mjs}'",
+    "lint": "npm run lint-latex && npm run lint-prettier && npm run lint-eslint",
+    "test": "jest",
+    "lint-eslint": "next lint",
+    "lint-prettier": "prettier --write '**/*.{ts,tsx,json,js,mjs}'",
     "lint-latex": "latexindent -silent -local -modifylinebreaks -overwrite docs/**/*.tex"
   },
   "dependencies": {
