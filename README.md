@@ -3,7 +3,10 @@
   <br />
   <h1>Sayyara</h1>
   <p>Progressive Web Application for Independent Automotive Repair Shop Industry</p>
+  <a href="https://github.com/arkinmodi/project-sayyara/actions/workflows/build-docs.yml"><img src="https://github.com/arkinmodi/project-sayyara/actions/workflows/build-docs.yml/badge.svg" alt="Build Docs"></a>
+  <a href="https://github.com/arkinmodi/project-sayyara/actions/workflows/run-tests.yml"><img src="https://github.com/arkinmodi/project-sayyara/actions/workflows/run-tests.yml/badge.svg" alt="Application Tests"></a>
 </div>
+<br/>
 
 Developer Names: Arkin Modi, Joy Xiao, Leon So, Timothy Choy
 
