@@ -53,6 +53,9 @@ export const authOptions: NextAuthOptions = {
   theme: {
     logo: "/icons/icon-512x512.png",
   },
+  pages: {
+    signIn: "/auth/login",
+  },
 };
 
 export default NextAuth(authOptions);
