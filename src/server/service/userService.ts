@@ -30,6 +30,7 @@ export const register = async (user: RegisterInputType) => {
 };
 
 export const getUser = async (email: string) => {
+  if (!email) return null;
   return await prisma.user.findUnique({
     where: {
       email,
