@@ -17,7 +17,8 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
-      "@server/*": ["src/server/*"]
+      "@server/*": ["src/server/*"],
+      "@pages/*": ["src/pages/*"]
     },
     "typeRoots": ["./node_modules/@types", "./src/types"]
   },

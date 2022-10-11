@@ -1,6 +1,8 @@
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
+
+import { getServerAuthSession } from "@server/common/getServerAuthSession";
 
 const Register: NextPage = () => {
   const router = useRouter();
@@ -40,6 +42,24 @@ const Register: NextPage = () => {
       </Link>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const callBackUrl = context.query.callbackUrl;
+  const session = await getServerAuthSession(context);
+
+  if (session && !Array.isArray(callBackUrl)) {
+    return {
+      redirect: {
+        destination: callBackUrl ?? "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default Register;

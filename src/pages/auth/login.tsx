@@ -3,9 +3,11 @@ import {
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
-import { getCsrfToken, getSession } from "next-auth/react";
+import { getCsrfToken } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+
+import { getServerAuthSession } from "@server/common/getServerAuthSession";
 
 const Login: NextPage = ({
   csrfToken,
@@ -39,7 +41,7 @@ const Login: NextPage = ({
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const callBackUrl = context.query.callbackUrl;
-  const session = await getSession();
+  const session = await getServerAuthSession(context);
 
   if (session && !Array.isArray(callBackUrl)) {
     return {
