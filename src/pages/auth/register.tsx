@@ -10,7 +10,7 @@ const Register: NextPage = () => {
     <div>
       <form method="post" action="/api/user/register">
         <input
-          name="callBackUrl"
+          name="callbackUrl"
           type="hidden"
           defaultValue={router.query.callbackUrl ?? "/"}
         />
@@ -45,13 +45,13 @@ const Register: NextPage = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const callBackUrl = context.query.callbackUrl;
+  const callbackUrl = context.query.callbackUrl;
   const session = await getServerAuthSession(context);
 
-  if (session && !Array.isArray(callBackUrl)) {
+  if (session && !Array.isArray(callbackUrl)) {
     return {
       redirect: {
-        destination: callBackUrl ?? "/",
+        destination: callbackUrl ?? "/",
         permanent: false,
       },
     };

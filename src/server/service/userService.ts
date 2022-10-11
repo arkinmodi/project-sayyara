@@ -7,7 +7,7 @@ export const registerSchema = z.object({
   password: z.string(),
   firstName: z.string(),
   lastName: z.string(),
-  callBackUrl: z.string().optional(),
+  callbackUrl: z.string().optional(),
 });
 type RegisterInputType = z.infer<typeof registerSchema>;
 

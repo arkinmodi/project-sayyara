@@ -15,7 +15,7 @@ const registerController = async (
       .json({ message: "User with email address already exists." });
   } else {
     await register(data);
-    res.redirect(data.callBackUrl ?? "/");
+    res.redirect(data.callbackUrl ?? "/");
   }
 };
 
