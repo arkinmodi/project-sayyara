@@ -1,6 +1,8 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+import { getUser } from "@server/service/userService";
+
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
@@ -9,25 +11,26 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Email",
       credentials: {
-        username: {
+        email: {
           label: "Email",
           type: "email",
           placeholder: "example@sayyara.com",
         },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials, _req) {
         if (!credentials) return null;
 
-        // todo: call backend to verify credentials in db
-        // console.log("running authorize()");
-        // console.log("credentials?", credentials);
+        const userData = await getUser(credentials.email);
+        if (!userData || userData.password !== credentials.password) {
+          return null;
+        }
 
         return {
-          id: 1,
-          firstName: "John",
-          lastName: "Smith",
-          email: credentials.username ?? "johnsmith@example.com",
+          id: userData.id,
+          firstName: userData.first_name,
+          lastName: userData.last_name,
+          email: userData.email,
         };
       },
     }),

@@ -1,26 +1,39 @@
 import {
   GetServerSideProps,
   InferGetServerSidePropsType,
-  NextPage
+  NextPage,
 } from "next";
 import { getCsrfToken, getSession } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Login: NextPage = ({
   csrfToken,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const router = useRouter();
   return (
-    <form method="post" action="/api/auth/callback/credentials">
-      <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-      <label>
-        Email
-        <input name="email" type="email" />
-      </label>
-      <label>
-        Password
-        <input name="password" type="password" />
-      </label>
-      <button type="submit">Sign in</button>
-    </form>
+    <div>
+      <form method="post" action="/api/auth/callback/credentials">
+        <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+        <label>
+          Email
+          <input name="email" type="email" />
+        </label>
+        <label>
+          Password
+          <input name="password" type="password" />
+        </label>
+        <button type="submit">Sign in</button>
+      </form>
+      <Link
+        href={{
+          pathname: "/auth/register",
+          query: { callbackUrl: router.query.callbackUrl },
+        }}
+      >
+        <button>Create Account</button>
+      </Link>
+    </div>
   );
 };
 
