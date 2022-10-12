@@ -38,7 +38,7 @@ jobs:
         run: npm ci
 
       - name: 🧽 Run Prettier
-        run: npx prettier --check '**/*.{ts,tsx,json,js,mjs}'
+        run: npm run lint:prettier
 
       - name: 🧽 Run ESLint
-        run: npm run lint
+        run: npm run lint:eslint
