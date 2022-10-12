@@ -18,7 +18,8 @@
     "baseUrl": ".",
     "paths": {
       "@server/*": ["src/server/*"],
-      "@pages/*": ["src/pages/*"]
+      "@pages/*": ["src/pages/*"],
+      "@test/*": ["test/*"]
     },
     "typeRoots": ["./node_modules/@types", "./src/types"]
   },

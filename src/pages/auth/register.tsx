@@ -24,11 +24,11 @@ const Register: NextPage = () => {
         </label>
         <label>
           First Name
-          <input name="firstName" type="text" />
+          <input name="first_name" type="text" />
         </label>
         <label>
           Last Name
-          <input name="lastName" type="text" />
+          <input name="last_name" type="text" />
         </label>
         <button type="submit">Register</button>
       </form>

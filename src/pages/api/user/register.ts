@@ -1,12 +1,16 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { registerSchema, register, getUser } from "@server/service/userService";
+import {
+  createUser,
+  getUser,
+  registrationSchema,
+} from "@server/service/userService";
 
 const registerController = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const data = registerSchema.parse(req.body);
+  const data = registrationSchema.parse(req.body);
 
   const existingUser = await getUser(data.email);
   if (existingUser) {
@@ -14,8 +18,8 @@ const registerController = async (
       .status(409)
       .json({ message: "User with email address already exists." });
   } else {
-    await register(data);
-    res.redirect(data.callbackUrl ?? "/");
+    await createUser(data);
+    res.redirect(req.body.callbackUrl ?? "/");
   }
 };
 

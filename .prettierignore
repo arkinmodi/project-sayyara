@@ -1,3 +1,7 @@
 # Ignore artifacts:
 build
 coverage
+.next
+**/public/workbox-*.js
+**/public/sw.js
+**/public/worker-*.js
