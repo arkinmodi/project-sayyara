@@ -9,11 +9,14 @@
     "build": "next build",
     "start": "next start",
     "postinstall": "prisma generate",
-    "db-init": "prisma migrate dev",
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push",
     "lint": "next lint",
     "test": "jest --verbose test",
     "prettify": "prettier --write '**/*.{ts,tsx,json,js,mjs}'",
-    "lint-latex": "latexindent -silent -local -modifylinebreaks -overwrite docs/**/*.tex"
+    "lint-latex": "latexindent -silent -local -modifylinebreaks -overwrite docs/**/*.tex",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.5",
