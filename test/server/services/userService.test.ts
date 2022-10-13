@@ -23,95 +23,93 @@ const testUser: User = {
   image: null,
 };
 
-describe("user service", () => {
-  describe("get user", () => {
-    describe("given user does not exist", () => {
-      it("should return null", async () => {
-        prismaMock.user.findUnique.mockResolvedValue(null);
+describe("get user", () => {
+  describe("given user does not exist", () => {
+    it("should return null", async () => {
+      prismaMock.user.findUnique.mockResolvedValue(null);
 
-        await expect(getUser("does_not_exists@test.com")).resolves.toBeNull();
-      });
+      await expect(getUser("does_not_exists@test.com")).resolves.toBeNull();
     });
+  });
 
-    describe("given user does exist", () => {
-      it("should return user", async () => {
-        prismaMock.user.findUnique.mockResolvedValue(testUser);
+  describe("given user does exist", () => {
+    it("should return user", async () => {
+      prismaMock.user.findUnique.mockResolvedValue(testUser);
 
-        await expect(getUser(testUser.email)).resolves.toEqual(testUser);
-      });
+      await expect(getUser(testUser.email)).resolves.toEqual(testUser);
     });
+  });
 
-    describe("given blank email address", () => {
-      it("should return null", async () => {
-        await expect(getUser("")).resolves.toBeNull();
+  describe("given blank email address", () => {
+    it("should return null", async () => {
+      await expect(getUser("")).resolves.toBeNull();
+    });
+  });
+});
+
+describe("create user", () => {
+  describe("given user", () => {
+    it("should create user", async () => {
+      const mockCreateUserInput: CreateUserInputType = testUser;
+
+      prismaMock.user.create.mockResolvedValue(testUser);
+
+      await expect(createUser(mockCreateUserInput)).resolves.toBe(testUser);
+    });
+  });
+
+  describe("given user already exists", () => {
+    it("should throw an exception", async () => {
+      const mockCreateUserInput: CreateUserInputType = testUser;
+
+      prismaMock.user.create.mockRejectedValue(
+        new PrismaClientKnownRequestError(
+          "Unique constraint failed on the constraint: `User_email_key`",
+          "P2002",
+          "4.4.0"
+        )
+      );
+
+      await expect(createUser(mockCreateUserInput)).rejects.toBeInstanceOf(
+        PrismaClientKnownRequestError
+      );
+    });
+  });
+});
+
+describe("user authorization", () => {
+  describe("given valid email and password", () => {
+    it("should return user data", async () => {
+      prismaMock.user.findUnique.mockResolvedValue(testUser);
+
+      await expect(
+        authorize(testUser.email, testUser.password)
+      ).resolves.toStrictEqual({
+        id: testUser.id,
+        firstName: testUser.first_name,
+        lastName: testUser.last_name,
+        email: testUser.email,
       });
     });
   });
 
-  describe("create user", () => {
-    describe("given user", () => {
-      it("should create user", async () => {
-        const mockCreateUserInput: CreateUserInputType = testUser;
+  describe("given invalid email", () => {
+    it("should reject", async () => {
+      prismaMock.user.findUnique.mockResolvedValue(null);
 
-        prismaMock.user.create.mockResolvedValue(testUser);
-
-        await expect(createUser(mockCreateUserInput)).resolves.toBe(testUser);
-      });
-    });
-
-    describe("given user already exists", () => {
-      it("should throw an exception", async () => {
-        const mockCreateUserInput: CreateUserInputType = testUser;
-
-        prismaMock.user.create.mockRejectedValue(
-          new PrismaClientKnownRequestError(
-            "Unique constraint failed on the constraint: `User_email_key`",
-            "P2002",
-            "4.4.0"
-          )
-        );
-
-        await expect(createUser(mockCreateUserInput)).rejects.toBeInstanceOf(
-          PrismaClientKnownRequestError
-        );
-      });
+      await expect(
+        authorize("does_not_exists@test.com", testUser.password)
+      ).rejects.toEqual("user not found");
     });
   });
 
-  describe("user authorization", () => {
-    describe("given valid email and password", () => {
-      it("should return user data", async () => {
-        prismaMock.user.findUnique.mockResolvedValue(testUser);
+  describe("given invalid password", () => {
+    it("should reject", async () => {
+      prismaMock.user.findUnique.mockResolvedValue(testUser);
 
-        await expect(
-          authorize(testUser.email, testUser.password)
-        ).resolves.toStrictEqual({
-          id: testUser.id,
-          firstName: testUser.first_name,
-          lastName: testUser.last_name,
-          email: testUser.email,
-        });
-      });
-    });
-
-    describe("given invalid email", () => {
-      it("should reject", async () => {
-        prismaMock.user.findUnique.mockResolvedValue(null);
-
-        await expect(
-          authorize("does_not_exists@test.com", testUser.password)
-        ).rejects.toEqual("user not found");
-      });
-    });
-
-    describe("given invalid password", () => {
-      it("should reject", async () => {
-        prismaMock.user.findUnique.mockResolvedValue(testUser);
-
-        await expect(
-          authorize(testUser.email, "wrong_password")
-        ).rejects.toEqual("unauthorized");
-      });
+      await expect(authorize(testUser.email, "wrong_password")).rejects.toEqual(
+        "unauthorized"
+      );
     });
   });
 });
