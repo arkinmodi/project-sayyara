@@ -22,6 +22,7 @@ const customJestConfig = {
   collectCoverage: true,
   clearMocks: true,
   runner: "groups",
+  coveragePathIgnorePatterns: ["<rootDir>/test/mocks/"],
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

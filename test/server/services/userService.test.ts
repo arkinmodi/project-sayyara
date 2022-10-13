@@ -84,7 +84,7 @@ describe("user authorization", () => {
 
       await expect(
         authorize(testUser.email, testUser.password)
-      ).resolves.toStrictEqual({
+      ).resolves.toEqual({
         id: testUser.id,
         firstName: testUser.first_name,
         lastName: testUser.last_name,
