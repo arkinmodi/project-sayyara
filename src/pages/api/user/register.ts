@@ -10,15 +10,19 @@ const registerController = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const data = registrationSchema.parse(req.body);
+  const result = registrationSchema.safeParse(req.body);
+  if (!result.success) {
+    res.status(400).json({ message: result.error });
+    return;
+  }
 
-  const existingUser = await getUser(data.email);
+  const existingUser = await getUser(result.data.email);
   if (existingUser) {
     res
       .status(409)
       .json({ message: "User with email address already exists." });
   } else {
-    await createUser(data);
+    await createUser(result.data);
     res.redirect(req.body.callbackUrl ?? "/");
   }
 };
