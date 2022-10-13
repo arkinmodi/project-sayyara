@@ -11,7 +11,7 @@ import {
   createUser,
   CreateUserInputType,
   getUser,
-} from "@server/service/userService";
+} from "@server/services/userService";
 import { prismaMock } from "@test/mocks/prismaMock";
 
 const testUser: User = {

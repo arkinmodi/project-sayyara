@@ -4,7 +4,7 @@ import {
   createUser,
   getUser,
   registrationSchema,
-} from "@server/service/userService";
+} from "@server/services/userService";
 
 const registerController = async (
   req: NextApiRequest,

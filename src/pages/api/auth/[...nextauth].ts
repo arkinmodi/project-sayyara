@@ -1,7 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-import { authorize } from "@server/service/userService";
+import { authorize } from "@server/services/userService";
 
 export const authOptions: NextAuthOptions = {
   session: {
