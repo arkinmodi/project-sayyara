@@ -21,6 +21,7 @@ const customJestConfig = {
   verbose: true,
   collectCoverage: true,
   clearMocks: true,
+  runner: "groups",
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

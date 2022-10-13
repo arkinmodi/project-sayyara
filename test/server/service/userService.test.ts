@@ -1,3 +1,8 @@
+/**
+ * User Service Unit Tests
+ * 
+ * @group unit
+ */
 import { User } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 
