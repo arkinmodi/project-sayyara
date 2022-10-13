@@ -33,3 +33,17 @@ export const getUser = async (email: string) => {
     },
   });
 };
+
+export const authorize = async (email: string, password: string) => {
+  const userData = await getUser(email);
+
+  if (!userData) return Promise.reject("user not found");
+  if (userData.password !== password) return Promise.reject("unauthorized");
+
+  return {
+    id: userData.id,
+    firstName: userData.first_name,
+    lastName: userData.last_name,
+    email: userData.email,
+  };
+};

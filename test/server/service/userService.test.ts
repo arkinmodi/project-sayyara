@@ -1,15 +1,16 @@
 /**
  * User Service Unit Tests
- * 
+ *
  * @group unit
  */
 import { User } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 
 import {
+  authorize,
   createUser,
-  getUser,
   CreateUserInputType,
+  getUser,
 } from "@server/service/userService";
 import { prismaMock } from "@test/mocks/prismaMock";
 
@@ -73,6 +74,43 @@ describe("user service", () => {
         await expect(createUser(mockCreateUserInput)).rejects.toBeInstanceOf(
           PrismaClientKnownRequestError
         );
+      });
+    });
+  });
+
+  describe("user authorization", () => {
+    describe("given valid email and password", () => {
+      it("should return user data", async () => {
+        prismaMock.user.findUnique.mockResolvedValue(testUser);
+
+        await expect(
+          authorize(testUser.email, testUser.password)
+        ).resolves.toStrictEqual({
+          id: testUser.id,
+          firstName: testUser.first_name,
+          lastName: testUser.last_name,
+          email: testUser.email,
+        });
+      });
+    });
+
+    describe("given invalid email", () => {
+      it("should reject", async () => {
+        prismaMock.user.findUnique.mockResolvedValue(null);
+
+        await expect(
+          authorize("does_not_exists@test.com", testUser.password)
+        ).rejects.toEqual("user not found");
+      });
+    });
+
+    describe("given invalid password", () => {
+      it("should reject", async () => {
+        prismaMock.user.findUnique.mockResolvedValue(testUser);
+
+        await expect(
+          authorize(testUser.email, "wrong_password")
+        ).rejects.toEqual("unauthorized");
       });
     });
   });

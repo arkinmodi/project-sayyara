@@ -1,7 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-import { getUser } from "@server/service/userService";
+import { authorize } from "@server/service/userService";
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -20,18 +20,9 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, _req) {
         if (!credentials) return null;
-
-        const userData = await getUser(credentials.email);
-        if (!userData || userData.password !== credentials.password) {
-          return null;
-        }
-
-        return {
-          id: userData.id,
-          firstName: userData.first_name,
-          lastName: userData.last_name,
-          email: userData.email,
-        };
+        return await authorize(credentials.email, credentials.password).catch(
+          (_reason) => null
+        );
       },
     }),
   ],
