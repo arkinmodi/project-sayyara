@@ -34,11 +34,11 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}        \\
+		\textbf{Date}    & \textbf{Developer(s)} & \textbf{Change}        \\
 		\midrule
-		October 13    & Joy Xiao              & Introduction           \\
-		Date2         & Name(s)               & Description of changes \\
-		...           & ...                   & ...                    \\
+		October 14, 2022 & Joy Xiao              & Introduction           \\
+		Date2            & Name(s)               & Description of changes \\
+		...              & ...                   & ...                    \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -57,19 +57,31 @@
 This document outlines the hazard analysis of Sayyara. The definition of hazard is any property or
 condition in the system along with conditions in the environment that may cause harm or damage.
 This definition is from Nancy Leveson's work. The hazards for Sayyara include security and usage
-hazards such as protecting personal information, database failures, and no internet connection.
+hazards such as protecting personal information, database failures, and having no internet
+connection.
 
 \section{Scope and Purpose of Hazard Analysis}
 The scope of the hazard analysis is to identify any hazards that may arise when using the
-application and coming up with mitigation steps. The purpose of the hazard analysis is to pinpoint
-areas where hazards may arise and their effects and come up with mitigation steps. Through
-completing the hazard analysis, safety and security requirements will be developed early in the
-design process to prevent hazards from occurring without plans in place to reduce the risk.
+application, their causes, coming up with steps to eliminate or mitigate the effect of the hazard.
+The purpose of the hazard analysis is to pinpoint areas where hazards may arise and their effects
+and come up with mitigation steps. Through completing the hazard analysis, safety and security
+requirements will be developed early in the design process to minimize the risk of having hazards
+occur without plans in place to reduce or mitigate the effects.
 
 \section{System Boundaries and Components}
-The system consists of: \list{enumerate}
-\item The application's front-end and back-end components
-\item The database being used
+The system consists of:
+\begin{enumerate}
+	\item The application's front-end and back-end components in the major categories:
+	      \begin{itemize}
+		      \item Authentication
+		      \item Appointments
+		      \item Quotes
+		      \item Work Orders
+		      \item Shop Profile
+		      \item Services
+		      \item Shop Employees
+	      \end{itemize}
+	\item The database being used which will store all of application's data
 \end{enumerate}
 
 \section{Critical Assumptions}
