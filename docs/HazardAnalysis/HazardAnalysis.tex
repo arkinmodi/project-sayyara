@@ -3,6 +3,9 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{pdflscape}
+\usepackage{float}
+\usepackage{adjustbox}
 
 \hypersetup{
     colorlinks=true,       % false: boxed links; true: colored links
@@ -16,7 +19,7 @@
 
 \author{\authname}
 
-\date{}
+\date{\today}
 
 \input{../Comments}
 \input{../Common}
@@ -34,11 +37,10 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}    & \textbf{Developer(s)} & \textbf{Change}        \\
+		\textbf{Date}    & \textbf{Developer(s)} & \textbf{Change}                               \\
 		\midrule
-		October 14, 2022 & Joy Xiao              & Introduction           \\
-		Date2            & Name(s)               & Description of changes \\
-		...              & ...                   & ...                    \\
+		October 13, 2022 & Arkin Modi            & Create Failure Mode and Effect Analysis table \\
+		October 14, 2022 & Joy Xiao              & Introduction                                  \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -93,9 +95,21 @@ The system consists of:
 
 There are no critical assumptions made.
 
-\section{Failure Mode and Effect Analysis}
-
-\wss{Include your FMEA table here}
+\newpage
+\begin{landscape}
+	\section{Failure Mode and Effect Analysis}
+	\begin{table}[H]
+		\centering
+		\caption{Failure Mode and Effect Analysis Table}
+		\begin{adjustbox}{width=\paperwidth}
+			\begin{tabular}{c|c|c|c|c|c|c}
+				\hline
+				\textbf{Component} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref.} \\
+				\hline
+			\end{tabular}
+		\end{adjustbox}
+	\end{table}
+\end{landscape}
 
 \section{Safety and Security Requirements}
 
