@@ -8,6 +8,7 @@
 \usepackage{adjustbox}
 \usepackage{multirow}
 \usepackage{enumitem}
+\usepackage{longtable}
 
 \hypersetup{
 	colorlinks=true,		% false: boxed links; true: colored links
@@ -75,110 +76,105 @@
 \newpage
 \begin{landscape}
 	\section{Failure Mode and Effect Analysis}
-	\begin{table}[H]
-		\centering
-		\caption{Failure Mode and Effect Analysis Table}
-		\begin{adjustbox}{width=\paperwidth}
-			\begin{tabular}{|p{0.15\textwidth}|p{0.15\textwidth}|p{0.25\textwidth}|p{0.25\textwidth}|p{0.25\textwidth}|p{0.1\textwidth}|p{0.05\textwidth}|}
-				\hline
-				\multicolumn{1}{|c|}{\textbf{Component}}
-				 & \multicolumn{1}{|c|}{\textbf{Failure Modes}}
-				 & \multicolumn{1}{|c|}{\textbf{Effects of Failure}}
-				 & \multicolumn{1}{|c|}{\textbf{Causes of Failure}}
-				 & \multicolumn{1}{|c|}{\textbf{Recommended Action}}
-				 & \multicolumn{1}{|c|}{\textbf{SR}}
-				 & \multicolumn{1}{|c|}{\textbf{Ref.}}                                                                         \\
-				\hline
-				\multirow{2}{*}{Work Orders}
-				 & Work Order is missing
-				 & Customer and Employees will not know any of the work that has been done for a specific job
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item Database failure
-				   \end{enumerate}
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item Regular and automatic database backups/snapshots and allow shop owners to request rollbacks
-				   \end{enumerate}
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item
-				   \end{enumerate}
-				 & H5-1                                                                                                        \\
-				\cline{2-7}
-				~
-				 & Work Order is missing detailed information
-				 & Customer and Employees will not know all of the work that has been done for a specific job
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item Database failure
-				   \end{enumerate}
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item Refer to H5-1a
-				   \end{enumerate}
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item
-				   \end{enumerate}
-				 & H5-2                                                                                                        \\
-				\hline
-				Shop Profile
-				 & Unable to find shop details
-				 & Customers will not be able to see the information about a specific shop (e.g., address, phone number, etc.)
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item Database failure
-				   \end{enumerate}
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item Refer to H5-1a
-				   \end{enumerate}
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item
-				   \end{enumerate}
-				 & H6-1                                                                                                        \\
-				\hline
-				\multirow{2}{*}{Services}
-				 & Unable to find a service
-				 & Customers and Employees will not be able to see what services are offered by the shop
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item Database failure
-				   \end{enumerate}
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item Refer to H5-1a
-				   \end{enumerate}
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item
-				   \end{enumerate}
-				 & H7-1                                                                                                        \\
-				\cline{2-7}
-				~
-				 & Unable to find a service's details
-				 & Customers and Employees will not be able to see the service's details (e.g., price, estimated time, etc.)
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item Database failure
-				   \end{enumerate}
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item Refer to H5-1a
-				   \end{enumerate}
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item
-				   \end{enumerate}
-				 & H7-1                                                                                                        \\
-				\hline
-				Shop Employees
-				 & A former employee joins the shop account
-				 & The former employee can view sensitive information and perform unauthorized actions
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item A former employee accepts their invite link to join the shop as an employee after their employment
-					         has been terminated
-				   \end{enumerate}
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item Invite links should expire after a set period of time
-					   \item Invite links should only be able to be accepts once
-					   \item Shop owners should be able to revoke access to any employee
-				   \end{enumerate}
-				 & \begin{enumerate}[label=\alph*., leftmargin=*]
-					   \item
-				   \end{enumerate}
-				 & H8-1                                                                                                        \\
-				\hline
-			\end{tabular}
-		\end{adjustbox}
-	\end{table}
+	\begin{longtable}{|p{0.15\textwidth}|p{0.15\textwidth}|p{0.25\textwidth}|p{0.25\textwidth}|p{0.35\textwidth}|p{0.1\textwidth}|p{0.05\textwidth}|}
+		\caption{Failure Mode and Effect Analysis Table}                                                               \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{Component}}
+		 & \multicolumn{1}{|c|}{\textbf{Failure Modes}}
+		 & \multicolumn{1}{|c|}{\textbf{Effects of Failure}}
+		 & \multicolumn{1}{|c|}{\textbf{Causes of Failure}}
+		 & \multicolumn{1}{|c|}{\textbf{Recommended Action}}
+		 & \multicolumn{1}{|c|}{\textbf{SR}}
+		 & \multicolumn{1}{|c|}{\textbf{Ref.}}                                                                         \\
+		\hline
+		\multirow{2}{*}{Work Orders}
+		 & Work Order is missing
+		 & Customer and Employees will not know any of the work that has been done for a specific job
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Regular and automatic database backups/snapshots and allow shop owners to request rollbacks
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H5-1                                                                                                        \\
+		\cline{2-7}
+		~
+		 & Work Order is missing detailed information
+		 & Customer and Employees will not know all of the work that has been done for a specific job
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Refer to H5-1a
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H5-2                                                                                                        \\
+		\hline
+		Shop Profile
+		 & Unable to find shop details
+		 & Customers will not be able to see the information about a specific shop (e.g., address, phone number, etc.)
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Refer to H5-1a
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H6-1                                                                                                        \\
+		\hline
+		\multirow{2}{*}{Services}
+		 & Unable to find a service
+		 & Customers and Employees will not be able to see what services are offered by the shop
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Refer to H5-1a
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H7-1                                                                                                        \\
+		\cline{2-7}
+		~
+		 & Unable to find a service's details
+		 & Customers and Employees will not be able to see the service's details (e.g., price, estimated time, etc.)
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Refer to H5-1a
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H7-1                                                                                                        \\
+		\hline
+		Shop Employees
+		 & A former employee joins the shop account
+		 & The former employee can view sensitive information and perform unauthorized actions
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item A former employee accepts their invite link to join the shop as an employee after their employment
+			         has been terminated
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Invite links should expire after a set period of time
+			   \item Invite links should only be able to be accepts once
+			   \item Shop owners should be able to revoke access to any employee
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H8-1                                                                                                        \\
+		\hline
+	\end{longtable}
 \end{landscape}
 
 \section{Safety and Security Requirements}
