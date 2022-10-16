@@ -6,6 +6,7 @@
 \usepackage{pdflscape}
 \usepackage{float}
 \usepackage{adjustbox}
+\usepackage{multirow}
 
 \hypersetup{
     colorlinks=true,       % false: boxed links; true: colored links
@@ -41,6 +42,7 @@
 		\midrule
 		October 13, 2022 & Arkin Modi            & Create Failure Mode and Effect Analysis table \\
 		October 14, 2022 & Joy Xiao              & Introduction                                  \\
+		October 15, 2022 & Leon So               & Update Failure Mode and Effect Analysis table \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -99,9 +101,19 @@ The system consists of:
 		\centering
 		\caption{Failure Mode and Effect Analysis Table}
 		\begin{adjustbox}{width=\paperwidth}
-			\begin{tabular}{c|c|c|c|c|c|c}
+			\begin{tabular}{|l|l|l|l|l|l|l|}
 				\hline
-				\textbf{Component} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref.} \\
+				\textbf{Component}              & \textbf{Failure Modes}                                   & \textbf{Effects of Failure}                                                     & \textbf{Causes of Failure}                                                                   & \textbf{Recommended Action}                                                             & \textbf{SR} & \textbf{Ref.} \\
+				\hline
+				General                         & Loss or theft of Personal Identifiable Information (PII) & Legal consequences, loss of user trust                                          & Malicious internal or external actors                                                        & Encryption of PII data at rest and in transit                                           & ~           & ~             \\
+				\hline
+				\multirow{2}{*}{Authentication} & User cannot login                                        & User is unable to access their account and application features requiring login & User inputted login credentials do not match the credentials in the database                 & Allow user to reset password                                                            & ~           & ~             \\
+				\cline{2-7}
+				                                & User account is hacked                                   & Unauthorized actions may be performed from the hacked account                   & Malicious internal or external actors                                                        & Allow user to reset password, system administrators to undo/revert unauthorized changes & ~           & ~             \\
+				\hline
+				Appointments                    & Multiple appointments are scheduled for the same time    & Conflict in scheduling and availability                                         & Two or more users attempt to schedule an appointment for the same time slot at the same time & The shop owner or employee will accept one of the appointments                          & ~           & ~             \\
+				\hline
+				Quotes                          & Chat is disconnected                                     & Loss of chat history, disconnection from live chat                              & Loss of internet, inactive or stale connection, web socket failure                           & Notify user of chat disconnection, cache latest messages, disable send button           & ~           & ~             \\
 				\hline
 			\end{tabular}
 		\end{adjustbox}
