@@ -6,13 +6,14 @@
 \usepackage{pdflscape}
 \usepackage{float}
 \usepackage{adjustbox}
+\usepackage{multirow}
 
 \hypersetup{
-    colorlinks=true,       % false: boxed links; true: colored links
-    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
-    citecolor=green,        % color of links to bibliography
-    filecolor=magenta,      % color of file links
-    urlcolor=cyan           % color of external links
+	colorlinks=true,		% false: boxed links; true: colored links
+	linkcolor=red,			% color of internal links (change box color with linkbordercolor)
+	citecolor=green,		% color of links to bibliography
+	filecolor=magenta,	% color of file links
+	urlcolor=cyan				% color of external links
 }
 
 \title{Hazard Analysis\\\progname}
@@ -76,9 +77,25 @@
 		\centering
 		\caption{Failure Mode and Effect Analysis Table}
 		\begin{adjustbox}{width=\paperwidth}
-			\begin{tabular}{c|c|c|c|c|c|c}
+			\begin{tabular}{|l|l|l|l|l|l|l|}
 				\hline
-				\textbf{Component} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref.} \\
+				\textbf{Component}              & \textbf{Failure Modes}                            & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref.} \\
+				\hline
+				\multirow{2}{*}{Authentication} & ~                                                 & ~                           & ~                          & ~                           & ~           & ~             \\
+				\cline{2-7}
+				                                & ~                                                 & ~                           & ~                          & ~                           & ~           & ~             \\
+				\hline
+				Appointments                    & Two Appointments are scheduled for the same time. & ~                           & ~                          & ~                           & ~           & ~             \\
+				\hline
+				Quotes                          & Chat is disconnected.                             & ~                           & ~                          & ~                           & ~           & ~             \\
+				\hline
+				Work Orders                     & ~                                                 & ~                           & ~                          & ~                           & ~           & ~             \\
+				\hline
+				Shop Profile                    & ~                                                 & ~                           & ~                          & ~                           & ~           & ~             \\
+				\hline
+				Services                        & ~                                                 & ~                           & ~                          & ~                           & ~           & ~             \\
+				\hline
+				Shop Employees                  & A former employee joins the shop account.         & ~                           & ~                          & ~                           & ~           & ~             \\
 				\hline
 			\end{tabular}
 		\end{adjustbox}
@@ -94,5 +111,8 @@
 
 \wss{Which safety requirements will be implemented as part of the capstone timeline?
 	Which requirements will be implemented in the future?}
+
+\wss{The Roadmap is where you can explain which safety requirements will be implemented during the
+	course, and which will be ``postponed'' until after the course.}
 
 \end{document}
