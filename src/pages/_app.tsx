@@ -1,17 +1,23 @@
 import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import type { AppType } from "next/app";
-
+import type { AppProps } from "next/app";
+import { FC } from "react";
+import { Provider } from "react-redux";
+import { wrapper } from "../redux/store";
 import "../styles/globals.css";
 
-const MyApp: AppType<{ session: Session | null }> = ({
-  Component,
-  pageProps: { session, ...pageProps },
-}) => {
+const MyApp: FC<
+  AppProps<{
+    session: Session | null;
+  }>
+> = ({ Component, ...rest }) => {
+  const { store, props } = wrapper.useWrappedStore(rest);
   return (
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>
+    <Provider store={store}>
+      <SessionProvider session={rest.pageProps.session}>
+        <Component {...props.pageProps} />
+      </SessionProvider>
+    </Provider>
   );
 };
 
