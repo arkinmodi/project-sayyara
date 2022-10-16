@@ -11,7 +11,7 @@ export interface SagaStore extends Store {
   sagaTask?: Task;
 }
 
-export const makeStore = (context: Context) => {
+export const makeStore = (_context: Context) => {
   const sagaMiddleware = createSagaMiddleware();
 
   const store = configureStore({
