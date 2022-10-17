@@ -12,6 +12,7 @@ const registrationHandler = async (
 ) => {
   if (req.method !== "POST") {
     res.status(405).json({ message: "Method not allowed." });
+    return;
   }
 
   const result = registrationSchema.safeParse(req.body);
