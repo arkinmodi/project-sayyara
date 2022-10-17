@@ -7,6 +7,8 @@
 \usepackage{float}
 \usepackage{adjustbox}
 \usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{longtable}
 
 \hypersetup{
     colorlinks=true,       % false: boxed links; true: colored links
@@ -97,27 +99,92 @@ The system consists of:
 \newpage
 \begin{landscape}
 	\section{Failure Mode and Effect Analysis}
-	\begin{table}[H]
-		\centering
-		\caption{Failure Mode and Effect Analysis Table}
-		\begin{adjustbox}{width=\paperwidth}
-			\begin{tabular}{|l|l|l|l|l|l|l|}
-				\hline
-				\textbf{Component}              & \textbf{Failure Modes}                                   & \textbf{Effects of Failure}                                                     & \textbf{Causes of Failure}                                                                   & \textbf{Recommended Action}                                                             & \textbf{SR} & \textbf{Ref.} \\
-				\hline
-				General                         & Loss or theft of Personal Identifiable Information (PII) & Legal consequences, loss of user trust                                          & Malicious internal or external actors                                                        & Encryption of PII data at rest and in transit                                           & ~           & ~             \\
-				\hline
-				\multirow{2}{*}{Authentication} & User cannot login                                        & User is unable to access their account and application features requiring login & User inputted login credentials do not match the credentials in the database                 & Allow user to reset password                                                            & ~           & ~             \\
-				\cline{2-7}
-				                                & User account is hacked                                   & Unauthorized actions may be performed from the hacked account                   & Malicious internal or external actors                                                        & Allow user to reset password, system administrators to undo/revert unauthorized changes & ~           & ~             \\
-				\hline
-				Appointments                    & Multiple appointments are scheduled for the same time    & Conflict in scheduling and availability                                         & Two or more users attempt to schedule an appointment for the same time slot at the same time & The shop owner or employee will accept one of the appointments                          & ~           & ~             \\
-				\hline
-				Quotes                          & Chat is disconnected                                     & Loss of chat history, disconnection from live chat                              & Loss of internet, inactive or stale connection, web socket failure                           & Notify user of chat disconnection, cache latest messages, disable send button           & ~           & ~             \\
-				\hline
-			\end{tabular}
-		\end{adjustbox}
-	\end{table}
+	\begin{longtable}{|p{0.15\textwidth}|p{0.15\textwidth}|p{0.25\textwidth}|p{0.25\textwidth}|p{0.35\textwidth}|p{0.1\textwidth}|p{0.05\textwidth}|}
+		\caption{Failure Mode and Effect Analysis Table}                                                     \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{Component}}
+		 & \multicolumn{1}{|c|}{\textbf{Failure Modes}}
+		 & \multicolumn{1}{|c|}{\textbf{Effects of Failure}}
+		 & \multicolumn{1}{|c|}{\textbf{Causes of Failure}}
+		 & \multicolumn{1}{|c|}{\textbf{Recommended Action}}
+		 & \multicolumn{1}{|c|}{\textbf{SR}}
+		 & \multicolumn{1}{|c|}{\textbf{Ref.}}                                                               \\
+		\hline
+		General
+		 & Loss or theft of Personal Identifiable Information (PII)
+		 & Legal consequences
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Malicious internal or external actors gains access to the system
+			   \item SQL inject attack
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Encryption of PII data at rest and in transit
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H1-1                                                                                              \\
+		\hline
+		\multirow{2}{*}{Authentication}
+		 & User cannot login
+		 & User is unable to access their account and application features requiring login
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item User inputted login credentials do not match the credentials in the database
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Allow user to reset password
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H2-1                                                                                              \\
+		\cline{2-7}
+		 & User account is hacked
+		 & Unauthorized actions may be performed from the hacked account
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Malicious internal or external actors gains access to the user account
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Allow user to reset password
+			   \item System administrators to undo/revert unauthorized changes
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H2-2                                                                                              \\
+		\hline
+		Appointments
+		 & Multiple appointments are scheduled for the same time
+		 & Conflict in scheduling and availability
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Two or more users attempt to schedule an appointment for the same time slot at the same time
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item The shop owner or employee will accept one of the appointments
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H3-1                                                                                              \\
+		\hline
+		Quotes
+		 & Chat is disconnected
+		 & Loss of chat history, new messages sent may not be received
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Loss of internet
+			   \item Inactive or stale connection
+			   \item Web socket failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Notify user of chat disconnection
+			   \item Cache latest messages, disable send button
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H4-1                                                                                              \\
+		\hline
+	\end{longtable}
 \end{landscape}
 
 \section{Safety and Security Requirements}
