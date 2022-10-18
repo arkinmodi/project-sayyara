@@ -301,12 +301,12 @@ The system consists of:
 \begin{enumerate}[label=SR\arabic*.]
 	\item The system shall protect personally identifiable information (PII) by encrypting information both
 	      at rest and in transit
-	\item[] \emph{Rationale:} There are legal consequences associated with losing people's PPI
+	\item[] \emph{Rationale:} There are legal consequences associated with losing people's PPI.
 	\item[] \emph{Associated Hazards:} H1-1 \\
 	\item The system shall allow the user to reset their password
 	\item[] \emph{Rationale:} If a user forgets their password, they will be unable to access information
 		regarding their work. Furthermore, losing access to their account due to a malicious actor would
-		allow unauthorized people to access components that require a level of authorization.
+		allow unauthorized people access to components that require a level of authorization.
 	\item[] \emph{Associated Hazards:} H2-1, H2-2 \\
 	\item In the case of multiple appointments scheduled in the same time frame, the system shall allow the
 	      shop owner or employee to accept one of the appointments
@@ -314,6 +314,33 @@ The system consists of:
 		can occur if multiple users fill in a time slot at the same time. Allowing the shop owner or employees
 		to accept would remove the hazard of conflicting schedules.
 	\item[] \emph{Associated Hazards:} H3-1 \\
+	\item The system shall notify the user if there is no network connection, and prevent the user from using
+	      functions that require a connection when they have no connection
+	\item[] \emph{Rationale:} A web socket connection cannot be made if there is no network connection.
+		Letting the user know that they have no connection and disabling methods for them to use connections
+		would prevent any hazards.
+	\item[] \emph{Associated Hazards:} H4-1, H7-1, H7-2 \\
+	\item The system shall cache recent chat messages
+	\item[] \emph{Rationale:} Caching recent chat messages allows the user to keep reading their conversations,
+		even without access to a network.
+	\item[] \emph{Associated Hazards:} H4-1 \\
+	\item The system shall take periodic backups and snapshots of the database and allow shop owners to
+	      request rollbacks
+	\item[] \emph{Rationale:} It would be catastrophic to lose critical data in the case of a database failure.
+		Having backups and snapshots would alleviate this hazard.
+	\item[] \emph{Associated Hazards:} H5-1, H5-2, H6-1, H7-1, H7-2, H8-2 \\
+	\item The system shall disable invite links to employees after they have been used, after a set period of
+	      time, or if the shop owner revokes access
+	\item[] \emph{Rationale:} Having an invite link stay after its intended duration would cause problems, such
+		as accidentally allowing former employees back into the shop.
+	\item[] \emph{Associated Hazards:} H8-1 \\
+	\item The system shall allow multiple invite links to a single employee, though only one invite link can
+	      be valid at any given time
+	\item[] \emph{Rationale:} There could be a situation where a database failure, or human error cause an
+		employee to be unable to accept their first invitation. Allowing multiple invite links to the same
+		employee would resolve this hazard. Allowing only one valid link at any time would prevent malicious
+		actors from using links that were not meant to be used.
+	\item[] \emph{Associated Hazards:} H8-2 \\
 \end{enumerate}
 
 % \wss{Newly discovered requirements.  These should also be added to the SRS.  (A
