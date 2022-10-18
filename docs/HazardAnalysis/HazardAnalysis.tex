@@ -6,13 +6,16 @@
 \usepackage{pdflscape}
 \usepackage{float}
 \usepackage{adjustbox}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{longtable}
 
 \hypersetup{
-    colorlinks=true,       % false: boxed links; true: colored links
-    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
-    citecolor=green,        % color of links to bibliography
-    filecolor=magenta,      % color of file links
-    urlcolor=cyan           % color of external links
+	colorlinks=true,		% false: boxed links; true: colored links
+	linkcolor=red,			% color of internal links (change box color with linkbordercolor)
+	citecolor=green,		% color of links to bibliography
+	filecolor=magenta,	% color of file links
+	urlcolor=cyan				% color of external links
 }
 
 \title{Hazard Analysis\\\progname}
@@ -37,10 +40,13 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}    & \textbf{Developer(s)} & \textbf{Change}                               \\
+		\textbf{Date}    & \textbf{Developer(s)} & \textbf{Change}                                                                \\
 		\midrule
-		October 13, 2022 & Arkin Modi            & Create Failure Mode and Effect Analysis table \\
-		October 17, 2022 & Arkin Modi            & Add Roadmap section                           \\
+		October 13, 2022 & Arkin Modi            & Create Failure Mode and Effect Analysis table                                  \\
+		October 14, 2022 & Joy Xiao              & Introduction                                                                   \\
+		October 15, 2022 & Leon So               & Update Failure Mode and Effect Analysis table                                  \\
+		October 16, 2022 & Arkin Modi            & Fill in FMEA table for Work Orders, Shop Profile, Services, and Shop Employees \\
+		October 17, 2022 & Arkin Modi            & Add Roadmap section                                                            \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -53,37 +59,241 @@
 
 \pagenumbering{arabic}
 
-\wss{You are free to modify this template.}
-
 \section{Introduction}
-
-\wss{You can include your definition of what a hazard is here.}
+This document outlines the hazard analysis of Sayyara. The definition of hazard is any property or
+condition in the system along with conditions in the environment that may cause harm or damage.
+This definition is from Nancy Leveson's work. The hazards for Sayyara include security and usage
+hazards such as protecting personal information, database failures, and having no internet
+connection.
 
 \section{Scope and Purpose of Hazard Analysis}
+The scope of the hazard analysis is to identify any hazards that may arise when using the
+application, their causes, coming up with steps to eliminate or mitigate the effect of the hazard.
+The purpose of the hazard analysis is to pinpoint areas where hazards may arise and their effects
+and come up with mitigation steps. Through completing the hazard analysis, safety and security
+requirements will be developed early in the design process to minimize the risk of having hazards
+occur without plans in place to reduce or mitigate the effects.
 
 \section{System Boundaries and Components}
+The system consists of:
+\begin{enumerate}
+	\item The application's front-end and back-end components in the major categories:
+	      \begin{itemize}
+		      \item Authentication
+		      \item Appointments
+		      \item Quotes
+		      \item Work Orders
+		      \item Shop Profile
+		      \item Services
+		      \item Shop Employees
+	      \end{itemize}
+	\item The database being used which will store all of application's data
+\end{enumerate}
 
 \section{Critical Assumptions}
-
-\wss{These assumptions that are made about the software or system.  You should
-	minimize the number of assumptions that remove potential hazards.  For instance,
-	you could assume a part will never fail, but it is generally better to include
-	this potential failure mode.}
+\begin{itemize}
+	\item Assume the users of the application are not intentionally trying to misuse it
+	\item Assume that the user will follow cybersecurity best practices
+\end{itemize}
 
 \newpage
 \begin{landscape}
 	\section{Failure Mode and Effect Analysis}
-	\begin{table}[H]
-		\centering
-		\caption{Failure Mode and Effect Analysis Table}
-		\begin{adjustbox}{width=\paperwidth}
-			\begin{tabular}{c|c|c|c|c|c|c}
-				\hline
-				\textbf{Component} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref.} \\
-				\hline
-			\end{tabular}
-		\end{adjustbox}
-	\end{table}
+	\begin{longtable}{|p{0.15\textwidth}|p{0.15\textwidth}|p{0.25\textwidth}|p{0.25\textwidth}|p{0.35\textwidth}|p{0.1\textwidth}|p{0.05\textwidth}|}
+		\caption{Failure Mode and Effect Analysis Table}                                                                \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{Component}}
+		 & \multicolumn{1}{|c|}{\textbf{Failure Modes}}
+		 & \multicolumn{1}{|c|}{\textbf{Effects of Failure}}
+		 & \multicolumn{1}{|c|}{\textbf{Causes of Failure}}
+		 & \multicolumn{1}{|c|}{\textbf{Recommended Action}}
+		 & \multicolumn{1}{|c|}{\textbf{SR}}
+		 & \multicolumn{1}{|c|}{\textbf{Ref.}}                                                                          \\
+		\hline
+		General
+		 & Loss or theft of Personal Identifiable Information (PII)
+		 & Legal consequences
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Malicious internal or external actors gains access to the system
+			   \item SQL inject attack
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Encryption of PII data at rest and in transit
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H1-1                                                                                                         \\
+		\hline
+		\multirow{2}{*}{Authentication}
+		 & User cannot login
+		 & User is unable to access their account and application features requiring login
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item User inputted login credentials do not match the credentials in the database
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Allow user to reset password
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H2-1                                                                                                         \\
+		\cline{2-7}
+		 & User account is hacked
+		 & Unauthorized actions may be performed from the hacked account
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Malicious internal or external actors gains access to the user account
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Allow user to reset password
+			   \item System administrators to undo/revert unauthorized changes
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H2-2                                                                                                         \\
+		\hline
+		Appointments
+		 & Multiple appointments are scheduled for the same time
+		 & Conflict in scheduling and availability
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Two or more users attempt to schedule an appointment for the same time slot at the same time
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item The shop owner or employee will accept one of the appointments
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H3-1                                                                                                         \\
+		\hline
+		Quotes
+		 & Chat is disconnected
+		 & Loss of chat history, new messages sent may not be received
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Loss of internet
+			   \item Inactive or stale connection
+			   \item Web socket failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Notify user of chat disconnection
+			   \item Cache latest messages, disable send button
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H4-1                                                                                                         \\
+		\hline
+		\multirow{2}{*}{Work Orders}
+		 & Work Order is missing
+		 & Customer and Employees will not know any of the work that has been done for a specific job
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Regular and automatic database backups/snapshots and allow shop owners to request rollbacks
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H5-1                                                                                                         \\
+		\cline{2-7}
+		~
+		 & Work Order is missing detailed information
+		 & Customer and Employees will not know all of the work that has been done for a specific job
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Refer to H5-1a
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H5-2                                                                                                         \\
+		\hline
+		Shop Profile
+		 & Unable to find details of a shop
+		 & Customers will not be able to see the information about a specific shop (e.g., address, phone number, etc.)
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Refer to H5-1a
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H6-1                                                                                                         \\
+		\hline
+		\multirow{2}{*}{Services}
+		 & Unable to find a service
+		 & Customers and Employees will not be able to see what services are offered by the shop
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+			   \item Client-side network failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Refer to H5-1a
+			   \item Display a message to the user informing them that they are offline
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H7-1                                                                                                         \\
+		\cline{2-7}
+		~
+		 & Unable to find details of a service
+		 & Customers and Employees will not be able to see the details of a service (e.g., price, estimated time, etc.)
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+			   \item Client-side network failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Refer to H5-1a
+			   \item Refer to H7-1b
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H7-2                                                                                                         \\
+		\hline
+		\multirow{2}{*}{Shop Employees}
+		 & A former employee joins the shop account
+		 & The former employee can view sensitive information and perform unauthorized actions
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item A former employee accepts their invite link to join the shop as an employee after their employment
+			         has been terminated
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Invite links should expire after a set period of time
+			   \item Invite links should only be able to be accepts once
+			   \item Shop owners should be able to revoke access to any employee
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H8-1                                                                                                         \\
+		\cline{2-7}
+		~
+		 & An employee of the shop cannot be found
+		 & Shop owners will not be able view employee's details; Effected employee will not be able to be
+		assigned to work orders or view their profile details
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+			   \item Client-side network failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Refer to H5-1a
+			   \item Refer to H7-1b
+			   \item Employees should be able to be reinvited to a shop
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H8-2                                                                                                         \\
+		\hline
+	\end{longtable}
 \end{landscape}
 
 \section{Safety and Security Requirements}
