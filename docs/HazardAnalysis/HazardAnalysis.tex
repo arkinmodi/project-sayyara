@@ -114,10 +114,20 @@ The system consists of:
 
 \begin{enumerate}[SR\arabic*.]
 	\item The system shall protect personally identifiable information (PII) by encrypting information both
-	      at rest and in transit.
-	\item[] \emph{Rationale:}
-	\item[] \emph{Associated Hazards:}
-	\item Test
+	      at rest and in transit
+	\item[] \emph{Rationale:} There are legal consequences associated with losing people's PPI
+	\item[] \emph{Associated Hazards:} H1-1 \\
+	\item The system shall allow the user to reset their password
+	\item[] \emph{Rationale:} If a user forgets their password, they will be unable to access information
+		regarding their work. Furthermore, losing access to their account due to a malicious actor would
+		allow unauthorized people to access components that require a level of authorization.
+	\item[] \emph{Associated Hazards:} H2-1, H2-2 \\
+	\item In the case of multiple appointments scheduled in the same time frame, the system shall allow the
+	      shop owner or employee to accept one of the appointments
+	\item[] \emph{Rationale:} As the application is run in real time with multiple users, scheduling conflicts
+		can occur if multiple users fill in a time slot at the same time. Allowing the shop owner or employees
+		to accept would remove the hazard of conflicting schedules.
+	\item[] \emph{Associated Hazards:} H3-1 \\
 \end{enumerate}
 
 \wss{Newly discovered requirements.  These should also be added to the SRS.  (A
