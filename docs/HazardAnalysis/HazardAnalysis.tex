@@ -11,11 +11,11 @@
 \usepackage{longtable}
 
 \hypersetup{
-    colorlinks=true,       % false: boxed links; true: colored links
-    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
-    citecolor=green,        % color of links to bibliography
-    filecolor=magenta,      % color of file links
-    urlcolor=cyan           % color of external links
+	colorlinks=true,		% false: boxed links; true: colored links
+	linkcolor=red,			% color of internal links (change box color with linkbordercolor)
+	citecolor=green,		% color of links to bibliography
+	filecolor=magenta,	% color of file links
+	urlcolor=cyan				% color of external links
 }
 
 \title{Hazard Analysis\\\progname}
@@ -40,11 +40,12 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}    & \textbf{Developer(s)} & \textbf{Change}                               \\
+		\textbf{Date}    & \textbf{Developer(s)} & \textbf{Change}                                                                \\
 		\midrule
-		October 13, 2022 & Arkin Modi            & Create Failure Mode and Effect Analysis table \\
-		October 14, 2022 & Joy Xiao              & Introduction                                  \\
-		October 15, 2022 & Leon So               & Update Failure Mode and Effect Analysis table \\
+		October 13, 2022 & Arkin Modi            & Create Failure Mode and Effect Analysis table                                  \\
+		October 14, 2022 & Joy Xiao              & Introduction                                                                   \\
+		October 15, 2022 & Leon So               & Update Failure Mode and Effect Analysis table                                  \\
+		October 16, 2022 & Arkin Modi            & Fill in FMEA table for Work Orders, Shop Profile, Services, and Shop Employees \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -56,8 +57,6 @@
 ~\newpage
 
 \pagenumbering{arabic}
-
-\wss{You are free to modify this template.}
 
 \section{Introduction}
 This document outlines the hazard analysis of Sayyara. The definition of hazard is any property or
@@ -100,7 +99,7 @@ The system consists of:
 \begin{landscape}
 	\section{Failure Mode and Effect Analysis}
 	\begin{longtable}{|p{0.15\textwidth}|p{0.15\textwidth}|p{0.25\textwidth}|p{0.25\textwidth}|p{0.35\textwidth}|p{0.1\textwidth}|p{0.05\textwidth}|}
-		\caption{Failure Mode and Effect Analysis Table}                                                     \\
+		\caption{Failure Mode and Effect Analysis Table}                                                                \\
 		\hline
 		\multicolumn{1}{|c|}{\textbf{Component}}
 		 & \multicolumn{1}{|c|}{\textbf{Failure Modes}}
@@ -108,7 +107,7 @@ The system consists of:
 		 & \multicolumn{1}{|c|}{\textbf{Causes of Failure}}
 		 & \multicolumn{1}{|c|}{\textbf{Recommended Action}}
 		 & \multicolumn{1}{|c|}{\textbf{SR}}
-		 & \multicolumn{1}{|c|}{\textbf{Ref.}}                                                               \\
+		 & \multicolumn{1}{|c|}{\textbf{Ref.}}                                                                          \\
 		\hline
 		General
 		 & Loss or theft of Personal Identifiable Information (PII)
@@ -123,7 +122,7 @@ The system consists of:
 		 & \begin{enumerate}[label=\alph*., leftmargin=*]
 			   \item
 		   \end{enumerate}
-		 & H1-1                                                                                              \\
+		 & H1-1                                                                                                         \\
 		\hline
 		\multirow{2}{*}{Authentication}
 		 & User cannot login
@@ -137,7 +136,7 @@ The system consists of:
 		 & \begin{enumerate}[label=\alph*., leftmargin=*]
 			   \item
 		   \end{enumerate}
-		 & H2-1                                                                                              \\
+		 & H2-1                                                                                                         \\
 		\cline{2-7}
 		 & User account is hacked
 		 & Unauthorized actions may be performed from the hacked account
@@ -151,7 +150,7 @@ The system consists of:
 		 & \begin{enumerate}[label=\alph*., leftmargin=*]
 			   \item
 		   \end{enumerate}
-		 & H2-2                                                                                              \\
+		 & H2-2                                                                                                         \\
 		\hline
 		Appointments
 		 & Multiple appointments are scheduled for the same time
@@ -165,7 +164,7 @@ The system consists of:
 		 & \begin{enumerate}[label=\alph*., leftmargin=*]
 			   \item
 		   \end{enumerate}
-		 & H3-1                                                                                              \\
+		 & H3-1                                                                                                         \\
 		\hline
 		Quotes
 		 & Chat is disconnected
@@ -182,7 +181,116 @@ The system consists of:
 		 & \begin{enumerate}[label=\alph*., leftmargin=*]
 			   \item
 		   \end{enumerate}
-		 & H4-1                                                                                              \\
+		 & H4-1                                                                                                         \\
+		\hline
+		\multirow{2}{*}{Work Orders}
+		 & Work Order is missing
+		 & Customer and Employees will not know any of the work that has been done for a specific job
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Regular and automatic database backups/snapshots and allow shop owners to request rollbacks
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H5-1                                                                                                         \\
+		\cline{2-7}
+		~
+		 & Work Order is missing detailed information
+		 & Customer and Employees will not know all of the work that has been done for a specific job
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Refer to H5-1a
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H5-2                                                                                                         \\
+		\hline
+		Shop Profile
+		 & Unable to find details of a shop
+		 & Customers will not be able to see the information about a specific shop (e.g., address, phone number, etc.)
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Refer to H5-1a
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H6-1                                                                                                         \\
+		\hline
+		\multirow{2}{*}{Services}
+		 & Unable to find a service
+		 & Customers and Employees will not be able to see what services are offered by the shop
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+			   \item Client-side network failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Refer to H5-1a
+			   \item Display a message to the user informing them that they are offline
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H7-1                                                                                                         \\
+		\cline{2-7}
+		~
+		 & Unable to find details of a service
+		 & Customers and Employees will not be able to see the details of a service (e.g., price, estimated time, etc.)
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+			   \item Client-side network failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Refer to H5-1a
+			   \item Refer to H7-1b
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H7-2                                                                                                         \\
+		\hline
+		\multirow{2}{*}{Shop Employees}
+		 & A former employee joins the shop account
+		 & The former employee can view sensitive information and perform unauthorized actions
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item A former employee accepts their invite link to join the shop as an employee after their employment
+			         has been terminated
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Invite links should expire after a set period of time
+			   \item Invite links should only be able to be accepts once
+			   \item Shop owners should be able to revoke access to any employee
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H8-1                                                                                                         \\
+		\cline{2-7}
+		~
+		 & An employee of the shop cannot be found
+		 & Shop owners will not be able view employee's details; Effected employee will not be able to be
+		assigned to work orders or view their profile details
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Database failure
+			   \item Client-side network failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Refer to H5-1a
+			   \item Refer to H7-1b
+			   \item Employees should be able to be reinvited to a shop
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H8-2                                                                                                         \\
 		\hline
 	\end{longtable}
 \end{landscape}
@@ -196,5 +304,8 @@ The system consists of:
 
 \wss{Which safety requirements will be implemented as part of the capstone timeline?
 	Which requirements will be implemented in the future?}
+
+\wss{The Roadmap is where you can explain which safety requirements will be implemented during the
+	course, and which will be ``postponed'' until after the course.}
 
 \end{document}
