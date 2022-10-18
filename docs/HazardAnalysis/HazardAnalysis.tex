@@ -44,6 +44,7 @@
 		\midrule
 		October 13, 2022 & Arkin Modi            & Create Failure Mode and Effect Analysis table                                  \\
 		October 14, 2022 & Joy Xiao              & Introduction                                                                   \\
+		October 15, 2022 & Leon So               & Update Failure Mode and Effect Analysis table                                  \\
 		October 16, 2022 & Arkin Modi            & Fill in FMEA table for Work Orders, Shop Profile, Services, and Shop Employees \\
 		\bottomrule
 	\end{tabularx}
@@ -107,6 +108,80 @@ The system consists of:
 		 & \multicolumn{1}{|c|}{\textbf{Recommended Action}}
 		 & \multicolumn{1}{|c|}{\textbf{SR}}
 		 & \multicolumn{1}{|c|}{\textbf{Ref.}}                                                                          \\
+		\hline
+		General
+		 & Loss or theft of Personal Identifiable Information (PII)
+		 & Legal consequences
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Malicious internal or external actors gains access to the system
+			   \item SQL inject attack
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Encryption of PII data at rest and in transit
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H1-1                                                                                                         \\
+		\hline
+		\multirow{2}{*}{Authentication}
+		 & User cannot login
+		 & User is unable to access their account and application features requiring login
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item User inputted login credentials do not match the credentials in the database
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Allow user to reset password
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H2-1                                                                                                         \\
+		\cline{2-7}
+		 & User account is hacked
+		 & Unauthorized actions may be performed from the hacked account
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Malicious internal or external actors gains access to the user account
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Allow user to reset password
+			   \item System administrators to undo/revert unauthorized changes
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H2-2                                                                                                         \\
+		\hline
+		Appointments
+		 & Multiple appointments are scheduled for the same time
+		 & Conflict in scheduling and availability
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Two or more users attempt to schedule an appointment for the same time slot at the same time
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item The shop owner or employee will accept one of the appointments
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H3-1                                                                                                         \\
+		\hline
+		Quotes
+		 & Chat is disconnected
+		 & Loss of chat history, new messages sent may not be received
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Loss of internet
+			   \item Inactive or stale connection
+			   \item Web socket failure
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item Notify user of chat disconnection
+			   \item Cache latest messages, disable send button
+		   \end{enumerate}
+		 & \begin{enumerate}[label=\alph*., leftmargin=*]
+			   \item
+		   \end{enumerate}
+		 & H4-1                                                                                                         \\
 		\hline
 		\multirow{2}{*}{Work Orders}
 		 & Work Order is missing
