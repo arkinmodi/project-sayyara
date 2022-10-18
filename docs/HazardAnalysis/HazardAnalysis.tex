@@ -8,7 +8,6 @@
 \usepackage{adjustbox}
 \usepackage{multirow}
 \usepackage{enumitem}
-\usepackage[shortlabels]{enumitem}
 \usepackage{longtable}
 
 \hypersetup{
@@ -191,7 +190,7 @@ The system consists of:
 
 \section{Safety and Security Requirements}
 
-\begin{enumerate}[SR\arabic*.]
+\begin{enumerate}[label=SR\arabic*.]
 	\item The system shall protect personally identifiable information (PII) by encrypting information both
 	      at rest and in transit
 	\item[] \emph{Rationale:} There are legal consequences associated with losing people's PPI
