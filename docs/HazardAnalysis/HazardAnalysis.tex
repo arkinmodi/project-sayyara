@@ -43,6 +43,7 @@
 		\textbf{Date}    & \textbf{Developer(s)} & \textbf{Change}                                                                \\
 		\midrule
 		October 13, 2022 & Arkin Modi            & Create Failure Mode and Effect Analysis table                                  \\
+		October 14, 2022 & Joy Xiao              & Introduction                                                                   \\
 		October 16, 2022 & Arkin Modi            & Fill in FMEA table for Work Orders, Shop Profile, Services, and Shop Employees \\
 		\bottomrule
 	\end{tabularx}
@@ -56,22 +57,42 @@
 
 \pagenumbering{arabic}
 
-\wss{You are free to modify this template.}
-
 \section{Introduction}
-
-\wss{You can include your definition of what a hazard is here.}
+This document outlines the hazard analysis of Sayyara. The definition of hazard is any property or
+condition in the system along with conditions in the environment that may cause harm or damage.
+This definition is from Nancy Leveson's work. The hazards for Sayyara include security and usage
+hazards such as protecting personal information, database failures, and having no internet
+connection.
 
 \section{Scope and Purpose of Hazard Analysis}
+The scope of the hazard analysis is to identify any hazards that may arise when using the
+application, their causes, coming up with steps to eliminate or mitigate the effect of the hazard.
+The purpose of the hazard analysis is to pinpoint areas where hazards may arise and their effects
+and come up with mitigation steps. Through completing the hazard analysis, safety and security
+requirements will be developed early in the design process to minimize the risk of having hazards
+occur without plans in place to reduce or mitigate the effects.
 
 \section{System Boundaries and Components}
+The system consists of:
+\begin{enumerate}
+	\item The application's front-end and back-end components in the major categories:
+	      \begin{itemize}
+		      \item Authentication
+		      \item Appointments
+		      \item Quotes
+		      \item Work Orders
+		      \item Shop Profile
+		      \item Services
+		      \item Shop Employees
+	      \end{itemize}
+	\item The database being used which will store all of application's data
+\end{enumerate}
 
 \section{Critical Assumptions}
-
-\wss{These assumptions that are made about the software or system.  You should
-	minimize the number of assumptions that remove potential hazards.  For instance,
-	you could assume a part will never fail, but it is generally better to include
-	this potential failure mode.}
+\begin{itemize}
+	\item Assume the users of the application are not intentionally trying to misuse it
+	\item Assume that the user will follow cybersecurity best practices
+\end{itemize}
 
 \newpage
 \begin{landscape}
