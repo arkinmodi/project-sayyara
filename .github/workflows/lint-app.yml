@@ -9,7 +9,7 @@ on:
 
 jobs:
   lint_app:
-    name: 🧽 Lint Application
+    name: 🧽 Lint and Typecheck Application
     runs-on: ubuntu-latest
     steps:
       - name: 🛎 Checkout
@@ -36,6 +36,9 @@ jobs:
 
       - name: 🚧 Install Dependencies
         run: npm ci
+
+      - name: 🧽 Run Typecheck
+        run: npx tsc --project ./tsconfig.json
 
       - name: 🧽 Run Prettier
         run: npx prettier --check '**/*.{ts,tsx,json,js,mjs}'
