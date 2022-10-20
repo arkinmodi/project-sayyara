@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:docs": "docker compose -f docker-compose-docs.yml run docs",
     "start": "next start",
     "postinstall": "prisma generate",
     "db:migrate": "prisma migrate deploy",
