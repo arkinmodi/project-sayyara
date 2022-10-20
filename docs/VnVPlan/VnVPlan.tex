@@ -58,8 +58,10 @@
 	\bottomrule
 \end{tabular}\\
 
-\wss{symbols, abbreviations or acronyms -- you can simply reference the SRS
+\wss{symbols, abbreviations or acronyms --- you can simply reference the SRS
 	\citep{SRS} tables, if appropriate}
+
+\wss{Remove this section if it isn't needed}
 
 \newpage
 
@@ -86,9 +88,9 @@ This document ... \wss{provide an introductory blurb and roadmap of the Verifica
 \subsection{Relevant Documentation}
 
 \wss{Reference relevant documentation.  This will definitely include your SRS
-	and your other project documents (MG, MIS, etc).  You can include these even
-	before they are written, since by the time the project is done, they will be
-	written.}
+	and your other project documents (design documents, like MG, MIS, etc).  You
+	can include these even before they are written, since by the time the project
+	is done, they will be written.}
 
 \citet{SRS}
 
@@ -99,17 +101,17 @@ This document ... \wss{provide an introductory blurb and roadmap of the Verifica
 
 \subsection{Verification and Validation Team}
 
-\wss{You, your classmates and the course instructor.  Maybe your supervisor.
+\wss{Your teammates.  Maybe your supervisor.
 	You shoud do more than list names.  You should say what each person's role is
-	for the project.  A table is a good way to summarize this information.}
+	for the project's verification.  A table is a good way to summarize this information.}
 
 \subsection{SRS Verification Plan}
 
-\wss{List any approaches you intend to use for SRS verification.  This may just
-	be ad hoc feedback from reviewers, like your classmates, or you may have
-	something more rigorous/systematic in mind..}
+\wss{List any approaches you intend to use for SRS verification.  This may include
+	ad hoc feedback from reviewers, like your classmates, or you may plan for
+	something more rigorous/systematic.}
 
-\wss{Remember you have an SRS checklist}
+\wss{Maybe create an SRS checklist?}
 
 \subsection{Design Verification Plan}
 
@@ -117,7 +119,7 @@ This document ... \wss{provide an introductory blurb and roadmap of the Verifica
 
 \wss{The review will include reviews by your classmates}
 
-\wss{Remember you have MG and MIS checklists}
+\wss{Create a checklists?}
 
 \subsection{Implementation Verification Plan}
 
@@ -139,6 +141,9 @@ This document ... \wss{provide an introductory blurb and roadmap of the Verifica
 	that verify that coding standards have been respected, like flake9 for
 	Python.}
 
+\wss{If you have already done this in the development plan, you can point to
+	that document.}
+
 \wss{The details of this section will likely evolve as you get closer to the
 	implementation.}
 
@@ -147,6 +152,12 @@ This document ... \wss{provide an introductory blurb and roadmap of the Verifica
 \wss{If there is any external data that can be used for validation, you should
 	point to it here.  If there are no plans for validation, you should state that
 	here.}
+
+\wss{You might want to use review sessions with the stakeholder to check that
+	the requirements document captures the right requirements.  Maybe task based
+	inspection?}
+
+\wss{This section might reference back to the SRS verification section.}
 
 \section{System Test Description}
 
@@ -157,12 +168,12 @@ This document ... \wss{provide an introductory blurb and roadmap of the Verifica
 	level of document structure can be removed.}
 
 \wss{Include a blurb here to explain why the subsections below
-	cover the requirements.  References to the SRS would be good.}
+	cover the requirements.  References to the SRS would be good here.}
 
 \subsubsection{Area of Testing1}
 
 \wss{It would be nice to have a blurb here to explain why the subsections below
-	cover the requirements.  References to the SRS would be good.  If a section
+	cover the requirements.  References to the SRS would be good here.  If a section
 	covers tests for input constraints, you should reference the data constraints
 	table in the SRS.}
 
@@ -208,10 +219,11 @@ This document ... \wss{provide an introductory blurb and roadmap of the Verifica
 
 \wss{The nonfunctional requirements for accuracy will likely just reference the
 	appropriate functional tests from above.  The test cases should mention
-	reporting the relative error for these tests.}
+	reporting the relative error for these tests.  Not all projects will
+	necessarily have nonfunctional requirements related to accuracy}
 
 \wss{Tests related to usability could include conducting a usability test and
-	survey.}
+	survey.  The survey will be in the Appendix.}
 
 \subsubsection{Area of Testing1}
 
@@ -221,7 +233,7 @@ This document ... \wss{provide an introductory blurb and roadmap of the Verifica
 
 	\item{test-id1\\}
 
-	Type:
+	Type: Functional, Dynamic, Manual, Static etc.
 
 	Initial State:
 
@@ -256,10 +268,10 @@ This document ... \wss{provide an introductory blurb and roadmap of the Verifica
 
 \section{Unit Test Description}
 
-\wss{Reference your MIS and explain your overall philosophy for test case
-	selection.}
-\wss{This section should not be filled in until after the MIS has
-	been completed.}
+\wss{Reference your MIS (detailed design document) and explain your overall
+	philosophy for test case selection.}
+\wss{This section should not be filled in until after the MIS (detailed design
+	document) has been completed.}
 
 \subsection{Unit Testing Scope}
 
@@ -392,9 +404,20 @@ this section for easy maintenance.
 The information in this section will be used to evaluate the team members on the graduate attribute
 of Lifelong Learning. Please answer the following questions:
 
+\newpage{}
+\section*{Appendix --- Reflection}
+
+The information in this section will be used to evaluate the team members on the graduate attribute
+of Lifelong Learning. Please answer the following questions:
+
 \begin{enumerate}
-	\item
-	\item
+	\item What knowledge and skills will the team collectively need to acquire to successfully complete the
+	      verification and validation of your project? Examples of possible knowledge and skills include
+	      dynamic testing knowledge, static testing knowledge, specific tool usage etc. You should look to
+	      identify at least one item for each team member.
+	\item For each of the knowledge areas and skills identified in the previous question, what are at least
+	      two approaches to acquiring the knowledge or mastering the skill? Of the identified approaches,
+	      which will each team member pursue, and why did they make this choice?
 \end{enumerate}
 
 \end{document}
