@@ -184,6 +184,7 @@
 		October 5, 2022    & Leon So               & Add reflection                                                                     \\
 		October 5, 2022    & Timothy Choy          & Add reflection                                                                     \\
 		October 5, 2022    & Joy Xiao              & Add reflection                                                                     \\
+		October 19, 2022   & Timothy Choy          & Update requirements from Hazard Analysis                                           \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -574,6 +575,8 @@ external systems and services.
 \end{table}
 
 \subsubsection{Individual Product Use Cases}
+Text marked in \textbf{bold} are additional information added from the Revision 0 Hazard Analysis.
+
 \textbf{Title:} Creating an account for an auto repair shop\\
 \textbf{Trigger:} Auto repair shop owner adds their shop to Sayyara\\
 \textbf{Pre-condition:} The physical auto repair shop exists\\
@@ -756,6 +759,7 @@ external systems and services.
 	\item User selects a service or attaches a quote
 	\item System present user with a list of time slots for the appointment
 	\item User selects a time slot
+	\item \textbf{Shop owner or employee accepts the appointment}
 	\item System creates a work order based off of the appointment
 	\item Auto repair shop owner assigns an employee to the work order
 \end{enumerate}
@@ -1596,6 +1600,7 @@ $(\exists a \in \text{users} \wedge a.\text{role} \in \text{owner} | \forall x \
 Owners can view and modify all other employees that work under them
 
 \section{Non-functional Requirements}
+The requirements in \textbf{bold} are additional requirements from the Revision 0 Hazard Analysis.
 
 \subsection{Look and Feel Requirements}
 \begin{enumerate}[LF\arabic*.]
@@ -1608,6 +1613,7 @@ Owners can view and modify all other employees that work under them
 \begin{enumerate}[UH\arabic*.]
 	\item The system shall accessible by any desktop or mobile device and any operating system
 	\item The system shall be accessible through the web browser and when the device is connected to internet
+	\item \textbf{The system shall notify the user if there is no network connection and prevent users from using functions that require a connection}
 \end{enumerate}
 
 \subsection{Performance Requirements}
