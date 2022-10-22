@@ -1,0 +1,6 @@
+FROM ghcr.io/xu-cheng/texlive-full:20221001
+WORKDIR /sayyara
+RUN apk update \
+    && apk add make \
+    && rm -rf /var/cache/apk/*
+ENTRYPOINT [ "make" ]
