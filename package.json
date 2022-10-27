@@ -16,10 +16,11 @@
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "jest --group=unit --config=jest.unit.config.js",
     "test:integration": "npm run db:migrate && jest --runInBand --group=integration --config=jest.integration.config.js",
-    "lint": "npm run lint:latex && npm run lint:prettier && npm run lint:eslint",
+    "lint": "npm run lint:latex && npm run lint:types && npm run lint:prettier && npm run lint:eslint",
     "lint:eslint": "next lint",
     "lint:prettier": "prettier --write '**/*.{ts,tsx,json,js,mjs}'",
     "lint:latex": "latexindent -silent -local -modifylinebreaks -overwrite docs/**/*.tex",
+    "lint:types": "tsc --project ./tsconfig.json",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down"
   },
