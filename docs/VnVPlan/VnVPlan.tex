@@ -31,9 +31,10 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}    & \textbf{Developer(s)} & \textbf{Change}                \\
+		\textbf{Date}    & \textbf{Developer(s)} & \textbf{Change}                      \\
 		\midrule
-		October 26, 2022 & Arkin Modi            & Added Software Validation Plan \\
+		October 26, 2022 & Arkin Modi            & Add Software Validation Plan         \\
+		October 27, 2022 & Arkin Modi            & Add Implementation Verification Plan \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -134,14 +135,13 @@ This document ... \wss{provide an introductory blurb and roadmap of the Verifica
 
 \subsection{Implementation Verification Plan}
 
-\wss{You should at least point to the tests listed in this document and the unit
-	testing plan.}
+Automated integration tests will be created to fullfil the system tests defined in section
+\ref{System Test Description} and automated unit tests will be created to fullfil the tests defined
+in section \ref{Unit Test Description}. Static analysis will be performed through code review by at
+least one core team member per pull request and automation tools as stated in \ref{Automated
+	Testing and Verification Tools}. A pull request will cover at most one module.
 
-\wss{In this section you would also give any details of any plans for static verification of
-	the implementation.  Potential techniques include code walkthroughs, code
-	inspection, static analyzers, etc.}
-
-\subsection{Automated Testing and Verification Tools}
+\subsection{Automated Testing and Verification Tools} \label{Automated Testing and Verification Tools}
 
 \wss{What tools are you using for automated testing.  Likely a unit testing
 	framework and maybe a profiling tool, like ValGrind.  Other possible tools
@@ -166,7 +166,7 @@ defined in the
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{Software
 	Requirements Specification (SRS)}.
 
-\section{System Test Description}
+\section{System Test Description} \label{System Test Description}
 
 \subsection{Tests for Functional Requirements}
 
@@ -276,7 +276,7 @@ defined in the
 \wss{Provide a table that shows which test cases are supporting which
 	requirements.}
 
-\section{Unit Test Description}
+\section{Unit Test Description} \label{Unit Test Description}
 
 \wss{Reference your MIS (detailed design document) and explain your overall
 	philosophy for test case selection.}
