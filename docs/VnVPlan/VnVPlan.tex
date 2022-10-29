@@ -35,6 +35,7 @@
 		\midrule
 		October 26, 2022 & Arkin Modi            & Added Software Validation Plan           \\
 		October 27, 2022 & Joy Xiao              & Add Testing Team and Design Verification \\
+		October 29, 2022 & Arkin Modi            & Add System Tests for Work Orders         \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -188,50 +189,145 @@ defined in the
 \wss{Include a blurb here to explain why the subsections below
 	cover the requirements.  References to the SRS would be good here.}
 
-\subsubsection{Area of Testing1}
+\subsubsection{Work Orders}
 
-\wss{It would be nice to have a blurb here to explain why the subsections below
-	cover the requirements.  References to the SRS would be good here.  If a section
-	covers tests for input constraints, you should reference the data constraints
-	table in the SRS.}
-
-\paragraph{Title for Test}
+This section will contains tests covering the ``Work Orders'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
 
-	\item{test-id1\\}
+	\item \textbf{FRT-BE17-1}
 
-	Control: Manual versus Automatic
+	      Control: Automatic
 
-	Initial State:
+	      Initial State: Shop Owner/Employee Account with a registered shop and a quote
 
-	Input:
+	      Input: A new appointment created at the shop with a quote ID
 
-	Output: \wss{The expected result for the given inputs}
+	      Output: A new work order is created with details from the quote
 
-	Test Case Derivation: \wss{Justify the expected value given in the Output field}
+	      Test Case Derivation: The system shall automatically create a work order for new appointment with
+	      information from the quote
 
-	How test will be performed:
+	      How test will be performed: Through Jest we will call the endpoint for creating an appointment
 
-	\item{test-id2\\}
+	\item \textbf{FRT-BE17-2}
 
-	Control: Manual versus Automatic
+	      Control: Automatic
 
-	Initial State:
+	      Initial State: Shop Owner/Employee Account with a registered shop
 
-	Input:
+	      Input: A new appointment created at the shop
 
-	Output: \wss{The expected result for the given inputs}
+	      Output: A new work order is created
 
-	Test Case Derivation: \wss{Justify the expected value given in the Output field}
+	      Test Case Derivation: The system shall automatically create a work order for new appointment
 
-	How test will be performed:
+	      How test will be performed: Through Jest we will call the endpoint for creating an appointment
+
+	\item \textbf{FRT-BE18}
+
+	      Control: Automatic
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: Appointment is deleted by appointment ID
+
+	      Output: Appointment and Work Order deleted confirmation message
+
+	      Test Case Derivation: The system shall delete appointment and the associated work order upon
+	      request
+
+	      How test will be performed: Through Jest we will call the endpoint for deleting an appointment
+
+	\item \textbf{FRT-BE19}
+
+	      Control: Automatic
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: Work Order is searched by the customer name, assigned employee, service type, and/or a date
+	      range
+
+	      Output: The work orders matching the inputted criteria in a table format
+
+	      Test Case Derivation: The system shall display work order upon request
+
+	      How test will be performed: Through Jest we will call the endpoint for getting a work order
+
+	\item \textbf{FRT-BE20}
+
+	      Control: Automatic
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: Request to view past work orders
+
+	      Output: Past work orders in a table format
+
+	      Test Case Derivation: The system shall display work order upon request
+
+	      How test will be performed: Through Jest we will call the endpoint for getting a work order
+
+	\item \textbf{FRT-BE21}
+
+	      Control: Automatic
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: Request to update a work order with new details
+
+	      Output: A work order updated confirmation message
+
+	      Test Case Derivation: The system shall update work order upon request
+
+	      How test will be performed: Through Jest we will call the endpoint for updating a work order
+
+	\item \textbf{FRT-BE22}
+
+	      Control: Automatic
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an appointment, and a work order
+	      associated to the appointment
+
+	      Input: A customer has paid for their appointment
+
+	      Output: The work order is emailed to the customer, and the appointment and work order are marked as
+	      ``completed''
+
+	      Test Case Derivation: The system shall mark work orders and appointments as completed when the
+	      customer has paid for the word done
+
+	      How test will be performed: Through Jest we will call the endpoint for completing an appointment
+
+	\item \textbf{FRT-BE23}
+
+	      Control: Automatic
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an appointment, and a work order
+	      associated to the appointment
+
+	      Input: Request work order details
+
+	      Output: The work order details
+
+	      Test Case Derivation: The system shall display work orders details upon request
+
+	      How test will be performed: Through Jest we will call the endpoint for getting a work order
+
+	      % \item test-id2
+	      %       Control: Manual versus Automatic
+	      %       Initial State:
+	      %       Input:
+	      %       Output: \wss{The expected result for the given inputs}
+	      %       Test Case Derivation: \wss{Justify the expected value given in the Output field}
+	      %       How test will be performed:
 
 \end{enumerate}
-
-\subsubsection{Area of Testing2}
-
-...
 
 \subsection{Tests for Nonfunctional Requirements}
 
