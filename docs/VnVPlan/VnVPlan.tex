@@ -35,6 +35,7 @@
 		\midrule
 		October 26, 2022 & Arkin Modi            & Added Software Validation Plan           \\
 		October 27, 2022 & Joy Xiao              & Add Testing Team and Design Verification \\
+		October 28, 2022 & Arkin Modi            & Add System Tests for Quotes              \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -188,44 +189,257 @@ defined in the
 \wss{Include a blurb here to explain why the subsections below
 	cover the requirements.  References to the SRS would be good here.}
 
-\subsubsection{Area of Testing1}
+\subsubsection{Quotes}
 
-\wss{It would be nice to have a blurb here to explain why the subsections below
-	cover the requirements.  References to the SRS would be good here.  If a section
-	covers tests for input constraints, you should reference the data constraints
-	table in the SRS.}
+% \wss{It would be nice to have a blurb here to explain why the subsections below
+% 	cover the requirements.  References to the SRS would be good here.  If a section
+% 	covers tests for input constraints, you should reference the data constraints
+% 	table in the SRS.}
 
-\paragraph{Title for Test}
+This section will contains tests covering the ``Quotes'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
 
-	\item{test-id1\\}
+	\item \textbf{FRT-BE8-1}
 
-	Control: Manual versus Automatic
+	      Control: Automatic
 
-	Initial State:
+	      Initial State: Customer Account with no quotes having been made by the account
 
-	Input:
+	      Input: Request past quotes
 
-	Output: \wss{The expected result for the given inputs}
+	      Output: A message saying there are no past quotes
 
-	Test Case Derivation: \wss{Justify the expected value given in the Output field}
+	      Test Case Derivation: There are no past quotes to display
 
-	How test will be performed:
+	      How test will be performed: Through Jest we will call the endpoint for retrieving past quotes
 
-	\item{test-id2\\}
+	\item \textbf{FRT-BE8-2}
 
-	Control: Manual versus Automatic
+	      Control: Automatic
 
-	Initial State:
+	      Initial State: Customer Account with completed quotes having been made by the account
 
-	Input:
+	      Input: Request past quotes
 
-	Output: \wss{The expected result for the given inputs}
+	      Output: A table with all the quotes
 
-	Test Case Derivation: \wss{Justify the expected value given in the Output field}
+	      Test Case Derivation: There are past quotes to display
 
-	How test will be performed:
+	      How test will be performed: Through Jest we will call the endpoint for retrieving past quotes
+
+	\item \textbf{FRT-BE8-3}
+
+	      Control: Automatic
+
+	      Initial State: Shop Owner/Employee Account with no quotes having been made against the shop
+
+	      Input: Request past quotes with quote ID, customer phone number, and/or customer name
+
+	      Output: A message saying there are no past quotes
+
+	      Test Case Derivation: There are no past quotes to display matching the inputted criteria
+
+	      How test will be performed: Through Jest we will call the endpoint for retrieving past quotes
+
+	\item \textbf{FRT-BE8-4}
+
+	      Control: Automatic
+
+	      Initial State: Shop Owner/Employee Account with completed quotes having been made against the shop
+
+	      Input: Request past quotes with quote ID, customer phone number, and/or customer name
+
+	      Output: A table with all the quotes
+
+	      Test Case Derivation: There are past quotes to display matching the inputted criteria
+
+	      How test will be performed: Through Jest we will call the endpoint for retrieving past quotes
+
+	\item \textbf{FRT-BE9-1}
+
+	      Control: Automatic
+
+	      Initial State: Customer Account with completed quotes having been made by the account
+
+	      Input: Request quote details
+
+	      Output: The quote details
+
+	      Test Case Derivation: Display the quote details requested
+
+	      How test will be performed: Through Jest we will call the endpoint for retrieving quotes details
+
+	\item \textbf{FRT-BE9-2}
+
+	      Control: Automatic
+
+	      Initial State: Shop Owner/Employee Account with completed quotes having been made against the shop
+
+	      Input: Request quote details
+
+	      Output: The quote details
+
+	      Test Case Derivation: Display the quote details requested
+
+	      How test will be performed: Through Jest we will call the endpoint for retrieving quotes details
+
+	\item \textbf{FRT-BE10-1}
+
+	      Control: Automatic
+
+	      Initial State: Customer Account
+
+	      Input: A filled in quote request form
+
+	      Output: A quote created confirmation message
+
+	      Test Case Derivation: The system shall verify that the quote was created successfully
+
+	      How test will be performed: Through Jest we will call the endpoint for creating a quote
+
+	\item \textbf{FRT-BE10-2}
+
+	      Control: Automatic
+
+	      Initial State: Shop Owner/Employee Account with a registered shop
+
+	      Input: A quote is created against the shop
+
+	      Output: A notification for the created quote
+
+	      Test Case Derivation: The system shall notify that a quote was created
+
+	      How test will be performed: Through Jest we will call the endpoint for creating a quote
+
+	\item \textbf{FRT-BE11}
+
+	      Control: Automatic
+
+	      Initial State: Customer Account with a created quote
+
+	      Input: Request to delete quote with the quote's ID
+
+	      Output: A quote deleted confirmation message
+
+	      Test Case Derivation: The system shall delete the quote upon request
+
+	      How test will be performed: Through Jest we will call the endpoint for deleting a quote
+
+	\item \textbf{FRT-BE12-1}
+
+	      Control: Automatic
+
+	      Initial State: Customer Account with a created quote
+
+	      Input: Request to update quote with the quote's new details
+
+	      Output: A quote updated confirmation message
+
+	      Test Case Derivation: The system shall update the quote upon request
+
+	      How test will be performed: Through Jest we will call the endpoint for updating a quote
+
+	\item \textbf{FRT-BE12-2}
+
+	      Control: Automatic
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and an active quote
+
+	      Input: A quote's details are updated
+
+	      Output: A notification for the updated quote
+
+	      Test Case Derivation: The system shall notify that a quote was updated
+
+	      How test will be performed: Through Jest we will call the endpoint for updating a quote
+
+	\item \textbf{FRT-BE13}
+
+	      Control: Automatic
+
+	      Initial State: Customer Account with a created quote
+
+	      Input: A request to create a new quote using details from another quote which is identified by
+	      quote ID
+
+	      Output: A quote created confirmation message
+
+	      Test Case Derivation: The system shall verify that the quote was created successfully with an
+	      existing quote's details
+
+	      How test will be performed: Through Jest we will call the endpoint for creating a quote
+
+	\item \textbf{FRT-BE14-1}
+
+	      Control: Automatic
+
+	      Initial State: Customer Account with a created quote
+
+	      Input: A response to a quote
+
+	      Output: A notification for the responded to quote
+
+	      Test Case Derivation: The system shall notify that a quote was responded to
+
+	      How test will be performed: Through Jest we will call the endpoint for responding to a quote
+
+	\item \textbf{FRT-BE14-2}
+
+	      Control: Automatic
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and an active quote
+
+	      Input: A response to a quote
+
+	      Output: A quote responded confirmation message
+
+	      Test Case Derivation: The system shall verify that the quote was responded to successfully
+
+	      How test will be performed: Through Jest we will call the endpoint for responding to a quote
+
+	\item \textbf{FRT-BE15}
+
+	      Control: Automatic
+
+	      Initial State: Customer Account with a responded to quote
+
+	      Input: Accept a responded to quote
+
+	      Output: The system shall request the user to create an appointment with the shop that responded
+
+	      Test Case Derivation: The system shall have the user create an appointment upon accepting a quote
+
+	      How test will be performed: Through Jest we will call the endpoint for accepting to a quote
+
+	\item \textbf{FRT-BE16-1}
+
+	      Control: Automatic
+
+	      Initial State: Customer Account with a created quote
+
+	      Input: A message to request additional information
+
+	      Output: A message sent confirmation
+
+	      Test Case Derivation: The system shall confirm to the user that the message was sent
+
+	      How test will be performed: Through Jest we will call the endpoint for sending a message
+
+	\item \textbf{FRT-BE16-2}
+
+	      Control: Automatic
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and an active quote
+
+	      Input: A message to request additional information
+
+	      Output: A message sent confirmation
+
+	      Test Case Derivation: The system shall confirm to the user that the message was sent
+
+	      How test will be performed: Through Jest we will call the endpoint for sending a message
 
 \end{enumerate}
 
@@ -418,12 +632,6 @@ this section for easy maintenance.
 \subsection{Usability Survey Questions?}
 
 \wss{This is a section that would be appropriate for some projects.}
-
-\newpage{}
-\section*{Appendix --- Reflection}
-
-The information in this section will be used to evaluate the team members on the graduate attribute
-of Lifelong Learning. Please answer the following questions:
 
 \newpage{}
 \section*{Appendix --- Reflection}
