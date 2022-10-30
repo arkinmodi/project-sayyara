@@ -228,7 +228,7 @@ This section will contains tests covering the ``Quotes'' requirements defined in
 
 	      Control: Manual
 
-	      Initial State: Shop Owner/Employee Account with no quotes having been made against the shop
+	      Initial State: Shop Owner/Employee Account with no quotes requests assigned to the shop
 
 	      Input: Request past quotes with quote ID, customer phone number, and/or customer name
 
@@ -242,7 +242,7 @@ This section will contains tests covering the ``Quotes'' requirements defined in
 
 	      Control: Manual
 
-	      Initial State: Shop Owner/Employee Account with completed quotes having been made against the shop
+	      Initial State: Shop Owner/Employee Account with closed quotes having been made against the shop
 
 	      Input: Request past quotes with quote ID, customer phone number, and/or customer name
 
@@ -270,7 +270,7 @@ This section will contains tests covering the ``Quotes'' requirements defined in
 
 	      Control: Manual
 
-	      Initial State: Shop Owner/Employee Account with completed quotes having been made against the shop
+	      Initial State: Shop Owner/Employee Account with closed quotes having been made against the shop
 
 	      Input: Request quote details
 
@@ -288,7 +288,7 @@ This section will contains tests covering the ``Quotes'' requirements defined in
 
 	      Input: A filled in quote request form
 
-	      Output: A quote created confirmation message
+	      Output: A confirmation messaging indicating that the quote was requested
 
 	      Test Case Derivation: The system shall verify that the quote was created successfully
 
@@ -300,9 +300,9 @@ This section will contains tests covering the ``Quotes'' requirements defined in
 
 	      Initial State: Shop Owner/Employee Account with a registered shop
 
-	      Input: A quote is created against the shop
+	      Input: A quote is requested from the shop
 
-	      Output: A notification for the created quote
+	      Output: A notification for the open quote request
 
 	      Test Case Derivation: The system shall notify that a quote was created
 
@@ -359,7 +359,7 @@ This section will contains tests covering the ``Quotes'' requirements defined in
 	      Input: A request to create a new quote using details from another quote which is identified by
 	      quote ID
 
-	      Output: A quote created confirmation message
+	      Output: A confirmation messaging indicating that the quote was requested
 
 	      Test Case Derivation: The system shall verify that the quote was created successfully with an
 	      existing quote's details
