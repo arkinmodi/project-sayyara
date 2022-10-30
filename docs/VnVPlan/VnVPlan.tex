@@ -35,6 +35,7 @@
 		\midrule
 		October 26, 2022 & Arkin Modi            & Added Software Validation Plan           \\
 		October 27, 2022 & Joy Xiao              & Add Testing Team and Design Verification \\
+		October 29, 2022 & Joy Xiao              & Add System Tests for Appointments        \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -188,44 +189,42 @@ defined in the
 \wss{Include a blurb here to explain why the subsections below
 	cover the requirements.  References to the SRS would be good here.}
 
-\subsubsection{Area of Testing1}
+\subsubsection{Appointments}
 
-\wss{It would be nice to have a blurb here to explain why the subsections below
-	cover the requirements.  References to the SRS would be good here.  If a section
-	covers tests for input constraints, you should reference the data constraints
-	table in the SRS.}
-
-\paragraph{Title for Test}
+This section will contains tests covering the ``Appointments'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
 
-	\item{test-id1\\}
+	\item{FRT-BE2-1}
 
-	Control: Manual versus Automatic
+	Control: Automatic
 
-	Initial State:
+	Initial State: Vehicle Owner finds auto shops to book appointments
 
-	Input:
+	Input: Vehicle Owner fills out service request information and selects an available appointment
+	time slot
 
-	Output: \wss{The expected result for the given inputs}
+	Output: A new appointment is created with service details
 
-	Test Case Derivation: \wss{Justify the expected value given in the Output field}
+	Test Case Derivation: The system shall allow the user to book an appointment
 
-	How test will be performed:
+	How test will be performed: Through Jest we will call the endpoint for creating an appointment
 
-	\item{test-id2\\}
+	\item{FRT-BE2-2}
 
-	Control: Manual versus Automatic
+	Control: Automatic
 
-	Initial State:
+	Initial State: Shop Owner/Shop Employee needs to enter an appointment into the schedule
 
-	Input:
+	Input: Shop Owner/Shop Employee fills out customer information, service request information and
+	selects an available appointment time slot
 
-	Output: \wss{The expected result for the given inputs}
+	Output: A new appointment is created with service details
 
-	Test Case Derivation: \wss{Justify the expected value given in the Output field}
+	Test Case Derivation: The system shall allow the user to book an appointment
 
-	How test will be performed:
+	How test will be performed: Through Jest we will call the endpoint for creating an appointment
 
 \end{enumerate}
 
