@@ -11,6 +11,7 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
+\usepackage{float}
 
 \input{../Comments}
 \input{../Common}
@@ -34,7 +35,7 @@
 		\textbf{Date}    & \textbf{Developer(s)} & \textbf{Change}                      \\
 		\midrule
 		October 26, 2022 & Arkin Modi            & Add Software Validation Plan         \\
-		October 27, 2022 & Arkin Modi            & Add Implementation Verification Plan \\
+		October 30, 2022 & Arkin Modi            & Add Implementation Verification Plan \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -140,6 +141,41 @@ Automated integration tests will be created to fullfil the system tests defined 
 in section \ref{Unit Test Description}. Static analysis will be performed through code review by at
 least one core team member per pull request and automation tools as stated in \ref{Automated
 	Testing and Verification Tools}. A pull request will cover at most one module.
+
+Manual System Tests defined in section \ref{System Test Description} shall take place from February
+20, 2023 to March 6, 2023. The areas of responsibility will be divided as described in table
+\ref{Manual System Testing Responsibilities}.
+
+\begin{table}[H]
+	\centering
+	\caption{Manual System Testing Responsibilities}
+	\vspace{5pt}
+	\begin{tabular}{|p{0.5\textwidth}|p{0.5\textwidth}|}
+		\hline
+		\textbf{Area of Testing} & \textbf{Team Member Responsible} \\
+		\hline
+		Authentication           & Leon So                          \\
+		\hline
+		Appointments             & Joy Xiao                         \\
+		\hline
+		Quotes                   & Arkin Modi                       \\
+		\hline
+		Work Orders              & Arkin Modi                       \\
+		\hline
+		Employee Management      & Leon So                          \\
+		\hline
+		Services                 & Joy Xiao                         \\
+		\hline
+		Shop Lookup              & Timothy Choy                     \\
+		\hline
+		Shop Profile             & Timothy Choy                     \\
+		\hline
+		Employee Profile         & Timothy Choy                     \\
+		\hline
+	\end{tabular}
+
+	\label{Manual System Testing Responsibilities}
+\end{table}
 
 \subsection{Automated Testing and Verification Tools} \label{Automated Testing and Verification Tools}
 
