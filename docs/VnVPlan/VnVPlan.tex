@@ -38,6 +38,7 @@
 		October 27, 2022 & Arkin Modi            & Add Automated Testing and Verification Tools \\
 		October 28, 2022 & Leon So               & Add Summary                                  \\
 		October 29, 2022 & Leon So               & Add Objectives                               \\
+		October 30, 2022 & Leon So               & Add Usability and Humanity Tests             \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -179,7 +180,7 @@ defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs
 
 \section{System Test Description}
 
-\subsection{Tests for Functional Requirements}
+\subsection{Tests for Functional Requirements} \label{Tests for Functional Requirements}
 
 \wss{Subsets of the tests may be in related, so this section is divided into
 	different areas.  If there are no identifiable subsets for the tests, this
@@ -392,9 +393,44 @@ defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs
 
 \end{enumerate}
 
-\subsubsection{Module ?}
+\subsubsection{Usability and Humanity Requirements}
+\begin{enumerate}
 
-...
+	\item{NFRT-UH-1\\}
+
+	Type: Dynamic, Manual
+
+	Initial State: Device is connected to the internet and application is not open
+
+	Input/Condition: The user launches the application on Google Chrome
+
+	Output/Result: The system can be assessed through Google Chrome
+
+	How test will be performed: The tester will attempt to launch the application on the Google Chrome
+	web browser and using a device that is connected to the internet.
+
+	\item{NFRT-UH-2\\}
+
+	Type: Dynamic, Manual
+
+	Initial State: Device is connected to the internet and the application is open
+
+	Input/Condition: User disconnects from the internet
+
+	Output/Result: The system notifies the user that there is no network connection and functionality
+	will be limited.
+
+	How test will be performed: The tester disconnect from the internet while the application is open.
+
+	\item{NFRT-UH-3\\}
+
+	Type: Dynamic, Manual
+
+	How test will be performed: The testers will complete the manual system tests for functional
+	requirements listed section \ref{Tests for Functional Requirements} on a MacOS desktop/laptop
+	device, a Windows desktop/laptop, an iOS mobile device, and an android mobile device.
+
+\end{enumerate}
 
 \subsection{Traceability Between Test Cases and Modules}
 
