@@ -31,13 +31,14 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}    & \textbf{Developer(s)} & \textbf{Change}                          \\
+		\textbf{Date}    & \textbf{Developer(s)} & \textbf{Change}                              \\
 		\midrule
-		October 26, 2022 & Arkin Modi            & Added Software Validation Plan           \\
-		October 27, 2022 & Joy Xiao              & Add Testing Team and Design Verification \\
-		October 28, 2022 & Leon So               & Add Summary                              \\
-		October 29, 2022 & Leon So               & Add Objectives                           \\
-		October 29, 2022 & Arkin Modi            & Add System Tests for Work Orders         \\
+		October 26, 2022 & Arkin Modi            & Added Software Validation Plan               \\
+		October 27, 2022 & Joy Xiao              & Add Testing Team and Design Verification     \\
+		October 27, 2022 & Arkin Modi            & Add Automated Testing and Verification Tools \\
+		October 28, 2022 & Leon So               & Add Summary                                  \\
+		October 29, 2022 & Leon So               & Add Objectives                               \\
+		October 29, 2022 & Arkin Modi            & Add System Tests for Work Orders             \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -59,9 +60,11 @@
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l}
 	\toprule
-	\textbf{symbol} & \textbf{description}        \\
+	\textbf{symbol} & \textbf{description}                \\
 	\midrule
-	PWA             & Progressive Web Application \\
+	CI              & Continuous Integration              \\
+	SRS             & Software Requirements Specification \\
+	PWA             & Progressive Web Application         \\
 	\bottomrule
 \end{tabular}\\
 
@@ -158,28 +161,22 @@ the corresponding requirements.
 
 \subsection{Automated Testing and Verification Tools}
 
-\wss{What tools are you using for automated testing.  Likely a unit testing
-	framework and maybe a profiling tool, like ValGrind.  Other possible tools
-	include a static analyzer, make, continuous integration tools, test coverage
-	tools, etc.  Explain your plans for summarizing code coverage metrics.
-	Linters are another important class of tools.  For the programming language
-	you select, you should look at the available linters.  There may also be tools
-	that verify that coding standards have been respected, like flake9 for
-	Python.}
+All tooling and automations that will be used for testing and verification have been documented in
+the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/DevelopmentPlan/DevelopmentPlan.pdf}{Development
+	Plan} under the ``Technology'' and ``Code Standard'' sections.
 
-\wss{If you have already done this in the development plan, you can point to
-	that document.}
-
-\wss{The details of this section will likely evolve as you get closer to the
-	implementation.}
+As part of our CI, we will have a pipeline running the automated tests against every commit to the
+main branch and every pull request opened against the main branch that contains a source code or
+testing code change. There will also be a pipeline running against every pull request asserting
+adherence to the documented code style standards. Code coverage reports will be commented directly
+to the pull request or the commit to the main branch using a pipeline.
 
 \subsection{Software Validation Plan}
 
 The plan for validating the software and the requirements shall be to conduct review session with
 the stakeholders. These review sessions shall focus on the business events and user flows as
-defined in the
-\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{Software
-	Requirements Specification (SRS)}.
+defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \section{System Test Description}
 
