@@ -38,6 +38,7 @@
 		October 27, 2022 & Arkin Modi            & Add Automated Testing and Verification Tools \\
 		October 28, 2022 & Leon So               & Add Summary                                  \\
 		October 29, 2022 & Leon So               & Add Objectives                               \\
+		October 30, 2022 & Arkin Modi            & Add Security System Tests                    \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -64,6 +65,7 @@
 	CI              & Continuous Integration              \\
 	SRS             & Software Requirements Specification \\
 	PWA             & Progressive Web Application         \\
+	HTTP            & Hypertext Transfer Protocol         \\
 	\bottomrule
 \end{tabular}\\
 
@@ -246,41 +248,37 @@ defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs
 \wss{Static tests, review, inspections, and walkthroughs, will not follow the
 	format for the tests given below.}
 
-\subsubsection{Area of Testing1}
-
-\paragraph{Title for Test}
+\subsubsection{Security Requirements}
 
 \begin{enumerate}
 
-	\item{test-id1\\}
+	\item \textbf{NFRT-SR1-1}
 
-	Type: Functional, Dynamic, Manual, Static etc.
+	      Type: Dynamic, Manual
 
-	Initial State:
+	      Initial State: Two created account with both containing an appointment
 
-	Input/Condition:
+	      Input/Condition: The appointment not belonging to the account will be looked by appointment ID
 
-	Output/Result:
+	      Output/Result: An error message saying the appointment is not found
 
-	How test will be performed:
+	      How test will be performed: The tester will search for the appointment by appointment ID through
+	      the user interface
 
-	\item{test-id2\\}
+	\item \textbf{NFRT-SR1-2}
 
-	Type: Functional, Dynamic, Manual, Static etc.
+	      Type: Dynamic, Automatic
 
-	Initial State:
+	      Initial State: An account with a created appointment
 
-	Input:
+	      Input/Condition: A HTTP request to the application's backend to get the appointment by appointment
+	      ID
 
-	Output:
+	      Output/Result: The request is rejected with a 403 Forbidden error message
 
-	How test will be performed:
+	      How test will be performed: Through Jest a request will be sent to the server
 
 \end{enumerate}
-
-\subsubsection{Area of Testing2}
-
-...
 
 \subsection{Traceability Between Test Cases and Requirements}
 
