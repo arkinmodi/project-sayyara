@@ -196,11 +196,11 @@ This section will contains tests covering the ``Appointments'' requirements defi
 
 \begin{enumerate}
 
-	\item{FRT-BE2-1}
+	\item{FRT-BE4-1}
 
-	Control: Automatic
+	Control: Manual
 
-	Initial State: Vehicle Owner finds auto shops to book appointments
+	Initial State: Vehicle Owner got a quote from an auto shop
 
 	Input: Vehicle Owner fills out service request information and selects an available appointment
 	time slot
@@ -211,11 +211,26 @@ This section will contains tests covering the ``Appointments'' requirements defi
 
 	How test will be performed: Through Jest we will call the endpoint for creating an appointment
 
-	\item{FRT-BE2-2}
+	\item{FRT-BE4-2}
 
-	Control: Automatic
+	Control: Manual
 
-	Initial State: Shop Owner/Shop Employee needs to enter an appointment into the schedule
+	Initial State: Vehicle Owner selects a canned job at an auto shop
+
+	Input: Vehicle Owner fills out service request information and selects an available appointment
+	time slot
+
+	Output: A new appointment is created with service details
+
+	Test Case Derivation: The system shall allow the user to book an appointment
+
+	How test will be performed: Through Jest we will call the endpoint for creating an appointment
+
+	\item{FRT-BE4-3}
+
+	Control: Manual
+
+	Initial State: Shop Owner/Shop Employee account with appointment to be scheduled
 
 	Input: Shop Owner/Shop Employee fills out customer information, service request information and
 	selects an available appointment time slot
@@ -225,6 +240,96 @@ This section will contains tests covering the ``Appointments'' requirements defi
 	Test Case Derivation: The system shall allow the user to book an appointment
 
 	How test will be performed: Through Jest we will call the endpoint for creating an appointment
+
+	\item{FRT-BE5-1}
+
+	Control: Manual
+
+	Initial State: Vehicle Owner has a service appointment scheduled
+
+	Input: Vehicle Owner selects an appointment to edit and selects a new available timeslot for the
+	appointment
+
+	Output: The appointment booking is updated to the new timeslot
+
+	Test Case Derivation: The system shall allow the user to edit an appointment
+
+	How test will be performed: Through Jest we will call the endpoint for updating an appointment
+	timeslot
+
+	\item{FRT-BE5-2}
+
+	Control: Manual
+
+	Initial State: Shop Owner/Shop Employee has a service appointment scheduled
+
+	Input: Shop Owner/Shop Employee selects an appointment to edit and selects a new available timeslot
+	for the appointment
+
+	Output: The appointment booking is updated to the new timeslot
+
+	Test Case Derivation: The system shall allow the user to edit an appointment
+
+	How test will be performed: Through Jest we will call the endpoint for updating an appointment
+	timeslot
+
+	\item{FRT-BE5-3}
+
+	Control: Manual
+
+	Initial State: Shop Owner/Shop Employee has a service appointment scheduled
+
+	Input: Shop Owner/Shop Employee selects an appointment to edit service details
+
+	Output: The appointment booking is updated with the updated service details
+
+	Test Case Derivation: The system shall allow the user to edit an appointment
+
+	How test will be performed: Through Jest we will call the endpoint for updating appointment service
+	details
+
+	\item{FRT-BE6-1}
+
+	Control: Manual
+
+	Initial State: Vehicle Owner has a service appointment scheduled
+
+	Input: Vehicle Owner selects an appointment to cancel
+
+	Output: The appointment booking is cancelled
+
+	Test Case Derivation: The system shall allow the user to cancel an appointment
+
+	How test will be performed: Through Jest we will call the endpoint for cancelling an appointment
+
+	\item{FRT-BE6-2}
+
+	Control: Manual
+
+	Initial State: Shop Owner/Shop Employee has a service appointment scheduled
+
+	Input: Shop Owner/Shop Employee selects an appointment to cancel
+
+	Output: The appointment booking is cancelled
+
+	Test Case Derivation: The system shall allow the user to cancel an appointment
+
+	How test will be performed: Through Jest we will call the endpoint for cancelling an appointment
+
+	\item{FRT-BE7-1}
+
+	Control: Manual
+
+	Initial State: Shop Owner selects appointment availability
+
+	Input: Shop Owner sets appointment availabilities
+
+	Output: The appointment availability is updated in the database
+
+	Test Case Derivation: The system shall allow the user to set appointment availabilities
+
+	How test will be performed: Through Jest we will call the endpoint for setting appointment
+	availabilities
 
 \end{enumerate}
 
