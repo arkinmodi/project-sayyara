@@ -246,41 +246,53 @@ defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs
 \wss{Static tests, review, inspections, and walkthroughs, will not follow the
 	format for the tests given below.}
 
-\subsubsection{Area of Testing1}
-
-\paragraph{Title for Test}
+\subsubsection{Look and Feel Requirements}
 
 \begin{enumerate}
 
-	\item{test-id1\\}
+	\item \textbf{NFRT-LF1}
 
-	Type: Functional, Dynamic, Manual, Static etc.
+	      Type: Dynamic, Manual
 
-	Initial State:
+	      Initial State: The application is accessible through the Google Chrome web browser
 
-	Input/Condition:
+	      Input/Condition: The window size is changed
 
-	Output/Result:
+	      Output/Result: The application shall adjust and scale to fit the new window size
 
-	How test will be performed:
+	      How test will be performed: The tester will access the application through Google Chrome on their
+	      desktop/laptop and change the windows through the use of Google Chrome Developer Tools' Device
+	      Toolbar
 
-	\item{test-id2\\}
+	\item \textbf{NFRT-LF2}
 
-	Type: Functional, Dynamic, Manual, Static etc.
+	      Type: Dynamic, Manual
 
-	Initial State:
+	      Initial State: The application is accessible through the Google Chrome web browser
 
-	Input:
+	      Input: The application is opened in a full screened web browser window
 
-	Output:
+	      Output: All text on the screen shall be readable
 
-	How test will be performed:
+	      How test will be performed: The tester open the application in a full screened web browser window,
+	      navigate to all pages, and judge if all text on the screen is readable from sitting 50 centimeters
+	      away from the monitor
+
+	\item \textbf{NFRT-LF3}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the Google Chrome web browser and there is a
+	      completed work order and quote on the user's account
+
+	      Input: The user opens the work order details and the quote details
+
+	      Output: All currency shall be rounded to two decimal places
+
+	      How test will be performed: The tester will navigate to the work order and quote and verify that
+	      all values of currency are rounded to two decimal places
 
 \end{enumerate}
-
-\subsubsection{Area of Testing2}
-
-...
 
 \subsection{Traceability Between Test Cases and Requirements}
 
