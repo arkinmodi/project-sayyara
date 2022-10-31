@@ -41,6 +41,7 @@
 		October 28, 2022 & Arkin Modi            & Add System Tests for Quotes                  \\
 		October 29, 2022 & Leon So               & Add Objectives                               \\
 		October 29, 2022 & Arkin Modi            & Add System Tests for Work Orders             \\
+		October 29, 2022 & Joy Xiao              & Add System Tests for Appointments            \\
 		October 30, 2022 & Leon So               & Add Operational and Environmental Tests      \\
 		October 30, 2022 & Arkin Modi            & Add Implementation Verification Plan         \\
 		October 30, 2022 & Leon So               & Add Usability and Humanity Tests             \\
@@ -228,13 +229,179 @@ defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs
 \wss{Include a blurb here to explain why the subsections below
 	cover the requirements.  References to the SRS would be good here.}
 
+\subsubsection{Appointments}
+
+This section will contains tests covering the ``Appointments'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE4-1}
+
+	      Control: Manual
+
+	      Initial State: Customer account which received a quote from an auto shop
+
+	      Input: Enters service request information and selects an available appointment time slot
+
+	      Output: A new appointment request is created with service details linked to the quote. Shop
+	      Owner/Employee Accounts will receive the appointment request
+
+	      Test Case Derivation: The appointment will be requested with the details the user entered
+
+	      How test will be performed: The tester will go through the appointment booking process through the
+	      user interface through quotes
+
+	\item \textbf{FRT-BE4-2}
+
+	      Control: Manual
+
+	      Initial State: Customer account selects a canned job at an auto shop
+
+	      Input: Enters service request information and selects an available appointment time slot
+
+	      Output: A new appointment request is created with service details. Shop Owner/Employee Accounts
+	      will receive the appointment request
+
+	      Test Case Derivation: The appointment will be requested with the canned job details as well as
+	      details the user entered
+
+	      How test will be performed: The tester will go through the appointment booking process through the
+	      user interface by selecting a canned job
+
+	\item \textbf{FRT-BE4-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with appointment to be scheduled
+
+	      Input: Enters customer information, service request information and selects an available
+	      appointment time slot
+
+	      Output: A new appointment request is created with service details
+
+	      Test Case Derivation: The appointment will be requested with the details the user entered
+
+	      How test will be performed: The tester will go through the appointment booking process through the
+	      user interface
+
+	\item \textbf{FRT-BE5-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit and selects a new available time slot for the appointment
+
+	      Output: A new appointment request is made with the new time slot. Shop Owner/Employee Accounts will
+	      receive the appointment request
+
+	      Test Case Derivation: The user is able to change their appointment to any of the available time
+	      slots displayed
+
+	      How test will be performed: The tester will go through the user interface to edit an appointment
+	      booking
+
+	\item \textbf{FRT-BE5-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit and selects a new available time slot for the appointment
+
+	      Output: The appointment booking is updated to the new time slot
+
+	      Test Case Derivation: The user is able to change their appointment to any of the available time
+	      slots displayed
+
+	      How test will be performed: The tester will go through the user interface to edit an appointment
+	      booking time slot
+
+	\item \textbf{FRT-BE5-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit service details
+
+	      Output: The appointment booking is updated with the updated service details
+
+	      Test Case Derivation: The user is able to update the appointment details
+
+	      How test will be performed: The tester will go through the user interface to edit appointment
+	      details
+
+	\item \textbf{FRT-BE3-4}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with appointment requests
+
+	      Input: Accept an appointment request
+
+	      Output: Appointment booking displayed in calendar for Shop Owner/Employee accounts and Customer
+	      account
+
+	      Test Case Derivation: The appointment request is accepted and appointment booking is completed
+
+	      How test will be performed: The tester will accept an appointment request through the user
+	      interface
+
+	\item \textbf{FRT-BE6-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account has a service appointment scheduled
+
+	      Input: Selects an appointment to cancel
+
+	      Output: The appointment booking is cancelled and removed from the customer and shop owner/employee
+	      schedules
+
+	      Test Case Derivation: The appointment should be removed from the calendar when it is cancelled
+
+	      How test will be performed: The tester will go through the user interface to cancel an appointment
+
+	\item \textbf{FRT-BE6-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Shop Employee has a service appointment scheduled
+
+	      Input: Selects an appointment to cancel
+
+	      Output: The appointment booking is cancelled and removed from the customer and shop owner/employee
+	      schedules
+
+	      Test Case Derivation: The appointment should be removed from the calendar when it is cancelled
+
+	      How test will be performed: The tester will go through the user interface to cancel an appointment
+
+	\item \textbf{FRT-BE7-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner selects appointment availability
+
+	      Input: Sets appointment availabilities
+
+	      Output: The appointment availability is updated in the database
+
+	      Test Case Derivation: The appointment availability will be saved and availability time slots to
+	      book appointments will be updated
+
+	      How test will be performed: The tester will go through the user interface to set appointment
+	      availabilities
+\end{enumerate}
+
 \subsubsection{Quotes}
 
 This section will contains tests covering the ``Quotes'' requirements defined in the
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
-
 	\item \textbf{FRT-BE8-1}
 
 	      Control: Manual
@@ -480,7 +647,6 @@ This section will contains tests covering the ``Quotes'' requirements defined in
 
 	      How test will be performed: The tester will send a message for additional information through the
 	      user interface
-
 \end{enumerate}
 
 \subsubsection{Work Orders}
