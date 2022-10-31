@@ -641,8 +641,7 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 
 	      Initial State: Two created accounts with both containing an appointment
 
-	      Input/Condition: The appointment not belonging to the account will be searched for by appointment
-	      ID
+	      Input/Condition: The user searches for an appointment ID not belonging to the account
 
 	      Output/Result: An error message saying the appointment is not found
 
@@ -655,19 +654,19 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 
 	      Initial State: An account with a created appointment
 
-	      Input/Condition: A HTTP request to the application's backend to get the appointment by appointment
+	      Input/Condition: An HTTP request to the application's backend to get the appointment by appointment
 	      ID
 
 	      Output/Result: The request is rejected with a 403 Forbidden error message
 
-	      How test will be performed: Through Jest a HTTP request will be sent to the server
+	      How test will be performed: Through Jest an HTTP request will be sent to the server
 
 	\item \textbf{NFRT-SR2-1}
 
 	      Type: Dynamic, Manual
 
-	      Initial State: One Shop Owner account and two Customer account with one customer having an
-	      appointment at the shop registered under the Shop Owner account
+	      Initial State: One Shop Owner account and two Customer accounts with one customer having an
+	      appointment at the shop registered under the same Shop Owner account
 
 	      Input/Condition: Viewing available time slots as the Customer without an appointment and again as
 	      the Shop Owner
@@ -683,17 +682,17 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 
 	      Type: Dynamic, Automatic
 
-	      Initial State: One Shop Owner account and two Customer account with one customer having an
-	      appointment at the shop registered under the Shop Owner account
+	      Initial State: One Shop Owner account and two Customer accounts with one customer having an
+	      appointment at the shop registered under the same Shop Owner account
 
-	      Input/Condition: A HTTP request to the application's backend to get the available time slots using
+	      Input/Condition: An HTTP request to the application's backend to get the available time slots using
 	      the Customer without an appointment's security token and again with the Shop Owner's security token
 
 	      Output/Result: The Customer should only be able to view the time slot taken by the other customer,
 	      but the Shop Owner should be able to view all the information of the Customer that has taken the
 	      time slot
 
-	      How test will be performed: Through Jest a HTTP request will be sent to the server as both the
+	      How test will be performed: Through Jest an HTTP request will be sent to the server as both the
 	      Customer without an appointment and the Shop Owner
 
 \end{enumerate}
