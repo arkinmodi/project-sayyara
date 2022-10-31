@@ -12,6 +12,9 @@
 }
 \usepackage[round]{natbib}
 \usepackage{float}
+\usepackage{pdflscape}
+\usepackage{longtable}
+\usepackage{multirow}
 
 \input{../Comments}
 \input{../Common}
@@ -32,19 +35,20 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}    & \textbf{Developer(s)} & \textbf{Change}                              \\
+		\textbf{Date}    & \textbf{Developer(s)} & \textbf{Change}                                      \\
 		\midrule
-		October 26, 2022 & Arkin Modi            & Added Software Validation Plan               \\
-		October 27, 2022 & Joy Xiao              & Add Testing Team and Design Verification     \\
-		October 27, 2022 & Arkin Modi            & Add Automated Testing and Verification Tools \\
-		October 28, 2022 & Leon So               & Add Summary                                  \\
-		October 28, 2022 & Arkin Modi            & Add System Tests for Quotes                  \\
-		October 29, 2022 & Leon So               & Add Objectives                               \\
-		October 29, 2022 & Arkin Modi            & Add System Tests for Work Orders             \\
-		October 29, 2022 & Joy Xiao              & Add System Tests for Appointments            \\
-		October 30, 2022 & Leon So               & Add Operational and Environmental Tests      \\
-		October 30, 2022 & Arkin Modi            & Add Implementation Verification Plan         \\
-		October 30, 2022 & Leon So               & Add Usability and Humanity Tests             \\
+		October 26, 2022 & Arkin Modi            & Added Software Validation Plan                       \\
+		October 27, 2022 & Joy Xiao              & Add Testing Team and Design Verification             \\
+		October 27, 2022 & Arkin Modi            & Add Automated Testing and Verification Tools         \\
+		October 28, 2022 & Leon So               & Add Summary                                          \\
+		October 28, 2022 & Arkin Modi            & Add System Tests for Quotes                          \\
+		October 29, 2022 & Leon So               & Add Objectives                                       \\
+		October 29, 2022 & Arkin Modi            & Add System Tests for Work Orders                     \\
+		October 29, 2022 & Joy Xiao              & Add System Tests for Appointments                    \\
+		October 30, 2022 & Leon So               & Add Operational and Environmental Tests              \\
+		October 30, 2022 & Arkin Modi            & Add Implementation Verification Plan                 \\
+		October 30, 2022 & Leon So               & Add Usability and Humanity Tests                     \\
+		November 1, 2022 & Arkin Modi            & Add Traceability Between Test Cases and Requirements \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -831,10 +835,80 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 
 ...
 
-\subsection{Traceability Between Test Cases and Requirements}
+\newpage
+\begin{landscape}
+	\subsection{Traceability Between Test Cases and Requirements}
 
-\wss{Provide a table that shows which test cases are supporting which
-	requirements.}
+	\begin{longtable}{|l|cccccccccccccccc|}
+		\caption{Traceability Between Test Cases and Requirements, BE1 to BE16}                                                                                                                                                                                                                                      \\
+		\hline
+		\textbf{Test IDs}   & \multicolumn{16}{c|}{\textbf{Requirement IDs}}                                                                                                                                                                                                                                         \\
+		\hline
+		~                   & \textbf{BE1}                                   & \textbf{BE2} & \textbf{BE3} & \textbf{BE4} & \textbf{BE5} & \textbf{BE6} & \textbf{BE7} & \textbf{BE8} & \textbf{BE9} & \textbf{BE10} & \textbf{BE11} & \textbf{BE12} & \textbf{BE13} & \textbf{BE14} & \textbf{BE15} & \textbf{BE16} \\
+		\hline
+		\textbf{FRT-BE1-1}  & X                                              & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE2-1}  & ~                                              & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE3-1}  & ~                                              & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE4-1}  & ~                                              & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE5-1}  & ~                                              & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE6-1}  & ~                                              & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE7-1}  & ~                                              & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE8-1}  & ~                                              & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE9-1}  & ~                                              & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE10-1} & ~                                              & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE11-1} & ~                                              & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & X             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE12-1} & ~                                              & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE13-1} & ~                                              & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & X             & ~             & ~             & ~             \\
+		\textbf{FRT-BE14-1} & ~                                              & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & X             & ~             & ~             \\
+		\textbf{FRT-BE15-1} & ~                                              & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & X             & ~             \\
+		\textbf{FRT-BE16-1} & ~                                              & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & X             \\
+		\hline
+	\end{longtable}
+
+	\newpage
+
+	\begin{longtable}{|l|ccccccccccccccc|}
+		\caption{Traceability Between Test Cases and Requirements, BE17 to BE31}                                                                                                                                                                                                                             \\
+		\hline
+		\textbf{Test IDs}   & \multicolumn{15}{c|}{\textbf{Requirement IDs}}                                                                                                                                                                                                                                 \\
+		\hline
+		~                   & \textbf{BE17}                                  & \textbf{BE18} & \textbf{BE19} & \textbf{BE20} & \textbf{BE21} & \textbf{BE21} & \textbf{BE23} & \textbf{BE24} & \textbf{BE25} & \textbf{BE26} & \textbf{BE27} & \textbf{BE28} & \textbf{BE29} & \textbf{BE30} & \textbf{BE31} \\
+		\hline
+		\textbf{FRT-BE17-1} & X                                              & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE18-1} & ~                                              & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE19-1} & ~                                              & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE20-1} & ~                                              & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE21-1} & ~                                              & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE22-1} & ~                                              & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE23-1} & ~                                              & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE24-1} & ~                                              & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE25-1} & ~                                              & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE26-1} & ~                                              & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE27-1} & ~                                              & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE28-1} & ~                                              & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             \\
+		\textbf{FRT-BE29-1} & ~                                              & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             \\
+		\textbf{FRT-BE30-1} & ~                                              & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             \\
+		\textbf{FRT-BE31-1} & ~                                              & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             \\
+		\hline
+	\end{longtable}
+
+	\newpage
+
+	\begin{longtable}{|l|ccccc|}
+		\caption{Traceability Between Test Cases and Requirements, BE32 to BE36}                                                            \\
+		\hline
+		\textbf{Test IDs}   & \multicolumn{5}{c|}{\textbf{Requirement IDs}}                                                                 \\
+		\hline
+		~                   & \textbf{BE32}                                 & \textbf{BE33} & \textbf{BE34} & \textbf{BE35} & \textbf{BE36} \\
+		\hline
+		\textbf{FRT-BE32-1} & X                                             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE33-1} & ~                                             & X             & ~             & ~             & ~             \\
+		\textbf{FRT-BE34-1} & ~                                             & ~             & X             & ~             & ~             \\
+		\textbf{FRT-BE35-1} & ~                                             & ~             & ~             & X             & ~             \\
+		\textbf{FRT-BE36-1} & ~                                             & ~             & ~             & ~             & X             \\
+		\hline
+	\end{longtable}
+\end{landscape}
 
 \section{Unit Test Description} \label{Unit Test Description}
 
