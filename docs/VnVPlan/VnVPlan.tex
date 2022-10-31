@@ -11,6 +11,7 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
+\usepackage{float}
 
 \input{../Comments}
 \input{../Common}
@@ -37,8 +38,14 @@
 		October 27, 2022 & Joy Xiao              & Add Testing Team and Design Verification     \\
 		October 27, 2022 & Arkin Modi            & Add Automated Testing and Verification Tools \\
 		October 28, 2022 & Leon So               & Add Summary                                  \\
+		October 28, 2022 & Arkin Modi            & Add System Tests for Quotes                  \\
 		October 29, 2022 & Leon So               & Add Objectives                               \\
+		October 29, 2022 & Arkin Modi            & Add System Tests for Work Orders             \\
+		October 29, 2022 & Joy Xiao              & Add System Tests for Appointments            \\
 		October 30, 2022 & Timothy Choy          & Add SRS Verification Plan                    \\
+		October 30, 2022 & Leon So               & Add Operational and Environmental Tests      \\
+		October 30, 2022 & Arkin Modi            & Add Implementation Verification Plan         \\
+		October 30, 2022 & Leon So               & Add Usability and Humanity Tests             \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -159,14 +166,48 @@ the corresponding requirements.
 
 \subsection{Implementation Verification Plan}
 
-\wss{You should at least point to the tests listed in this document and the unit
-	testing plan.}
+Automated integration tests will be created to fullfil the system tests defined in section
+\ref{System Test Description} and automated unit tests will be created to fullfil the tests defined
+in section \ref{Unit Test Description}. Static analysis will be performed through code review by at
+least one core team member per pull request and automation tools as stated in \ref{Automated
+	Testing and Verification Tools}. A pull request will cover at most one module.
 
-\wss{In this section you would also give any details of any plans for static verification of
-	the implementation.  Potential techniques include code walkthroughs, code
-	inspection, static analyzers, etc.}
+Manual System Tests defined in section \ref{System Test Description} shall take place from January
+16, 2023 to January 30, 2023. The areas of responsibility will be divided as described in table
+\ref{Manual System Testing Responsibilities}.
 
-\subsection{Automated Testing and Verification Tools}
+\begin{table}[H]
+	\centering
+	\caption{Manual System Testing Responsibilities}
+	\vspace{5pt}
+	\begin{tabular}{|p{0.5\textwidth}|p{0.5\textwidth}|}
+		\hline
+		\textbf{Area of Testing} & \textbf{Team Member Responsible} \\
+		\hline
+		Authentication           & Leon So                          \\
+		\hline
+		Appointments             & Joy Xiao                         \\
+		\hline
+		Quotes                   & Arkin Modi                       \\
+		\hline
+		Work Orders              & Arkin Modi                       \\
+		\hline
+		Employee Management      & Leon So                          \\
+		\hline
+		Services                 & Joy Xiao                         \\
+		\hline
+		Shop Lookup              & Timothy Choy                     \\
+		\hline
+		Shop Profile             & Timothy Choy                     \\
+		\hline
+		Employee Profile         & Timothy Choy                     \\
+		\hline
+	\end{tabular}
+
+	\label{Manual System Testing Responsibilities}
+\end{table}
+
+\subsection{Automated Testing and Verification Tools} \label{Automated Testing and Verification Tools}
 
 All tooling and automations that will be used for testing and verification have been documented in
 the
@@ -185,9 +226,9 @@ The plan for validating the software and the requirements shall be to conduct re
 the stakeholders. These review sessions shall focus on the business events and user flows as
 defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
-\section{System Test Description}
+\section{System Test Description} \label{System Test Description}
 
-\subsection{Tests for Functional Requirements}
+\subsection{Tests for Functional Requirements} \label{Tests for Functional Requirements}
 
 \wss{Subsets of the tests may be in related, so this section is divided into
 	different areas.  If there are no identifiable subsets for the tests, this
@@ -196,50 +237,558 @@ defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs
 \wss{Include a blurb here to explain why the subsections below
 	cover the requirements.  References to the SRS would be good here.}
 
-\subsubsection{Area of Testing1}
+\subsubsection{Appointments}
 
-\wss{It would be nice to have a blurb here to explain why the subsections below
-	cover the requirements.  References to the SRS would be good here.  If a section
-	covers tests for input constraints, you should reference the data constraints
-	table in the SRS.}
-
-\paragraph{Title for Test}
+This section will contains tests covering the ``Appointments'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
 
-	\item{test-id1\\}
+	\item \textbf{FRT-BE4-1}
 
-	Control: Manual versus Automatic
+	      Control: Manual
 
-	Initial State:
+	      Initial State: Customer account which received a quote from an auto shop
 
-	Input:
+	      Input: Enters service request information and selects an available appointment time slot
 
-	Output: \wss{The expected result for the given inputs}
+	      Output: A new appointment request is created with service details linked to the quote. Shop
+	      Owner/Employee Accounts will receive the appointment request
 
-	Test Case Derivation: \wss{Justify the expected value given in the Output field}
+	      Test Case Derivation: The appointment will be requested with the details the user entered
 
-	How test will be performed:
+	      How test will be performed: The tester will go through the appointment booking process through the
+	      user interface through quotes
 
-	\item{test-id2\\}
+	\item \textbf{FRT-BE4-2}
 
-	Control: Manual versus Automatic
+	      Control: Manual
 
-	Initial State:
+	      Initial State: Customer account selects a canned job at an auto shop
 
-	Input:
+	      Input: Enters service request information and selects an available appointment time slot
 
-	Output: \wss{The expected result for the given inputs}
+	      Output: A new appointment request is created with service details. Shop Owner/Employee Accounts
+	      will receive the appointment request
 
-	Test Case Derivation: \wss{Justify the expected value given in the Output field}
+	      Test Case Derivation: The appointment will be requested with the canned job details as well as
+	      details the user entered
 
-	How test will be performed:
+	      How test will be performed: The tester will go through the appointment booking process through the
+	      user interface by selecting a canned job
 
+	\item \textbf{FRT-BE4-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with appointment to be scheduled
+
+	      Input: Enters customer information, service request information and selects an available
+	      appointment time slot
+
+	      Output: A new appointment request is created with service details
+
+	      Test Case Derivation: The appointment will be requested with the details the user entered
+
+	      How test will be performed: The tester will go through the appointment booking process through the
+	      user interface
+
+	\item \textbf{FRT-BE5-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit and selects a new available time slot for the appointment
+
+	      Output: A new appointment request is made with the new time slot. Shop Owner/Employee Accounts will
+	      receive the appointment request
+
+	      Test Case Derivation: The user is able to change their appointment to any of the available time
+	      slots displayed
+
+	      How test will be performed: The tester will go through the user interface to edit an appointment
+	      booking
+
+	\item \textbf{FRT-BE5-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit and selects a new available time slot for the appointment
+
+	      Output: The appointment booking is updated to the new time slot
+
+	      Test Case Derivation: The user is able to change their appointment to any of the available time
+	      slots displayed
+
+	      How test will be performed: The tester will go through the user interface to edit an appointment
+	      booking time slot
+
+	\item \textbf{FRT-BE5-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit service details
+
+	      Output: The appointment booking is updated with the updated service details
+
+	      Test Case Derivation: The user is able to update the appointment details
+
+	      How test will be performed: The tester will go through the user interface to edit appointment
+	      details
+
+	\item \textbf{FRT-BE3-4}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with appointment requests
+
+	      Input: Accept an appointment request
+
+	      Output: Appointment booking displayed in calendar for Shop Owner/Employee accounts and Customer
+	      account
+
+	      Test Case Derivation: The appointment request is accepted and appointment booking is completed
+
+	      How test will be performed: The tester will accept an appointment request through the user
+	      interface
+
+	\item \textbf{FRT-BE6-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account has a service appointment scheduled
+
+	      Input: Selects an appointment to cancel
+
+	      Output: The appointment booking is cancelled and removed from the customer and shop owner/employee
+	      schedules
+
+	      Test Case Derivation: The appointment should be removed from the calendar when it is cancelled
+
+	      How test will be performed: The tester will go through the user interface to cancel an appointment
+
+	\item \textbf{FRT-BE6-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Shop Employee has a service appointment scheduled
+
+	      Input: Selects an appointment to cancel
+
+	      Output: The appointment booking is cancelled and removed from the customer and shop owner/employee
+	      schedules
+
+	      Test Case Derivation: The appointment should be removed from the calendar when it is cancelled
+
+	      How test will be performed: The tester will go through the user interface to cancel an appointment
+
+	\item \textbf{FRT-BE7-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner selects appointment availability
+
+	      Input: Sets appointment availabilities
+
+	      Output: The appointment availability is updated in the database
+
+	      Test Case Derivation: The appointment availability will be saved and availability time slots to
+	      book appointments will be updated
+
+	      How test will be performed: The tester will go through the user interface to set appointment
+	      availabilities
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Quotes}
 
-...
+This section will contains tests covering the ``Quotes'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+	\item \textbf{FRT-BE8-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with no quote requests initiated from the account
+
+	      Input: Request past quotes
+
+	      Output: A message saying there are no past quotes
+
+	      Test Case Derivation: There are no past quotes to display
+
+	      How test will be performed: The tester will request for past quotes through the user interface
+
+	\item \textbf{FRT-BE8-2}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with quotes requests which have been closed and were initiated by
+	      the account
+
+	      Input: Request past quotes
+
+	      Output: A table with all the quotes
+
+	      Test Case Derivation: There are past quotes to display
+
+	      How test will be performed: The tester will request for past quotes through the user interface
+
+	\item \textbf{FRT-BE8-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with no quotes requests assigned to the shop
+
+	      Input: Request past quotes with quote ID, customer phone number, and/or customer name
+
+	      Output: A message saying there are no past quotes
+
+	      Test Case Derivation: There are no past quotes to display matching the inputted criteria
+
+	      How test will be performed: The tester will request for past quotes through the user interface
+
+	\item \textbf{FRT-BE8-4}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with closed quotes requests that were assigned to the
+	      shop
+
+	      Input: Request past quotes with quote ID, customer phone number, and/or customer name
+
+	      Output: A table with all the quotes
+
+	      Test Case Derivation: There are past quotes to display matching the inputted criteria
+
+	      How test will be performed: The tester will request for past quotes through the user interface
+
+	\item \textbf{FRT-BE9-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with quotes requests which have been closed and were initiated by
+	      the account
+
+	      Input: Request quote details
+
+	      Output: The quote details
+
+	      Test Case Derivation: Display the quote details requested
+
+	      How test will be performed: The tester will request for quote details through the user interface
+
+	\item \textbf{FRT-BE9-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with closed quotes requests that were assigned to the
+	      shop
+
+	      Input: Request quote details
+
+	      Output: The quote details
+
+	      Test Case Derivation: Display the quote details requested
+
+	      How test will be performed: The tester will request for quote details through the user interface
+
+	\item \textbf{FRT-BE10-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account
+
+	      Input: A filled in quote request form
+
+	      Output: A confirmation messaging indicating that the quote was requested
+
+	      Test Case Derivation: The system shall verify that the quote was created successfully
+
+	      How test will be performed: The tester will create a quote through the user interface
+
+	\item \textbf{FRT-BE10-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop
+
+	      Input: A quote is requested from the shop
+
+	      Output: A notification for the open quote request
+
+	      Test Case Derivation: The system shall notify that a quote was created
+
+	      How test will be performed: The tester will create a quote through the user interface
+
+	\item \textbf{FRT-BE11}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a created quote
+
+	      Input: Request to delete quote with the quote's ID
+
+	      Output: A quote deleted confirmation message
+
+	      Test Case Derivation: The system shall delete the quote upon request
+
+	      How test will be performed: The tester will delete a quote through the user interface
+
+	\item \textbf{FRT-BE12-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a created quote
+
+	      Input: Request to update quote with the quote's new details
+
+	      Output: A quote updated confirmation message
+
+	      Test Case Derivation: The system shall update the quote upon request
+
+	      How test will be performed: The tester will update a quote through the user interface
+
+	\item \textbf{FRT-BE12-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and an active quote
+
+	      Input: A quote's details are updated
+
+	      Output: A notification for the updated quote
+
+	      Test Case Derivation: The system shall notify that a quote was updated
+
+	      How test will be performed: The tester will update a quote through the user interface
+
+	\item \textbf{FRT-BE13}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a created quote
+
+	      Input: A request to create a new quote using details from another quote which is identified by
+	      quote ID
+
+	      Output: A confirmation messaging indicating that the quote was requested
+
+	      Test Case Derivation: The system shall verify that the quote was created successfully with an
+	      existing quote's details
+
+	      How test will be performed: The tester will create a quote through the user interface
+
+	\item \textbf{FRT-BE14-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a created quote
+
+	      Input: A response to a quote
+
+	      Output: A notification for the responded to quote
+
+	      Test Case Derivation: The system shall notify that a quote was responded to
+
+	      How test will be performed: The tester will create a response to a quote through the user interface
+
+	\item \textbf{FRT-BE14-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and an active quote
+
+	      Input: A response to a quote
+
+	      Output: A quote responded confirmation message
+
+	      Test Case Derivation: The system shall verify that the quote was responded to successfully
+
+	      How test will be performed: The tester will create a response to a quote through the user interface
+
+	\item \textbf{FRT-BE15}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a responded to quote
+
+	      Input: Accept a responded to quote
+
+	      Output: The system shall request the user to create an appointment with the shop that responded
+
+	      Test Case Derivation: The system shall have the user create an appointment upon accepting a quote
+
+	      How test will be performed: The tester will accept a quote through the user interface
+
+	\item \textbf{FRT-BE16-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a created quote
+
+	      Input: A message to request additional information
+
+	      Output: A message sent confirmation
+
+	      Test Case Derivation: The system shall confirm to the user that the message was sent
+
+	      How test will be performed: The tester will send a message for additional information through the
+	      user interface
+
+	\item \textbf{FRT-BE16-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and an active quote
+
+	      Input: A message to request additional information
+
+	      Output: A message sent confirmation
+
+	      Test Case Derivation: The system shall confirm to the user that the message was sent
+
+	      How test will be performed: The tester will send a message for additional information through the
+	      user interface
+\end{enumerate}
+
+\subsubsection{Work Orders}
+
+This section will contains tests covering the ``Work Orders'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE17-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and a quote
+
+	      Input: A new appointment created at the shop from the quote
+
+	      Output: A new work order is created with details from the quote
+
+	      Test Case Derivation: The system shall automatically create a work order for new appointment with
+	      information from the quote
+
+	      How test will be performed: The tester will create an appointment through the user interface
+
+	\item \textbf{FRT-BE17-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop
+
+	      Input: A new appointment created at the shop
+
+	      Output: A new work order is created
+
+	      Test Case Derivation: The system shall automatically create a work order for new appointment
+
+	      How test will be performed: The tester will create an appointment through the user interface
+
+	\item \textbf{FRT-BE18}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: Appointment is deleted
+
+	      Output: Appointment and Work Order deleted confirmation message
+
+	      Test Case Derivation: The system shall delete appointment and the associated work order upon
+	      request
+
+	      How test will be performed: The tester will delete an appointment through the user interface
+
+	\item \textbf{FRT-BE19}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: Work Order is searched by the customer name, assigned employee, service type, and/or a date
+	      range
+
+	      Output: The work orders matching the inputted criteria in a table format
+
+	      Test Case Derivation: The system shall display work order upon request
+
+	      How test will be performed: The tester will search for a work order through the user interface
+
+	\item \textbf{FRT-BE20}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: Request to view past work orders
+
+	      Output: Past work orders in a table format
+
+	      Test Case Derivation: The system shall display work order upon request
+
+	      How test will be performed: The tester will search for past work orders through the user interface
+
+	\item \textbf{FRT-BE21}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: Request to update a work order with new details
+
+	      Output: A work order updated confirmation message
+
+	      Test Case Derivation: The system shall update work order upon request
+
+	      How test will be performed: The tester will update a work order through the user interface
+
+	\item \textbf{FRT-BE22}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an appointment, and a work order
+	      associated to the appointment
+
+	      Input: A customer has paid for their appointment
+
+	      Output: The work order is emailed to the customer, and the appointment and work order are marked as
+	      ``completed''
+
+	      Test Case Derivation: The system shall mark work orders and appointments as completed when the
+	      customer has paid for the word done
+
+	      How test will be performed: The tester will mark a work order as completed through the user
+	      interface
+
+	\item \textbf{FRT-BE23}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an appointment, and a work order
+	      associated to the appointment
+
+	      Input: Request work order details
+
+	      Output: The work order details
+
+	      Test Case Derivation: The system shall display work orders details upon request
+
+	      How test will be performed: The tester will view a work order's details through the user interface
+
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 
@@ -295,7 +844,7 @@ defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs
 \wss{Provide a table that shows which test cases are supporting which
 	requirements.}
 
-\section{Unit Test Description}
+\section{Unit Test Description} \label{Unit Test Description}
 
 \wss{Reference your MIS (detailed design document) and explain your overall
 	philosophy for test case selection.}
@@ -400,9 +949,59 @@ defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs
 
 \end{enumerate}
 
-\subsubsection{Module ?}
+\subsubsection{Usability and Humanity Requirements}
+\begin{enumerate}
 
-...
+	\item \textbf{NFRT-UH1} % For UH1
+
+	      Type: Dynamic, Manual
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements listed section \ref{Tests for Functional Requirements} on a MacOS desktop/laptop
+	      device, a Windows desktop/laptop, an iOS mobile device, and an android mobile device.
+
+	\item \textbf{NFRT-UH2} % For UH2
+
+	      Type: Dynamic, Manual
+
+	      Initial State: Device is connected to the internet and application is not open
+
+	      Input/Condition: The user launches the application on Google Chrome
+
+	      Output/Result: The system can be assessed through Google Chrome
+
+	      How test will be performed: The tester will attempt to launch the application on the Google Chrome
+	      web browser and using a device that is connected to the internet.
+
+	\item \textbf{NFRT-UH3} % For UH3
+
+	      Type: Dynamic, Manual
+
+	      Initial State: Device is connected to the internet and the application is open
+
+	      Input/Condition: User disconnects from the internet
+
+	      Output/Result: The system notifies the user that there is no network connection and functionality
+	      will be limited.
+
+	      How test will be performed: The tester disconnect from the internet while the application is open.
+
+\end{enumerate}
+
+\subsubsection{Operational and Environmental Requirements}
+\begin{enumerate}
+
+	\item \textbf{NFRT-OE1} % For OE1
+
+	      Type: Dynamic, Manual
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements listed section \ref{Tests for Functional Requirements} on Google Chrome using various
+	      device dimension options listed the Google DevTools Device Toolbar. At minimum, the testers will
+	      test with the following dimensions: Responsive, iPhone 12 Pro (390x844), iPhone SE (375x667), and
+	      iPad Air (820x1180). This set will provide a reasonable variety of different device dimensions.
+
+\end{enumerate}
 
 \subsection{Traceability Between Test Cases and Modules}
 
@@ -426,12 +1025,6 @@ this section for easy maintenance.
 \subsection{Usability Survey Questions?}
 
 \wss{This is a section that would be appropriate for some projects.}
-
-\newpage{}
-\section*{Appendix --- Reflection}
-
-The information in this section will be used to evaluate the team members on the graduate attribute
-of Lifelong Learning. Please answer the following questions:
 
 \newpage{}
 \section*{Appendix --- Reflection}
