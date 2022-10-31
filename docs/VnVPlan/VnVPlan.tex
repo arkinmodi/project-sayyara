@@ -45,6 +45,7 @@
 		October 30, 2022 & Leon So               & Add Operational and Environmental Tests      \\
 		October 30, 2022 & Arkin Modi            & Add Implementation Verification Plan         \\
 		October 30, 2022 & Leon So               & Add Usability and Humanity Tests             \\
+		October 30, 2022 & Joy Xiao              & Add System Tests for Services                \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -779,6 +780,84 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 	      Test Case Derivation: The system shall display work orders details upon request
 
 	      How test will be performed: The tester will view a work order's details through the user interface
+
+\end{enumerate}
+
+\subsubsection{Services}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE28-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner has a shop profile
+
+	      Input: Shop Owner sets available services
+
+	      Output: Shop services are sent to the database and displayed on the shop profile
+
+	      Test Case Derivation: The user can add available auto shop services to their shop profile
+
+	      How test will be performed: The user will search for shop services through the user interface
+
+	\item \textbf{FRT-BE29-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account searches for auto repair or maintenance services
+
+	      Input: Enters specific auto service in the search bar
+
+	      Output: Auto shops with relevant services displayed with service details
+
+	      Test Case Derivation: Services and auto shops relevant to the search query will be displayed
+
+	      How test will be performed: The user will search for shop services through the user interface
+
+	\item \textbf{FRT-BE29-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Shop Employee searches for auto repair or maintenance services
+
+	      Input: Enters specific auto service in the search bar
+
+	      Output: Auto shops with relevant services displayed with service details
+
+	      Test Case Derivation: Services corresponding to the auto shop will be displayed
+
+	      How test will be performed: The user will search for shop services through the user interface
+
+	\item \textbf{FRT-BE30-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner with services listed on their shop profile
+
+	      Input: Updates the details of a service listed on their profile
+
+	      Output: The service is updated with the entered details
+
+	      Test Case Derivation: The shop profile will list the service with the updated details
+
+	      How test will be performed: The user will update the details of a shop service through the user
+	      interface
+
+	\item \textbf{FRT-BE31-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner with services listed on their shop profile
+
+	      Input: Deletes a service listed on their shop profile
+
+	      Output: Service is removed from the shop profile. Other services that were not deleted continue to
+	      be listed on the shop profile
+
+	      Test Case Derivation: The service that is deleted is removed from the shop profile
+
+	      How test will be performed: The user will delete a shop service through the user interface
 
 \end{enumerate}
 
