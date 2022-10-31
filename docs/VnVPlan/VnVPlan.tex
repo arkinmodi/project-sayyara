@@ -45,6 +45,7 @@
 		October 30, 2022 & Leon So               & Add Operational and Environmental Tests      \\
 		October 30, 2022 & Arkin Modi            & Add Implementation Verification Plan         \\
 		October 30, 2022 & Leon So               & Add Usability and Humanity Tests             \\
+		October 31, 2022 & Timothy Choy          & Add System Tests for Shop Lookup             \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -231,7 +232,7 @@ defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs
 
 \subsubsection{Appointments}
 
-This section will contains tests covering the ``Appointments'' requirements defined in the
+This section will contain tests covering the ``Appointments'' requirements defined in the
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
@@ -398,7 +399,7 @@ This section will contains tests covering the ``Appointments'' requirements defi
 
 \subsubsection{Quotes}
 
-This section will contains tests covering the ``Quotes'' requirements defined in the
+This section will contain tests covering the ``Quotes'' requirements defined in the
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
@@ -651,7 +652,7 @@ This section will contains tests covering the ``Quotes'' requirements defined in
 
 \subsubsection{Work Orders}
 
-This section will contains tests covering the ``Work Orders'' requirements defined in the
+This section will contain tests covering the ``Work Orders'' requirements defined in the
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
@@ -780,6 +781,21 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 
 	      How test will be performed: The tester will view a work order's details through the user interface
 
+\end{enumerate}
+
+\subsubsection{Shop Lookup}
+
+This section will contain tests covering the ``Shop Lookup'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+	\item \textbf{FRT-BE32}\\
+	      Control: Manual\\
+	      Initial State: Shop Owner/Employee Account with a registered shop\\
+	      Input: The user attempts to view a list of shops, using the parameters of distance, postal code, and/or shop name\\
+	      Output: A output list of shops based on the input parameters\\
+	      Test Case Derivation:\\
+	      How test will be performed:\\
 \end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
