@@ -39,6 +39,7 @@
 		October 27, 2022 & Arkin Modi            & Add Automated Testing and Verification Tools \\
 		October 28, 2022 & Leon So               & Add Summary                                  \\
 		October 29, 2022 & Leon So               & Add Objectives                               \\
+		October 29, 2022 & Arkin Modi            & Add System Tests for Work Orders             \\
 		October 30, 2022 & Arkin Modi            & Add Implementation Verification Plan         \\
 		October 30, 2022 & Leon So               & Add Usability and Humanity Tests             \\
 		\bottomrule
@@ -225,50 +226,138 @@ defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs
 \wss{Include a blurb here to explain why the subsections below
 	cover the requirements.  References to the SRS would be good here.}
 
-\subsubsection{Area of Testing1}
+\subsubsection{Work Orders}
 
-\wss{It would be nice to have a blurb here to explain why the subsections below
-	cover the requirements.  References to the SRS would be good here.  If a section
-	covers tests for input constraints, you should reference the data constraints
-	table in the SRS.}
-
-\paragraph{Title for Test}
+This section will contains tests covering the ``Work Orders'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
 
-	\item{test-id1\\}
+	\item \textbf{FRT-BE17-1}
 
-	Control: Manual versus Automatic
+	      Control: Manual
 
-	Initial State:
+	      Initial State: Shop Owner/Employee Account with a registered shop and a quote
 
-	Input:
+	      Input: A new appointment created at the shop from the quote
 
-	Output: \wss{The expected result for the given inputs}
+	      Output: A new work order is created with details from the quote
 
-	Test Case Derivation: \wss{Justify the expected value given in the Output field}
+	      Test Case Derivation: The system shall automatically create a work order for new appointment with
+	      information from the quote
 
-	How test will be performed:
+	      How test will be performed: The tester will create an appointment through the user interface
 
-	\item{test-id2\\}
+	\item \textbf{FRT-BE17-2}
 
-	Control: Manual versus Automatic
+	      Control: Manual
 
-	Initial State:
+	      Initial State: Shop Owner/Employee Account with a registered shop
 
-	Input:
+	      Input: A new appointment created at the shop
 
-	Output: \wss{The expected result for the given inputs}
+	      Output: A new work order is created
 
-	Test Case Derivation: \wss{Justify the expected value given in the Output field}
+	      Test Case Derivation: The system shall automatically create a work order for new appointment
 
-	How test will be performed:
+	      How test will be performed: The tester will create an appointment through the user interface
+
+	\item \textbf{FRT-BE18}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: Appointment is deleted
+
+	      Output: Appointment and Work Order deleted confirmation message
+
+	      Test Case Derivation: The system shall delete appointment and the associated work order upon
+	      request
+
+	      How test will be performed: The tester will delete an appointment through the user interface
+
+	\item \textbf{FRT-BE19}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: Work Order is searched by the customer name, assigned employee, service type, and/or a date
+	      range
+
+	      Output: The work orders matching the inputted criteria in a table format
+
+	      Test Case Derivation: The system shall display work order upon request
+
+	      How test will be performed: The tester will search for a work order through the user interface
+
+	\item \textbf{FRT-BE20}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: Request to view past work orders
+
+	      Output: Past work orders in a table format
+
+	      Test Case Derivation: The system shall display work order upon request
+
+	      How test will be performed: The tester will search for past work orders through the user interface
+
+	\item \textbf{FRT-BE21}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: Request to update a work order with new details
+
+	      Output: A work order updated confirmation message
+
+	      Test Case Derivation: The system shall update work order upon request
+
+	      How test will be performed: The tester will update a work order through the user interface
+
+	\item \textbf{FRT-BE22}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an appointment, and a work order
+	      associated to the appointment
+
+	      Input: A customer has paid for their appointment
+
+	      Output: The work order is emailed to the customer, and the appointment and work order are marked as
+	      ``completed''
+
+	      Test Case Derivation: The system shall mark work orders and appointments as completed when the
+	      customer has paid for the word done
+
+	      How test will be performed: The tester will mark a work order as completed through the user
+	      interface
+
+	\item \textbf{FRT-BE23}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an appointment, and a work order
+	      associated to the appointment
+
+	      Input: Request work order details
+
+	      Output: The work order details
+
+	      Test Case Derivation: The system shall display work orders details upon request
+
+	      How test will be performed: The tester will view a work order's details through the user interface
 
 \end{enumerate}
-
-\subsubsection{Area of Testing2}
-
-...
 
 \subsection{Tests for Nonfunctional Requirements}
 
