@@ -796,19 +796,20 @@ This section will contains tests covering the ``Services'' requirements defined 
 
 	      Initial State: Shop Owner has a shop profile
 
-	      Input: Shop Owner sets available services
+	      Input: Shop Owner adds available services
 
 	      Output: Shop services are sent to the database and displayed on the shop profile
 
 	      Test Case Derivation: The user can add available auto shop services to their shop profile
 
-	      How test will be performed: The user will search for shop services through the user interface
+	      How test will be performed: The tester will add a service to the shop profile and confirms it shows
+	      on the shop profile
 
 	\item \textbf{FRT-BE29-1}
 
 	      Control: Manual
 
-	      Initial State: Customer Account searches for auto repair or maintenance services
+	      Initial State: Active Customer Account
 
 	      Input: Enters specific auto service in the search bar
 
@@ -816,7 +817,8 @@ This section will contains tests covering the ``Services'' requirements defined 
 
 	      Test Case Derivation: Services and auto shops relevant to the search query will be displayed
 
-	      How test will be performed: The user will search for shop services through the user interface
+	      How test will be performed: The tester will search for shop services through the user interface and
+	      confirms that the appropriate results are displayed
 
 	\item \textbf{FRT-BE29-2}
 
@@ -830,7 +832,8 @@ This section will contains tests covering the ``Services'' requirements defined 
 
 	      Test Case Derivation: Services corresponding to the auto shop will be displayed
 
-	      How test will be performed: The user will search for shop services through the user interface
+	      How test will be performed: The tester will search for shop services through the user interface and
+	      confirms that all of the shop's services are listed
 
 	\item \textbf{FRT-BE30-1}
 
@@ -844,8 +847,8 @@ This section will contains tests covering the ``Services'' requirements defined 
 
 	      Test Case Derivation: The shop profile will list the service with the updated details
 
-	      How test will be performed: The user will update the details of a shop service through the user
-	      interface
+	      How test will be performed: The tester will update the details of a shop service through the user
+	      interface and confirms that the shop profile is updated
 
 	\item \textbf{FRT-BE31-1}
 
@@ -860,7 +863,8 @@ This section will contains tests covering the ``Services'' requirements defined 
 
 	      Test Case Derivation: The service that is deleted is removed from the shop profile
 
-	      How test will be performed: The user will delete a shop service through the user interface
+	      How test will be performed: The tester will delete a shop service through the user interface and
+	      confirms that the shop profile is updated
 
 \end{enumerate}
 
