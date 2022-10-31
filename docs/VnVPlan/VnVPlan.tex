@@ -790,46 +790,48 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 
 \begin{enumerate}
 	\item \textbf{FRT-BE33}
-	
-	Control: Manual
 
-	Initial State:
+	      Control: Manual
 
-	Input:
+	      Initial State: Shop Owner/Employee Account with a registered shop
 
-	Output:
+	      Input: Request to view shop profile
 
-	Test Case Derivation:
+	      Output: Information regarding the shop, which includes the shop's address, phone number, and email
 
-	How test will be performed:
+	      Test Case Derivation: The system shall display information about the shop upon request
+
+	      How test will be performed: The tester will go through the user interface to view a shop profile
 
 	\item \textbf{FRT-BE34-1}
-	
-	Control: Manual
 
-	Initial State:
+	      Control: Manual
 
-	Input:
+	      Initial State: Shop Owner Account with a registered shop
 
-	Output:
+	      Input: Request to update shop profile, with information which includes the shop's address, phone
+	      number, and email
 
-	Test Case Derivation:
+	      Output: A shop profile update confirmation message, and updated shop details
 
-	How test will be performed:
+	      Test Case Derivation: The system shall update a shop's information upon request
+
+	      How test will be performed: The tester will go through the user interface to update a shop profile,
+	      on a Shop Owner Account
 
 	\item \textbf{FRT-BE34-2}
-	
-	Control: Manual
 
-	Initial State:
+	      Control: Manual
 
-	Input:
+	      Initial State: Employee Account with a registered shop
 
-	Output:
+	      Input: Request to update shop profile
 
-	Test Case Derivation:
+	      Output: An error message regarding incorrect privilege
 
-	How test will be performed:
+	      Test Case Derivation: The system shall not let employees update the shop profile
+
+	      How test will be performed: The tester will attempt to update a shop profile on an Employee Account
 \end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
