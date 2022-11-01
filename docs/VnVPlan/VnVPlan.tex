@@ -980,6 +980,101 @@ This section will contain tests covering the ``Employee Profile'' requirements d
 
 \begin{enumerate}
 	\item \textbf{FRT-BE35-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, Employee account
+	      exists
+
+	      Input: An Employee account views their employee profile
+
+	      Output: Displays the employee's name, phone number and email
+
+	      Test Case Derivation: The system shall display the employee's profile when requested
+
+	      How test will be performed: The tester will navigate the interface to view their own profile
+
+	\item \textbf{FRT-BE35-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, multiple Employee
+	      accounts exist
+
+	      Input: An Employee account views another employee's profile
+
+	      Output: Does not display the information
+
+	      Test Case Derivation: The system shall not display other employee's profiles
+
+	      How test will be performed: The tester will navigate the interface to view another employee's
+	      profile
+
+	\item \textbf{FRT-BE35-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, Employee accounts
+	      exist
+
+	      Input: A Shop Owner account views an employee profile
+
+	      Output: Displays the employee's name, phone number and email
+
+	      Test Case Derivation: The system shall display the employee's profile to a Shop Owner when
+	      requested
+
+	      How test will be performed: The tester will navigate the interface to view many different employee
+	      profiles
+
+	\item \textbf{FRT-BE36-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, Employee account
+	      exists
+
+	      Input: An Employee account attempts to edit their own profile, by providing an email and/or a phone
+	      number
+
+	      Output: A notification of a successful update and their profile is updated accordingly
+
+	      Test Case Derivation: The system shall allow the Employee account to edit their own profile
+
+	      How test will be performed: The tester will edit their own profile by updating the email and phone
+	      number fields
+
+	\item \textbf{FRT-BE36-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, multiple Employee
+	      accounts exist
+
+	      Input: An Employee account attempts to update another employee's profile
+
+	      Output: Nothing happens
+
+	      Test Case Derivation: The system shall not allow Employee accounts to edit other employee profiles
+
+	      How test will be performed: The tester will attempt to edit another employee's profile
+
+	\item \textbf{FRT-BE36-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, Employee account
+	      exists
+
+	      Input: A Shop Owner account attempts to update any employee profile, providing an email and/or
+	      phone number
+
+	      Output: A notification of a successful update and the profile is updated accordingly
+
+	      Test Case Derivation: The system shall allow Shop Owner accounts to update employee profiles
+
+	      How test will be performed: The tester will attempt to edit multiple employee profiles
+
 \end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
