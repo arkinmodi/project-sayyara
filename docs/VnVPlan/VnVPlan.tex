@@ -18,7 +18,7 @@
 
 \begin{document}
 
-\title{Project Title: System Verification and Validation Plan for \progname{}}
+\title{System Verification and Validation Plan for \progname{}}
 \author{\authname}
 \date{\today}
 
@@ -42,12 +42,17 @@
 		October 29, 2022 & Leon So               & Add Objectives                               \\
 		October 29, 2022 & Arkin Modi            & Add System Tests for Work Orders             \\
 		October 29, 2022 & Joy Xiao              & Add System Tests for Appointments            \\
+		October 30, 2022 & Timothy Choy          & Add SRS Verification Plan                    \\
 		October 30, 2022 & Leon So               & Add Operational and Environmental Tests      \\
 		October 30, 2022 & Arkin Modi            & Add Implementation Verification Plan         \\
 		October 30, 2022 & Leon So               & Add Usability and Humanity Tests             \\
 		October 30, 2022 & Joy Xiao              & Add System Tests for Services                \\
 		October 30, 2022 & Leon So               & Add System Tests for Employee Management     \\
+		October 30, 2022 & Arkin Modi            & Add Look and Feel System Tests               \\
+		October 30, 2022 & Arkin Modi            & Add Security System Tests                    \\
 		October 31, 2022 & Joy Xiao              & Add Cultural Requirements Tests              \\
+		October 31, 2022 & Timothy Choy          & Add System Tests for Shop Profile            \\
+		November 1, 2022 & Timothy Choy          & Add System Tests for Employee Profile        \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -74,6 +79,7 @@
 	CI              & Continuous Integration              \\
 	SRS             & Software Requirements Specification \\
 	PWA             & Progressive Web Application         \\
+	HTTP            & Hypertext Transfer Protocol         \\
 	\bottomrule
 \end{tabular}\\
 
@@ -131,11 +137,18 @@ Sayyara passes all tests after performing the tests and making any necessary upd
 
 \subsection{SRS Verification Plan}
 
-\wss{List any approaches you intend to use for SRS verification.  This may include
-	ad hoc feedback from reviewers, like your classmates, or you may plan for
-	something more rigorous/systematic.}
+SRS verification will be done by the core developers of the project, as well as by the TAs of the
+course. To verify the contents of the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}, we will
+compare the requirements stated by the stakeholder, Nabeel, with the requirements stated in the
+SRS. Furthermore, we will show our SRS to Nabeel for their review. We believe that this is
+sufficient to verify the SRS, as Nabeel has defined clear requirements for the project.
 
-\wss{Maybe create an SRS checklist?}
+% \wss{List any approaches you intend to use for SRS verification.  This may include
+% 	ad hoc feedback from reviewers, like your classmates, or you may plan for
+% 	something more rigorous/systematic.}
+
+% \wss{Maybe create an SRS checklist?}
 
 \subsection{Design Verification Plan}
 
@@ -971,6 +984,161 @@ This section will contains tests covering the ``Services'' requirements defined 
 
 \end{enumerate}
 
+\subsubsection{Shop Profile}
+
+This section will contain tests covering the ``Shop Profile'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+	\item \textbf{FRT-BE33-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop
+
+	      Input: Request to view shop profile
+
+	      Output: Information regarding the shop, which includes the shop's address, phone number, and email
+
+	      Test Case Derivation: The system shall display information about the shop upon request
+
+	      How test will be performed: The tester will go through the user interface to view a shop profile
+
+	\item \textbf{FRT-BE34-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner Account with a registered shop
+
+	      Input: Request to update shop profile, with information which includes the shop's address, phone
+	      number, and email
+
+	      Output: A shop profile update confirmation message, and updated shop details
+
+	      Test Case Derivation: The system shall update a shop's information upon request
+
+	      How test will be performed: The tester will go through the user interface to update a shop profile,
+	      on a Shop Owner Account
+
+	\item \textbf{FRT-BE34-2}
+
+	      Control: Manual
+
+	      Initial State: Employee Account with a registered shop
+
+	      Input: Request to update shop profile
+
+	      Output: An error message regarding incorrect privilege
+
+	      Test Case Derivation: The system shall not let employees update the shop profile
+
+	      How test will be performed: The tester will attempt to update a shop profile on an Employee Account
+\end{enumerate}
+
+\subsubsection{Employee Profile}
+
+This section will contain tests covering the ``Employee Profile'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+	\item \textbf{FRT-BE35-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, Employee account
+	      exists
+
+	      Input: An Employee account views their employee profile
+
+	      Output: Displays the employee's name, phone number and email
+
+	      Test Case Derivation: The system shall display the employee's profile when requested
+
+	      How test will be performed: The tester will navigate the interface to view their own profile
+
+	\item \textbf{FRT-BE35-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, multiple Employee
+	      accounts exist
+
+	      Input: An Employee account views another employee's profile
+
+	      Output: Does not display the information
+
+	      Test Case Derivation: The system shall not display other employee's profiles
+
+	      How test will be performed: The tester will navigate the interface to view another employee's
+	      profile
+
+	\item \textbf{FRT-BE35-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, Employee accounts
+	      exist
+
+	      Input: A Shop Owner account views an employee profile
+
+	      Output: Displays the employee's name, phone number and email
+
+	      Test Case Derivation: The system shall display the employee's profile to a Shop Owner when
+	      requested
+
+	      How test will be performed: The tester will navigate the interface to view many different employee
+	      profiles
+
+	\item \textbf{FRT-BE36-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, Employee account
+	      exists
+
+	      Input: An Employee account attempts to edit their own profile, by providing an email and/or a phone
+	      number
+
+	      Output: A notification of a successful update and their profile is updated accordingly
+
+	      Test Case Derivation: The system shall allow the Employee account to edit their own profile
+
+	      How test will be performed: The tester will edit their own profile by updating the email and phone
+	      number fields
+
+	\item \textbf{FRT-BE36-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, multiple Employee
+	      accounts exist
+
+	      Input: An Employee account attempts to update another employee's profile
+
+	      Output: Nothing happens
+
+	      Test Case Derivation: The system shall not allow Employee accounts to edit other employee profiles
+
+	      How test will be performed: The tester will attempt to edit another employee's profile
+
+	\item \textbf{FRT-BE36-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, Employee account
+	      exists
+
+	      Input: A Shop Owner account attempts to update any employee profile, providing an email and/or
+	      phone number
+
+	      Output: A notification of a successful update and the profile is updated accordingly
+
+	      Test Case Derivation: The system shall allow Shop Owner accounts to update employee profiles
+
+	      How test will be performed: The tester will attempt to edit multiple employee profiles
+
+\end{enumerate}
+
 \subsection{Tests for Nonfunctional Requirements}
 
 \wss{The nonfunctional requirements for accuracy will likely just reference the
@@ -1002,10 +1170,57 @@ This section will contains tests covering the ``Services'' requirements defined 
 
 \end{enumerate}
 
+\subsubsection{Look and Feel Requirements}
+
+\begin{enumerate}
+
+	\item \textbf{NFRT-LF1-1} % For LF1
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the Google Chrome web browser
+
+	      Input/Condition: The window size is changed
+
+	      Output/Result: The application shall adjust and scale to fit the new window size
+
+	      How test will be performed: The tester will access the application through Google Chrome on their
+	      desktop/laptop and change the windows through the use of Google Chrome DevTools Device Toolbar
+
+	\item \textbf{NFRT-LF2-1} % For LF2
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the Google Chrome web browser
+
+	      Input: The application is opened in a full screened web browser window
+
+	      Output: All text on the screen shall be readable
+
+	      How test will be performed: The tester open the application in a full screened web browser window,
+	      navigate to all pages, and judge if all text on the screen is readable from sitting 50 centimeters
+	      away from the monitor
+
+	\item \textbf{NFRT-LF3-1} % For LF3
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the Google Chrome web browser and there is a
+	      completed work order and quote on the user's account
+
+	      Input: The user opens the work order details and the quote details
+
+	      Output: All currency shall be rounded to two decimal places
+
+	      How test will be performed: The tester will navigate to the work order and quote and verify that
+	      all values of currency are rounded to two decimal places
+
+\end{enumerate}
+
 \subsubsection{Usability and Humanity Requirements}
 \begin{enumerate}
 
-	\item \textbf{NFRT-UH1} % For UH1
+	\item \textbf{NFRT-UH1-1} % For UH1
 
 	      Type: Dynamic, Manual
 
@@ -1013,7 +1228,7 @@ This section will contains tests covering the ``Services'' requirements defined 
 	      requirements listed section \ref{Tests for Functional Requirements} on a MacOS desktop/laptop
 	      device, a Windows desktop/laptop, an iOS mobile device, and an android mobile device.
 
-	\item \textbf{NFRT-UH2} % For UH2
+	\item \textbf{NFRT-UH2-1} % For UH2
 
 	      Type: Dynamic, Manual
 
@@ -1026,7 +1241,7 @@ This section will contains tests covering the ``Services'' requirements defined 
 	      How test will be performed: The tester will attempt to launch the application on the Google Chrome
 	      web browser and using a device that is connected to the internet.
 
-	\item \textbf{NFRT-UH3} % For UH3
+	\item \textbf{NFRT-UH3-1} % For UH3
 
 	      Type: Dynamic, Manual
 
@@ -1044,15 +1259,81 @@ This section will contains tests covering the ``Services'' requirements defined 
 \subsubsection{Operational and Environmental Requirements}
 \begin{enumerate}
 
-	\item \textbf{NFRT-OE1} % For OE1
+	\item \textbf{NFRT-OE1-1} % For OE1
 
 	      Type: Dynamic, Manual
 
 	      How test will be performed: The testers will complete the manual system tests for functional
 	      requirements listed section \ref{Tests for Functional Requirements} on Google Chrome using various
 	      device dimension options listed the Google DevTools Device Toolbar. At minimum, the testers will
-	      test with the following dimensions: Responsive, iPhone 12 Pro (390x844), iPhone SE (375x667), and
-	      iPad Air (820x1180). This set will provide a reasonable variety of different device dimensions.
+	      test with the following dimensions: Responsive, iPhone 12 Pro ($390 \times 844$), iPhone SE ($375
+		      \times 667$), and iPad Air ($820 \times 1180$). This set will provide a reasonable variety of
+	      different device dimensions.
+
+\end{enumerate}
+
+\subsubsection{Security Requirements}
+\begin{enumerate}
+
+	\item \textbf{NFRT-SR1-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: Two created accounts with both containing an appointment
+
+	      Input/Condition: The user searches for an appointment ID not belonging to the account
+
+	      Output/Result: An error message saying the appointment is not found
+
+	      How test will be performed: The tester will search for the appointment by appointment ID through
+	      the user interface
+
+	\item \textbf{NFRT-SR1-2}
+
+	      Type: Dynamic, Automatic
+
+	      Initial State: An account with a created appointment
+
+	      Input/Condition: An HTTP request to the application's backend to get the appointment by appointment
+	      ID
+
+	      Output/Result: The request is rejected with a 403 Forbidden error message
+
+	      How test will be performed: Through Jest an HTTP request will be sent to the server
+
+	\item \textbf{NFRT-SR2-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: One Shop Owner account and two Customer accounts with one customer having an
+	      appointment at the shop registered under the same Shop Owner account
+
+	      Input/Condition: Request available time slots at the Shop Owner's store using both the Customer
+	      without an appointment's account and the Shop Owner's account
+
+	      Output/Result: The Customer should only be able to view the time slot taken by the other customer,
+	      but the Shop Owner should be able to view all the information of the Customer that has taken the
+	      time slot
+
+	      How test will be performed: The tester will view the available time slots page as both the Customer
+	      without an appointment and the Shop Owner
+
+	\item \textbf{NFRT-SR2-2}
+
+	      Type: Dynamic, Automatic
+
+	      Initial State: One Shop Owner account and two Customer accounts with one customer having an
+	      appointment at the shop registered under the same Shop Owner account
+
+	      Input/Condition: An HTTP request to the application's backend to get the available time slots using
+	      the Customer without an appointment's security token and again with the Shop Owner's security token
+
+	      Output/Result: The Customer should only be able to view the time slot taken by the other customer,
+	      but the Shop Owner should be able to view all the information of the Customer that has taken the
+	      time slot
+
+	      How test will be performed: Through Jest an HTTP request will be sent to the server as both the
+	      Customer without an appointment and the Shop Owner
 
 \end{enumerate}
 
@@ -1165,6 +1446,10 @@ This section will contains tests covering the ``Services'' requirements defined 
 	How test will be performed:
 
 \end{enumerate}
+
+\subsubsection{Module ?}
+
+...
 
 \subsection{Traceability Between Test Cases and Modules}
 
