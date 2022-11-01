@@ -47,6 +47,7 @@
 		October 30, 2022 & Leon So               & Add Usability and Humanity Tests             \\
 		October 30, 2022 & Joy Xiao              & Add System Tests for Services                \\
 		October 30, 2022 & Leon So               & Add System Tests for Employee Management     \\
+		October 30, 2022 & Arkin Modi            & Add Look and Feel System Tests               \\
 		October 30, 2022 & Arkin Modi            & Add Security System Tests                    \\
 		\bottomrule
 	\end{tabularx}
@@ -985,10 +986,57 @@ This section will contains tests covering the ``Services'' requirements defined 
 \wss{Static tests, review, inspections, and walkthroughs, will not follow the
 	format for the tests given below.}
 
+\subsubsection{Look and Feel Requirements}
+
+\begin{enumerate}
+
+	\item \textbf{NFRT-LF1-1} % For LF1
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the Google Chrome web browser
+
+	      Input/Condition: The window size is changed
+
+	      Output/Result: The application shall adjust and scale to fit the new window size
+
+	      How test will be performed: The tester will access the application through Google Chrome on their
+	      desktop/laptop and change the windows through the use of Google Chrome DevTools Device Toolbar
+
+	\item \textbf{NFRT-LF2-1} % For LF2
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the Google Chrome web browser
+
+	      Input: The application is opened in a full screened web browser window
+
+	      Output: All text on the screen shall be readable
+
+	      How test will be performed: The tester open the application in a full screened web browser window,
+	      navigate to all pages, and judge if all text on the screen is readable from sitting 50 centimeters
+	      away from the monitor
+
+	\item \textbf{NFRT-LF3-1} % For LF3
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the Google Chrome web browser and there is a
+	      completed work order and quote on the user's account
+
+	      Input: The user opens the work order details and the quote details
+
+	      Output: All currency shall be rounded to two decimal places
+
+	      How test will be performed: The tester will navigate to the work order and quote and verify that
+	      all values of currency are rounded to two decimal places
+
+\end{enumerate}
+
 \subsubsection{Usability and Humanity Requirements}
 \begin{enumerate}
 
-	\item \textbf{NFRT-UH1} % For UH1
+	\item \textbf{NFRT-UH1-1} % For UH1
 
 	      Type: Dynamic, Manual
 
@@ -996,7 +1044,7 @@ This section will contains tests covering the ``Services'' requirements defined 
 	      requirements listed section \ref{Tests for Functional Requirements} on a MacOS desktop/laptop
 	      device, a Windows desktop/laptop, an iOS mobile device, and an android mobile device.
 
-	\item \textbf{NFRT-UH2} % For UH2
+	\item \textbf{NFRT-UH2-1} % For UH2
 
 	      Type: Dynamic, Manual
 
@@ -1009,7 +1057,7 @@ This section will contains tests covering the ``Services'' requirements defined 
 	      How test will be performed: The tester will attempt to launch the application on the Google Chrome
 	      web browser and using a device that is connected to the internet.
 
-	\item \textbf{NFRT-UH3} % For UH3
+	\item \textbf{NFRT-UH3-1} % For UH3
 
 	      Type: Dynamic, Manual
 
@@ -1027,7 +1075,7 @@ This section will contains tests covering the ``Services'' requirements defined 
 \subsubsection{Operational and Environmental Requirements}
 \begin{enumerate}
 
-	\item \textbf{NFRT-OE1} % For OE1
+	\item \textbf{NFRT-OE1-1} % For OE1
 
 	      Type: Dynamic, Manual
 
