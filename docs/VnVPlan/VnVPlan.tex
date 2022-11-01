@@ -45,6 +45,7 @@
 		October 30, 2022 & Leon So               & Add Operational and Environmental Tests      \\
 		October 30, 2022 & Arkin Modi            & Add Implementation Verification Plan         \\
 		October 30, 2022 & Leon So               & Add Usability and Humanity Tests             \\
+		October 30, 2022 & Leon So               & Add System Tests for Employee Management     \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -779,6 +780,107 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 	      Test Case Derivation: The system shall display work orders details upon request
 
 	      How test will be performed: The tester will view a work order's details through the user interface
+
+\end{enumerate}
+
+\subsubsection{Employee Management}
+
+This section will contain tests covering the ``Employee Management'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE24-1}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with no employees invited to shop yet
+
+	      Input: Shop owner enters a list of employee emails to invite
+
+	      Output: System sends invitation to employee emails provided
+
+	      Test Case Derivation: The system shall allow the user to enter employee email(s) to invite; the
+	      system shall send an invitation email to the invited employee(s)
+
+	      How test will be performed: The tester will use a shop owner account to send employee invitation
+	      emails
+
+	\item \textbf{FRT-BE24-2}
+
+	      Control: Manual
+
+	      Initial State: Employee account with invitation email
+
+	      Input: Employee uses invitation email to sign up
+
+	      Output: System displays employee sign up form
+
+	      Test Case Derivation: The system shall allow the user to accept an invitation
+
+	      How test will be performed: The tester will attempt to accept an employee invitation email
+
+	\item \textbf{FRT-BE25-1}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with employees listed under the shop
+
+	      Input: The user enters search text to search for an employee
+
+	      Output: System displays a list of employees whose name or email matches the search text
+
+	      Test Case Derivation: The system shall allow the user to enter search text to search for an
+	      employee; the system shall display a list of employees whose name or email matches the search text
+
+	      How test will be performed: The tester will use a shop owner account with employees listed under
+	      the shop and enter search text to search for an employee
+
+	\item \textbf{FRT-BE26-1}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with no employees
+
+	      Input: The user attempts to view the list of employees
+
+	      Output: Message indicating that there are currently no employees
+
+	      Test Case Derivation: The shop owner with no employees wants to view the list of employees
+
+	      How test will be performed: The tester will use a shop owner account with no employees listed under
+	      the shop and attempt to view the list of employees
+
+	\item \textbf{FRT-BE26-2}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with employees
+
+	      Input: The user attempts to view the list of employees
+
+	      Output: Table of employees details and employee management options
+
+	      Test Case Derivation: The shop owner with employees wants to view the list of employees
+
+	      How test will be performed: The tester will use a shop owner account with employees listed under
+	      the shop and attempt to view the list of employees
+
+	\item \textbf{FRT-BE27-1}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with employees
+
+	      Input: The user attempts to remove an employee
+
+	      Output: Table of employees details and employee management options updates with employee removed;
+	      the remove employee's access should be revoked
+
+	      Test Case Derivation: The shop owner with employees wants to remove an employee
+
+	      How test will be performed: The tester will use a shop owner account with employees listed under
+	      the shop and attempt to remove an employee
 
 \end{enumerate}
 
