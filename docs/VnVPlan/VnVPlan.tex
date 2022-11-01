@@ -47,6 +47,7 @@
 		October 30, 2022 & Leon So               & Add Usability and Humanity Tests             \\
 		October 30, 2022 & Joy Xiao              & Add System Tests for Services                \\
 		October 30, 2022 & Leon So               & Add System Tests for Employee Management     \\
+		October 31, 2022 & Joy Xiao              & Add Cultural Requirements Tests              \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -983,41 +984,77 @@ This section will contains tests covering the ``Services'' requirements defined 
 \wss{Static tests, review, inspections, and walkthroughs, will not follow the
 	format for the tests given below.}
 
-\subsubsection{Area of Testing1}
-
-\paragraph{Title for Test}
-
+\subsubsection{Cultural Requirements}
 \begin{enumerate}
+	\item \textbf{NFRT-CR1}
 
-	\item{test-id1\\}
+	      Type: Static, Manual
 
-	Type: Functional, Dynamic, Manual, Static etc.
+	      How test will be performed: The testers will go through end to end tests for the entire program and
+	      will confirm that any texts or images are not offensive.
 
-	Initial State:
+	\item \textbf{NFRT-CR2}
 
-	Input/Condition:
+	      Type: Static, Manual
 
-	Output/Result:
-
-	How test will be performed:
-
-	\item{test-id2\\}
-
-	Type: Functional, Dynamic, Manual, Static etc.
-
-	Initial State:
-
-	Input:
-
-	Output:
-
-	How test will be performed:
+	      How test will be performed: The testers will go through end to end tests for the entire program and
+	      will confirm that the text displayed is in English.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Usability and Humanity Requirements}
+\begin{enumerate}
 
-...
+	\item \textbf{NFRT-UH1} % For UH1
+
+	      Type: Dynamic, Manual
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements listed section \ref{Tests for Functional Requirements} on a MacOS desktop/laptop
+	      device, a Windows desktop/laptop, an iOS mobile device, and an android mobile device.
+
+	\item \textbf{NFRT-UH2} % For UH2
+
+	      Type: Dynamic, Manual
+
+	      Initial State: Device is connected to the internet and application is not open
+
+	      Input/Condition: The user launches the application on Google Chrome
+
+	      Output/Result: The system can be assessed through Google Chrome
+
+	      How test will be performed: The tester will attempt to launch the application on the Google Chrome
+	      web browser and using a device that is connected to the internet.
+
+	\item \textbf{NFRT-UH3} % For UH3
+
+	      Type: Dynamic, Manual
+
+	      Initial State: Device is connected to the internet and the application is open
+
+	      Input/Condition: User disconnects from the internet
+
+	      Output/Result: The system notifies the user that there is no network connection and functionality
+	      will be limited.
+
+	      How test will be performed: The tester disconnect from the internet while the application is open.
+
+\end{enumerate}
+
+\subsubsection{Operational and Environmental Requirements}
+\begin{enumerate}
+
+	\item \textbf{NFRT-OE1} % For OE1
+
+	      Type: Dynamic, Manual
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements listed section \ref{Tests for Functional Requirements} on Google Chrome using various
+	      device dimension options listed the Google DevTools Device Toolbar. At minimum, the testers will
+	      test with the following dimensions: Responsive, iPhone 12 Pro (390x844), iPhone SE (375x667), and
+	      iPad Air (820x1180). This set will provide a reasonable variety of different device dimensions.
+
+\end{enumerate}
 
 \subsection{Traceability Between Test Cases and Requirements}
 
@@ -1126,60 +1163,6 @@ This section will contains tests covering the ``Services'' requirements defined 
 	Output:
 
 	How test will be performed:
-
-\end{enumerate}
-
-\subsubsection{Usability and Humanity Requirements}
-\begin{enumerate}
-
-	\item \textbf{NFRT-UH1} % For UH1
-
-	      Type: Dynamic, Manual
-
-	      How test will be performed: The testers will complete the manual system tests for functional
-	      requirements listed section \ref{Tests for Functional Requirements} on a MacOS desktop/laptop
-	      device, a Windows desktop/laptop, an iOS mobile device, and an android mobile device.
-
-	\item \textbf{NFRT-UH2} % For UH2
-
-	      Type: Dynamic, Manual
-
-	      Initial State: Device is connected to the internet and application is not open
-
-	      Input/Condition: The user launches the application on Google Chrome
-
-	      Output/Result: The system can be assessed through Google Chrome
-
-	      How test will be performed: The tester will attempt to launch the application on the Google Chrome
-	      web browser and using a device that is connected to the internet.
-
-	\item \textbf{NFRT-UH3} % For UH3
-
-	      Type: Dynamic, Manual
-
-	      Initial State: Device is connected to the internet and the application is open
-
-	      Input/Condition: User disconnects from the internet
-
-	      Output/Result: The system notifies the user that there is no network connection and functionality
-	      will be limited.
-
-	      How test will be performed: The tester disconnect from the internet while the application is open.
-
-\end{enumerate}
-
-\subsubsection{Operational and Environmental Requirements}
-\begin{enumerate}
-
-	\item \textbf{NFRT-OE1} % For OE1
-
-	      Type: Dynamic, Manual
-
-	      How test will be performed: The testers will complete the manual system tests for functional
-	      requirements listed section \ref{Tests for Functional Requirements} on Google Chrome using various
-	      device dimension options listed the Google DevTools Device Toolbar. At minimum, the testers will
-	      test with the following dimensions: Responsive, iPhone 12 Pro (390x844), iPhone SE (375x667), and
-	      iPad Air (820x1180). This set will provide a reasonable variety of different device dimensions.
 
 \end{enumerate}
 
