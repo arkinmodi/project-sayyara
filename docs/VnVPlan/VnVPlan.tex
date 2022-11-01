@@ -48,6 +48,7 @@
 		October 30, 2022 & Joy Xiao              & Add System Tests for Services                \\
 		October 30, 2022 & Leon So               & Add System Tests for Employee Management     \\
 		October 30, 2022 & Arkin Modi            & Add Look and Feel System Tests               \\
+		October 30, 2022 & Arkin Modi            & Add Security System Tests                    \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -74,6 +75,7 @@
 	CI              & Continuous Integration              \\
 	SRS             & Software Requirements Specification \\
 	PWA             & Progressive Web Application         \\
+	HTTP            & Hypertext Transfer Protocol         \\
 	\bottomrule
 \end{tabular}\\
 
@@ -1083,6 +1085,71 @@ This section will contains tests covering the ``Services'' requirements defined 
 	      test with the following dimensions: Responsive, iPhone 12 Pro ($390 \times 844$), iPhone SE ($375
 		      \times 667$), and iPad Air ($820 \times 1180$). This set will provide a reasonable variety of
 	      different device dimensions.
+
+\end{enumerate}
+
+\subsubsection{Security Requirements}
+\begin{enumerate}
+
+	\item \textbf{NFRT-SR1-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: Two created accounts with both containing an appointment
+
+	      Input/Condition: The user searches for an appointment ID not belonging to the account
+
+	      Output/Result: An error message saying the appointment is not found
+
+	      How test will be performed: The tester will search for the appointment by appointment ID through
+	      the user interface
+
+	\item \textbf{NFRT-SR1-2}
+
+	      Type: Dynamic, Automatic
+
+	      Initial State: An account with a created appointment
+
+	      Input/Condition: An HTTP request to the application's backend to get the appointment by appointment
+	      ID
+
+	      Output/Result: The request is rejected with a 403 Forbidden error message
+
+	      How test will be performed: Through Jest an HTTP request will be sent to the server
+
+	\item \textbf{NFRT-SR2-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: One Shop Owner account and two Customer accounts with one customer having an
+	      appointment at the shop registered under the same Shop Owner account
+
+	      Input/Condition: Request available time slots at the Shop Owner's store using both the Customer
+	      without an appointment's account and the Shop Owner's account
+
+	      Output/Result: The Customer should only be able to view the time slot taken by the other customer,
+	      but the Shop Owner should be able to view all the information of the Customer that has taken the
+	      time slot
+
+	      How test will be performed: The tester will view the available time slots page as both the Customer
+	      without an appointment and the Shop Owner
+
+	\item \textbf{NFRT-SR2-2}
+
+	      Type: Dynamic, Automatic
+
+	      Initial State: One Shop Owner account and two Customer accounts with one customer having an
+	      appointment at the shop registered under the same Shop Owner account
+
+	      Input/Condition: An HTTP request to the application's backend to get the available time slots using
+	      the Customer without an appointment's security token and again with the Shop Owner's security token
+
+	      Output/Result: The Customer should only be able to view the time slot taken by the other customer,
+	      but the Shop Owner should be able to view all the information of the Customer that has taken the
+	      time slot
+
+	      How test will be performed: Through Jest an HTTP request will be sent to the server as both the
+	      Customer without an appointment and the Shop Owner
 
 \end{enumerate}
 
