@@ -41,9 +41,12 @@
 		October 28, 2022 & Arkin Modi            & Add System Tests for Quotes                  \\
 		October 29, 2022 & Leon So               & Add Objectives                               \\
 		October 29, 2022 & Arkin Modi            & Add System Tests for Work Orders             \\
+		October 29, 2022 & Joy Xiao              & Add System Tests for Appointments            \\
 		October 30, 2022 & Leon So               & Add Operational and Environmental Tests      \\
 		October 30, 2022 & Arkin Modi            & Add Implementation Verification Plan         \\
 		October 30, 2022 & Leon So               & Add Usability and Humanity Tests             \\
+		October 30, 2022 & Joy Xiao              & Add System Tests for Services                \\
+		October 30, 2022 & Leon So               & Add System Tests for Employee Management     \\
 		October 30, 2022 & Arkin Modi            & Add Security System Tests                    \\
 		\bottomrule
 	\end{tabularx}
@@ -230,13 +233,179 @@ defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs
 \wss{Include a blurb here to explain why the subsections below
 	cover the requirements.  References to the SRS would be good here.}
 
+\subsubsection{Appointments}
+
+This section will contains tests covering the ``Appointments'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE4-1}
+
+	      Control: Manual
+
+	      Initial State: Customer account which received a quote from an auto shop
+
+	      Input: Enters service request information and selects an available appointment time slot
+
+	      Output: A new appointment request is created with service details linked to the quote. Shop
+	      Owner/Employee Accounts will receive the appointment request
+
+	      Test Case Derivation: The appointment will be requested with the details the user entered
+
+	      How test will be performed: The tester will go through the appointment booking process through the
+	      user interface through quotes
+
+	\item \textbf{FRT-BE4-2}
+
+	      Control: Manual
+
+	      Initial State: Customer account selects a canned job at an auto shop
+
+	      Input: Enters service request information and selects an available appointment time slot
+
+	      Output: A new appointment request is created with service details. Shop Owner/Employee Accounts
+	      will receive the appointment request
+
+	      Test Case Derivation: The appointment will be requested with the canned job details as well as
+	      details the user entered
+
+	      How test will be performed: The tester will go through the appointment booking process through the
+	      user interface by selecting a canned job
+
+	\item \textbf{FRT-BE4-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with appointment to be scheduled
+
+	      Input: Enters customer information, service request information and selects an available
+	      appointment time slot
+
+	      Output: A new appointment request is created with service details
+
+	      Test Case Derivation: The appointment will be requested with the details the user entered
+
+	      How test will be performed: The tester will go through the appointment booking process through the
+	      user interface
+
+	\item \textbf{FRT-BE5-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit and selects a new available time slot for the appointment
+
+	      Output: A new appointment request is made with the new time slot. Shop Owner/Employee Accounts will
+	      receive the appointment request
+
+	      Test Case Derivation: The user is able to change their appointment to any of the available time
+	      slots displayed
+
+	      How test will be performed: The tester will go through the user interface to edit an appointment
+	      booking
+
+	\item \textbf{FRT-BE5-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit and selects a new available time slot for the appointment
+
+	      Output: The appointment booking is updated to the new time slot
+
+	      Test Case Derivation: The user is able to change their appointment to any of the available time
+	      slots displayed
+
+	      How test will be performed: The tester will go through the user interface to edit an appointment
+	      booking time slot
+
+	\item \textbf{FRT-BE5-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit service details
+
+	      Output: The appointment booking is updated with the updated service details
+
+	      Test Case Derivation: The user is able to update the appointment details
+
+	      How test will be performed: The tester will go through the user interface to edit appointment
+	      details
+
+	\item \textbf{FRT-BE3-4}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with appointment requests
+
+	      Input: Accept an appointment request
+
+	      Output: Appointment booking displayed in calendar for Shop Owner/Employee accounts and Customer
+	      account
+
+	      Test Case Derivation: The appointment request is accepted and appointment booking is completed
+
+	      How test will be performed: The tester will accept an appointment request through the user
+	      interface
+
+	\item \textbf{FRT-BE6-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account has a service appointment scheduled
+
+	      Input: Selects an appointment to cancel
+
+	      Output: The appointment booking is cancelled and removed from the customer and shop owner/employee
+	      schedules
+
+	      Test Case Derivation: The appointment should be removed from the calendar when it is cancelled
+
+	      How test will be performed: The tester will go through the user interface to cancel an appointment
+
+	\item \textbf{FRT-BE6-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Shop Employee has a service appointment scheduled
+
+	      Input: Selects an appointment to cancel
+
+	      Output: The appointment booking is cancelled and removed from the customer and shop owner/employee
+	      schedules
+
+	      Test Case Derivation: The appointment should be removed from the calendar when it is cancelled
+
+	      How test will be performed: The tester will go through the user interface to cancel an appointment
+
+	\item \textbf{FRT-BE7-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner selects appointment availability
+
+	      Input: Sets appointment availabilities
+
+	      Output: The appointment availability is updated in the database
+
+	      Test Case Derivation: The appointment availability will be saved and availability time slots to
+	      book appointments will be updated
+
+	      How test will be performed: The tester will go through the user interface to set appointment
+	      availabilities
+\end{enumerate}
+
 \subsubsection{Quotes}
 
 This section will contains tests covering the ``Quotes'' requirements defined in the
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
-
 	\item \textbf{FRT-BE8-1}
 
 	      Control: Manual
@@ -353,7 +522,7 @@ This section will contains tests covering the ``Quotes'' requirements defined in
 
 	      How test will be performed: The tester will create a quote through the user interface
 
-	\item \textbf{FRT-BE11}
+	\item \textbf{FRT-BE11-1}
 
 	      Control: Manual
 
@@ -395,7 +564,7 @@ This section will contains tests covering the ``Quotes'' requirements defined in
 
 	      How test will be performed: The tester will update a quote through the user interface
 
-	\item \textbf{FRT-BE13}
+	\item \textbf{FRT-BE13-1}
 
 	      Control: Manual
 
@@ -439,7 +608,7 @@ This section will contains tests covering the ``Quotes'' requirements defined in
 
 	      How test will be performed: The tester will create a response to a quote through the user interface
 
-	\item \textbf{FRT-BE15}
+	\item \textbf{FRT-BE15-1}
 
 	      Control: Manual
 
@@ -482,7 +651,6 @@ This section will contains tests covering the ``Quotes'' requirements defined in
 
 	      How test will be performed: The tester will send a message for additional information through the
 	      user interface
-
 \end{enumerate}
 
 \subsubsection{Work Orders}
@@ -521,7 +689,7 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 
 	      How test will be performed: The tester will create an appointment through the user interface
 
-	\item \textbf{FRT-BE18}
+	\item \textbf{FRT-BE18-1}
 
 	      Control: Manual
 
@@ -537,7 +705,7 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 
 	      How test will be performed: The tester will delete an appointment through the user interface
 
-	\item \textbf{FRT-BE19}
+	\item \textbf{FRT-BE19-1}
 
 	      Control: Manual
 
@@ -553,7 +721,7 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 
 	      How test will be performed: The tester will search for a work order through the user interface
 
-	\item \textbf{FRT-BE20}
+	\item \textbf{FRT-BE20-1}
 
 	      Control: Manual
 
@@ -568,7 +736,7 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 
 	      How test will be performed: The tester will search for past work orders through the user interface
 
-	\item \textbf{FRT-BE21}
+	\item \textbf{FRT-BE21-1}
 
 	      Control: Manual
 
@@ -583,7 +751,7 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 
 	      How test will be performed: The tester will update a work order through the user interface
 
-	\item \textbf{FRT-BE22}
+	\item \textbf{FRT-BE22-1}
 
 	      Control: Manual
 
@@ -601,7 +769,7 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 	      How test will be performed: The tester will mark a work order as completed through the user
 	      interface
 
-	\item \textbf{FRT-BE23}
+	\item \textbf{FRT-BE23-1}
 
 	      Control: Manual
 
@@ -618,6 +786,192 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 
 \end{enumerate}
 
+\subsubsection{Employee Management}
+
+This section will contain tests covering the ``Employee Management'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE24-1}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with no employees invited to shop yet
+
+	      Input: Shop owner enters a list of employee emails to invite
+
+	      Output: System sends invitation to employee emails provided
+
+	      Test Case Derivation: The system shall allow the user to enter employee email(s) to invite; the
+	      system shall send an invitation email to the invited employee(s)
+
+	      How test will be performed: The tester will use a shop owner account to send employee invitation
+	      emails
+
+	\item \textbf{FRT-BE24-2}
+
+	      Control: Manual
+
+	      Initial State: Employee account with invitation email
+
+	      Input: Employee uses invitation email to sign up
+
+	      Output: System displays employee sign up form
+
+	      Test Case Derivation: The system shall allow the user to accept an invitation
+
+	      How test will be performed: The tester will attempt to accept an employee invitation email
+
+	\item \textbf{FRT-BE25-1}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with employees listed under the shop
+
+	      Input: The user enters search text to search for an employee
+
+	      Output: System displays a list of employees whose name or email matches the search text
+
+	      Test Case Derivation: The system shall allow the user to enter search text to search for an
+	      employee; the system shall display a list of employees whose name or email matches the search text
+
+	      How test will be performed: The tester will use a shop owner account with employees listed under
+	      the shop and enter search text to search for an employee
+
+	\item \textbf{FRT-BE26-1}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with no employees
+
+	      Input: The user attempts to view the list of employees
+
+	      Output: Message indicating that there are currently no employees
+
+	      Test Case Derivation: The shop owner with no employees wants to view the list of employees
+
+	      How test will be performed: The tester will use a shop owner account with no employees listed under
+	      the shop and attempt to view the list of employees
+
+	\item \textbf{FRT-BE26-2}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with employees
+
+	      Input: The user attempts to view the list of employees
+
+	      Output: Table of employees details and employee management options
+
+	      Test Case Derivation: The shop owner with employees wants to view the list of employees
+
+	      How test will be performed: The tester will use a shop owner account with employees listed under
+	      the shop and attempt to view the list of employees
+
+	\item \textbf{FRT-BE27-1}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with employees
+
+	      Input: The user attempts to remove an employee
+
+	      Output: Table of employees details and employee management options updates with employee removed;
+	      the remove employee's access should be revoked
+
+	      Test Case Derivation: The shop owner with employees wants to remove an employee
+
+	      How test will be performed: The tester will use a shop owner account with employees listed under
+	      the shop and attempt to remove an employee
+
+\end{enumerate}
+
+\subsubsection{Services}
+
+This section will contains tests covering the ``Services'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE28-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner has a shop profile
+
+	      Input: Shop Owner adds available services
+
+	      Output: Shop services are sent to the database and displayed on the shop profile
+
+	      Test Case Derivation: The user can add available auto shop services to their shop profile
+
+	      How test will be performed: The tester will add a service to the shop profile and confirms it shows
+	      on the shop profile
+
+	\item \textbf{FRT-BE29-1}
+
+	      Control: Manual
+
+	      Initial State: Active Customer Account
+
+	      Input: Enters specific auto service in the search bar
+
+	      Output: Auto shops with relevant services displayed with service details
+
+	      Test Case Derivation: Services and auto shops relevant to the search query will be displayed
+
+	      How test will be performed: The tester will search for shop services through the user interface and
+	      confirms that the appropriate results are displayed
+
+	\item \textbf{FRT-BE29-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Shop Employee searches for auto repair or maintenance services
+
+	      Input: Enters specific auto service in the search bar
+
+	      Output: Auto shops with relevant services displayed with service details
+
+	      Test Case Derivation: Services corresponding to the auto shop will be displayed
+
+	      How test will be performed: The tester will search for shop services through the user interface and
+	      confirms that all of the shop's services are listed
+
+	\item \textbf{FRT-BE30-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner with services listed on their shop profile
+
+	      Input: Updates the details of a service listed on their profile
+
+	      Output: The service is updated with the entered details
+
+	      Test Case Derivation: The shop profile will list the service with the updated details
+
+	      How test will be performed: The tester will update the details of a shop service through the user
+	      interface and confirms that the shop profile is updated
+
+	\item \textbf{FRT-BE31-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner with services listed on their shop profile
+
+	      Input: Deletes a service listed on their shop profile
+
+	      Output: Service is removed from the shop profile. Other services that were not deleted continue to
+	      be listed on the shop profile
+
+	      Test Case Derivation: The service that is deleted is removed from the shop profile
+
+	      How test will be performed: The tester will delete a shop service through the user interface and
+	      confirms that the shop profile is updated
+
+\end{enumerate}
+
 \subsection{Tests for Nonfunctional Requirements}
 
 \wss{The nonfunctional requirements for accuracy will likely just reference the
@@ -631,8 +985,62 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 \wss{Static tests, review, inspections, and walkthroughs, will not follow the
 	format for the tests given below.}
 
-\subsubsection{Security Requirements}
+\subsubsection{Usability and Humanity Requirements}
+\begin{enumerate}
 
+	\item \textbf{NFRT-UH1} % For UH1
+
+	      Type: Dynamic, Manual
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements listed section \ref{Tests for Functional Requirements} on a MacOS desktop/laptop
+	      device, a Windows desktop/laptop, an iOS mobile device, and an android mobile device.
+
+	\item \textbf{NFRT-UH2} % For UH2
+
+	      Type: Dynamic, Manual
+
+	      Initial State: Device is connected to the internet and application is not open
+
+	      Input/Condition: The user launches the application on Google Chrome
+
+	      Output/Result: The system can be assessed through Google Chrome
+
+	      How test will be performed: The tester will attempt to launch the application on the Google Chrome
+	      web browser and using a device that is connected to the internet.
+
+	\item \textbf{NFRT-UH3} % For UH3
+
+	      Type: Dynamic, Manual
+
+	      Initial State: Device is connected to the internet and the application is open
+
+	      Input/Condition: User disconnects from the internet
+
+	      Output/Result: The system notifies the user that there is no network connection and functionality
+	      will be limited.
+
+	      How test will be performed: The tester disconnect from the internet while the application is open.
+
+\end{enumerate}
+
+\subsubsection{Operational and Environmental Requirements}
+\begin{enumerate}
+
+	\item \textbf{NFRT-OE1} % For OE1
+
+	      Type: Dynamic, Manual
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements listed section \ref{Tests for Functional Requirements} on Google Chrome using various
+	      device dimension options listed the Google DevTools Device Toolbar. At minimum, the testers will
+	      test with the following dimensions: Responsive, iPhone 12 Pro ($390 \times 844$), iPhone SE ($375
+		      \times 667$), and iPad Air ($820 \times 1180$). This set will provide a reasonable variety of
+	      different device dimensions.
+
+\end{enumerate}
+
+\subsubsection{Security Requirements}
 \begin{enumerate}
 
 	\item \textbf{NFRT-SR1-1}
@@ -807,59 +1215,9 @@ This section will contains tests covering the ``Work Orders'' requirements defin
 
 \end{enumerate}
 
-\subsubsection{Usability and Humanity Requirements}
-\begin{enumerate}
+\subsubsection{Module ?}
 
-	\item \textbf{NFRT-UH1} % For UH1
-
-	      Type: Dynamic, Manual
-
-	      How test will be performed: The testers will complete the manual system tests for functional
-	      requirements listed section \ref{Tests for Functional Requirements} on a MacOS desktop/laptop
-	      device, a Windows desktop/laptop, an iOS mobile device, and an android mobile device.
-
-	\item \textbf{NFRT-UH2} % For UH2
-
-	      Type: Dynamic, Manual
-
-	      Initial State: Device is connected to the internet and application is not open
-
-	      Input/Condition: The user launches the application on Google Chrome
-
-	      Output/Result: The system can be assessed through Google Chrome
-
-	      How test will be performed: The tester will attempt to launch the application on the Google Chrome
-	      web browser and using a device that is connected to the internet.
-
-	\item \textbf{NFRT-UH3} % For UH3
-
-	      Type: Dynamic, Manual
-
-	      Initial State: Device is connected to the internet and the application is open
-
-	      Input/Condition: User disconnects from the internet
-
-	      Output/Result: The system notifies the user that there is no network connection and functionality
-	      will be limited.
-
-	      How test will be performed: The tester disconnect from the internet while the application is open.
-
-\end{enumerate}
-
-\subsubsection{Operational and Environmental Requirements}
-\begin{enumerate}
-
-	\item \textbf{NFRT-OE1} % For OE1
-
-	      Type: Dynamic, Manual
-
-	      How test will be performed: The testers will complete the manual system tests for functional
-	      requirements listed section \ref{Tests for Functional Requirements} on Google Chrome using various
-	      device dimension options listed the Google DevTools Device Toolbar. At minimum, the testers will
-	      test with the following dimensions: Responsive, iPhone 12 Pro (390x844), iPhone SE (375x667), and
-	      iPad Air (820x1180). This set will provide a reasonable variety of different device dimensions.
-
-\end{enumerate}
+...
 
 \subsection{Traceability Between Test Cases and Modules}
 
