@@ -49,6 +49,7 @@
 		October 30, 2022 & Leon So               & Add System Tests for Employee Management     \\
 		October 30, 2022 & Arkin Modi            & Add Look and Feel System Tests               \\
 		October 30, 2022 & Arkin Modi            & Add Security System Tests                    \\
+		October 31, 2022 & Timothy Choy          & Add System Tests for Shop Profile            \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -971,6 +972,57 @@ This section will contains tests covering the ``Services'' requirements defined 
 	      How test will be performed: The tester will delete a shop service through the user interface and
 	      confirms that the shop profile is updated
 
+\end{enumerate}
+
+\subsubsection{Shop Profile}
+
+This section will contain tests covering the ``Shop Profile'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+	\item \textbf{FRT-BE33-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop
+
+	      Input: Request to view shop profile
+
+	      Output: Information regarding the shop, which includes the shop's address, phone number, and email
+
+	      Test Case Derivation: The system shall display information about the shop upon request
+
+	      How test will be performed: The tester will go through the user interface to view a shop profile
+
+	\item \textbf{FRT-BE34-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner Account with a registered shop
+
+	      Input: Request to update shop profile, with information which includes the shop's address, phone
+	      number, and email
+
+	      Output: A shop profile update confirmation message, and updated shop details
+
+	      Test Case Derivation: The system shall update a shop's information upon request
+
+	      How test will be performed: The tester will go through the user interface to update a shop profile,
+	      on a Shop Owner Account
+
+	\item \textbf{FRT-BE34-2}
+
+	      Control: Manual
+
+	      Initial State: Employee Account with a registered shop
+
+	      Input: Request to update shop profile
+
+	      Output: An error message regarding incorrect privilege
+
+	      Test Case Derivation: The system shall not let employees update the shop profile
+
+	      How test will be performed: The tester will attempt to update a shop profile on an Employee Account
 \end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
