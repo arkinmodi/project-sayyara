@@ -983,41 +983,60 @@ This section will contains tests covering the ``Services'' requirements defined 
 \wss{Static tests, review, inspections, and walkthroughs, will not follow the
 	format for the tests given below.}
 
-\subsubsection{Area of Testing1}
-
-\paragraph{Title for Test}
-
+\subsubsection{Usability and Humanity Requirements}
 \begin{enumerate}
 
-	\item{test-id1\\}
+	\item \textbf{NFRT-UH1} % For UH1
 
-	Type: Functional, Dynamic, Manual, Static etc.
+	      Type: Dynamic, Manual
 
-	Initial State:
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements listed section \ref{Tests for Functional Requirements} on a MacOS desktop/laptop
+	      device, a Windows desktop/laptop, an iOS mobile device, and an android mobile device.
 
-	Input/Condition:
+	\item \textbf{NFRT-UH2} % For UH2
 
-	Output/Result:
+	      Type: Dynamic, Manual
 
-	How test will be performed:
+	      Initial State: Device is connected to the internet and application is not open
 
-	\item{test-id2\\}
+	      Input/Condition: The user launches the application on Google Chrome
 
-	Type: Functional, Dynamic, Manual, Static etc.
+	      Output/Result: The system can be assessed through Google Chrome
 
-	Initial State:
+	      How test will be performed: The tester will attempt to launch the application on the Google Chrome
+	      web browser and using a device that is connected to the internet.
 
-	Input:
+	\item \textbf{NFRT-UH3} % For UH3
 
-	Output:
+	      Type: Dynamic, Manual
 
-	How test will be performed:
+	      Initial State: Device is connected to the internet and the application is open
+
+	      Input/Condition: User disconnects from the internet
+
+	      Output/Result: The system notifies the user that there is no network connection and functionality
+	      will be limited.
+
+	      How test will be performed: The tester disconnect from the internet while the application is open.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Operational and Environmental Requirements}
+\begin{enumerate}
 
-...
+	\item \textbf{NFRT-OE1} % For OE1
+
+	      Type: Dynamic, Manual
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements listed section \ref{Tests for Functional Requirements} on Google Chrome using various
+	      device dimension options listed the Google DevTools Device Toolbar. At minimum, the testers will
+	      test with the following dimensions: Responsive, iPhone 12 Pro ($390 \times 844$), iPhone SE ($375
+		      \times 667$), and iPad Air ($820 \times 1180$). This set will provide a reasonable variety of
+	      different device dimensions.
+
+\end{enumerate}
 
 \subsection{Traceability Between Test Cases and Requirements}
 
@@ -1129,59 +1148,9 @@ This section will contains tests covering the ``Services'' requirements defined 
 
 \end{enumerate}
 
-\subsubsection{Usability and Humanity Requirements}
-\begin{enumerate}
+\subsubsection{Module ?}
 
-	\item \textbf{NFRT-UH1} % For UH1
-
-	      Type: Dynamic, Manual
-
-	      How test will be performed: The testers will complete the manual system tests for functional
-	      requirements listed section \ref{Tests for Functional Requirements} on a MacOS desktop/laptop
-	      device, a Windows desktop/laptop, an iOS mobile device, and an android mobile device.
-
-	\item \textbf{NFRT-UH2} % For UH2
-
-	      Type: Dynamic, Manual
-
-	      Initial State: Device is connected to the internet and application is not open
-
-	      Input/Condition: The user launches the application on Google Chrome
-
-	      Output/Result: The system can be assessed through Google Chrome
-
-	      How test will be performed: The tester will attempt to launch the application on the Google Chrome
-	      web browser and using a device that is connected to the internet.
-
-	\item \textbf{NFRT-UH3} % For UH3
-
-	      Type: Dynamic, Manual
-
-	      Initial State: Device is connected to the internet and the application is open
-
-	      Input/Condition: User disconnects from the internet
-
-	      Output/Result: The system notifies the user that there is no network connection and functionality
-	      will be limited.
-
-	      How test will be performed: The tester disconnect from the internet while the application is open.
-
-\end{enumerate}
-
-\subsubsection{Operational and Environmental Requirements}
-\begin{enumerate}
-
-	\item \textbf{NFRT-OE1} % For OE1
-
-	      Type: Dynamic, Manual
-
-	      How test will be performed: The testers will complete the manual system tests for functional
-	      requirements listed section \ref{Tests for Functional Requirements} on Google Chrome using various
-	      device dimension options listed the Google DevTools Device Toolbar. At minimum, the testers will
-	      test with the following dimensions: Responsive, iPhone 12 Pro (390x844), iPhone SE (375x667), and
-	      iPad Air (820x1180). This set will provide a reasonable variety of different device dimensions.
-
-\end{enumerate}
+...
 
 \subsection{Traceability Between Test Cases and Modules}
 
