@@ -96,6 +96,7 @@ jobs:
               - '${{ env.UGDE_DIR }}/**'
             vnv_plan:
               - *common
+              - *references
               - '${{ env.VNVP_DIR }}/**'
             vnv_report:
               - *common
