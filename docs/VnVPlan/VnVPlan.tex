@@ -56,6 +56,7 @@
 		October 31, 2022 & Timothy Choy          & Add System Tests for Shop Lookup                     \\
 		October 31, 2022 & Joy Xiao              & Add Cultural Requirements Tests                      \\
 		October 31, 2022 & Timothy Choy          & Add System Tests for Shop Profile                    \\
+		October 31, 2022 & Timothy Choy          & Add Performance Tests                                \\
 		October 31, 2022 & Leon So               & Add System Tests for Authentication                  \\
 		November 1, 2022 & Timothy Choy          & Add System Tests for Employee Profile                \\
 		November 1, 2022 & Timothy Choy          & Add Maintainability and Support Tests                \\
@@ -1424,6 +1425,18 @@ This section will contain tests covering the ``Employee Profile'' requirements d
 	      will be limited.
 
 	      How test will be performed: The tester disconnect from the internet while the application is open.
+
+\end{enumerate}
+
+\subsubsection{Performance Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-PR1-1} % For PR1
+
+	      Type: Dynamic, Manual
+
+	      How test will be performed: The tester will additionally add a timer to every test listed in
+	      section \ref{Tests for Functional Requirements} to check if every user function responds within 0.5
+	      seconds.
 
 \end{enumerate}
 
