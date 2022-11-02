@@ -18,7 +18,7 @@
 
 \begin{document}
 
-\title{Project Title: System Verification and Validation Plan for \progname{}}
+\title{System Verification and Validation Plan for \progname{}}
 \author{\authname}
 \date{\today}
 
@@ -42,6 +42,7 @@
 		October 29, 2022 & Leon So               & Add Objectives                               \\
 		October 29, 2022 & Arkin Modi            & Add System Tests for Work Orders             \\
 		October 29, 2022 & Joy Xiao              & Add System Tests for Appointments            \\
+		October 30, 2022 & Timothy Choy          & Add SRS Verification Plan                    \\
 		October 30, 2022 & Leon So               & Add Operational and Environmental Tests      \\
 		October 30, 2022 & Arkin Modi            & Add Implementation Verification Plan         \\
 		October 30, 2022 & Leon So               & Add Usability and Humanity Tests             \\
@@ -50,6 +51,11 @@
 		October 30, 2022 & Arkin Modi            & Add Look and Feel System Tests               \\
 		October 30, 2022 & Arkin Modi            & Add Security System Tests                    \\
 		October 31, 2022 & Timothy Choy          & Add System Tests for Shop Lookup             \\
+		October 31, 2022 & Joy Xiao              & Add Cultural Requirements Tests              \\
+		October 31, 2022 & Timothy Choy          & Add System Tests for Shop Profile            \\
+		October 31, 2022 & Leon So               & Add System Tests for Authentication          \\
+		November 1, 2022 & Timothy Choy          & Add System Tests for Employee Profile        \\
+		November 1, 2022 & Joy Xiao              & Add Legal Requirement Tests                  \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -134,11 +140,18 @@ Sayyara passes all tests after performing the tests and making any necessary upd
 
 \subsection{SRS Verification Plan}
 
-\wss{List any approaches you intend to use for SRS verification.  This may include
-	ad hoc feedback from reviewers, like your classmates, or you may plan for
-	something more rigorous/systematic.}
+SRS verification will be done by the core developers of the project, as well as by the TAs of the
+course. To verify the contents of the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}, we will
+compare the requirements stated by the stakeholder, Nabeel, with the requirements stated in the
+SRS. Furthermore, we will show our SRS to Nabeel for their review. We believe that this is
+sufficient to verify the SRS, as Nabeel has defined clear requirements for the project.
 
-\wss{Maybe create an SRS checklist?}
+% \wss{List any approaches you intend to use for SRS verification.  This may include
+% 	ad hoc feedback from reviewers, like your classmates, or you may plan for
+% 	something more rigorous/systematic.}
+
+% \wss{Maybe create an SRS checklist?}
 
 \subsection{Design Verification Plan}
 
@@ -234,6 +247,156 @@ defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs
 
 \wss{Include a blurb here to explain why the subsections below
 	cover the requirements.  References to the SRS would be good here.}
+
+\subsubsection{Authentication}
+This section will contains tests covering the ``Authentication'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE1-1}
+
+	      Control: Manual
+
+	      Initial State: Customer with no existing account
+
+	      Input: Customer submits sign up form with valid email, password, name, and phone number
+
+	      Output: Redirect to vehicle owner landing page upon successful registration
+
+	      Test Case Derivation: New customer wants to sign up for a new account with valid sign up
+	      information provided
+
+	      How test will be performed: The tester will register and sign up for a new customer account using
+	      valid sign up information
+
+	\item \textbf{FRT-BE1-2}
+
+	      Control: Manual
+
+	      Initial State: Shop owner with no existing account
+
+	      Input: Shop owner submits sign up form with valid email, password, name, phone number, shop name,
+	      shop address, and shop phone number
+
+	      Output: Redirect to shop owner landing page upon successful registration
+
+	      Test Case Derivation: New shop owner user wants to sign up for a new account with valid sign up
+	      information provided
+
+	      How test will be performed: The tester will register and sign up for a new shop owner account using
+	      valid sign up information
+
+	\item \textbf{FRT-BE1-3}
+
+	      Control: Manual
+
+	      Initial State: Employee with no existing account
+
+	      Input: Employee submits sign up form with valid email, password, name, and phone number
+
+	      Output: Redirect to employee landing page upon successful registration
+
+	      Test Case Derivation: New employee user wants to sign up for a new account with valid sign up
+	      information provided
+
+	      How test will be performed: The tester will register and sign up for a new employee account using
+	      valid sign up information
+
+	\item \textbf{FRT-BE2-1}
+
+	      Control: Manual
+
+	      Initial State: Customer with existing account and not logged in
+
+	      Input: Customer submits login form with valid email and password
+
+	      Output: Redirect to vehicle owner landing page upon successful login
+
+	      Test Case Derivation: Customer wants to login to existing with valid login credentials provided
+
+	      How test will be performed: The tester will login to an existing customer account using valid login
+	      credentials
+
+	\item \textbf{FRT-BE2-2}
+
+	      Control: Manual
+
+	      Initial State: Shop owner with existing account and not logged in
+
+	      Input: Shop owner submits login form with valid email and password
+
+	      Output: Redirect to shop owner landing page upon successful login
+
+	      Test Case Derivation: Shop owner wants to login to existing with valid login credentials provided
+
+	      How test will be performed: The tester will login to an existing shop owner account using valid
+	      login credentials
+
+	\item \textbf{FRT-BE2-3}
+
+	      Control: Manual
+
+	      Initial State: Employee with existing account and not logged in
+
+	      Input: Employee submits login form with valid email and password
+
+	      Output: Redirect to employee landing page upon successful login
+
+	      Test Case Derivation: Employee wants to login to existing with valid login credentials provided
+
+	      How test will be performed: The tester will login to an existing employee account using valid login
+	      credentials
+
+	\item \textbf{FRT-BE3-1}
+
+	      Control: Manual
+
+	      Initial State: Customer with existing account and not logged in
+
+	      Input: Customer requests a password reset code to be sent to inputted email
+
+	      Output: System sends password reset code to inputted email and displays a countdown for password
+	      reset expiration
+
+	      Test Case Derivation: Customer wants to reset password
+
+	      How test will be performed: The tester will request a password reset with an email associated with
+	      an existing account
+
+	\item \textbf{FRT-BE3-2}
+
+	      Control: Manual
+
+	      Initial State: Shop owner with existing account and not logged in
+
+	      Input: Shop owner requests a password reset code to be sent to inputted email
+
+	      Output: System sends password reset code to inputted email and displays a countdown for password
+	      reset expiration
+
+	      Test Case Derivation: Shop owner wants to reset password
+
+	      How test will be performed: The tester will request a password reset with an email associated with
+	      an existing account
+
+	\item \textbf{FRT-BE3-3}
+
+	      Control: Manual
+
+	      Initial State: Employee with existing account and not logged in
+
+	      Input: Employee requests a password reset code to be sent to inputted email
+
+	      Output: System sends password reset code to inputted email and displays a countdown for password
+	      reset expiration
+
+	      Test Case Derivation: Employee wants to reset password
+
+	      How test will be performed: The tester will request a password reset with an email associated with
+	      an existing account
+
+\end{enumerate}
 
 \subsubsection{Appointments}
 
@@ -997,6 +1160,161 @@ This section will contain tests covering the ``Shop Lookup'' requirements define
 	      if the shop list changes correctly
 \end{enumerate}
 
+\subsubsection{Shop Profile}
+
+This section will contain tests covering the ``Shop Profile'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+	\item \textbf{FRT-BE33-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop
+
+	      Input: Request to view shop profile
+
+	      Output: Information regarding the shop, which includes the shop's address, phone number, and email
+
+	      Test Case Derivation: The system shall display information about the shop upon request
+
+	      How test will be performed: The tester will go through the user interface to view a shop profile
+
+	\item \textbf{FRT-BE34-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner Account with a registered shop
+
+	      Input: Request to update shop profile, with information which includes the shop's address, phone
+	      number, and email
+
+	      Output: A shop profile update confirmation message, and updated shop details
+
+	      Test Case Derivation: The system shall update a shop's information upon request
+
+	      How test will be performed: The tester will go through the user interface to update a shop profile,
+	      on a Shop Owner Account
+
+	\item \textbf{FRT-BE34-2}
+
+	      Control: Manual
+
+	      Initial State: Employee Account with a registered shop
+
+	      Input: Request to update shop profile
+
+	      Output: An error message regarding incorrect privilege
+
+	      Test Case Derivation: The system shall not let employees update the shop profile
+
+	      How test will be performed: The tester will attempt to update a shop profile on an Employee Account
+\end{enumerate}
+
+\subsubsection{Employee Profile}
+
+This section will contain tests covering the ``Employee Profile'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+	\item \textbf{FRT-BE35-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, Employee account
+	      exists
+
+	      Input: An Employee account views their employee profile
+
+	      Output: Displays the employee's name, phone number and email
+
+	      Test Case Derivation: The system shall display the employee's profile when requested
+
+	      How test will be performed: The tester will navigate the interface to view their own profile
+
+	\item \textbf{FRT-BE35-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, multiple Employee
+	      accounts exist
+
+	      Input: An Employee account views another employee's profile
+
+	      Output: Does not display the information
+
+	      Test Case Derivation: The system shall not display other employee's profiles
+
+	      How test will be performed: The tester will navigate the interface to view another employee's
+	      profile
+
+	\item \textbf{FRT-BE35-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, Employee accounts
+	      exist
+
+	      Input: A Shop Owner account views an employee profile
+
+	      Output: Displays the employee's name, phone number and email
+
+	      Test Case Derivation: The system shall display the employee's profile to a Shop Owner when
+	      requested
+
+	      How test will be performed: The tester will navigate the interface to view many different employee
+	      profiles
+
+	\item \textbf{FRT-BE36-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, Employee account
+	      exists
+
+	      Input: An Employee account attempts to edit their own profile, by providing an email and/or a phone
+	      number
+
+	      Output: A notification of a successful update and their profile is updated accordingly
+
+	      Test Case Derivation: The system shall allow the Employee account to edit their own profile
+
+	      How test will be performed: The tester will edit their own profile by updating the email and phone
+	      number fields
+
+	\item \textbf{FRT-BE36-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, multiple Employee
+	      accounts exist
+
+	      Input: An Employee account attempts to update another employee's profile
+
+	      Output: Nothing happens
+
+	      Test Case Derivation: The system shall not allow Employee accounts to edit other employee profiles
+
+	      How test will be performed: The tester will attempt to edit another employee's profile
+
+	\item \textbf{FRT-BE36-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner account with employees listed on their shop profile, Employee account
+	      exists
+
+	      Input: A Shop Owner account attempts to update any employee profile, providing an email and/or
+	      phone number
+
+	      Output: A notification of a successful update and the profile is updated accordingly
+
+	      Test Case Derivation: The system shall allow Shop Owner accounts to update employee profiles
+
+	      How test will be performed: The tester will attempt to edit multiple employee profiles
+
+\end{enumerate}
+
 \subsection{Tests for Nonfunctional Requirements}
 
 \wss{The nonfunctional requirements for accuracy will likely just reference the
@@ -1009,6 +1327,36 @@ This section will contain tests covering the ``Shop Lookup'' requirements define
 
 \wss{Static tests, review, inspections, and walkthroughs, will not follow the
 	format for the tests given below.}
+
+\subsubsection{Cultural Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-CR1-1}
+
+	      Type: Static, Manual
+
+	      How test will be performed: The testers will go through end to end tests for the entire program and
+	      will confirm that any texts or images are not offensive.
+
+	\item \textbf{NFRT-CR2-1}
+
+	      Type: Static, Manual
+
+	      How test will be performed: The testers will go through end to end tests for the entire program and
+	      will confirm that the text displayed is in English.
+
+\end{enumerate}
+
+\subsubsection{Legal Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-LR1-1}
+
+	      Type: Static, Manual
+
+	      How test will be performed: The testers will go through the source code of the project and project
+	      documents to determine if any open source resources were used and check that appropriate credits
+	      and/or copyright licenses are used.
+
+\end{enumerate}
 
 \subsubsection{Look and Feel Requirements}
 
