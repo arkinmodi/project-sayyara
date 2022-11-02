@@ -53,10 +53,13 @@
 		October 30, 2022 & Leon So               & Add System Tests for Employee Management             \\
 		October 30, 2022 & Arkin Modi            & Add Look and Feel System Tests                       \\
 		October 30, 2022 & Arkin Modi            & Add Security System Tests                            \\
+		October 31, 2022 & Timothy Choy          & Add System Tests for Shop Lookup                     \\
 		October 31, 2022 & Joy Xiao              & Add Cultural Requirements Tests                      \\
 		October 31, 2022 & Timothy Choy          & Add System Tests for Shop Profile                    \\
 		October 31, 2022 & Leon So               & Add System Tests for Authentication                  \\
 		November 1, 2022 & Timothy Choy          & Add System Tests for Employee Profile                \\
+		November 1, 2022 & Timothy Choy          & Add Maintainability and Support Tests                \\
+		November 1, 2022 & Timothy Choy          & Add VnV Verification Plan                            \\
 		November 1, 2022 & Joy Xiao              & Add Legal Requirement Tests                          \\
 		November 1, 2022 & Arkin Modi            & Add Traceability Between Test Cases and Requirements \\
 		\bottomrule
@@ -171,11 +174,19 @@ the corresponding requirements.
 
 \subsection{Verification and Validation Plan Verification Plan}
 
-\wss{The verification and validation plan is an artifact that should also be verified.}
+The VnV Plan verification will be done by the core developers of the project, and the TAs of the
+course. To verify the plan, we will run through the requirements stated in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS} and match every
+requirement to at least one test. Regarding the unit tests, we will match each module stated in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MG/MG.pdf}{MG} and
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MIS/MIS.pdf}{MIS} to the
+tests written in the VnV plan.
 
-\wss{The review will include reviews by your classmates}
+% \wss{The verification and validation plan is an artifact that should also be verified.}
 
-\wss{Create a checklists?}
+% \wss{The review will include reviews by your classmates}
+
+% \wss{Create a checklists?}
 
 \subsection{Implementation Verification Plan}
 
@@ -402,7 +413,7 @@ This section will contains tests covering the ``Authentication'' requirements de
 
 \subsubsection{Appointments}
 
-This section will contains tests covering the ``Appointments'' requirements defined in the
+This section will contain tests covering the ``Appointments'' requirements defined in the
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
@@ -456,6 +467,22 @@ This section will contains tests covering the ``Appointments'' requirements defi
 	      How test will be performed: The tester will go through the appointment booking process through the
 	      user interface
 
+	\item \textbf{FRT-BE4-4}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with appointment requests
+
+	      Input: Accept an appointment request
+
+	      Output: Appointment booking displayed in calendar for Shop Owner/Employee accounts and Customer
+	      account
+
+	      Test Case Derivation: The appointment request is accepted and appointment booking is completed
+
+	      How test will be performed: The tester will accept an appointment request through the user
+	      interface
+
 	\item \textbf{FRT-BE5-1}
 
 	      Control: Manual
@@ -503,22 +530,6 @@ This section will contains tests covering the ``Appointments'' requirements defi
 
 	      How test will be performed: The tester will go through the user interface to edit appointment
 	      details
-
-	\item \textbf{FRT-BE5-4}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Employee Account with appointment requests
-
-	      Input: Accept an appointment request
-
-	      Output: Appointment booking displayed in calendar for Shop Owner/Employee accounts and Customer
-	      account
-
-	      Test Case Derivation: The appointment request is accepted and appointment booking is completed
-
-	      How test will be performed: The tester will accept an appointment request through the user
-	      interface
 
 	\item \textbf{FRT-BE6-1}
 
@@ -569,7 +580,7 @@ This section will contains tests covering the ``Appointments'' requirements defi
 
 \subsubsection{Quotes}
 
-This section will contains tests covering the ``Quotes'' requirements defined in the
+This section will contain tests covering the ``Quotes'' requirements defined in the
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
@@ -822,7 +833,7 @@ This section will contains tests covering the ``Quotes'' requirements defined in
 
 \subsubsection{Work Orders}
 
-This section will contains tests covering the ``Work Orders'' requirements defined in the
+This section will contain tests covering the ``Work Orders'' requirements defined in the
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
@@ -1139,6 +1150,29 @@ This section will contains tests covering the ``Services'' requirements defined 
 
 \end{enumerate}
 
+\subsubsection{Shop Lookup}
+
+This section will contain tests covering the ``Shop Lookup'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+	\item \textbf{FRT-BE32-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, Customer Account exists
+
+	      Input: The Customer Account attempts to view a list of shops, using the parameters of distance,
+	      postal code, and/or shop name
+
+	      Output: An output list of shops based on the input parameters
+
+	      Test Case Derivation: The system shall show a list of shops with the specified parameters provided
+
+	      How test will be performed: The tester will search for shops, and input various parameters to see
+	      if the shop list changes correctly
+\end{enumerate}
+
 \subsubsection{Shop Profile}
 
 This section will contain tests covering the ``Shop Profile'' requirements defined in the
@@ -1406,6 +1440,18 @@ This section will contain tests covering the ``Employee Profile'' requirements d
 	      test with the following dimensions: Responsive, iPhone 12 Pro ($390 \times 844$), iPhone SE ($375
 		      \times 667$), and iPad Air ($820 \times 1180$). This set will provide a reasonable variety of
 	      different device dimensions.
+
+\end{enumerate}
+
+\subsubsection{Maintainability and Support Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-MS1-1} % For MS1
+
+	      Type: Manual
+
+	      How test will be performed: Every document will have to pass a review by every developer before the
+	      document is finalized. The review will include running through the system and linking every module
+	      to proper documentation.
 
 \end{enumerate}
 
