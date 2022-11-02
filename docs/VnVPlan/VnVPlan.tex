@@ -50,9 +50,14 @@
 		October 30, 2022 & Leon So               & Add System Tests for Employee Management     \\
 		October 30, 2022 & Arkin Modi            & Add Look and Feel System Tests               \\
 		October 30, 2022 & Arkin Modi            & Add Security System Tests                    \\
+		October 31, 2022 & Timothy Choy          & Add System Tests for Shop Lookup             \\
+		October 31, 2022 & Joy Xiao              & Add Cultural Requirements Tests              \\
 		October 31, 2022 & Timothy Choy          & Add System Tests for Shop Profile            \\
+		October 31, 2022 & Leon So               & Add System Tests for Authentication          \\
 		November 1, 2022 & Timothy Choy          & Add System Tests for Employee Profile        \\
 		November 1, 2022 & Timothy Choy          & Add Maintainability and Support Tests        \\
+		November 1, 2022 & Timothy Choy          & Add VnV Verification Plan                    \\
+		November 1, 2022 & Joy Xiao              & Add Legal Requirement Tests                  \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -166,11 +171,19 @@ the corresponding requirements.
 
 \subsection{Verification and Validation Plan Verification Plan}
 
-\wss{The verification and validation plan is an artifact that should also be verified.}
+The VnV Plan verification will be done by the core developers of the project, and the TAs of the
+course. To verify the plan, we will run through the requirements stated in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS} and match every
+requirement to at least one test. Regarding the unit tests, we will match each module stated in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MG/MG.pdf}{MG} and
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MIS/MIS.pdf}{MIS} to the
+tests written in the VnV plan.
 
-\wss{The review will include reviews by your classmates}
+% \wss{The verification and validation plan is an artifact that should also be verified.}
 
-\wss{Create a checklists?}
+% \wss{The review will include reviews by your classmates}
+
+% \wss{Create a checklists?}
 
 \subsection{Implementation Verification Plan}
 
@@ -245,9 +258,159 @@ defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs
 \wss{Include a blurb here to explain why the subsections below
 	cover the requirements.  References to the SRS would be good here.}
 
+\subsubsection{Authentication}
+This section will contains tests covering the ``Authentication'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE1-1}
+
+	      Control: Manual
+
+	      Initial State: Customer with no existing account
+
+	      Input: Customer submits sign up form with valid email, password, name, and phone number
+
+	      Output: Redirect to vehicle owner landing page upon successful registration
+
+	      Test Case Derivation: New customer wants to sign up for a new account with valid sign up
+	      information provided
+
+	      How test will be performed: The tester will register and sign up for a new customer account using
+	      valid sign up information
+
+	\item \textbf{FRT-BE1-2}
+
+	      Control: Manual
+
+	      Initial State: Shop owner with no existing account
+
+	      Input: Shop owner submits sign up form with valid email, password, name, phone number, shop name,
+	      shop address, and shop phone number
+
+	      Output: Redirect to shop owner landing page upon successful registration
+
+	      Test Case Derivation: New shop owner user wants to sign up for a new account with valid sign up
+	      information provided
+
+	      How test will be performed: The tester will register and sign up for a new shop owner account using
+	      valid sign up information
+
+	\item \textbf{FRT-BE1-3}
+
+	      Control: Manual
+
+	      Initial State: Employee with no existing account
+
+	      Input: Employee submits sign up form with valid email, password, name, and phone number
+
+	      Output: Redirect to employee landing page upon successful registration
+
+	      Test Case Derivation: New employee user wants to sign up for a new account with valid sign up
+	      information provided
+
+	      How test will be performed: The tester will register and sign up for a new employee account using
+	      valid sign up information
+
+	\item \textbf{FRT-BE2-1}
+
+	      Control: Manual
+
+	      Initial State: Customer with existing account and not logged in
+
+	      Input: Customer submits login form with valid email and password
+
+	      Output: Redirect to vehicle owner landing page upon successful login
+
+	      Test Case Derivation: Customer wants to login to existing with valid login credentials provided
+
+	      How test will be performed: The tester will login to an existing customer account using valid login
+	      credentials
+
+	\item \textbf{FRT-BE2-2}
+
+	      Control: Manual
+
+	      Initial State: Shop owner with existing account and not logged in
+
+	      Input: Shop owner submits login form with valid email and password
+
+	      Output: Redirect to shop owner landing page upon successful login
+
+	      Test Case Derivation: Shop owner wants to login to existing with valid login credentials provided
+
+	      How test will be performed: The tester will login to an existing shop owner account using valid
+	      login credentials
+
+	\item \textbf{FRT-BE2-3}
+
+	      Control: Manual
+
+	      Initial State: Employee with existing account and not logged in
+
+	      Input: Employee submits login form with valid email and password
+
+	      Output: Redirect to employee landing page upon successful login
+
+	      Test Case Derivation: Employee wants to login to existing with valid login credentials provided
+
+	      How test will be performed: The tester will login to an existing employee account using valid login
+	      credentials
+
+	\item \textbf{FRT-BE3-1}
+
+	      Control: Manual
+
+	      Initial State: Customer with existing account and not logged in
+
+	      Input: Customer requests a password reset code to be sent to inputted email
+
+	      Output: System sends password reset code to inputted email and displays a countdown for password
+	      reset expiration
+
+	      Test Case Derivation: Customer wants to reset password
+
+	      How test will be performed: The tester will request a password reset with an email associated with
+	      an existing account
+
+	\item \textbf{FRT-BE3-2}
+
+	      Control: Manual
+
+	      Initial State: Shop owner with existing account and not logged in
+
+	      Input: Shop owner requests a password reset code to be sent to inputted email
+
+	      Output: System sends password reset code to inputted email and displays a countdown for password
+	      reset expiration
+
+	      Test Case Derivation: Shop owner wants to reset password
+
+	      How test will be performed: The tester will request a password reset with an email associated with
+	      an existing account
+
+	\item \textbf{FRT-BE3-3}
+
+	      Control: Manual
+
+	      Initial State: Employee with existing account and not logged in
+
+	      Input: Employee requests a password reset code to be sent to inputted email
+
+	      Output: System sends password reset code to inputted email and displays a countdown for password
+	      reset expiration
+
+	      Test Case Derivation: Employee wants to reset password
+
+	      How test will be performed: The tester will request a password reset with an email associated with
+	      an existing account
+
+\end{enumerate}
+
 \subsubsection{Appointments}
 
-This section will contains tests covering the ``Appointments'' requirements defined in the
+This section will contain tests covering the ``Appointments'' requirements defined in the
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
@@ -301,6 +464,22 @@ This section will contains tests covering the ``Appointments'' requirements defi
 	      How test will be performed: The tester will go through the appointment booking process through the
 	      user interface
 
+	\item \textbf{FRT-BE4-4}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with appointment requests
+
+	      Input: Accept an appointment request
+
+	      Output: Appointment booking displayed in calendar for Shop Owner/Employee accounts and Customer
+	      account
+
+	      Test Case Derivation: The appointment request is accepted and appointment booking is completed
+
+	      How test will be performed: The tester will accept an appointment request through the user
+	      interface
+
 	\item \textbf{FRT-BE5-1}
 
 	      Control: Manual
@@ -348,22 +527,6 @@ This section will contains tests covering the ``Appointments'' requirements defi
 
 	      How test will be performed: The tester will go through the user interface to edit appointment
 	      details
-
-	\item \textbf{FRT-BE3-4}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Employee Account with appointment requests
-
-	      Input: Accept an appointment request
-
-	      Output: Appointment booking displayed in calendar for Shop Owner/Employee accounts and Customer
-	      account
-
-	      Test Case Derivation: The appointment request is accepted and appointment booking is completed
-
-	      How test will be performed: The tester will accept an appointment request through the user
-	      interface
 
 	\item \textbf{FRT-BE6-1}
 
@@ -414,7 +577,7 @@ This section will contains tests covering the ``Appointments'' requirements defi
 
 \subsubsection{Quotes}
 
-This section will contains tests covering the ``Quotes'' requirements defined in the
+This section will contain tests covering the ``Quotes'' requirements defined in the
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
@@ -667,7 +830,7 @@ This section will contains tests covering the ``Quotes'' requirements defined in
 
 \subsubsection{Work Orders}
 
-This section will contains tests covering the ``Work Orders'' requirements defined in the
+This section will contain tests covering the ``Work Orders'' requirements defined in the
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
@@ -984,6 +1147,29 @@ This section will contains tests covering the ``Services'' requirements defined 
 
 \end{enumerate}
 
+\subsubsection{Shop Lookup}
+
+This section will contain tests covering the ``Shop Lookup'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+	\item \textbf{FRT-BE32-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, Customer Account exists
+
+	      Input: The Customer Account attempts to view a list of shops, using the parameters of distance,
+	      postal code, and/or shop name
+
+	      Output: An output list of shops based on the input parameters
+
+	      Test Case Derivation: The system shall show a list of shops with the specified parameters provided
+
+	      How test will be performed: The tester will search for shops, and input various parameters to see
+	      if the shop list changes correctly
+\end{enumerate}
+
 \subsubsection{Shop Profile}
 
 This section will contain tests covering the ``Shop Profile'' requirements defined in the
@@ -1151,6 +1337,36 @@ This section will contain tests covering the ``Employee Profile'' requirements d
 
 \wss{Static tests, review, inspections, and walkthroughs, will not follow the
 	format for the tests given below.}
+
+\subsubsection{Cultural Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-CR1-1}
+
+	      Type: Static, Manual
+
+	      How test will be performed: The testers will go through end to end tests for the entire program and
+	      will confirm that any texts or images are not offensive.
+
+	\item \textbf{NFRT-CR2-1}
+
+	      Type: Static, Manual
+
+	      How test will be performed: The testers will go through end to end tests for the entire program and
+	      will confirm that the text displayed is in English.
+
+\end{enumerate}
+
+\subsubsection{Legal Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-LR1-1}
+
+	      Type: Static, Manual
+
+	      How test will be performed: The testers will go through the source code of the project and project
+	      documents to determine if any open source resources were used and check that appropriate credits
+	      and/or copyright licenses are used.
+
+\end{enumerate}
 
 \subsubsection{Look and Feel Requirements}
 
