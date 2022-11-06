@@ -1,5 +1,5 @@
-# Problem Statement
+# Problem Statement and Goals
 
-The folders and files for this folder are as follows:
+Document: [ProblemStatement.pdf](ProblemStatement.pdf)
 
-Describe ...
+This document outlines the problem we have set out to solve and the high-level goals we will accomplish.
