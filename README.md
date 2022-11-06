@@ -9,11 +9,11 @@
 </div>
 <br/>
 
-Developer Names: Arkin Modi, Joy Xiao, Leon So, Timothy Choy
+**Developer Names:** Arkin Modi, Joy Xiao, Leon So, Timothy Choy
 
-Course Code: SFWRENG 4G06, Software Design IV - Capstone Design Project
+**Course Code:** SFWRENG 4G06, Software Design IV - Capstone Design Project
 
-Date of project start: September 6, 2022
+**Date of project start:** September 6, 2022
 
 This project is a progressive web application designed for auto repair shops and customers. Sayyara
 allows customers to quickly find and compare auto repair shops, request quotes, and schedule service
