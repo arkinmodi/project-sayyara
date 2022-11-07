@@ -1,5 +1,5 @@
 # Hazard Analysis
 
-The folders and files for this folder are as follows:
+Document: [HazardAnalysis.pdf](HazardAnalysis.pdf)
 
-Describe ...
+This document outlines the hazard analysis of Sayyara. The definition of hazard is any property or condition in the system along with conditions in the environment that may cause harm or damage.
