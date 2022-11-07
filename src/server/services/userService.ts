@@ -1,27 +1,19 @@
 import { z } from "zod";
 
-import { prisma } from "@server/db/client";
+import { prisma, UserType } from "@server/db/client";
 
 export const registrationSchema = z.object({
   email: z.string().email(),
   password: z.string(),
   first_name: z.string(),
   last_name: z.string(),
+  type: z.nativeEnum(UserType),
 });
 export type CreateUserInputType = z.infer<typeof registrationSchema>;
 
 export const createUser = async (user: CreateUserInputType) => {
   return await prisma.user.create({
-    data: {
-      ...user,
-      accounts: {
-        create: [
-          {
-            type: "Test",
-          },
-        ],
-      },
-    },
+    data: user,
   });
 };
 

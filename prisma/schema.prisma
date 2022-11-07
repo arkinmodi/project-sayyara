@@ -12,20 +12,64 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
-model Account {
-  id     String @id @default(cuid())
-  userId String
-  type   String
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
 model User {
-  id         String    @id @default(cuid())
+  id         String   @id @default(cuid())
   first_name String
   last_name  String
-  email      String    @unique
+  email      String   @unique
   password   String
   image      String?
-  accounts   Account[]
+  type       UserType
+
+  employee_appointments Appointment[] @relation(name: "employee")
+  customer_appointments Appointment[] @relation(name: "customer")
+}
+
+model Appointment {
+  id            String      @id @default(cuid())
+  quote_id      String?     @unique
+  work_order_id String?     @unique
+  vehicle_id    String      @unique
+  service_type  ServiceType
+  price         Float
+  employee_id   String      @unique
+  customer_id   String      @unique
+
+  vehicle   Vehicle    @relation(fields: [vehicle_id], references: [id])
+  quote     Quote?     @relation(fields: [quote_id], references: [id])
+  workOrder WorkOrder? @relation(fields: [work_order_id], references: [id])
+  employee  User       @relation(fields: [employee_id], references: [id], name: "employee")
+  customer  User       @relation(fields: [customer_id], references: [id], name: "customer")
+}
+
+model Quote {
+  id          String       @id @default(cuid())
+  appointment Appointment?
+}
+
+model Vehicle {
+  id            String        @id @default(cuid())
+  year          Int
+  make          String
+  model         String
+  vin           String
+  license_plate String
+  appointment   Appointment[]
+}
+
+model WorkOrder {
+  id          String       @id @default(cuid())
+  appointment Appointment?
+}
+
+enum UserType {
+  SHOP_OWNER
+  EMPLOYEE
+  CUSTOMER
+}
+
+enum ServiceType {
+  CANNED
+  CUSTOM
+  REWORK
 }
