@@ -21,6 +21,10 @@ const testUser: User = {
   email: "user@test.com",
   password: "test_password",
   image: null,
+  create_time: new Date(),
+  update_time: new Date(),
+  type: "SHOP_OWNER",
+  shop_id: "shop_id",
 };
 
 describe("get user", () => {
@@ -89,6 +93,7 @@ describe("user authorization", () => {
         firstName: testUser.first_name,
         lastName: testUser.last_name,
         email: testUser.email,
+        type: testUser.type,
       });
     });
   });

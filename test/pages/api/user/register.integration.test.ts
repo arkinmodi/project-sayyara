@@ -18,6 +18,10 @@ const testUser: User = {
   email: "user@test.com",
   password: "test_password",
   image: null,
+  create_time: new Date(),
+  update_time: new Date(),
+  type: "SHOP_OWNER",
+  shop_id: "shop_id",
 };
 
 beforeAll(async () => {
@@ -29,7 +33,7 @@ afterAll(async () => {
 });
 
 afterEach(async () => {
-  const deleteUsers = prisma.user.deleteMany();
+  const deleteUsers = prisma.user.deleteMany({});
   await prisma.$transaction([deleteUsers]);
 });
 
@@ -42,6 +46,7 @@ describe("new user registration", () => {
         password: testUser.password,
         first_name: testUser.first_name,
         last_name: testUser.last_name,
+        type: testUser.type,
       };
 
       await registrationHandler(req, res);
@@ -57,6 +62,10 @@ describe("new user registration", () => {
         email: "user@test.com",
         password: "test_password",
         image: null,
+        type: "SHOP_OWNER",
+        create_time: expect.any(Date),
+        update_time: expect.any(Date),
+        shop_id: null,
       });
     });
   });
@@ -69,6 +78,7 @@ describe("new user registration", () => {
           password: testUser.password,
           first_name: testUser.first_name,
           last_name: testUser.last_name,
+          type: testUser.type,
         },
       });
 
@@ -78,9 +88,12 @@ describe("new user registration", () => {
         password: testUser.password,
         first_name: testUser.first_name,
         last_name: testUser.last_name,
+        type: testUser.type,
       };
 
       await registrationHandler(req, res);
+
+      console.log(res._getJSONData());
 
       expect(res.statusCode).toBe(409);
       expect(res._getJSONData()).toEqual({
