@@ -17,7 +17,7 @@ const registrationHandler = async (
 
   const result = registrationSchema.safeParse(req.body);
   if (!result.success) {
-    res.status(400).json({ message: result.error });
+    res.status(400).json({ message: result.error.issues });
     return;
   }
 

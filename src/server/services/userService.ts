@@ -1,6 +1,5 @@
-import { z } from "zod";
-
 import { prisma, UserType } from "@server/db/client";
+import { z } from "zod";
 
 export const registrationSchema = z.object({
   email: z.string().email(),
@@ -8,22 +7,26 @@ export const registrationSchema = z.object({
   first_name: z.string(),
   last_name: z.string(),
   type: z.nativeEnum(UserType),
+  shop: z.string().optional(),
 });
 export type CreateUserInputType = z.infer<typeof registrationSchema>;
 
 export const createUser = async (user: CreateUserInputType) => {
+  const shop = user.shop
+    ? { shop: { connect: { id: user.shop } } }
+    : { shop: {} };
+
   return await prisma.user.create({
-    data: user,
+    data: {
+      ...user,
+      ...shop,
+    },
   });
 };
 
 export const getUser = async (email: string) => {
   if (!email) return null;
-  return await prisma.user.findUnique({
-    where: {
-      email,
-    },
-  });
+  return await prisma.user.findUnique({ where: { email } });
 };
 
 export const authorize = async (email: string, password: string) => {
@@ -37,5 +40,6 @@ export const authorize = async (email: string, password: string) => {
     firstName: userData.first_name,
     lastName: userData.last_name,
     email: userData.email,
+    type: userData.type,
   };
 };
