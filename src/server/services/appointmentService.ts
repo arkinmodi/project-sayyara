@@ -59,6 +59,10 @@ export const getAppointmentById = async (id: string) => {
   return await prisma.appointment.findUnique({ where: { id } });
 };
 
+export const getAppointmentByShopId = async (shopId: string) => {
+  return await prisma.appointment.findMany({ where: { shop_id: shopId } });
+};
+
 export const updateAppointmentSchema = z.object({
   quote_id: z.string().optional(),
   work_order_id: z.string().optional(),
