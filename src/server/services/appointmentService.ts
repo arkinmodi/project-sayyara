@@ -1,4 +1,9 @@
-import { AppointmentStatus, prisma, ServiceType } from "@server/db/client";
+import {
+  Appointment,
+  AppointmentStatus,
+  prisma,
+  ServiceType,
+} from "@server/db/client";
 import { z } from "zod";
 
 export const createAppointmentSchema = z.object({
@@ -61,7 +66,6 @@ export const updateAppointmentSchema = z.object({
   service_type: z.nativeEnum(ServiceType).optional(),
   price: z.number().min(0).optional(),
   employee_id: z.string().optional(),
-  customer_id: z.string().optional(),
   status: z.nativeEnum(AppointmentStatus).optional(),
   start_time: z.date().optional(),
   end_time: z.date().optional(),
@@ -88,57 +92,78 @@ export const updateAppointmentById = async (
     appointment.status === "PENDING_APPROVAL" &&
     patch.status === "ACCEPTED"
   ) {
-    acceptAppointment(id);
+    await acceptAppointment(appointment);
   }
 
-  return await prisma.appointment.update({ where: { id }, data: patch });
+  const workOrderUpdate = patch.work_order_id
+    ? { work_order: { connect: { id: patch.work_order_id } } }
+    : {};
+
+  const vehicleUpdate = patch.vehicle_id
+    ? { vehicle: { connect: { id: patch.vehicle_id } } }
+    : {};
+
+  const employeeUpdate = patch.employee_id
+    ? { employee: { connect: { id: patch.employee_id } } }
+    : {};
+
+  return await prisma.appointment.update({
+    where: { id },
+    data: {
+      service_type: patch.service_type,
+      price: patch.price,
+      status: patch.status,
+      start_time: patch.start_time,
+      end_time: patch.end_time,
+      ...workOrderUpdate,
+      ...vehicleUpdate,
+      ...employeeUpdate,
+    },
+  });
 };
 
-const acceptAppointment = async (id: string) => {
-  const acceptedAppointment = await prisma.appointment.findUnique({
-    where: { id },
-  });
-  if (!acceptedAppointment) return Promise.reject("Appointment not found.");
+const acceptAppointment = async (appointment: Appointment) => {
+  await prisma.$transaction([
+    prisma.appointment.update({
+      where: { id: appointment.id },
+      data: {
+        status: "ACCEPTED",
+      },
+    }),
 
-  await prisma.appointment.update({
-    where: { id },
-    data: {
-      status: "ACCEPTED",
-    },
-  });
+    // Reject all other appointments conflicting
+    prisma.appointment.updateMany({
+      where: {
+        AND: [
+          { start_time: { gte: appointment.start_time } },
+          { end_time: { lte: appointment.start_time } },
+        ],
+        NOT: [
+          { id: { equals: appointment.id } },
+          { status: { equals: "REJECTED" } },
+        ],
+      },
+      data: {
+        status: "REJECTED",
+      },
+    }),
 
-  // Reject all other appointments conflicting
-  await prisma.appointment.updateMany({
-    where: {
-      AND: [
-        { start_time: { gte: acceptedAppointment.start_time } },
-        { end_time: { lte: acceptedAppointment.start_time } },
-      ],
-      NOT: [
-        { id: { equals: acceptedAppointment.id } },
-        { status: { equals: "REJECTED" } },
-      ],
-    },
-    data: {
-      status: "REJECTED",
-    },
-  });
-
-  await prisma.appointment.updateMany({
-    where: {
-      AND: [
-        { start_time: { gte: acceptedAppointment.end_time } },
-        { end_time: { lte: acceptedAppointment.end_time } },
-      ],
-      NOT: [
-        { id: { equals: acceptedAppointment.id } },
-        { status: { equals: "REJECTED" } },
-      ],
-    },
-    data: {
-      status: "REJECTED",
-    },
-  });
+    prisma.appointment.updateMany({
+      where: {
+        AND: [
+          { start_time: { gte: appointment.end_time } },
+          { end_time: { lte: appointment.end_time } },
+        ],
+        NOT: [
+          { id: { equals: appointment.id } },
+          { status: { equals: "REJECTED" } },
+        ],
+      },
+      data: {
+        status: "REJECTED",
+      },
+    }),
+  ]);
 };
 
 export const deleteAppointment = async (id: string) => {
