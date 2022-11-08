@@ -25,6 +25,14 @@ export const createAppointment = async (appointment: CreateAppointmentType) => {
     return Promise.reject("Invalid start time and/or end time.");
   }
 
+  const quote = appointment.quote_id
+    ? { quote: { connect: { id: appointment.quote_id } } }
+    : { quote: {} };
+
+  const employee = appointment.employee_id
+    ? { employee: { connect: { id: appointment.employee_id } } }
+    : { employee: {} };
+
   return await prisma.appointment.create({
     data: {
       status: "PENDING_APPROVAL",
@@ -32,24 +40,12 @@ export const createAppointment = async (appointment: CreateAppointmentType) => {
       end_time: appointment.end_time,
       price: appointment.price,
       service_type: appointment.service_type,
-      vehicle: {
-        connect: { id: appointment.vehicle_id },
-      },
-      work_order: {
-        create: { create_time: now, update_time: now },
-      },
-      customer: {
-        connect: { id: appointment.customer_id },
-      },
-      quote: {
-        connect: { id: appointment.quote_id },
-      },
-      employee: {
-        connect: { id: appointment.employee_id },
-      },
-      shop: {
-        connect: { id: appointment.shop_id },
-      },
+      work_order: { create: { create_time: now, update_time: now } },
+      vehicle: { connect: { id: appointment.vehicle_id } },
+      customer: { connect: { id: appointment.customer_id } },
+      shop: { connect: { id: appointment.shop_id } },
+      ...quote,
+      ...employee,
     },
   });
 };
