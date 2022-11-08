@@ -135,6 +135,7 @@ const acceptAppointment = async (appointment: Appointment) => {
     prisma.appointment.updateMany({
       where: {
         AND: [
+          { shop_id: { equals: appointment.shop_id } },
           { start_time: { gte: appointment.start_time } },
           { end_time: { lte: appointment.start_time } },
         ],
@@ -151,6 +152,7 @@ const acceptAppointment = async (appointment: Appointment) => {
     prisma.appointment.updateMany({
       where: {
         AND: [
+          { shop_id: { equals: appointment.shop_id } },
           { start_time: { gte: appointment.end_time } },
           { end_time: { lte: appointment.end_time } },
         ],
