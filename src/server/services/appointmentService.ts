@@ -8,24 +8,32 @@ import { z } from "zod";
 
 export const createAppointmentSchema = z.object({
   quote_id: z.string().optional(),
-  vehicle_id: z.string(),
   service_type: z.nativeEnum(ServiceType),
   price: z.number().min(0).optional(),
   employee_id: z.string().optional(),
-  customer_id: z.string(),
-  start_time: z.date(),
-  end_time: z.date(),
-  shop_id: z.string(),
+  start_time: z.preprocess((arg) => {
+    if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
+  }, z.date()),
+  end_time: z.preprocess((arg) => {
+    if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
+  }, z.date()),
+
+  // TODO: make these required
+  vehicle_id: z.string().optional(),
+  customer_id: z.string().optional(),
+  shop_id: z.string().optional(),
 });
 export type CreateAppointmentType = z.infer<typeof createAppointmentSchema>;
 
 export const createAppointment = async (appointment: CreateAppointmentType) => {
   const now = new Date();
 
+  // TODO: Do we want to only accept events that are in the future?
+  // Ensure start occurs before end
   if (
-    appointment.start_time > appointment.end_time ||
-    appointment.start_time < now ||
-    appointment.end_time < now
+    appointment.start_time > appointment.end_time
+    // || appointment.start_time < now ||
+    // appointment.end_time < now
   ) {
     return Promise.reject("Invalid start time and/or end time.");
   }
