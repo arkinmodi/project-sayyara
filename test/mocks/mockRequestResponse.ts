@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createRequest, createResponse, RequestOptions } from "node-mocks-http";
 
-export const mockRequestResponse = (
+export const createMockRequestResponse = (
   options: RequestOptions = { method: "GET" }
 ) => {
   const req = createRequest<NextApiRequest>(options);

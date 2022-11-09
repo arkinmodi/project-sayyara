@@ -9,7 +9,7 @@ import { User } from "@prisma/client";
 
 import registrationHandler from "@pages/api/user/register";
 import { prisma } from "@server/db/client";
-import { mockRequestResponse } from "@test/mocks/mockRequestResponse";
+import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 
 const testUser: User = {
   id: "test_id",
@@ -40,7 +40,7 @@ afterEach(async () => {
 describe("new user registration", () => {
   describe("given valid new user data", () => {
     it("should create new user", async () => {
-      const { req, res } = mockRequestResponse({ method: "POST" });
+      const { req, res } = createMockRequestResponse({ method: "POST" });
       req.body = {
         email: testUser.email,
         password: testUser.password,
@@ -82,7 +82,7 @@ describe("new user registration", () => {
         },
       });
 
-      const { req, res } = mockRequestResponse({ method: "POST" });
+      const { req, res } = createMockRequestResponse({ method: "POST" });
       req.body = {
         email: testUser.email,
         password: testUser.password,
@@ -104,7 +104,7 @@ describe("new user registration", () => {
 
   describe("given invalid user data", () => {
     it("should return 400", async () => {
-      const { req, res } = mockRequestResponse({ method: "POST" });
+      const { req, res } = createMockRequestResponse({ method: "POST" });
       req.body = {
         password: testUser.password,
         first_name: testUser.first_name,
