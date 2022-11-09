@@ -5,7 +5,7 @@
  * @group integration
  */
 
-import { User } from "@prisma/client";
+import { User } from "@server/db/client";
 
 import registrationHandler from "@pages/api/user/register";
 import { prisma } from "@server/db/client";
