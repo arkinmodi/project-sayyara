@@ -30,27 +30,28 @@ model User {
   shop                  Shop?         @relation(fields: [shop_id], references: [id])
 }
 
+// TODO: re-evaluate what should be optional for Appointment
 model Appointment {
   id            String            @id @default(cuid())
   create_time   DateTime          @default(now())
   update_time   DateTime          @updatedAt
   quote_id      String?           @unique
   work_order_id String            @unique
-  vehicle_id    String            @unique
+  vehicle_id    String?           @unique
   service_type  ServiceType
   price         Float?
   employee_id   String?           @unique
-  customer_id   String            @unique
+  customer_id   String?           @unique
   status        AppointmentStatus
   start_time    DateTime
   end_time      DateTime
   shop_id       String?
 
-  vehicle    Vehicle   @relation(fields: [vehicle_id], references: [id])
+  vehicle    Vehicle?  @relation(fields: [vehicle_id], references: [id])
   quote      Quote?    @relation(fields: [quote_id], references: [id])
   work_order WorkOrder @relation(fields: [work_order_id], references: [id])
   employee   User?     @relation(fields: [employee_id], references: [id], name: "employee")
-  customer   User      @relation(fields: [customer_id], references: [id], name: "customer")
+  customer   User?     @relation(fields: [customer_id], references: [id], name: "customer")
   shop       Shop?     @relation(fields: [shop_id], references: [id])
 }
 

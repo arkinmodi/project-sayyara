@@ -38,6 +38,18 @@ export const createAppointment = async (appointment: CreateAppointmentType) => {
     ? { employee: { connect: { id: appointment.employee_id } } }
     : { employee: {} };
 
+  const vehicle = appointment.vehicle_id
+    ? { vehicle: { connect: { id: appointment.vehicle_id } } }
+    : { vehicle: {} };
+
+  const customer = appointment.customer_id
+    ? { customer: { connect: { id: appointment.customer_id } } }
+    : { customer: {} };
+
+  const shop = appointment.shop_id
+    ? { shop: { connect: { id: appointment.shop_id } } }
+    : { shop: {} };
+
   return await prisma.appointment.create({
     data: {
       status: "PENDING_APPROVAL",
@@ -46,9 +58,12 @@ export const createAppointment = async (appointment: CreateAppointmentType) => {
       price: appointment.price,
       service_type: appointment.service_type,
       work_order: { create: { create_time: now, update_time: now } },
-      vehicle: { connect: { id: appointment.vehicle_id } },
-      customer: { connect: { id: appointment.customer_id } },
-      shop: { connect: { id: appointment.shop_id } },
+      // vehicle: { connect: { id: appointment.vehicle_id } },
+      ...vehicle,
+      // customer: { connect: { id: appointment.customer_id } },
+      ...customer,
+      // shop: { connect: { id: appointment.shop_id } },
+      ...shop,
       ...quote,
       ...employee,
     },
