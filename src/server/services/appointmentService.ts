@@ -184,6 +184,22 @@ const acceptAppointment = async (appointment: Appointment) => {
         status: "REJECTED",
       },
     }),
+
+    prisma.appointment.updateMany({
+      where: {
+        AND: [
+          { start_time: { lte: appointment.start_time } },
+          { end_time: { gte: appointment.end_time } },
+        ],
+        NOT: [
+          { id: { equals: appointment.id } },
+          { status: { equals: "REJECTED" } },
+        ],
+      },
+      data: {
+        status: "REJECTED",
+      },
+    }),
   ]);
 };
 
