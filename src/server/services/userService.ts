@@ -12,21 +12,30 @@ export const registrationSchema = z.object({
 export type CreateUserInputType = z.infer<typeof registrationSchema>;
 
 export const createUser = async (user: CreateUserInputType) => {
-  const shop = user.shop
-    ? { shop: { connect: { id: user.shop } } }
-    : { shop: {} };
+  if (user.type === "CUSTOMER") {
+    return await prisma.customer.create({
+      data: {
+        ...user,
+      },
+    });
+  } else {
+    const shop = user.shop
+      ? { shop: { connect: { id: user.shop } } }
+      : { shop: {} };
 
-  return await prisma.user.create({
-    data: {
-      ...user,
-      ...shop,
-    },
-  });
+    return await prisma.employee.create({
+      data: {
+        ...user,
+        ...shop,
+      },
+    });
+  }
 };
 
 export const getUser = async (email: string) => {
   if (!email) return null;
-  return await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.customer.findUnique({ where: { email } });
+  return user ?? (await prisma.employee.findUnique({ where: { email } }));
 };
 
 export const authorize = async (email: string, password: string) => {

@@ -6,11 +6,11 @@
  */
 import appointmentHandler from "@pages/api/appointment";
 import appointmentByIdHandler from "@pages/api/appointment/[id]";
-import { prisma, User } from "@server/db/client";
+import { Employee, prisma } from "@server/db/client";
 import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 import { Session } from "next-auth";
 
-const testUser: User = {
+const testEmployeeUser: Employee = {
   id: "test_id",
   first_name: "first_name",
   last_name: "last_name",
@@ -114,9 +114,9 @@ jest.mock("@server/common/getServerAuthSession", () => ({
   getServerAuthSession: jest.fn<Session, []>(() => ({
     expires: "1",
     user: {
-      ...testUser,
-      firstName: testUser.first_name,
-      lastName: testUser.last_name,
+      ...testEmployeeUser,
+      firstName: testEmployeeUser.first_name,
+      lastName: testEmployeeUser.last_name,
     },
   })),
 }));
@@ -131,7 +131,8 @@ afterAll(async () => {
 
 afterEach(async () => {
   const deleteAppointments = prisma.appointment.deleteMany({});
-  await prisma.$transaction([deleteAppointments]);
+  const deleteWorkOrders = prisma.workOrder.deleteMany({});
+  await prisma.$transaction([deleteAppointments, deleteWorkOrders]);
 });
 
 describe("update appointment", () => {

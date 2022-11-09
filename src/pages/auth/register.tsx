@@ -14,7 +14,6 @@ const Register: NextPage = () => {
           type="hidden"
           defaultValue={router.query.callbackUrl ?? "/"}
         />
-        <input name="type" type="hidden" defaultValue="SHOP_OWNER" />
         <label>
           Email
           <input name="email" type="email" />
@@ -31,6 +30,14 @@ const Register: NextPage = () => {
           Last Name
           <input name="last_name" type="text" />
         </label>
+
+        <label htmlFor="type"></label>
+        <select id="type" name="type">
+          <option value="CUSTOMER">Customer</option>
+          <option value="EMPLOYEE">Employee</option>
+          <option value="SHOP_OWNER">Shop Owner</option>
+        </select>
+
         <button type="submit">Register</button>
       </form>
       <Link

@@ -18,6 +18,7 @@ declare module "next-auth" {
   interface User extends DefaultUser {
     firstName: string;
     lastName: string;
+    type: UserType;
   }
 }
 
@@ -27,5 +28,6 @@ declare module "next-auth/jwt" {
     id: string;
     firstName: string;
     lastName: string;
+    type: UserType;
   }
 }
