@@ -9,8 +9,8 @@ const appointmentHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const user = await getServerAuthSession({ req, res });
-  if (!user) {
+  const session = await getServerAuthSession({ req, res });
+  if (!session) {
     res.status(403).json({ message: "Forbidden." });
     return;
   }
