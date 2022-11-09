@@ -161,27 +161,19 @@ const acceptAppointment = async (appointment: Appointment) => {
     // Reject all other appointments conflicting
     prisma.appointment.updateMany({
       where: {
-        AND: [
-          { shop_id: { equals: appointment.shop_id } },
-          { start_time: { gte: appointment.start_time } },
-          { end_time: { lte: appointment.start_time } },
-        ],
-        NOT: [
-          { id: { equals: appointment.id } },
-          { status: { equals: "REJECTED" } },
-        ],
-      },
-      data: {
-        status: "REJECTED",
-      },
-    }),
-
-    prisma.appointment.updateMany({
-      where: {
-        AND: [
-          { shop_id: { equals: appointment.shop_id } },
-          { start_time: { gte: appointment.end_time } },
-          { end_time: { lte: appointment.end_time } },
+        OR: [
+          {
+            start_time: {
+              gte: appointment.start_time,
+              lt: appointment.end_time,
+            },
+          },
+          {
+            end_time: {
+              gt: appointment.start_time,
+              lte: appointment.end_time,
+            },
+          },
         ],
         NOT: [
           { id: { equals: appointment.id } },
