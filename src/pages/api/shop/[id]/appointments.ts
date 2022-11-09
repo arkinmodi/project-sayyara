@@ -25,7 +25,7 @@ const appointmentByShopIdHandler = async (
 
   const appointment = await getAppointmentByShopId(id);
 
-  // todo: if the caller is a customer, appointment's response should hide unnecessary information
+  // TODO: if the caller is a customer, appointment's response should hide unnecessary information
 
   res.status(200).json(appointment);
 };
