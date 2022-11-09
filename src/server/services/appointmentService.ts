@@ -78,6 +78,10 @@ export const createAppointment = async (appointment: CreateAppointmentType) => {
   });
 };
 
+export const getAllAppointment = async () => {
+  return await prisma.appointment.findMany({});
+};
+
 export const getAppointmentById = async (id: string) => {
   return await prisma.appointment.findUnique({ where: { id } });
 };
