@@ -81,6 +81,18 @@ npm run docker:up
 npm run docker:down
 ```
 
+This project uses [Prisma](https://www.prisma.io/) as an [ORM](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) and for generating type definitions for database objects. To apply the [database schema](prisma/schema.prisma) onto the MySQL database run (the database will be targeted by the `DATABASE_URL` in your `.env`):
+
+```sh
+npm run db:push
+```
+
+To generate the Prisma TypeScript type definitions, run:
+
+```sh
+npm install
+```
+
 This project uses [TypeScript](https://www.typescriptlang.org/) and [Next.js](https://nextjs.org/).
 
 To start a local development server on http://localhost:3000/:

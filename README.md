@@ -3,14 +3,17 @@
   <br />
   <h1>Sayyara</h1>
   <p>Progressive Web Application for Independent Automotive Repair Shop Industry</p>
+  <p>McMaster University Undergraduate Software Engineering Capstone</p>
   <a href="https://github.com/arkinmodi/project-sayyara/actions/workflows/build-docs.yml"><img src="https://github.com/arkinmodi/project-sayyara/actions/workflows/build-docs.yml/badge.svg" alt="Build Docs"></a>
   <a href="https://github.com/arkinmodi/project-sayyara/actions/workflows/run-tests.yml"><img src="https://github.com/arkinmodi/project-sayyara/actions/workflows/run-tests.yml/badge.svg" alt="Application Tests"></a>
 </div>
 <br/>
 
-Developer Names: Arkin Modi, Joy Xiao, Leon So, Timothy Choy
+**Developer Names:** Arkin Modi, Joy Xiao, Leon So, Timothy Choy
 
-Date of project start: September 6, 2022
+**Course Code:** SFWRENG 4G06, Software Design IV - Capstone Design Project
+
+**Date of project start:** September 6, 2022
 
 This project is a progressive web application designed for auto repair shops and customers. Sayyara
 allows customers to quickly find and compare auto repair shops, request quotes, and schedule service
