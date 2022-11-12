@@ -5,19 +5,23 @@
  * @group integration
  */
 
-import { User } from "@prisma/client";
+import { Employee } from "@server/db/client";
 
 import registrationHandler from "@pages/api/user/register";
 import { prisma } from "@server/db/client";
-import { mockRequestResponse } from "@test/mocks/mockRequestResponse";
+import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 
-const testUser: User = {
+const testEmployeeUser: Employee = {
   id: "test_id",
   first_name: "first_name",
   last_name: "last_name",
   email: "user@test.com",
   password: "test_password",
   image: null,
+  create_time: new Date(),
+  update_time: new Date(),
+  type: "SHOP_OWNER",
+  shop_id: "shop_id",
 };
 
 beforeAll(async () => {
@@ -29,24 +33,26 @@ afterAll(async () => {
 });
 
 afterEach(async () => {
-  const deleteUsers = prisma.user.deleteMany();
-  await prisma.$transaction([deleteUsers]);
+  const deleteEmployees = prisma.employee.deleteMany({});
+  const deleteCustomers = prisma.customer.deleteMany({});
+  await prisma.$transaction([deleteEmployees, deleteCustomers]);
 });
 
 describe("new user registration", () => {
   describe("given valid new user data", () => {
     it("should create new user", async () => {
-      const { req, res } = mockRequestResponse({ method: "POST" });
+      const { req, res } = createMockRequestResponse({ method: "POST" });
       req.body = {
-        email: testUser.email,
-        password: testUser.password,
-        first_name: testUser.first_name,
-        last_name: testUser.last_name,
+        email: testEmployeeUser.email,
+        password: testEmployeeUser.password,
+        first_name: testEmployeeUser.first_name,
+        last_name: testEmployeeUser.last_name,
+        type: testEmployeeUser.type,
       };
 
       await registrationHandler(req, res);
-      const newUser = await prisma.user.findUnique({
-        where: { email: testUser.email },
+      const newUser = await prisma.employee.findUnique({
+        where: { email: testEmployeeUser.email },
       });
 
       expect(res.statusCode).toBe(302);
@@ -57,27 +63,33 @@ describe("new user registration", () => {
         email: "user@test.com",
         password: "test_password",
         image: null,
+        type: "SHOP_OWNER",
+        create_time: expect.any(Date),
+        update_time: expect.any(Date),
+        shop_id: null,
       });
     });
   });
 
   describe("given valid existing user data", () => {
     it("should not create new user", async () => {
-      await prisma.user.create({
+      await prisma.employee.create({
         data: {
-          email: testUser.email,
-          password: testUser.password,
-          first_name: testUser.first_name,
-          last_name: testUser.last_name,
+          email: testEmployeeUser.email,
+          password: testEmployeeUser.password,
+          first_name: testEmployeeUser.first_name,
+          last_name: testEmployeeUser.last_name,
+          type: testEmployeeUser.type,
         },
       });
 
-      const { req, res } = mockRequestResponse({ method: "POST" });
+      const { req, res } = createMockRequestResponse({ method: "POST" });
       req.body = {
-        email: testUser.email,
-        password: testUser.password,
-        first_name: testUser.first_name,
-        last_name: testUser.last_name,
+        email: testEmployeeUser.email,
+        password: testEmployeeUser.password,
+        first_name: testEmployeeUser.first_name,
+        last_name: testEmployeeUser.last_name,
+        type: testEmployeeUser.type,
       };
 
       await registrationHandler(req, res);
@@ -91,11 +103,11 @@ describe("new user registration", () => {
 
   describe("given invalid user data", () => {
     it("should return 400", async () => {
-      const { req, res } = mockRequestResponse({ method: "POST" });
+      const { req, res } = createMockRequestResponse({ method: "POST" });
       req.body = {
-        password: testUser.password,
-        first_name: testUser.first_name,
-        last_name: testUser.last_name,
+        password: testEmployeeUser.password,
+        first_name: testEmployeeUser.first_name,
+        last_name: testEmployeeUser.last_name,
       };
 
       await registrationHandler(req, res);

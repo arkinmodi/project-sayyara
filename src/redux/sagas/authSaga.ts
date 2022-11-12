@@ -15,6 +15,10 @@ import AuthTypes from "../types/authTypes";
 function* postLogin(body: any): Generator<boolean> {
   fetch("/api/auth/callback/credentials", {
     method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(body),
   }).then((res) => {
     if (res.status === 200) {
@@ -29,6 +33,10 @@ function* postLogin(body: any): Generator<boolean> {
 function* postSignUp(body: any): Generator<boolean> {
   fetch("/api/user/register", {
     method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(body),
   }).then((res) => {
     if (res.status === 200) {
@@ -61,6 +69,7 @@ function* signUp(
     password: payload.password,
     first_name: payload.firstName,
     last_name: payload.lastName,
+    type: payload.type,
   };
   yield call(postSignUp, body);
 }

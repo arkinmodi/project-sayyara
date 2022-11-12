@@ -28,6 +28,7 @@ interface ISignUpFormValues {
   lastName: string;
   email: string;
   password: string;
+  type: string;
 }
 
 const initialSignUpFormValues: ISignUpFormValues = {
@@ -36,6 +37,7 @@ const initialSignUpFormValues: ISignUpFormValues = {
   lastName: "",
   email: "",
   password: "",
+  type: "SHOP_OWNER",
 };
 
 const Register: NextPage = ({}: InferGetServerSidePropsType<

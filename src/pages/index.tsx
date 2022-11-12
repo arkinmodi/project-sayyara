@@ -20,7 +20,9 @@ const Home: NextPage = () => {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
-        <p className={styles.description}>Hello {session?.user?.firstName}!</p>
+        <p className={styles.description}>
+          Hello {session?.user.firstName}! You are a {session?.user.type}!
+        </p>
         <button onClick={() => signOut()}>Sign Out</button>
 
         <p className={styles.description}>
