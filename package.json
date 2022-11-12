@@ -25,6 +25,7 @@
     "docker:down": "docker compose down"
   },
   "dependencies": {
+    "@blueprintjs/datetime": "^4.4.7",
     "@prisma/client": "^4.4.0",
     "@reduxjs/toolkit": "^1.8.6",
     "next": "12.3.1",
