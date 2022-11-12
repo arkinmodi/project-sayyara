@@ -31,7 +31,6 @@ function* postLogin(body: any): Generator<boolean> {
 }
 
 function* postSignUp(body: any): Generator<boolean> {
-  console.log("redux body", body);
   fetch("/api/user/register", {
     method: "POST",
     headers: {
