@@ -19,6 +19,7 @@ export interface IAuthActionCreateSignUp extends IAuthActionBase {
     password: string;
     firstName: string;
     lastName: string;
+    type: string;
   };
 }
 
