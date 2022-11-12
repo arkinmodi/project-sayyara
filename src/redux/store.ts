@@ -2,14 +2,25 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Store } from "redux";
 import { createWrapper, Context } from "next-redux-wrapper";
 import createSagaMiddleware, { Task } from "redux-saga";
-import { rootSaga } from "./sagas";
-import { rootReducer } from "./reducers";
+import { rootReducer } from "./reducers/rootReducer";
+import { rootSaga } from "./sagas/rootSaga";
+import { IAuthState, initialAuthState } from "./state/user/authState";
 
-export interface State {}
+/**
+ * Note: next-redux-wrapper automatically creates the store instances and ensures they all have the same state
+ */
 
-export interface SagaStore extends Store {
+interface SagaStore extends Store {
   sagaTask?: Task;
 }
+
+export interface RootState {
+  auth: IAuthState;
+}
+
+const initialState = {
+  auth: initialAuthState,
+};
 
 export const makeStore = (_context: Context) => {
   const sagaMiddleware = createSagaMiddleware();
@@ -20,6 +31,7 @@ export const makeStore = (_context: Context) => {
       ...getDefaultMiddleware(),
       sagaMiddleware,
     ],
+    preloadedState: initialState,
   });
 
   (store as SagaStore).sagaTask = sagaMiddleware.run(rootSaga);
@@ -27,4 +39,4 @@ export const makeStore = (_context: Context) => {
   return store;
 };
 
-export const wrapper = createWrapper<Store<State>>(makeStore, { debug: false });
+export const wrapper = createWrapper(makeStore);
