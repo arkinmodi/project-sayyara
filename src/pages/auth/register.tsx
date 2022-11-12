@@ -1,45 +1,183 @@
-import { GetServerSideProps, NextPage } from "next";
+import authStyles from "../../styles/pages/auth/Auth.module.css";
+import {
+  Card,
+  Button,
+  Elevation,
+  FormGroup,
+  InputGroup,
+  Icon,
+  ButtonGroup,
+  // Radio,
+  // RadioGroup,
+} from "@blueprintjs/core";
+import {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+} from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
+import React, { ChangeEvent, useState } from "react";
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
+import AuthTypes from "src/redux/types/authTypes";
+import { useDispatch } from "react-redux";
 
-const Register: NextPage = () => {
+interface ISignUpFormValues {
+  callbackUrl: string | string[];
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
+const initialSignUpFormValues: ISignUpFormValues = {
+  callbackUrl: "/",
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+};
+
+const Register: NextPage = ({}: InferGetServerSidePropsType<
+  typeof getServerSideProps
+>) => {
+  const [formValues, setFormValues] = useState(initialSignUpFormValues);
+  // const [accountType, setAccountType] = useState(0);
+
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  // const handleAccountTypeChange = (
+  //   event: React.FormEvent<HTMLInputElement>
+  // ) => {
+  //   if (
+  //     event?.currentTarget &&
+  //     (event.currentTarget as HTMLInputElement).value
+  //   ) {
+  //     setAccountType(Number((event.currentTarget as HTMLInputElement).value));
+  //   }
+  // };
+
+  const handleSignUpButtonClick = (): void => {
+    // TODO: validate inputs
+    const callbackUrl = router.query.callbackUrl;
+    if (callbackUrl) {
+      setFormValues({ ...formValues, callbackUrl });
+    }
+    dispatch({ type: AuthTypes.CREATE_SIGN_UP, payload: formValues });
+  };
+
+  const handleLoginButtonClick = () => {
+    const href = {
+      pathname: "/auth/login",
+      query: { callbackUrl: router.query.callbackUrl },
+    };
+    router.push(href);
+  };
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
+  };
+
   return (
-    <div>
-      <form method="post" action="/api/user/register">
-        <input
-          name="callbackUrl"
-          type="hidden"
-          defaultValue={router.query.callbackUrl ?? "/"}
-        />
-        <label>
-          Email
-          <input name="email" type="email" />
-        </label>
-        <label>
-          Password
-          <input name="password" type="password" />
-        </label>
-        <label>
-          First Name
-          <input name="first_name" type="text" />
-        </label>
-        <label>
-          Last Name
-          <input name="last_name" type="text" />
-        </label>
-        <button type="submit">Register</button>
-      </form>
-      <Link
-        href={{
-          pathname: "/auth/login",
-          query: { callbackUrl: router.query.callbackUrl },
-        }}
+    <div className={authStyles.authContainer}>
+      <Card
+        className={authStyles.authFormCard}
+        interactive={false}
+        elevation={Elevation.THREE}
       >
-        <button>Already Have An Account?</button>
-      </Link>
+        <div className={authStyles.authFormCardHeader}>
+          <Icon icon="user" size={80} />
+          <h1>Sign Up</h1>
+        </div>
+        <div className={authStyles.authForm}>
+          {/* <RadioGroup
+            label="Account Type"
+            onChange={handleAccountTypeChange}
+            selectedValue={accountType}
+          >
+            <Radio label="Customer" value={0} />
+            <Radio label="Shop Owner" value={1} />
+            <Radio label="Employee" value={2} />
+          </RadioGroup> */}
+          <FormGroup label="Email" labelFor="text-input" labelInfo="(Required)">
+            <InputGroup
+              id="text-input"
+              placeholder="Email"
+              className={authStyles.authFormInput}
+              value={formValues.email}
+              onChange={handleInputChange}
+              name="email"
+            />
+          </FormGroup>
+          <FormGroup
+            label="Password"
+            labelFor="text-input"
+            labelInfo="(Required)"
+          >
+            <InputGroup
+              id="text-input"
+              type="password"
+              className={authStyles.authFormInput}
+              placeholder="Password"
+              value={formValues.password}
+              onChange={handleInputChange}
+              name="password"
+            />
+          </FormGroup>
+          <FormGroup
+            label="First Name"
+            labelFor="text-input"
+            labelInfo="(Required)"
+          >
+            <InputGroup
+              id="text-input"
+              type="text"
+              className={authStyles.authFormInput}
+              placeholder="First Name"
+              value={formValues.firstName}
+              onChange={handleInputChange}
+              name="firstName"
+            />
+          </FormGroup>
+          <FormGroup
+            label="Last Name"
+            labelFor="text-input"
+            labelInfo="(Required)"
+          >
+            <InputGroup
+              id="text-input"
+              type="text"
+              className={authStyles.authFormInput}
+              placeholder="Last Name"
+              value={formValues.lastName}
+              onChange={handleInputChange}
+              name="lastName"
+            />
+          </FormGroup>
+          <ButtonGroup className={authStyles.authFormButtonGroup}>
+            <Button
+              intent="primary"
+              className={authStyles.authFormButton}
+              onClick={handleSignUpButtonClick}
+            >
+              Sign Up
+            </Button>
+            <Button
+              intent="primary"
+              className={authStyles.authFormButton}
+              minimal
+              onClick={handleLoginButtonClick}
+            >
+              Login
+            </Button>
+          </ButtonGroup>
+        </div>
+      </Card>
     </div>
   );
 };
