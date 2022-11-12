@@ -1,5 +1,5 @@
-import { DefaultSession, DefaultUser } from "next-auth";
 import { UserType } from "@server/db/client";
+import { DefaultSession, DefaultUser } from "next-auth";
 
 declare module "next-auth" {
   /**
