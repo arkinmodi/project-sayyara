@@ -15,7 +15,9 @@ const registrationHandler = async (
     return;
   }
 
-  const result = registrationSchema.safeParse(req.body);
+  const body = JSON.parse(req.body);
+  const result = registrationSchema.safeParse(body);
+  console.log(result);
   if (!result.success) {
     res.status(400).json({ message: result.error });
     return;
@@ -28,7 +30,7 @@ const registrationHandler = async (
       .json({ message: "User with email address already exists." });
   } else {
     await createUser(result.data);
-    res.redirect(req.body.callbackUrl ?? "/");
+    res.redirect(body.callbackUrl ?? "/");
   }
 };
 
