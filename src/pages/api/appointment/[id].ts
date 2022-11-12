@@ -1,5 +1,5 @@
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
-import { Appointment } from "@server/db/client";
+import { Appointment, UserType } from "@server/db/client";
 import {
   deleteAppointment,
   getAppointmentById,
@@ -83,7 +83,7 @@ const appointmentByIdHandler = async (
 
 const isAuthorized = (session: Session, appointment: Appointment) => {
   return !(
-    session.user.type === "CUSTOMER" &&
+    session.user.type === UserType.CUSTOMER &&
     session.user.id !== appointment.customer_id
   );
 };
