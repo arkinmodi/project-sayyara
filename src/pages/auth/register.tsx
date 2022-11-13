@@ -13,6 +13,7 @@ import {
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
+import { getCsrfToken } from "next-auth/react";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -20,7 +21,6 @@ import AuthTypes from "src/redux/types/authTypes";
 import authStyles from "../../styles/pages/auth/Auth.module.css";
 
 interface ISignUpFormValues {
-  callbackUrl: string | string[];
   firstName: string;
   lastName: string;
   email: string;
@@ -29,7 +29,6 @@ interface ISignUpFormValues {
 }
 
 const initialSignUpFormValues: ISignUpFormValues = {
-  callbackUrl: "/",
   firstName: "",
   lastName: "",
   email: "",
@@ -38,9 +37,10 @@ const initialSignUpFormValues: ISignUpFormValues = {
 };
 
 // TODO: account types are currently disabled and commented out
-const Register: NextPage = ({}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) => {
+const Register: NextPage = ({
+  csrfToken,
+  callbackUrl,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [formValues, setFormValues] = useState<ISignUpFormValues>(
     initialSignUpFormValues
   );
@@ -62,17 +62,16 @@ const Register: NextPage = ({}: InferGetServerSidePropsType<
 
   const handleSignUpButtonClick = (): void => {
     // TODO: validate inputs
-    const callbackUrl = router.query.callbackUrl;
-    if (callbackUrl) {
-      setFormValues({ ...formValues, callbackUrl });
-    }
-    dispatch({ type: AuthTypes.CREATE_SIGN_UP, payload: formValues });
+    dispatch({
+      type: AuthTypes.CREATE_SIGN_UP,
+      payload: { ...formValues, csrfToken, callbackUrl },
+    });
   };
 
   const handleLoginButtonClick = () => {
     const href = {
       pathname: "/auth/login",
-      query: { callbackUrl: router.query.callbackUrl },
+      query: { callbackUrl },
     };
     router.push(href);
   };
@@ -189,8 +188,8 @@ const Register: NextPage = ({}: InferGetServerSidePropsType<
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const callbackUrl = context.query.callbackUrl;
   const session = await getServerAuthSession(context);
+  const callbackUrl = context.query.callbackUrl;
 
   if (session && !Array.isArray(callbackUrl)) {
     return {
@@ -202,7 +201,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: {},
+    props: {
+      csrfToken: await getCsrfToken(context),
+      callbackUrl: Array.isArray(callbackUrl) ? "/" : callbackUrl,
+    },
   };
 };
 

@@ -14,7 +14,8 @@ export interface IAuthActionCreateLogin extends IAuthActionBase {
 
 export interface IAuthActionCreateSignUp extends IAuthActionBase {
   payload: {
-    callbackUrl: string | string[];
+    csrfToken: string;
+    callbackUrl: string;
     email: string;
     password: string;
     firstName: string;
