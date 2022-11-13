@@ -60,7 +60,7 @@ export const createAppointment = async (appointment: CreateAppointmentType) => {
 
   return await prisma.appointment.create({
     data: {
-      status: AppointmentStatus.PENDING_APPROVAL,
+      status: "PENDING_APPROVAL",
       start_time: appointment.start_time,
       end_time: appointment.end_time,
       price: appointment.price,
@@ -158,7 +158,7 @@ const acceptAppointment = async (appointment: Appointment) => {
     prisma.appointment.update({
       where: { id: appointment.id },
       data: {
-        status: AppointmentStatus.ACCEPTED,
+        status: "ACCEPTED",
       },
     }),
 
@@ -181,11 +181,11 @@ const acceptAppointment = async (appointment: Appointment) => {
         ],
         NOT: [
           { id: { equals: appointment.id } },
-          { status: { equals: AppointmentStatus.REJECTED } },
+          { status: { equals: "REJECTED" } },
         ],
       },
       data: {
-        status: AppointmentStatus.REJECTED,
+        status: "REJECTED",
       },
     }),
 
@@ -197,11 +197,11 @@ const acceptAppointment = async (appointment: Appointment) => {
         ],
         NOT: [
           { id: { equals: appointment.id } },
-          { status: { equals: AppointmentStatus.REJECTED } },
+          { status: { equals: "REJECTED" } },
         ],
       },
       data: {
-        status: AppointmentStatus.REJECTED,
+        status: "REJECTED",
       },
     }),
   ]);
