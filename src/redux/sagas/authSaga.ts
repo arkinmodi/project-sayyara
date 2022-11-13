@@ -11,9 +11,10 @@ import {
   IAuthActionCreateSignUp,
 } from "../actions/authActions";
 import AuthTypes from "../types/authTypes";
+import Router from "next/router";
 
-function* postLogin(body: any): Generator<boolean> {
-  fetch("/api/auth/callback/credentials", {
+function postLogin(body: object): Promise<boolean> {
+  return fetch("/api/auth/callback/credentials", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -30,8 +31,8 @@ function* postLogin(body: any): Generator<boolean> {
   });
 }
 
-function* postSignUp(body: any): Generator<boolean> {
-  fetch("/api/user/register", {
+function postSignUp(body: object): Promise<boolean> {
+  return fetch("/api/user/register", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -54,6 +55,9 @@ function* login(
   try {
     const isLoggedIn = yield call(postLogin, action.payload);
     yield put({ type: AuthTypes.SET_IS_LOGGED_IN, isLoggedIn });
+    if (isLoggedIn) {
+      yield call(Router.push, "/");
+    }
   } catch (e) {
     yield put({ type: AuthTypes.SET_IS_LOGGED_IN, isLoggedIn: false });
   }

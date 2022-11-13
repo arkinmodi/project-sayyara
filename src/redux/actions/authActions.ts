@@ -28,7 +28,7 @@ export type IAuthAction =
   | IAuthActionCreateSignUp
   | IAuthActionSetIsLoggedIn;
 
-export const createLogin = (payload: IAuthActionCreateSignUp["payload"]) => ({
+export const createLogin = (payload: IAuthActionCreateLogin["payload"]) => ({
   type: AuthType.CREATE_LOGIN,
   payload,
 });

@@ -15,7 +15,6 @@ import {
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { ChangeEvent, useState } from "react";
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
@@ -40,10 +39,13 @@ const initialSignUpFormValues: ISignUpFormValues = {
   type: "SHOP_OWNER",
 };
 
+// TODO: account types are currently disabled and commented out
 const Register: NextPage = ({}: InferGetServerSidePropsType<
   typeof getServerSideProps
 >) => {
-  const [formValues, setFormValues] = useState(initialSignUpFormValues);
+  const [formValues, setFormValues] = useState<ISignUpFormValues>(
+    initialSignUpFormValues
+  );
   // const [accountType, setAccountType] = useState(0);
 
   const router = useRouter();
@@ -106,9 +108,13 @@ const Register: NextPage = ({}: InferGetServerSidePropsType<
             <Radio label="Shop Owner" value={1} />
             <Radio label="Employee" value={2} />
           </RadioGroup> */}
-          <FormGroup label="Email" labelFor="text-input" labelInfo="(Required)">
+          <FormGroup
+            label="Email"
+            labelFor="authSignUpFormEmailInput"
+            labelInfo="(Required)"
+          >
             <InputGroup
-              id="text-input"
+              id="authSignUpFormEmailInput"
               placeholder="Email"
               className={authStyles.authFormInput}
               value={formValues.email}
@@ -118,11 +124,11 @@ const Register: NextPage = ({}: InferGetServerSidePropsType<
           </FormGroup>
           <FormGroup
             label="Password"
-            labelFor="text-input"
+            labelFor="authSignUpFormPasswordInput"
             labelInfo="(Required)"
           >
             <InputGroup
-              id="text-input"
+              id="authSignUpFormPasswordInput"
               type="password"
               className={authStyles.authFormInput}
               placeholder="Password"
@@ -133,11 +139,11 @@ const Register: NextPage = ({}: InferGetServerSidePropsType<
           </FormGroup>
           <FormGroup
             label="First Name"
-            labelFor="text-input"
+            labelFor="authSignUpFormFirstNameInput"
             labelInfo="(Required)"
           >
             <InputGroup
-              id="text-input"
+              id="authSignUpFormFirstNameInput"
               type="text"
               className={authStyles.authFormInput}
               placeholder="First Name"
@@ -148,11 +154,11 @@ const Register: NextPage = ({}: InferGetServerSidePropsType<
           </FormGroup>
           <FormGroup
             label="Last Name"
-            labelFor="text-input"
+            labelFor="authSignUpFormLastNameInput"
             labelInfo="(Required)"
           >
             <InputGroup
-              id="text-input"
+              id="authSignUpFormLastNameInput"
               type="text"
               className={authStyles.authFormInput}
               placeholder="Last Name"
