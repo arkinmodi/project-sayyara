@@ -1,3 +1,4 @@
+import Router from "next/router";
 import {
   all,
   call,
@@ -11,7 +12,6 @@ import {
   IAuthActionCreateSignUp,
 } from "../actions/authActions";
 import AuthTypes from "../types/authTypes";
-import Router from "next/router";
 
 function postLogin(body: object): Promise<boolean> {
   return fetch("/api/auth/callback/credentials", {
