@@ -1,25 +1,23 @@
-import authStyles from "../../styles/pages/auth/Auth.module.css";
 import {
-  Card,
   Button,
+  ButtonGroup,
+  Card,
   Elevation,
   FormGroup,
-  InputGroup,
   Icon,
-  ButtonGroup,
-  // Radio,
-  // RadioGroup,
+  InputGroup,
 } from "@blueprintjs/core";
+import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import {
   GetServerSideProps,
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
 import { useRouter } from "next/router";
-import React, { ChangeEvent, useState } from "react";
-import { getServerAuthSession } from "@server/common/getServerAuthSession";
-import AuthTypes from "src/redux/types/authTypes";
+import { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
+import AuthTypes from "src/redux/types/authTypes";
+import authStyles from "../../styles/pages/auth/Auth.module.css";
 
 interface ISignUpFormValues {
   callbackUrl: string | string[];

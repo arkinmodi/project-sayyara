@@ -1,12 +1,3 @@
-import authStyles from "../../styles/pages/auth/Auth.module.css";
-import {
-  GetServerSideProps,
-  InferGetServerSidePropsType,
-  NextPage,
-} from "next";
-import { getCsrfToken } from "next-auth/react";
-import { useRouter } from "next/router";
-import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import {
   Button,
   ButtonGroup,
@@ -16,9 +7,18 @@ import {
   Icon,
   InputGroup,
 } from "@blueprintjs/core";
+import { getServerAuthSession } from "@server/common/getServerAuthSession";
+import {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+} from "next";
+import { getCsrfToken } from "next-auth/react";
+import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import AuthTypes from "../../redux/types/authTypes";
+import authStyles from "../../styles/pages/auth/Auth.module.css";
 
 interface ILoginFormValues {
   csrfToken: "";
