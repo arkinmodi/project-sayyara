@@ -11,7 +11,7 @@ export interface IAppointment {
 }
 
 export enum AppointmentStatus {
-    PENDING_APPROVAL,
-    ACCEPTED,
-    REJECTED
+    PENDING_APPROVAL = "PENDING_APPROVAL",
+    ACCEPTED = "ACCEPTED",
+    REJECTED = "REJECTED"
 }
