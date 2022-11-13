@@ -25,10 +25,14 @@
     "docker:down": "docker compose down"
   },
   "dependencies": {
-    "@blueprintjs/datetime": "^4.4.7",
     "@blueprintjs/core": "^4.11.6",
+    "@blueprintjs/datetime": "^4.4.7",
+    "@blueprintjs/datetime2": "^0.9.5",
+    "@blueprintjs/popover2": "^1.10.1",
+    "@blueprintjs/select": "^4.8.11",
     "@prisma/client": "^4.4.0",
     "@reduxjs/toolkit": "^1.8.6",
+    "date-fns": "^2.29.3",
     "next": "12.3.1",
     "next-auth": "^4.13.0",
     "next-pwa": "^5.6.0",
