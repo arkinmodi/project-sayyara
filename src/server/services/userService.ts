@@ -12,7 +12,7 @@ export const registrationSchema = z.object({
 export type CreateUserInputType = z.infer<typeof registrationSchema>;
 
 export const createUser = async (user: CreateUserInputType) => {
-  if (user.type === "CUSTOMER") {
+  if (user.type === UserType.CUSTOMER) {
     return await prisma.customer.create({
       data: {
         ...user,
