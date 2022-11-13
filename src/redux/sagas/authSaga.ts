@@ -13,7 +13,16 @@ import {
 } from "../actions/authActions";
 import AuthTypes from "../types/authTypes";
 
-function postLogin(body: object): Promise<boolean> {
+interface IPostSignUpBody {
+  callbackUrl: string;
+  email: string;
+  password: string;
+  first_name: string;
+  last_name: string;
+  type: string;
+}
+
+function postLogin(body: IAuthActionCreateLogin["payload"]): Promise<boolean> {
   return fetch("/api/auth/callback/credentials", {
     method: "POST",
     headers: {
@@ -31,7 +40,7 @@ function postLogin(body: object): Promise<boolean> {
   });
 }
 
-function postSignUp(body: object): Promise<boolean> {
+function postSignUp(body: IPostSignUpBody): Promise<boolean> {
   return fetch("/api/user/register", {
     method: "POST",
     headers: {
@@ -52,14 +61,11 @@ function postSignUp(body: object): Promise<boolean> {
 function* login(
   action: IAuthActionCreateLogin
 ): Generator<CallEffect | PutEffect> {
-  try {
-    const isLoggedIn = yield call(postLogin, action.payload);
-    yield put({ type: AuthTypes.SET_IS_LOGGED_IN, isLoggedIn });
-    if (isLoggedIn) {
-      yield call(Router.push, "/");
-    }
-  } catch (e) {
-    yield put({ type: AuthTypes.SET_IS_LOGGED_IN, isLoggedIn: false });
+  const isLoggedIn = yield call(postLogin, action.payload);
+  yield put({ type: AuthTypes.SET_IS_LOGGED_IN, isLoggedIn });
+  // Redirect to landing page if login is successful
+  if (isLoggedIn) {
+    yield call(Router.push, "/");
   }
 }
 
@@ -67,7 +73,7 @@ function* signUp(
   action: IAuthActionCreateSignUp
 ): Generator<CallEffect | PutEffect> {
   const payload = action.payload;
-  const body = {
+  const body: IPostSignUpBody = {
     callbackUrl: payload.callbackUrl,
     email: payload.email,
     password: payload.password,
@@ -75,13 +81,24 @@ function* signUp(
     last_name: payload.lastName,
     type: payload.type,
   };
-  yield call(postSignUp, body);
+  const success = yield call(postSignUp, body);
+  if (success) {
+    // If registration is successful, attempt to login automatically
+    const loginBody: IAuthActionCreateLogin["payload"] = {
+      csrfToken: payload.csrfToken,
+      email: payload.email,
+      password: payload.password,
+    };
+    yield put({ type: AuthTypes.CREATE_LOGIN, payload: loginBody });
+  }
 }
 
 /**
  * Saga to handle all auth related actions.
  */
 export function* authSaga() {
-  yield all([takeEvery(AuthTypes.CREATE_LOGIN, login)]);
-  yield all([takeEvery(AuthTypes.CREATE_SIGN_UP, signUp)]);
+  yield all([
+    takeEvery(AuthTypes.CREATE_LOGIN, login),
+    takeEvery(AuthTypes.CREATE_SIGN_UP, signUp),
+  ]);
 }
