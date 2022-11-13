@@ -13,15 +13,22 @@ import {
   MenuItem,
 } from "@blueprintjs/core";
 import { MultiSelect2 } from "@blueprintjs/select";
+import { useDispatch } from "react-redux";
 
 const RequestAppointment: NextPage = () => {
   const [dateValue, setDateValue] = useState<string>("");
   const [item, setItem] = useState<string>("");
   const [items, setItems] = useState<string[]>([]);
+
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const handleRequestSubmit = (): void => {
     console.log("date: " + dateValue + " items: " + items);
+    dispatch({
+      types: AppointmentTypes.CREATE_APPOINTMENT,
+      payload: items.push(dateValue),
+    });
   };
 
   const handleDateChange = useCallback(setDateValue, []);
