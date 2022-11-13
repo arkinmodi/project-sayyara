@@ -35,7 +35,10 @@ const initialLoginFormValues: ILoginFormValues = {
 const Login: NextPage = ({
   csrfToken,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const [formValues, setFormValues] = useState(initialLoginFormValues);
+  const [formValues, setFormValues] = useState<ILoginFormValues>({
+    ...initialLoginFormValues,
+    csrfToken,
+  });
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -50,7 +53,6 @@ const Login: NextPage = ({
 
   const handleLoginButtonClick = (): void => {
     // TODO: validate inputs
-    setFormValues({ ...formValues, csrfToken });
     dispatch({ type: AuthTypes.CREATE_LOGIN, payload: formValues });
   };
 
@@ -74,9 +76,13 @@ const Login: NextPage = ({
           <h1>Login</h1>
         </div>
         <div className={authStyles.authForm}>
-          <FormGroup label="Email" labelFor="text-input" labelInfo="(Required)">
+          <FormGroup
+            label="Email"
+            labelFor="authLoginFormEmailInput"
+            labelInfo="(Required)"
+          >
             <InputGroup
-              id="text-input"
+              id="authLoginFormEmailInput"
               placeholder="Email"
               className={authStyles.authFormInput}
               value={formValues.email}
@@ -86,11 +92,11 @@ const Login: NextPage = ({
           </FormGroup>
           <FormGroup
             label="Password"
-            labelFor="text-input"
+            labelFor="authLoginFormPasswordInput"
             labelInfo="(Required)"
           >
             <InputGroup
-              id="text-input"
+              id="authLoginFormPasswordInput"
               type="password"
               placeholder="Password"
               className={authStyles.authFormInput}

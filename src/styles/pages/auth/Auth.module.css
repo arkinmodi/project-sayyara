@@ -29,6 +29,7 @@
 .authFormCard {
   background-color: rgba(232, 232, 232, 0.3);
   width: 50%;
+  margin-top: 5%;
 }
 
 .authFormButton {
