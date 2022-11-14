@@ -22,7 +22,7 @@ export interface IAppointmentActionSetAppointments
 
 export interface IAppointmentActionCreateAppointment 
   extends IAppointmentActionBase {
-  payload: { service_type: string; startTime: string; endTime: string}
+  payload: { service_type: string; start_time: string; end_time: string}
 }
 
 export type IAppointmentAction =

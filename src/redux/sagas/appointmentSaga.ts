@@ -11,12 +11,6 @@ import { IAppointment } from "src/types/appointment";
 import { IAppointmentActionCreateAppointment, IAppointmentActionSetAppointmentStatus } from "../actions/appointmentAction";
 import AppointmentTypes from "../types/appointmentTypes";
 
-interface IPostCreateBody {
-  service_type: string;
-  start_time: string;
-  end_time: string;
-}
-
 function patchAppointmentStatus(
   content: IAppointmentActionSetAppointmentStatus["payload"]
 ): Promise<boolean> {
@@ -87,7 +81,7 @@ function* readAppointments(): Generator<CallEffect | PutEffect> {
   });
 }
 
-function postCreate(body: IPostCreateBody): Promise<boolean> {
+function postCreate(body: IAppointmentActionCreateAppointment["payload"]): Promise<boolean> {
   return fetch("/api/appointment/", {
       method: "POST",
       headers: {
@@ -107,13 +101,7 @@ function postCreate(body: IPostCreateBody): Promise<boolean> {
 function* create(
   action: IAppointmentActionCreateAppointment
 ): Generator<CallEffect | PutEffect> {
-  const payload = action.payload;
-  const body: IPostCreateBody = {
-    service_type: payload.service_type,
-    start_time: payload.startTime,
-    end_time: payload.endTime,
-  };
-  yield call(postCreate, body);
+  yield call(postCreate, action.payload);
 }
 
 /**

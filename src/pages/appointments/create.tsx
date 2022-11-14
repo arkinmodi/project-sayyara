@@ -23,12 +23,13 @@ const Create: NextPage = () => {
     new Date("2020-01-01T00:00:00")
   );
   const [endTime, setEndTime] = useState<Date>(new Date("2020-01-01T00:00:00"));
-  const [item, setItem] = useState<string>("Canned");
+  const [serviceType, setServiceType] = useState<string>("Canned");
 
   const dispatch = useDispatch();
   const router = useRouter();
 
   const handleRequestSubmit = (): void => {
+    const service_type = serviceType.toUpperCase();
     const start_time = new Date(
       dateValue + "T" + format(startTime, timeFnsFormat)
     ).toString();
@@ -36,11 +37,13 @@ const Create: NextPage = () => {
       dateValue + "T" + format(endTime, timeFnsFormat)
     ).toString();
 
-    console.log("Payload: " + item + ", " + start_time + ", " + end_time);
+    console.log(
+      "Payload: " + service_type + ", " + start_time + ", " + end_time
+    );
 
     dispatch({
       type: AppointmentTypes.CREATE_APPOINTMENT,
-      payload: { item, start_time, end_time },
+      payload: { service_type, start_time, end_time },
     });
   };
 
@@ -81,7 +84,7 @@ const Create: NextPage = () => {
                     key={val}
                     text={val}
                     onClick={(elm) => {
-                      setItem(elm.target.textContent);
+                      setServiceType(elm.target.textContent);
                     }}
                   />
                 );
@@ -90,7 +93,7 @@ const Create: NextPage = () => {
               filterable={false}
             >
               <Button
-                text={item}
+                text={serviceType}
                 rightIcon="caret-down"
                 className={styles.createSelectButton}
               />
