@@ -14,11 +14,13 @@ export interface IAuthActionCreateLogin extends IAuthActionBase {
 
 export interface IAuthActionCreateSignUp extends IAuthActionBase {
   payload: {
-    callbackUrl: string | string[];
+    csrfToken: string;
+    callbackUrl: string;
     email: string;
     password: string;
     firstName: string;
     lastName: string;
+    type: string;
   };
 }
 
@@ -27,7 +29,7 @@ export type IAuthAction =
   | IAuthActionCreateSignUp
   | IAuthActionSetIsLoggedIn;
 
-export const createLogin = (payload: IAuthActionCreateSignUp["payload"]) => ({
+export const createLogin = (payload: IAuthActionCreateLogin["payload"]) => ({
   type: AuthType.CREATE_LOGIN,
   payload,
 });

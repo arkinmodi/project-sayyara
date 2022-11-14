@@ -1,47 +1,49 @@
-import authStyles from "../../styles/pages/auth/Auth.module.css";
 import {
-  Card,
   Button,
+  ButtonGroup,
+  Card,
   Elevation,
   FormGroup,
-  InputGroup,
   Icon,
-  ButtonGroup,
-  // Radio,
-  // RadioGroup,
+  InputGroup,
 } from "@blueprintjs/core";
+import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import {
   GetServerSideProps,
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
-import Link from "next/link";
+import { getCsrfToken } from "next-auth/react";
 import { useRouter } from "next/router";
-import React, { ChangeEvent, useState } from "react";
-import { getServerAuthSession } from "@server/common/getServerAuthSession";
-import AuthTypes from "src/redux/types/authTypes";
+import { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
+import AuthTypes from "src/redux/types/authTypes";
+import authStyles from "../../styles/pages/auth/Auth.module.css";
 
 interface ISignUpFormValues {
-  callbackUrl: string | string[];
   firstName: string;
   lastName: string;
   email: string;
   password: string;
+  type: string;
 }
 
 const initialSignUpFormValues: ISignUpFormValues = {
-  callbackUrl: "/",
   firstName: "",
   lastName: "",
   email: "",
   password: "",
+  type: "SHOP_OWNER",
 };
 
-const Register: NextPage = ({}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) => {
-  const [formValues, setFormValues] = useState(initialSignUpFormValues);
+// TODO: account types are currently disabled and commented out
+const Register: NextPage = ({
+  csrfToken,
+  callbackUrl,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const [formValues, setFormValues] = useState<ISignUpFormValues>(
+    initialSignUpFormValues
+  );
   // const [accountType, setAccountType] = useState(0);
 
   const router = useRouter();
@@ -60,17 +62,16 @@ const Register: NextPage = ({}: InferGetServerSidePropsType<
 
   const handleSignUpButtonClick = (): void => {
     // TODO: validate inputs
-    const callbackUrl = router.query.callbackUrl;
-    if (callbackUrl) {
-      setFormValues({ ...formValues, callbackUrl });
-    }
-    dispatch({ type: AuthTypes.CREATE_SIGN_UP, payload: formValues });
+    dispatch({
+      type: AuthTypes.CREATE_SIGN_UP,
+      payload: { ...formValues, csrfToken, callbackUrl },
+    });
   };
 
   const handleLoginButtonClick = () => {
     const href = {
       pathname: "/auth/login",
-      query: { callbackUrl: router.query.callbackUrl },
+      query: { callbackUrl },
     };
     router.push(href);
   };
@@ -104,9 +105,13 @@ const Register: NextPage = ({}: InferGetServerSidePropsType<
             <Radio label="Shop Owner" value={1} />
             <Radio label="Employee" value={2} />
           </RadioGroup> */}
-          <FormGroup label="Email" labelFor="text-input" labelInfo="(Required)">
+          <FormGroup
+            label="Email"
+            labelFor="authSignUpFormEmailInput"
+            labelInfo="(Required)"
+          >
             <InputGroup
-              id="text-input"
+              id="authSignUpFormEmailInput"
               placeholder="Email"
               className={authStyles.authFormInput}
               value={formValues.email}
@@ -116,11 +121,11 @@ const Register: NextPage = ({}: InferGetServerSidePropsType<
           </FormGroup>
           <FormGroup
             label="Password"
-            labelFor="text-input"
+            labelFor="authSignUpFormPasswordInput"
             labelInfo="(Required)"
           >
             <InputGroup
-              id="text-input"
+              id="authSignUpFormPasswordInput"
               type="password"
               className={authStyles.authFormInput}
               placeholder="Password"
@@ -131,11 +136,11 @@ const Register: NextPage = ({}: InferGetServerSidePropsType<
           </FormGroup>
           <FormGroup
             label="First Name"
-            labelFor="text-input"
+            labelFor="authSignUpFormFirstNameInput"
             labelInfo="(Required)"
           >
             <InputGroup
-              id="text-input"
+              id="authSignUpFormFirstNameInput"
               type="text"
               className={authStyles.authFormInput}
               placeholder="First Name"
@@ -146,11 +151,11 @@ const Register: NextPage = ({}: InferGetServerSidePropsType<
           </FormGroup>
           <FormGroup
             label="Last Name"
-            labelFor="text-input"
+            labelFor="authSignUpFormLastNameInput"
             labelInfo="(Required)"
           >
             <InputGroup
-              id="text-input"
+              id="authSignUpFormLastNameInput"
               type="text"
               className={authStyles.authFormInput}
               placeholder="Last Name"
@@ -183,8 +188,8 @@ const Register: NextPage = ({}: InferGetServerSidePropsType<
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const callbackUrl = context.query.callbackUrl;
   const session = await getServerAuthSession(context);
+  const callbackUrl = context.query.callbackUrl;
 
   if (session && !Array.isArray(callbackUrl)) {
     return {
@@ -196,7 +201,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: {},
+    props: {
+      csrfToken: await getCsrfToken(context),
+      callbackUrl: Array.isArray(callbackUrl) ? "/" : callbackUrl,
+    },
   };
 };
 

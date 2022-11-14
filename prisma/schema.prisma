@@ -12,20 +12,108 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
-model Account {
-  id     String @id @default(cuid())
-  userId String
-  type   String
+model Employee {
+  id          String   @id @default(cuid())
+  create_time DateTime @default(now())
+  update_time DateTime @updatedAt
+  first_name  String
+  last_name   String
+  email       String   @unique
+  password    String
+  image       String?
+  type        UserType
+  shop_id     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  appointments Appointment[]
+  shop         Shop?         @relation(fields: [shop_id], references: [id])
 }
 
-model User {
-  id         String    @id @default(cuid())
-  first_name String
-  last_name  String
-  email      String    @unique
-  password   String
-  image      String?
-  accounts   Account[]
+model Customer {
+  id           String        @id @default(cuid())
+  create_time  DateTime      @default(now())
+  update_time  DateTime      @updatedAt
+  first_name   String
+  last_name    String
+  email        String        @unique
+  password     String
+  image        String?
+  type         UserType      @default(CUSTOMER)
+  appointments Appointment[]
+}
+
+// TODO: re-evaluate what should be optional for Appointment
+model Appointment {
+  id            String            @id @default(cuid())
+  create_time   DateTime          @default(now())
+  update_time   DateTime          @updatedAt
+  quote_id      String?           @unique
+  work_order_id String            @unique
+  vehicle_id    String?           @unique
+  service_type  ServiceType
+  price         Float?
+  employee_id   String?           @unique
+  customer_id   String?           @unique
+  status        AppointmentStatus
+  start_time    DateTime
+  end_time      DateTime
+  shop_id       String?
+
+  vehicle    Vehicle?  @relation(fields: [vehicle_id], references: [id])
+  quote      Quote?    @relation(fields: [quote_id], references: [id])
+  work_order WorkOrder @relation(fields: [work_order_id], references: [id])
+  employee   Employee? @relation(fields: [employee_id], references: [id])
+  customer   Customer? @relation(fields: [customer_id], references: [id])
+  shop       Shop?     @relation(fields: [shop_id], references: [id])
+}
+
+model Quote {
+  id          String       @id @default(cuid())
+  create_time DateTime     @default(now())
+  update_time DateTime     @updatedAt
+  appointment Appointment?
+}
+
+model Vehicle {
+  id            String        @id @default(cuid())
+  create_time   DateTime      @default(now())
+  update_time   DateTime      @updatedAt
+  year          Int
+  make          String
+  model         String
+  vin           String
+  license_plate String
+  appointment   Appointment[]
+}
+
+model WorkOrder {
+  id          String       @id @default(cuid())
+  create_time DateTime     @default(now())
+  update_time DateTime     @updatedAt
+  appointment Appointment?
+}
+
+model Shop {
+  id           String        @id @default(cuid())
+  create_time  DateTime      @default(now())
+  update_time  DateTime      @updatedAt
+  appointments Appointment[]
+  employees    Employee[]
+}
+
+enum UserType {
+  SHOP_OWNER
+  EMPLOYEE
+  CUSTOMER
+}
+
+enum ServiceType {
+  CANNED
+  CUSTOM
+  REWORK
+}
+
+enum AppointmentStatus {
+  PENDING_APPROVAL
+  ACCEPTED
+  REJECTED
 }

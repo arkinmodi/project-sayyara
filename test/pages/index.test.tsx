@@ -15,6 +15,7 @@ describe("Home", () => {
             firstName: "FirstName",
             lastName: "LastName",
             email: "test@sayyara.com",
+            type: "SHOP_OWNER",
           },
         }}
       >

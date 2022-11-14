@@ -3,7 +3,7 @@
  *
  * @group unit
  */
-import { User } from "@prisma/client";
+import { Employee } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 
 import {
@@ -14,19 +14,23 @@ import {
 } from "@server/services/userService";
 import { prismaMock } from "@test/mocks/prismaMock";
 
-const testUser: User = {
+const testEmployeeUser: Employee = {
   id: "test_id",
   first_name: "first_name",
   last_name: "last_name",
   email: "user@test.com",
   password: "test_password",
   image: null,
+  create_time: new Date(),
+  update_time: new Date(),
+  type: "SHOP_OWNER",
+  shop_id: "shop_id",
 };
 
 describe("get user", () => {
   describe("given user does not exist", () => {
     it("should return null", async () => {
-      prismaMock.user.findUnique.mockResolvedValue(null);
+      prismaMock.employee.findUnique.mockResolvedValue(null);
 
       await expect(getUser("does_not_exists@test.com")).resolves.toBeNull();
     });
@@ -34,9 +38,11 @@ describe("get user", () => {
 
   describe("given user does exist", () => {
     it("should return user", async () => {
-      prismaMock.user.findUnique.mockResolvedValue(testUser);
+      prismaMock.employee.findUnique.mockResolvedValue(testEmployeeUser);
 
-      await expect(getUser(testUser.email)).resolves.toEqual(testUser);
+      await expect(getUser(testEmployeeUser.email)).resolves.toEqual(
+        testEmployeeUser
+      );
     });
   });
 
@@ -50,19 +56,21 @@ describe("get user", () => {
 describe("create user", () => {
   describe("given user", () => {
     it("should create user", async () => {
-      const mockCreateUserInput: CreateUserInputType = testUser;
+      const mockCreateUserInput: CreateUserInputType = testEmployeeUser;
 
-      prismaMock.user.create.mockResolvedValue(testUser);
+      prismaMock.employee.create.mockResolvedValue(testEmployeeUser);
 
-      await expect(createUser(mockCreateUserInput)).resolves.toBe(testUser);
+      await expect(createUser(mockCreateUserInput)).resolves.toBe(
+        testEmployeeUser
+      );
     });
   });
 
   describe("given user already exists", () => {
     it("should throw an exception", async () => {
-      const mockCreateUserInput: CreateUserInputType = testUser;
+      const mockCreateUserInput: CreateUserInputType = testEmployeeUser;
 
-      prismaMock.user.create.mockRejectedValue(
+      prismaMock.employee.create.mockRejectedValue(
         new PrismaClientKnownRequestError(
           "Unique constraint failed on the constraint: `User_email_key`",
           "P2002",
@@ -80,36 +88,37 @@ describe("create user", () => {
 describe("user authorization", () => {
   describe("given valid email and password", () => {
     it("should return user data", async () => {
-      prismaMock.user.findUnique.mockResolvedValue(testUser);
+      prismaMock.employee.findUnique.mockResolvedValue(testEmployeeUser);
 
       await expect(
-        authorize(testUser.email, testUser.password)
+        authorize(testEmployeeUser.email, testEmployeeUser.password)
       ).resolves.toEqual({
-        id: testUser.id,
-        firstName: testUser.first_name,
-        lastName: testUser.last_name,
-        email: testUser.email,
+        id: testEmployeeUser.id,
+        firstName: testEmployeeUser.first_name,
+        lastName: testEmployeeUser.last_name,
+        email: testEmployeeUser.email,
+        type: testEmployeeUser.type,
       });
     });
   });
 
   describe("given invalid email", () => {
     it("should reject", async () => {
-      prismaMock.user.findUnique.mockResolvedValue(null);
+      prismaMock.employee.findUnique.mockResolvedValue(null);
 
       await expect(
-        authorize("does_not_exists@test.com", testUser.password)
+        authorize("does_not_exists@test.com", testEmployeeUser.password)
       ).rejects.toEqual("user not found");
     });
   });
 
   describe("given invalid password", () => {
     it("should reject", async () => {
-      prismaMock.user.findUnique.mockResolvedValue(testUser);
+      prismaMock.employee.findUnique.mockResolvedValue(testEmployeeUser);
 
-      await expect(authorize(testUser.email, "wrong_password")).rejects.toEqual(
-        "unauthorized"
-      );
+      await expect(
+        authorize(testEmployeeUser.email, "wrong_password")
+      ).rejects.toEqual("unauthorized");
     });
   });
 });
