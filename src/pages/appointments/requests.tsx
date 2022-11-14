@@ -48,26 +48,22 @@ const Requests: NextPage = () => {
         {pendingAppointments.length > 0 ? (
           pendingAppointments.map((appointment) => (
             <Card key={appointment.id.toString()}>
-              <span>
-                <div>Appointment id: {appointment.id}</div>
-                <div>
-                  Start time:{" "}
-                  {String(new Date(appointment.startTime).toLocaleString())}
-                </div>
-                <div>
-                  End time:{" "}
-                  {String(new Date(appointment.endTime).toLocaleString())}
-                </div>
-              </span>
-              <span>
-                <Button
-                  className={styles.appointmentRequestsAcceptButton}
-                  intent="primary"
-                  onClick={() => handleAcceptButtonClick(appointment)}
-                >
-                  Accept
-                </Button>
-              </span>
+              <div>Appointment id: {appointment.id}</div>
+              <div>
+                Start time:{" "}
+                {String(new Date(appointment.startTime).toLocaleString())}
+              </div>
+              <div>
+                End time:{" "}
+                {String(new Date(appointment.endTime).toLocaleString())}
+              </div>
+              <Button
+                className={styles.appointmentRequestsAcceptButton}
+                intent="primary"
+                onClick={() => handleAcceptButtonClick(appointment)}
+              >
+                Accept
+              </Button>
             </Card>
           ))
         ) : (
