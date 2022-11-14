@@ -109,7 +109,7 @@ function* create(
 ): Generator<CallEffect | PutEffect> {
   const payload = action.payload;
   const body: IPostCreateBody = {
-    service_type: payload.type,
+    service_type: payload.service_type,
     start_time: payload.startTime,
     end_time: payload.endTime,
   };
