@@ -1,4 +1,3 @@
-import { List } from "reselect/es/types";
 import { AppointmentStatus, IAppointment } from "../../types/appointment";
 import AppointmentTypes from "../types/appointmentTypes";
 

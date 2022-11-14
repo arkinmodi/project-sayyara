@@ -1,11 +1,11 @@
-import { NextPage } from "next";
 import { Button, Card } from "@blueprintjs/core";
-import { useState, useEffect } from "react";
-import { IAppointment, AppointmentStatus } from "../../types/appointment";
-import styles from "../../styles/pages/appointments/AppointmentResponse.module.css";
+import { NextPage } from "next";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AppointmentTypes from "src/redux/types/appointmentTypes";
 import { AppointmentSelectors } from "src/redux/selectors/appointmentSelectors";
+import AppointmentTypes from "src/redux/types/appointmentTypes";
+import styles from "../../styles/pages/appointments/Requests.module.css";
+import { AppointmentStatus, IAppointment } from "../../types/appointment";
 
 const Requests: NextPage = () => {
   const [pendingAppointments, setPendingAppointments] = useState<
@@ -41,11 +41,11 @@ const Requests: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <Card className={styles.card}>
+      <Card className={styles.appointmentsCard}>
         <h2 className={styles.cardHeader}>Appointment Requests</h2>
         {pendingAppointments.length > 0 ? (
           pendingAppointments.map((appointment) => (
-            <Card>
+            <Card key={appointment.id.toString()}>
               <span>
                 <div>Appointment id: {appointment.id}</div>
                 <div>
