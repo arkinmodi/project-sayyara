@@ -11,7 +11,7 @@ import { IAppointment } from "src/types/appointment";
 import { IAppointmentActionSetAppointmentStatus } from "../actions/appointmentAction";
 import AppointmentTypes from "../types/appointmentTypes";
 
-function patchAcceptAppointment(
+function patchAppointmentStatus(
   content: IAppointmentActionSetAppointmentStatus["payload"]
 ): Promise<boolean> {
   return fetch(`/api/appointment/${content.id}`, {
@@ -67,7 +67,7 @@ function getAllAppointments(): Promise<IAppointment[]> {
 function* setAppointmentStatus(
   action: IAppointmentActionSetAppointmentStatus
 ): Generator<CallEffect | PutEffect> {
-  const success = yield call(patchAcceptAppointment, action.payload);
+  const success = yield call(patchAppointmentStatus, action.payload);
   if (success) {
     yield call(readAppointments);
   }

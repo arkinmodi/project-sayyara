@@ -40,9 +40,11 @@ const Requests: NextPage = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <Card className={styles.appointmentsCard}>
-        <h2 className={styles.cardHeader}>Appointment Requests</h2>
+    <div className={styles.appointmentRequestsContainer}>
+      <Card className={styles.appointmentRequestsCard}>
+        <h2 className={styles.appointmentRequestsCardText}>
+          Appointment Requests
+        </h2>
         {pendingAppointments.length > 0 ? (
           pendingAppointments.map((appointment) => (
             <Card key={appointment.id.toString()}>
@@ -59,7 +61,7 @@ const Requests: NextPage = () => {
               </span>
               <span>
                 <Button
-                  className={styles.acceptButton}
+                  className={styles.appointmentRequestsAcceptButton}
                   intent="primary"
                   onClick={() => handleAcceptButtonClick(appointment)}
                 >
@@ -69,7 +71,9 @@ const Requests: NextPage = () => {
             </Card>
           ))
         ) : (
-          <div className={styles.cardHeader}>No pending appointments</div>
+          <div className={styles.appointmentRequestsCardText}>
+            No pending appointments
+          </div>
         )}
       </Card>
     </div>
