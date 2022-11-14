@@ -29,14 +29,14 @@ const Create: NextPage = () => {
   const router = useRouter();
 
   const handleRequestSubmit = (): void => {
-    console.log("date: " + dateValue);
-    console.log("start time: " + format(startTime, timeFnsFormat));
-    console.log("end time: " + format(endTime, timeFnsFormat));
-    console.log("item: " + item);
     const start_time = new Date(
       dateValue + "T" + format(startTime, timeFnsFormat)
-    );
-    const end_time = new Date(dateValue + "T" + format(endTime, timeFnsFormat));
+    ).toString();
+    const end_time = new Date(
+      dateValue + "T" + format(endTime, timeFnsFormat)
+    ).toString();
+
+    console.log("Payload: " + item + ", " + start_time + ", " + end_time);
 
     dispatch({
       type: AppointmentTypes.CREATE_APPOINTMENT,

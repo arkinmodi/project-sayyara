@@ -22,13 +22,14 @@ export interface IAppointmentActionSetAppointments
 
 export interface IAppointmentActionCreateAppointment 
   extends IAppointmentActionBase {
-  payload: { types: string; startTime: Date; endTime: Date}
+  payload: { type: string; startTime: string; endTime: string}
 }
 
 export type IAppointmentAction =
   | IAppointmentActionSetAppointmentStatus
   | IAppointmentActionReadAppointments
-  | IAppointmentActionSetAppointments;
+  | IAppointmentActionSetAppointments
+  | IAppointmentActionCreateAppointment;
 
 export const readAppointments = (payload: void) => ({
   type: AppointmentTypes.READ_APPOINTMENTS,

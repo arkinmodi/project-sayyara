@@ -12,9 +12,9 @@ import { IAppointmentActionCreateAppointment, IAppointmentActionSetAppointmentSt
 import AppointmentTypes from "../types/appointmentTypes";
 
 interface IPostCreateBody {
-  types: string;
-  start_time: Date;
-  end_time: Date;
+  service_type: string;
+  start_time: string;
+  end_time: string;
 }
 
 function patchAppointmentStatus(
@@ -109,7 +109,7 @@ function* create(
 ): Generator<CallEffect | PutEffect> {
   const payload = action.payload;
   const body: IPostCreateBody = {
-    types: payload.types,
+    service_type: payload.type,
     start_time: payload.startTime,
     end_time: payload.endTime,
   };
