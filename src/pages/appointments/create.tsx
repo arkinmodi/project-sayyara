@@ -14,9 +14,15 @@ import {
 } from "@blueprintjs/core";
 import { MultiSelect2 } from "@blueprintjs/select";
 import { useDispatch } from "react-redux";
+import AppointmentTypes from "../../redux/types/appointmentTypes";
+import { TimePicker } from "@blueprintjs/datetime";
 
-const RequestAppointment: NextPage = () => {
-  const [dateValue, setDateValue] = useState<string>("");
+const Create: NextPage = () => {
+  const [dateValue, setDateValue] = useState<string | null>(null);
+  const [startTime, setStartTime] = useState<Date>(
+    new Date("2020-01-01T00:00:00")
+  );
+  const [endTime, setEndTime] = useState<Date>(new Date("2020-01-01T00:00:00"));
   const [item, setItem] = useState<string>("");
   const [items, setItems] = useState<string[]>([]);
 
@@ -24,15 +30,15 @@ const RequestAppointment: NextPage = () => {
   const router = useRouter();
 
   const handleRequestSubmit = (): void => {
-    console.log("date: " + dateValue + " items: " + items);
-    dispatch({
-      types: AppointmentTypes.CREATE_APPOINTMENT,
-      payload: items.push(dateValue),
-    });
+    console.log("date: " + dateValue);
+    console.log("start time: " + format(startTime, timeFnsFormat));
+    console.log("end time: " + format(endTime, timeFnsFormat));
+    console.log("items: " + items);
   };
 
   const handleDateChange = useCallback(setDateValue, []);
-  const dateFnsFormat = "PPPPp";
+  const dateFnsFormat = "PPPP";
+  const timeFnsFormat = "p";
   const formatDate = useCallback(
     (date: Date) => format(date, dateFnsFormat),
     []
@@ -51,7 +57,7 @@ const RequestAppointment: NextPage = () => {
       >
         <div className={requestStyles.requestFormHeader}>
           <Icon icon="calendar" size={80} />
-          <h1>Request an Appointment</h1>
+          <h1>Create an Appointment</h1>
         </div>
         <div className={requestStyles.requestForm}>
           <FormGroup
@@ -84,20 +90,32 @@ const RequestAppointment: NextPage = () => {
               }}
             />
           </FormGroup>
-          <FormGroup label="Appointment Time" labelInfo="(Required)">
+          <FormGroup label="Appointment Date" labelInfo="(Required)">
             <DateInput2
               formatDate={formatDate}
-              onChange={(newDate: string) => {
+              onChange={(newDate: string | null) => {
                 handleDateChange(newDate);
               }}
               parseDate={parseDate}
-              placeholder={"Select a date and time"}
+              placeholder={"Select a date"}
               value={dateValue}
               highlightCurrentDay={true}
-              disableTimezoneSelect={true}
-              timePrecision={"minute"}
             />
           </FormGroup>
+          <div className={requestStyles.requestFormTime}>
+            <FormGroup label="Start Time" labelInfo="(Required)">
+              <TimePicker
+                useAmPm={true}
+                onChange={(time) => setStartTime(time)}
+              />
+            </FormGroup>
+            <FormGroup label="End Time" labelInfo="(Required)">
+              <TimePicker
+                useAmPm={true}
+                onChange={(time) => setEndTime(time)}
+              />
+            </FormGroup>
+          </div>
         </div>
         <Button
           intent="primary"
@@ -111,4 +129,4 @@ const RequestAppointment: NextPage = () => {
   );
 };
 
-export default RequestAppointment;
+export default Create;
