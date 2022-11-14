@@ -4,6 +4,10 @@ import { Store } from "redux";
 import createSagaMiddleware, { Task } from "redux-saga";
 import { rootReducer } from "./reducers/rootReducer";
 import { rootSaga } from "./sagas/rootSaga";
+import {
+  IAppointmentsState,
+  initialAppointmentsState,
+} from "./state/user/appointmentState";
 import { IAuthState, initialAuthState } from "./state/user/authState";
 
 /**
@@ -16,10 +20,12 @@ interface SagaStore extends Store {
 
 export interface RootState {
   auth: IAuthState;
+  appointments: IAppointmentsState;
 }
 
 const initialState = {
   auth: initialAuthState,
+  appointments: initialAppointmentsState,
 };
 
 export const makeStore = (_context: Context) => {

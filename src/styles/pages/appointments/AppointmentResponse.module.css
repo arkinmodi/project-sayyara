@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: black;
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 5%;
+}
+
+.card {
+  background-color: rgba(232, 232, 232, 0.3);
+  width: 50%;
+  margin-top: 5%;
+}
+
+.acceptButton {
+  width: 150px;
+  height: 40px;
+  margin: 2px;
+}
