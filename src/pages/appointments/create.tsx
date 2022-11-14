@@ -1,9 +1,3 @@
-import requestStyles from "../../styles/pages/appointments/Request.module.css";
-import { NextPage } from "next";
-import { useRouter } from "next/router";
-import { DateInput2 } from "@blueprintjs/datetime2";
-import { format, parse } from "date-fns";
-import { useCallback, useState } from "react";
 import {
   Button,
   Card,
@@ -12,10 +6,16 @@ import {
   Icon,
   MenuItem,
 } from "@blueprintjs/core";
-import { MultiSelect2 } from "@blueprintjs/select";
-import { useDispatch } from "react-redux";
-import AppointmentTypes from "../../redux/types/appointmentTypes";
 import { TimePicker } from "@blueprintjs/datetime";
+import { DateInput2 } from "@blueprintjs/datetime2";
+import { Select2 } from "@blueprintjs/select";
+import { format, parse } from "date-fns";
+import { NextPage } from "next";
+import { useRouter } from "next/router";
+import { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import AppointmentTypes from "src/redux/types/appointmentTypes";
+import styles from "../../styles/pages/appointments/Create.module.css";
 
 const Create: NextPage = () => {
   const [dateValue, setDateValue] = useState<string | null>(null);
@@ -23,8 +23,7 @@ const Create: NextPage = () => {
     new Date("2020-01-01T00:00:00")
   );
   const [endTime, setEndTime] = useState<Date>(new Date("2020-01-01T00:00:00"));
-  const [item, setItem] = useState<string>("");
-  const [items, setItems] = useState<string[]>([]);
+  const [item, setItem] = useState<string>("Canned");
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -33,12 +32,21 @@ const Create: NextPage = () => {
     console.log("date: " + dateValue);
     console.log("start time: " + format(startTime, timeFnsFormat));
     console.log("end time: " + format(endTime, timeFnsFormat));
-    console.log("items: " + items);
+    console.log("item: " + item);
+    const start_time = new Date(
+      dateValue + "T" + format(startTime, timeFnsFormat)
+    );
+    const end_time = new Date(dateValue + "T" + format(endTime, timeFnsFormat));
+
+    dispatch({
+      type: AppointmentTypes.CREATE_APPOINTMENT,
+      payload: { item, start_time, end_time },
+    });
   };
 
   const handleDateChange = useCallback(setDateValue, []);
   const dateFnsFormat = "PPPP";
-  const timeFnsFormat = "p";
+  const timeFnsFormat = "HH:mm:ss";
   const formatDate = useCallback(
     (date: Date) => format(date, dateFnsFormat),
     []
@@ -49,28 +57,24 @@ const Create: NextPage = () => {
   );
 
   return (
-    <div className={requestStyles.requestContainer}>
+    <div className={styles.createContainer}>
       <Card
-        className={requestStyles.requestFormCard}
+        className={styles.createFormCard}
         interactive={false}
         elevation={Elevation.THREE}
       >
-        <div className={requestStyles.requestFormHeader}>
+        <div className={styles.createFormHeader}>
           <Icon icon="calendar" size={80} />
           <h1>Create an Appointment</h1>
         </div>
-        <div className={requestStyles.requestForm}>
+        <div>
           <FormGroup
             label="Appointment Type"
             labelInfo="(Required)"
             labelFor="tag-input"
           >
-            <MultiSelect2
+            <Select2
               items={["Canned", "Custom", "Rework"]}
-              onItemSelect={() => {}}
-              selectedItems={items}
-              tagRenderer={(item) => item}
-              activeItem={item}
               itemRenderer={(val, itemProps) => {
                 return (
                   <MenuItem
@@ -78,17 +82,19 @@ const Create: NextPage = () => {
                     text={val}
                     onClick={(elm) => {
                       setItem(elm.target.textContent);
-                      setItems((items) => {
-                        return [...items, elm.target.textContent];
-                      });
                     }}
                   />
                 );
               }}
-              onRemove={(item) => {
-                setItems((items) => items.filter((elm) => elm !== item));
-              }}
-            />
+              onItemSelect={() => {}}
+              filterable={false}
+            >
+              <Button
+                text={item}
+                rightIcon="caret-down"
+                className={styles.createSelectButton}
+              />
+            </Select2>
           </FormGroup>
           <FormGroup label="Appointment Date" labelInfo="(Required)">
             <DateInput2
@@ -102,7 +108,7 @@ const Create: NextPage = () => {
               highlightCurrentDay={true}
             />
           </FormGroup>
-          <div className={requestStyles.requestFormTime}>
+          <div className={styles.createFormTime}>
             <FormGroup label="Start Time" labelInfo="(Required)">
               <TimePicker
                 useAmPm={true}
@@ -117,11 +123,7 @@ const Create: NextPage = () => {
             </FormGroup>
           </div>
         </div>
-        <Button
-          intent="primary"
-          className={requestStyles.requestFormButton}
-          onClick={handleRequestSubmit}
-        >
+        <Button intent="primary" onClick={handleRequestSubmit}>
           Submit Appointment
         </Button>
       </Card>
