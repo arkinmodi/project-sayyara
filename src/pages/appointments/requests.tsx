@@ -17,7 +17,7 @@ const Requests: NextPage = () => {
 
   useEffect(() => {
     dispatch({ type: AppointmentTypes.READ_APPOINTMENTS });
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const pendingAppointments = appointments
@@ -32,7 +32,7 @@ const Requests: NextPage = () => {
         );
       });
     setPendingAppointments(pendingAppointments);
-  }, [appointments]);
+  }, [appointments, setPendingAppointments]);
 
   const handleAcceptButtonClick = (appointment: IAppointment): void => {
     const payload = { id: appointment.id, status: AppointmentStatus.ACCEPTED };
