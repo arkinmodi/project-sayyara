@@ -10,11 +10,11 @@ const appointmentHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  // const session = await getServerAuthSession({ req, res });
-  // if (!session) {
-  //   res.status(403).json({ message: "Forbidden." });
-  //   return;
-  // }
+  const session = await getServerAuthSession({ req, res });
+  if (!session) {
+    res.status(403).json({ message: "Forbidden." });
+    return;
+  }
 
   switch (req.method) {
     case "POST":
