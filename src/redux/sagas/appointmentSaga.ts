@@ -105,7 +105,7 @@ function postCreate(body: IPostCreateBody): Promise<boolean> {
   })
 }
 
-function* create(
+function* createAppointment(
   action: IAppointmentActionCreateAppointment
 ): Generator<CallEffect | PutEffect> {
   const payload = action.payload;
@@ -125,6 +125,6 @@ export function* appointmentSaga() {
   yield all([
     takeEvery(AppointmentTypes.SET_APPOINTMENT_STATUS, setAppointmentStatus),
     takeEvery(AppointmentTypes.READ_APPOINTMENTS, readAppointments),
-    takeEvery(AppointmentTypes.CREATE_APPOINTMENT, create),
+    takeEvery(AppointmentTypes.CREATE_APPOINTMENT, createAppointment),
   ]);
 }

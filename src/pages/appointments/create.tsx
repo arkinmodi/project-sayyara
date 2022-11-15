@@ -50,8 +50,6 @@ const Create: NextPage = () => {
       dateValue + "T" + format(endTimeValue, timeFnsFormat)
     ).toString();
 
-    console.log("Payload: " + serviceType + ", " + startTime + ", " + endTime);
-
     dispatch({
       type: AppointmentTypes.CREATE_APPOINTMENT,
       payload: { serviceType, startTime, endTime },
