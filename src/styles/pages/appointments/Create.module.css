@@ -1,0 +1,40 @@
+.createAppointmentContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: black;
+}
+
+.createAppointmentFormCard {
+    background-color: rgba(232, 232, 232, 0.3);
+    width: 50%;
+}
+
+.createAppointmentFormHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 5%;
+}
+
+.createAppointmentSelectButton {
+    width: 100%;
+    justify-content: space-between;
+}
+
+.createAppointmentFormTime {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+@media (max-width: 1000px) {
+    .createFormCard {
+        width: 80%;
+    }
+}
