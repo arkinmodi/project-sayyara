@@ -15,41 +15,50 @@ import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import AppointmentTypes from "src/redux/types/appointmentTypes";
+import { ServiceType } from "src/types/service";
 import styles from "../../styles/pages/appointments/Create.module.css";
+
+const mapServiceType = {
+  [ServiceType.CANNED]: "Canned",
+  [ServiceType.CUSTOM]: "Custom",
+  [ServiceType.REWORK]: "Rework",
+};
+
+const dateFnsFormat = "PPPP";
+const timeFnsFormat = "HH:mm:ss";
 
 const Create: NextPage = () => {
   const [dateValue, setDateValue] = useState<string | null>(null);
-  const [startTime, setStartTime] = useState<Date>(
+  const [startTimeValue, setStartTimeValue] = useState<Date>(
     new Date("2020-01-01T00:00:00")
   );
-  const [endTime, setEndTime] = useState<Date>(new Date("2020-01-01T00:00:00"));
-  const [serviceType, setServiceType] = useState<string>("Canned");
+  const [endTimeValue, setEndTimeValue] = useState<Date>(
+    new Date("2020-01-01T00:00:00")
+  );
+  const [serviceType, setServiceType] = useState<ServiceType>(
+    ServiceType.CANNED
+  );
 
   const dispatch = useDispatch();
   const router = useRouter();
 
   const handleRequestSubmit = (): void => {
-    const service_type = serviceType.toUpperCase();
-    const start_time = new Date(
-      dateValue + "T" + format(startTime, timeFnsFormat)
+    const startTime = new Date(
+      dateValue + "T" + format(startTimeValue, timeFnsFormat)
     ).toString();
-    const end_time = new Date(
-      dateValue + "T" + format(endTime, timeFnsFormat)
+    const endTime = new Date(
+      dateValue + "T" + format(endTimeValue, timeFnsFormat)
     ).toString();
 
-    console.log(
-      "Payload: " + service_type + ", " + start_time + ", " + end_time
-    );
+    console.log("Payload: " + serviceType + ", " + startTime + ", " + endTime);
 
     dispatch({
       type: AppointmentTypes.CREATE_APPOINTMENT,
-      payload: { service_type, start_time, end_time },
+      payload: { serviceType, startTime, endTime },
     });
   };
 
   const handleDateChange = useCallback(setDateValue, []);
-  const dateFnsFormat = "PPPP";
-  const timeFnsFormat = "HH:mm:ss";
   const formatDate = useCallback(
     (date: Date) => format(date, dateFnsFormat),
     []
@@ -60,13 +69,13 @@ const Create: NextPage = () => {
   );
 
   return (
-    <div className={styles.createContainer}>
+    <div className={styles.createAppointmentContainer}>
       <Card
-        className={styles.createFormCard}
+        className={styles.createAppointmentFormCard}
         interactive={false}
         elevation={Elevation.THREE}
       >
-        <div className={styles.createFormHeader}>
+        <div className={styles.createAppointmentFormHeader}>
           <Icon icon="calendar" size={80} />
           <h1>Create an Appointment</h1>
         </div>
@@ -77,14 +86,14 @@ const Create: NextPage = () => {
             labelFor="tag-input"
           >
             <Select2
-              items={["Canned", "Custom", "Rework"]}
-              itemRenderer={(val, itemProps) => {
+              items={Object.values(mapServiceType)}
+              itemRenderer={(val, _itemProps) => {
                 return (
                   <MenuItem
                     key={val}
                     text={val}
                     onClick={(elm) => {
-                      setServiceType(elm.target.textContent);
+                      setServiceType(elm.target.textContent.toUpperCase());
                     }}
                   />
                 );
@@ -93,9 +102,9 @@ const Create: NextPage = () => {
               filterable={false}
             >
               <Button
-                text={serviceType}
+                text={mapServiceType[serviceType]}
                 rightIcon="caret-down"
-                className={styles.createSelectButton}
+                className={styles.createAppointmentSelectButton}
               />
             </Select2>
           </FormGroup>
@@ -111,17 +120,17 @@ const Create: NextPage = () => {
               highlightCurrentDay={true}
             />
           </FormGroup>
-          <div className={styles.createFormTime}>
+          <div className={styles.createAppointmentFormTime}>
             <FormGroup label="Start Time" labelInfo="(Required)">
               <TimePicker
                 useAmPm={true}
-                onChange={(time) => setStartTime(time)}
+                onChange={(time) => setStartTimeValue(time)}
               />
             </FormGroup>
             <FormGroup label="End Time" labelInfo="(Required)">
               <TimePicker
                 useAmPm={true}
-                onChange={(time) => setEndTime(time)}
+                onChange={(time) => setEndTimeValue(time)}
               />
             </FormGroup>
           </div>

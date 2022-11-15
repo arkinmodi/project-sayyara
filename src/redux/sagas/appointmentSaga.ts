@@ -8,8 +8,15 @@ import {
   takeEvery,
 } from "redux-saga/effects";
 import { IAppointment } from "src/types/appointment";
+import { ServiceType } from "src/types/service";
 import { IAppointmentActionCreateAppointment, IAppointmentActionSetAppointmentStatus } from "../actions/appointmentAction";
 import AppointmentTypes from "../types/appointmentTypes";
+
+interface IPostCreateBody {
+  service_type: ServiceType;
+  start_time: string;
+  end_time: string;
+}
 
 function patchAppointmentStatus(
   content: IAppointmentActionSetAppointmentStatus["payload"]
@@ -81,7 +88,7 @@ function* readAppointments(): Generator<CallEffect | PutEffect> {
   });
 }
 
-function postCreate(body: IAppointmentActionCreateAppointment["payload"]): Promise<boolean> {
+function postCreate(body: IPostCreateBody): Promise<boolean> {
   return fetch("/api/appointment/", {
       method: "POST",
       headers: {
@@ -101,7 +108,14 @@ function postCreate(body: IAppointmentActionCreateAppointment["payload"]): Promi
 function* create(
   action: IAppointmentActionCreateAppointment
 ): Generator<CallEffect | PutEffect> {
-  yield call(postCreate, action.payload);
+  const payload = action.payload;
+  const body: IPostCreateBody = {
+    service_type: payload.serviceType,
+    start_time: payload.startTime,
+    end_time: payload.endTime,
+  }
+  console.log(body);
+  yield call(postCreate, body);
 }
 
 /**
