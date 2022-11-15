@@ -114,7 +114,6 @@ function* createAppointment(
     start_time: payload.startTime,
     end_time: payload.endTime,
   }
-  console.log(body);
   yield call(postCreate, body);
 }
 
