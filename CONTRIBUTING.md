@@ -212,6 +212,12 @@ To run just the integration test suite:
 npm run test:integration
 ```
 
+To get a combined code coverage report (unit tests and integration tests), run:
+
+```sh
+npm run test:coverage
+```
+
 ## Writing Docs
 
 The documentation is written in [LaTeX](https://www.latex-project.org/) and are located under the `docs` folder. Make changes to the `.tex` files. To build the LaTeX files into a pdf locally using Docker run:
