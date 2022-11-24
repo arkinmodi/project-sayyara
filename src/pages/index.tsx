@@ -6,7 +6,6 @@ import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
-  console.log("TEST");
 
   return (
     <div className={styles.container}>
