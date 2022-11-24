@@ -8,6 +8,7 @@ const Home: NextPage = () => {
   const { data: session } = useSession();
 
   console.log("TESTING");
+  console.log("TESTING AGAIN?");
 
   return (
     <div className={styles.container}>
