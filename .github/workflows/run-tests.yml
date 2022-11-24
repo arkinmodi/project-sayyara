@@ -45,3 +45,41 @@ jobs:
 
       - name: 🧪 Run Tests
         run: npx jest --group=unit --config=jest.unit.config.js
+
+  sys_tests:
+    name: 🧪 Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛎 Checkout
+        uses: actions/checkout@v3
+
+      - name: 💻 Setup Node
+        uses: actions/setup-node@v3.5.1
+        with:
+          node-version: "16"
+
+      - name: 💿 Cache Node Modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: "${{ runner.os }}-build-${{ env.cache-name }}\
+            -${{ hashFiles('**/package-lock.json') }}"
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: 🚧 Install Dependencies
+        run: npm ci
+
+      - name: 🗄️ Start MySQL Database
+        run: docker compose up -d --wait
+
+      - name: 📋 Apply Prisma Schema
+        run: npx prisma db push
+
+      - name: 🧪 Run Tests
+        run: npx jest --runInBand --group=integration --config=jest.integration.config.js
