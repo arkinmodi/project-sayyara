@@ -19,6 +19,7 @@ const customJestConfig = {
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
   verbose: true,
   collectCoverage: true,
+  collectCoverageFrom: ["./src/**"],
   clearMocks: true,
   runner: "groups",
   coveragePathIgnorePatterns: ["<rootDir>/test/mocks/"],

@@ -20,6 +20,7 @@ const customJestConfig = {
   setupFilesAfterEnv: ["<rootDir>/test/mocks/prismaMock.ts"],
   verbose: true,
   collectCoverage: true,
+  collectCoverageFrom: ["./src/**"],
   clearMocks: true,
   runner: "groups",
   coveragePathIgnorePatterns: ["<rootDir>/test/mocks/"],
