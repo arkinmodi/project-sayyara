@@ -2,16 +2,19 @@
 # TODO: Missing artifacts should be added to this file
 .PHONY:	SRS
 
-all:	SRS MG MIS PS VnVP VnVR DevP HazA Refl UGde
+all:	SRS MG MIS SystDes PS VnVP VnVR DevP HazA Refl UGde
 
 SRS:
 	cd SRS && make && cd ..
 
 MG:
-	cd Design/MG && make && cd ../..
+	cd Design/SoftArchitecture && make && cd ../..
 
 MIS:
-	cd Design/MIS && make && cd ../..
+	cd Design/SoftDetailedDes && make && cd ../..
+
+SystDes:
+	cd Design/SystDesign && make && cd ../..
 
 PS:
 	cd ProblemStatementAndGoals && make && cd ..
@@ -34,7 +37,7 @@ Refl:
 UGde:
 	cd UserGuide && make && cd ../..
 
-clean:	cleanSRS cleanMG cleanMIS cleanPS cleanVnVP cleanVnVR cleanDevP cleanHazA cleanRefl cleanUGde
+clean:	cleanSRS cleanMG cleanMIS cleanSystDes cleanPS cleanVnVP cleanVnVR cleanDevP cleanHazA cleanRefl cleanUGde
 
 cleanPS:
 	cd ProblemStatementAndGoals && make clean && cd ..
@@ -43,10 +46,13 @@ cleanSRS:
 	cd SRS && make clean && cd ..
 
 cleanMG:
-	cd Design/MG && make clean && cd ..
+	cd Design/SoftArchitecture && make clean && cd ..
 
 cleanMIS:
-	cd Design/MIS && make clean && cd ..
+	cd Design/SoftDetailedDes && make clean && cd ..
+
+cleanSystDes:
+	cd Design/SystDesign && make clean && cd ..
 
 cleanVnVP:
 	cd VnVPlan && make clean && cd ..
