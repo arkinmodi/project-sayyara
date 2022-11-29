@@ -4,14 +4,14 @@ on:
     branches:
       - main
     paths:
-    - src/**
-    - test/**
+      - src/**
+      - test/**
   push:
     branches:
       - main
     paths:
-    - src/**
-    - test/**
+      - src/**
+      - test/**
 
 jobs:
   app_tests:
@@ -24,7 +24,7 @@ jobs:
       - name: 💻 Setup Node
         uses: actions/setup-node@v3.5.1
         with:
-          node-version: '16'
+          node-version: "16"
 
       - name: 💿 Cache Node Modules
         uses: actions/cache@v3
@@ -78,6 +78,8 @@ jobs:
         run: docker compose up -d --wait
 
       - name: 📋 Apply Prisma Schema
+        env:
+          DATABASE_URL: mysql://root:password@localhost:3306/sayyara
         run: npx prisma db push
 
       - name: 🧪 Run Tests
