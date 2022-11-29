@@ -152,7 +152,7 @@ jobs:
 
       - name: 📝 Get Comment Body
         id: comment-body
-        run: cat code-coverage-results.md) >> $GITHUB_OUTPUT
+        run: cat code-coverage-results.md >> $GITHUB_OUTPUT
 
       - name: 📤 Add Coverage Commit Comment
         uses: peter-evans/commit-comment@v2
