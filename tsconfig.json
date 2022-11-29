@@ -19,6 +19,8 @@
     "paths": {
       "@server/*": ["src/server/*"],
       "@pages/*": ["src/pages/*"],
+      "@styles/*": ["src/styles/*"],
+      "@redux/*": ["src/redux/*"],
       "@test/*": ["test/*"]
     },
     "typeRoots": ["./node_modules/@types", "./src/types"]

@@ -1,4 +1,4 @@
-import { Appointment } from "@prisma/client";
+import { Appointment } from "@server/db/client";
 import {
   all,
   call,
@@ -9,7 +9,10 @@ import {
 } from "redux-saga/effects";
 import { IAppointment } from "src/types/appointment";
 import { ServiceType } from "src/types/service";
-import { IAppointmentActionCreateAppointment, IAppointmentActionSetAppointmentStatus } from "../actions/appointmentAction";
+import {
+  IAppointmentActionCreateAppointment,
+  IAppointmentActionSetAppointmentStatus,
+} from "../actions/appointmentAction";
 import AppointmentTypes from "../types/appointmentTypes";
 
 interface IPostCreateBody {
@@ -90,19 +93,19 @@ function* readAppointments(): Generator<CallEffect | PutEffect> {
 
 function postCreate(body: IPostCreateBody): Promise<boolean> {
   return fetch("/api/appointment/", {
-      method: "POST",
-      headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
   }).then((res) => {
-      if (res.status === 200) {
-          return true;
-      } else {
-          return false;
-      }
-  })
+    if (res.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  });
 }
 
 function* createAppointment(
@@ -113,7 +116,7 @@ function* createAppointment(
     service_type: payload.serviceType,
     start_time: payload.startTime,
     end_time: payload.endTime,
-  }
+  };
   yield call(postCreate, body);
 }
 
