@@ -42,8 +42,7 @@ const Home: NextPage = () => {
         <button onClick={() => signOut()}>Sign Out</button>
 
         <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.tsx</code>
+          Get started by editing pages/index.tsx
         </p>
 
         <div className={styles.grid}>
