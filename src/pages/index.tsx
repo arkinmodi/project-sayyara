@@ -23,10 +23,6 @@ const Home: NextPage = () => {
     );
   }
 
-  console.log("TESTING");
-  console.log("TESTING2");
-  console.log("TESTING3");
-
   return (
     <div className={styles.container}>
       <Head>
