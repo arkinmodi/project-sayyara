@@ -24,6 +24,7 @@ const Home: NextPage = () => {
   }
 
   console.log("TESTING");
+  console.log("TESTING");
 
   return (
     <div className={styles.container}>
