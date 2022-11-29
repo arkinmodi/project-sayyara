@@ -49,7 +49,7 @@ jobs:
     outputs:
       module_guide: ${{ steps.filter.outputs.module_guide }}
       module_interface_spec: ${{ steps.filter.outputs.module_interface_spec }}
-      system_design: ${{ steps.filter.system_design }}
+      system_design: ${{ steps.filter.outputs.system_design }}
       dev_plan: ${{ steps.filter.outputs.dev_plan }}
       hazard_analysis: ${{ steps.filter.outputs.hazard_analysis }}
       problem_statement: ${{ steps.filter.outputs.problem_statement }}
