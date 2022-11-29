@@ -17,9 +17,11 @@ env:
   COMMENTS_PATH: docs/Comments.tex
   COMMON_PATH: docs/Common.tex
   MG_FILENAME: MG.pdf
-  MG_DIR: docs/Design/MG
+  MG_DIR: docs/Design/SoftArchitecture
   MIS_FILENAME: MIS.pdf
-  MIS_DIR: docs/Design/MIS
+  MIS_DIR: docs/Design/SoftDetailedDes
+  SYSTDES_FILENAME: SystDes.pdf
+  SYSTDES_DIR: docs/Design/SystDesign
   DEVP_FILENAME: DevelopmentPlan.pdf
   DEVP_DIR: docs/DevelopmentPlan
   HAZA_FILENAME: HazardAnalysis.pdf
@@ -47,6 +49,7 @@ jobs:
     outputs:
       module_guide: ${{ steps.filter.outputs.module_guide }}
       module_interface_spec: ${{ steps.filter.outputs.module_interface_spec }}
+      system_design: ${{ steps.filter.outputs.system_design }}
       dev_plan: ${{ steps.filter.outputs.dev_plan }}
       hazard_analysis: ${{ steps.filter.outputs.hazard_analysis }}
       problem_statement: ${{ steps.filter.outputs.problem_statement }}
@@ -75,6 +78,9 @@ jobs:
             module_interface_spec:
               - *common
               - '${{ env.MIS_DIR }}/**'
+            system_design:
+              - *common
+              - '${{ env.SYSTDES_DIR }}/**'
             dev_plan:
               - *common
               - '${{ env.DEVP_DIR }}/**'
@@ -147,6 +153,29 @@ jobs:
         with:
           name: ${{ env.MIS_FILENAME }}
           path: "${{ env.MIS_DIR }}/${{ env.MIS_FILENAME }}"
+
+  build_system_design:
+    name: 🏗 Build System Design
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.system_design == 'true' }}
+    steps:
+      - name: 🛎 Checkout
+        uses: actions/checkout@v3
+
+      - name: 👷 Build LaTeX PDF
+        uses: xu-cheng/texlive-action/full@v1
+        with:
+          run: |
+            apk add --update-cache make
+            cd docs
+            make SystDes
+
+      - name: 💾 Save LaTeX PDF
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.SYSTDES_FILENAME }}
+          path: "${{ env.SYSTDES_DIR }}/${{ env.SYSTDES_FILENAME }}"
 
   build_dev_plan:
     name: 🏗 Build Development Plan
@@ -338,6 +367,7 @@ jobs:
       - changes
       - build_module_guide
       - build_module_interface_spec
+      - build_system_design
       - build_dev_plan
       - build_hazard_analysis
       - build_problem_statement
@@ -360,16 +390,17 @@ jobs:
 
       - name: 🚧 Move PDFs To Correct Directory
         run: |
-          [ ! -e "$MG_FILENAME/$MG_FILENAME" ]      || mv -v "$MG_FILENAME/$MG_FILENAME" "$MG_DIR/$MG_FILENAME"
-          [ ! -e "$MIS_FILENAME/$MIS_FILENAME" ]    || mv -v "$MIS_FILENAME/$MIS_FILENAME" "$MIS_DIR/$MIS_FILENAME"
-          [ ! -e "$DEVP_FILENAME/$DEVP_FILENAME" ]  || mv -v "$DEVP_FILENAME/$DEVP_FILENAME" "$DEVP_DIR/$DEVP_FILENAME"
-          [ ! -e "$HAZA_FILENAME/$HAZA_FILENAME" ]  || mv -v "$HAZA_FILENAME/$HAZA_FILENAME" "$HAZA_DIR/$HAZA_FILENAME"
-          [ ! -e "$PS_FILENAME/$PS_FILENAME" ]      || mv -v "$PS_FILENAME/$PS_FILENAME" "$PS_DIR/$PS_FILENAME"
-          [ ! -e "$REFL_FILENAME/$REFL_FILENAME" ]  || mv -v "$REFL_FILENAME/$REFL_FILENAME" "$REFL_DIR/$REFL_FILENAME"
-          [ ! -e "$SRS_FILENAME/$SRS_FILENAME" ]    || mv -v "$SRS_FILENAME/$SRS_FILENAME" "$SRS_DIR/$SRS_FILENAME"
-          [ ! -e "$UGDE_FILENAME/$UGDE_FILENAME" ]  || mv -v "$UGDE_FILENAME/$UGDE_FILENAME" "$UGDE_DIR/$UGDE_FILENAME"
-          [ ! -e "$VNVP_FILENAME/$VNVP_FILENAME" ]  || mv -v "$VNVP_FILENAME/$VNVP_FILENAME" "$VNVP_DIR/$VNVP_FILENAME"
-          [ ! -e "$VNVR_FILENAME/$VNVR_FILENAME" ]  || mv -v "$VNVR_FILENAME/$VNVR_FILENAME" "$VNVR_DIR/$VNVR_FILENAME"
+          [ ! -e "$MG_FILENAME/$MG_FILENAME" ]            || mv -v "$MG_FILENAME/$MG_FILENAME" "$MG_DIR/$MG_FILENAME"
+          [ ! -e "$MIS_FILENAME/$MIS_FILENAME" ]          || mv -v "$MIS_FILENAME/$MIS_FILENAME" "$MIS_DIR/$MIS_FILENAME"
+          [ ! -e "$SYSTDES_FILENAME/$SYSTDES_FILENAME" ]  || mv -v "$SYSTDES_FILENAME/$SYSTDES_FILENAME" "$SYSTDES_DIR/$SYSTDES_FILENAME"
+          [ ! -e "$DEVP_FILENAME/$DEVP_FILENAME" ]        || mv -v "$DEVP_FILENAME/$DEVP_FILENAME" "$DEVP_DIR/$DEVP_FILENAME"
+          [ ! -e "$HAZA_FILENAME/$HAZA_FILENAME" ]        || mv -v "$HAZA_FILENAME/$HAZA_FILENAME" "$HAZA_DIR/$HAZA_FILENAME"
+          [ ! -e "$PS_FILENAME/$PS_FILENAME" ]            || mv -v "$PS_FILENAME/$PS_FILENAME" "$PS_DIR/$PS_FILENAME"
+          [ ! -e "$REFL_FILENAME/$REFL_FILENAME" ]        || mv -v "$REFL_FILENAME/$REFL_FILENAME" "$REFL_DIR/$REFL_FILENAME"
+          [ ! -e "$SRS_FILENAME/$SRS_FILENAME" ]          || mv -v "$SRS_FILENAME/$SRS_FILENAME" "$SRS_DIR/$SRS_FILENAME"
+          [ ! -e "$UGDE_FILENAME/$UGDE_FILENAME" ]        || mv -v "$UGDE_FILENAME/$UGDE_FILENAME" "$UGDE_DIR/$UGDE_FILENAME"
+          [ ! -e "$VNVP_FILENAME/$VNVP_FILENAME" ]        || mv -v "$VNVP_FILENAME/$VNVP_FILENAME" "$VNVP_DIR/$VNVP_FILENAME"
+          [ ! -e "$VNVR_FILENAME/$VNVR_FILENAME" ]        || mv -v "$VNVR_FILENAME/$VNVR_FILENAME" "$VNVR_DIR/$VNVR_FILENAME"
 
       - name: 🚀 Add & Commit
         run: |
