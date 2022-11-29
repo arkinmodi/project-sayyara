@@ -153,8 +153,8 @@ jobs:
       - name: 📝 Get Comment Body
         id: comment-body
         run: |
-          echo -e "# Code Coverage Report\n$(cat code-coverage-results.md)" > code-coverage-results.md
-          body="$(cat code-coverage-results.md)"
+          echo -e "# Code Coverage Report\n$(cat code-coverage-results.md)" > code-coverage-results-with-title.md
+          body="$(cat code-coverage-results-with-title.md)"
           delimiter="$(openssl rand -hex 8)"
           echo "body<<$delimiter" >> $GITHUB_OUTPUT
           echo "$body" >> $GITHUB_OUTPUT
