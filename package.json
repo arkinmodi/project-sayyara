@@ -14,7 +14,7 @@
     "db:studio": "prisma studio",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "jest --group=unit --config=jest.unit.config.js",
-    "test:integration": "npm run db:push && jest --runInBand --group=integration --config=jest.integration.config.js",
+    "test:integration": "npm run docker:up && npm run db:push && jest --runInBand --group=integration --config=jest.integration.config.js",
     "test:coverage": "npm run test && npm run test:coverage:report",
     "test:coverage:report": "rm -rf coverage && mkdir coverage && cp coverage-integration/coverage-final.json coverage/coverage-integration.json && cp coverage-unit/coverage-final.json coverage/coverage-unit.json && nyc report --temp-dir coverage --reporter html",
     "lint": "npm run lint:latex && npm run lint:types && npm run lint:prettier && npm run lint:eslint",
@@ -22,7 +22,7 @@
     "lint:prettier": "prettier --write '**/*.{ts,tsx,json,js,mjs}'",
     "lint:latex": "latexindent -silent -local -modifylinebreaks -overwrite docs/**/*.tex",
     "lint:types": "tsc --project ./tsconfig.json",
-    "docker:up": "docker compose up -d",
+    "docker:up": "docker compose up -d --wait",
     "docker:down": "docker compose down"
   },
   "dependencies": {
