@@ -227,16 +227,17 @@ The documentation is written in [LaTeX](https://www.latex-project.org/) and are 
 npm run build:docs
 
 # Build a specific doc
-npm run build:docs -- PS    # Problem Statement and Goals
-npm run build:docs -- DevP  # Development Plan
-npm run build:docs -- SRS   # Software Requirements Specification
-npm run build:docs -- HazA  # Hazard Analysis
-npm run build:docs -- VnVP  # Verification and Validation Plan
-npm run build:docs -- MG    # Design/MG   Module Guide
-npm run build:docs -- MIS   # Design/MIS  Module Interface Specification
-npm run build:docs -- VnVR  # Verification and Validation Report
-npm run build:docs -- UGde  # User Guide
-npm run build:docs -- Refl  # Reflection Report
+npm run build:docs -- PS      # Problem Statement and Goals
+npm run build:docs -- DevP    # Development Plan
+npm run build:docs -- SRS     # Software Requirements Specification
+npm run build:docs -- HazA    # Hazard Analysis
+npm run build:docs -- VnVP    # Verification and Validation Plan
+npm run build:docs -- MG      # Design/SoftArchitecture   Module Guide
+npm run build:docs -- MIS     # Design/SoftDetailedDes  Module Interface Specification
+npm run build:docs -- SystDes # Design/SystDesign  System Design
+npm run build:docs -- VnVR    # Verification and Validation Report
+npm run build:docs -- UGde    # User Guide
+npm run build:docs -- Refl    # Reflection Report
 ```
 
 Upon opening of a pull request, the [GitHub Action](https://github.com/features/actions) pipeline will build the PDF. It is not required for you to commit a built PDF as part of your PR as the main branch pipeline will create one for you.

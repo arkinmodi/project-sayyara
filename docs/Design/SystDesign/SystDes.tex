@@ -1,0 +1,114 @@
+\documentclass[12pt, titlepage]{article}
+
+\usepackage{fullpage}
+\usepackage[round]{natbib}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=black,
+    linkcolor=red,
+    urlcolor=blue
+}
+
+\input{../../Comments}
+\input{../../Common}
+
+\newcounter{acnum}
+\newcommand{\actheacnum}{AC\theacnum}
+\newcommand{\acref}[1]{AC\ref{#1}}
+
+\newcounter{ucnum}
+\newcommand{\uctheucnum}{UC\theucnum}
+\newcommand{\uref}[1]{UC\ref{#1}}
+
+\newcounter{mnum}
+\newcommand{\mthemnum}{M\themnum}
+\newcommand{\mref}[1]{M\ref{#1}}
+
+\begin{document}
+
+\title{System Design for \progname{}}
+\author{\authname}
+\date{\today}
+
+\maketitle
+
+\pagenumbering{roman}
+
+\section{Revision History}
+
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
+	\toprule {\bf Date} & {\bf Version} & {\bf Notes} \\
+	\midrule
+	Date 1              & 1.0           & Notes       \\
+	Date 2              & 1.1           & Notes       \\
+	\bottomrule
+\end{tabularx}
+
+\newpage
+
+\section{Reference Material}
+
+This section records information for easy reference.
+
+\subsection{Abbreviations and Acronyms}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l l}
+	\toprule
+	\textbf{symbol} & \textbf{description}        \\
+	\midrule
+	\progname       & Explanation of program name \\
+	\wss{...}       & \wss{...}                   \\
+	\bottomrule
+\end{tabular}\\
+
+\newpage
+
+\tableofcontents
+
+\listoftables
+
+\listoffigures
+
+\newpage
+
+\pagenumbering{arabic}
+
+\section{Introduction}
+
+\section{Connection Between Requirements and Design} \label{SecConnection}
+
+The design of the system is intended to satisfy the requirements developed in the SRS. In this
+stage, the system is decomposed into modules and potentially hardware.
+
+\wss{The intention of this section is to document decisions that are made
+	``between'' the requirements and the design.  To satisfy some requirements,
+	design decisions need to be made.  Rather than make these decisions implicit,
+	they are explicitly recorded here.  For instance, if a program has security
+	requirements, a specific design decision may be made to satisfy those
+	requirements with a password.  In scientific examples, the choice of algorithm
+	could potentially go here, if that is a decision that is exposed by the
+	interface.}
+
+% \bibliographystyle {plainnat}
+% \bibliography{../../../refs/References}
+
+\newpage{}
+\section*{Appendix --- Reflection}
+
+The information in this section will be used to evaluate the team members on the graduate attribute
+of Lifelong Learning. Please answer the following questions:
+
+\begin{enumerate}
+	\item
+	\item
+\end{enumerate}
+
+\end{document}
