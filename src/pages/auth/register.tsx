@@ -1,12 +1,3 @@
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  Elevation,
-  FormGroup,
-  Icon,
-  InputGroup,
-} from "@blueprintjs/core";
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import {
   GetServerSideProps,
@@ -15,6 +6,9 @@ import {
 } from "next";
 import { getCsrfToken } from "next-auth/react";
 import { useRouter } from "next/router";
+import { Button } from "primereact/button";
+import { Card } from "primereact/card";
+import { InputText } from "primereact/inputtext";
 import { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import AuthTypes from "src/redux/types/authTypes";
@@ -86,101 +80,74 @@ const Register: NextPage = ({
 
   return (
     <div className={authStyles.authContainer}>
-      <Card
-        className={authStyles.authFormCard}
-        interactive={false}
-        elevation={Elevation.THREE}
-      >
+      <Card className={authStyles.authFormCard}>
         <div className={authStyles.authFormCardHeader}>
-          <Icon icon="user" size={80} />
+          <i className="pi pi-user-plus" style={{ fontSize: "2em" }} />
           <h1>Sign Up</h1>
         </div>
         <div className={authStyles.authForm}>
-          {/* <RadioGroup
-            label="Account Type"
-            onChange={handleAccountTypeChange}
-            selectedValue={accountType}
-          >
-            <Radio label="Customer" value={0} />
-            <Radio label="Shop Owner" value={1} />
-            <Radio label="Employee" value={2} />
-          </RadioGroup> */}
-          <FormGroup
-            label="Email"
-            labelFor="authSignUpFormEmailInput"
-            labelInfo="(Required)"
-          >
-            <InputGroup
-              id="authSignUpFormEmailInput"
-              placeholder="Email"
-              className={authStyles.authFormInput}
-              value={formValues.email}
-              onChange={handleInputChange}
-              name="email"
-            />
-          </FormGroup>
-          <FormGroup
-            label="Password"
-            labelFor="authSignUpFormPasswordInput"
-            labelInfo="(Required)"
-          >
-            <InputGroup
-              id="authSignUpFormPasswordInput"
-              type="password"
-              className={authStyles.authFormInput}
-              placeholder="Password"
-              value={formValues.password}
-              onChange={handleInputChange}
-              name="password"
-            />
-          </FormGroup>
-          <FormGroup
-            label="First Name"
-            labelFor="authSignUpFormFirstNameInput"
-            labelInfo="(Required)"
-          >
-            <InputGroup
-              id="authSignUpFormFirstNameInput"
-              type="text"
-              className={authStyles.authFormInput}
-              placeholder="First Name"
-              value={formValues.firstName}
-              onChange={handleInputChange}
-              name="firstName"
-            />
-          </FormGroup>
-          <FormGroup
-            label="Last Name"
-            labelFor="authSignUpFormLastNameInput"
-            labelInfo="(Required)"
-          >
-            <InputGroup
-              id="authSignUpFormLastNameInput"
-              type="text"
-              className={authStyles.authFormInput}
-              placeholder="Last Name"
-              value={formValues.lastName}
-              onChange={handleInputChange}
-              name="lastName"
-            />
-          </FormGroup>
-          <ButtonGroup className={authStyles.authFormButtonGroup}>
+          <label htmlFor="authSignUpFormEmailInput">Email (Required)</label>
+          <br />
+          <InputText
+            id="authSignUpFormEmailInput"
+            placeholder="Email"
+            className={authStyles.authFormInput}
+            value={formValues.email}
+            onChange={handleInputChange}
+            name="email"
+          />
+          <br />
+          <label htmlFor="authSignUpFormPasswordInput">
+            Password (Required)
+          </label>
+          <br />
+          <InputText
+            id="authSignUpFormPasswordInput"
+            type="password"
+            className={authStyles.authFormInput}
+            placeholder="Password"
+            value={formValues.password}
+            onChange={handleInputChange}
+            name="password"
+          />
+          <br />
+          <label htmlFor="authSignUpFormFirstNameInput">
+            First Name (Required)
+          </label>
+          <br />
+          <InputText
+            id="authSignUpFormFirstNameInput"
+            className={authStyles.authFormInput}
+            placeholder="First Name"
+            value={formValues.firstName}
+            onChange={handleInputChange}
+            name="firstName"
+          />
+          <br />
+          <label htmlFor="authSignUpFormLastNameInput">
+            Last Name (Required)
+          </label>
+          <br />
+          <InputText
+            id="authSignUpFormLastNameInput"
+            className={authStyles.authFormInput}
+            placeholder="Last Name"
+            value={formValues.lastName}
+            onChange={handleInputChange}
+            name="lastName"
+          />
+          <div className={authStyles.authFormButtonGroup}>
             <Button
-              intent="primary"
+              label="Sign Up"
               className={authStyles.authFormButton}
               onClick={handleSignUpButtonClick}
-            >
-              Sign Up
-            </Button>
+            />
             <Button
-              intent="primary"
-              className={authStyles.authFormButton}
-              minimal
+              label="Login"
+              className={`${authStyles.authFormButton} p-button-text`}
               onClick={handleLoginButtonClick}
-            >
-              Login
-            </Button>
-          </ButtonGroup>
+            />
+          </div>
         </div>
       </Card>
     </div>

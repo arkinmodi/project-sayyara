@@ -2,10 +2,26 @@ import type { NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
+import { ProgressSpinner } from "primereact/progressspinner";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession({ required: true });
+
+  if (status === "loading" || !session) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <ProgressSpinner />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -21,13 +37,12 @@ const Home: NextPage = () => {
         </h1>
 
         <p className={styles.description}>
-          Hello {session?.user.firstName}! You are a {session?.user.type}!
+          Hello {session.user.firstName}! You are a {session.user.type}!
         </p>
         <button onClick={() => signOut()}>Sign Out</button>
 
         <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.tsx</code>
+          Get started by editing pages/index.tsx
         </p>
 
         <div className={styles.grid}>
