@@ -73,7 +73,7 @@ describe("create user", () => {
       prismaMock.employee.create.mockRejectedValue(
         new PrismaClientKnownRequestError(
           "Unique constraint failed on the constraint: `User_email_key`",
-          { code: "P2002", clientVersion: "4.4.0" }
+          { code: "P2002", clientVersion: "4.7.0" }
         )
       );
 
