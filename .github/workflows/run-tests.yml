@@ -49,6 +49,8 @@ jobs:
   sys_tests:
     name: 🧪 Integration Tests
     runs-on: ubuntu-latest
+    env:
+          DATABASE_URL: mysql://root:password@localhost:3306/sayyara
     steps:
       - name: 🛎 Checkout
         uses: actions/checkout@v3
@@ -78,8 +80,6 @@ jobs:
         run: docker compose up -d --wait
 
       - name: 📋 Apply Prisma Schema
-        env:
-          DATABASE_URL: mysql://root:password@localhost:3306/sayyara
         run: npx prisma db push
 
       - name: 🧪 Run Tests
