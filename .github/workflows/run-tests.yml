@@ -153,13 +153,12 @@ jobs:
       - name: 📝 Get Comment Body
         id: comment-body
         run: |
-          ls -la
+          echo -e "# Code Coverage Report\n$(cat code-coverage-results.md)" > code-coverage-results.md
           body="$(cat code-coverage-results.md)"
           delimiter="$(openssl rand -hex 8)"
           echo "body<<$delimiter" >> $GITHUB_OUTPUT
           echo "$body" >> $GITHUB_OUTPUT
           echo "$delimiter" >> $GITHUB_OUTPUT
-        # cat code-coverage-results.md >> $GITHUB_OUTPUT
 
       - name: 📤 Add Coverage Commit Comment
         uses: peter-evans/commit-comment@v2
