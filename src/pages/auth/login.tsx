@@ -1,12 +1,4 @@
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  Elevation,
-  FormGroup,
-  Icon,
-  InputGroup,
-} from "@blueprintjs/core";
+import AuthTypes from "@redux/types/authTypes";
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import {
   GetServerSideProps,
@@ -15,9 +7,11 @@ import {
 } from "next";
 import { getCsrfToken } from "next-auth/react";
 import { useRouter } from "next/router";
+import { Button } from "primereact/button";
+import { Card } from "primereact/card";
+import { InputText } from "primereact/inputtext";
 import { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-import AuthTypes from "../../redux/types/authTypes";
 import authStyles from "../../styles/pages/auth/Auth.module.css";
 
 interface ILoginFormValues {
@@ -66,62 +60,48 @@ const Login: NextPage = ({
 
   return (
     <div className={authStyles.authContainer}>
-      <Card
-        className={authStyles.authFormCard}
-        interactive={false}
-        elevation={Elevation.THREE}
-      >
+      <Card className={authStyles.authFormCard}>
         <div className={authStyles.authFormCardHeader}>
-          <Icon icon="user" size={80} />
+          <i className="pi pi-user" style={{ fontSize: "2em" }} />
           <h1>Login</h1>
         </div>
         <div className={authStyles.authForm}>
-          <FormGroup
-            label="Email"
-            labelFor="authLoginFormEmailInput"
-            labelInfo="(Required)"
-          >
-            <InputGroup
-              id="authLoginFormEmailInput"
-              placeholder="Email"
-              className={authStyles.authFormInput}
-              value={formValues.email}
-              onChange={handleInputChange}
-              name="email"
-            />
-          </FormGroup>
-          <FormGroup
-            label="Password"
-            labelFor="authLoginFormPasswordInput"
-            labelInfo="(Required)"
-          >
-            <InputGroup
-              id="authLoginFormPasswordInput"
-              type="password"
-              placeholder="Password"
-              className={authStyles.authFormInput}
-              value={formValues.password}
-              onChange={handleInputChange}
-              name="password"
-            />
-          </FormGroup>
-          <ButtonGroup className={authStyles.authFormButtonGroup}>
+          <label htmlFor="authLoginFormEmailInput">Email (Required)</label>
+          <br />
+          <InputText
+            id="authLoginFormEmailInput"
+            className={authStyles.authFormInput}
+            value={formValues.email}
+            onChange={handleInputChange}
+            name="email"
+            placeholder="Email"
+          />
+          <br />
+          <label htmlFor="authLoginFormPasswordInput">
+            Password (Required)
+          </label>
+          <br />
+          <InputText
+            id="authLoginFormPasswordInput"
+            type="password"
+            placeholder="Password"
+            className={authStyles.authFormInput}
+            value={formValues.password}
+            onChange={handleInputChange}
+            name="password"
+          />
+          <div className={authStyles.authFormButtonGroup}>
             <Button
-              intent="primary"
+              label="Login"
               className={authStyles.authFormButton}
               onClick={handleLoginButtonClick}
-            >
-              Login
-            </Button>
+            />
             <Button
-              intent="primary"
+              label="Sign Up"
               className={authStyles.authFormButton}
-              minimal
               onClick={handleSignUpButtonClick}
-            >
-              Sign Up
-            </Button>
-          </ButtonGroup>
+            />
+          </div>
         </div>
       </Card>
     </div>

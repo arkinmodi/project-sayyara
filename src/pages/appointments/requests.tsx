@@ -1,10 +1,11 @@
-import { Button, Card } from "@blueprintjs/core";
+import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
+import AppointmentTypes from "@redux/types/appointmentTypes";
+import styles from "@styles/pages/appointments/Requests.module.css";
 import { NextPage } from "next";
+import { Button } from "primereact/button";
+import { Card } from "primereact/card";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppointmentSelectors } from "src/redux/selectors/appointmentSelectors";
-import AppointmentTypes from "src/redux/types/appointmentTypes";
-import styles from "../../styles/pages/appointments/Requests.module.css";
 import { AppointmentStatus, IAppointment } from "../../types/appointment";
 
 const Requests: NextPage = () => {
@@ -58,12 +59,10 @@ const Requests: NextPage = () => {
                 {String(new Date(appointment.endTime).toLocaleString())}
               </div>
               <Button
+                label="Accept"
                 className={styles.appointmentRequestsAcceptButton}
-                intent="primary"
                 onClick={() => handleAcceptButtonClick(appointment)}
-              >
-                Accept
-              </Button>
+              />
             </Card>
           ))
         ) : (

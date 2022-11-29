@@ -1,141 +1,96 @@
-import {
-  Button,
-  Card,
-  Elevation,
-  FormGroup,
-  Icon,
-  MenuItem,
-} from "@blueprintjs/core";
-import { TimePicker } from "@blueprintjs/datetime";
-import { DateInput2 } from "@blueprintjs/datetime2";
-import { Select2 } from "@blueprintjs/select";
-import { format, parse } from "date-fns";
+import AppointmentTypes from "@redux/types/appointmentTypes";
+import styles from "@styles/pages/appointments/Create.module.css";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { Button } from "primereact/button";
+import { Calendar } from "primereact/calendar";
+import { Card } from "primereact/card";
+import { Dropdown } from "primereact/dropdown";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import AppointmentTypes from "src/redux/types/appointmentTypes";
 import { ServiceType } from "src/types/service";
-import styles from "../../styles/pages/appointments/Create.module.css";
-
-const mapServiceType = {
-  [ServiceType.CANNED]: "Canned",
-  [ServiceType.CUSTOM]: "Custom",
-  [ServiceType.REWORK]: "Rework",
-};
-
-const dateFnsFormat = "PPPP";
-const timeFnsFormat = "HH:mm:ss";
 
 const Create: NextPage = () => {
-  const [dateValue, setDateValue] = useState<string | null>(null);
-  const [startTimeValue, setStartTimeValue] = useState<Date>(
-    new Date("2020-01-01T00:00:00")
-  );
-  const [endTimeValue, setEndTimeValue] = useState<Date>(
-    new Date("2020-01-01T00:00:00")
-  );
+  const [date, setDate] = useState<Date>(new Date());
+  const [startTime, setStartTime] = useState<Date>(new Date());
+  const [endTime, setEndTime] = useState<Date>(new Date());
   const [serviceType, setServiceType] = useState<ServiceType>(
     ServiceType.CANNED
   );
 
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const handleRequestSubmit = (): void => {
-    const startTime = new Date(
-      dateValue + "T" + format(startTimeValue, timeFnsFormat)
+    const startDate = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      startTime.getHours(),
+      startTime.getMinutes(),
+      startTime.getSeconds()
     ).toString();
-    const endTime = new Date(
-      dateValue + "T" + format(endTimeValue, timeFnsFormat)
+    const endDate = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      endTime.getHours(),
+      endTime.getMinutes(),
+      endTime.getSeconds()
     ).toString();
 
     dispatch({
       type: AppointmentTypes.CREATE_APPOINTMENT,
-      payload: { serviceType, startTime, endTime },
+      payload: { serviceType, startTime: startDate, endTime: endDate },
     });
   };
 
-  const handleDateChange = useCallback(setDateValue, []);
-  const formatDate = useCallback(
-    (date: Date) => format(date, dateFnsFormat),
-    []
-  );
-  const parseDate = useCallback(
-    (str: string) => parse(str, dateFnsFormat, new Date()),
-    []
-  );
-
   return (
     <div className={styles.createAppointmentContainer}>
-      <Card
-        className={styles.createAppointmentFormCard}
-        interactive={false}
-        elevation={Elevation.THREE}
-      >
+      <Card className={styles.createAppointmentFormCard}>
         <div className={styles.createAppointmentFormHeader}>
-          <Icon icon="calendar" size={80} />
+          <i className="pi pi-calendar-plus" style={{ fontSize: "2em" }} />
           <h1>Create an Appointment</h1>
         </div>
         <div>
-          <FormGroup
-            label="Appointment Type"
-            labelInfo="(Required)"
-            labelFor="tag-input"
-          >
-            <Select2
-              items={Object.values(mapServiceType)}
-              itemRenderer={(val, _itemProps) => {
-                return (
-                  <MenuItem
-                    key={val}
-                    text={val}
-                    onClick={(elm) => {
-                      setServiceType(elm.target.textContent.toUpperCase());
-                    }}
-                  />
-                );
-              }}
-              onItemSelect={() => {}}
-              filterable={false}
-            >
-              <Button
-                text={mapServiceType[serviceType]}
-                rightIcon="caret-down"
-                className={styles.createAppointmentSelectButton}
-              />
-            </Select2>
-          </FormGroup>
-          <FormGroup label="Appointment Date" labelInfo="(Required)">
-            <DateInput2
-              formatDate={formatDate}
-              onChange={(newDate: string | null) => {
-                handleDateChange(newDate);
-              }}
-              parseDate={parseDate}
-              placeholder={"Select a date"}
-              value={dateValue}
-              highlightCurrentDay={true}
+          <div>
+            <h4>Appointment Type (Required)</h4>
+            <Dropdown
+              value={serviceType}
+              placeholder={serviceType}
+              options={[
+                ServiceType.CANNED,
+                ServiceType.CUSTOM,
+                ServiceType.REWORK,
+              ]}
+              onChange={(e) => setServiceType(e.value)}
             />
-          </FormGroup>
-          <div className={styles.createAppointmentFormTime}>
-            <FormGroup label="Start Time" labelInfo="(Required)">
-              <TimePicker
-                useAmPm={true}
-                onChange={(time) => setStartTimeValue(time)}
-              />
-            </FormGroup>
-            <FormGroup label="End Time" labelInfo="(Required)">
-              <TimePicker
-                useAmPm={true}
-                onChange={(time) => setEndTimeValue(time)}
-              />
-            </FormGroup>
+          </div>
+          <div>
+            <h4>Appointment Date (Required)</h4>
+            <Calendar
+              value={date}
+              onChange={(e) => setDate(e.value as Date)} // TODO: proper typing
+            />
+          </div>
+          <div>
+            <h4>Start Time (Required)</h4>
+            <Calendar
+              timeOnly
+              hourFormat="12"
+              value={startTime}
+              onChange={(e) => setStartTime(e.value as Date)}
+            />
+          </div>
+          <div>
+            <h4>End Time (Required)</h4>
+            <Calendar
+              timeOnly
+              hourFormat="12"
+              value={endTime}
+              onChange={(e) => setEndTime(e.value as Date)}
+            />
           </div>
         </div>
-        <Button intent="primary" onClick={handleRequestSubmit}>
-          Submit Appointment
-        </Button>
+        <Button label="Submit Appointment" onClick={handleRequestSubmit} />
       </Card>
     </div>
   );

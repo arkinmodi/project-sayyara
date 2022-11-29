@@ -1,5 +1,5 @@
 export enum ServiceType {
-    CANNED = "CANNED",
-    CUSTOM = "CUSTOM",
-    REWORK = "REWORK",
+  CANNED = "CANNED",
+  CUSTOM = "CUSTOM",
+  REWORK = "REWORK",
 }

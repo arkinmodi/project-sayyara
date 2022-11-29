@@ -21,9 +21,9 @@ export interface IAppointmentActionSetAppointments
   payload: { appointments: IAppointment[] };
 }
 
-export interface IAppointmentActionCreateAppointment 
+export interface IAppointmentActionCreateAppointment
   extends IAppointmentActionBase {
-  payload: { serviceType: ServiceType; startTime: string; endTime: string}
+  payload: { serviceType: ServiceType; startTime: string; endTime: string };
 }
 
 export type IAppointmentAction =
@@ -49,7 +49,9 @@ export const setAppointmentsStatus = (payload: AppointmentStatus) => ({
   payload,
 });
 
-export const createAppointment = (payload: IAppointmentActionCreateAppointment["payload"]) => ({
+export const createAppointment = (
+  payload: IAppointmentActionCreateAppointment["payload"]
+) => ({
   type: AppointmentTypes.CREATE_APPOINTMENT,
   payload,
-})
+});
