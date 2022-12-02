@@ -14,13 +14,13 @@
     "db:studio": "prisma studio",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "jest --group=unit --config=jest.unit.config.js",
-    "test:integration": "npm run db:push && jest --runInBand --group=integration --config=jest.integration.config.js",
+    "test:integration": "npm run docker:up && npm run db:push && jest --runInBand --group=integration --config=jest.integration.config.js",
     "lint": "npm run lint:latex && npm run lint:types && npm run lint:prettier && npm run lint:eslint",
     "lint:eslint": "next lint",
     "lint:prettier": "prettier --write '**/*.{ts,tsx,json,js,mjs}'",
     "lint:latex": "latexindent -silent -local -modifylinebreaks -overwrite docs/**/*.tex",
     "lint:types": "tsc --project ./tsconfig.json",
-    "docker:up": "docker compose up -d",
+    "docker:up": "docker compose up -d --wait",
     "docker:down": "docker compose down"
   },
   "dependencies": {
