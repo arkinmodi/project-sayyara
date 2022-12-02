@@ -6,12 +6,16 @@ on:
     paths:
       - src/**
       - test/**
+      - package.json
+      - package-lock.json
   push:
     branches:
       - main
     paths:
       - src/**
       - test/**
+      - package.json
+      - package-lock.json
 
 jobs:
   app_tests:
