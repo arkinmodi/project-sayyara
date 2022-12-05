@@ -130,6 +130,7 @@ model Part {
   condition   PartCondition
   build       PartBuild
   cost        Float
+  name        String
 }
 
 enum UserType {

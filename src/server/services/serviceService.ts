@@ -6,6 +6,7 @@ const createPartSchema = z.object({
   condition: z.nativeEnum(PartCondition),
   build: z.nativeEnum(PartBuild),
   cost: z.number(),
+  name: z.string(),
 });
 
 export const createServiceSchema = z.object({
@@ -24,7 +25,9 @@ export const createService = async (service: CreateServiceType) => {
   return await prisma.service.create({
     data: {
       ...service,
+      shop_id: undefined,
       parts,
+      shop: { connect: { id: service.shop_id } },
     },
     include: {
       parts: true,
@@ -49,6 +52,7 @@ const updatePartSchema = z.object({
   condition: z.nativeEnum(PartCondition).optional(),
   build: z.nativeEnum(PartBuild).optional(),
   cost: z.number().optional(),
+  name: z.string().optional(),
 });
 
 export const updateServiceSchema = z.object({
