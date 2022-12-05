@@ -98,8 +98,9 @@ export const updateServiceById = async (
 
 // TODO: delete parts? Or do we need to create a separate service for parts?
 export const deleteService = async (id: string) => {
-  return await prisma.service.delete({
+  await prisma.service.update({
     where: { id },
-    include: { parts: true },
+    data: { parts: { deleteMany: {} } },
   });
+  return await prisma.service.delete({ where: { id } });
 };

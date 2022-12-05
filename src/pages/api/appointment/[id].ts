@@ -49,6 +49,12 @@ const appointmentByIdHandler = async (
       }
 
       appointment = await getAppointmentById(id);
+
+      if (!appointment) {
+        res.status(404).json({ message: "Appointment not found." });
+        return;
+      }
+
       if (appointment && !isAuthorized(session, appointment)) {
         res.status(403).json({ message: "Forbidden." });
         return;
@@ -67,13 +73,19 @@ const appointmentByIdHandler = async (
 
     case "DELETE":
       appointment = await getAppointmentById(id);
+
+      if (!appointment) {
+        res.status(404).json({ message: "Appointment not found." });
+        return;
+      }
+
       if (appointment && !isAuthorized(session, appointment)) {
         res.status(403).json({ message: "Forbidden." });
         return;
       }
 
       await deleteAppointment(id);
-      res.status(204);
+      res.status(204).end();
       break;
 
     default:

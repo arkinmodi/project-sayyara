@@ -44,7 +44,13 @@ const serviceByIdHandler = async (
       }
 
       service = await getServiceById(id);
-      if (service && session.user.type !== "SHOP_OWNER") {
+
+      if (!service) {
+        res.status(404).json({ message: "Service not found." });
+        return;
+      }
+
+      if (session.user.type !== "SHOP_OWNER") {
         res.status(403).json({ message: "Forbidden." });
         return;
       }
@@ -60,13 +66,19 @@ const serviceByIdHandler = async (
 
     case "DELETE":
       service = await getServiceById(id);
+
+      if (!service) {
+        res.status(404).json({ message: "Service not found." });
+        return;
+      }
+
       if (service && session.user.type !== "SHOP_OWNER") {
         res.status(403).json({ message: "Forbidden." });
         return;
       }
 
       await deleteService(id);
-      res.status(204);
+      res.status(204).end();
       break;
 
     default:
