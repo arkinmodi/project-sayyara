@@ -20,9 +20,11 @@ const customJestConfig = {
   setupFilesAfterEnv: ["<rootDir>/test/mocks/prismaMock.ts"],
   verbose: true,
   collectCoverage: true,
+  collectCoverageFrom: ["./src/**"],
   clearMocks: true,
   runner: "groups",
   coveragePathIgnorePatterns: ["<rootDir>/test/mocks/"],
+  coverageDirectory: "coverage-unit",
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

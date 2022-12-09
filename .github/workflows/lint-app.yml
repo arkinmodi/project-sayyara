@@ -4,8 +4,8 @@ on:
     branches:
       - main
     paths:
-    - src/**
-    - test/**
+      - src/**
+      - test/**
 
 jobs:
   lint_app:
@@ -18,7 +18,7 @@ jobs:
       - name: 💻 Setup Node
         uses: actions/setup-node@v3.5.1
         with:
-          node-version: '16'
+          node-version: "16"
 
       - name: 💿 Cache Node Modules
         uses: actions/cache@v3

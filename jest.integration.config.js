@@ -19,9 +19,11 @@ const customJestConfig = {
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
   verbose: true,
   collectCoverage: true,
+  collectCoverageFrom: ["./src/**"],
   clearMocks: true,
   runner: "groups",
   coveragePathIgnorePatterns: ["<rootDir>/test/mocks/"],
+  coverageDirectory: "coverage-integration",
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
