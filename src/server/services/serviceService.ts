@@ -1,10 +1,8 @@
-import { PartBuild, PartCondition, prisma } from "@server/db/client";
+import { prisma } from "@server/db/client";
 import { z } from "zod";
 
 const createPartSchema = z.object({
   quantity: z.number().int(),
-  condition: z.nativeEnum(PartCondition),
-  build: z.nativeEnum(PartBuild),
   cost: z.number(),
   name: z.string(),
 });
@@ -26,11 +24,7 @@ export const createService = async (service: CreateServiceType) => {
     data: {
       ...service,
       shop_id: undefined,
-      parts,
       shop: { connect: { id: service.shop_id } },
-    },
-    include: {
-      parts: true,
     },
   });
 };
@@ -38,7 +32,6 @@ export const createService = async (service: CreateServiceType) => {
 export const getServiceById = async (id: string) => {
   return await prisma.service.findUnique({
     where: { id },
-    include: { parts: true },
   });
 };
 
@@ -49,8 +42,6 @@ export const getServicesByShopId = async (shopId: string) => {
 const updatePartSchema = z.object({
   id: z.string(),
   quantity: z.number().int().optional(),
-  condition: z.nativeEnum(PartCondition).optional(),
-  build: z.nativeEnum(PartBuild).optional(),
   cost: z.number().optional(),
   name: z.string().optional(),
 });
@@ -71,20 +62,6 @@ export const updateServiceById = async (
   const service = await getServiceById(id);
   if (!service) return Promise.reject("Service not found.");
 
-  if (patch.parts) {
-    for (const part of patch.parts) {
-      await prisma.part.update({
-        where: { id: part.id },
-        data: {
-          quantity: part.quantity,
-          condition: part.condition,
-          build: part.build,
-          cost: part.cost,
-        },
-      });
-    }
-  }
-
   return await prisma.service.update({
     where: { id },
     data: {
@@ -96,11 +73,6 @@ export const updateServiceById = async (
   });
 };
 
-// TODO: delete parts? Or do we need to create a separate service for parts?
 export const deleteService = async (id: string) => {
-  await prisma.service.update({
-    where: { id },
-    data: { parts: { deleteMany: {} } },
-  });
   return await prisma.service.delete({ where: { id } });
 };
