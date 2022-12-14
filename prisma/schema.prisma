@@ -13,19 +13,20 @@ datasource db {
 }
 
 model Employee {
-  id          String   @id @default(cuid())
-  create_time DateTime @default(now())
-  update_time DateTime @updatedAt
-  first_name  String
-  last_name   String
-  email       String   @unique
-  password    String
-  image       String?
-  type        UserType
-  shop_id     String?
-
+  id           String        @id @default(cuid())
+  create_time  DateTime      @default(now())
+  update_time  DateTime      @updatedAt
+  first_name   String
+  last_name    String
+  email        String        @unique
+  password     String
+  image        String?
+  type         UserType
+  shop_id      String?
+  work_orders  WorkOrder[]
   appointments Appointment[]
-  shop         Shop?         @relation(fields: [shop_id], references: [id])
+
+  shop Shop? @relation(fields: [shop_id], references: [id])
 }
 
 model Customer {
@@ -39,6 +40,7 @@ model Customer {
   image        String?
   type         UserType      @default(CUSTOMER)
   appointments Appointment[]
+  work_orders  WorkOrder[]
 }
 
 // TODO: re-evaluate what should be optional for Appointment
@@ -82,7 +84,8 @@ model Vehicle {
   model         String
   vin           String
   license_plate String
-  appointment   Appointment[]
+  appointments  Appointment[]
+  work_orders   WorkOrder[]
 }
 
 model WorkOrder {
@@ -90,6 +93,22 @@ model WorkOrder {
   create_time DateTime     @default(now())
   update_time DateTime     @updatedAt
   appointment Appointment?
+  title       String
+  customer_id String
+  vehicle_id  String
+  employee_id String?
+  body        String
+  shop_id     String
+
+  customer Customer  @relation(fields: [customer_id], references: [id])
+  vehicle  Vehicle   @relation(fields: [vehicle_id], references: [id])
+  employee Employee? @relation(fields: [employee_id], references: [id])
+  shop     Shop      @relation(fields: [shop_id], references: [id])
+
+  @@index([customer_id])
+  @@index([vehicle_id])
+  @@index([employee_id])
+  @@index([shop_id])
 }
 
 model Shop {
@@ -98,6 +117,7 @@ model Shop {
   update_time  DateTime      @updatedAt
   appointments Appointment[]
   employees    Employee[]
+  work_orders  WorkOrder[]
 }
 
 enum UserType {

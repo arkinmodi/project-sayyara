@@ -32,6 +32,10 @@ export const createUser = async (user: CreateUserInputType) => {
   }
 };
 
+export const getEmployeeById = async (id: string) => {
+  return await prisma.employee.findUnique({ where: { id } });
+};
+
 export const getUser = async (email: string) => {
   if (!email) return null;
   const user = await prisma.customer.findUnique({ where: { email } });
