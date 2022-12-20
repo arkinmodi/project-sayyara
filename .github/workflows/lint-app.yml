@@ -41,7 +41,7 @@ jobs:
         run: npx tsc --project ./tsconfig.json
 
       - name: 🧽 Run Prettier
-        run: npx prettier --check '**/*.{ts,tsx,json,js,mjs}'
+        run: npx prettier --check '**/*.{ts,tsx,json,js,mjs,css}'
 
       - name: 🧽 Run ESLint
         run: npx next lint
