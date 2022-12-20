@@ -101,7 +101,7 @@ model Shop {
   update_time  DateTime      @updatedAt
   appointments Appointment[]
   employees    Employee[]
-  services     Service[]
+  // services     Service[]
 }
 
 model Service {
@@ -112,11 +112,12 @@ model Service {
   description    String
   estimated_time Int
   total_price    Float
-  shop_id        String
+  // parts          Json
+  // shop_id        String?
 
-  shop Shop @relation(fields: [shop_id], references: [id])
+  // shop Shop? @relation(fields: [shop_id], references: [id])
 
-  @@index([shop_id])
+  // @@index([shop_id])
 }
 
 enum UserType {

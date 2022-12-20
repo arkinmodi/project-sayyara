@@ -13,7 +13,7 @@ export const createServiceSchema = z.object({
   estimated_time: z.number().int(),
   parts: z.array(createPartSchema).optional(),
   total_price: z.number(),
-  shop_id: z.string(),
+  // shop_id: z.string(),
 });
 export type CreateServiceType = z.infer<typeof createServiceSchema>;
 
@@ -22,9 +22,11 @@ export const createService = async (service: CreateServiceType) => {
 
   return await prisma.service.create({
     data: {
-      ...service,
-      shop_id: undefined,
-      shop: { connect: { id: service.shop_id } },
+      name: service.name,
+      description: service.description,
+      estimated_time: service.estimated_time,
+      total_price: service.total_price,
+      // shop: { connect: { id: service.shop_id } },
     },
   });
 };
@@ -35,9 +37,9 @@ export const getServiceById = async (id: string) => {
   });
 };
 
-export const getServicesByShopId = async (shopId: string) => {
-  return await prisma.service.findMany({ where: { shop_id: shopId } });
-};
+// export const getServicesByShopId = async (shopId: string) => {
+//   return await prisma.service.findMany({ where: { shop_id: shopId } });
+// };
 
 const updatePartSchema = z.object({
   id: z.string(),
