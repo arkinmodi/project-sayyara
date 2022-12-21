@@ -25,7 +25,7 @@ export const partSchema = z.object({
   cost: z.number(),
   name: z.string(),
   condition: z.enum(["NEW", "USED"]),
-  build: z.enum(["OEM", "AFTER MARKET"]),
+  build: z.enum(["OEM", "AFTER_MARKET"]),
 });
 
 export type PartType = z.infer<typeof partSchema>;
