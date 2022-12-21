@@ -17,6 +17,7 @@ const testService: Service = {
   description: "test_service_description",
   estimated_time: 2,
   total_price: 100,
+  parts: null,
 };
 
 describe("get service", () => {

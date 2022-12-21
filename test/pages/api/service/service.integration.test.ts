@@ -7,11 +7,11 @@
 
 import serviceHandler from "@pages/api/service";
 import serviceByIdHandler from "@pages/api/service/[id]";
-import { Employee, prisma, Service } from "@server/db/client";
+import { Employee, prisma, ServiceWithParts } from "@server/db/client";
 import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 import { Session } from "next-auth";
 
-const testService: Service = {
+const testService: ServiceWithParts = {
   id: "",
   create_time: new Date(),
   update_time: new Date(),
@@ -19,6 +19,7 @@ const testService: Service = {
   description: "test_service_description",
   estimated_time: 2,
   total_price: 100,
+  parts: [],
 };
 
 const testEmployeeUser: Employee = {

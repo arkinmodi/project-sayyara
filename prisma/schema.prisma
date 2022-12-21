@@ -112,7 +112,7 @@ model Service {
   description    String
   estimated_time Int
   total_price    Float
-  // parts          Json
+  parts          Json
   // shop_id        String?
 
   // shop Shop? @relation(fields: [shop_id], references: [id])
