@@ -1,4 +1,4 @@
-import { partSchema, prisma, ServiceWithParts } from "@server/db/client";
+import { partSchema, prisma, ServiceWithPartsType } from "@server/db/client";
 import { z } from "zod";
 
 export const createServiceSchema = z.object({
@@ -21,31 +21,26 @@ export const createService = async (service: CreateServiceType) => {
       parts: service.parts,
       // shop: { connect: { id: service.shop_id } },
     },
-  })) as ServiceWithParts;
+  })) as ServiceWithPartsType;
 };
 
 export const getServiceById = async (id: string) => {
-  return await prisma.service.findUnique({
+  return (await prisma.service.findUnique({
     where: { id },
-  });
+  })) as ServiceWithPartsType;
 };
 
 // export const getServicesByShopId = async (shopId: string) => {
 //   return await prisma.service.findMany({ where: { shop_id: shopId } });
 // };
 
-const updatePartSchema = z.object({
-  id: z.string(),
-  quantity: z.number().int().optional(),
-  cost: z.number().optional(),
-  name: z.string().optional(),
-});
-
+// Since Parts are stored as a JSON array (without IDs), to update the list of parts, you need to
+// send in the complete new list of parts, not just what you want to change
 export const updateServiceSchema = z.object({
   name: z.string().optional(),
   description: z.string().optional(),
   estimated_time: z.number().int().optional(),
-  parts: z.array(updatePartSchema).optional(),
+  parts: z.array(partSchema).optional(),
   total_price: z.number().optional(),
 });
 export type UpdateServiceType = z.infer<typeof updateServiceSchema>;
@@ -56,16 +51,10 @@ export const updateServiceById = async (
 ) => {
   const service = await getServiceById(id);
   if (!service) return Promise.reject("Service not found.");
-
-  return await prisma.service.update({
+  return (await prisma.service.update({
     where: { id },
-    data: {
-      name: patch.name,
-      description: patch.description,
-      estimated_time: patch.estimated_time,
-      total_price: patch.total_price,
-    },
-  });
+    data: patch,
+  })) as ServiceWithPartsType;
 };
 
 export const deleteService = async (id: string) => {

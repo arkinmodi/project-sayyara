@@ -1,5 +1,5 @@
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
-import { Service } from "@server/db/client";
+import { ServiceWithPartsType } from "@server/db/client";
 import {
   deleteService,
   getServiceById,
@@ -24,7 +24,7 @@ const serviceByIdHandler = async (
     return;
   }
 
-  let service: Service | null;
+  let service: ServiceWithPartsType | null;
 
   switch (req.method) {
     case "GET":

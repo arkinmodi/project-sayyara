@@ -30,6 +30,6 @@ export const partSchema = z.object({
 
 export type PartType = z.infer<typeof partSchema>;
 
-export type ServiceWithParts = {
+export type ServiceWithPartsType = {
   parts: PartType[];
 } & Service;
