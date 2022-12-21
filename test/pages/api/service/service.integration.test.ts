@@ -19,7 +19,15 @@ const testService: ServiceWithPartsType = {
   description: "test_service_description",
   estimated_time: 2,
   total_price: 100,
-  parts: [],
+  parts: [
+    {
+      quantity: 2,
+      cost: 100.0,
+      name: "test_part",
+      condition: "NEW",
+      build: "OEM",
+    },
+  ],
 };
 
 const testEmployeeUser: Employee = {
