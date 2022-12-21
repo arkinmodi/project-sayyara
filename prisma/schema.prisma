@@ -2,14 +2,13 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Employee {
@@ -29,16 +28,18 @@ model Employee {
 }
 
 model Customer {
-  id           String        @id @default(cuid())
-  create_time  DateTime      @default(now())
-  update_time  DateTime      @updatedAt
-  first_name   String
-  last_name    String
-  email        String        @unique
-  password     String
-  image        String?
-  type         UserType      @default(CUSTOMER)
-  appointments Appointment[]
+  id            String        @id @default(cuid())
+  create_time   DateTime      @default(now())
+  update_time   DateTime      @updatedAt
+  first_name    String
+  last_name     String
+  email         String        @unique
+  password      String
+  image         String?
+  type          UserType      @default(CUSTOMER)
+  appointments  Appointment[]
+  chat_messages ChatMessage[]
+  quotes        Quote[]
 }
 
 // TODO: re-evaluate what should be optional for Appointment
@@ -67,10 +68,36 @@ model Appointment {
 }
 
 model Quote {
-  id          String       @id @default(cuid())
-  create_time DateTime     @default(now())
-  update_time DateTime     @updatedAt
-  appointment Appointment?
+  id          String   @id @default(cuid())
+  create_time DateTime @default(now())
+  update_time DateTime @updatedAt
+  customer_id String
+  shop_id     String
+
+  customer      Customer      @relation(fields: [customer_id], references: [id])
+  shop          Shop          @relation(fields: [shop_id], references: [id])
+  appointment   Appointment?
+  chat_messages ChatMessage[]
+
+  @@index([customer_id])
+  @@index([shop_id])
+}
+
+model ChatMessage {
+  id          String   @id @default(cuid())
+  create_time DateTime @default(now())
+  update_time DateTime @updatedAt
+  quote_id    String
+  customer_id String
+  shop_id     String
+
+  customer Customer @relation(fields: [customer_id], references: [id])
+  shop     Shop     @relation(fields: [shop_id], references: [id])
+  quote    Quote    @relation(fields: [quote_id], references: [id])
+
+  @@index([customer_id])
+  @@index([shop_id])
+  @@index([quote_id])
 }
 
 model Vehicle {
@@ -93,11 +120,13 @@ model WorkOrder {
 }
 
 model Shop {
-  id           String        @id @default(cuid())
-  create_time  DateTime      @default(now())
-  update_time  DateTime      @updatedAt
-  appointments Appointment[]
-  employees    Employee[]
+  id            String        @id @default(cuid())
+  create_time   DateTime      @default(now())
+  update_time   DateTime      @updatedAt
+  appointments  Appointment[]
+  employees     Employee[]
+  chat_messages ChatMessage[]
+  quotes        Quote[]
 }
 
 enum UserType {
