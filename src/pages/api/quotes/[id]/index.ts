@@ -36,9 +36,6 @@ const quoteByIdHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
       break;
 
-    case "PATCH":
-      break;
-
     case "DELETE":
       quote = await getQuoteById(id);
       if (!quote) {
