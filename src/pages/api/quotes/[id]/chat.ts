@@ -2,7 +2,7 @@ import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import {
   createChatMessage,
   createChatMessageSchema,
-  getChatMessages,
+  getChatMessagesByQuoteId,
 } from "@server/services/chatService";
 import { NextApiRequest, NextApiResponse } from "next";
 import type { Session } from "next-auth";
@@ -22,12 +22,9 @@ const chatHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   switch (req.method) {
     case "GET":
-      const messages = await getChatMessages(id);
+      const messages = await getChatMessagesByQuoteId(id);
       if (messages.length > 0 && messages[0]) {
-        const customerId = messages[0].customer_id;
-        const shopId = messages[0].shop_id;
-
-        if (await isAuthorized(session, customerId, shopId)) {
+        if (await isAuthorized(session, id)) {
           res.status(200).json(messages);
         } else {
           res.status(403).json({ message: "Forbidden." });
@@ -44,8 +41,15 @@ const chatHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         return;
       }
 
-      const newMessage = await createChatMessage(result.data);
-      res.status(201).json(newMessage);
+      const newMessage = await createChatMessage(result.data, id).catch(
+        (reason) => {
+          if (reason === "Missing sender information.") res.status(400);
+          else res.status(500);
+          res.json({ message: reason });
+          return null;
+        }
+      );
+      if (newMessage) res.status(201).json(newMessage);
       break;
 
     default:
@@ -55,20 +59,20 @@ const chatHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 // TODO: enable this when shop profiles can be fetched
-const isAuthorized = async (
-  session: Session,
-  customerId: string,
-  shopId: string
-) => {
+const isAuthorized = async (session: Session, quoteId: string) => {
   return true;
 
-  // if (session.user.type === "CUSTOMER") return session.user.id === customerId;
+  // const quote = await getQuoteById(quoteId);
+  // if (!quote) return false;
 
-  // const shop = await getShopByEmployeeId(session.user.id);
-  // OR
-  // const shop = await getShopByEmployeeEmail(session.user.email);
-
-  // return shop.id === shopId;
+  // if (session.user.type === "CUSTOMER") {
+  //   return session.user.id === quote.customer_id;
+  // } else {
+  //   const shop = await getShopByEmployeeId(session.user.id);
+  //   OR
+  //   const shop = await getShopByEmployeeEmail(session.user.email);
+  //   return shop.id === quote.shop_id;
+  // }
 };
 
 export default chatHandler;
