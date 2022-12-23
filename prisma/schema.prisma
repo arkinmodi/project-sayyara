@@ -2,14 +2,13 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Employee {
@@ -26,6 +25,8 @@ model Employee {
 
   appointments Appointment[]
   shop         Shop?         @relation(fields: [shop_id], references: [id])
+
+  @@index([shop_id])
 }
 
 model Customer {
@@ -64,6 +65,8 @@ model Appointment {
   employee   Employee? @relation(fields: [employee_id], references: [id])
   customer   Customer? @relation(fields: [customer_id], references: [id])
   shop       Shop?     @relation(fields: [shop_id], references: [id])
+
+  @@index([shop_id])
 }
 
 model Quote {
@@ -98,6 +101,23 @@ model Shop {
   update_time  DateTime      @updatedAt
   appointments Appointment[]
   employees    Employee[]
+  // services     Service[]
+}
+
+model Service {
+  id             String   @id @default(cuid())
+  create_time    DateTime @default(now())
+  update_time    DateTime @updatedAt
+  name           String
+  description    String
+  estimated_time Int
+  total_price    Float
+  parts          Json
+  // shop_id        String?
+
+  // shop Shop? @relation(fields: [shop_id], references: [id])
+
+  // @@index([shop_id])
 }
 
 enum UserType {

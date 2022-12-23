@@ -107,7 +107,7 @@ export const updateAppointmentById = async (
   id: string,
   patch: UpdateAppointmentType
 ) => {
-  const appointment = await prisma.appointment.findUnique({ where: { id } });
+  const appointment = await getAppointmentById(id);
   if (!appointment) return Promise.reject("Appointment not found.");
 
   const now = new Date();
