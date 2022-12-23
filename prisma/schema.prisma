@@ -25,6 +25,8 @@ model Employee {
 
   appointments Appointment[]
   shop         Shop?         @relation(fields: [shop_id], references: [id])
+
+  @@index([shop_id])
 }
 
 model Customer {
@@ -65,6 +67,8 @@ model Appointment {
   employee   Employee? @relation(fields: [employee_id], references: [id])
   customer   Customer? @relation(fields: [customer_id], references: [id])
   shop       Shop?     @relation(fields: [shop_id], references: [id])
+
+  @@index([shop_id])
 }
 
 model Quote {
@@ -128,6 +132,23 @@ model Shop {
   employees     Employee[]
   chat_messages ChatMessage[]
   quotes        Quote[]
+  // services     Service[]
+}
+
+model Service {
+  id             String   @id @default(cuid())
+  create_time    DateTime @default(now())
+  update_time    DateTime @updatedAt
+  name           String
+  description    String
+  estimated_time Int
+  total_price    Float
+  parts          Json
+  // shop_id        String?
+
+  // shop Shop? @relation(fields: [shop_id], references: [id])
+
+  // @@index([shop_id])
 }
 
 enum UserType {
