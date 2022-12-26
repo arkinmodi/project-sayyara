@@ -6,6 +6,7 @@
  */
 
 import quoteHandler from "@pages/api/quotes";
+import quoteByIdHandler from "@pages/api/quotes/[id]";
 import chatHandler from "@pages/api/quotes/[id]/chat";
 import {
   ChatMessage,
@@ -190,6 +191,52 @@ describe("get chat messages", () => {
 
       expect(res.statusCode).toBe(200);
       expect(res._getJSONData()["length"]).toBe(0);
+    });
+  });
+});
+
+describe("delete quote and chat messages", () => {
+  describe("given quote ID", () => {
+    it("should delete quote and all chat messages", async () => {
+      await createCustomer();
+      await createEmployee();
+      await createShop();
+      const quoteId = await createQuote();
+
+      // Create Employee Chat Message
+      const employeePost = createMockRequestResponse({ method: "POST" });
+      employeePost.req.body = {
+        shop_id: testEmployeeUser.shop_id,
+        message: testChatMessage.message,
+      };
+      employeePost.req.query = { ...employeePost.req.query, id: quoteId };
+      await chatHandler(employeePost.req, employeePost.res);
+      expect(employeePost.res.statusCode).toBe(201);
+
+      // Create Customer Chat Message
+      const customerPost = createMockRequestResponse({ method: "POST" });
+      customerPost.req.body = {
+        customer_id: testCustomerUser.id,
+        message: testChatMessage.message,
+      };
+      customerPost.req.query = { ...customerPost.req.query, id: quoteId };
+      await chatHandler(customerPost.req, customerPost.res);
+      expect(customerPost.res.statusCode).toBe(201);
+
+      // Delete Quote and Chat Messages
+      const { req, res } = createMockRequestResponse({ method: "DELETE" });
+      req.query = { ...req.query, id: quoteId };
+      await quoteByIdHandler(req, res);
+
+      expect(res.statusCode).toBe(204);
+
+      // Confirm Chat Messages are Deleted
+      const get = createMockRequestResponse({ method: "GET" });
+      get.req.query = { ...get.req.query, id: quoteId };
+      await chatHandler(get.req, get.res);
+
+      expect(get.res.statusCode).toBe(200);
+      expect(get.res._getJSONData()["length"]).toBe(0);
     });
   });
 });
