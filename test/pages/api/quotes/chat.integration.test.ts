@@ -133,7 +133,7 @@ describe("create chat messages", () => {
 });
 
 describe("get chat messages", () => {
-  describe("given quote ID", () => {
+  describe("given quote ID with messages", () => {
     it("should return all messages related to the quote", async () => {
       await createCustomer();
       await createEmployee();
@@ -173,6 +173,23 @@ describe("get chat messages", () => {
 
       expect(res._getJSONData()[1]["shop_id"]).toBe(testEmployeeUser.shop_id);
       expect(res._getJSONData()[1]["customer_id"]).toBeNull();
+    });
+  });
+
+  describe("given quote ID with messages", () => {
+    it("should return an empty list", async () => {
+      await createCustomer();
+      await createEmployee();
+      await createShop();
+      const quoteId = await createQuote();
+
+      // Get Chat Messages
+      const { req, res } = createMockRequestResponse({ method: "GET" });
+      req.query = { ...req.query, id: quoteId };
+      await chatHandler(req, res);
+
+      expect(res.statusCode).toBe(200);
+      expect(res._getJSONData()["length"]).toBe(0);
     });
   });
 });
