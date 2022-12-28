@@ -1,7 +1,6 @@
 \documentclass[12pt, titlepage]{article}
 
 \usepackage{amsmath, mathtools}
-
 \usepackage[round]{natbib}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -19,17 +18,18 @@
 \usepackage[section]{placeins}
 \usepackage{caption}
 \usepackage{fullpage}
+\usepackage{array}
+\usepackage[nottoc,numbib]{tocbibind}
 
 \hypersetup{
-bookmarks=true,         % show bookmarks bar?
-colorlinks=true,        % false: boxed links; true: colored links
-linkcolor=red,          % color of internal links (change box color with linkbordercolor)
-citecolor=blue,         % color of links to bibliography
-filecolor=magenta,      % color of file links
-urlcolor=cyan           % color of external links
+	bookmarks=true,         % show bookmarks bar?
+	colorlinks=true,        % false: boxed links; true: colored links
+	linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+	citecolor=blue,         % color of links to bibliography
+	filecolor=magenta,      % color of file links
+	urlcolor=cyan           % color of external links
 }
 
-\usepackage{array}
 
 \externaldocument{../../SRS/SRS}
 
@@ -50,13 +50,16 @@ urlcolor=cyan           % color of external links
 
 \section{Revision History}
 
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-	\toprule {\bf Date} & {\bf Version} & {\bf Notes} \\
-	\midrule
-	Date 1              & 1.0           & Notes       \\
-	Date 2              & 1.1           & Notes       \\
-	\bottomrule
-\end{tabularx}
+\begin{table}[hp]
+	\caption{Revision History} \label{TblRevisionHistory}
+	\begin{tabularx}{\textwidth}{llX}
+		\toprule
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}         \\
+		\midrule
+		December 28, 2022 & Arkin Modi            & Create Revision History \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
 
 ~\newpage
 
@@ -69,6 +72,12 @@ See SRS Documentation at \wss{give url}
 \newpage
 
 \tableofcontents
+
+\newpage
+
+\listoftables
+
+\listoffigures
 
 \newpage
 
@@ -226,12 +235,12 @@ The following table is taken directly from the Module Guide document for this pr
 
 \newpage
 
-\bibliographystyle {plainnat}
-\bibliography {../../../refs/References}
+\bibliographystyle{plainnat}
+\bibliography{../../../refs/References}
 
 \newpage
 
-\section{Appendix} \label{Appendix}
+\section{Appendix}
 
 \wss{Extra information if required}
 
