@@ -1,4 +1,5 @@
 import { prisma, UserType } from "@server/db/client";
+import bcrypt from "bcrypt";
 import { z } from "zod";
 
 export const registrationSchema = z.object({
@@ -12,6 +13,8 @@ export const registrationSchema = z.object({
 export type CreateUserInputType = z.infer<typeof registrationSchema>;
 
 export const createUser = async (user: CreateUserInputType) => {
+  user.password = bcrypt.hashSync(user.password, 10);
+
   if (user.type === "CUSTOMER") {
     return await prisma.customer.create({
       data: {
@@ -42,7 +45,10 @@ export const authorize = async (email: string, password: string) => {
   const userData = await getUser(email);
 
   if (!userData) return Promise.reject("user not found");
-  if (userData.password !== password) return Promise.reject("unauthorized");
+
+  if (!bcrypt.compareSync(password, userData.password)) {
+    return Promise.reject("unauthorized");
+  }
 
   return {
     id: userData.id,
