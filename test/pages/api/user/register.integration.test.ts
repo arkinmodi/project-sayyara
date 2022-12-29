@@ -61,7 +61,7 @@ describe("new user registration", () => {
         first_name: "first_name",
         last_name: "last_name",
         email: "user@test.com",
-        password: "test_password",
+        password: expect.any(String),
         image: null,
         type: "SHOP_OWNER",
         create_time: expect.any(Date),
