@@ -12,6 +12,7 @@
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
+    "db:seed": "prisma db seed",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "jest --group=unit --config=jest.unit.config.js",
     "test:integration": "npm run docker:up && npm run db:push && jest --runInBand --group=integration --config=jest.integration.config.js",
@@ -62,7 +63,11 @@
     "prettier-plugin-organize-imports": "^3.2.0",
     "prisma": "^4.7.0",
     "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.1",
     "typescript": "4.9.3"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"commonjs\"} prisma/seed.ts"
   },
   "overrides": {
     "loader-utils": "^2.0.4"
