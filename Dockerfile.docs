@@ -1,4 +1,4 @@
-FROM ghcr.io/xu-cheng/texlive-full:20221201
+FROM ghcr.io/xu-cheng/texlive-full:20230101
 WORKDIR /sayyara
 RUN apk update \
     && apk add make \
