@@ -6,9 +6,10 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppointmentStatus, IAppointment } from "../../types/appointment";
+import { AppointmentStatus, IAppointment } from "../../../types/appointment";
 
-const Requests: NextPage = () => {
+// TODO: pass in the appointments list from the db and order it according to the date/start-time. For each appointment with the same date, display the info in cards
+const OrderedAppointments: NextPage = () => {
   const [pendingAppointments, setPendingAppointments] = useState<
     IAppointment[]
   >([]);
@@ -75,4 +76,4 @@ const Requests: NextPage = () => {
   );
 };
 
-export default Requests;
+export default OrderedAppointments;
