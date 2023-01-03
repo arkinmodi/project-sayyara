@@ -9,6 +9,8 @@
 \usepackage{float}
 \usepackage{hyperref}
 \usepackage[nottoc,numbib]{tocbibind}
+\usepackage{enumitem}
+\usepackage{longtable}
 
 \hypersetup{
 	colorlinks,
@@ -285,30 +287,95 @@ means that the module is not a leaf and will not have to be implemented.
 This section shows two traceability matrices: between the modules and the requirements and between
 the modules and the anticipated changes.
 
-% the table should use mref, the requirements should be named, use something
-% like fref
-\begin{table}[H]
-	\centering
-	\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
-		\toprule
-		\textbf{Req.} & \textbf{Modules}                                                                           \\
-		\midrule
-		R1            & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}                                 \\
-		R2            & \mref{mInput}, \mref{mParams}                                                              \\
-		R3            & \mref{mVerify}                                                                             \\
-		R4            & \mref{mOutput}, \mref{mControl}                                                            \\
-		R5            & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot} \\
-		R6            & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot} \\
-		R7            & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}               \\
-		R8            & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}               \\
-		R9            & \mref{mVerifyOut}                                                                          \\
-		R10           & \mref{mOutput}, \mref{mODEs}, \mref{mControl}                                              \\
-		R11           & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}                              \\
-		\bottomrule
-	\end{tabular}
+\begin{longtable}{p{0.2\textwidth} p{0.6\textwidth}}
 	\caption{Trace Between Requirements and Modules}
-	\label{TblRT}
-\end{table}
+	\label{TblRT}                            \\
+	\toprule
+	\textbf{Requirements} & \textbf{Modules} \\
+	\midrule
+	FRT-BE1-1             & ~                \\
+	FRT-BE1-2             & ~                \\
+	FRT-BE1-3             & ~                \\
+	FRT-BE2-1             & ~                \\
+	FRT-BE2-2             & ~                \\
+	FRT-BE2-3             & ~                \\
+	FRT-BE3-1             & ~                \\
+	FRT-BE3-2             & ~                \\
+	FRT-BE3-3             & ~                \\
+	FRT-BE4-1             & ~                \\
+	FRT-BE4-2             & ~                \\
+	FRT-BE4-3             & ~                \\
+	FRT-BE4-4             & ~                \\
+	FRT-BE5-1             & ~                \\
+	FRT-BE5-2             & ~                \\
+	FRT-BE5-3             & ~                \\
+	FRT-BE6-1             & ~                \\
+	FRT-BE6-2             & ~                \\
+	FRT-BE7-1             & ~                \\
+	FRT-BE8-1             & ~                \\
+	FRT-BE8-2             & ~                \\
+	FRT-BE8-3             & ~                \\
+	FRT-BE8-4             & ~                \\
+	FRT-BE9-1             & ~                \\
+	FRT-BE9-2             & ~                \\
+	FRT-BE10-1            & ~                \\
+	FRT-BE10-2            & ~                \\
+	FRT-BE11-1            & ~                \\
+	FRT-BE12-1            & ~                \\
+	FRT-BE12-2            & ~                \\
+	FRT-BE13-1            & ~                \\
+	FRT-BE14-1            & ~                \\
+	FRT-BE14-2            & ~                \\
+	FRT-BE15-1            & ~                \\
+	FRT-BE16-1            & ~                \\
+	FRT-BE16-2            & ~                \\
+	FRT-BE17-1            & ~                \\
+	FRT-BE17-2            & ~                \\
+	FRT-BE18-1            & ~                \\
+	FRT-BE19-1            & ~                \\
+	FRT-BE20-1            & ~                \\
+	FRT-BE21-1            & ~                \\
+	FRT-BE22-1            & ~                \\
+	FRT-BE23-1            & ~                \\
+	FRT-BE24-1            & ~                \\
+	FRT-BE24-2            & ~                \\
+	FRT-BE25-1            & ~                \\
+	FRT-BE26-1            & ~                \\
+	FRT-BE26-2            & ~                \\
+	FRT-BE27-1            & ~                \\
+	FRT-BE28-1            & ~                \\
+	FRT-BE29-1            & ~                \\
+	FRT-BE29-2            & ~                \\
+	FRT-BE30-1            & ~                \\
+	FRT-BE31-1            & ~                \\
+	FRT-BE32-1            & ~                \\
+	FRT-BE33-1            & ~                \\
+	FRT-BE34-1            & ~                \\
+	FRT-BE34-2            & ~                \\
+	FRT-BE35-1            & ~                \\
+	FRT-BE35-2            & ~                \\
+	FRT-BE35-3            & ~                \\
+	FRT-BE36-1            & ~                \\
+	FRT-BE36-2            & ~                \\
+	FRT-BE36-3            & ~                \\
+	NFRT-LF1-1            & ~                \\
+	NFRT-LF2-1            & ~                \\
+	NFRT-LF3-1            & ~                \\
+	NFRT-UH1-1            & ~                \\
+	NFRT-UH2-1            & ~                \\
+	NFRT-UH3-1            & ~                \\
+	NFRT-PR1-1            & ~                \\
+	NFRT-OE1-1            & ~                \\
+	NFRT-MS1-1            & ~                \\
+	NFRT-SR1-1            & ~                \\
+	NFRT-SR1-2            & ~                \\
+	NFRT-SR2-1            & ~                \\
+	NFRT-SR2-2            & ~                \\
+	NFRT-CR1-1            & ~                \\
+	NFRT-CR2-1            & ~                \\
+	NFRT-LR1-1            & ~                \\
+	\bottomrule
+\end{longtable}
 
 \begin{table}[H]
 	\centering
