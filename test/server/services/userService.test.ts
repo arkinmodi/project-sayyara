@@ -4,14 +4,7 @@
  * @group unit
  */
 import { Employee } from "@prisma/client";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
-
-import {
-  authorize,
-  createUser,
-  CreateUserInputType,
-  getUser,
-} from "@server/services/userService";
+import { authorize, getUserByEmail } from "@server/services/userService";
 import { prismaMock } from "@test/mocks/prismaMock";
 
 const hashPassword = {
@@ -37,7 +30,9 @@ describe("get user", () => {
     it("should return null", async () => {
       prismaMock.employee.findUnique.mockResolvedValue(null);
 
-      await expect(getUser("does_not_exists@test.com")).resolves.toBeNull();
+      await expect(
+        getUserByEmail("does_not_exists@test.com")
+      ).resolves.toBeNull();
     });
   });
 
@@ -45,7 +40,7 @@ describe("get user", () => {
     it("should return user", async () => {
       prismaMock.employee.findUnique.mockResolvedValue(testEmployeeUser);
 
-      await expect(getUser(testEmployeeUser.email)).resolves.toEqual(
+      await expect(getUserByEmail(testEmployeeUser.email)).resolves.toEqual(
         testEmployeeUser
       );
     });
@@ -53,38 +48,7 @@ describe("get user", () => {
 
   describe("given blank email address", () => {
     it("should return null", async () => {
-      await expect(getUser("")).resolves.toBeNull();
-    });
-  });
-});
-
-describe("create user", () => {
-  describe("given user", () => {
-    it("should create user", async () => {
-      const mockCreateUserInput: CreateUserInputType = testEmployeeUser;
-
-      prismaMock.employee.create.mockResolvedValue(testEmployeeUser);
-
-      await expect(createUser(mockCreateUserInput)).resolves.toBe(
-        testEmployeeUser
-      );
-    });
-  });
-
-  describe("given user already exists", () => {
-    it("should throw an exception", async () => {
-      const mockCreateUserInput: CreateUserInputType = testEmployeeUser;
-
-      prismaMock.employee.create.mockRejectedValue(
-        new PrismaClientKnownRequestError(
-          "Unique constraint failed on the constraint: `User_email_key`",
-          { code: "P2002", clientVersion: "4.7.0" }
-        )
-      );
-
-      await expect(createUser(mockCreateUserInput)).rejects.toBeInstanceOf(
-        PrismaClientKnownRequestError
-      );
+      await expect(getUserByEmail("")).resolves.toBeNull();
     });
   });
 });
