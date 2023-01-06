@@ -8,12 +8,14 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage[nottoc,numbib]{tocbibind}
+
 \hypersetup{
-    colorlinks,
-    citecolor=blue,
-    filecolor=black,
-    linkcolor=red,
-    urlcolor=blue
+	colorlinks,
+	citecolor=blue,
+	filecolor=black,
+	linkcolor=red,
+	urlcolor=blue
 }
 
 \input{../../Comments}
@@ -43,13 +45,16 @@
 
 \section{Revision History}
 
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-	\toprule {\bf Date} & {\bf Version} & {\bf Notes} \\
-	\midrule
-	Date 1              & 1.0           & Notes       \\
-	Date 2              & 1.1           & Notes       \\
-	\bottomrule
-\end{tabularx}
+\begin{table}[hp]
+	\caption{Revision History} \label{TblRevisionHistory}
+	\begin{tabularx}{\textwidth}{llX}
+		\toprule
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}         \\
+		\midrule
+		December 28, 2022 & Arkin Modi            & Create Revision History \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
 
 \newpage
 
@@ -76,11 +81,13 @@ This section records information for easy reference.
 	UC              & Unlikely Change                     \\
 	\wss{etc.}      & \wss{...}                           \\
 	\bottomrule
-\end{tabular}\\
+\end{tabular}
 
 \newpage
 
 \tableofcontents
+
+\newpage
 
 \listoftables
 
@@ -345,20 +352,15 @@ use modules from the lower levels.
 	\label{FigUH}
 \end{figure}
 
-%\section*{References}
+\newpage
 
-\bibliographystyle {plainnat}
+\bibliographystyle{plainnat}
 \bibliography{../../../refs/References}
 
-\newpage{}
-\section*{Appendix --- Reflection}
+\newpage
 
-The information in this section will be used to evaluate the team members on the graduate attribute
-of Lifelong Learning. Please answer the following questions:
+\section{Appendix}
 
-\begin{enumerate}
-	\item
-	\item
-\end{enumerate}
+\wss{Extra information if required}
 
 \end{document}

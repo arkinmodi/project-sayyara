@@ -1,18 +1,11 @@
-/**
- * ******************
- * *** DEPRECATED ***
- * ******************
- */
-
+import {
+  createShopOwner,
+  createShopOwnerSchema,
+  getUserByEmail,
+} from "@server/services/userService";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import {
-  createUser,
-  getUserByEmail,
-  registrationSchema,
-} from "@server/services/userService";
-
-const registrationHandler = async (
+const registerShopOwnerHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
@@ -21,7 +14,7 @@ const registrationHandler = async (
     return;
   }
 
-  const result = registrationSchema.safeParse(req.body);
+  const result = createShopOwnerSchema.safeParse(req.body);
   if (!result.success) {
     res.status(400).json({ message: result.error.issues });
     return;
@@ -33,9 +26,9 @@ const registrationHandler = async (
       .status(409)
       .json({ message: "User with email address already exists." });
   } else {
-    await createUser(result.data);
+    await createShopOwner(result.data);
     res.redirect(req.body.callbackUrl ?? "/");
   }
 };
 
-export default registrationHandler;
+export default registerShopOwnerHandler;
