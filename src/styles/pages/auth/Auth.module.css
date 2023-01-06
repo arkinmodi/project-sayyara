@@ -18,8 +18,17 @@
 }
 
 .authForm {
-  padding-right: 10%;
-  padding-left: 10%;
+  padding-right: 20%;
+  padding-left: 20%;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 0;
+}
+
+.authFormBody {
+  width: 100%;
+  min-height: 375px;
 }
 
 .authFormGroup {
@@ -36,24 +45,77 @@
   width: 150px;
   height: 40px;
   margin: 2px;
+  background: #436188;
+  border-color: #436188;
 }
 
-.authFormInput {
+.authFormShopRoleButton {
+  width: 300px;
+  height: 40px;
+  margin: 10px;
+  background: #436188;
+  border-color: #436188;
+}
+
+.authFormButtonMinimal {
+  width: 150px;
+  height: 40px;
+  margin: 2px;
+  background: none;
+  border-color: #436188;
+  border-width: 2px;
+  color: #436188;
+}
+
+.authFormButton:hover,
+.authFormButtonMinimal:hover,
+.authFormShopRoleButton:hover {
+  opacity: 0.9;
+  background: #436188 !important;
+  border-color: #436188 !important;
+}
+
+.authFormInput,
+.authFormDropdown {
   justify-content: center;
   margin-top: 5px;
   margin-bottom: 5px;
+  width: 100%;
 }
 
 .authFormButtonGroup {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   padding: 5%;
+  bottom: 0px;
+}
+
+.authFormShopRoleButtonGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  vertical-align: center;
+  height: 100%;
+  margin-top: 20%;
 }
 
 @media (max-width: 1000px) {
   .authFormCard {
     width: 80%;
+  }
+
+  .authForm {
+    padding-right: 2.5%;
+    padding-left: 2.5%;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .authFormShopRoleButtonGroup {
+    margin-top: 40%;
   }
 }

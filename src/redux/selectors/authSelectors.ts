@@ -9,6 +9,21 @@ const getIsLoggedIn = createSelector(
   (authState) => authState.isLoggedIn
 );
 
+/**
+ * Auth Dialog Selectors
+ */
+const getAuthDialogIsOpen = createSelector(
+  getAuthState,
+  (authState) => authState.authDialogState.isAuthDialogOpen
+);
+
+const getAuthDialogType = createSelector(
+  getAuthState,
+  (authState) => authState.authDialogState.authDialogType
+);
+
 export const AuthSelectors = {
   getIsLoggedIn,
+  getAuthDialogIsOpen,
+  getAuthDialogType,
 };

@@ -1,5 +1,6 @@
 import AuthTypes from "@redux/types/authTypes";
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
+import authStyles from "@styles/pages/auth/Auth.module.css";
 import {
   GetServerSideProps,
   InferGetServerSidePropsType,
@@ -12,7 +13,6 @@ import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-import authStyles from "../../styles/pages/auth/Auth.module.css";
 
 interface ILoginFormValues {
   csrfToken: "";
