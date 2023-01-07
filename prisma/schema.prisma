@@ -21,10 +21,10 @@ model Employee {
   password    String
   image       String?
   type        UserType
-  shop_id     String?
+  shop_id     String
 
   appointments Appointment[]
-  shop         Shop?         @relation(fields: [shop_id], references: [id])
+  shop         Shop          @relation(fields: [shop_id], references: [id])
 
   @@index([shop_id])
 }
@@ -40,6 +40,7 @@ model Customer {
   image        String?
   type         UserType      @default(CUSTOMER)
   appointments Appointment[]
+  vehicles     Vehicle[]
 }
 
 // TODO: re-evaluate what should be optional for Appointment
@@ -85,7 +86,12 @@ model Vehicle {
   model         String
   vin           String
   license_plate String
+  customer_id   String
   appointment   Appointment[]
+
+  customer Customer @relation(fields: [customer_id], references: [id])
+
+  @@index([customer_id])
 }
 
 model WorkOrder {
