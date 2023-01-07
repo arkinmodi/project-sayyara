@@ -7,12 +7,17 @@ import { Employee } from "@prisma/client";
 import { authorize, getUserByEmail } from "@server/services/userService";
 import { prismaMock } from "@test/mocks/prismaMock";
 
+const hashPassword = {
+  hash: "$2b$10$0hhwu7ukxDsEaVe/0vW3/.RgvcBhsvUOO6ThYJwQsNWqp6eKwCaN6",
+  plaintext: "password",
+};
+
 const testEmployeeUser: Employee = {
   id: "test_id",
   first_name: "first_name",
   last_name: "last_name",
   email: "user@test.com",
-  password: "test_password",
+  password: hashPassword.hash,
   image: null,
   create_time: new Date(),
   update_time: new Date(),
@@ -51,10 +56,11 @@ describe("get user", () => {
 describe("user authorization", () => {
   describe("given valid email and password", () => {
     it("should return user data", async () => {
+      testEmployeeUser.password = hashPassword.hash;
       prismaMock.employee.findUnique.mockResolvedValue(testEmployeeUser);
 
       await expect(
-        authorize(testEmployeeUser.email, testEmployeeUser.password)
+        authorize(testEmployeeUser.email, hashPassword.plaintext)
       ).resolves.toEqual({
         id: testEmployeeUser.id,
         firstName: testEmployeeUser.first_name,
@@ -70,13 +76,14 @@ describe("user authorization", () => {
       prismaMock.employee.findUnique.mockResolvedValue(null);
 
       await expect(
-        authorize("does_not_exists@test.com", testEmployeeUser.password)
+        authorize("does_not_exists@test.com", hashPassword.plaintext)
       ).rejects.toEqual("user not found");
     });
   });
 
   describe("given invalid password", () => {
     it("should reject", async () => {
+      testEmployeeUser.password = hashPassword.hash;
       prismaMock.employee.findUnique.mockResolvedValue(testEmployeeUser);
 
       await expect(

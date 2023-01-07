@@ -1,6 +1,7 @@
 import { Customer, Employee, prisma, UserType } from "@server/db/client";
 import { createShopSchema } from "@server/services/shopService";
 import { createVehicleSchema } from "@server/services/vehicleService";
+import bcrypt from "bcrypt";
 import { z } from "zod";
 
 // ********************** BEGIN DEPRECATED **********************
@@ -58,7 +59,7 @@ export const createCustomer = async (customer: CreateCustomerType) => {
   return await prisma.customer.create({
     data: {
       email: customer.email,
-      password: customer.password,
+      password: hash(customer.password),
       first_name: customer.first_name,
       last_name: customer.last_name,
       type: "CUSTOMER",
@@ -85,7 +86,7 @@ export const createEmployee = async (employee: CreateEmployeeType) => {
   return await prisma.employee.create({
     data: {
       email: employee.email,
-      password: employee.password,
+      password: hash(employee.password),
       first_name: employee.first_name,
       last_name: employee.last_name,
       type: "EMPLOYEE",
@@ -108,7 +109,7 @@ export const createShopOwner = async (shopOwner: CreateShopOwnerType) => {
   return await prisma.employee.create({
     data: {
       email: shopOwner.email,
-      password: shopOwner.password,
+      password: hash(shopOwner.password),
       first_name: shopOwner.first_name,
       last_name: shopOwner.last_name,
       type: "SHOP_OWNER",
@@ -116,6 +117,8 @@ export const createShopOwner = async (shopOwner: CreateShopOwnerType) => {
     },
   });
 };
+
+const hash = (plaintext: string) => bcrypt.hashSync(plaintext, 10);
 
 export const getUserByEmail = async (
   email: string
@@ -129,7 +132,10 @@ export const authorize = async (email: string, password: string) => {
   const userData = await getUserByEmail(email);
 
   if (!userData) return Promise.reject("user not found");
-  if (userData.password !== password) return Promise.reject("unauthorized");
+
+  if (!bcrypt.compareSync(password, userData.password)) {
+    return Promise.reject("unauthorized");
+  }
 
   return {
     id: userData.id,
