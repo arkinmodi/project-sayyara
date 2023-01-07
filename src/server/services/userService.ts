@@ -59,7 +59,7 @@ export const createCustomer = async (customer: CreateCustomerType) => {
   return await prisma.customer.create({
     data: {
       email: customer.email,
-      password: hashPassword(customer.password),
+      password: hash(customer.password),
       first_name: customer.first_name,
       last_name: customer.last_name,
       type: "CUSTOMER",
@@ -86,7 +86,7 @@ export const createEmployee = async (employee: CreateEmployeeType) => {
   return await prisma.employee.create({
     data: {
       email: employee.email,
-      password: hashPassword(employee.password),
+      password: hash(employee.password),
       first_name: employee.first_name,
       last_name: employee.last_name,
       type: "EMPLOYEE",
@@ -109,7 +109,7 @@ export const createShopOwner = async (shopOwner: CreateShopOwnerType) => {
   return await prisma.employee.create({
     data: {
       email: shopOwner.email,
-      password: hashPassword(shopOwner.password),
+      password: hash(shopOwner.password),
       first_name: shopOwner.first_name,
       last_name: shopOwner.last_name,
       type: "SHOP_OWNER",
@@ -118,7 +118,7 @@ export const createShopOwner = async (shopOwner: CreateShopOwnerType) => {
   });
 };
 
-const hashPassword = (password: string) => bcrypt.hashSync(password, 10);
+const hash = (plaintext: string) => bcrypt.hashSync(plaintext, 10);
 
 export const getUserByEmail = async (
   email: string
