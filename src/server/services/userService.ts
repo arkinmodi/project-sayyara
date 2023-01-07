@@ -19,8 +19,6 @@ export type CreateUserInputType = z.infer<typeof registrationSchema>;
 export const createUser = async (
   user: CreateUserInputType
 ): Promise<Customer | Employee> => {
-  user.password = bcrypt.hashSync(user.password, 10);
-
   if (user.type === "CUSTOMER") {
     return await createCustomer({
       email: user.email,
@@ -61,7 +59,7 @@ export const createCustomer = async (customer: CreateCustomerType) => {
   return await prisma.customer.create({
     data: {
       email: customer.email,
-      password: customer.password,
+      password: hashPassword(customer.password),
       first_name: customer.first_name,
       last_name: customer.last_name,
       type: "CUSTOMER",
@@ -88,7 +86,7 @@ export const createEmployee = async (employee: CreateEmployeeType) => {
   return await prisma.employee.create({
     data: {
       email: employee.email,
-      password: employee.password,
+      password: hashPassword(employee.password),
       first_name: employee.first_name,
       last_name: employee.last_name,
       type: "EMPLOYEE",
@@ -111,7 +109,7 @@ export const createShopOwner = async (shopOwner: CreateShopOwnerType) => {
   return await prisma.employee.create({
     data: {
       email: shopOwner.email,
-      password: shopOwner.password,
+      password: hashPassword(shopOwner.password),
       first_name: shopOwner.first_name,
       last_name: shopOwner.last_name,
       type: "SHOP_OWNER",
@@ -119,6 +117,8 @@ export const createShopOwner = async (shopOwner: CreateShopOwnerType) => {
     },
   });
 };
+
+const hashPassword = (password: string) => bcrypt.hashSync(password, 10);
 
 export const getUserByEmail = async (
   email: string
