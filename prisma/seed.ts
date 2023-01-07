@@ -35,6 +35,7 @@ const seed = async () => {
       first_name: "John",
       last_name: "Stone",
       type: "SHOP_OWNER",
+      shop: { create: {} },
     },
   });
 
