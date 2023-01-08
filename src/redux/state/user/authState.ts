@@ -4,7 +4,7 @@ export interface IAuthState {
   isLoggedIn: boolean;
   authDialogState: {
     isAuthDialogOpen: boolean;
-    authDialogType: AuthDialogType | undefined;
+    authDialogType: AuthDialogType;
   };
 }
 
@@ -12,6 +12,6 @@ export const initialAuthState: IAuthState = {
   isLoggedIn: false,
   authDialogState: {
     isAuthDialogOpen: false,
-    authDialogType: undefined,
+    authDialogType: AuthDialogType.CUSTOMER,
   },
 };

@@ -199,7 +199,7 @@ function* shopOwnerSignUp(
       shop_city: payload.shopCity,
       shop_province: payload.shopProvince,
       shop_postal_code: payload.shopPostalCode,
-      shop_phone_number: payload.stopPhoneNumber,
+      shop_phone_number: payload.shopPhoneNumber,
     },
   };
   const success = yield call(postShopOwnerSignUp, body);

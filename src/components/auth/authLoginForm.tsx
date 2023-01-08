@@ -1,4 +1,4 @@
-import AuthTypes from "@redux/types/authTypes";
+import { createLogin } from "@redux/actions/authActions";
 import { getCsrfToken } from "next-auth/react";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -30,14 +30,14 @@ const AuthLoginForm = () => {
           console.log(err);
         }
       }
-      fetchCSRF();
     }
+    fetchCSRF();
   }, [formValues]);
 
   const dispatch = useDispatch();
   const handleLoginButtonClick = (): void => {
     // TODO: validate inputs
-    dispatch({ type: AuthTypes.CREATE_LOGIN, payload: formValues });
+    dispatch(createLogin(formValues));
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

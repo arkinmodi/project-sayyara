@@ -1,5 +1,5 @@
+import { setIsAuthDialogOpen, setIsLoggedIn } from "@redux/actions/authActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
-import AuthTypes from "@redux/types/authTypes";
 import styles from "@styles/components/common/Header.module.css";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -44,15 +44,9 @@ const Header = () => {
   // Set global isLoggedIn state based on user session
   useEffect(() => {
     if (!isLoggedIn && session?.user != null) {
-      dispatch({
-        type: AuthTypes.SET_IS_LOGGED_IN,
-        payload: { isLoggedIn: true },
-      });
+      dispatch(setIsLoggedIn({ isLoggedIn: true }));
     } else if (isLoggedIn && session?.user == null) {
-      dispatch({
-        type: AuthTypes.SET_IS_LOGGED_IN,
-        payload: { isLoggedIn: false },
-      });
+      dispatch(setIsLoggedIn({ isLoggedIn: false }));
     }
   }, [session?.user, isLoggedIn, dispatch]);
 
@@ -60,10 +54,9 @@ const Header = () => {
    * Handle navbar button clicks to open auth dialog
    */
   const openAuthDialog = (type: AuthDialogType) => {
-    dispatch({
-      type: AuthTypes.SET_IS_AUTH_DIALOG_OPEN,
-      payload: { isAuthDialogOpen: true, authDialogType: type },
-    });
+    dispatch(
+      setIsAuthDialogOpen({ isAuthDialogOpen: true, authDialogType: type })
+    );
   };
 
   const start = (

@@ -1,5 +1,5 @@
+import { setIsAuthDialogOpen } from "@redux/actions/authActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
-import AuthTypes from "@redux/types/authTypes";
 import styles from "@styles/components/auth/AuthDialog.module.css";
 import { Dialog } from "primereact/dialog";
 import React, { useCallback, useEffect, useState } from "react";
@@ -9,8 +9,8 @@ import AuthFormTabs from "./authFormTabs";
 
 const AuthDialog = () => {
   const [displayDialog, setDisplayDialog] = useState(false);
-  const [dialogType, setDialogType] = useState<AuthDialogType | undefined>(
-    undefined
+  const [dialogType, setDialogType] = useState<AuthDialogType>(
+    AuthDialogType.CUSTOMER
   );
 
   const dispatch = useDispatch();
@@ -23,10 +23,12 @@ const AuthDialog = () => {
    */
   const onHide = useCallback(() => {
     setDisplayDialog(false);
-    dispatch({
-      type: AuthTypes.SET_IS_AUTH_DIALOG_OPEN,
-      payload: { isAuthDialogOpen: false, AuthDialogType: undefined },
-    });
+    dispatch(
+      setIsAuthDialogOpen({
+        isAuthDialogOpen: false,
+        authDialogType: AuthDialogType.CUSTOMER,
+      })
+    );
   }, [dispatch]);
 
   useEffect(() => {

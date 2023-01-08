@@ -1,4 +1,4 @@
-import AuthTypes from "@redux/types/authTypes";
+import { createShopEmployeeSignUp } from "@redux/actions/authActions";
 import { getCsrfToken } from "next-auth/react";
 import { DropdownChangeParams } from "primereact/dropdown";
 import React, { ChangeEvent, useEffect, useState } from "react";
@@ -62,10 +62,7 @@ const AuthSignUpFormShopEmployee = (
 
   const handleSignUpButtonClick = (): void => {
     // TODO: validate inputs
-    dispatch({
-      type: AuthTypes.CREATE_SHOP_EMPLOYEE_SIGN_UP,
-      payload: { ...formValues },
-    });
+    dispatch(createShopEmployeeSignUp(formValues));
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

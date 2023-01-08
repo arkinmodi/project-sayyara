@@ -1,4 +1,4 @@
-import AuthTypes from "@redux/types/authTypes";
+import { createCustomerSignUp } from "@redux/actions/authActions";
 import { getCsrfToken } from "next-auth/react";
 import { DropdownChangeParams } from "primereact/dropdown";
 import React, { ChangeEvent, useEffect, useState } from "react";
@@ -38,8 +38,8 @@ const AuthSignUpFormCustomer = () => {
           console.log(err);
         }
       }
-      fetchCSRF();
     }
+    fetchCSRF();
   }, [formValues]);
 
   const dispatch = useDispatch();
@@ -53,11 +53,16 @@ const AuthSignUpFormCustomer = () => {
   };
 
   const handleSignUpButtonClick = (): void => {
-    // TODO: validate inputs
-    dispatch({
-      type: AuthTypes.CREATE_CUSTOMER_SIGN_UP,
-      payload: { ...formValues },
-    });
+    // TODO: validate inputs and require non-null inputs before form submission
+    if (formValues.vehicleYear != null) {
+      dispatch(
+        createCustomerSignUp({
+          ...formValues,
+          // Assert value is non-null
+          vehicleYear: formValues.vehicleYear!,
+        })
+      );
+    }
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

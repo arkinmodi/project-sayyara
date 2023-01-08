@@ -1,4 +1,4 @@
-import AuthTypes from "@redux/types/authTypes";
+import { createShopOwnerSignup } from "@redux/actions/authActions";
 import { getCsrfToken } from "next-auth/react";
 import { DropdownChangeParams } from "primereact/dropdown";
 import React, { ChangeEvent, useEffect, useState } from "react";
@@ -63,10 +63,7 @@ const AuthSignUpFormShopOwner = (props: IAuthSignUpFormShopOwnerProps) => {
 
   const handleSignUpButtonClick = (): void => {
     // TODO: validate inputs
-    dispatch({
-      type: AuthTypes.CREATE_SHOP_OWNER_SIGN_UP,
-      payload: { ...formValues },
-    });
+    dispatch(createShopOwnerSignup(formValues));
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

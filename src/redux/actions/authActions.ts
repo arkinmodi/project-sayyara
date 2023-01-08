@@ -50,12 +50,12 @@ export interface IAuthActionCreateShopOwnerSignUp extends IAuthActionBase {
     shopCity: string;
     shopPostalCode: string;
     shopProvince: string;
-    stopPhoneNumber: string;
+    shopPhoneNumber: string;
   };
 }
 
 export interface IAuthActionSetIsAuthDialogOpen extends IAuthActionBase {
-  payload: { isAuthPopoutOpen: boolean; authDialogType: AuthDialogType };
+  payload: { isAuthDialogOpen: boolean; authDialogType: AuthDialogType };
 }
 
 export type IAuthAction =
@@ -92,9 +92,16 @@ export const createShopOwnerSignup = (
   payload,
 });
 
-export const setIsAuthPopoutOpen = (
+export const setIsAuthDialogOpen = (
   payload: IAuthActionSetIsAuthDialogOpen["payload"]
 ) => ({
   type: AuthType.SET_IS_AUTH_DIALOG_OPEN,
+  payload,
+});
+
+export const setIsLoggedIn = (
+  payload: IAuthActionSetIsLoggedIn["payload"]
+) => ({
+  type: AuthType.SET_IS_LOGGED_IN,
   payload,
 });
