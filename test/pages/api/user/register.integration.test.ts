@@ -5,7 +5,6 @@
  * @group integration
  */
 
-import registrationHandler from "@pages/api/user/register";
 import registerCustomerHandler from "@pages/api/user/register/customer";
 import registerEmployeeHandler from "@pages/api/user/register/employee";
 import registerShopOwnerHandler from "@pages/api/user/register/shopOwner";
@@ -89,36 +88,6 @@ afterEach(async () => {
 
 describe("new user registration", () => {
   describe("given valid new user data", () => {
-    it("should create new user", async () => {
-      const { req, res } = createMockRequestResponse({ method: "POST" });
-      req.body = {
-        email: testEmployee.email,
-        password: testEmployee.password,
-        first_name: testEmployee.first_name,
-        last_name: testEmployee.last_name,
-        type: testEmployee.type,
-      };
-
-      await registrationHandler(req, res);
-      const newUser = await prisma.employee.findUnique({
-        where: { email: testEmployee.email },
-      });
-
-      expect(res.statusCode).toBe(302);
-      expect(newUser).toEqual({
-        id: expect.any(String),
-        first_name: testEmployee.first_name,
-        last_name: testEmployee.last_name,
-        email: testEmployee.email,
-        password: expect.any(String),
-        image: null,
-        type: "SHOP_OWNER",
-        create_time: expect.any(Date),
-        update_time: expect.any(Date),
-        shop_id: expect.any(String),
-      });
-    });
-
     it("should create new customer", async () => {
       const { req, res } = createMockRequestResponse({ method: "POST" });
       req.body = {
@@ -230,55 +199,6 @@ describe("new user registration", () => {
         image: null,
         type: testShopOwner.type,
         shop_id: expect.any(String),
-      });
-    });
-  });
-
-  describe("given valid existing user data", () => {
-    it("should not create new user", async () => {
-      await prisma.employee.create({
-        data: {
-          email: testEmployee.email,
-          password: testEmployee.password,
-          first_name: testEmployee.first_name,
-          last_name: testEmployee.last_name,
-          type: testEmployee.type,
-          shop: { create: {} },
-        },
-      });
-
-      const { req, res } = createMockRequestResponse({ method: "POST" });
-      req.body = {
-        email: testEmployee.email,
-        password: testEmployee.password,
-        first_name: testEmployee.first_name,
-        last_name: testEmployee.last_name,
-        type: testEmployee.type,
-      };
-
-      await registrationHandler(req, res);
-
-      expect(res.statusCode).toBe(409);
-      expect(res._getJSONData()).toEqual({
-        message: "User with email address already exists.",
-      });
-    });
-  });
-
-  describe("given invalid user data", () => {
-    it("should return 400", async () => {
-      const { req, res } = createMockRequestResponse({ method: "POST" });
-      req.body = {
-        password: testEmployee.password,
-        first_name: testEmployee.first_name,
-        last_name: testEmployee.last_name,
-      };
-
-      await registrationHandler(req, res);
-
-      expect(res.statusCode).toBe(400);
-      expect(res._getJSONData()).toEqual({
-        message: expect.anything(),
       });
     });
   });
