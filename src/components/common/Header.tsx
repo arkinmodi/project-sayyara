@@ -54,7 +54,7 @@ const Header = () => {
         payload: { isLoggedIn: false },
       });
     }
-  }, [session?.user, isLoggedIn]);
+  }, [session?.user, isLoggedIn, dispatch]);
 
   /**
    * Handle navbar button clicks to open auth dialog

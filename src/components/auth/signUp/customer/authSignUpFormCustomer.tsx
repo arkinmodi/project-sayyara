@@ -28,17 +28,19 @@ const AuthSignUpFormCustomer = () => {
 
   useEffect(() => {
     async function fetchCSRF() {
-      try {
-        const res = await getCsrfToken();
-        if (!!res) {
-          setFormValues({ ...formValues, csrfToken: res });
+      if (formValues.csrfToken == "") {
+        try {
+          const res = await getCsrfToken();
+          if (!!res) {
+            setFormValues({ ...formValues, csrfToken: res });
+          }
+        } catch (err) {
+          console.log(err);
         }
-      } catch (err) {
-        console.log(err);
       }
+      fetchCSRF();
     }
-    fetchCSRF();
-  }, []);
+  }, [formValues]);
 
   const dispatch = useDispatch();
 

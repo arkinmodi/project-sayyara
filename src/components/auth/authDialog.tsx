@@ -2,7 +2,7 @@ import { AuthSelectors } from "@redux/selectors/authSelectors";
 import AuthTypes from "@redux/types/authTypes";
 import styles from "@styles/components/auth/AuthDialog.module.css";
 import { Dialog } from "primereact/dialog";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthDialogType } from "src/types/auth";
 import AuthFormTabs from "./authFormTabs";
@@ -18,6 +18,17 @@ const AuthDialog = () => {
   const authDialogType = useSelector(AuthSelectors.getAuthDialogType);
   const isLoggedIn = useSelector(AuthSelectors.getIsLoggedIn);
 
+  /**
+   * Hide auth Dialog and reset Dialog state
+   */
+  const onHide = useCallback(() => {
+    setDisplayDialog(false);
+    dispatch({
+      type: AuthTypes.SET_IS_AUTH_DIALOG_OPEN,
+      payload: { isAuthDialogOpen: false, AuthDialogType: undefined },
+    });
+  }, [dispatch]);
+
   useEffect(() => {
     setDisplayDialog(isOpen);
   }, [isOpen]);
@@ -30,18 +41,7 @@ const AuthDialog = () => {
     if (isLoggedIn) {
       onHide();
     }
-  }, [isLoggedIn]);
-
-  /**
-   * Hide auth Dialog and reset Dialog state
-   */
-  const onHide = () => {
-    setDisplayDialog(false);
-    dispatch({
-      type: AuthTypes.SET_IS_AUTH_DIALOG_OPEN,
-      payload: { isAuthDialogOpen: false, AuthDialogType: undefined },
-    });
-  };
+  }, [isLoggedIn, onHide]);
 
   return (
     <div>
