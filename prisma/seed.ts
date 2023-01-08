@@ -39,7 +39,7 @@ const seed = async () => {
     },
   });
 
-  // Create Customer
+  // Create Customer and Vehicle
   await prisma.customer.create({
     data: {
       email: customerCredentials.email,
@@ -47,14 +47,23 @@ const seed = async () => {
       first_name: "Mia",
       last_name: "Wong",
       type: "CUSTOMER",
+      vehicles: {
+        create: [
+          {
+            year: 2013,
+            make: "Subaru",
+            model: "Forester",
+            vin: "JF2SHADC3DG417185",
+            license_plate: "BPNW958",
+          },
+        ],
+      },
     },
   });
 };
 
 seed()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
+  .then(async () => await prisma.$disconnect())
   .catch(async (e) => {
     console.error(e);
     await prisma.$disconnect();
