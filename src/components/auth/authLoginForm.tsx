@@ -4,7 +4,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import authStyles from "../../styles/pages/auth/Auth.module.css";
+import authStyles from "../../styles/components/auth/Auth.module.css";
 import { ILoginFormValues } from "./types";
 
 const initialLoginFormValues: ILoginFormValues = {

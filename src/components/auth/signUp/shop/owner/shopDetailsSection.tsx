@@ -1,4 +1,4 @@
-import authStyles from "@styles/pages/auth/Auth.module.css";
+import authStyles from "@styles/components/auth/Auth.module.css";
 import { Button } from "primereact/button";
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
