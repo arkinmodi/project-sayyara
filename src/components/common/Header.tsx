@@ -1,6 +1,7 @@
 import { setIsAuthDialogOpen, setIsLoggedIn } from "@redux/actions/authActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/components/common/Header.module.css";
+import classNames from "classnames";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { Button } from "primereact/button";
@@ -10,10 +11,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthDialogType } from "src/types/auth";
 import AuthDialog from "../auth/authDialog";
-const classNames = require("classnames");
 
 const Header = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const isLoggedIn = useSelector(AuthSelectors.getIsLoggedIn);
   const dispatch = useDispatch();
 

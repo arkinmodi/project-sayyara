@@ -12,4 +12,4 @@ export const PROVINCES = [
   "Quebec",
   "Saskatchewan",
   "Yukon",
-];
+] as const;
