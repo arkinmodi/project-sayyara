@@ -57,6 +57,7 @@
 		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}         \\
 		\midrule
 		December 28, 2022 & Arkin Modi            & Create Revision History \\
+		January 9, 2023   & Arkin Modi            & Add Module Hierarchy    \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -131,44 +132,43 @@ described by giving their type signature followed by their specification.
 
 The following table is taken directly from the Module Guide document for this project.
 
-\begin{table}[h!]
+\begin{table}[H]
 	\centering
 	\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
 		\toprule
-		\textbf{Level 1}                               & \textbf{Level 2}                \\
+		\textbf{Level 1}                                      & \textbf{Level 2}           \\
 		\midrule
 
-		{Hardware-Hiding}                              & ~                               \\
+		Hardware-Hiding Module                                & ~                          \\
+
 		\midrule
 
-		\multirow{7}{0.3\textwidth}{Behaviour-Hiding}  & Input Parameters                \\
-		                                               & Output Format                   \\
-		                                               & Output Verification             \\
-		                                               & Temperature ODEs                \\
-		                                               & Energy Equations                \\
-		                                               & Control Module                  \\
-		                                               & Specification Parameters Module \\
+		\multirow{8}{0.3\textwidth}{Behaviour-Hiding Module}  & Users Module               \\
+		                                                      & Quotes Module              \\
+		                                                      & Appointments Module        \\
+		                                                      & Work Orders Module         \\
+		                                                      & Employee Management Module \\
+		                                                      & Services Module            \\
+		                                                      & Shop Lookup Module         \\
+		                                                      & Shop Profile Module        \\
 		\midrule
 
-		\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}       \\
-		                                               & ODE Solver                      \\
-		                                               & Plotting                        \\
+		\multirow{1}{0.3\textwidth}{Software Decision Module} & Database Driver Module     \\
+
 		\bottomrule
-
 	\end{tabular}
 	\caption{Module Hierarchy}
 	\label{TblMH}
 \end{table}
 
 \newpage
-~\newpage
 
 \section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
 	cross-referencing}
 
 \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
 
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\wss{It is also possible to use \LaTeX{} for hypperlinks to external documents.}
 
 \subsection{Module}
 
