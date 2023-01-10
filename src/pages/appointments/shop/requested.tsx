@@ -2,13 +2,13 @@ import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
 import AppointmentTypes from "@redux/types/appointmentTypes";
 import styles from "@styles/pages/appointments/Requests.module.css";
 import { NextPage } from "next";
-import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppointmentStatus, IAppointment } from "../../../types/appointment";
+import AppointmentCard from "./appointmentCard";
 
-const Requests: NextPage = () => {
+const Requested: NextPage = () => {
   const [pendingAppointments, setPendingAppointments] = useState<
     IAppointment[]
   >([]);
@@ -49,22 +49,7 @@ const Requests: NextPage = () => {
         </h2>
         {pendingAppointments.length > 0 ? (
           pendingAppointments.map((appointment) => (
-            <Card key={appointment.id.toString()}>
-              <div>Appointment id: {appointment.id}</div>
-              <div>
-                Start time:{" "}
-                {String(new Date(appointment.startTime).toLocaleString())}
-              </div>
-              <div>
-                End time:{" "}
-                {String(new Date(appointment.endTime).toLocaleString())}
-              </div>
-              <Button
-                label="Accept"
-                className={styles.appointmentRequestsAcceptButton}
-                onClick={() => handleAcceptButtonClick(appointment)}
-              />
-            </Card>
+            <AppointmentCard appointment={appointment} />
           ))
         ) : (
           <div className={styles.appointmentRequestsCardText}>
@@ -76,4 +61,4 @@ const Requests: NextPage = () => {
   );
 };
 
-export default Requests;
+export default Requested;

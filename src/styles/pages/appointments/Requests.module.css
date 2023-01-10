@@ -18,15 +18,37 @@
 }
 
 .appointmentRequestsCard {
-  background-color: rgba(232, 232, 232, 0.3);
-  width: 50%;
+  border-radius: 5px;
+  margin: 3%;
+}
+
+.floatRight {
   margin-top: 5%;
+  float: right;
+  width: 50%;
+  text-align: right;
+}
+
+.floatLeft {
+  display: inline-block;
 }
 
 .appointmentRequestsAcceptButton {
   width: 150px;
   height: 40px;
   margin: 2px;
+  background-color: #69ad96;
+  border-color: #69ad96;
+}
+
+.appointmentRequestsRejectButton {
+  width: 150px;
+  height: 40px;
+  margin: 2px;
+  background-color: white;
+  color: #436188;
+  border-color: #436188;
+  border-width: 3px;
 }
 
 @media (max-width: 1000px) {

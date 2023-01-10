@@ -8,6 +8,9 @@ export interface IAppointment {
   serviceType: String;
   price: Number;
   status: AppointmentStatus;
+  vehicleMake: String;
+  vehicleModel: String;
+  vehicleManufactureYear: Number;
 }
 
 export enum AppointmentStatus {
