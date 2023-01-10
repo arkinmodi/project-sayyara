@@ -1,3 +1,4 @@
+import { UserType } from "@prisma/client";
 import { AuthDialogType } from "src/types/auth";
 import AuthType from "../types/authTypes";
 
@@ -58,13 +59,18 @@ export interface IAuthActionSetIsAuthDialogOpen extends IAuthActionBase {
   payload: { isAuthDialogOpen: boolean; authDialogType: AuthDialogType };
 }
 
+export interface IAuthActionSetUserType extends IAuthActionBase {
+  payload: { userType: UserType | undefined };
+}
+
 export type IAuthAction =
   | IAuthActionCreateLogin
   | IAuthActionCreateCustomerSignUp
   | IAuthActionCreateShopEmployeeSignUp
   | IAuthActionCreateShopOwnerSignUp
   | IAuthActionSetIsLoggedIn
-  | IAuthActionSetIsAuthDialogOpen;
+  | IAuthActionSetIsAuthDialogOpen
+  | IAuthActionSetUserType;
 
 export const createLogin = (payload: IAuthActionCreateLogin["payload"]) => ({
   type: AuthType.CREATE_LOGIN,
@@ -103,5 +109,10 @@ export const setIsLoggedIn = (
   payload: IAuthActionSetIsLoggedIn["payload"]
 ) => ({
   type: AuthType.SET_IS_LOGGED_IN,
+  payload,
+});
+
+export const setUserType = (payload: IAuthActionSetUserType["payload"]) => ({
+  type: AuthType.SET_USER_TYPE,
   payload,
 });
