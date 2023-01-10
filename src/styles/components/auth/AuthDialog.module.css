@@ -1,0 +1,11 @@
+.authDialog {
+  width: 45vw;
+  height: 35vw;
+}
+
+@media (max-width: 1000px) {
+  .authDialog {
+    width: 90vw;
+    height: 80vh;
+  }
+}
