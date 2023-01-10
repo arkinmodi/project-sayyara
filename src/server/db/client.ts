@@ -1,4 +1,11 @@
-import { PrismaClient, Service } from "@prisma/client";
+import {
+  Customer,
+  Employee,
+  PrismaClient,
+  Service,
+  Shop,
+  Vehicle,
+} from "@prisma/client";
 import { z } from "zod";
 
 declare global {
@@ -33,3 +40,11 @@ export type PartType = z.infer<typeof partSchema>;
 export type ServiceWithPartsType = {
   parts: PartType[];
 } & Service;
+
+export type CustomerWithVehicles = {
+  vehicles: Vehicle[];
+} & Customer;
+
+export type EmployeeWithShop = {
+  shop: Shop;
+} & Employee;

@@ -14,3 +14,27 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.blueText {
+  color: #436188;
+}
+
+.greenText {
+  color: #69ad96;
+}
+
+/**
+ * Global override to center TabView
+ */
+.p-tabview .p-tabview-nav {
+  justify-content: center !important;
+}
+
+.p-tabview .p-tabview-nav .p-tabview-ink-bar {
+  display: none;
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  border-color: #436188;
+  color: #436188;
+}

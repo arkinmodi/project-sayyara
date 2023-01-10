@@ -9,6 +9,7 @@
 \usepackage{float}
 \usepackage{hyperref}
 \usepackage[nottoc,numbib]{tocbibind}
+\usepackage{enumitem}
 
 \hypersetup{
 	colorlinks,
@@ -52,6 +53,7 @@
 		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}         \\
 		\midrule
 		December 28, 2022 & Arkin Modi            & Create Revision History \\
+		January 3, 2023   & Arkin Modi            & Add Module Hierarchy    \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -179,36 +181,46 @@ This section provides an overview of the module design. Modules are summarized i
 decomposed by secrets in Table \ref{TblMH}. The modules listed below, which are leaves in the
 hierarchy tree, are the modules that will actually be implemented.
 
-\begin{description}
-	\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-	\item ...
-\end{description}
+\begin{enumerate}[label=\textbf{M\arabic*:},ref=M\arabic*]
+	\item \label{mHH} Hardware-Hiding Module
+	\item \label{mDBDriver} Database Driver Module
+	\item \label{mUsers} Users Module
+	\item \label{mQuotes} Quotes Module
+	\item \label{mAppointments} Appointments Module
+	\item \label{mWorkOrders} Work Orders Module
+	\item \label{mEmployeeManagement} Employee Management Module
+	\item \label{mServices} Services Module
+	\item \label{mShopLookup} Shop Lookup Module
+	\item \label{mShopProfile} Shop Profile Module
+\end{enumerate}
 
-\begin{table}[h!]
+Note that \ref{mHH} is a commonly used module and is already implemented by the operating system.
+It will not be reimplemented.
+
+\begin{table}[H]
 	\centering
 	\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
 		\toprule
-		\textbf{Level 1}                                      & \textbf{Level 2} \\
+		\textbf{Level 1}                                      & \textbf{Level 2}           \\
 		\midrule
 
-		{Hardware-Hiding Module}                              & ~                \\
+		Hardware-Hiding Module                                & ~                          \\
+
 		\midrule
 
-		\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module}  & ?                \\
-		                                                      & ?                \\
-		                                                      & ?                \\
-		                                                      & ?                \\
-		                                                      & ?                \\
-		                                                      & ?                \\
-		                                                      & ?                \\
-		                                                      & ?                \\
+		\multirow{8}{0.3\textwidth}{Behaviour-Hiding Module}  & Users Module               \\
+		                                                      & Quotes Module              \\
+		                                                      & Appointments Module        \\
+		                                                      & Work Orders Module         \\
+		                                                      & Employee Management Module \\
+		                                                      & Services Module            \\
+		                                                      & Shop Lookup Module         \\
+		                                                      & Shop Profile Module        \\
 		\midrule
 
-		\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}              \\
-		                                                      & ?                \\
-		                                                      & ?                \\
+		\multirow{1}{0.3\textwidth}{Software Decision Module} & Database Driver Module     \\
+
 		\bottomrule
-
 	\end{tabular}
 	\caption{Module Hierarchy}
 	\label{TblMH}
@@ -218,7 +230,7 @@ hierarchy tree, are the modules that will actually be implemented.
 
 The design of the system is intended to satisfy the requirements developed in the SRS. In this
 stage, the system is decomposed into modules. The connection between requirements and modules is
-listed in Table~\ref{TblRT}.
+listed in Table \ref{TblRT}.
 
 \section{Module Decomposition} \label{SecMD}
 
@@ -233,7 +245,7 @@ libraries. \emph{\progname{}} means the module will be implemented by the \progn
 Only the leaf modules in the hierarchy have to be implemented. If a dash (\emph{--}) is shown, this
 means that the module is not a leaf and will not have to be implemented.
 
-\subsection{Hardware Hiding Modules (\mref{mHH})}
+\subsection{Hardware Hiding Modules (\ref{mHH})}
 
 \begin{description}
 	\item[Secrets:]The data structure and algorithm used to implement the virtual hardware.
