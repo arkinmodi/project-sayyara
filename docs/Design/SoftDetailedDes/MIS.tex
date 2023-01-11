@@ -294,7 +294,7 @@ None
 
 \subsubsection{Environment Variables}
 
-None
+User's Display \\ Database
 
 \subsubsection{Assumptions}
 
@@ -304,7 +304,7 @@ None
 
 \noindent createCustomer($customer$):
 \begin{itemize}
-	\item transition: new Customer(customer), save customer to customer database
+	\item transition: new Customer(customer), save customer to customer database table
 	\item output: $out := (exc = \text{CustomerAlreadyExistsException}$ \\ $\Rightarrow ``\text{User with
 			      email address already exists.}" |\ \neg exc \Rightarrow \text{new Customer(\emph{customer})})$
 	\item exception: $exc := getUserByEmail(customer.email) \neq \text{None}$ \\ $\Rightarrow
@@ -313,7 +313,7 @@ None
 
 \noindent createEmployee($employee$):
 \begin{itemize}
-	\item transition: new Employee(employee), save employee to employee database
+	\item transition: new Employee(employee), save employee to employee database table
 	\item output: $out := (exc = \text{EmployeeAlreadyExistsException}$ \\ $\Rightarrow ``\text{User with
 			      email address already exists.}" |\ \neg exc \Rightarrow \text{new Employee(\emph{employee})})$
 	\item exception: $exc := getUserByEmail(employee.email) \neq \text{None}$ \\ $\Rightarrow
@@ -322,7 +322,7 @@ None
 
 \noindent createShopOwner($shopOwner$):
 \begin{itemize}
-	\item transition: new Employee(shopOwner), save shop owner to employee database
+	\item transition: new Employee(shopOwner), save shop owner to employee database table
 	\item output: $out := (exc = \text{ShopOwnerAlreadyExistsException}$ \\ $\Rightarrow ``\text{User with
 			      email address already exists.}" |\ \neg exc \Rightarrow \text{new Employee(\emph{shopOwner})})$
 	\item exception: $exc := getUserByEmail(shopOwner.email) \neq \text{None}$ \\ $\Rightarrow
@@ -331,8 +331,8 @@ None
 
 \noindent getUserByEmail($e$):
 \begin{itemize}
-	\item output: $out :=$ A User such that is contains the email, $e$, from the customers or employees, else
-	      None.
+	\item output: $out :=$ A User such that is contains the email, $e$, from the customer database table or
+	      employees database table, else None.
 \end{itemize}
 
 \noindent authorize($email, password$):
