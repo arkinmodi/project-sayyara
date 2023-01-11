@@ -163,8 +163,6 @@ The following table is taken directly from the Module Guide document for this pr
 	\label{TblMH}
 \end{table}
 
-\newpage
-
 \section{MIS of Users Module} \label{mUsers}
 \subsection{Module}
 
@@ -196,13 +194,13 @@ None
 	\begin{adjustbox}{width=\textwidth}
 		\begin{tabular}{llll}
 			\hline
-			\textbf{Name}   & \textbf{In}         & \textbf{Out}                       & \textbf{Exceptions}             \\
+			\textbf{Name}   & \textbf{In}         & \textbf{Out}                         & \textbf{Exceptions}             \\
 			\hline
-			createCustomer  & CreateCustomerType  & Customer                           & CustomerAlreadyExistsException  \\
-			createEmployee  & CreateEmployeeType  & Employee                           & EmployeeAlreadyExistsException  \\
-			createShopOwner & CreateShopOwnerType & Employee                           & ShopOwnerAlreadyExistsException \\
-			getUserByEmail  & String              & $Customer \lor Employee \lor None$ & ~                               \\
-			authorize       & String, String      & AuthorizeReturnType                & ~                               \\
+			createCustomer  & CreateCustomerType  & Customer                             & CustomerAlreadyExistsException  \\
+			createEmployee  & CreateEmployeeType  & Employee                             & EmployeeAlreadyExistsException  \\
+			createShopOwner & CreateShopOwnerType & Employee                             & ShopOwnerAlreadyExistsException \\
+			getUserByEmail  & String              & Customer $\lor$ Employee $\lor$ None & ~                               \\
+			authorize       & String, String      & AuthorizeReturnType                  & ~                               \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -216,6 +214,8 @@ None
 
 \subsubsection{Environment Variables}
 
+None
+
 \subsubsection{Assumptions}
 
 None
@@ -224,11 +224,43 @@ None
 
 \noindent createCustomer($customer$):
 \begin{itemize}
-	\item transition: new Customer(customer), save customer to database
+	\item transition: new Customer(customer), save customer to customer database
 	\item output: $out := (exc = \text{CustomerAlreadyExistsException}$ \\ $\Rightarrow ``\text{User with
 			      email address already exists.}" |\ \neg exc \Rightarrow \text{new Customer(\emph{customer})})$
 	\item exception: $exc := getUserByEmail(customer.email) \neq \text{None}$ \\ $\Rightarrow
 		      \text{CustomerAlreadyExistsException}$
+\end{itemize}
+
+\noindent createEmployee($employee$):
+\begin{itemize}
+	\item transition: new Employee(employee), save employee to employee database
+	\item output: $out := (exc = \text{EmployeeAlreadyExistsException}$ \\ $\Rightarrow ``\text{User with
+			      email address already exists.}" |\ \neg exc \Rightarrow \text{new Employee(\emph{employee})})$
+	\item exception: $exc := getUserByEmail(employee.email) \neq \text{None}$ \\ $\Rightarrow
+		      \text{EmployeeAlreadyExistsException}$
+\end{itemize}
+
+\noindent createShopOwner($shopOwner$):
+\begin{itemize}
+	\item transition: new Employee(shopOwner), save shop owner to employee database
+	\item output: $out := (exc = \text{ShopOwnerAlreadyExistsException}$ \\ $\Rightarrow ``\text{User with
+			      email address already exists.}" |\ \neg exc \Rightarrow \text{new Employee(\emph{shopOwner})})$
+	\item exception: $exc := getUserByEmail(shopOwner.email) \neq \text{None}$ \\ $\Rightarrow
+		      \text{ShopOwnerAlreadyExistsException}$
+\end{itemize}
+
+\noindent getUserByEmail($e$):
+\begin{itemize}
+	\item output: $out :=$ A User such that is contains the email, $e$, from the customers or employees, else
+	      None.
+\end{itemize}
+
+\noindent authorize($email, password$):
+\begin{itemize}
+	\item output: $out := getUserByEmail(email) = \text{User} \Rightarrow $ \\ $(\text{User} = \text{None}
+		      \Rightarrow \text{``User not found."}$ \\ $|\ \text{User.password} = password \Rightarrow
+		      \text{AuthorizeReturnType}$ \\ $|\ \text{User.password} \neq password \Rightarrow
+		      \text{``Unauthorized"})$
 \end{itemize}
 
 \subsubsection{Local Functions}
