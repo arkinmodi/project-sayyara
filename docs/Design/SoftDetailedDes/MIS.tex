@@ -57,6 +57,8 @@
 		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}         \\
 		\midrule
 		December 28, 2022 & Arkin Modi            & Create Revision History \\
+		January 7, 2023   & Joy Xiao              & Introduction            \\
+		January 9, 2023   & Arkin Modi            & Add Module Hierarchy    \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -65,9 +67,20 @@
 
 \section{Symbols, Abbreviations and Acronyms}
 
-See SRS Documentation at \wss{give url}
+See SRS Documentation at
+\url{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}
 
 \wss{Also add any additional symbols, abbreviations or acronyms}
+
+\begin{tabular}{l l}
+	\toprule
+	\textbf{symbol} & \textbf{description}            \\
+	\midrule
+	\progname       & Explanation of program name     \\
+	MIS             & Module Interface Specifications \\
+	MG              & Module Guide                    \\
+	\bottomrule
+\end{tabular}
 
 \newpage
 
@@ -85,11 +98,20 @@ See SRS Documentation at \wss{give url}
 
 \section{Introduction}
 
-The following document details the Module Interface Specifications for \wss{Fill in your project
-	name and description}
+The following document details the Module Interface Specifications for project Sayyara. Sayyara is
+a progressive web application (PWA) which will act as a single platform for independent auto repair
+shops and vehicle owners. This platform will allow independent auto repair shops and vehicle owners
+to interact in a more efficient and effective manner. Vehicle owners can search for auto repair
+shops and services; request quotes for service; book, view, and manage service appointments. On the
+application, auto repair shop owners will be able to manage a list of employees; manage a list of
+service types and corresponding service appointment availabilities; manage store information such
+as location, hours of operation, and contact information. Auto repair shop owners and employees
+will be able to manage quotes, service appointments, and work orders from a single application. The
+MIS will detail specifications for the project described above.
 
 Complementary documents include the System Requirement Specifications and Module Guide. The full
-documentation and implementation can be found at \url{...}. \wss{provide the url for your repo}
+documentation and implementation can be found at
+\url{https://github.com/arkinmodi/project-sayyara/}.
 
 \section{Notation}
 
@@ -131,44 +153,43 @@ described by giving their type signature followed by their specification.
 
 The following table is taken directly from the Module Guide document for this project.
 
-\begin{table}[h!]
+\begin{table}[H]
 	\centering
 	\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
 		\toprule
-		\textbf{Level 1}                               & \textbf{Level 2}                \\
+		\textbf{Level 1}                                      & \textbf{Level 2}           \\
 		\midrule
 
-		{Hardware-Hiding}                              & ~                               \\
+		Hardware-Hiding Module                                & ~                          \\
+
 		\midrule
 
-		\multirow{7}{0.3\textwidth}{Behaviour-Hiding}  & Input Parameters                \\
-		                                               & Output Format                   \\
-		                                               & Output Verification             \\
-		                                               & Temperature ODEs                \\
-		                                               & Energy Equations                \\
-		                                               & Control Module                  \\
-		                                               & Specification Parameters Module \\
+		\multirow{8}{0.3\textwidth}{Behaviour-Hiding Module}  & Users Module               \\
+		                                                      & Quotes Module              \\
+		                                                      & Appointments Module        \\
+		                                                      & Work Orders Module         \\
+		                                                      & Employee Management Module \\
+		                                                      & Services Module            \\
+		                                                      & Shop Lookup Module         \\
+		                                                      & Shop Profile Module        \\
 		\midrule
 
-		\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}       \\
-		                                               & ODE Solver                      \\
-		                                               & Plotting                        \\
+		\multirow{1}{0.3\textwidth}{Software Decision Module} & Database Driver Module     \\
+
 		\bottomrule
-
 	\end{tabular}
 	\caption{Module Hierarchy}
 	\label{TblMH}
 \end{table}
 
 \newpage
-~\newpage
 
 \section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
 	cross-referencing}
 
 \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
 
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\wss{It is also possible to use \LaTeX{} for hypperlinks to external documents.}
 
 \subsection{Module}
 

@@ -47,7 +47,7 @@ export const authOptions: NextAuthOptions = {
     logo: "/icons/icon-512x512.png",
   },
   pages: {
-    signIn: "/auth/login",
+    signIn: "/",
   },
 };
 
