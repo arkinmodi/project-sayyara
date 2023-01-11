@@ -55,6 +55,7 @@
 		December 28, 2022 & Arkin Modi            & Create Revision History                   \\
 		January 3, 2023   & Arkin Modi            & Add Module Hierarchy                      \\
 		January 8, 2023   & Arkin Modi            & Add Use Hierarchy Between Modules Diagram \\
+		January 10, 2023  & Arkin Modi            & Add Module Decompositions                 \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -82,6 +83,7 @@ This section records information for easy reference.
 	SRS             & Software Requirements Specification \\
 	\progname       & Explanation of program name         \\
 	UC              & Unlikely Change                     \\
+	CRUD            & Create, Read, Update, and Delete    \\
 	\wss{etc.}      & \wss{...}                           \\
 	\bottomrule
 \end{tabular}
@@ -258,40 +260,121 @@ means that the module is not a leaf and will not have to be implemented.
 
 \subsection{Behaviour-Hiding Module}
 
+% \begin{description}
+%      \item[Secrets:] The contents of the required behaviours.
+%      \item[Services:] Includes programs that provide externally visible behaviour of the system as specified
+%              in the software requirements specification (SRS) documents. This module serves as a communication
+%              layer between the hardware-hiding module and the software decision module. The programs in this
+%              module will need to change if there are changes in the SRS.
+%      \item[Implemented By:] --
+% \end{description}
+
+% \subsubsection{Input Format Module (\mref{mInput})}
+
+% \begin{description}
+%      \item[Secrets:] The format and structure of the input data.
+%      \item[Services:] Converts the input data into the data structure used by the input parameters module.
+%      \item[Implemented By:] [Your Program Name Here]
+%  \item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type] [Information to include
+%              for leaf modules in the decomposition by secrets tree.]
+% \end{description}
+
+\subsubsection{User Module (\ref{mUsers})}
+
 \begin{description}
-	\item[Secrets:]The contents of the required behaviours.
-	\item[Services:]Includes programs that provide externally visible behaviour of the system as specified in
-	the software requirements specification (SRS) documents. This module serves as a communication
-	layer between the hardware-hiding module and the software decision module. The programs in this
-	module will need to change if there are changes in the SRS.
-	\item[Implemented By:] --
+	\item[Secrets:] The format and structure of user data objects.
+	\item[Services:] Provide CRUD operations for user objects, and the ability to verify a user's
+		authorization.
+	\item[Implemented By:] \progname{}
+		% \item[Type of Module:]
 \end{description}
 
-\subsubsection{Input Format Module (\mref{mInput})}
+\subsubsection{Quotes Module (\ref{mQuotes})}
 
 \begin{description}
-	\item[Secrets:]The format and structure of the input data.
-	\item[Services:]Converts the input data into the data structure used by the input parameters module.
-	\item[Implemented By:] [Your Program Name Here]
-	\item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type] [Information to include
-		for leaf modules in the decomposition by secrets tree.]
+	\item[Secrets:] The format and structure of quote and chat message data objects.
+	\item[Services:] Provide CRUD operations for quote and chat message objects.
+	\item[Implemented By:] \progname{}
+		% \item[Type of Module:]
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Appointments Module (\ref{mAppointments})}
+
+\begin{description}
+	\item[Secrets:] The format and structure of appointment data objects.
+	\item[Services:] Provide CRUD operations for appointment objects, the ability to verify if an appointment
+		is acceptable (i.e., is possible to fulfill), and the ability to accept an appointment and reject
+		all conflicting appointments.
+	\item[Implemented By:] \progname{}
+		% \item[Type of Module:]
+\end{description}
+
+\subsubsection{Work Orders Module (\ref{mWorkOrders})}
+
+\begin{description}
+	\item[Secrets:] The format and structure of work order data objects.
+	\item[Services:] Provide CRUD operations for work order objects.
+	\item[Implemented By:] \progname{}
+		% \item[Type of Module:]
+\end{description}
+
+\subsubsection{Employee Management Module (\ref{mEmployeeManagement})}
+
+\begin{description}
+	\item[Secrets:] --
+	\item[Services:] Provide CRUD operations for managing employee's relation with shop.
+	\item[Implemented By:] \progname{}
+		% \item[Type of Module:]
+\end{description}
+
+\subsubsection{Services Module (\ref{mServices})}
+
+\begin{description}
+	\item[Secrets:] The format and structure of service data objects.
+	\item[Services:] Provide CRUD operations for service objects.
+	\item[Implemented By:] \progname{}
+		% \item[Type of Module:]
+\end{description}
+
+\subsubsection{Shop Lookup Module (\ref{mShopLookup})}
+
+\begin{description}
+	\item[Secrets:] --
+	\item[Services:] Provides the ability to query for a shop by distance, postal code and/or shop name.
+	\item[Implemented By:] \progname{}
+		% \item[Type of Module:]
+\end{description}
+
+\subsubsection{Shop Profile Module (\ref{mShopProfile})}
+
+\begin{description}
+	\item[Secrets:] The format and structure of shop data objects.
+	\item[Services:] Provide CRUD operations for shop objects.
+	\item[Implemented By:] \progname{}
+		% \item[Type of Module:]
+\end{description}
 
 \subsection{Software Decision Module}
 
+% \begin{description}
+%      \item[Secrets:] The design decision based on mathematical theorems, physical facts, or programming
+%              considerations. The secrets of this module are \emph{not} described in the SRS.
+%      \item[Services:] Includes data structure and algorithms used in the system that do not provide direct
+%              interaction with the user.
+%              % Changes in these modules are more likely to be motivated by a desire to
+%              % improve performance than by externally imposed changes.
+%      \item[Implemented By:] --
+% \end{description}
+
+\subsubsection{Database Driver Module (\ref{mDBDriver})}
 \begin{description}
-	\item[Secrets:] The design decision based on mathematical theorems, physical facts, or programming
-		considerations. The secrets of this module are \emph{not} described in the SRS.
-	\item[Services:] Includes data structure and algorithms used in the system that do not provide direct
-		interaction with the user.
-		% Changes in these modules are more likely to be motivated by a desire to
-		% improve performance than by externally imposed changes.
-	\item[Implemented By:] --
+	\item[Secrets:] The data structures and algorithms for representing the database's schema and
+		communicating with the database.
+	\item[Services:] Provides a driver to interface with the database
+	\item[Implemented By:] Prisma
 \end{description}
 
-\subsubsection{Etc.}
+\newpage
 
 \section{Traceability Matrix} \label{SecTM}
 
