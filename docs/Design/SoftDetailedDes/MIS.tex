@@ -20,6 +20,8 @@
 \usepackage{fullpage}
 \usepackage{array}
 \usepackage[nottoc,numbib]{tocbibind}
+\usepackage{adjustbox}
+
 
 \hypersetup{
 	bookmarks=true,         % show bookmarks bar?
@@ -54,9 +56,10 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}         \\
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}           \\
 		\midrule
-		December 28, 2022 & Arkin Modi            & Create Revision History \\
+		December 28, 2022 & Arkin Modi            & Create Revision History   \\
+		January 10, 2023  & Arkin Modi            & Create MIS of User Module \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -161,77 +164,149 @@ The following table is taken directly from the Module Guide document for this pr
 \end{table}
 
 \newpage
-~\newpage
 
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
-	cross-referencing}
-
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
-
+\section{MIS of Users Module} \label{mUsers}
 \subsection{Module}
 
-\wss{Short name for the module}
+userService
 
 \subsection{Uses}
+
+Database Driver Module
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
 
+None
+
+% \subsubsection{Exported Types}
+
+% \textbf{CreateCustomerType}
+
+% \textbf{CreateEmployeeType}
+
+% \textbf{CreateShopOwnerType}
+
+% \textbf{AuthorizeReturnType}
+
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-	\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-		\hline
-		\textbf{Name}    & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-		\hline
-		\wss{accessProg} & -           & -            & -                   \\
-		\hline
-	\end{tabular}
+	\begin{adjustbox}{width=\textwidth}
+		\begin{tabular}{llll}
+			\hline
+			\textbf{Name}   & \textbf{In}         & \textbf{Out}                       & \textbf{Exceptions}             \\
+			\hline
+			createCustomer  & CreateCustomerType  & Customer                           & CustomerAlreadyExistsException  \\
+			createEmployee  & CreateEmployeeType  & Employee                           & EmployeeAlreadyExistsException  \\
+			createShopOwner & CreateShopOwnerType & Employee                           & ShopOwnerAlreadyExistsException \\
+			getUserByEmail  & String              & $Customer \lor Employee \lor None$ & ~                               \\
+			authorize       & String, String      & AuthorizeReturnType                & ~                               \\
+			\hline
+		\end{tabular}
+	\end{adjustbox}
 \end{center}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
 
-\wss{Not all modules will have state variables.  State variables give the module
-	a memory.}
+None
 
 \subsubsection{Environment Variables}
 
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-	when the module has external interaction with the environment, such as for a
-	device driver, screen interface, keyboard, file, etc.}
-
 \subsubsection{Assumptions}
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-	exceptions, but for practical purposes assumptions are sometimes appropriate.}
+None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent createCustomer($customer$):
 \begin{itemize}
-	\item transition: \wss{if appropriate}
-	\item output: \wss{if appropriate}
-	\item exception: \wss{if appropriate}
+	\item transition: new Customer(customer), save customer to database
+	\item output: $out := (exc = \text{CustomerAlreadyExistsException}$ \\ $\Rightarrow ``\text{User with
+			      email address already exists.}" |\ \neg exc \Rightarrow \text{new Customer(\emph{customer})})$
+	\item exception: $exc := getUserByEmail(customer.email) \neq \text{None}$ \\ $\Rightarrow
+		      \text{CustomerAlreadyExistsException}$
 \end{itemize}
-
-\wss{A module without environment variables or state variables is unlikely to
-	have a state transition.  In this case a state transition can only occur if
-	the module is changing the state of another module.}
-
-\wss{Modules rarely have both a transition and an output.  In most cases you
-	will have one or the other.}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-	They are not necessarily something that is going to be implemented
-	explicitly.  Even if they are implemented, they are not exported; they only
-	have local scope.}
+\noindent hash($s$):
+\begin{itemize}
+	\item output: $out := \text{hashed value of } s$
+\end{itemize}
+
+% \section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
+% 	cross-referencing}
+
+% \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
+
+% \wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+
+% \subsection{Module}
+
+% \wss{Short name for the module}
+
+% \subsection{Uses}
+
+% \subsection{Syntax}
+
+% \subsubsection{Exported Constants}
+
+% \subsubsection{Exported Access Programs}
+
+% \begin{center}
+% 	\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+% 		\hline
+% 		\textbf{Name}    & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+% 		\hline
+% 		\wss{accessProg} & -           & -            & -                   \\
+% 		\hline
+% 	\end{tabular}
+% \end{center}
+
+% \subsection{Semantics}
+
+% \subsubsection{State Variables}
+
+% \wss{Not all modules will have state variables.  State variables give the module
+% 	a memory.}
+
+% \subsubsection{Environment Variables}
+
+% \wss{This section is not necessary for all modules.  Its purpose is to capture
+% 	when the module has external interaction with the environment, such as for a
+% 	device driver, screen interface, keyboard, file, etc.}
+
+% \subsubsection{Assumptions}
+
+% \wss{Try to minimize assumptions and anticipate programmer errors via
+% 	exceptions, but for practical purposes assumptions are sometimes appropriate.}
+
+% \subsubsection{Access Routine Semantics}
+
+% \noindent \wss{accessProg}():
+% \begin{itemize}
+% 	\item transition: \wss{if appropriate}
+% 	\item output: \wss{if appropriate}
+% 	\item exception: \wss{if appropriate}
+% \end{itemize}
+
+% \wss{A module without environment variables or state variables is unlikely to
+% 	have a state transition.  In this case a state transition can only occur if
+% 	the module is changing the state of another module.}
+
+% \wss{Modules rarely have both a transition and an output.  In most cases you
+% 	will have one or the other.}
+
+% \subsubsection{Local Functions}
+
+% \wss{As appropriate} \wss{These functions are for the purpose of specification.
+% 	They are not necessarily something that is going to be implemented
+% 	explicitly.  Even if they are implemented, they are not exported; they only
+% 	have local scope.}
 
 \newpage
 
