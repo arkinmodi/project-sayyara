@@ -7,9 +7,10 @@ import { Provider } from "react-redux";
 
 import "primeicons/primeicons.css"; // icons
 import "primereact/resources/primereact.min.css"; // core css
-import "primereact/resources/themes/lara-light-indigo/theme.css"; // theme
+import "primereact/resources/themes/lara-light-blue/theme.css"; // theme
 
-import "../styles/globals.css";
+import "@styles/globals.css";
+import Header from "src/components/common/Header";
 
 const MyApp: FC<
   AppProps<{
@@ -17,9 +18,11 @@ const MyApp: FC<
   }>
 > = ({ Component, ...rest }) => {
   const { store, props } = wrapper.useWrappedStore(rest);
+
   return (
     <Provider store={store}>
       <SessionProvider session={rest.pageProps.session}>
+        <Header />
         <Component {...props.pageProps} />
       </SessionProvider>
     </Provider>
