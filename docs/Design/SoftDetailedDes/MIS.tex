@@ -178,15 +178,95 @@ Database Driver Module
 
 None
 
-% \subsubsection{Exported Types}
+\subsubsection{Exported Types}
 
-% \textbf{CreateCustomerType}
+\textbf{CreateCustomerType}
 
-% \textbf{CreateEmployeeType}
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name}   & \textbf{Output Type} & \textbf{Description}                \\
+		\hline
+		email                  & String               & Email of Customer                   \\
+		\hline
+		password               & String               & Password of Customer Account        \\
+		\hline
+		first\_name            & String               & First Name of Customer              \\
+		\hline
+		last\_name             & String               & Last Name of Customer               \\
+		\hline
+		vehicle.year           & $\mathbb{N}$         & Model Year of Customer's Vehicle    \\
+		\hline
+		vehicle.make           & String               & Make of Customer's Vehicle          \\
+		\hline
+		vehicle.model          & String               & Model of Customer's Vehicle         \\
+		\hline
+		vehicle.vin            & String               & VIN of Customer's Vehicle           \\
+		\hline
+		vehicle.license\_plate & String               & License Plate of Customer's Vehicle \\
+		\hline
+	\end{tabular}
+\end{table}
 
-% \textbf{CreateShopOwnerType}
+\textbf{CreateEmployeeType}
 
-% \textbf{AuthorizeReturnType}
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}               \\
+		\hline
+		email                & String               & Email of Employee                  \\
+		\hline
+		password             & String               & Password of Employee's Account     \\
+		\hline
+		first\_name          & String               & First Name of Employee             \\
+		\hline
+		last\_name           & String               & Last Name of Employee              \\
+		\hline
+		shop\_id             & String               & ID of Shop that Employee Works For \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\textbf{CreateShopOwnerType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}             \\
+		\hline
+		email                & String               & Email of Shop Owner              \\
+		\hline
+		password             & String               & Password of Shop Owner's Account \\
+		\hline
+		first\_name          & String               & First Name of Shop Owner         \\
+		\hline
+		last\_name           & String               & Last Name of Shop Owner          \\
+		\hline
+		shop.---             & String               & \dots                            \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\textbf{AuthorizeReturnType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description} \\
+		\hline
+		id                   & String               & User ID              \\
+		\hline
+		firstName            & String               & First Name of User   \\
+		\hline
+		lastName             & String               & Last Name of User    \\
+		\hline
+		email                & String               & Email of User        \\
+		\hline
+		type                 & String               & Type of User         \\
+		\hline
+	\end{tabular}
+\end{table}
 
 \subsubsection{Exported Access Programs}
 
