@@ -70,7 +70,7 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
           value={formValues.phoneNumber}
           onChange={handleInputChange}
           name="phoneNumber"
-          placeholder="phoneNumber"
+          placeholder="Phone Number"
         />
         <br />
         <label htmlFor="authSignUpFormPasswordInput">Password (Required)</label>
