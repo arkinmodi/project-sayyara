@@ -14,6 +14,7 @@ const initialAuthSignUpFormShopEmployeeValues: IAuthSignUpFormShopEmployeeValues
   {
     csrfToken: "",
     email: "",
+    phoneNumber: "",
     password: "",
     firstName: "",
     lastName: "",

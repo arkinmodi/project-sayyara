@@ -4,6 +4,7 @@ export interface IAuthSignUpFormValues {
   password: string;
   firstName: string;
   lastName: string;
+  phoneNumber: string;
 }
 
 export interface IAuthSignUpFormCustomerValues extends IAuthSignUpFormValues {
