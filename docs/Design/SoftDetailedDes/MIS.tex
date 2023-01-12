@@ -20,6 +20,7 @@
 \usepackage{fullpage}
 \usepackage{array}
 \usepackage[nottoc,numbib]{tocbibind}
+\usepackage{adjustbox}
 
 \hypersetup{
 	bookmarks=true,         % show bookmarks bar?
@@ -54,11 +55,12 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}         \\
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}               \\
 		\midrule
-		December 28, 2022 & Arkin Modi            & Create Revision History \\
-		January 7, 2023   & Joy Xiao              & Introduction            \\
-		January 9, 2023   & Arkin Modi            & Add Module Hierarchy    \\
+		December 28, 2022 & Arkin Modi            & Create Revision History       \\
+		January 7, 2023   & Joy Xiao              & Introduction                  \\
+		January 9, 2023   & Arkin Modi            & Add Module Hierarchy          \\
+		January 12, 2023  & Arkin Modi            & Create MIS of Services Module \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -184,75 +186,146 @@ The following table is taken directly from the Module Guide document for this pr
 
 \newpage
 
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
-	cross-referencing}
-
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX{} for hypperlinks to external documents.}
-
+\section{MIS of Services Module} \label{mUsers}
 \subsection{Module}
 
-\wss{Short name for the module}
+serviceService
 
 \subsection{Uses}
+
+Database Driver Module
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
 
+None
+
+\subsubsection{Exported Types}
+
+\textbf{Part}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}                       \\
+		\hline
+		quantity             & $\mathbb{N}$         & Number of Parts                            \\
+		\hline
+		cost                 & $\mathbb{Q}$         & Price of Parts                             \\
+		\hline
+		name                 & String               & Name of Part                               \\
+		\hline
+		condition            & String               & Condition of Part  (i.e., New or Used)     \\
+		\hline
+		build                & String               & Origin of Part (i.e., OEM or After Market) \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\textbf{CreateServiceType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}               \\
+		\hline
+		name                 & String               & Name of Service                    \\
+		\hline
+		description          & String               & Description of Service             \\
+		\hline
+		estimated\_time      & String               & Estimated Time of Service          \\
+		\hline
+		parts                & List$<$Part$>$       & Estimated Parts needed for Service \\
+		\hline
+		total\_price         & $\mathbb{Q}$         & Estimated Price needed for Service \\
+		\hline
+		shop\_id             & String               & Shop that Service is available at  \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\textbf{UpdateServiceType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type}       & \textbf{Description}               \\
+		\hline
+		name                 & Optional$<$String$>$       & Name of Service                    \\
+		\hline
+		description          & Optional$<$String$>$       & Description of Service             \\
+		\hline
+		estimated\_time      & Optional$<$String$>$       & Estimated Time of Service          \\
+		\hline
+		parts                & Optional$<$List$<$Part$>>$ & Estimated Parts needed for Service \\
+		\hline
+		total\_price         & Optional$<\mathbb{Q}>$     & Estimated Price needed for Service \\
+		\hline
+	\end{tabular}
+\end{table}
+
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-	\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-		\hline
-		\textbf{Name}    & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-		\hline
-		\wss{accessProg} & -           & -            & -                   \\
-		\hline
-	\end{tabular}
+	\begin{adjustbox}{width=\textwidth}
+		\begin{tabular}{llll}
+			\hline
+			\textbf{Name}     & \textbf{In}               & \textbf{Out}        & \textbf{Exceptions}      \\
+			\hline
+			createService     & CreateServiceType         & Service             & ~                        \\
+			getServiceById    & String                    & Service $\lor$ None & ~                        \\
+			updateServiceById & String, UpdateServiceType & Service             & ServiceNotFoundException \\
+			deleteServiceById & String                    & ~                   & ~                        \\
+			\hline
+		\end{tabular}
+	\end{adjustbox}
 \end{center}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
 
-\wss{Not all modules will have state variables.  State variables give the module
-	a memory.}
+None
 
 \subsubsection{Environment Variables}
 
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-	when the module has external interaction with the environment, such as for a
-	device driver, screen interface, keyboard, file, etc.}
+User's Display \\ Database
 
 \subsubsection{Assumptions}
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-	exceptions, but for practical purposes assumptions are sometimes appropriate.}
+None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent createService($service$):
 \begin{itemize}
-	\item transition: \wss{if appropriate}
-	\item output: \wss{if appropriate}
-	\item exception: \wss{if appropriate}
+	\item transition: new Service(service), save service to service database table
+	\item output: $out := \text{new Service(\emph{service})}$
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-	have a state transition.  In this case a state transition can only occur if
-	the module is changing the state of another module.}
+\noindent getServiceById($id$):
+\begin{itemize}
+	\item output: $out :=$ A Service such that it's ID matches $id$ from the service database table else
+	      None.
+\end{itemize}
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-	will have one or the other.}
+\noindent updateServiceById($id, patch$):
+\begin{itemize}
+	\item transition: Update all fields of Service with fields in $patch$ in service database table
+	\item output: $out := getServiceById(id) = \text{Service} \Rightarrow (\text{Service} = \text{None} $ \\
+		      $\Rightarrow \text{ServiceNotFoundException } |\ \text{Service} \neq \text{None}$ \\ $\Rightarrow
+		      \text{update all fields of Service with fields in } patch \text{ in service database table})$
+\end{itemize}
+
+\noindent deleteServiceById($id$):
+\begin{itemize}
+	\item transition: Delete all Services where Service.ID $= id$.
+\end{itemize}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-	They are not necessarily something that is going to be implemented
-	explicitly.  Even if they are implemented, they are not exported; they only
-	have local scope.}
+None
 
 \newpage
 
