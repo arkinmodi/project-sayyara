@@ -52,6 +52,7 @@
 		\midrule
 		December 28, 2022 & Arkin Modi            & Revision History \& Mark Not Applicable Sections \\
 		January 7, 2023   & Joy Xiao              & Introduction \& Purpose                          \\
+		January 11, 2023  & Leon So               & Undesired Event Handling                         \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -126,7 +127,23 @@ the project.
 
 \subsection{Undesired Event Handling}
 
-\wss{How you will approach undesired events}
+Undesired events will be handled both client-side and server-side.
+
+On the client-side, if an unexpected event arises or the application enters a bad state, the
+application will reset to a safe state. For example, if a user attempts to access a route that they
+are not authorized to access, they will be either redirected to an appropriate route, prompted
+to login, or an error page will be displayed with instructions to return to the home page. Input
+forms will also include input validation to ensure only properly formed data is handled. If the
+user attempts to input invalid data, the form field will reset and form submission will be blocked.
+The user will be prompted to enter a valid input value in the form field. Similarly, various user
+actions and inputs that may pose cause that the application to enter an undesirable state will be
+validated before updating the application state.
+
+On the server-side, each API will return a response with the appropriate error status code and
+message. Subsequently, the client will have logic to gracefully handle unsuccessful responses and
+status codes, preventing the system from entering an undesirable state. Inputs will also be
+validated on the server-side by parsing the input data using defined schemas. This will ensure data
+integrity and prevents the undesirable data from entering the workflows or database.
 
 \subsection{Component Diagram}
 
