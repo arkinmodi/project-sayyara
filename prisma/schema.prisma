@@ -12,16 +12,17 @@ datasource db {
 }
 
 model Employee {
-  id          String   @id @default(cuid())
-  create_time DateTime @default(now())
-  update_time DateTime @updatedAt
-  first_name  String
-  last_name   String
-  email       String   @unique
-  password    String
-  image       String?
-  type        UserType
-  shop_id     String
+  id           String   @id @default(cuid())
+  create_time  DateTime @default(now())
+  update_time  DateTime @updatedAt
+  first_name   String
+  last_name    String
+  phone_number String
+  email        String   @unique
+  password     String
+  image        String?
+  type         UserType
+  shop_id      String
 
   appointments Appointment[]
   shop         Shop          @relation(fields: [shop_id], references: [id])
@@ -35,6 +36,7 @@ model Customer {
   update_time   DateTime      @updatedAt
   first_name    String
   last_name     String
+  phone_number  String
   email         String        @unique
   password      String
   image         String?

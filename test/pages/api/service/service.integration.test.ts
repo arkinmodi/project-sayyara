@@ -34,6 +34,7 @@ const testEmployeeUser: Employee = {
   id: "test_id",
   first_name: "first_name",
   last_name: "last_name",
+  phone_number: "1234567890",
   email: "user@test.com",
   password: "test_password",
   image: null,
