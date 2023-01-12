@@ -252,6 +252,7 @@ None
 
 \textbf{CreateShopOwnerType}
 
+% TODO: Add Shop Fields
 \begin{table}[H]
 	\begin{tabular}{|l|l|l|}
 		\hline
@@ -265,7 +266,6 @@ None
 		\hline
 		last\_name           & String               & Last Name of Shop Owner          \\
 		\hline
-		% TODO: Add Shop Fields
 		shop.---             & String               & \dots                            \\
 		\hline
 	\end{tabular}
@@ -302,7 +302,7 @@ None
 			createCustomer  & CreateCustomerType  & Customer                             & CustomerAlreadyExistsException  \\
 			createEmployee  & CreateEmployeeType  & Employee                             & EmployeeAlreadyExistsException  \\
 			createShopOwner & CreateShopOwnerType & Employee                             & ShopOwnerAlreadyExistsException \\
-			getUserByEmail  & String              & Customer $\lor$ Employee $\lor$ None & ~                               \\
+			getUserByEmail  & String              & Customer $\lor$ Employee $\lor$ None & UserNotFound                    \\
 			authorize       & String, String      & AuthorizeReturnType                  & ~                               \\
 			\hline
 		\end{tabular}
@@ -354,14 +354,14 @@ None
 
 \noindent getUserByEmail($e$):
 \begin{itemize}
-	\item output: $out :=$ A User such that is contains the email, $e$, from the customer database table or
+	\item output: $out :=$ A User such that it contains the email, $e$, from the customer database table or
 	      employees database table, else None.
 \end{itemize}
 
 \noindent authorize($email, password$):
 \begin{itemize}
 	\item output: $out := getUserByEmail(email) = \text{User} \Rightarrow $ \\ $(\text{User} = \text{None}
-		      \Rightarrow \text{``User not found."}$ \\ $|\ \text{User.password} = password \Rightarrow
+		      \Rightarrow \text{UserNotFound}$ \\ $|\ \text{User.password} = password \Rightarrow
 		      \text{AuthorizeReturnType}$ \\ $|\ \text{User.password} \neq password \Rightarrow
 		      \text{``Unauthorized"})$
 \end{itemize}
