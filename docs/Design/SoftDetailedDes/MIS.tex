@@ -308,8 +308,8 @@ None
 			createCustomer  & CreateCustomerType  & Customer                             & CustomerAlreadyExistsException  \\
 			createEmployee  & CreateEmployeeType  & Employee                             & EmployeeAlreadyExistsException  \\
 			createShopOwner & CreateShopOwnerType & Employee                             & ShopOwnerAlreadyExistsException \\
-			getUserByEmail  & String              & Customer $\lor$ Employee $\lor$ None & UserNotFound                    \\
-			authorize       & String, String      & AuthorizeReturnType                  & ~                               \\
+			getUserByEmail  & String              & Customer $\lor$ Employee $\lor$ None & UserNotFoundException           \\
+			authorize       & String, String      & AuthorizeReturnType                  & UnauthorizeException            \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -367,9 +367,9 @@ None
 \noindent authorize($email, password$):
 \begin{itemize}
 	\item output: $out := getUserByEmail(email) = \text{User} \Rightarrow $ \\ $(\text{User} = \text{None}
-		      \Rightarrow \text{UserNotFound}$ \\ $|\ \text{User.password} = password \Rightarrow
-		      \text{AuthorizeReturnType}$ \\ $|\ \text{User.password} \neq password \Rightarrow
-		      \text{``Unauthorized"})$
+		      \Rightarrow exc = \text{UserNotFoundException} \Rightarrow \text{``User not found."}$ \\ $|\
+		      \text{User.password} = password \Rightarrow \text{AuthorizeReturnType}$ \\ $|\ \text{User.password}
+		      \neq password \Rightarrow exc = \text{UnauthorizeException} \Rightarrow \text{``Unauthorized"})$
 \end{itemize}
 
 \subsubsection{Local Functions}
