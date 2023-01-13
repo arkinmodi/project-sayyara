@@ -56,6 +56,7 @@
 		January 3, 2023   & Arkin Modi            & Add Module Hierarchy                      \\
 		January 8, 2023   & Arkin Modi            & Add Use Hierarchy Between Modules Diagram \\
 		January 10, 2023  & Arkin Modi            & Add Module Decompositions                 \\
+		January 12, 2023  & Leon So               & Anticipated Changes \& Unlikely Changes   \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -161,7 +162,10 @@ hides the associated decision. The approach adapted here is called design for ch
 		hardware on which the software is running.
 	\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
 		initial input data.
-	\item ...
+	\item The format of the initial input data
+	\item The format of server-side responses
+	\item The styling of UI forms and components
+	\item The formatting of UI forms and components
 \end{description}
 
 \subsection{Unlikely Changes} \label{SecUchange}
@@ -175,7 +179,9 @@ decisions will be changed.
 \begin{description}
 	\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
 		(Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-	\item ...
+	\item The application will be built-upon the NextJS framework
+	\item The application will use Prisma for object-relation mapping (ORM)
+	\item There will always be a source of input data external to the system
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
