@@ -5,23 +5,74 @@
  * @group integration
  */
 
-import { Employee } from "@server/db/client";
-
-import registrationHandler from "@pages/api/user/register";
-import { prisma } from "@server/db/client";
+import registerCustomerHandler from "@pages/api/user/register/customer";
+import registerEmployeeHandler from "@pages/api/user/register/employee";
+import registerShopOwnerHandler from "@pages/api/user/register/shopOwner";
+import {
+  CustomerWithVehicles,
+  Employee,
+  EmployeeWithShop,
+  prisma,
+} from "@server/db/client";
 import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 
-const testEmployeeUser: Employee = {
-  id: "test_id",
-  first_name: "first_name",
-  last_name: "last_name",
-  email: "user@test.com",
-  password: "test_password",
+const testEmployee: Employee = {
+  id: "",
+  first_name: "employee_first_name",
+  last_name: "employee_last_name",
+  phone_number: "1234567890",
+  email: "employee@test.com",
+  password: "employee_password",
+  image: null,
+  create_time: new Date(),
+  update_time: new Date(),
+  type: "EMPLOYEE",
+  shop_id: "shop_id",
+};
+
+const testShopOwner: EmployeeWithShop = {
+  id: "",
+  first_name: "shop_owner_first_name",
+  last_name: "shop_owner_last_name",
+  phone_number: "1234567890",
+  email: "shop_owner@test.com",
+  password: "shop_owner_password",
   image: null,
   create_time: new Date(),
   update_time: new Date(),
   type: "SHOP_OWNER",
   shop_id: "shop_id",
+  shop: {
+    id: "shop_id",
+    create_time: new Date(),
+    update_time: new Date(),
+  },
+};
+
+const testCustomer: CustomerWithVehicles = {
+  id: "",
+  first_name: "customer_first_name",
+  last_name: "customer_last_name",
+  phone_number: "1234567890",
+  email: "customer@test.com",
+  password: "customer_password",
+  image: null,
+  create_time: new Date(),
+  update_time: new Date(),
+  type: "CUSTOMER",
+  vehicles: [
+    {
+      id: "test_customer_vehicle_id",
+      create_time: new Date(),
+      update_time: new Date(),
+      customer_id: "test_customer_id",
+      license_plate: "test_license_plate",
+      make: "test_make",
+      model: "test_model",
+      vin: "test_vin",
+      year: 2017,
+    },
+  ],
 };
 
 beforeAll(async () => {
@@ -40,81 +91,123 @@ afterEach(async () => {
 
 describe("new user registration", () => {
   describe("given valid new user data", () => {
-    it("should create new user", async () => {
+    it("should create new customer", async () => {
       const { req, res } = createMockRequestResponse({ method: "POST" });
       req.body = {
-        email: testEmployeeUser.email,
-        password: testEmployeeUser.password,
-        first_name: testEmployeeUser.first_name,
-        last_name: testEmployeeUser.last_name,
-        type: testEmployeeUser.type,
+        email: testCustomer.email,
+        password: testCustomer.password,
+        first_name: testCustomer.first_name,
+        last_name: testCustomer.last_name,
+        phone_number: testCustomer.phone_number,
+        vehicle: {
+          year: testCustomer.vehicles[0]?.year,
+          make: testCustomer.vehicles[0]?.make,
+          model: testCustomer.vehicles[0]?.model,
+          vin: testCustomer.vehicles[0]?.vin,
+          license_plate: testCustomer.vehicles[0]?.license_plate,
+        },
       };
 
-      await registrationHandler(req, res);
-      const newUser = await prisma.employee.findUnique({
-        where: { email: testEmployeeUser.email },
+      await registerCustomerHandler(req, res);
+      const newCustomer = await prisma.customer.findUnique({
+        where: { email: testCustomer.email },
+        include: { vehicles: true },
       });
 
       expect(res.statusCode).toBe(302);
-      expect(newUser).toEqual({
+      expect(newCustomer).toEqual({
         id: expect.any(String),
-        first_name: "first_name",
-        last_name: "last_name",
-        email: "user@test.com",
-        password: "test_password",
+        first_name: testCustomer.first_name,
+        last_name: testCustomer.last_name,
+        phone_number: testCustomer.phone_number,
+        email: testCustomer.email,
+        password: expect.any(String),
         image: null,
-        type: "SHOP_OWNER",
         create_time: expect.any(Date),
         update_time: expect.any(Date),
-        shop_id: null,
+        type: "CUSTOMER",
+        vehicles: [
+          {
+            id: expect.any(String),
+            create_time: expect.any(Date),
+            update_time: expect.any(Date),
+            year: testCustomer.vehicles[0]?.year,
+            make: testCustomer.vehicles[0]?.make,
+            model: testCustomer.vehicles[0]?.model,
+            vin: testCustomer.vehicles[0]?.vin,
+            license_plate: testCustomer.vehicles[0]?.license_plate,
+            customer_id: expect.any(String),
+          },
+        ],
       });
     });
-  });
 
-  describe("given valid existing user data", () => {
-    it("should not create new user", async () => {
-      await prisma.employee.create({
-        data: {
-          email: testEmployeeUser.email,
-          password: testEmployeeUser.password,
-          first_name: testEmployeeUser.first_name,
-          last_name: testEmployeeUser.last_name,
-          type: testEmployeeUser.type,
-        },
-      });
+    it("should create new employee", async () => {
+      // Create Shop
+      // TODO: Use REST controller
+      const shop = await prisma.shop.create({ data: {} });
+      testEmployee.shop_id = shop.id;
 
       const { req, res } = createMockRequestResponse({ method: "POST" });
       req.body = {
-        email: testEmployeeUser.email,
-        password: testEmployeeUser.password,
-        first_name: testEmployeeUser.first_name,
-        last_name: testEmployeeUser.last_name,
-        type: testEmployeeUser.type,
+        email: testEmployee.email,
+        password: testEmployee.password,
+        first_name: testEmployee.first_name,
+        last_name: testEmployee.last_name,
+        phone_number: testEmployee.phone_number,
+        shop_id: testEmployee.shop_id,
       };
 
-      await registrationHandler(req, res);
+      await registerEmployeeHandler(req, res);
+      const newEmployee = await prisma.employee.findUnique({
+        where: { email: testEmployee.email },
+      });
 
-      expect(res.statusCode).toBe(409);
-      expect(res._getJSONData()).toEqual({
-        message: "User with email address already exists.",
+      expect(res.statusCode).toBe(302);
+      expect(newEmployee).toEqual({
+        id: expect.any(String),
+        create_time: expect.any(Date),
+        update_time: expect.any(Date),
+        first_name: testEmployee.first_name,
+        last_name: testEmployee.last_name,
+        phone_number: testEmployee.phone_number,
+        email: testEmployee.email,
+        password: expect.any(String),
+        image: null,
+        type: testEmployee.type,
+        shop_id: testEmployee.shop_id,
       });
     });
-  });
 
-  describe("given invalid user data", () => {
-    it("should return 400", async () => {
+    it("should create new shop owner", async () => {
       const { req, res } = createMockRequestResponse({ method: "POST" });
       req.body = {
-        password: testEmployeeUser.password,
-        first_name: testEmployeeUser.first_name,
-        last_name: testEmployeeUser.last_name,
+        email: testShopOwner.email,
+        password: testShopOwner.password,
+        first_name: testShopOwner.first_name,
+        last_name: testShopOwner.last_name,
+        phone_number: testShopOwner.phone_number,
+        shop: {},
       };
 
-      await registrationHandler(req, res);
+      await registerShopOwnerHandler(req, res);
+      const newShopOwner = await prisma.employee.findUnique({
+        where: { email: testShopOwner.email },
+      });
 
-      expect(res.statusCode).toBe(400);
-      expect(res._getJSONData()).toEqual({
-        message: expect.anything(),
+      expect(res.statusCode).toBe(302);
+      expect(newShopOwner).toEqual({
+        id: expect.any(String),
+        create_time: expect.any(Date),
+        update_time: expect.any(Date),
+        first_name: testShopOwner.first_name,
+        last_name: testShopOwner.last_name,
+        phone_number: testShopOwner.phone_number,
+        email: testShopOwner.email,
+        password: expect.any(String),
+        image: null,
+        type: testShopOwner.type,
+        shop_id: expect.any(String),
       });
     });
   });

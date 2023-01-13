@@ -1,3 +1,5 @@
+import { UserType } from "@prisma/client";
+import { AuthDialogType } from "src/types/auth";
 import AuthType from "../types/authTypes";
 
 interface IAuthActionBase {
@@ -12,29 +14,108 @@ export interface IAuthActionCreateLogin extends IAuthActionBase {
   payload: { csrfToken: string; email: string; password: string };
 }
 
-export interface IAuthActionCreateSignUp extends IAuthActionBase {
+export interface IAuthActionCreateCustomerSignUp extends IAuthActionBase {
   payload: {
     csrfToken: string;
-    callbackUrl: string;
     email: string;
+    phoneNumber: string;
     password: string;
     firstName: string;
     lastName: string;
-    type: string;
+    licensePlate: string;
+    vin: string;
+    vehicleMake: string;
+    vehicleModel: string;
+    vehicleYear: number;
   };
+}
+
+export interface IAuthActionCreateShopEmployeeSignUp extends IAuthActionBase {
+  payload: {
+    csrfToken: string;
+    email: string;
+    phoneNumber: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    shopId: string;
+  };
+}
+
+export interface IAuthActionCreateShopOwnerSignUp extends IAuthActionBase {
+  payload: {
+    csrfToken: string;
+    email: string;
+    phoneNumber: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    shopAddress: string;
+    shopCity: string;
+    shopPostalCode: string;
+    shopProvince: string;
+    shopPhoneNumber: string;
+  };
+}
+
+export interface IAuthActionSetIsAuthDialogOpen extends IAuthActionBase {
+  payload: { isAuthDialogOpen: boolean; authDialogType: AuthDialogType };
+}
+
+export interface IAuthActionSetUserType extends IAuthActionBase {
+  payload: { userType: UserType | undefined };
 }
 
 export type IAuthAction =
   | IAuthActionCreateLogin
-  | IAuthActionCreateSignUp
-  | IAuthActionSetIsLoggedIn;
+  | IAuthActionCreateCustomerSignUp
+  | IAuthActionCreateShopEmployeeSignUp
+  | IAuthActionCreateShopOwnerSignUp
+  | IAuthActionSetIsLoggedIn
+  | IAuthActionSetIsAuthDialogOpen
+  | IAuthActionSetUserType;
 
 export const createLogin = (payload: IAuthActionCreateLogin["payload"]) => ({
   type: AuthType.CREATE_LOGIN,
   payload,
 });
 
-export const createSignUp = (payload: IAuthActionCreateSignUp["payload"]) => ({
-  type: AuthType.CREATE_SIGN_UP,
+export const createCustomerSignUp = (
+  payload: IAuthActionCreateCustomerSignUp["payload"]
+) => ({
+  type: AuthType.CREATE_CUSTOMER_SIGN_UP,
+  payload,
+});
+
+export const createShopEmployeeSignUp = (
+  payload: IAuthActionCreateShopEmployeeSignUp["payload"]
+) => ({
+  type: AuthType.CREATE_SHOP_EMPLOYEE_SIGN_UP,
+  payload,
+});
+
+export const createShopOwnerSignup = (
+  payload: IAuthActionCreateShopOwnerSignUp["payload"]
+) => ({
+  type: AuthType.CREATE_SHOP_OWNER_SIGN_UP,
+  payload,
+});
+
+export const setIsAuthDialogOpen = (
+  payload: IAuthActionSetIsAuthDialogOpen["payload"]
+) => ({
+  type: AuthType.SET_IS_AUTH_DIALOG_OPEN,
+  payload,
+});
+
+export const setIsLoggedIn = (
+  payload: IAuthActionSetIsLoggedIn["payload"]
+) => ({
+  type: AuthType.SET_IS_LOGGED_IN,
+  payload,
+});
+
+export const setUserType = (payload: IAuthActionSetUserType["payload"]) => ({
+  type: AuthType.SET_USER_TYPE,
   payload,
 });

@@ -1,4 +1,12 @@
-import { PrismaClient } from "@prisma/client";
+import {
+  Customer,
+  Employee,
+  PrismaClient,
+  Service,
+  Shop,
+  Vehicle,
+} from "@prisma/client";
+import { z } from "zod";
 
 declare global {
   var prisma: PrismaClient | undefined;
@@ -18,3 +26,25 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 export * from "@prisma/client";
+
+export const partSchema = z.object({
+  quantity: z.number().int(),
+  cost: z.number(),
+  name: z.string(),
+  condition: z.enum(["NEW", "USED"]),
+  build: z.enum(["OEM", "AFTER_MARKET"]),
+});
+
+export type PartType = z.infer<typeof partSchema>;
+
+export type ServiceWithPartsType = {
+  parts: PartType[];
+} & Service;
+
+export type CustomerWithVehicles = {
+  vehicles: Vehicle[];
+} & Customer;
+
+export type EmployeeWithShop = {
+  shop: Shop;
+} & Employee;
