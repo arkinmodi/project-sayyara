@@ -16,6 +16,7 @@ import AuthTypes from "../types/authTypes";
 
 interface IPostSignUpBody {
   email: string;
+  phone_number: string;
   password: string;
   first_name: string;
   last_name: string;
@@ -139,6 +140,7 @@ function* customerSignUp(
   const payload = action.payload;
   const body: IPostCustomerSignUpBody = {
     email: payload.email,
+    phone_number: payload.phoneNumber,
     password: payload.password,
     first_name: payload.firstName,
     last_name: payload.lastName,
@@ -168,6 +170,7 @@ function* shopEmployeeSignUp(
   const payload = action.payload;
   const body: IPostShopEmployeeSignUpBody = {
     email: payload.email,
+    phone_number: payload.phoneNumber,
     password: payload.password,
     first_name: payload.firstName,
     last_name: payload.lastName,
@@ -191,6 +194,7 @@ function* shopOwnerSignUp(
   const payload = action.payload;
   const body: IPostShopOwnerSignUpBody = {
     email: payload.email,
+    phone_number: payload.phoneNumber,
     password: payload.password,
     first_name: payload.firstName,
     last_name: payload.lastName,

@@ -18,6 +18,7 @@ export interface IAuthActionCreateCustomerSignUp extends IAuthActionBase {
   payload: {
     csrfToken: string;
     email: string;
+    phoneNumber: string;
     password: string;
     firstName: string;
     lastName: string;
@@ -33,6 +34,7 @@ export interface IAuthActionCreateShopEmployeeSignUp extends IAuthActionBase {
   payload: {
     csrfToken: string;
     email: string;
+    phoneNumber: string;
     password: string;
     firstName: string;
     lastName: string;
@@ -44,6 +46,7 @@ export interface IAuthActionCreateShopOwnerSignUp extends IAuthActionBase {
   payload: {
     csrfToken: string;
     email: string;
+    phoneNumber: string;
     password: string;
     firstName: string;
     lastName: string;
