@@ -54,6 +54,7 @@
 		January 7, 2023   & Joy Xiao              & Introduction \& Purpose                          \\
 		January 11, 2023  & Leon So               & Undesired Event Handling                         \\
 		January 12, 2023  & Leon So               & Normal Behaviour \& Introduction                 \\
+		January 13, 2023  & Timothy Choy          & Connection Between Requirements \& Design        \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -68,11 +69,12 @@ This section records information for easy reference.
 
 \begin{tabular}{l l}
 	\toprule
-	\textbf{symbol} & \textbf{description}            \\
+	\textbf{symbol} & \textbf{description}                \\
 	\midrule
-	\progname       & Explanation of program name     \\
-	MIS             & Module Interface Specifications \\
-	MG              & Module Guide                    \\
+	\progname       & Explanation of program name         \\
+	MIS             & Module Interface Specifications     \\
+	MG              & Module Guide                        \\
+	SRS             & Software Requirements Specification \\
 	\bottomrule
 \end{tabular}
 
@@ -164,6 +166,23 @@ integrity and prevents the undesirable data from entering the workflows or datab
 	they are explicitly recorded here.  For instance, if a program has security
 	requirements, a specific design decision may be made to satisfy those
 	requirements with a password.}
+
+The following table shows the connections between the requirements stated in the SRS
+\url{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf} and our design
+decisions to implement the requirements. The requirements in the table will refer to the
+requirement number as stated in the SRS.
+
+\begin{table}[H]
+	\centering
+	\caption{Connection Between Requirements and Design}
+	\vspace{5pt}
+	\begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+		\hline
+		\textbf{Requirement} & \textbf{Design Decision}                                                                                                     \\
+		\hline
+		SR2                  & Separate views are created for each type of user, so that they have access to only information that the specific user needs. \\
+	\end{tabular}
+\end{table}
 
 \section{System Variables}
 \subsection{Monitored Variables}
