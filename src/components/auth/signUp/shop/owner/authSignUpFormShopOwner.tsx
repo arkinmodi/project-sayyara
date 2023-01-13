@@ -13,6 +13,7 @@ interface IAuthSignUpFormShopOwnerProps {
 const initialAuthSignUpFormShopOwnerValues: IAuthSignUpFormShopOwnerValues = {
   csrfToken: "",
   email: "",
+  phoneNumber: "",
   password: "",
   firstName: "",
   lastName: "",

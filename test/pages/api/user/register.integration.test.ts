@@ -20,6 +20,7 @@ const testEmployee: Employee = {
   id: "",
   first_name: "employee_first_name",
   last_name: "employee_last_name",
+  phone_number: "1234567890",
   email: "employee@test.com",
   password: "employee_password",
   image: null,
@@ -33,6 +34,7 @@ const testShopOwner: EmployeeWithShop = {
   id: "",
   first_name: "shop_owner_first_name",
   last_name: "shop_owner_last_name",
+  phone_number: "1234567890",
   email: "shop_owner@test.com",
   password: "shop_owner_password",
   image: null,
@@ -51,6 +53,7 @@ const testCustomer: CustomerWithVehicles = {
   id: "",
   first_name: "customer_first_name",
   last_name: "customer_last_name",
+  phone_number: "1234567890",
   email: "customer@test.com",
   password: "customer_password",
   image: null,
@@ -95,6 +98,7 @@ describe("new user registration", () => {
         password: testCustomer.password,
         first_name: testCustomer.first_name,
         last_name: testCustomer.last_name,
+        phone_number: testCustomer.phone_number,
         vehicle: {
           year: testCustomer.vehicles[0]?.year,
           make: testCustomer.vehicles[0]?.make,
@@ -115,6 +119,7 @@ describe("new user registration", () => {
         id: expect.any(String),
         first_name: testCustomer.first_name,
         last_name: testCustomer.last_name,
+        phone_number: testCustomer.phone_number,
         email: testCustomer.email,
         password: expect.any(String),
         image: null,
@@ -149,6 +154,7 @@ describe("new user registration", () => {
         password: testEmployee.password,
         first_name: testEmployee.first_name,
         last_name: testEmployee.last_name,
+        phone_number: testEmployee.phone_number,
         shop_id: testEmployee.shop_id,
       };
 
@@ -164,6 +170,7 @@ describe("new user registration", () => {
         update_time: expect.any(Date),
         first_name: testEmployee.first_name,
         last_name: testEmployee.last_name,
+        phone_number: testEmployee.phone_number,
         email: testEmployee.email,
         password: expect.any(String),
         image: null,
@@ -179,6 +186,7 @@ describe("new user registration", () => {
         password: testShopOwner.password,
         first_name: testShopOwner.first_name,
         last_name: testShopOwner.last_name,
+        phone_number: testShopOwner.phone_number,
         shop: {},
       };
 
@@ -194,6 +202,7 @@ describe("new user registration", () => {
         update_time: expect.any(Date),
         first_name: testShopOwner.first_name,
         last_name: testShopOwner.last_name,
+        phone_number: testShopOwner.phone_number,
         email: testShopOwner.email,
         password: expect.any(String),
         image: null,
