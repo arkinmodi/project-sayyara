@@ -6,22 +6,40 @@
  */
 import appointmentHandler from "@pages/api/appointment";
 import appointmentByIdHandler from "@pages/api/appointment/[id]";
-import { Employee, prisma } from "@server/db/client";
+import registerCustomerHandler from "@pages/api/user/register/customer";
+import { Customer, prisma, Shop, Vehicle } from "@server/db/client";
 import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 import { Session } from "next-auth";
 
-const testEmployeeUser: Employee = {
-  id: "test_id",
-  first_name: "first_name",
-  last_name: "last_name",
-  email: "user@test.com",
-  password: "test_password",
-  phone_number: "1234567890",
-  image: null,
+const testCustomerUser: Customer = {
+  id: "test_customer_id",
   create_time: new Date(),
   update_time: new Date(),
-  type: "SHOP_OWNER",
-  shop_id: "shop_id",
+  first_name: "first_name",
+  last_name: "last_name",
+  phone_number: "1234567890",
+  email: "customer@test.com",
+  password: "test_password",
+  image: null,
+  type: "CUSTOMER",
+};
+
+const testShop: Shop = {
+  id: "test_shop_id",
+  create_time: new Date(),
+  update_time: new Date(),
+};
+
+const testVehicle: Vehicle = {
+  id: "",
+  create_time: new Date(),
+  update_time: new Date(),
+  year: 0,
+  make: "",
+  model: "",
+  vin: "",
+  license_plate: "",
+  customer_id: testCustomerUser.id,
 };
 
 //
@@ -112,14 +130,21 @@ const notConflictingAppointments = [
 ];
 
 jest.mock("@server/common/getServerAuthSession", () => ({
-  getServerAuthSession: jest.fn<Session, []>(() => ({
-    expires: "1",
-    user: {
-      ...testEmployeeUser,
-      firstName: testEmployeeUser.first_name,
-      lastName: testEmployeeUser.last_name,
-    },
-  })),
+  getServerAuthSession: jest.fn<Promise<Session>, []>(async () => {
+    const customer = await prisma.customer.findUniqueOrThrow({
+      where: { email: testCustomerUser.email },
+    });
+    return {
+      expires: "1",
+      user: {
+        id: customer.id,
+        email: customer.email,
+        type: customer.type,
+        firstName: customer.first_name,
+        lastName: customer.last_name,
+      },
+    };
+  }),
 }));
 
 beforeAll(async () => {
@@ -131,14 +156,22 @@ afterAll(async () => {
 });
 
 afterEach(async () => {
-  const deleteAppointments = prisma.appointment.deleteMany({});
-  const deleteWorkOrders = prisma.workOrder.deleteMany({});
-  await prisma.$transaction([deleteAppointments, deleteWorkOrders]);
+  await prisma.$transaction([
+    prisma.customer.deleteMany(),
+    prisma.shop.deleteMany(),
+    prisma.vehicle.deleteMany(),
+    prisma.appointment.deleteMany(),
+    prisma.workOrder.deleteMany(),
+  ]);
 });
 
 describe("update appointment", () => {
   describe("given appointment has been accepted", () => {
     it("should accept appointment and only reject conflicting appointments", async () => {
+      // Create Customer, vehicle, and Shop
+      const customer = await createCustomerAndVehicle();
+      const shop = await createShop();
+
       // Create Appointments
       for (const ap of [
         appointment,
@@ -146,7 +179,12 @@ describe("update appointment", () => {
         ...notConflictingAppointments,
       ]) {
         const { req, res } = createMockRequestResponse({ method: "POST" });
-        req.body = ap;
+        req.body = {
+          ...ap,
+          vehicle_id: customer?.vehicles[0]?.id,
+          customer_id: customer?.id,
+          shop_id: shop.id,
+        };
         await appointmentHandler(req, res);
 
         expect(res.statusCode).toBe(201);
@@ -188,3 +226,31 @@ describe("update appointment", () => {
     });
   });
 });
+
+const createShop = async () => {
+  return await prisma.shop.create({ data: testShop });
+};
+
+const createCustomerAndVehicle = async () => {
+  const { req, res } = createMockRequestResponse({ method: "POST" });
+  req.body = {
+    email: testCustomerUser.email,
+    password: testCustomerUser.password,
+    first_name: testCustomerUser.first_name,
+    last_name: testCustomerUser.last_name,
+    phone_number: testCustomerUser.phone_number,
+    vehicle: {
+      year: testVehicle.year,
+      make: testVehicle.make,
+      model: testVehicle.model,
+      vin: testVehicle.vin,
+      license_plate: testVehicle.license_plate,
+    },
+  };
+  await registerCustomerHandler(req, res);
+
+  return await prisma.customer.findUniqueOrThrow({
+    where: { email: testCustomerUser.email },
+    include: { vehicles: true },
+  });
+};

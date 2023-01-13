@@ -56,11 +56,11 @@ model Appointment {
   update_time   DateTime          @updatedAt
   quote_id      String?           @unique
   work_order_id String            @unique
-  vehicle_id    String?           @unique
+  vehicle_id    String?
   service_type  ServiceType
   price         Float?
-  employee_id   String?           @unique
-  customer_id   String?           @unique
+  employee_id   String?
+  customer_id   String?
   status        AppointmentStatus
   start_time    DateTime
   end_time      DateTime
@@ -74,6 +74,9 @@ model Appointment {
   shop       Shop?     @relation(fields: [shop_id], references: [id])
 
   @@index([shop_id])
+  @@index([vehicle_id])
+  @@index([customer_id])
+  @@index([employee_id])
 }
 
 model Quote {
