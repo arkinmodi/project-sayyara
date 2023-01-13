@@ -78,6 +78,7 @@ This section records information for easy reference.
 	DAG             & Directed Acyclic Graph              \\
 	M               & Module                              \\
 	MG              & Module Guide                        \\
+	ORM             & Object-relational Mapping           \\
 	OS              & Operating System                    \\
 	R               & Requirement                         \\
 	SC              & Scientific Computing                \\
@@ -157,16 +158,13 @@ Anticipated changes are the source of the information that is to be hidden insid
 Ideally, changing one of the anticipated changes will only require changing the one module that
 hides the associated decision. The approach adapted here is called design for change.
 
-\begin{description}
-	\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-		hardware on which the software is running.
-	\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-		initial input data.
-	\item The format of the initial input data
-	\item The format of server-side responses
-	\item The styling of UI forms and components
-	\item The formatting of UI forms and components
-\end{description}
+\begin{enumerate}[label=\textbf{AC\arabic*:},ref=AC\arabic*]
+	\item \label{acHardware} The specific hardware on which the software is running.
+	\item \label{acInitialInput} The format of the initial input data.
+	\item \label{acServerSideResponses} The format of server-side responses
+	\item \label{acStyling} The styling of UI forms and components
+	\item \label{acFormatting} The formatting of UI forms and components
+\end{enumerate}
 
 \subsection{Unlikely Changes} \label{SecUchange}
 
@@ -176,13 +174,11 @@ stage can simplify the software design. If these decision should later need to b
 many parts of the design will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
 
-\begin{description}
-	\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-		(Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-	\item The application will be built-upon the NextJS framework
-	\item The application will use Prisma for object-relation mapping (ORM)
-	\item There will always be a source of input data external to the system
-\end{description}
+\begin{enumerate}[label=\textbf{UC\arabic*:},ref=UC\arabic*]
+	\item \label{ucNextjs} The application will be built-upon the Next.js framework
+	\item \label{ucPrisma} The application will use Prisma for ORM
+	\item \label{ucInput} There will always be a source of input data external to the system
+\end{enumerate}
 
 \section{Module Hierarchy} \label{SecMH}
 
