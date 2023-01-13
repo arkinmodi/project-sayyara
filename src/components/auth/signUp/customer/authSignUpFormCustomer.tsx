@@ -10,6 +10,7 @@ import VehicleDetailsSection from "./vehicleDetailsSection";
 const initialAuthSignUpFormCustomerValues: IAuthSignUpFormCustomerValues = {
   csrfToken: "",
   email: "",
+  phoneNumber: "",
   password: "",
   firstName: "",
   lastName: "",

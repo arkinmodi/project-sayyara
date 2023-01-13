@@ -18,6 +18,7 @@ const testCustomerUser: Customer = {
   update_time: new Date(),
   first_name: "first_name",
   last_name: "last_name",
+  phone_number: "1234567890",
   email: "customer@test.com",
   password: "test_password",
   image: null,

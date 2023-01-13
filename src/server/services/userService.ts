@@ -9,6 +9,7 @@ export const createCustomerSchema = z.object({
   password: z.string(),
   first_name: z.string(),
   last_name: z.string(),
+  phone_number: z.string(),
   vehicle: createVehicleSchema,
 });
 
@@ -21,6 +22,7 @@ export const createCustomer = async (customer: CreateCustomerType) => {
       password: hash(customer.password),
       first_name: customer.first_name,
       last_name: customer.last_name,
+      phone_number: customer.phone_number,
       type: "CUSTOMER",
       vehicles: { create: { ...customer.vehicle } },
     },
@@ -32,6 +34,7 @@ export const createEmployeeSchema = z.object({
   password: z.string(),
   first_name: z.string(),
   last_name: z.string(),
+  phone_number: z.string(),
   shop_id: z.string(),
 });
 
@@ -48,6 +51,7 @@ export const createEmployee = async (employee: CreateEmployeeType) => {
       password: hash(employee.password),
       first_name: employee.first_name,
       last_name: employee.last_name,
+      phone_number: employee.phone_number,
       type: "EMPLOYEE",
       shop: { connect: { id: employee.shop_id } },
     },
@@ -59,6 +63,7 @@ export const createShopOwnerSchema = z.object({
   password: z.string(),
   first_name: z.string(),
   last_name: z.string(),
+  phone_number: z.string(),
   shop: createShopSchema,
 });
 
@@ -71,6 +76,7 @@ export const createShopOwner = async (shopOwner: CreateShopOwnerType) => {
       password: hash(shopOwner.password),
       first_name: shopOwner.first_name,
       last_name: shopOwner.last_name,
+      phone_number: shopOwner.phone_number,
       type: "SHOP_OWNER",
       shop: { create: { ...shopOwner.shop } },
     },

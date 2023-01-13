@@ -34,6 +34,7 @@ const seed = async () => {
       password: shopOwnerCredentials.password,
       first_name: "John",
       last_name: "Stone",
+      phone_number: "9055259140",
       type: "SHOP_OWNER",
       shop: { create: {} },
     },
@@ -46,6 +47,7 @@ const seed = async () => {
       password: customerCredentials.password,
       first_name: "Mia",
       last_name: "Wong",
+      phone_number: "9055259140",
       type: "CUSTOMER",
       vehicles: {
         create: [
