@@ -210,29 +210,29 @@ None
 \begin{table}[H]
 	\begin{tabular}{|l|l|l|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type}  & \textbf{Description}                    \\
+		\textbf{Output Name} & \textbf{Output Type}  & \textbf{Description}                  \\
 		\hline
-		id                   & String                & ID of Employee                          \\
+		id                   & String                & ID of Employee                        \\
 		\hline
-		create\_time         & String                & Create Time of Employee Account         \\
+		create\_time         & String                & Create Time of Employee Account       \\
 		\hline
-		update\_time         & String                & Update Time of Employee Account         \\
+		update\_time         & String                & Update Time of Employee Account       \\
 		\hline
-		first\_name          & String                & First Name of Employee                  \\
+		first\_name          & String                & First Name of Employee                \\
 		\hline
-		last\_name           & String                & Last Name of Employee                   \\
+		last\_name           & String                & Last Name of Employee                 \\
 		\hline
-		phone\_number        & String                & Phone Number of Employee                \\
+		phone\_number        & String                & Phone Number of Employee              \\
 		\hline
-		email                & String                & Email of Employee                       \\
+		email                & String                & Email of Employee                     \\
 		\hline
-		password             & String                & Password of Employee's Account          \\
+		password             & String                & Password of Employee's Account        \\
 		\hline
-		type                 & String                & Type of User                            \\
+		type                 & String                & Type of User                          \\
 		\hline
-		shop                 & Shop                  & Shop which Employee is registered under \\
+		shop                 & Shop                  & Shop Employee which registered under  \\
 		\hline
-		appointments         & List$<$Appointment$>$ & Appointments assigned to the Employee   \\
+		appointments         & List$<$Appointment$>$ & Appointments assigned to the Employee \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -600,215 +600,6 @@ None
 	\end{adjustbox}
 \end{center}
 
-\textbf{Customer}
-
-\begin{table}[H]
-	\begin{tabular}{|l|l|l|}
-		\hline
-		\textbf{Output Name} & \textbf{Output Type}  & \textbf{Description}                  \\
-		\hline
-		id                   & String                & ID of Customer                        \\
-		\hline
-		create\_time         & String                & Create Time of Customer Account       \\
-		\hline
-		update\_time         & String                & Update Time of Customer Account       \\
-		\hline
-		first\_name          & String                & First Name of Customer                \\
-		\hline
-		last\_name           & String                & Last Name of Customer                 \\
-		\hline
-		phone\_number        & String                & Phone Number of Customer              \\
-		\hline
-		email                & String                & Email of Customer                     \\
-		\hline
-		password             & String                & Password of Customer's Account        \\
-		\hline
-		type                 & String                & Type of User                          \\
-		\hline
-		appointments         & List$<$Appointment$>$ & Appointments assigned to the Customer \\
-		\hline
-		chat\_messages       & List$<$ChatMessage$>$ & Chat Messages sent by the Customer    \\
-		\hline
-		quotes               & List$<$Quote$>$       & Quotes initiated by the Customer      \\
-		\hline
-		vehicles             & List$<$Vehicle$>$     & Vehicles associated with the Customer \\
-		\hline
-	\end{tabular}
-\end{table}
-
-\textbf{Appointment}
-
-\begin{table}[H]
-	\begin{tabular}{|l|l|l|}
-		\hline
-		\textbf{Output Name} & \textbf{Output Type}   & \textbf{Description}           \\
-		\hline
-		id                   & String                 & ID of Appointment              \\
-		\hline
-		create\_time         & String                 & Create Time of Appointment     \\
-		\hline
-		update\_time         & String                 & Update Time of Appointment     \\
-		\hline
-		quote                & Optional$<$Quote$>$    & Associated Quote               \\
-		\hline
-		work\_order          & Work Order             & Associated Work Order          \\
-		\hline
-		vehicle              & Vehicle                & Associated Vehicle             \\
-		\hline
-		service\_type        & String                 & Type of Service                \\
-		\hline
-		employee             & Optional$<$Employee$>$ & Assigned Employee              \\
-		\hline
-		customer             & Customer               & Assigned Customer              \\
-		\hline
-		status               & String                 & Progress Status of Appointment \\
-		\hline
-		start\_time          & DateTime               & Start Time                     \\
-		\hline
-		end\_time            & DateTime               & End Time                       \\
-		\hline
-		shop                 & Shop                   & Associated Shop                \\
-		\hline
-	\end{tabular}
-\end{table}
-
-\textbf{Quote}
-
-\begin{table}[H]
-	\begin{tabular}{|l|l|l|}
-		\hline
-		\textbf{Output Name} & \textbf{Output Type}      & \textbf{Description}     \\
-		\hline
-		id                   & String                    & ID of Quote              \\
-		\hline
-		create\_time         & String                    & Create Time of Quote     \\
-		\hline
-		update\_time         & String                    & Update Time of Quote     \\
-		\hline
-		customer             & Customer                  & Assigned Customer        \\
-		\hline
-		shop                 & Shop                      & Associated Shop          \\
-		\hline
-		appointment          & Optional$<$Appointment$>$ & Associated Appointment   \\
-		\hline
-		chat\_messages       & List$<$ChatMessage$>$     & Associated Chat Messages \\
-		\hline
-	\end{tabular}
-\end{table}
-
-\textbf{ChatMessage}
-
-\begin{table}[H]
-	\begin{tabular}{|l|l|l|}
-		\hline
-		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}        \\
-		\hline
-		id                   & String               & ID of Chat Message          \\
-		\hline
-		create\_time         & String               & Create Time of Chat Message \\
-		\hline
-		update\_time         & String               & Update Time of Chat Message \\
-		\hline
-		message              & String               & Chat Message                \\
-		\hline
-		quote                & Quote                & Associated Quote            \\
-		\hline
-		customer             & Customer             & Associated Customer         \\
-		\hline
-		shop                 & Shop                 & Associated Shop             \\
-		\hline
-	\end{tabular}
-\end{table}
-
-\textbf{Vehicle}
-
-\begin{table}[H]
-	\begin{tabular}{|l|l|l|}
-		\hline
-		\textbf{Output Name} & \textbf{Output Type}  & \textbf{Description}                 \\
-		\hline
-		id                   & String                & ID of the Vehicle                    \\
-		\hline
-		create\_time         & String                & Create Time of the Vehicle           \\
-		\hline
-		update\_time         & String                & Update Time of the Vehicle           \\
-		\hline
-		year                 & $\mathbb{N}$          & Model Year of the Vehicle            \\
-		\hline
-		make                 & String                & Make of the Vehicle                  \\
-		\hline
-		model                & String                & Model of the Vehicle                 \\
-		\hline
-		vin                  & String                & VIN of the Vehicle                   \\
-		\hline
-		license\_plate       & String                & License Plate of the Vehicle         \\
-		\hline
-		customer             & Customer              & Associated Customer                  \\
-		\hline
-		appointments         & List$<$Appointment$>$ & Appointments assigned to the Vehicle \\
-		\hline
-	\end{tabular}
-\end{table}
-
-\textbf{WorkOrder}
-
-\begin{table}[H]
-	\begin{tabular}{|l|l|l|}
-		\hline
-		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}      \\
-		\hline
-		id                   & String               & ID of Work Order          \\
-		\hline
-		create\_time         & String               & Create Time of Work Order \\
-		\hline
-		update\_time         & String               & Update Time of Work Order \\
-		\hline
-		appointment          & Appointment          & Associated Appointment    \\
-		\hline
-		title                & String               & Title of Work Order       \\
-		\hline
-		customer             & Customer             & Assigned Customer         \\
-		\hline
-		vehicle              & Vehicle              & Associated Vehicle        \\
-		\hline
-		employee             & Employee             & Assigned Employee         \\
-		\hline
-		body                 & String               & Work Order Details        \\
-		\hline
-		shop                 & Shop                 & Associated Shop           \\
-		\hline
-	\end{tabular}
-\end{table}
-
-\textbf{Shop}
-
-\begin{table}[H]
-	\begin{tabular}{|l|l|l|}
-		\hline
-		\textbf{Output Name} & \textbf{Output Type}  & \textbf{Description}               \\
-		\hline
-		id                   & String                & ID of Shop                         \\
-		\hline
-		create\_time         & String                & Create Time of Shop                \\
-		\hline
-		update\_time         & String                & Update Time of Shop                \\
-		\hline
-		appointments         & List$<$Appointment$>$ & Appointments assigned to Shop      \\
-		\hline
-		employees            & List$<$Employee$>$    & List of Employee assigned to Shop  \\
-		\hline
-		chat\_messages       & List$<$ChatMessage$>$ & List of Chat Messages sent by Shop \\
-		\hline
-		quotes               & List$<$Quote$>$       & List of Quotes                     \\
-		\hline
-		services             & List$<$Service$>$     & List of offered Services           \\
-		\hline
-	\end{tabular}
-\end{table}
-
-\subsubsection{Exported Access Programs}
-
-None
 \subsection{Semantics}
 
 \subsubsection{State Variables}
