@@ -796,6 +796,7 @@ None
 	\item output: $out := getServiceById(id) = \text{Service} \Rightarrow (\text{Service} = \text{None} $ \\
 		      $\Rightarrow \text{ServiceNotFoundException } |\ \text{Service} \neq \text{None}$ \\ $\Rightarrow
 		      \text{update all fields of Service with fields in } patch \text{ in service database table})$
+	\item exception: $exc := getServiceById(id) = None \Rightarrow \text{ServiceNotFoundException}$
 \end{itemize}
 
 \noindent deleteServiceById($id$):
