@@ -145,6 +145,14 @@ model Shop {
   id            String        @id @default(cuid())
   create_time   DateTime      @default(now())
   update_time   DateTime      @updatedAt
+  name String
+  address String
+  phone_number String
+  postal_code String
+  city String
+  province String
+  hours_of_operation Json?
+
   appointments  Appointment[]
   employees     Employee[]
   chat_messages ChatMessage[]
@@ -162,11 +170,11 @@ model Service {
   total_price    Float
   parts          Json
   type           ServiceType
-  shop_id        String
   appointments   Appointment[]
   quotes         Quote[]
+  shop_id        String?
 
-  shop Shop @relation(fields: [shop_id], references: [id])
+  shop Shop? @relation(fields: [shop_id], references: [id])
 
   @@index([shop_id])
 }
