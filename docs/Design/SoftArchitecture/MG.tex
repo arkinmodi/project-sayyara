@@ -57,6 +57,7 @@
 		January 8, 2023   & Arkin Modi            & Add Use Hierarchy Between Modules Diagram \\
 		January 10, 2023  & Arkin Modi            & Add Module Decompositions                 \\
 		January 12, 2023  & Leon So               & Anticipated Changes \& Unlikely Changes   \\
+		January 15, 2023  & Arkin Modi            & Merge Shop Profile \& Shop Lookup Module  \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -195,8 +196,7 @@ hierarchy tree, are the modules that will actually be implemented.
 	\item \label{mWorkOrders} Work Orders Module
 	\item \label{mEmployeeManagement} Employee Management Module
 	\item \label{mServices} Services Module
-	\item \label{mShopLookup} Shop Lookup Module
-	\item \label{mShopProfile} Shop Profile Module
+	\item \label{mShop} Shop Module
 \end{enumerate}
 
 Note that \ref{mHH} is a commonly used module and is already implemented by the operating system.
@@ -213,14 +213,13 @@ It will not be reimplemented.
 
 		\midrule
 
-		\multirow{8}{0.3\textwidth}{Behaviour-Hiding Module}  & Users Module               \\
+		\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module}  & Users Module               \\
 		                                                      & Quotes Module              \\
 		                                                      & Appointments Module        \\
 		                                                      & Work Orders Module         \\
 		                                                      & Employee Management Module \\
 		                                                      & Services Module            \\
-		                                                      & Shop Lookup Module         \\
-		                                                      & Shop Profile Module        \\
+		                                                      & Shop Module                \\
 		\midrule
 
 		\multirow{1}{0.3\textwidth}{Software Decision Module} & Database Driver Module     \\
@@ -338,20 +337,12 @@ means that the module is not a leaf and will not have to be implemented.
 		% \item[Type of Module:]
 \end{description}
 
-\subsubsection{Shop Lookup Module (\ref{mShopLookup})}
-
-\begin{description}
-	\item[Secrets:] --
-	\item[Services:] Provides the ability to query for a shop by distance, postal code and/or shop name.
-	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
-\end{description}
-
-\subsubsection{Shop Profile Module (\ref{mShopProfile})}
+\subsubsection{Shop Module (\ref{mShop})}
 
 \begin{description}
 	\item[Secrets:] The format and structure of shop data objects.
-	\item[Services:] Provide CRUD operations for shop objects.
+	\item[Services:] Provides CRUD operations for shop objects and the ability to query for a shop by
+		distance, postal code and/or shop name.
 	\item[Implemented By:] \progname{}
 		% \item[Type of Module:]
 \end{description}
