@@ -50,13 +50,14 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                           \\
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                                   \\
 		\midrule
-		December 28, 2022 & Arkin Modi            & Create Revision History                   \\
-		January 3, 2023   & Arkin Modi            & Add Module Hierarchy                      \\
-		January 8, 2023   & Arkin Modi            & Add Use Hierarchy Between Modules Diagram \\
-		January 10, 2023  & Arkin Modi            & Add Module Decompositions                 \\
-		January 12, 2023  & Leon So               & Anticipated Changes \& Unlikely Changes   \\
+		December 28, 2022 & Arkin Modi            & Create Revision History                           \\
+		January 3, 2023   & Arkin Modi            & Add Module Hierarchy                              \\
+		January 8, 2023   & Arkin Modi            & Add Use Hierarchy Between Modules Diagram         \\
+		January 10, 2023  & Arkin Modi            & Add Module Decompositions                         \\
+		January 12, 2023  & Leon So               & Anticipated Changes \& Unlikely Changes           \\
+		January 15, 2023  & Arkin Modi            & Add ``Type of Module" to Behaviour-Hiding Modules \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -288,7 +289,7 @@ means that the module is not a leaf and will not have to be implemented.
 	\item[Services:] Provide CRUD operations for user objects, and the ability to verify a user's
 		authorization.
 	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
+	\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Quotes Module (\ref{mQuotes})}
@@ -297,7 +298,7 @@ means that the module is not a leaf and will not have to be implemented.
 	\item[Secrets:] The format and structure of quote and chat message data objects.
 	\item[Services:] Provide CRUD operations for quote and chat message objects.
 	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
+	\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Appointments Module (\ref{mAppointments})}
@@ -308,7 +309,7 @@ means that the module is not a leaf and will not have to be implemented.
 		is acceptable (i.e., is possible to fulfill), and the ability to accept an appointment and reject
 		all conflicting appointments.
 	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
+	\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Work Orders Module (\ref{mWorkOrders})}
@@ -317,7 +318,7 @@ means that the module is not a leaf and will not have to be implemented.
 	\item[Secrets:] The format and structure of work order data objects.
 	\item[Services:] Provide CRUD operations for work order objects.
 	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
+	\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Employee Management Module (\ref{mEmployeeManagement})}
@@ -326,7 +327,7 @@ means that the module is not a leaf and will not have to be implemented.
 	\item[Secrets:] --
 	\item[Services:] Provide CRUD operations for managing employee's relation with shop.
 	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
+	\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Services Module (\ref{mServices})}
@@ -335,7 +336,7 @@ means that the module is not a leaf and will not have to be implemented.
 	\item[Secrets:] The format and structure of service data objects.
 	\item[Services:] Provide CRUD operations for service objects.
 	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
+	\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Shop Lookup Module (\ref{mShopLookup})}
@@ -344,7 +345,7 @@ means that the module is not a leaf and will not have to be implemented.
 	\item[Secrets:] --
 	\item[Services:] Provides the ability to query for a shop by distance, postal code and/or shop name.
 	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
+	\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Shop Profile Module (\ref{mShopProfile})}
@@ -353,7 +354,7 @@ means that the module is not a leaf and will not have to be implemented.
 	\item[Secrets:] The format and structure of shop data objects.
 	\item[Services:] Provide CRUD operations for shop objects.
 	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
+	\item[Type of Module:] Library
 \end{description}
 
 \subsection{Software Decision Module}
@@ -373,7 +374,7 @@ means that the module is not a leaf and will not have to be implemented.
 	\item[Secrets:] The data structures and algorithms for representing the database's schema and
 		communicating with the database.
 	\item[Services:] Provides a driver to interface with the database
-	\item[Implemented By:] Prisma
+	\item[Implemented By:] \progname{}, Prisma
 \end{description}
 
 \newpage
