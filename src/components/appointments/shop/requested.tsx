@@ -31,6 +31,16 @@ const Requested = () => {
           new Date(appointment2.startTime).getTime()
         );
       });
+
+    //put the appointments in a map of lists depending on the date
+    const pendingAppointmentsMap = Map<String, Array<IAppointment>>;
+    for (var appointment of pendingAppointments) {
+      //TODO: Might have to change this depending on the format that the date is saved
+      var date = new Date(appointment.startTime.toISOString().substring(0, 10))
+        pendingAppointments[0].set(date, appointment)
+      );
+      var appointment1 = pendingAppointments[0];
+    }
     setPendingAppointments(pendingAppointments);
   }, [appointments, setPendingAppointments]);
 
