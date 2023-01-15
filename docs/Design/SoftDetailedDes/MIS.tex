@@ -777,7 +777,8 @@ None
 \noindent createAppointment($appointment$):
 \begin{itemize}
 	\item transition: new Appointment(appointment) as ``Pending Approval", save appointment to appointment
-	      database table
+	      database table. new WorkOrder() connected to the newly created appointment, save work order to work
+	      order database table.
 	\item output: $out := (exc = \text{InvalidTimeException}$ \\ $\Rightarrow \text{``Invalid start time
 			      and/or end time."} |\ \neg exc \Rightarrow \text{new Appointment(\emph{appointment})})$
 	\item exception: $exc := appointment.start\_time > appointment.end\_time$ \\ $\Rightarrow
