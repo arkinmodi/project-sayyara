@@ -63,6 +63,7 @@
 		January 9, 2023   & Arkin Modi            & Add Module Hierarchy                 \\
 		January 11, 2023  & Arkin Modi            & Create MIS of User Module            \\
 		January 13, 2023  & Arkin Modi            & Create MIS of Database Driver Module \\
+		January 15, 2023  & Arkin Modi            & Create MIS of Quotes Module          \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -663,6 +664,141 @@ None
 \begin{itemize}
 	\item output: $out := \text{hashed value of } s$
 \end{itemize}
+
+\newpage
+
+\section{MIS of Quotes Module} \label{mQuotes}
+\subsection{Module}
+
+quoteService \\ chatService
+
+\subsection{Uses}
+
+Database Driver Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Types}
+
+\textbf{CreateQuoteType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description} \\
+		\hline
+		customer\_id         & String               & ID of Customer       \\
+		\hline
+		shop\_id             & String               & ID of Shop           \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\textbf{CreateChatMessageType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description} \\
+		\hline
+		customer\_id         & Optional$<$String$>$ & ID of Customer       \\
+		\hline
+		shop\_id             & Optional$<$String$>$ & ID of Shop           \\
+		\hline
+		message              & String               & Chat message         \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{adjustbox}{width=\textwidth}
+		\begin{tabular}{llll}
+			\hline
+			\textbf{Name}            & \textbf{In}                   & \textbf{Out}          & \textbf{Exceptions}                            \\
+			\hline
+			createQuote              & CreateQuoteType               & Quote                 & ~                                              \\
+			getQuoteById             & String                        & Quote $\lor$ None     & ~                                              \\
+			getQuotesByCustomerId    & String                        & Quote $\lor$ None     & ~                                              \\
+			getQuotesByShopId        & String                        & Quote $\lor$ None     & ~                                              \\
+			deleteQuoteAndChatById   & String                        & ~                     & ~                                              \\
+			createChatMessage        & CreateChatMessageType, String & ChatMessage           & MissingSenderException, QuoteNotFoundException \\
+			getChatMessagesByQuoteId & String                        & List$<$ChatMessage$>$ & ~                                              \\
+			\hline
+		\end{tabular}
+	\end{adjustbox}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+User's Display \\ Database
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent createQuote($quote$):
+\begin{itemize}
+	\item transition: new Quote(quote), save quote to quote database table
+	\item output: $out := \text{new Quote(\emph{quote})}$
+\end{itemize}
+
+\noindent getQuoteById($id$):
+\begin{itemize}
+	\item output: $out :=$ A Quote such that it's ID matches $id$ from the quote database table else None.
+\end{itemize}
+
+\noindent getQuotesByCustomerId($customerId$):
+\begin{itemize}
+	\item output: $out :=$ A Quote such that it's customer ID matches $customerId$ from the quote database
+	      table else None.
+\end{itemize}
+
+\noindent getQuotesByShopId($shopId$):
+\begin{itemize}
+	\item output: $out :=$ A Quote such that it's shop ID matches $shopId$ from the quote database table else
+	      None.
+\end{itemize}
+
+\noindent deleteQuoteAndChatById($id$):
+\begin{itemize}
+	\item transition: Delete all Quote and ChatMessage where their quote ID matches $id$ from the quote
+	      database table and the chat message database table, respectively.
+\end{itemize}
+
+\noindent createChatMessage($chatMessage, quoteId$):
+\begin{itemize}
+	\item transition: new ChatMessage($chatMessage, quoteId$), save quote to quote database table
+	\item output: $out := (exc = QuoteNotFoundException \Rightarrow \text{``Quote Not Found" })$ \\ $|\ exc =
+		      MissingSenderException \Rightarrow \text{``Missing Sender Information" }$ \\ $|\ \neg exc
+		      \Rightarrow \text{new ChatMessage(\emph{chatMessage, quoteId})}$
+	\item exception: $exc := (getQuoteById(quoteId) = None \Rightarrow QuoteNotFoundException$ \\ $ |\
+		      chatMessage.customer\_id = \text{None} \land chatMessage.shop\_id = \text{None}$ \\ $\Rightarrow
+		      MissingSenderException)$
+\end{itemize}
+
+\noindent getQuoteById($quoteId$):
+\begin{itemize}
+	\item output: $out :=$ A list of Chat Messages such that their quote ID matches $quoteId$ from the chat
+	      message database table else an empty list.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
 
 \newpage
 
