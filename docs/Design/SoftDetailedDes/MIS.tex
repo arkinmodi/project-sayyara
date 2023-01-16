@@ -892,7 +892,7 @@ None
 \noindent updateEmployee($employeeId, patch$):
 \begin{itemize}
 	\item transition: Update all fields of Employee with fields in $patch$ in employee database table
-	\item output: $out := getEmployeeById(id) = \text{Service} \Rightarrow (\text{Employee} = \text{None} $
+	\item output: $out := getEmployeeById(id) = \text{Employee} \Rightarrow (\text{Employee} = \text{None} $
 		      \\ $\Rightarrow \text{UserNotFoundException } |\ \text{Employee} \neq \text{None}$ \\ $\Rightarrow
 		      \text{update all fields of Employee with fields in } patch \text{ in service database table})$
 	\item exception: $exc := getEmployeeById(id) = None \Rightarrow \text{UserNotFoundException}$
