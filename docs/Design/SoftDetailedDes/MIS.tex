@@ -56,13 +56,14 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                      \\
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                          \\
 		\midrule
-		December 28, 2022 & Arkin Modi            & Create Revision History              \\
-		January 7, 2023   & Joy Xiao              & Introduction                         \\
-		January 9, 2023   & Arkin Modi            & Add Module Hierarchy                 \\
-		January 11, 2023  & Arkin Modi            & Create MIS of User Module            \\
-		January 13, 2023  & Arkin Modi            & Create MIS of Database Driver Module \\
+		December 28, 2022 & Arkin Modi            & Create Revision History                  \\
+		January 7, 2023   & Joy Xiao              & Introduction                             \\
+		January 9, 2023   & Arkin Modi            & Add Module Hierarchy                     \\
+		January 11, 2023  & Arkin Modi            & Create MIS of User Module                \\
+		January 13, 2023  & Arkin Modi            & Create MIS of Database Driver Module     \\
+		January 15, 2023  & Joy Xiao              & Create MIS of Employee Management Module \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -659,10 +660,96 @@ None
 
 \subsubsection{Local Functions}
 
-\noindent hash($s$):
+\section{MIS of Employee Management Module} \label{mEmployeeManagement}
+\subsection{Module}
+
+employeeManagementService
+
+\subsection{Uses}
+
+Database Driver Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Types}
+
+\textbf{EmployeeType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}               \\
+		\hline
+		email                & String               & Email of Employee                  \\
+		\hline
+		password             & String               & Password of Employee's Account     \\
+		\hline
+		first\_name          & String               & First Name of Employee             \\
+		\hline
+		last\_name           & String               & Last Name of Employee              \\
+		\hline
+		phone\_number        & String               & Phone Number of Employee           \\
+		\hline
+		shop\_id             & String               & ID of Shop that Employee Works For \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{adjustbox}{width=\textwidth}
+		\begin{tabular}{llll}
+			\hline
+			\textbf{Name}   & \textbf{In} & \textbf{Out}     & \textbf{Exceptions} \\
+			\hline
+			getAllEmployees & String      & List<$Employee$> & ~                   \\
+			findEmployee    & String      & List<$Employee$> & ~                   \\
+			deleteEmployee  & String      & ~                & ~                   \\
+			\hline
+		\end{tabular}
+	\end{adjustbox}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+User's Display \\ Database
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getAllEmployees($shopId$):
 \begin{itemize}
-	\item output: $out := \text{hashed value of } s$
+	\item output: $out := List of employees from the shop database table associated with the $shopId$, else
+		      None.$
 \end{itemize}
+
+\noindent findEmployee($name$):
+\begin{itemize}
+	\item output: $out := List of employees with matching name$
+\end{itemize}
+
+\noindent deleteEmployee($employeeId$):
+\begin{itemize}
+	\item transition: Delete employee where their ID matches $employeeId$ from the employee database table.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
 
 \newpage
 
