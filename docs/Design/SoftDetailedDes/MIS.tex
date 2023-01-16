@@ -708,19 +708,19 @@ None
 \begin{table}[H]
 	\begin{tabular}{|l|l|l|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}               \\
+		\textbf{Output Name} & \textbf{Output Type}   & \textbf{Description}               \\
 		\hline
-		name                 & String               & Name of Service                    \\
+		name                 & String                 & Name of Service                    \\
 		\hline
-		description          & String               & Description of Service             \\
+		description          & String                 & Description of Service             \\
 		\hline
-		estimated\_time      & String               & Estimated Time of Service          \\
+		estimated\_time      & String                 & Estimated Time of Service          \\
 		\hline
-		parts                & List$<$Part$>$       & Estimated Parts needed for Service \\
+		parts                & List$<$Part$>$         & Estimated Parts needed for Service \\
 		\hline
-		total\_price         & $\mathbb{Q}$         & Estimated Price needed for Service \\
+		total\_price         & Optional$<\mathbb{Q}>$ & Estimated Price needed for Service \\
 		\hline
-		shop\_id             & String               & Shop that Service is available at  \\
+		shop\_id             & String                 & Shop that Service is available at  \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -751,12 +751,13 @@ None
 	\begin{adjustbox}{width=\textwidth}
 		\begin{tabular}{llll}
 			\hline
-			\textbf{Name}     & \textbf{In}               & \textbf{Out}        & \textbf{Exceptions}      \\
+			\textbf{Name}       & \textbf{In}               & \textbf{Out}        & \textbf{Exceptions}      \\
 			\hline
-			createService     & CreateServiceType         & Service             & ~                        \\
-			getServiceById    & String                    & Service $\lor$ None & ~                        \\
-			updateServiceById & String, UpdateServiceType & Service             & ServiceNotFoundException \\
-			deleteServiceById & String                    & ~                   & ~                        \\
+			createService       & CreateServiceType         & Service             & ~                        \\
+			getServiceById      & String                    & Service $\lor$ None & ~                        \\
+			getServicesByShopId & String                    & List$<$Service$>$   & ~                        \\
+			updateServiceById   & String, UpdateServiceType & Service             & ServiceNotFoundException \\
+			deleteServiceById   & String                    & ~                   & ~                        \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -788,6 +789,12 @@ None
 \begin{itemize}
 	\item output: $out :=$ A Service such that it's ID matches $id$ from the service database table else
 	      None.
+\end{itemize}
+
+\noindent getServicesByShopId($shopId$):
+\begin{itemize}
+	\item output: $out :=$ A list of Service such that it's shop ID matches $shopId$ from the service
+	      database table else an empty list.
 \end{itemize}
 
 \noindent updateServiceById($id, patch$):
