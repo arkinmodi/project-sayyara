@@ -935,10 +935,8 @@ None
 			      and/or end time."} |\ \neg exc \Rightarrow \text{new Appointment(\emph{appointment})})$
 	\item exception: $exc := (appointment.vehicle\_id = \text{None} \lor appointment.customer\_id =
 		      \text{None} \lor appointment.shop\_id = \text{None} \Rightarrow \text{MissingDataException})$ \\
-	      $|\ (getShopById(appointment.shop\_id) = Shop$ \\ $\Rightarrow appointment.start\_time >
-		      appointment.end\_time $ \\ $\lor appointment.start\_time < Shop.hours\_of\_operation.open\_time$ \\
-	      $\lor appointment.end\_time > Shop.hours\_of\_operation.close\_time $ \\ $\Rightarrow
-		      \text{InvalidTimeException})$
+	      $|\ (\neg isAppointmentValid(appointment.shop\_id, appointment.start\_time, appointment.end\_time)
+	      $ \\ $\Rightarrow \text{InvalidTimeException})$
 \end{itemize}
 
 \noindent getAppointmentById($id$):
@@ -963,9 +961,11 @@ None
 			      in appointment database table})$
 	\item exception: $exc := (getAppointmentById(id) = None \Rightarrow \text{AppointmentNotFoundException})$
 	      \\ $|\ (getAppointmentById(id) = Appointment \Rightarrow (patch.start\_time \neq \text{None } \land
-		      patch.start\_time < Appointment.shop.hours\_of\_operation.open\_time) \lor (patch.end\_time \neq
-		      \text{None } \land patch.end\_time > Appointment.shop.hours\_of\_operation.close\_time)$ \\
-	      $\Rightarrow \text{InvalidTimeException})$
+		      patch.end\_time \neq \text{None } \land \neg isAppointmentValid(Appointment.shop\_id,
+		      patch.start\_time, patch.end\_time)) \lor (patch.start\_time \neq \text{None}$ \\ $\land \neg
+		      isAppointmentValid(Appointment.shop\_id, patch.start\_time, Appointment.end\_time)) \lor
+		      (patch.end\_time \neq \text{None}$ \\ $\land \neg isAppointmentValid(Appointment.shop\_id,
+		      Appointment.start\_time, patch.end\_time))$ \\ $\Rightarrow \text{InvalidTimeException})$
 \end{itemize}
 
 \noindent deleteAppointment($id$):
@@ -981,6 +981,12 @@ None
 	\item transition: Mark the appointment as ``Accepted". If this appointment will consume the final
 	      employee or final work stall available during its specified time slot, mark all other appointment
 	      with overlapping time slot as ``Rejected".
+\end{itemize}
+
+\noindent isAppointmentValid($shop\_id, start\_time, end\_time$):
+\begin{itemize}
+	\item output: $out :=$ True if the given appointment is within the hours of operation for the shop else
+	      False.
 \end{itemize}
 
 \newpage
