@@ -141,6 +141,7 @@ The following table summarizes the primitive data types used by \progname.
 		integer            & $\mathbb{Z}$      & a number without a fractional component in (-$\infty$, $\infty$) \\
 		natural number     & $\mathbb{N}$      & a number without a fractional component in [1, $\infty$)         \\
 		real               & $\mathbb{R}$      & any number in (-$\infty$, $\infty$)                              \\
+		real positive      & $\mathbb{R}+$     & any number in [0, $\infty$)                                      \\
 		\bottomrule
 	\end{tabular}
 \end{center}
@@ -443,6 +444,54 @@ None
 	\end{tabular}
 \end{table}
 
+\textbf{Part}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}                       \\
+		\hline
+		quantity             & $\mathbb{N}$         & Number of Parts                            \\
+		\hline
+		cost                 & $\mathbb{R}+$        & Price of Parts                             \\
+		\hline
+		name                 & String               & Name of Part                               \\
+		\hline
+		condition            & String               & Condition of Part  (i.e., New or Used)     \\
+		\hline
+		build                & String               & Origin of Part (i.e., OEM or After Market) \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\textbf{Service}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type}    & \textbf{Description}                \\
+		\hline
+		id                   & String                  & ID of Service                       \\
+		\hline
+		create\_time         & String                  & Create Time of Service              \\
+		\hline
+		update\_time         & String                  & Update Time of Service              \\
+		\hline
+		name                 & String                  & Name of Service                     \\
+		\hline
+		description          & String                  & Description of Service              \\
+		\hline
+		estimated\_time      & $\mathbb{N}$            & Estimated time needed for a Service \\
+		\hline
+		total_price          & Optional$<\mathbb{R}+>$ & Estimated price for a Service       \\
+		\hline
+		parts                & List$<$Part$>$          & List of parts for a Service         \\
+		\hline
+		shop                 & Shop                    & Shop which offers the Service       \\
+		\hline
+	\end{tabular}
+\end{table}
+
 \subsubsection{Exported Access Programs}
 
 None
@@ -683,44 +732,24 @@ None
 
 \subsubsection{Exported Types}
 
-\textbf{Part}
-
-\begin{table}[H]
-	\begin{tabular}{|l|l|l|}
-		\hline
-		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}                       \\
-		\hline
-		quantity             & $\mathbb{N}$         & Number of Parts                            \\
-		\hline
-		cost                 & $\mathbb{Q}$         & Price of Parts                             \\
-		\hline
-		name                 & String               & Name of Part                               \\
-		\hline
-		condition            & String               & Condition of Part  (i.e., New or Used)     \\
-		\hline
-		build                & String               & Origin of Part (i.e., OEM or After Market) \\
-		\hline
-	\end{tabular}
-\end{table}
-
 \textbf{CreateServiceType}
 
 \begin{table}[H]
 	\begin{tabular}{|l|l|l|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type}   & \textbf{Description}               \\
+		\textbf{Output Name} & \textbf{Output Type}    & \textbf{Description}               \\
 		\hline
-		name                 & String                 & Name of Service                    \\
+		name                 & String                  & Name of Service                    \\
 		\hline
-		description          & String                 & Description of Service             \\
+		description          & String                  & Description of Service             \\
 		\hline
-		estimated\_time      & String                 & Estimated Time of Service          \\
+		estimated\_time      & String                  & Estimated Time of Service          \\
 		\hline
-		parts                & List$<$Part$>$         & Estimated Parts needed for Service \\
+		parts                & List$<$Part$>$          & Estimated Parts needed for Service \\
 		\hline
-		total\_price         & Optional$<\mathbb{Q}>$ & Estimated Price needed for Service \\
+		total\_price         & Optional$<\mathbb{R}+>$ & Estimated Price needed for Service \\
 		\hline
-		shop\_id             & String                 & Shop that Service is available at  \\
+		shop\_id             & String                  & Shop that Service is available at  \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -740,7 +769,7 @@ None
 		\hline
 		parts                & Optional$<$List$<$Part$>>$ & Estimated Parts needed for Service \\
 		\hline
-		total\_price         & Optional$<\mathbb{Q}>$     & Estimated Price needed for Service \\
+		total\_price         & Optional$<\mathbb{R}+>$    & Estimated Price needed for Service \\
 		\hline
 	\end{tabular}
 \end{table}
