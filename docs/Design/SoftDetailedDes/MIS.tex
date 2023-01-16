@@ -889,15 +889,15 @@ None
 \begin{table}[H]
 	\begin{tabular}{|l|l|l|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}           \\
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}     \\
 		\hline
-		email                & Optional$<$String$>$ & Email of Employee              \\
+		email                & Optional$<$String$>$ & Email of Employee        \\
 		\hline
-		first\_name          & Optional$<$String$>$ & First Name of Employee         \\
+		first\_name          & Optional$<$String$>$ & First Name of Employee   \\
 		\hline
-		last\_name           & Optional$<$String$>$ & Last Name of Employee          \\
+		last\_name           & Optional$<$String$>$ & Last Name of Employee    \\
 		\hline
-		phone\_number        & Optional$<$String$>$ & Phone Number of Employee       \\
+		phone\_number        & Optional$<$String$>$ & Phone Number of Employee \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -908,12 +908,12 @@ None
 	\begin{adjustbox}{width=\textwidth}
 		\begin{tabular}{llll}
 			\hline
-			\textbf{Name}   & \textbf{In}                & \textbf{Out}          & \textbf{Exceptions} \\
+			\textbf{Name}   & \textbf{In}                & \textbf{Out}       & \textbf{Exceptions}   \\
 			\hline
-			getEmployeeById & String                     & Employee              & ~                   \\
-			getAllEmployees & String                     & List$<$Employee$>$    & ~                   \\
-updateEmployee  & String, UpdateEmployeeType & ~                  & UserNotFoundException \\
-			deleteEmployee  & String                     & ~                     & ~                   \\
+			getEmployeeById & String                     & Employee           & ~                     \\
+			getAllEmployees & String                     & List$<$Employee$>$ & ~                     \\
+			updateEmployee  & String, UpdateEmployeeType & ~                  & UserNotFoundException \\
+			removeEmployee  & String                     & ~                  & ~                     \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -956,9 +956,10 @@ None
 	\item exception: $exc := getEmployeeById(id) = None \Rightarrow \text{UserNotFoundException}$
 \end{itemize}
 
-\noindent deleteEmployee($employeeId$):
+\noindent removeEmployee($employeeId$):
 \begin{itemize}
-	\item transition: Delete employee where their ID matches $employeeId$ from the employee database table.
+	\item transition: Change the state of the employee to "suspended" where their ID matches $employeeId$ in
+	      the employee database table.
 \end{itemize}
 
 \subsubsection{Local Functions}
