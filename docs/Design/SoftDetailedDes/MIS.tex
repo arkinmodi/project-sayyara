@@ -877,8 +877,8 @@ None
 			\hline
 			createQuote              & CreateQuoteType               & Quote                 & ~                                              \\
 			getQuoteById             & String                        & Quote $\lor$ None     & ~                                              \\
-			getQuotesByCustomerId    & String                        & Quote $\lor$ None     & ~                                              \\
-			getQuotesByShopId        & String                        & Quote $\lor$ None     & ~                                              \\
+			getQuotesByCustomerId    & String                        & List$<$Quote$>$       & ~                                              \\
+			getQuotesByShopId        & String                        & List$<$Quote$>$       & ~                                              \\
 			deleteQuoteAndChatById   & String                        & ~                     & ~                                              \\
 			createChatMessage        & CreateChatMessageType, String & ChatMessage           & MissingSenderException, QuoteNotFoundException \\
 			getChatMessagesByQuoteId & String                        & List$<$ChatMessage$>$ & ~                                              \\
@@ -916,14 +916,14 @@ None
 
 \noindent getQuotesByCustomerId($customerId$):
 \begin{itemize}
-	\item output: $out :=$ A Quote such that it's customer ID matches $customerId$ from the quote database
-	      table else None.
+	\item output: $out :=$ A list of Quotes such that it's customer ID matches $customerId$ from the quote
+	      database table else an empty list.
 \end{itemize}
 
 \noindent getQuotesByShopId($shopId$):
 \begin{itemize}
-	\item output: $out :=$ A Quote such that it's shop ID matches $shopId$ from the quote database table else
-	      None.
+	\item output: $out :=$ A list of Quotes such that it's shop ID matches $shopId$ from the quote database
+	      table else an empty list.
 \end{itemize}
 
 \noindent deleteQuoteAndChatById($id$):
