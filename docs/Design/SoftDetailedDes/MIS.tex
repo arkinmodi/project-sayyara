@@ -677,24 +677,22 @@ None
 
 \subsubsection{Exported Types}
 
-\textbf{EmployeeType}
+\textbf{UpdateEmployeeType}
 
 \begin{table}[H]
 	\begin{tabular}{|l|l|l|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}               \\
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}           \\
 		\hline
-		email                & String               & Email of Employee                  \\
+		email                & Optional$<$String$>$ & Email of Employee              \\
 		\hline
-		password             & String               & Password of Employee's Account     \\
+		password             & Optional$<$String$>$ & Password of Employee's Account \\
 		\hline
-		first\_name          & String               & First Name of Employee             \\
+		first\_name          & Optional$<$String$>$ & First Name of Employee         \\
 		\hline
-		last\_name           & String               & Last Name of Employee              \\
+		last\_name           & Optional$<$String$>$ & Last Name of Employee          \\
 		\hline
-		phone\_number        & String               & Phone Number of Employee           \\
-		\hline
-		shop\_id             & String               & ID of Shop that Employee Works For \\
+		phone\_number        & Optional$<$String$>$ & Phone Number of Employee       \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -705,11 +703,12 @@ None
 	\begin{adjustbox}{width=\textwidth}
 		\begin{tabular}{llll}
 			\hline
-			\textbf{Name}   & \textbf{In} & \textbf{Out}     & \textbf{Exceptions} \\
+			\textbf{Name}   & \textbf{In}                & \textbf{Out}          & \textbf{Exceptions} \\
 			\hline
-			getAllEmployees & String      & List<$Employee$> & ~                   \\
-			findEmployee    & String      & List<$Employee$> & ~                   \\
-			deleteEmployee  & String      & ~                & ~                   \\
+			getEmployeeById & String                     & $Employee$            & ~                   \\
+			getAllEmployees & String                     & List<$Employee$>      & ~                   \\
+			updateEmployee  & String, UpdateEmployeeType & UserNotFoundException                       \\
+			deleteEmployee  & String                     & ~                     & ~                   \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -737,9 +736,13 @@ None
 		      None.$
 \end{itemize}
 
-\noindent findEmployee($name$):
+\noindent updateEmployee($employeeId, patch$):
 \begin{itemize}
-	\item output: $out := List of employees with matching name$
+	\item transition: Update all fields of Employee with fields in $patch$ in employee database table
+	\item output: $out := getEmployeeById(id) = \text{Service} \Rightarrow (\text{Employee} = \text{None} $
+		      \\ $\Rightarrow \text{UserNotFoundException } |\ \text{Employee} \neq \text{None}$ \\ $\Rightarrow
+		      \text{update all fields of Employee with fields in } patch \text{ in service database table})$
+	\item exception: $exc := getEmployeeById(id) = None \Rightarrow \text{UserNotFoundException}$
 \end{itemize}
 
 \noindent deleteEmployee($employeeId$):
