@@ -63,6 +63,7 @@
 		January 9, 2023   & Arkin Modi            & Add Module Hierarchy                     \\
 		January 11, 2023  & Arkin Modi            & Create MIS of User Module                \\
 		January 13, 2023  & Arkin Modi            & Create MIS of Database Driver Module     \\
+		January 15, 2023  & Leon So               & Create MIS of Shop Module                \\
 		January 15, 2023  & Joy Xiao              & Create MIS of Employee Management Module \\
 		\bottomrule
 	\end{tabularx}
@@ -169,14 +170,13 @@ The following table is taken directly from the Module Guide document for this pr
 
 		\midrule
 
-		\multirow{8}{0.3\textwidth}{Behaviour-Hiding Module}  & Users Module               \\
+		\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module}  & Users Module               \\
 		                                                      & Quotes Module              \\
 		                                                      & Appointments Module        \\
 		                                                      & Work Orders Module         \\
 		                                                      & Employee Management Module \\
 		                                                      & Services Module            \\
-		                                                      & Shop Lookup Module         \\
-		                                                      & Shop Profile Module        \\
+		                                                      & Shop Module                \\
 		\midrule
 
 		\multirow{1}{0.3\textwidth}{Software Decision Module} & Database Driver Module     \\
@@ -431,6 +431,22 @@ None
 		\hline
 		update\_time         & String                & Update Time of Shop                \\
 		\hline
+		name                 & String                & Name of Shop                       \\
+		\hline
+		address              & String                & Address of Shop                    \\
+		\hline
+		city                 & String                & City of Shop                       \\
+		\hline
+		province             & String                & Province of Shop                   \\
+		\hline
+		postal\_code         & String                & Postal Code of Shop                \\
+		\hline
+		email                & String                & Email of Shop                      \\
+		\hline
+		phone\_number        & String                & Phone Number of Shop               \\
+		\hline
+		hours\_of\_operation & JSON                  & Hours of Operation of Shop         \\
+		\hline
 		appointments         & List$<$Appointment$>$ & Appointments assigned to Shop      \\
 		\hline
 		employees            & List$<$Employee$>$    & List of Employee assigned to Shop  \\
@@ -464,6 +480,133 @@ None
 \subsubsection{Access Routine Semantics}
 
 None
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+\section{MIS of Shop Module} \label{mShop}
+\subsection{Module}
+
+shopService
+
+\subsection{Uses}
+
+Database Driver Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Types}
+
+\textbf{CreateShopType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description} \\
+		\hline
+		name                 & String               & Name of Shop         \\
+		\hline
+		address              & String               & Address of shop      \\
+		\hline
+		city                 & String               & City of Shop         \\
+		\hline
+		province             & String               & Province of Shop     \\
+		\hline
+		postal\_code         & String               & Postal Code of Shop  \\
+		\hline
+		email                & String               & Email of Shop        \\
+		\hline
+		phone\_number        & String               & Phone Number of Shop \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\textbf{UpdateShopType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}       \\
+		\hline
+		name                 & Optional$<$String$>$ & Name of Shop               \\
+		\hline
+		address              & Optional$<$String$>$ & Address of shop            \\
+		\hline
+		city                 & Optional$<$String$>$ & City of Shop               \\
+		\hline
+		province             & Optional$<$String$>$ & Province of Shop           \\
+		\hline
+		postal\_code         & Optional$<$String$>$ & Postal Code of Shop        \\
+		\hline
+		hours\_of\_operation & Optional$<$JSON$>$   & Hours of Operation of Shop \\
+		\hline
+		email                & Optional$<$String$>$ & Email of Shop              \\
+		\hline
+		phone\_number        & Optional$<$String$>$ & Phone Number of Shop       \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{adjustbox}{width=\textwidth}
+		\begin{tabular}{llll}
+			\hline
+			\textbf{Name}  & \textbf{In}            & \textbf{Out}     & \textbf{Exceptions}                         \\
+			\hline
+			createShop     & CreateShopType         & Shop             & ~                                           \\
+			getShopById    & String                 & Shop $\lor$ None & ~                                           \\
+			updateShopById & String, UpdateShopType & Shop             & ShopNotFoundException, InvalidTimeException \\
+			\hline
+		\end{tabular}
+	\end{adjustbox}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+User's Display \\ Database
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent createShop($shop$):
+\begin{itemize}
+	\item transition: new Shop(shop), save shop to shop database table
+	\item output: $out := \text{new Shop(\emph{shop})}$
+\end{itemize}
+
+\noindent getShopById($id$):
+\begin{itemize}
+	\item output: $out :=$ A Shop such that it contains the ID, $id$, from the shop database table else None.
+\end{itemize}
+
+\noindent updateShopById($id, patch$):
+\begin{itemize}
+	\item transition: Update all fields of a Shop, with an ID equal to $id$, with fields in $patch$ in shop
+	      database table
+	\item output: $out := getShopById(id) = \text{Shop} \Rightarrow (\text{Shop} = \text{None} $ \\
+		      $\Rightarrow \text{ShopNotFoundException } |\ \text{Shop} \neq \text{None}$ \\ $\Rightarrow
+		      \text{update all fields of Shop with fields in } patch \text{ in shop database table})$
+	\item exception: $exc := getShopById(id) = None \Rightarrow \text{ShopNotFoundException}$ \\ $|\ \exists
+		      day \in hours\_of\_operation : day.open\_time > day.close\_time$ \\ $\Rightarrow
+		      \text{InvalidTimeException}$
+\end{itemize}
 
 \subsubsection{Local Functions}
 
@@ -546,19 +689,29 @@ None
 \begin{table}[H]
 	\begin{tabular}{|l|l|l|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}             \\
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}                     \\
 		\hline
-		email                & String               & Email of Shop Owner              \\
+		email                & String               & Email of Shop Owner                      \\
 		\hline
-		password             & String               & Password of Shop Owner's Account \\
+		password             & String               & Password of Shop Owner's Account         \\
 		\hline
-		first\_name          & String               & First Name of Shop Owner         \\
+		first\_name          & String               & First Name of Shop Owner                 \\
 		\hline
-		last\_name           & String               & Last Name of Shop Owner          \\
+		last\_name           & String               & Last Name of Shop Owner                  \\
 		\hline
-		phone\_number        & String               & Phone Number of Shop Owner       \\
+		phone\_number        & String               & Phone Number of Shop Owner               \\
 		\hline
-		shop.---             & String               & \dots                            \\
+		shop.name            & String               & Name of Shop owned by Shop Owner         \\
+		\hline
+		shop.address         & String               & Address of Shop owned by Shop Owner      \\
+		\hline
+		shop.city            & String               & City of Shop owned by Shop Owner         \\
+		\hline
+		shop.province        & String               & Province of Shop owned by Shop Owner     \\
+		\hline
+		shop.email           & String               & Email of Shop owned by Shop Owner        \\
+		\hline
+		shop.phone\_number   & String               & Phone Number of Shop owned by Shop Owner \\
 		\hline
 	\end{tabular}
 \end{table}
