@@ -60,7 +60,8 @@
 		December 28, 2022 & Arkin Modi            & Create Revision History              \\
 		January 7, 2023   & Joy Xiao              & Introduction                         \\
 		January 9, 2023   & Arkin Modi            & Add Module Hierarchy                 \\
-		January 11, 2023  & Arkin Modi            & Create MIS of User Module            \\
+		January 11, 2023  & Arkin Modi            & Create MIS of Users Module           \\
+		January 14, 2023  & Arkin Modi            & Create MIS of Work Orders Module     \\
 		January 13, 2023  & Arkin Modi            & Create MIS of Database Driver Module \\
 		January 13, 2023  & Arkin Modi            & Create MIS of Services Module        \\
 		January 15, 2023  & Arkin Modi            & Create MIS of Quotes Module          \\
@@ -798,7 +799,7 @@ None
 			createCustomer  & CreateCustomerType  & Customer                             & CustomerAlreadyExistsException  \\
 			createEmployee  & CreateEmployeeType  & Employee                             & EmployeeAlreadyExistsException  \\
 			createShopOwner & CreateShopOwnerType & Employee                             & ShopOwnerAlreadyExistsException \\
-			getUserByEmail  & String              & Customer $\lor$ Employee $\lor$ None & UserNotFoundException           \\
+			getUserByEmail  & String              & Customer $\lor$ Employee $\lor$ None & ~                               \\
 			authorize       & String, String      & AuthorizeReturnType                  & UnauthorizeException            \\
 			\hline
 		\end{tabular}
@@ -1012,6 +1013,99 @@ None
 \noindent deleteServiceById($id$):
 \begin{itemize}
 	\item transition: Delete all Services where their ID matches $id$ from the service database table.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of Work Orders Module} \label{mWorkOrders}
+\subsection{Module}
+
+workOrderService
+
+\subsection{Uses}
+
+Database Driver Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Types}
+
+\textbf{UpdateWorkOrderType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}    \\
+		\hline
+		title                & Optional$<$String$>$ & Title of Work Order     \\
+		\hline
+		body                 & Optional$<$String$>$ & Work Order Details      \\
+		\hline
+		employee\_id         & Optional$<$String$>$ & ID of Assigned Employee \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{adjustbox}{width=\textwidth}
+		\begin{tabular}{llll}
+			\hline
+			\textbf{Name}         & \textbf{In}                 & \textbf{Out}                    & \textbf{Exceptions}        \\
+			\hline
+			getWorkOrderById      & String                      & WorkOrder $\lor$ None           & ~                          \\
+			getWorkOrdersByShopId & String                      & List$<$WorkOrder$>$ $\lor$ None & ~                          \\
+			updateWorkOrderById   & String, UpdateWorkOrderType & WorkOrder                       & WorkOrderNotFoundException \\
+			\hline
+		\end{tabular}
+	\end{adjustbox}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+User's Display \\ Database
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+\noindent getWorkOrderById($id$):
+\begin{itemize}
+	\item output: $out :=$ A Work Order such that it's ID matches $id$ from the work order database table
+	      else None.
+\end{itemize}
+
+\noindent getWorkOrdersByShopId($shopId$):
+\begin{itemize}
+	\item output: $out :=$ A list of Work Orders such that their shop ID matches $shopId$ from the work order
+	      database table else an empty list.
+\end{itemize}
+
+\noindent updateWorkOrderById($id, patch$):
+\begin{itemize}
+	\item transition: Update all fields of a Work Order, with an ID equal to $id$, with fields in $patch$ in
+	      work order database table
+	\item output: $out := getWorkOrderById(id) = \text{WorkOrder} \Rightarrow (\text{WorkOrder} = \text{None}
+		      $ \\ $\Rightarrow \text{WorkOrderNotFoundException } |\ \text{WorkOrder} \neq \text{None}$ \\
+		      $\Rightarrow \text{update all fields of WorkOrder with fields in } patch \text{ in work order
+			      database table})$
+	\item exception: $exc := getWorkOrderById(id) = None \Rightarrow \text{WorkOrderNotFoundException}$
 \end{itemize}
 
 \subsubsection{Local Functions}
