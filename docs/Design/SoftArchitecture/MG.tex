@@ -10,6 +10,7 @@
 \usepackage{hyperref}
 \usepackage[nottoc,numbib]{tocbibind}
 \usepackage{enumitem}
+\usepackage{longtable}
 
 \hypersetup{
 	colorlinks,
@@ -21,18 +22,6 @@
 
 \input{../../Comments}
 \input{../../Common}
-
-\newcounter{acnum}
-\newcommand{\actheacnum}{AC\theacnum}
-\newcommand{\acref}[1]{AC\ref{#1}}
-
-\newcounter{ucnum}
-\newcommand{\uctheucnum}{UC\theucnum}
-\newcommand{\uref}[1]{UC\ref{#1}}
-
-\newcounter{mnum}
-\newcommand{\mthemnum}{M\themnum}
-\newcommand{\mref}[1]{M\ref{#1}}
 
 \begin{document}
 
@@ -50,13 +39,16 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                           \\
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                                   \\
 		\midrule
 		December 28, 2022 & Arkin Modi            & Create Revision History                   \\
 		January 3, 2023   & Arkin Modi            & Add Module Hierarchy                      \\
 		January 8, 2023   & Arkin Modi            & Add Use Hierarchy Between Modules Diagram \\
 		January 10, 2023  & Arkin Modi            & Add Module Decompositions                 \\
 		January 12, 2023  & Leon So               & Anticipated Changes \& Unlikely Changes   \\
+		January 12, 2023  & Arkin Modi            & Add Traceability Matrices                 \\
+		January 15, 2023  & Arkin Modi            & Add ``Type of Module" to Behaviour-Hiding Modules \\
+		January 15, 2023  & Arkin Modi            & Merge Shop Profile \& Shop Lookup Module  \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -86,7 +78,6 @@ This section records information for easy reference.
 	\progname       & Explanation of program name         \\
 	UC              & Unlikely Change                     \\
 	CRUD            & Create, Read, Update, and Delete    \\
-	\wss{etc.}      & \wss{...}                           \\
 	\bottomrule
 \end{tabular}
 
@@ -195,8 +186,7 @@ hierarchy tree, are the modules that will actually be implemented.
 	\item \label{mWorkOrders} Work Orders Module
 	\item \label{mEmployeeManagement} Employee Management Module
 	\item \label{mServices} Services Module
-	\item \label{mShopLookup} Shop Lookup Module
-	\item \label{mShopProfile} Shop Profile Module
+	\item \label{mShop} Shop Module
 \end{enumerate}
 
 Note that \ref{mHH} is a commonly used module and is already implemented by the operating system.
@@ -213,14 +203,13 @@ It will not be reimplemented.
 
 		\midrule
 
-		\multirow{8}{0.3\textwidth}{Behaviour-Hiding Module}  & Users Module               \\
+		\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module}  & Users Module               \\
 		                                                      & Quotes Module              \\
 		                                                      & Appointments Module        \\
 		                                                      & Work Orders Module         \\
 		                                                      & Employee Management Module \\
 		                                                      & Services Module            \\
-		                                                      & Shop Lookup Module         \\
-		                                                      & Shop Profile Module        \\
+		                                                      & Shop Module                \\
 		\midrule
 
 		\multirow{1}{0.3\textwidth}{Software Decision Module} & Database Driver Module     \\
@@ -288,7 +277,7 @@ means that the module is not a leaf and will not have to be implemented.
 	\item[Services:] Provide CRUD operations for user objects, and the ability to verify a user's
 		authorization.
 	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
+	\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Quotes Module (\ref{mQuotes})}
@@ -297,7 +286,7 @@ means that the module is not a leaf and will not have to be implemented.
 	\item[Secrets:] The format and structure of quote and chat message data objects.
 	\item[Services:] Provide CRUD operations for quote and chat message objects.
 	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
+	\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Appointments Module (\ref{mAppointments})}
@@ -308,7 +297,7 @@ means that the module is not a leaf and will not have to be implemented.
 		is acceptable (i.e., is possible to fulfill), and the ability to accept an appointment and reject
 		all conflicting appointments.
 	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
+	\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Work Orders Module (\ref{mWorkOrders})}
@@ -317,7 +306,7 @@ means that the module is not a leaf and will not have to be implemented.
 	\item[Secrets:] The format and structure of work order data objects.
 	\item[Services:] Provide CRUD operations for work order objects.
 	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
+	\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Employee Management Module (\ref{mEmployeeManagement})}
@@ -326,7 +315,7 @@ means that the module is not a leaf and will not have to be implemented.
 	\item[Secrets:] --
 	\item[Services:] Provide CRUD operations for managing employee's relation with shop.
 	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
+	\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Services Module (\ref{mServices})}
@@ -335,25 +324,17 @@ means that the module is not a leaf and will not have to be implemented.
 	\item[Secrets:] The format and structure of service data objects.
 	\item[Services:] Provide CRUD operations for service objects.
 	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
+	\item[Type of Module:] Library
 \end{description}
 
-\subsubsection{Shop Lookup Module (\ref{mShopLookup})}
-
-\begin{description}
-	\item[Secrets:] --
-	\item[Services:] Provides the ability to query for a shop by distance, postal code and/or shop name.
-	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
-\end{description}
-
-\subsubsection{Shop Profile Module (\ref{mShopProfile})}
+\subsubsection{Shop Module (\ref{mShop})}
 
 \begin{description}
 	\item[Secrets:] The format and structure of shop data objects.
-	\item[Services:] Provide CRUD operations for shop objects.
+	\item[Services:] Provides CRUD operations for shop objects and the ability to query for a shop by
+		distance, postal code and/or shop name.
 	\item[Implemented By:] \progname{}
-		% \item[Type of Module:]
+	\item[Type of Module:] Library
 \end{description}
 
 \subsection{Software Decision Module}
@@ -373,7 +354,7 @@ means that the module is not a leaf and will not have to be implemented.
 	\item[Secrets:] The data structures and algorithms for representing the database's schema and
 		communicating with the database.
 	\item[Services:] Provides a driver to interface with the database
-	\item[Implemented By:] Prisma
+	\item[Implemented By:] \progname{}, Prisma
 \end{description}
 
 \newpage
@@ -383,53 +364,76 @@ means that the module is not a leaf and will not have to be implemented.
 This section shows two traceability matrices: between the modules and the requirements and between
 the modules and the anticipated changes.
 
-% the table should use mref, the requirements should be named, use something
-% like fref
-\begin{table}[H]
-	\centering
-	\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
-		\toprule
-		\textbf{Req.} & \textbf{Modules}                                                                           \\
-		\midrule
-		R1            & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}                                 \\
-		R2            & \mref{mInput}, \mref{mParams}                                                              \\
-		R3            & \mref{mVerify}                                                                             \\
-		R4            & \mref{mOutput}, \mref{mControl}                                                            \\
-		R5            & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot} \\
-		R6            & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot} \\
-		R7            & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}               \\
-		R8            & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}               \\
-		R9            & \mref{mVerifyOut}                                                                          \\
-		R10           & \mref{mOutput}, \mref{mODEs}, \mref{mControl}                                              \\
-		R11           & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}                              \\
-		\bottomrule
-	\end{tabular}
-	\caption{Trace Between Requirements and Modules}
-	\label{TblRT}
-\end{table}
+\begin{longtable}{p{0.2\textwidth} p{0.6\textwidth}}
+	\caption{Trace Between Requirements and Modules} \label{TblRT}                                                                                 \\
+	\toprule
+	\textbf{Requirements} & \textbf{Modules}                                                                                                       \\
+	\midrule
+	BE1                   & \ref{mUsers}                                                                                                           \\
+	BE2                   & \ref{mUsers}                                                                                                           \\
+	BE3                   & \ref{mUsers}                                                                                                           \\
+	BE4                   & \ref{mAppointments}                                                                                                    \\
+	BE5                   & \ref{mAppointments}                                                                                                    \\
+	BE6                   & \ref{mAppointments}                                                                                                    \\
+	BE7                   & \ref{mAppointments}                                                                                                    \\
+	BE8                   & \ref{mQuotes}                                                                                                          \\
+	BE9                   & \ref{mQuotes}                                                                                                          \\
+	BE10                  & \ref{mQuotes}                                                                                                          \\
+	BE11                  & \ref{mQuotes}                                                                                                          \\
+	BE12                  & \ref{mQuotes}                                                                                                          \\
+	BE13                  & \ref{mQuotes}                                                                                                          \\
+	BE14                  & \ref{mQuotes}                                                                                                          \\
+	BE15                  & \ref{mQuotes}                                                                                                          \\
+	BE16                  & \ref{mQuotes}                                                                                                          \\
+	BE17                  & \ref{mWorkOrders}                                                                                                      \\
+	BE18                  & \ref{mWorkOrders}                                                                                                      \\
+	BE19                  & \ref{mWorkOrders}                                                                                                      \\
+	BE20                  & \ref{mWorkOrders}                                                                                                      \\
+	BE21                  & \ref{mWorkOrders}                                                                                                      \\
+	BE22                  & \ref{mWorkOrders}                                                                                                      \\
+	BE23                  & \ref{mWorkOrders}                                                                                                      \\
+	BE24                  & \ref{mEmployeeManagement}                                                                                              \\
+	BE25                  & \ref{mEmployeeManagement}                                                                                              \\
+	BE26                  & \ref{mEmployeeManagement}                                                                                              \\
+	BE27                  & \ref{mEmployeeManagement}                                                                                              \\
+	BE28                  & \ref{mServices}                                                                                                        \\
+	BE29                  & \ref{mServices}                                                                                                        \\
+	BE30                  & \ref{mServices}                                                                                                        \\
+	BE31                  & \ref{mServices}                                                                                                        \\
+	BE32                  & \ref{mShop}                                                                                                            \\
+	BE33                  & \ref{mShop}                                                                                                            \\
+	BE34                  & \ref{mShop}                                                                                                            \\
+	LF1                   & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+	LF2                   & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+	LF3                   & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+	UH1                   & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+	UH2                   & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+	UH3                   & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+	PR1                   & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+	OE1                   & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+	MS1                   & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+	SR1                   & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+	SR2                   & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+	CR1                   & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+	CR2                   & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+	LR1                   & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+	\bottomrule
+\end{longtable}
 
 \begin{table}[H]
+	\caption{Trace Between Anticipated Changes and Modules} \label{TblACT}
 	\centering
 	\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
 		\toprule
-		\textbf{AC}         & \textbf{Modules}  \\
+		\textbf{AC}                 & \textbf{Modules}                                                                                                                       \\
 		\midrule
-		\acref{acHardware}  & \mref{mHH}        \\
-		\acref{acInput}     & \mref{mInput}     \\
-		\acref{acParams}    & \mref{mParams}    \\
-		\acref{acVerify}    & \mref{mVerify}    \\
-		\acref{acOutput}    & \mref{mOutput}    \\
-		\acref{acVerifyOut} & \mref{mVerifyOut} \\
-		\acref{acODEs}      & \mref{mODEs}      \\
-		\acref{acEnergy}    & \mref{mEnergy}    \\
-		\acref{acControl}   & \mref{mControl}   \\
-		\acref{acSeqDS}     & \mref{mSeqDS}     \\
-		\acref{acSolver}    & \mref{mSolver}    \\
-		\acref{acPlot}      & \mref{mPlot}      \\
+		\ref{acHardware}            & \ref{mHH}                                                                                                                              \\
+		\ref{acInitialInput}        & \ref{mDBDriver} \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+		\ref{acServerSideResponses} & \ref{mDBDriver} \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop} \\
+		\ref{acStyling}             & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop}                 \\
+		\ref{acFormatting}          & \ref{mUsers} \ref{mQuotes} \ref{mAppointments} \ref{mWorkOrders} \ref{mEmployeeManagement} \ref{mServices} \ref{mShop}                 \\
 		\bottomrule
 	\end{tabular}
-	\caption{Trace Between Anticipated Changes and Modules}
-	\label{TblACT}
 \end{table}
 
 \section{Use Hierarchy Between Modules} \label{SecUse}
@@ -458,7 +462,5 @@ use modules from the lower levels.
 \newpage
 
 \section{Appendix}
-
-\wss{Extra information if required}
 
 \end{document}
