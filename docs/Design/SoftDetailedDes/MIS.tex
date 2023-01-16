@@ -489,6 +489,8 @@ None
 		\hline
 		shop                 & Shop                    & Shop which offers the Service       \\
 		\hline
+		type                 & String                  & Type of Service                     \\
+		\hline
 	\end{tabular}
 \end{table}
 
@@ -737,19 +739,21 @@ None
 \begin{table}[H]
 	\begin{tabular}{|l|l|l|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type}    & \textbf{Description}               \\
+		\textbf{Output Name} & \textbf{Output Type}    & \textbf{Description}                     \\
 		\hline
-		name                 & String                  & Name of Service                    \\
+		name                 & String                  & Name of Service                          \\
 		\hline
-		description          & String                  & Description of Service             \\
+		description          & String                  & Description of Service                   \\
 		\hline
-		estimated\_time      & String                  & Estimated Time of Service          \\
+		estimated\_time      & String                  & Estimated Time of Service                \\
 		\hline
-		parts                & List$<$Part$>$          & Estimated Parts needed for Service \\
+		parts                & List$<$Part$>$          & Estimated Parts needed for Service       \\
 		\hline
-		total\_price         & Optional$<\mathbb{R}+>$ & Estimated Price needed for Service \\
+		total\_price         & Optional$<\mathbb{R}+>$ & Estimated Price needed for Service       \\
 		\hline
-		shop\_id             & String                  & Shop that Service is available at  \\
+		shop\_id             & String                  & Shop that Service is available at        \\
+		\hline
+		type                 & String                  & Type of Service (e.g., Canned or Custom) \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -759,17 +763,19 @@ None
 \begin{table}[H]
 	\begin{tabular}{|l|l|l|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type}       & \textbf{Description}               \\
+		\textbf{Output Name} & \textbf{Output Type}       & \textbf{Description}                     \\
 		\hline
-		name                 & Optional$<$String$>$       & Name of Service                    \\
+		name                 & Optional$<$String$>$       & Name of Service                          \\
 		\hline
-		description          & Optional$<$String$>$       & Description of Service             \\
+		description          & Optional$<$String$>$       & Description of Service                   \\
 		\hline
-		estimated\_time      & Optional$<$String$>$       & Estimated Time of Service          \\
+		estimated\_time      & Optional$<$String$>$       & Estimated Time of Service                \\
 		\hline
-		parts                & Optional$<$List$<$Part$>>$ & Estimated Parts needed for Service \\
+		parts                & Optional$<$List$<$Part$>>$ & Estimated Parts needed for Service       \\
 		\hline
-		total\_price         & Optional$<\mathbb{R}+>$    & Estimated Price needed for Service \\
+		total\_price         & Optional$<\mathbb{R}+>$    & Estimated Price needed for Service       \\
+		\hline
+		type                 & Optional$<$String$>$       & Type of Service (e.g., Canned or Custom) \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -780,13 +786,15 @@ None
 	\begin{adjustbox}{width=\textwidth}
 		\begin{tabular}{llll}
 			\hline
-			\textbf{Name}       & \textbf{In}               & \textbf{Out}        & \textbf{Exceptions}      \\
+			\textbf{Name}             & \textbf{In}               & \textbf{Out}        & \textbf{Exceptions}      \\
 			\hline
-			createService       & CreateServiceType         & Service             & ~                        \\
-			getServiceById      & String                    & Service $\lor$ None & ~                        \\
-			getServicesByShopId & String                    & List$<$Service$>$   & ~                        \\
-			updateServiceById   & String, UpdateServiceType & Service             & ServiceNotFoundException \\
-			deleteServiceById   & String                    & ~                   & ~                        \\
+			createService             & CreateServiceType         & Service             & ~                        \\
+			getServiceById            & String                    & Service $\lor$ None & ~                        \\
+			getServicesByShopId       & String                    & List$<$Service$>$   & ~                        \\
+			getCannedServicesByShopId & String                    & List$<$Service$>$   & ~                        \\
+			getCustomServicesByShopId & String                    & List$<$Service$>$   & ~                        \\
+			updateServiceById         & String, UpdateServiceType & Service             & ServiceNotFoundException \\
+			deleteServiceById         & String                    & ~                   & ~                        \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -824,6 +832,18 @@ None
 \begin{itemize}
 	\item output: $out :=$ A list of Service such that it's shop ID matches $shopId$ from the service
 	      database table else an empty list.
+\end{itemize}
+
+\noindent getCannedServicesByShopId($shopId$):
+\begin{itemize}
+	\item output: $out :=$ A list of Service such that it's shop ID matches $shopId$ and it's type is
+	      ``Canned" from the service database table else an empty list.
+\end{itemize}
+
+\noindent getCustomServicesByShopId($shopId$):
+\begin{itemize}
+	\item output: $out :=$ A list of Service such that it's shop ID matches $shopId$ and it's type is
+	      ``Custom" from the service database table else an empty list.
 \end{itemize}
 
 \noindent updateServiceById($id, patch$):
