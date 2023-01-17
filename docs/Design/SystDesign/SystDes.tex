@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage{makecell}
 
 \hypersetup{
 	colorlinks,
@@ -20,17 +21,6 @@
 \input{../../Comments}
 \input{../../Common}
 
-\newcounter{acnum}
-\newcommand{\actheacnum}{AC\theacnum}
-\newcommand{\acref}[1]{AC\ref{#1}}
-
-\newcounter{ucnum}
-\newcommand{\uctheucnum}{UC\theucnum}
-\newcommand{\uref}[1]{UC\ref{#1}}
-
-\newcounter{mnum}
-\newcommand{\mthemnum}{M\themnum}
-\newcommand{\mref}[1]{M\ref{#1}}
 
 \begin{document}
 
@@ -56,6 +46,7 @@
 		January 12, 2023  & Leon So               & Normal Behaviour \& Introduction                 \\
 		January 13, 2023  & Timothy Choy          & Scope                                            \\
 		January 16, 2023  & Joy Xiao              & Component Diagram                                \\
+		January 17, 2023  & Arkin Modi            & Create Timeline                                  \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -223,8 +214,71 @@ N/A
 
 \section{Timeline}
 
-\wss{Schedule of tasks and who is responsible}
+\subsection{Module Development}
 
+The development of the modules shall take place over the months of December 2022 and January 2023.
+Specific dates, and responsibilities are described in Table \ref{ModuleDevelopmentTimeline}.
+
+\begin{table}[H]
+	\caption{Module Development Timeline} \label{ModuleDevelopmentTimeline}
+	\begin{tabular}{|p{0.32\textwidth}|p{0.4\textwidth}|p{0.23\textwidth}|}
+		\hline
+		\textbf{Module Name}       & \textbf{Development Timeline}             & \textbf{Developer(s)}    \\
+		\hline
+		Database Driver Module     & Dec. 1, 2022 \textemdash{} Jan. 31, 2023  & \makecell[l]{Arkin Modi, \\Joy Xiao,\\Leon So,\\Timothy Choy} \\
+		\hline
+		Users Module               & Dec. 1, 2022 \textemdash{} Dec. 15, 2022  & \makecell[l]{Arkin Modi, \\Leon So} \\
+		\hline
+		Employee Management Module & Dec. 15, 2022 \textemdash{} Dec. 22, 2022 & \makecell[l]{Joy Xiao,   \\Leon So} \\
+		\hline
+		Shop Module                & Dec. 15, 2022 \textemdash{} Dec. 22, 2022 & \makecell[l]{Leon So,    \\Timothy Choy} \\
+		\hline
+		Quotes Module              & Jan. 1, 2023 \textemdash{} Jan. 8, 2023   & \makecell[l]{Arkin Modi, \\Timothy Choy} \\
+		\hline
+		Services Module            & Jan. 1, 2023 \textemdash{} Jan. 8, 2023   & \makecell[l]{Arkin Modi, \\Joy Xiao} \\
+		\hline
+		Appointments Module        & Jan. 15, 2023 \textemdash{} Jan. 22, 2023 & \makecell[l]{Arkin Modi, \\Joy Xiao,\\Timothy Choy} \\
+		\hline
+		Work Orders Module         & Jan. 15, 2023 \textemdash{} Jan. 24, 2023 & Arkin Modi               \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Module Testing}
+
+The testing of the modules shall take place over the months of December 2022 and January 2023. The
+tests conducted shall primarily consist of manual testing and have the primary goal of certifying
+confidence for the Revision 0 Demonstration. This testing will not include everything described in
+the System Verification and Validation Plan. Generally, testing will take place for the week after
+development is scheduled to finish. Specific dates, and responsibilities are described in Table
+\ref{ModuleTestingTimeline}.
+
+\begin{table}[H]
+	\caption{Module Testing Timeline} \label{ModuleTestingTimeline}
+	\begin{tabular}{|p{0.32\textwidth}|p{0.4\textwidth}|p{0.23\textwidth}|}
+		\hline
+		\textbf{Module Name}       & \textbf{Testing Timeline}                 & \textbf{Developer(s)}    \\
+		\hline
+		Database Driver Module     & Dec. 1, 2022 \textemdash{} Jan. 31, 2023  & \makecell[l]{Arkin Modi, \\Joy Xiao,\\Leon So,\\Timothy Choy} \\
+		\hline
+		Users Module               & Dec. 15, 2022 \textemdash{} Dec. 22, 2022 & \makecell[l]{Arkin Modi, \\Leon So} \\
+		\hline
+		Employee Management Module & Dec. 22, 2022 \textemdash{} Dec. 29, 2022 & \makecell[l]{Joy Xiao,   \\Leon So} \\
+		\hline
+		Shop Module                & Dec. 22, 2022 \textemdash{} Dec. 29, 2022 & \makecell[l]{Leon So,    \\Timothy Choy} \\
+		\hline
+		Quotes Module              & Jan. 8, 2023 \textemdash{} Jan. 15, 2023  & \makecell[l]{Arkin Modi, \\Timothy Choy} \\
+		\hline
+		Services Module            & Jan. 8, 2023 \textemdash{} Jan. 15, 2023  & \makecell[l]{Arkin Modi, \\Joy Xiao} \\
+		\hline
+		Appointments Module        & Jan. 22, 2023 \textemdash{} Jan. 29, 2023 & \makecell[l]{Arkin Modi, \\Joy Xiao,\\Timothy Choy} \\
+		\hline
+		Work Orders Module         & Jan. 24, 2023 \textemdash{} Jan. 31, 2023 & Arkin Modi               \\
+		\hline
+	\end{tabular}
+\end{table}
+
+% \newpage
 % \bibliographystyle {plainnat}
 % \bibliography{../../../refs/References}
 
