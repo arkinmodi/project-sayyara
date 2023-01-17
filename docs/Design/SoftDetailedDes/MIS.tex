@@ -213,29 +213,31 @@ None
 \begin{table}[H]
 	\begin{tabular}{|l|l|l|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type}  & \textbf{Description}                    \\
+		\textbf{Output Name} & \textbf{Output Type}  & \textbf{Description}                        \\
 		\hline
-		id                   & String                & ID of Employee                          \\
+		id                   & String                & ID of Employee                              \\
 		\hline
-		create\_time         & String                & Create Time of Employee Account         \\
+		create\_time         & String                & Create Time of Employee Account             \\
 		\hline
-		update\_time         & String                & Update Time of Employee Account         \\
+		update\_time         & String                & Update Time of Employee Account             \\
 		\hline
-		first\_name          & String                & First Name of Employee                  \\
+		first\_name          & String                & First Name of Employee                      \\
 		\hline
-		last\_name           & String                & Last Name of Employee                   \\
+		last\_name           & String                & Last Name of Employee                       \\
 		\hline
-		phone\_number        & String                & Phone Number of Employee                \\
+		phone\_number        & String                & Phone Number of Employee                    \\
 		\hline
-		email                & String                & Email of Employee                       \\
+		email                & String                & Email of Employee                           \\
 		\hline
-		password             & String                & Password of Employee's Account          \\
+		password             & String                & Password of Employee's Account              \\
 		\hline
-		type                 & String                & Type of User                            \\
+		type                 & String                & Type of User                                \\
 		\hline
-		shop                 & Shop                  & Shop which Employee is registered under \\
+		shop                 & Shop                  & Shop which Employee is registered under     \\
 		\hline
-		appointments         & List$<$Appointment$>$ & Appointments assigned to the Employee   \\
+		appointments         & List$<$Appointment$>$ & Appointments assigned to the Employee       \\
+		\hline
+		status               & String                & Employee status (i.e., Active or Suspended) \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -958,7 +960,7 @@ None
 
 \noindent removeEmployee($employeeId$):
 \begin{itemize}
-	\item transition: Change the state of the employee to "suspended" where their ID matches $employeeId$ in
+	\item transition: Change the state of the employee to ``suspended" where their ID matches $employeeId$ in
 	      the employee database table.
 \end{itemize}
 
