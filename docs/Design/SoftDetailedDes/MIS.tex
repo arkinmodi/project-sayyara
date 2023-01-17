@@ -22,7 +22,6 @@
 \usepackage[nottoc,numbib]{tocbibind}
 \usepackage{adjustbox}
 
-
 \hypersetup{
 	bookmarks=true,         % show bookmarks bar?
 	colorlinks=true,        % false: boxed links; true: colored links
@@ -56,13 +55,17 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                      \\
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                          \\
 		\midrule
-		December 28, 2022 & Arkin Modi            & Create Revision History              \\
-		January 7, 2023   & Joy Xiao              & Introduction                         \\
-		January 9, 2023   & Arkin Modi            & Add Module Hierarchy                 \\
-		January 11, 2023  & Arkin Modi            & Create MIS of User Module            \\
-		January 13, 2023  & Arkin Modi            & Create MIS of Database Driver Module \\
+		December 28, 2022 & Arkin Modi            & Create Revision History                  \\
+		January 7, 2023   & Joy Xiao              & Introduction                             \\
+		January 9, 2023   & Arkin Modi            & Add Module Hierarchy                     \\
+		January 11, 2023  & Arkin Modi            & Create MIS of Users Module               \\
+		January 14, 2023  & Arkin Modi            & Create MIS of Work Orders Module         \\
+		January 13, 2023  & Arkin Modi            & Create MIS of Database Driver Module     \\
+		January 13, 2023  & Arkin Modi            & Create MIS of Services Module            \\
+		January 15, 2023  & Leon So               & Create MIS of Shop Module                \\
+		January 15, 2023  & Joy Xiao              & Create MIS of Employee Management Module \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -141,6 +144,7 @@ The following table summarizes the primitive data types used by \progname.
 		integer            & $\mathbb{Z}$      & a number without a fractional component in (-$\infty$, $\infty$) \\
 		natural number     & $\mathbb{N}$      & a number without a fractional component in [1, $\infty$)         \\
 		real               & $\mathbb{R}$      & any number in (-$\infty$, $\infty$)                              \\
+		real positive      & $\mathbb{R}+$     & any number in [0, $\infty$)                                      \\
 		\bottomrule
 	\end{tabular}
 \end{center}
@@ -168,14 +172,13 @@ The following table is taken directly from the Module Guide document for this pr
 
 		\midrule
 
-		\multirow{8}{0.3\textwidth}{Behaviour-Hiding Module}  & Users Module               \\
+		\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module}  & Users Module               \\
 		                                                      & Quotes Module              \\
 		                                                      & Appointments Module        \\
 		                                                      & Work Orders Module         \\
 		                                                      & Employee Management Module \\
 		                                                      & Services Module            \\
-		                                                      & Shop Lookup Module         \\
-		                                                      & Shop Profile Module        \\
+		                                                      & Shop Module                \\
 		\midrule
 
 		\multirow{1}{0.3\textwidth}{Software Decision Module} & Database Driver Module     \\
@@ -210,29 +213,31 @@ None
 \begin{table}[H]
 	\begin{tabular}{|l|l|l|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type}  & \textbf{Description}                    \\
+		\textbf{Output Name} & \textbf{Output Type}  & \textbf{Description}                        \\
 		\hline
-		id                   & String                & ID of Employee                          \\
+		id                   & String                & ID of Employee                              \\
 		\hline
-		create\_time         & String                & Create Time of Employee Account         \\
+		create\_time         & String                & Create Time of Employee Account             \\
 		\hline
-		update\_time         & String                & Update Time of Employee Account         \\
+		update\_time         & String                & Update Time of Employee Account             \\
 		\hline
-		first\_name          & String                & First Name of Employee                  \\
+		first\_name          & String                & First Name of Employee                      \\
 		\hline
-		last\_name           & String                & Last Name of Employee                   \\
+		last\_name           & String                & Last Name of Employee                       \\
 		\hline
-		phone\_number        & String                & Phone Number of Employee                \\
+		phone\_number        & String                & Phone Number of Employee                    \\
 		\hline
-		email                & String                & Email of Employee                       \\
+		email                & String                & Email of Employee                           \\
 		\hline
-		password             & String                & Password of Employee's Account          \\
+		password             & String                & Password of Employee's Account              \\
 		\hline
-		type                 & String                & Type of User                            \\
+		type                 & String                & Type of User                                \\
 		\hline
-		shop                 & Shop                  & Shop which Employee is registered under \\
+		shop                 & Shop                  & Shop which Employee is registered under     \\
 		\hline
-		appointments         & List$<$Appointment$>$ & Appointments assigned to the Employee   \\
+		appointments         & List$<$Appointment$>$ & Appointments assigned to the Employee       \\
+		\hline
+		status               & String                & Employee status (i.e., Active or Suspended) \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -430,6 +435,22 @@ None
 		\hline
 		update\_time         & String                & Update Time of Shop                \\
 		\hline
+		name                 & String                & Name of Shop                       \\
+		\hline
+		address              & String                & Address of Shop                    \\
+		\hline
+		city                 & String                & City of Shop                       \\
+		\hline
+		province             & String                & Province of Shop                   \\
+		\hline
+		postal\_code         & String                & Postal Code of Shop                \\
+		\hline
+		email                & String                & Email of Shop                      \\
+		\hline
+		phone\_number        & String                & Phone Number of Shop               \\
+		\hline
+		hours\_of\_operation & JSON                  & Hours of Operation of Shop         \\
+		\hline
 		appointments         & List$<$Appointment$>$ & Appointments assigned to Shop      \\
 		\hline
 		employees            & List$<$Employee$>$    & List of Employee assigned to Shop  \\
@@ -439,6 +460,56 @@ None
 		quotes               & List$<$Quote$>$       & List of Quotes                     \\
 		\hline
 		services             & List$<$Service$>$     & List of offered Services           \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\textbf{Part}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}                       \\
+		\hline
+		quantity             & $\mathbb{N}$         & Number of Parts                            \\
+		\hline
+		cost                 & $\mathbb{R}+$        & Price of Parts                             \\
+		\hline
+		name                 & String               & Name of Part                               \\
+		\hline
+		condition            & String               & Condition of Part  (i.e., New or Used)     \\
+		\hline
+		build                & String               & Origin of Part (i.e., OEM or After Market) \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\textbf{Service}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type}    & \textbf{Description}                \\
+		\hline
+		id                   & String                  & ID of Service                       \\
+		\hline
+		create\_time         & String                  & Create Time of Service              \\
+		\hline
+		update\_time         & String                  & Update Time of Service              \\
+		\hline
+		name                 & String                  & Name of Service                     \\
+		\hline
+		description          & String                  & Description of Service              \\
+		\hline
+		estimated\_time      & $\mathbb{N}$            & Estimated time needed for a Service \\
+		\hline
+		total\_price         & Optional$<\mathbb{R}+>$ & Estimated price for a Service       \\
+		\hline
+		parts                & List$<$Part$>$          & List of parts for a Service         \\
+		\hline
+		shop                 & Shop                    & Shop which offers the Service       \\
+		\hline
+		type                 & String                  & Type of Service                     \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -463,6 +534,133 @@ None
 \subsubsection{Access Routine Semantics}
 
 None
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+\section{MIS of Shop Module} \label{mShop}
+\subsection{Module}
+
+shopService
+
+\subsection{Uses}
+
+Database Driver Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Types}
+
+\textbf{CreateShopType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description} \\
+		\hline
+		name                 & String               & Name of Shop         \\
+		\hline
+		address              & String               & Address of shop      \\
+		\hline
+		city                 & String               & City of Shop         \\
+		\hline
+		province             & String               & Province of Shop     \\
+		\hline
+		postal\_code         & String               & Postal Code of Shop  \\
+		\hline
+		email                & String               & Email of Shop        \\
+		\hline
+		phone\_number        & String               & Phone Number of Shop \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\textbf{UpdateShopType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}       \\
+		\hline
+		name                 & Optional$<$String$>$ & Name of Shop               \\
+		\hline
+		address              & Optional$<$String$>$ & Address of shop            \\
+		\hline
+		city                 & Optional$<$String$>$ & City of Shop               \\
+		\hline
+		province             & Optional$<$String$>$ & Province of Shop           \\
+		\hline
+		postal\_code         & Optional$<$String$>$ & Postal Code of Shop        \\
+		\hline
+		hours\_of\_operation & Optional$<$JSON$>$   & Hours of Operation of Shop \\
+		\hline
+		email                & Optional$<$String$>$ & Email of Shop              \\
+		\hline
+		phone\_number        & Optional$<$String$>$ & Phone Number of Shop       \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{adjustbox}{width=\textwidth}
+		\begin{tabular}{llll}
+			\hline
+			\textbf{Name}  & \textbf{In}            & \textbf{Out}     & \textbf{Exceptions}                         \\
+			\hline
+			createShop     & CreateShopType         & Shop             & ~                                           \\
+			getShopById    & String                 & Shop $\lor$ None & ~                                           \\
+			updateShopById & String, UpdateShopType & Shop             & ShopNotFoundException, InvalidTimeException \\
+			\hline
+		\end{tabular}
+	\end{adjustbox}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+User's Display \\ Database
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent createShop($shop$):
+\begin{itemize}
+	\item transition: new Shop(shop), save shop to shop database table
+	\item output: $out := \text{new Shop(\emph{shop})}$
+\end{itemize}
+
+\noindent getShopById($id$):
+\begin{itemize}
+	\item output: $out :=$ A Shop such that it contains the ID, $id$, from the shop database table else None.
+\end{itemize}
+
+\noindent updateShopById($id, patch$):
+\begin{itemize}
+	\item transition: Update all fields of a Shop, with an ID equal to $id$, with fields in $patch$ in shop
+	      database table
+	\item output: $out := getShopById(id) = \text{Shop} \Rightarrow (\text{Shop} = \text{None} $ \\
+		      $\Rightarrow \text{ShopNotFoundException } |\ \text{Shop} \neq \text{None}$ \\ $\Rightarrow
+		      \text{update all fields of Shop with fields in } patch \text{ in shop database table})$
+	\item exception: $exc := getShopById(id) = None \Rightarrow \text{ShopNotFoundException}$ \\ $|\ \exists
+		      day \in hours\_of\_operation : day.open\_time > day.close\_time$ \\ $\Rightarrow
+		      \text{InvalidTimeException}$
+\end{itemize}
 
 \subsubsection{Local Functions}
 
@@ -545,19 +743,29 @@ None
 \begin{table}[H]
 	\begin{tabular}{|l|l|l|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}             \\
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}                     \\
 		\hline
-		email                & String               & Email of Shop Owner              \\
+		email                & String               & Email of Shop Owner                      \\
 		\hline
-		password             & String               & Password of Shop Owner's Account \\
+		password             & String               & Password of Shop Owner's Account         \\
 		\hline
-		first\_name          & String               & First Name of Shop Owner         \\
+		first\_name          & String               & First Name of Shop Owner                 \\
 		\hline
-		last\_name           & String               & Last Name of Shop Owner          \\
+		last\_name           & String               & Last Name of Shop Owner                  \\
 		\hline
-		phone\_number        & String               & Phone Number of Shop Owner       \\
+		phone\_number        & String               & Phone Number of Shop Owner               \\
 		\hline
-		shop.---             & String               & \dots                            \\
+		shop.name            & String               & Name of Shop owned by Shop Owner         \\
+		\hline
+		shop.address         & String               & Address of Shop owned by Shop Owner      \\
+		\hline
+		shop.city            & String               & City of Shop owned by Shop Owner         \\
+		\hline
+		shop.province        & String               & Province of Shop owned by Shop Owner     \\
+		\hline
+		shop.email           & String               & Email of Shop owned by Shop Owner        \\
+		\hline
+		shop.phone\_number   & String               & Phone Number of Shop owned by Shop Owner \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -593,7 +801,7 @@ None
 			createCustomer  & CreateCustomerType  & Customer                             & CustomerAlreadyExistsException  \\
 			createEmployee  & CreateEmployeeType  & Employee                             & EmployeeAlreadyExistsException  \\
 			createShopOwner & CreateShopOwnerType & Employee                             & ShopOwnerAlreadyExistsException \\
-			getUserByEmail  & String              & Customer $\lor$ Employee $\lor$ None & UserNotFoundException           \\
+			getUserByEmail  & String              & Customer $\lor$ Employee $\lor$ None & ~                               \\
 			authorize       & String, String      & AuthorizeReturnType                  & UnauthorizeException            \\
 			\hline
 		\end{tabular}
@@ -659,10 +867,348 @@ None
 
 \subsubsection{Local Functions}
 
-\noindent hash($s$):
+\newpage
+
+\section{MIS of Employee Management Module} \label{mEmployeeManagement}
+\subsection{Module}
+
+employeeManagementService
+
+\subsection{Uses}
+
+Database Driver Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Types}
+
+\textbf{UpdateEmployeeType}
+
+\begin{table}[H]
+	\begin{tabular}{|p{0.25\textwidth}|p{0.25\textwidth}|p{0.40\textwidth}|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}     \\
+		\hline
+		email                & Optional$<$String$>$ & Email of Employee        \\
+		\hline
+		first\_name          & Optional$<$String$>$ & First Name of Employee   \\
+		\hline
+		last\_name           & Optional$<$String$>$ & Last Name of Employee    \\
+		\hline
+		phone\_number        & Optional$<$String$>$ & Phone Number of Employee \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{adjustbox}{width=\textwidth}
+		\begin{tabular}{llll}
+			\hline
+			\textbf{Name}   & \textbf{In}                & \textbf{Out}       & \textbf{Exceptions}   \\
+			\hline
+			getEmployeeById & String                     & Employee           & ~                     \\
+			getAllEmployees & String                     & List$<$Employee$>$ & ~                     \\
+			updateEmployee  & String, UpdateEmployeeType & ~                  & UserNotFoundException \\
+			suspendEmployee  & String                     & ~                  & ~                     \\
+			\hline
+		\end{tabular}
+	\end{adjustbox}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+User's Display \\ Database
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getEmployeeById($employeeId$):
 \begin{itemize}
-	\item output: $out := \text{hashed value of } s$
+	\item output: $out :=$ An employee such that it's ID matches $employeeId$ from the employee database
+	      table else None.
 \end{itemize}
+
+\noindent getAllEmployees($shopId$):
+\begin{itemize}
+	\item output: $out :=$ List of employees from the shop database table associated with the $shopId$, else
+	      None.
+\end{itemize}
+
+\noindent updateEmployee($employeeId, patch$):
+\begin{itemize}
+	\item transition: Update all fields of Employee with fields in $patch$ in employee database table
+	\item output: $out := getEmployeeById(id) = \text{Employee} \Rightarrow (\text{Employee} = \text{None} $
+		      \\ $\Rightarrow \text{UserNotFoundException } |\ \text{Employee} \neq \text{None}$ \\ $\Rightarrow
+		      \text{update all fields of Employee with fields in } patch \text{ in service database table})$
+	\item exception: $exc := getEmployeeById(id) = None \Rightarrow \text{UserNotFoundException}$
+\end{itemize}
+
+\noindent suspendEmployee($employeeId$):
+\begin{itemize}
+	\item transition: Change the state of the employee to ``suspended" where their ID matches $employeeId$ in
+	      the employee database table.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of Services Module} \label{mServices}
+\subsection{Module}
+
+serviceService
+
+\subsection{Uses}
+
+Database Driver Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Types}
+
+\textbf{CreateServiceType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type}    & \textbf{Description}                     \\
+		\hline
+		name                 & String                  & Name of Service                          \\
+		\hline
+		description          & Optional$<$String$>$    & Description of Service                   \\
+		\hline
+		estimated\_time      & Optional$<$String$>$    & Estimated Time of Service                \\
+		\hline
+		parts                & List$<$Part$>$          & Estimated Parts needed for Service       \\
+		\hline
+		total\_price         & Optional$<\mathbb{R}+>$ & Estimated Price needed for Service       \\
+		\hline
+		shop\_id             & String                  & Shop that Service is available at        \\
+		\hline
+		type                 & String                  & Type of Service (e.g., Canned or Custom) \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\textbf{UpdateServiceType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type}       & \textbf{Description}                     \\
+		\hline
+		name                 & Optional$<$String$>$       & Name of Service                          \\
+		\hline
+		description          & Optional$<$String$>$       & Description of Service                   \\
+		\hline
+		estimated\_time      & Optional$<$String$>$       & Estimated Time of Service                \\
+		\hline
+		parts                & Optional$<$List$<$Part$>>$ & Estimated Parts needed for Service       \\
+		\hline
+		total\_price         & Optional$<\mathbb{R}+>$    & Estimated Price needed for Service       \\
+		\hline
+		type                 & Optional$<$String$>$       & Type of Service (e.g., Canned or Custom) \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{adjustbox}{width=\textwidth}
+		\begin{tabular}{llll}
+			\hline
+			\textbf{Name}             & \textbf{In}               & \textbf{Out}        & \textbf{Exceptions}      \\
+			\hline
+			createService             & CreateServiceType         & Service             & ~                        \\
+			getServiceById            & String                    & Service $\lor$ None & ~                        \\
+			getServicesByShopId       & String                    & List$<$Service$>$   & ~                        \\
+			getCannedServicesByShopId & String                    & List$<$Service$>$   & ~                        \\
+			getCustomServicesByShopId & String                    & List$<$Service$>$   & ~                        \\
+			updateServiceById         & String, UpdateServiceType & Service             & ServiceNotFoundException \\
+			deleteServiceById         & String                    & ~                   & ~                        \\
+			\hline
+		\end{tabular}
+	\end{adjustbox}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+User's Display \\ Database
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent createService($service$):
+\begin{itemize}
+	\item transition: new Service(service), save service to service database table
+	\item output: $out := \text{new Service(\emph{service})}$
+\end{itemize}
+
+\noindent getServiceById($id$):
+\begin{itemize}
+	\item output: $out :=$ A Service such that it's ID matches $id$ from the service database table else
+	      None.
+\end{itemize}
+
+\noindent getServicesByShopId($shopId$):
+\begin{itemize}
+	\item output: $out :=$ A list of Service such that it's shop ID matches $shopId$ from the service
+	      database table else an empty list.
+\end{itemize}
+
+\noindent getCannedServicesByShopId($shopId$):
+\begin{itemize}
+	\item output: $out :=$ A list of Service such that it's shop ID matches $shopId$ and it's type is
+	      ``Canned" from the service database table else an empty list.
+\end{itemize}
+
+\noindent getCustomServicesByShopId($shopId$):
+\begin{itemize}
+	\item output: $out :=$ A list of Service such that it's shop ID matches $shopId$ and it's type is
+	      ``Custom" from the service database table else an empty list.
+\end{itemize}
+
+\noindent updateServiceById($id, patch$):
+\begin{itemize}
+	\item transition: Update all fields of Service with fields in $patch$ in service database table
+	\item output: $out := getServiceById(id) = \text{Service} \Rightarrow (\text{Service} = \text{None} $ \\
+		      $\Rightarrow \text{ServiceNotFoundException } |\ \text{Service} \neq \text{None}$ \\ $\Rightarrow
+		      \text{update all fields of Service with fields in } patch \text{ in service database table})$
+	\item exception: $exc := getServiceById(id) = None \Rightarrow \text{ServiceNotFoundException}$
+\end{itemize}
+
+\noindent deleteServiceById($id$):
+\begin{itemize}
+	\item transition: Delete all Services where their ID matches $id$ from the service database table.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of Work Orders Module} \label{mWorkOrders}
+\subsection{Module}
+
+workOrderService
+
+\subsection{Uses}
+
+Database Driver Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Types}
+
+\textbf{UpdateWorkOrderType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}    \\
+		\hline
+		title                & Optional$<$String$>$ & Title of Work Order     \\
+		\hline
+		body                 & Optional$<$String$>$ & Work Order Details      \\
+		\hline
+		employee\_id         & Optional$<$String$>$ & ID of Assigned Employee \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{adjustbox}{width=\textwidth}
+		\begin{tabular}{llll}
+			\hline
+			\textbf{Name}         & \textbf{In}                 & \textbf{Out}                    & \textbf{Exceptions}        \\
+			\hline
+			getWorkOrderById      & String                      & WorkOrder $\lor$ None           & ~                          \\
+			getWorkOrdersByShopId & String                      & List$<$WorkOrder$>$ $\lor$ None & ~                          \\
+			updateWorkOrderById   & String, UpdateWorkOrderType & WorkOrder                       & WorkOrderNotFoundException \\
+			\hline
+		\end{tabular}
+	\end{adjustbox}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+User's Display \\ Database
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+\noindent getWorkOrderById($id$):
+\begin{itemize}
+	\item output: $out :=$ A Work Order such that it's ID matches $id$ from the work order database table
+	      else None.
+\end{itemize}
+
+\noindent getWorkOrdersByShopId($shopId$):
+\begin{itemize}
+	\item output: $out :=$ A list of Work Orders such that their shop ID matches $shopId$ from the work order
+	      database table else an empty list.
+\end{itemize}
+
+\noindent updateWorkOrderById($id, patch$):
+\begin{itemize}
+	\item transition: Update all fields of a Work Order, with an ID equal to $id$, with fields in $patch$ in
+	      work order database table
+	\item output: $out := getWorkOrderById(id) = \text{WorkOrder} \Rightarrow (\text{WorkOrder} = \text{None}
+		      $ \\ $\Rightarrow \text{WorkOrderNotFoundException } |\ \text{WorkOrder} \neq \text{None}$ \\
+		      $\Rightarrow \text{update all fields of WorkOrder with fields in } patch \text{ in work order
+			      database table})$
+	\item exception: $exc := getWorkOrderById(id) = None \Rightarrow \text{WorkOrderNotFoundException}$
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
 
 \newpage
 
