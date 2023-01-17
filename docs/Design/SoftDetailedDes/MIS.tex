@@ -55,16 +55,17 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                      \\
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                          \\
 		\midrule
-		December 28, 2022 & Arkin Modi            & Create Revision History              \\
-		January 7, 2023   & Joy Xiao              & Introduction                         \\
-		January 9, 2023   & Arkin Modi            & Add Module Hierarchy                 \\
-		January 11, 2023  & Arkin Modi            & Create MIS of Users Module           \\
-		January 14, 2023  & Arkin Modi            & Create MIS of Work Orders Module     \\
-		January 13, 2023  & Arkin Modi            & Create MIS of Database Driver Module \\
-		January 13, 2023  & Arkin Modi            & Create MIS of Services Module        \\
-		January 15, 2023  & Leon So               & Create MIS of Shop Module            \\
+		December 28, 2022 & Arkin Modi            & Create Revision History                  \\
+		January 7, 2023   & Joy Xiao              & Introduction                             \\
+		January 9, 2023   & Arkin Modi            & Add Module Hierarchy                     \\
+		January 11, 2023  & Arkin Modi            & Create MIS of Users Module               \\
+		January 14, 2023  & Arkin Modi            & Create MIS of Work Orders Module         \\
+		January 13, 2023  & Arkin Modi            & Create MIS of Database Driver Module     \\
+		January 13, 2023  & Arkin Modi            & Create MIS of Services Module            \\
+		January 15, 2023  & Leon So               & Create MIS of Shop Module                \\
+		January 15, 2023  & Joy Xiao              & Create MIS of Employee Management Module \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -212,29 +213,31 @@ None
 \begin{table}[H]
 	\begin{tabular}{|l|l|l|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type}  & \textbf{Description}                    \\
+		\textbf{Output Name} & \textbf{Output Type}  & \textbf{Description}                        \\
 		\hline
-		id                   & String                & ID of Employee                          \\
+		id                   & String                & ID of Employee                              \\
 		\hline
-		create\_time         & String                & Create Time of Employee Account         \\
+		create\_time         & String                & Create Time of Employee Account             \\
 		\hline
-		update\_time         & String                & Update Time of Employee Account         \\
+		update\_time         & String                & Update Time of Employee Account             \\
 		\hline
-		first\_name          & String                & First Name of Employee                  \\
+		first\_name          & String                & First Name of Employee                      \\
 		\hline
-		last\_name           & String                & Last Name of Employee                   \\
+		last\_name           & String                & Last Name of Employee                       \\
 		\hline
-		phone\_number        & String                & Phone Number of Employee                \\
+		phone\_number        & String                & Phone Number of Employee                    \\
 		\hline
-		email                & String                & Email of Employee                       \\
+		email                & String                & Email of Employee                           \\
 		\hline
-		password             & String                & Password of Employee's Account          \\
+		password             & String                & Password of Employee's Account              \\
 		\hline
-		type                 & String                & Type of User                            \\
+		type                 & String                & Type of User                                \\
 		\hline
-		shop                 & Shop                  & Shop which Employee is registered under \\
+		shop                 & Shop                  & Shop which Employee is registered under     \\
 		\hline
-		appointments         & List$<$Appointment$>$ & Appointments assigned to the Employee   \\
+		appointments         & List$<$Appointment$>$ & Appointments assigned to the Employee       \\
+		\hline
+		status               & String                & Employee status (i.e., Active or Suspended) \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -864,10 +867,106 @@ None
 
 \subsubsection{Local Functions}
 
-\noindent hash($s$):
+\newpage
+
+\section{MIS of Employee Management Module} \label{mEmployeeManagement}
+\subsection{Module}
+
+employeeManagementService
+
+\subsection{Uses}
+
+Database Driver Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Types}
+
+\textbf{UpdateEmployeeType}
+
+\begin{table}[H]
+	\begin{tabular}{|p{0.25\textwidth}|p{0.25\textwidth}|p{0.40\textwidth}|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}     \\
+		\hline
+		email                & Optional$<$String$>$ & Email of Employee        \\
+		\hline
+		first\_name          & Optional$<$String$>$ & First Name of Employee   \\
+		\hline
+		last\_name           & Optional$<$String$>$ & Last Name of Employee    \\
+		\hline
+		phone\_number        & Optional$<$String$>$ & Phone Number of Employee \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{adjustbox}{width=\textwidth}
+		\begin{tabular}{llll}
+			\hline
+			\textbf{Name}   & \textbf{In}                & \textbf{Out}       & \textbf{Exceptions}   \\
+			\hline
+			getEmployeeById & String                     & Employee           & ~                     \\
+			getAllEmployees & String                     & List$<$Employee$>$ & ~                     \\
+			updateEmployee  & String, UpdateEmployeeType & ~                  & UserNotFoundException \\
+			suspendEmployee  & String                     & ~                  & ~                     \\
+			\hline
+		\end{tabular}
+	\end{adjustbox}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+User's Display \\ Database
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getEmployeeById($employeeId$):
 \begin{itemize}
-	\item output: $out := \text{hashed value of } s$
+	\item output: $out :=$ An employee such that it's ID matches $employeeId$ from the employee database
+	      table else None.
 \end{itemize}
+
+\noindent getAllEmployees($shopId$):
+\begin{itemize}
+	\item output: $out :=$ List of employees from the shop database table associated with the $shopId$, else
+	      None.
+\end{itemize}
+
+\noindent updateEmployee($employeeId, patch$):
+\begin{itemize}
+	\item transition: Update all fields of Employee with fields in $patch$ in employee database table
+	\item output: $out := getEmployeeById(id) = \text{Employee} \Rightarrow (\text{Employee} = \text{None} $
+		      \\ $\Rightarrow \text{UserNotFoundException } |\ \text{Employee} \neq \text{None}$ \\ $\Rightarrow
+		      \text{update all fields of Employee with fields in } patch \text{ in service database table})$
+	\item exception: $exc := getEmployeeById(id) = None \Rightarrow \text{UserNotFoundException}$
+\end{itemize}
+
+\noindent suspendEmployee($employeeId$):
+\begin{itemize}
+	\item transition: Change the state of the employee to ``suspended" where their ID matches $employeeId$ in
+	      the employee database table.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
 
 \newpage
 
