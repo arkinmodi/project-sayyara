@@ -44,6 +44,7 @@
 		January 7, 2023   & Joy Xiao              & Introduction \& Purpose                                                                           \\
 		January 11, 2023  & Leon So               & Undesired Event Handling                                                                          \\
 		January 12, 2023  & Leon So               & Normal Behaviour \& Introduction                                                                  \\
+		January 13, 2023  & Timothy Choy          & Connection Between Requirements \& Design                                                         \\
 		January 13, 2023  & Timothy Choy          & Scope                                                                                             \\
 		January 16, 2023  & Joy Xiao              & Component Diagram                                                                                 \\
 		January 17, 2023  & Arkin Modi            & Create Timeline                                                                                   \\
@@ -186,12 +187,42 @@ integrity and prevents the undesirable data from entering the workflows or datab
 
 \subsection{Connection Between Requirements and Design} \label{SecConnection}
 
-\wss{The intention of this section is to document decisions that are made
-	``between'' the requirements and the design.  To satisfy some requirements,
-	design decisions need to be made.  Rather than make these decisions implicit,
-	they are explicitly recorded here.  For instance, if a program has security
-	requirements, a specific design decision may be made to satisfy those
-	requirements with a password.}
+% \wss{The intention of this section is to document decisions that are made
+% 	``between'' the requirements and the design.  To satisfy some requirements,
+% 	design decisions need to be made.  Rather than make these decisions implicit,
+% 	they are explicitly recorded here.  For instance, if a program has security
+% 	requirements, a specific design decision may be made to satisfy those
+% 	requirements with a password.}
+
+The following table shows the connections between the requirements stated in the SRS
+\url{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf} and our design
+decisions to implement the requirements. The requirements in the table will refer to the
+requirement number as stated in the SRS.
+
+\begin{table}[H]
+	\centering
+	\caption{Connection Between Requirements and Design}
+	\vspace{5pt}
+	\begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+		\hline
+		\textbf{Requirement} & \textbf{Design Decision}                                                                                                                                                                                                    \\
+		\hline
+		BE4                  & A calendar dropdown is used to allow the user to view appointment dates                                                                                                                                                     \\
+		\hline
+		BE8, BE20            & The quotes, appointments are in a tab view for easy visibility                                                                                                                                                              \\
+		\hline
+		BE25                 & Employees are listed in a list view                                                                                                                                                                                         \\
+		\hline
+		BE32                 & Shops are listed in a list view, with tags showing information relevant to the filters (such as services provided and parts used)                                                                                           \\
+		\hline
+		LF1                  & Each screen has a desktop and mobile view so that it can adjust cleanly based on the user's screen size                                                                                                                     \\
+		\hline
+		SR1, SR2             & Separate views are created for each type of user, so that they have access to only information that the specific user needs. Each account is created with a unique user type, so that they can only access the correct view \\
+		\hline
+		LR1                  & Images and assets used are either created by the team or provided by the stakeholder                                                                                                                                        \\
+		\hline
+	\end{tabular}
+\end{table}
 
 \section{System Variables}
 \subsection{Monitored Variables}
