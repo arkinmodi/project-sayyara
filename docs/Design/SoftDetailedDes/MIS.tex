@@ -68,6 +68,7 @@
 		January 15, 2023  & Leon So               & Create MIS of Shop Module                \\
 		January 15, 2023  & Arkin Modi            & Create MIS of Quotes Module              \\
 		January 15, 2023  & Joy Xiao              & Create MIS of Employee Management Module \\
+		January 17, 2023  & Timothy Choy          & Add Shop Lookup to Shop Module           \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -79,7 +80,7 @@
 See SRS Documentation at
 \url{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}
 
-\wss{Also add any additional symbols, abbreviations or acronyms}
+% \wss{Also add any additional symbols, abbreviations or acronyms}
 
 \begin{tabular}{l l}
 	\toprule
@@ -124,8 +125,8 @@ documentation and implementation can be found at
 
 \section{Notation}
 
-\wss{You should describe your notation.  You can use what is below as
-	a starting point.}
+% \wss{You should describe your notation.  You can use what is below as
+% 	a starting point.}
 
 The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995}, with the addition
 that template modules have been adapted from \cite{GhezziEtAl2003}. The mathematical notation comes
@@ -570,21 +571,23 @@ None
 \begin{table}[H]
 	\begin{tabular}{|p{0.25\textwidth}|p{0.25\textwidth}|p{0.40\textwidth}|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description} \\
+		\textbf{Output Name} & \textbf{Output Type}                & \textbf{Description}           \\
 		\hline
-		name                 & String               & Name of Shop         \\
+		name                 & String                              & Name of Shop                   \\
 		\hline
-		address              & String               & Address of shop      \\
+		address              & String                              & Address of shop                \\
 		\hline
-		city                 & String               & City of Shop         \\
+		city                 & String                              & City of Shop                   \\
 		\hline
-		province             & String               & Province of Shop     \\
+		province             & String                              & Province of Shop               \\
 		\hline
-		postal\_code         & String               & Postal Code of Shop  \\
+		postal\_code         & String                              & Postal Code of Shop            \\
 		\hline
-		email                & String               & Email of Shop        \\
+		email                & String                              & Email of Shop                  \\
 		\hline
-		phone\_number        & String               & Phone Number of Shop \\
+		phone\_number        & String                              & Phone Number of Shop           \\
+		\hline
+		location             & tuple of (lat, long : $\mathbb{R}$) & Latitude and Longitude of Shop \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -621,11 +624,12 @@ None
 	\begin{adjustbox}{width=\textwidth}
 		\begin{tabular}{llll}
 			\hline
-			\textbf{Name}  & \textbf{In}            & \textbf{Out}     & \textbf{Exceptions}                         \\
+			\textbf{Name}  & \textbf{In}                                                       & \textbf{Out}               & \textbf{Exceptions}                         \\
 			\hline
-			createShop     & CreateShopType         & Shop             & ~                                           \\
-			getShopById    & String                 & Shop $\lor$ None & ~                                           \\
-			updateShopById & String, UpdateShopType & Shop             & ShopNotFoundException, InvalidTimeException \\
+			createShop     & CreateShopType                                                    & Shop                       & ~                                           \\
+			getShopById    & String                                                            & Shop $\lor$ None           & ~                                           \\
+			filterShops    & String, tuple of (lat,long,distance:$\mathbb{R}$), String, String & List$<$Shop$>$ $\lor$ None & ~                                           \\
+			updateShopById & String, UpdateShopType                                            & Shop                       & ShopNotFoundException, InvalidTimeException \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -634,8 +638,6 @@ None
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
-None
 
 \subsubsection{Environment Variables}
 
@@ -649,7 +651,8 @@ None
 
 \noindent createShop($shop$):
 \begin{itemize}
-	\item transition: new Shop(shop), save shop to shop database table
+	\item transition: new Shop(shop), the location field is defined by getLatLong(address), save shop to shop
+	      database table
 	\item output: $out := \text{new Shop(\emph{shop})}$
 \end{itemize}
 
@@ -658,10 +661,20 @@ None
 	\item output: $out :=$ A Shop such that it contains the ID, $id$, from the shop database table else None.
 \end{itemize}
 
+\noindent filterShops($name, location, services, parts$):
+\begin{itemize}
+	\item output: A list of Shops from the database table, such that the Shops are filtered by each of the
+	      parameters as follows: \\ $a := (a \in \text{Shops} | \text{name} \in \text{a.name})$ \\ $b := (b
+		      \in \text{Shops} | \text{distance} \leq distance(\text{b.lat}, \text{b.long}, \text{lat},
+		      \text{long}))$ \\ $c := (c \in \text{Shops} | \text{services} \in \text{c.Services})$ \\ $d := (d
+		      \in \text{Shops} | \text{parts} \in \text{d.Parts})$ \\ $out := (s \in (a \land b \land c \land
+		      d))$
+\end{itemize}
+
 \noindent updateShopById($id, patch$):
 \begin{itemize}
 	\item transition: Update all fields of a Shop, with an ID equal to $id$, with fields in $patch$ in shop
-	      database table
+	      database table. Location is updated locally through the getLatLong(address) local function.
 	\item output: $out := getShopById(id) = \text{Shop} \Rightarrow (\text{Shop} = \text{None} $ \\
 		      $\Rightarrow \text{ShopNotFoundException } |\ \text{Shop} \neq \text{None}$ \\ $\Rightarrow
 		      \text{update all fields of Shop with fields in } patch \text{ in shop database table})$
@@ -672,9 +685,16 @@ None
 
 \subsubsection{Local Functions}
 
-None
+distance: $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ $\rightarrow$ $\mathbb{R}$ \\
 
-\newpage
+distance(shop\_lat, shop\_long, user\_lat, user\_long) $\equiv (3959 \cdot
+	\arccos(\cos(\text{shop\_lat})) \cdot \cos(\text{user\_lat}) + \cos(\text{shop\_long} -
+		\text{user\_long}) + \sin(\text{shop\_lat}) \cdot \sin(\text{user\_lat}))$
+
+getLatLong: String $\rightarrow$ $\mathbb{R}$, $\mathbb{R}$ \\
+
+getLatLong(address) $\equiv$ the latitude and longitude of the address, as defined by the Google
+Maps API. \\ \newpage
 
 \section{MIS of Users Module} \label{mUsers}
 \subsection{Module}
@@ -1560,6 +1580,6 @@ None
 
 \section{Appendix}
 
-\wss{Extra information if required}
+% \wss{Extra information if required}
 
 \end{document}
