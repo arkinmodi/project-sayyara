@@ -64,6 +64,7 @@
 		January 14, 2023  & Arkin Modi            & Create MIS of Work Orders Module         \\
 		January 13, 2023  & Arkin Modi            & Create MIS of Database Driver Module     \\
 		January 13, 2023  & Arkin Modi            & Create MIS of Services Module            \\
+		January 15, 2023  & Arkin Modi            & Create MIS of Appointments Module        \\
 		January 15, 2023  & Leon So               & Create MIS of Shop Module                \\
 		January 15, 2023  & Arkin Modi            & Create MIS of Quotes Module              \\
 		January 15, 2023  & Joy Xiao              & Create MIS of Employee Management Module \\
@@ -746,7 +747,6 @@ None
 
 \textbf{CreateShopOwnerType}
 
-% TODO: Add Shop Fields
 \begin{table}[H]
 	\begin{tabular}{|p{0.25\textwidth}|p{0.25\textwidth}|p{0.40\textwidth}|}
 		\hline
@@ -1123,6 +1123,178 @@ None
 \subsubsection{Local Functions}
 
 None
+
+\newpage
+
+\section{MIS of Appointments Module} \label{mAppointments}
+\subsection{Module}
+
+appointmentService
+
+\subsection{Uses}
+
+Database Driver Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+None
+
+\subsubsection{Exported Types}
+
+\textbf{CreateAppointmentType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}                    \\
+		\hline
+		quote\_id            & Optional$<$String$>$ & Associated Quote                        \\
+		\hline
+		service\_type        & String               & Type of Service                         \\
+		\hline
+		price                & $\mathbb{Q}$         & Estimated Price                         \\
+		\hline
+		employee\_id         & Optional$<$String$>$ & Assigned Employee                       \\
+		\hline
+		start\_time          & Date                 & Start Time of Appointment               \\
+		\hline
+		end\_time            & Date                 & End Time of Appointment                 \\
+		\hline
+		vehicle\_id          & String               & Vehicle Being Serviced                  \\
+		\hline
+		customer\_id         & String               & Customer the Appointment is for         \\
+		\hline
+		shop\_id             & String               & Shop the Appointment is taking place at \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\textbf{UpdateAppointmentType}
+
+\begin{table}[H]
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Output Name} & \textbf{Output Type}   & \textbf{Description}             \\
+		\hline
+		quote\_id            & Optional$<$String$>$   & Associated Quote                 \\
+		\hline
+		work\_order\_id      & Optional$<$String$>$   & Associated Work Order            \\
+		\hline
+		service\_type        & Optional$<$String$>$   & Type of Service                  \\
+		\hline
+		price                & Optional$<\mathbb{Q}>$ & Estimated Price                  \\
+		\hline
+		employee\_id         & Optional$<$String$>$   & Assigned Employee                \\
+		\hline
+		start\_time          & Optional$<$Date$>$     & Start Time of Appointment        \\
+		\hline
+		end\_time            & Optional$<$Date$>$     & End Time of Appointment          \\
+		\hline
+		vehicle\_id          & Optional$<$String$>$   & Vehicle Being Serviced           \\
+		\hline
+		status               & Optional$<$String$>$   & Acceptance status of appointment \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+	\begin{adjustbox}{width=\textwidth}
+		\begin{tabular}{llll}
+			\hline
+			\textbf{Name}           & \textbf{In}                   & \textbf{Out}            & \textbf{Exceptions}                                \\
+			\hline
+			createAppointment       & CreateAppointmentType         & Appointment             & InvalidTimeException, MissingDataException         \\
+			getAppointmentById      & String                        & Appointment $\lor$ None & ~                                                  \\
+			getAppointmentsByShopId & String                        & List$<$Appointment$>$   & ~                                                  \\
+			updateAppointmentById   & String, UpdateAppointmentType & Appointment             & AppointmentNotFoundException, InvalidTimeException \\
+			deleteAppointment       & String                        & ~                       & ~                                                  \\
+			\hline
+		\end{tabular}
+	\end{adjustbox}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+User's Display \\ Database
+
+\subsubsection{Assumptions}
+
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent createAppointment($appointment$):
+\begin{itemize}
+	\item transition: new Appointment(appointment) as ``Pending Approval", save appointment to appointment
+	      database table. new WorkOrder() connected to the newly created appointment, save work order to work
+	      order database table.
+	\item output: $out := (exc = \text{InvalidTimeException}$ \\ $\Rightarrow \text{``Invalid start time
+			      and/or end time."} |\ \neg exc \Rightarrow \text{new Appointment(\emph{appointment})})$
+	\item exception: $exc := (appointment.vehicle\_id = \text{None} \lor appointment.customer\_id =
+		      \text{None} \lor appointment.shop\_id = \text{None} \Rightarrow \text{MissingDataException})$ \\
+	      $|\ (\neg isAppointmentValid(appointment.shop\_id, appointment.start\_time, appointment.end\_time)
+	      $ \\ $\Rightarrow \text{InvalidTimeException})$
+\end{itemize}
+
+\noindent getAppointmentById($id$):
+\begin{itemize}
+	\item output: $out :=$ An Appointment such that it's ID matches $id$ from the appointment database table
+	      else None.
+\end{itemize}
+
+\noindent getAppointmentsByShopId($shopId$):
+\begin{itemize}
+	\item output: $out :=$ A list of Appointments such that their shop ID matches $shopId$ from the
+	      appointment database table else an empty list.
+\end{itemize}
+
+\noindent updateAppointmentById($id, patch$):
+\begin{itemize}
+	\item transition: Update all fields of an Appointment, with an ID equal to $id$, with fields in $patch$
+	      in appointment database table
+	\item output: $out := getAppointmentById(id) = \text{Appointment}$ \\ $\Rightarrow (\text{Appointment} =
+		      \text{None} \Rightarrow \text{AppointmentNotFoundException }$ \\ $|\ \text{Appointment} \neq
+		      \text{None}$ \\ $\Rightarrow \text{update all fields of Appointment with fields in } patch \text{
+			      in appointment database table})$
+	\item exception: $exc := (getAppointmentById(id) = None \Rightarrow \text{AppointmentNotFoundException})$
+	      \\ $|\ (getAppointmentById(id) = Appointment \Rightarrow (patch.start\_time \neq \text{None } \land
+		      patch.end\_time \neq \text{None } \land \neg isAppointmentValid(Appointment.shop\_id,
+		      patch.start\_time, patch.end\_time)) \lor (patch.start\_time \neq \text{None}$ \\ $\land \neg
+		      isAppointmentValid(Appointment.shop\_id, patch.start\_time, Appointment.end\_time)) \lor
+		      (patch.end\_time \neq \text{None}$ \\ $\land \neg isAppointmentValid(Appointment.shop\_id,
+		      Appointment.start\_time, patch.end\_time))$ \\ $\Rightarrow \text{InvalidTimeException})$
+\end{itemize}
+
+\noindent deleteAppointment($id$):
+\begin{itemize}
+	\item transition: Delete all Appointments where their ID matches $id$ from the appointment database
+	      table.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\noindent acceptAppointment($appointment$):
+\begin{itemize}
+	\item transition: Mark the appointment as ``Accepted". If this appointment will consume the final
+	      employee or final work stall available during its specified time slot, mark all other appointment
+	      with overlapping time slot as ``Rejected".
+\end{itemize}
+
+\noindent isAppointmentValid($shop\_id, start\_time, end\_time$):
+\begin{itemize}
+	\item output: $out :=$ True if the given appointment is within the hours of operation for the shop else
+	      False.
+\end{itemize}
 
 \newpage
 
