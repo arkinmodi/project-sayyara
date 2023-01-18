@@ -664,9 +664,10 @@ None
 \begin{itemize}
 	\item output: A list of Shops from the database table, such that the Shops are filtered by each of the
 	      parameters as follows: \\ $name := (a \in \text{Shops} | \text{name} \in \text{a.name})$ \\
-	      $location := (b \in \text{Shops} | \text{distance} <= distance(b.lat, b.long, lat, long))$ \\
-	      $services := (c \in \text{Shops} | \text{services} \in \text{c.Services})$ \\ $parts := (d \in
-		      \text{Shops} | \text{parts} \in \text{d.Parts})$ \\ $out := (s \in (a \land b \land c \land d))$
+	      $location := (b \in \text{Shops} | \text{distance} <= distance(\text{b.lat}, \text{b.long},
+		      \text{lat}, \text{long}))$ \\ $services := (c \in \text{Shops} | \text{services} \in
+		      \text{c.Services})$ \\ $parts := (d \in \text{Shops} | \text{parts} \in \text{d.Parts})$ \\ $out :=
+		      (s \in (a \land b \land c \land d))$
 \end{itemize}
 
 \noindent updateShopById($id, patch$):
@@ -685,9 +686,9 @@ None
 
 distance: $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ $->$ $\mathbb{R}$ \\
 
-distance(shop_lat, shop_long, user_lat, user_long) $\equiv (3959 \cdot
-	\arccos(\cos(\text{shop_lat})) \cdot \cos(\text{user_lat}) + \cos(\text{shop_long} -
-		\text{user_long}) + \sin(\text{shop_lat}) \cdot \sin(\text{user_lat}))$
+distance(shop\_lat, shop\_long, user\_lat, user\_long) $\equiv (3959 \cdot
+	\arccos(\cos(\text{shop_lat})) \cdot \cos(\text{user\_lat}) + \cos(\text{shop\_long} -
+		\text{user\_long}) + \sin(\text{sho\_lat}) \cdot \sin(\text{user\_lat}))$
 
 getLatLong: String $->$ $\mathbb{R}$, $\mathbb{R}$ \\
 
