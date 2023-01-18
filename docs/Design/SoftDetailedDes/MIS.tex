@@ -67,6 +67,7 @@
 		January 15, 2023  & Leon So               & Create MIS of Shop Module                \\
 		January 15, 2023  & Arkin Modi            & Create MIS of Quotes Module              \\
 		January 15, 2023  & Joy Xiao              & Create MIS of Employee Management Module \\
+		January 17, 2023  & Timothy Choy          & Add Shop Lookup to Shop Module           \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -569,21 +570,23 @@ None
 \begin{table}[H]
 	\begin{tabular}{|p{0.25\textwidth}|p{0.25\textwidth}|p{0.40\textwidth}|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description} \\
+		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}           \\
 		\hline
-		name                 & String               & Name of Shop         \\
+		name                 & String               & Name of Shop                   \\
 		\hline
-		address              & String               & Address of shop      \\
+		address              & String               & Address of shop                \\
 		\hline
-		city                 & String               & City of Shop         \\
+		city                 & String               & City of Shop                   \\
 		\hline
-		province             & String               & Province of Shop     \\
+		province             & String               & Province of Shop               \\
 		\hline
-		postal\_code         & String               & Postal Code of Shop  \\
+		postal\_code         & String               & Postal Code of Shop            \\
 		\hline
-		email                & String               & Email of Shop        \\
+		email                & String               & Email of Shop                  \\
 		\hline
-		phone\_number        & String               & Phone Number of Shop \\
+		phone\_number        & String               & Phone Number of Shop           \\
+		\hline
+		location             & (float, float)       & Latitude and Longitude of Shop \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -620,11 +623,12 @@ None
 	\begin{adjustbox}{width=\textwidth}
 		\begin{tabular}{llll}
 			\hline
-			\textbf{Name}  & \textbf{In}            & \textbf{Out}     & \textbf{Exceptions}                         \\
+			\textbf{Name}  & \textbf{In}                            & \textbf{Out}           & \textbf{Exceptions}                         \\
 			\hline
-			createShop     & CreateShopType         & Shop             & ~                                           \\
-			getShopById    & String                 & Shop $\lor$ None & ~                                           \\
-			updateShopById & String, UpdateShopType & Shop             & ShopNotFoundException, InvalidTimeException \\
+			createShop     & CreateShopType                         & Shop                   & ~                                           \\
+			getShopById    & String                                 & Shop $\lor$ None       & ~                                           \\
+			filterShops    & String, (float, float), String, String & List<Shop> $\lor$ None & ~                                           \\
+			updateShopById & String, UpdateShopType                 & Shop                   & ShopNotFoundException, InvalidTimeException \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -648,7 +652,8 @@ None
 
 \noindent createShop($shop$):
 \begin{itemize}
-	\item transition: new Shop(shop), save shop to shop database table
+	\item transition: new Shop(shop), the location field is defined by getLatLong(address), save shop to shop
+	      database table
 	\item output: $out := \text{new Shop(\emph{shop})}$
 \end{itemize}
 
@@ -660,7 +665,7 @@ None
 \noindent updateShopById($id, patch$):
 \begin{itemize}
 	\item transition: Update all fields of a Shop, with an ID equal to $id$, with fields in $patch$ in shop
-	      database table
+	      database table. Location is updated locally through the getLatLong(address) local function.
 	\item output: $out := getShopById(id) = \text{Shop} \Rightarrow (\text{Shop} = \text{None} $ \\
 		      $\Rightarrow \text{ShopNotFoundException } |\ \text{Shop} \neq \text{None}$ \\ $\Rightarrow
 		      \text{update all fields of Shop with fields in } patch \text{ in shop database table})$
@@ -671,9 +676,10 @@ None
 
 \subsubsection{Local Functions}
 
-None
+getLatLong: String -> tuple of ($\mathbb{R}$, $\mathbb{R}$) \\
 
-\newpage
+getLatLong(address) $\equiv$ the latitude and longitude of the address, as defined by the Google
+Maps API. \\ \newpage
 
 \section{MIS of Users Module} \label{mUsers}
 \subsection{Module}
