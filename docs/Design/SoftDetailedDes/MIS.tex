@@ -570,23 +570,23 @@ None
 \begin{table}[H]
 	\begin{tabular}{|p{0.25\textwidth}|p{0.25\textwidth}|p{0.40\textwidth}|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type} & \textbf{Description}           \\
+		\textbf{Output Name} & \textbf{Output Type}    & \textbf{Description}           \\
 		\hline
-		name                 & String               & Name of Shop                   \\
+		name                 & String                  & Name of Shop                   \\
 		\hline
-		address              & String               & Address of shop                \\
+		address              & String                  & Address of shop                \\
 		\hline
-		city                 & String               & City of Shop                   \\
+		city                 & String                  & City of Shop                   \\
 		\hline
-		province             & String               & Province of Shop               \\
+		province             & String                  & Province of Shop               \\
 		\hline
-		postal\_code         & String               & Postal Code of Shop            \\
+		postal\_code         & String                  & Postal Code of Shop            \\
 		\hline
-		email                & String               & Email of Shop                  \\
+		email                & String                  & Email of Shop                  \\
 		\hline
-		phone\_number        & String               & Phone Number of Shop           \\
+		phone\_number        & String                  & Phone Number of Shop           \\
 		\hline
-		location             & (float, float)       & Latitude and Longitude of Shop \\
+		location             & tuple of (float, float) & Latitude and Longitude of Shop \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -623,12 +623,12 @@ None
 	\begin{adjustbox}{width=\textwidth}
 		\begin{tabular}{llll}
 			\hline
-			\textbf{Name}  & \textbf{In}                            & \textbf{Out}           & \textbf{Exceptions}                         \\
+			\textbf{Name}  & \textbf{In}                                     & \textbf{Out}           & \textbf{Exceptions}                         \\
 			\hline
-			createShop     & CreateShopType                         & Shop                   & ~                                           \\
-			getShopById    & String                                 & Shop $\lor$ None       & ~                                           \\
-			filterShops    & String, (float, float), String, String & List<Shop> $\lor$ None & ~                                           \\
-			updateShopById & String, UpdateShopType                 & Shop                   & ShopNotFoundException, InvalidTimeException \\
+			createShop     & CreateShopType                                  & Shop                   & ~                                           \\
+			getShopById    & String                                          & Shop $\lor$ None       & ~                                           \\
+			filterShops    & String, tuple of (float, float), String, String & List<Shop> $\lor$ None & ~                                           \\
+			updateShopById & String, UpdateShopType                          & Shop                   & ShopNotFoundException, InvalidTimeException \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -637,8 +637,6 @@ None
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
-None
 
 \subsubsection{Environment Variables}
 
@@ -660,6 +658,11 @@ None
 \noindent getShopById($id$):
 \begin{itemize}
 	\item output: $out :=$ A Shop such that it contains the ID, $id$, from the shop database table else None.
+\end{itemize}
+
+\noindent filterShops($name, location, services, parts$):
+\begin{itemize}
+	\item output: $out :=$ A list of Shops such that
 \end{itemize}
 
 \noindent updateShopById($id, patch$):
