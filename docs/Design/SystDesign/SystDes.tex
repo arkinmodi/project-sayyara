@@ -44,6 +44,7 @@
 		January 7, 2023   & Joy Xiao              & Introduction \& Purpose                                                                           \\
 		January 11, 2023  & Leon So               & Undesired Event Handling                                                                          \\
 		January 12, 2023  & Leon So               & Normal Behaviour \& Introduction                                                                  \\
+		January 13, 2023  & Timothy Choy          & Scope                                                                                             \\
 		January 16, 2023  & Joy Xiao              & Component Diagram                                                                                 \\
 		January 17, 2023  & Arkin Modi            & Create Timeline                                                                                   \\
 		January 17, 2023  & Arkin Modi            & Add Work Order Mockups                                                                            \\
@@ -66,9 +67,11 @@ This section records information for easy reference.
 	\toprule
 	\textbf{symbol} & \textbf{description}                \\
 	\midrule
-	\progname       & The name of the program being built \\
+	\progname       & Explanation of program name         \\
 	MIS             & Module Interface Specifications     \\
 	MG              & Module Guide                        \\
+	PWA             & Progressive Web Application         \\
+	SRS             & Software Requirements Specification \\
 	\bottomrule
 \end{tabular}
 
@@ -110,8 +113,29 @@ the project.
 
 \section{Scope}
 
-\wss{Include a figure that show the System Context (showing the boundary between
-	your system and the environment around it.)}
+The system is designed to connect vehicle owners and independent shop owners, providing users with
+the ability to communicate with one another, and respectively view and manage the interactions and
+processes involved in a typical auto repair and maintenance service experience. All functionality
+of the system has been defined in the SRS
+\url{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf} and everything not
+included in the SRS is not part of the scope.
+
+The system includes a PWA and the relevant database to store information relevant to the
+application.
+
+\subsection{Context Diagram}
+
+Below is a context diagram detailing the boundary between the system and the environment around it.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{./diagrams/ContextDiagram.png}
+	\caption{Context Diagram}
+	\label{ContextDiagram}
+\end{figure}
+
+% \wss{Include a figure that show the System Context (showing the boundary between
+% 	your system and the environment around it.)}
 
 \section{Project Overview}
 
@@ -154,7 +178,7 @@ integrity and prevents the undesirable data from entering the workflows or datab
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{component-diagram.png}
+	\includegraphics[width=\textwidth]{./diagrams/component-diagram.png}
 	\caption{Component Diagram}
 	\label{ComponentDiagram}
 \end{figure}
