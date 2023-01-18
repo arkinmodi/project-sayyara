@@ -570,23 +570,23 @@ None
 \begin{table}[H]
 	\begin{tabular}{|p{0.25\textwidth}|p{0.25\textwidth}|p{0.40\textwidth}|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type}    & \textbf{Description}           \\
+		\textbf{Output Name} & \textbf{Output Type}             & \textbf{Description}           \\
 		\hline
-		name                 & String                  & Name of Shop                   \\
+		name                 & String                           & Name of Shop                   \\
 		\hline
-		address              & String                  & Address of shop                \\
+		address              & String                           & Address of shop                \\
 		\hline
-		city                 & String                  & City of Shop                   \\
+		city                 & String                           & City of Shop                   \\
 		\hline
-		province             & String                  & Province of Shop               \\
+		province             & String                           & Province of Shop               \\
 		\hline
-		postal\_code         & String                  & Postal Code of Shop            \\
+		postal\_code         & String                           & Postal Code of Shop            \\
 		\hline
-		email                & String                  & Email of Shop                  \\
+		email                & String                           & Email of Shop                  \\
 		\hline
-		phone\_number        & String                  & Phone Number of Shop           \\
+		phone\_number        & String                           & Phone Number of Shop           \\
 		\hline
-		location             & tuple of (float, float) & Latitude and Longitude of Shop \\
+		location             & tuple of (lat,long:$\mathbb{R}$) & Latitude and Longitude of Shop \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -623,12 +623,12 @@ None
 	\begin{adjustbox}{width=\textwidth}
 		\begin{tabular}{llll}
 			\hline
-			\textbf{Name}  & \textbf{In}                                     & \textbf{Out}           & \textbf{Exceptions}                         \\
+			\textbf{Name}  & \textbf{In}                                                       & \textbf{Out}           & \textbf{Exceptions}                         \\
 			\hline
-			createShop     & CreateShopType                                  & Shop                   & ~                                           \\
-			getShopById    & String                                          & Shop $\lor$ None       & ~                                           \\
-			filterShops    & String, tuple of (float, float), String, String & List<Shop> $\lor$ None & ~                                           \\
-			updateShopById & String, UpdateShopType                          & Shop                   & ShopNotFoundException, InvalidTimeException \\
+			createShop     & CreateShopType                                                    & Shop                   & ~                                           \\
+			getShopById    & String                                                            & Shop $\lor$ None       & ~                                           \\
+			filterShops    & String, tuple of (lat,long,distance:$\mathbb{R}$), String, String & List<Shop> $\lor$ None & ~                                           \\
+			updateShopById & String, UpdateShopType                                            & Shop                   & ShopNotFoundException, InvalidTimeException \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -662,7 +662,11 @@ None
 
 \noindent filterShops($name, location, services, parts$):
 \begin{itemize}
-	\item output: $out :=$ A list of Shops such that
+	\item output: A list of Shops from the database table, such that the Shops are filtered by each of the
+	      parameters as follows: \\ $name := (a \in \text{Shops} | \text{name} \in \text{a.name})$ \\
+	      $location := (b \in \text{Shops} | \text{distance} <= distance(b.lat, b.long, lat, long))$ \\
+	      $services := (c \in \text{Shops} | \text{services} \in \text{c.Services})$ \\ $parts := (d \in
+		      \text{Shops} | \text{parts} \in \text{d.Parts})$ \\ $out := (s \in (a \land b \land c \land d))$
 \end{itemize}
 
 \noindent updateShopById($id, patch$):
@@ -679,7 +683,13 @@ None
 
 \subsubsection{Local Functions}
 
-getLatLong: String -> tuple of ($\mathbb{R}$, $\mathbb{R}$) \\
+distance: $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ $->$ $\mathbb{R}$ \\
+
+distance(shop_lat, shop_long, user_lat, user_long) $\equiv (3959 \cdot
+	\arccos(\cos(\text{shop_lat})) \cdot \cos(\text{user_lat}) + \cos(\text{shop_long} -
+		\text{user_long}) + \sin(\text{shop_lat}) \cdot \sin(\text{user_lat}))$
+
+getLatLong: String $->$ $\mathbb{R}$, $\mathbb{R}$ \\
 
 getLatLong(address) $\equiv$ the latitude and longitude of the address, as defined by the Google
 Maps API. \\ \newpage
