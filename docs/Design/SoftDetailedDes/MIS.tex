@@ -688,7 +688,7 @@ distance: $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ $->$ $\mathbb{R
 
 distance(shop\_lat, shop\_long, user\_lat, user\_long) $\equiv (3959 \cdot
 	\arccos(\cos(\text{shop_lat})) \cdot \cos(\text{user\_lat}) + \cos(\text{shop\_long} -
-		\text{user\_long}) + \sin(\text{sho\_lat}) \cdot \sin(\text{user\_lat}))$
+		\text{user\_long}) + \sin(\text{shop\_lat}) \cdot \sin(\text{user\_lat}))$
 
 getLatLong: String $->$ $\mathbb{R}$, $\mathbb{R}$ \\
 
