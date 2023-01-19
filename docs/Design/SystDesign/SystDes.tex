@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage{makecell}
 
 \hypersetup{
 	colorlinks,
@@ -20,17 +21,6 @@
 \input{../../Comments}
 \input{../../Common}
 
-\newcounter{acnum}
-\newcommand{\actheacnum}{AC\theacnum}
-\newcommand{\acref}[1]{AC\ref{#1}}
-
-\newcounter{ucnum}
-\newcommand{\uctheucnum}{UC\theucnum}
-\newcommand{\uref}[1]{UC\ref{#1}}
-
-\newcounter{mnum}
-\newcommand{\mthemnum}{M\themnum}
-\newcommand{\mref}[1]{M\ref{#1}}
 
 \begin{document}
 
@@ -48,12 +38,21 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                                  \\
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                                                                                   \\
 		\midrule
-		December 28, 2022 & Arkin Modi            & Revision History \& Mark Not Applicable Sections \\
-		January 7, 2023   & Joy Xiao              & Introduction \& Purpose                          \\
-		January 11, 2023  & Leon So               & Undesired Event Handling                         \\
-		January 12, 2023  & Leon So               & Normal Behaviour \& Introduction                 \\
+		December 28, 2022 & Arkin Modi            & Revision History \& Mark Not Applicable Sections                                                  \\
+		January 7, 2023   & Joy Xiao              & Introduction \& Purpose                                                                           \\
+		January 11, 2023  & Leon So               & Undesired Event Handling                                                                          \\
+		January 12, 2023  & Leon So               & Normal Behaviour \& Introduction                                                                  \\
+		January 13, 2023  & Timothy Choy          & Connection Between Requirements \& Design                                                         \\
+		January 13, 2023  & Timothy Choy          & Scope                                                                                             \\
+		January 16, 2023  & Joy Xiao              & Component Diagram                                                                                 \\
+		January 17, 2023  & Arkin Modi            & Create Timeline                                                                                   \\
+		January 17, 2023  & Arkin Modi            & Add Work Order Mockups                                                                            \\
+		January 17, 2023  & Joy Xiao              & Add Shop Appointments, Services, Customer Landing Page Mockups                                    \\
+		January 17, 2023  & Leon So               & Add Login \& Sign Up, Shop Owner/Employee Landing Page, Shop Profile, Employee Management Mockups \\
+		January 17, 2023  & Timothy Choy          & Add Customer Appointments, Quotes, Shop Lookup Mockups                                            \\
+		January 18, 2023  & Leon So               & Add team reflection                                                                               \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -68,11 +67,13 @@ This section records information for easy reference.
 
 \begin{tabular}{l l}
 	\toprule
-	\textbf{symbol} & \textbf{description}            \\
+	\textbf{symbol} & \textbf{description}                \\
 	\midrule
-	\progname       & Explanation of program name     \\
-	MIS             & Module Interface Specifications \\
-	MG              & Module Guide                    \\
+	\progname       & Explanation of program name         \\
+	MIS             & Module Interface Specifications     \\
+	MG              & Module Guide                        \\
+	PWA             & Progressive Web Application         \\
+	SRS             & Software Requirements Specification \\
 	\bottomrule
 \end{tabular}
 
@@ -114,8 +115,29 @@ the project.
 
 \section{Scope}
 
-\wss{Include a figure that show the System Context (showing the boundary between
-	your system and the environment around it.)}
+The system is designed to connect vehicle owners and independent shop owners, providing users with
+the ability to communicate with one another, and respectively view and manage the interactions and
+processes involved in a typical auto repair and maintenance service experience. All functionality
+of the system has been defined in the SRS
+\url{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf} and everything not
+included in the SRS is not part of the scope.
+
+The system includes a PWA and the relevant database to store information relevant to the
+application.
+
+\subsection{Context Diagram}
+
+Below is a context diagram detailing the boundary between the system and the environment around it.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{./diagrams/ContextDiagram.png}
+	\caption{Context Diagram}
+	\label{ContextDiagram}
+\end{figure}
+
+% \wss{Include a figure that show the System Context (showing the boundary between
+% 	your system and the environment around it.)}
 
 \section{Project Overview}
 
@@ -156,14 +178,51 @@ integrity and prevents the undesirable data from entering the workflows or datab
 
 \subsection{Component Diagram}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{./diagrams/component-diagram.png}
+	\caption{Component Diagram}
+	\label{ComponentDiagram}
+\end{figure}
+
 \subsection{Connection Between Requirements and Design} \label{SecConnection}
 
-\wss{The intention of this section is to document decisions that are made
-	``between'' the requirements and the design.  To satisfy some requirements,
-	design decisions need to be made.  Rather than make these decisions implicit,
-	they are explicitly recorded here.  For instance, if a program has security
-	requirements, a specific design decision may be made to satisfy those
-	requirements with a password.}
+% \wss{The intention of this section is to document decisions that are made
+% 	``between'' the requirements and the design.  To satisfy some requirements,
+% 	design decisions need to be made.  Rather than make these decisions implicit,
+% 	they are explicitly recorded here.  For instance, if a program has security
+% 	requirements, a specific design decision may be made to satisfy those
+% 	requirements with a password.}
+
+The following table shows the connections between the requirements stated in the SRS
+\url{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf} and our design
+decisions to implement the requirements. The requirements in the table will refer to the
+requirement number as stated in the SRS.
+
+\begin{table}[H]
+	\centering
+	\caption{Connection Between Requirements and Design}
+	\vspace{5pt}
+	\begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+		\hline
+		\textbf{Requirement} & \textbf{Design Decision}                                                                                                                                                                                                    \\
+		\hline
+		BE4                  & A calendar dropdown is used to allow the user to view appointment dates                                                                                                                                                     \\
+		\hline
+		BE8, BE20            & The quotes, appointments are in a tab view for easy visibility                                                                                                                                                              \\
+		\hline
+		BE25                 & Employees are listed in a list view                                                                                                                                                                                         \\
+		\hline
+		BE32                 & Shops are listed in a list view, with tags showing information relevant to the filters (such as services provided and parts used)                                                                                           \\
+		\hline
+		LF1                  & Each screen has a desktop and mobile view so that it can adjust cleanly based on the user's screen size                                                                                                                     \\
+		\hline
+		SR1, SR2             & Separate views are created for each type of user, so that they have access to only information that the specific user needs. Each account is created with a unique user type, so that they can only access the correct view \\
+		\hline
+		LR1                  & Images and assets used are either created by the team or provided by the stakeholder                                                                                                                                        \\
+		\hline
+	\end{tabular}
+\end{table}
 
 \section{System Variables}
 \subsection{Monitored Variables}
@@ -177,8 +236,296 @@ N/A
 
 \section{User Interfaces}
 
-\wss{Design of user interface for software and hardware.  Attach an appendix if
-	needed. Drawings, Sketches, Figma}
+% \wss{Design of user interface for software and hardware.  Attach an appendix if
+% 	needed. Drawings, Sketches, Figma}
+
+\subsection{Home Page}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Home Page (Logged In) (Desktop).png}
+	\caption{Home Page \textemdash{} Logged In (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Home Page (Mobile).png}
+	\caption{Home Page \textemdash{} Logged In (Mobile)}
+\end{figure}
+
+\subsection{Manage Shop Employees}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Manage Shop (Employees) (Desktop).png}
+	\caption{Manage Shop \textemdash{} Employees (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{mockups/Manage Shop (Employees) (Mobile).png}
+	\caption{Manage Shop \textemdash{} Employees (Mobile)}
+\end{figure}
+
+\subsection{Manage Shop Details}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Manage Shop (Shop Settings) (Desktop).png}
+	\caption{Manage Shop \textemdash{} Details (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{mockups/Manage Shop (Shop Settings) (Mobile).png}
+	\caption{Manage Shop \textemdash{} Details (Mobile)}
+\end{figure}
+
+\subsection{Shop Profile}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Shop Profile (Shop Owner) (Desktop).png}
+	\caption{Shop Profile \textemdash{} Shop Owner (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Shop Profile (Vehicle Owner) (Desktop).png}
+	\caption{Shop Profile \textemdash{} Vehicle Owner (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{mockups/Shop Profile (Mobile).png}
+	\caption{Shop Profile (Mobile)}
+\end{figure}
+
+\subsection{Add Service to Shop}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Service Form (Shop Settings) (Desktop).png}
+	\caption{Add Service to Shop (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Service Form (Shop Settings) (Mobile).png}
+	\caption{Add Service to Shop (Mobile)}
+\end{figure}
+
+\subsection{Shop Owner/Employee Registration}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Shop Sign Up (Desktop).png}
+	\caption{Shop Owner/Employee Registration \textemdash{} Part 1 (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{mockups/Shop Sign Up (Mobile).png}
+	\caption{Shop Owner/Employee Registration \textemdash{} Part 1 (Mobile)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Shop Sign Up (Part 1) (Desktop).png}
+	\caption{Shop Owner/Employee Registration \textemdash{} Part 2 (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{mockups/Shop Sign Up (Part 1) (Mobile).png}
+	\caption{Shop Owner/Employee Registration \textemdash{} Part 2 (Mobile)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Shop Owner Signup (Part 2) (Desktop).png}
+	\caption{Shop Owner Registration \textemdash{} Part 3 (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{mockups/Shop Owner Signup (Part 2) (Mobile).png}
+	\caption{Shop Owner Registration \textemdash{} Part 3 (Mobile)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Employee Signup (Part 2) (Desktop).png}
+	\caption{Employee Registration \textemdash{} Part 3 (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{mockups/Employee Signup (Part 2) (Mobile).png}
+	\caption{Employee Registration \textemdash{} Part 3 (Mobile)}
+\end{figure}
+
+\subsection{Vehicle Owner Registration}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Vehicle Owner Sign Up (Part 1) (Desktop).png}
+	\caption{Vehicle Owner Registration \textemdash{} Part 1 (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{mockups/Vehicle Owner Sign Up (Part 1) (Mobile).png}
+	\caption{Vehicle Owner Registration \textemdash{} Part 1 (Mobile)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Vehicle Owner Sign Up (Part 2) (Desktop).png}
+	\caption{Vehicle Owner Registration \textemdash{} Part 2 (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{mockups/Vehicle Owner Sign Up (Part 2) (Mobile).png}
+	\caption{Vehicle Owner Registration \textemdash{} Part 2 (Mobile)}
+\end{figure}
+
+\subsection{Vehicle Owner/Shop Owner/Employee Login}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Vehicle-Shop Owner Login Popup (Desktop).png}
+	\caption{Vehicle Owner/Shop Owner/Employee Login (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{mockups/Vehicle-Shop Owner Login Popup (Mobile).png}
+	\caption{Vehicle Owner/Shop Owner/Employee Login (Mobile)}
+\end{figure}
+
+\subsection{Vehicle Owner Dashboard}
+\subsubsection{Service Requests}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Vehicle Owner Dashboard (Service Requests) (Desktop).png}
+	\caption{Vehicle Owner Dashboard \textemdash{} Service Requests (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{mockups/Vehicle Owner Dashboard (Service Requests) (Mobile).png}
+	\caption{Vehicle Owner Dashboard \textemdash{} Service Requests (Mobile)}
+\end{figure}
+
+\subsubsection{Quotes}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Vehicle Owner Dashboard (Quotes) (Desktop).png}
+	\caption{Vehicle Owner Dashboard \textemdash{} Quotes (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Vehicle Owner Dashboard (Quotes) (Mobile).png}
+	\caption{Vehicle Owner Dashboard \textemdash{} Quotes (Mobile)}
+\end{figure}
+
+\subsection{Vehicle Owner Create Appointment}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Vehicle Owner - Create Appointment Popup (Desktop).png}
+	\caption{Vehicle Owner Create Appointment (Desktop)}
+\end{figure}
+
+\subsection{Shop Owner/Employee Dashboard}
+\subsubsection{Quotes Requests}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Shop Owner Dashboard (Quotes Requests) (Desktop).png}
+	\caption{Shop Owner/Employee Dashboard \textemdash{} Quotes Requests (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Shop Owner Dashboard (Quotes Requests - Invitation) (Desktop).png}
+	\caption{Shop Owner/Employee Dashboard \textemdash{} Quotes Requests \textemdash{} Invitation (Desktop)}
+\end{figure}
+
+\subsubsection{Service Requests \textemdash{} Requested}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Shop Owner Dashboard (Service Requests - Requested) (Desktop).png}
+	\caption{Shop Owner/Employee Dashboard \textemdash{} Service \textemdash{} Requested (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{mockups/Shop Owner Dashboard (Service Requests - Requested) (Mobile).png}
+	\caption{Shop Owner/Employee Dashboard \textemdash{} Service \textemdash{} Requested (Mobile)}
+\end{figure}
+
+\subsubsection{Service Requests \textemdash{} Scheduled}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Shop Owner Dashboard (Service Requests - Scheduled) (Desktop).png}
+	\caption{Shop Owner/Employee Dashboard \textemdash{} Service \textemdash{} Scheduled (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{mockups/Shop Owner Dashboard (Service Requests - Scheduled) (Mobile).png}
+	\caption{Shop Owner/Employee Dashboard \textemdash{} Service \textemdash{} Scheduled (Mobile)}
+\end{figure}
+
+\subsubsection{Service Requests \textemdash{} In Progress}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Shop Owner Dashboard (Service Requests - In Progress) (Desktop).png}
+	\caption{Shop Owner/Employee Dashboard \textemdash{} Service \textemdash{} In Progress (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{mockups/Shop Owner Dashboard (Service Requests - In Progress) (Mobile).png}
+	\caption{Shop Owner/Employee Dashboard \textemdash{} Service \textemdash{} In Progress (Mobile)}
+\end{figure}
+
+\subsubsection{Service Requests \textemdash{} Work Orders}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Shop Owner-Employee Work Order (Desktop).png}
+	\caption{Shop Owner/Employee Dashboard \textemdash{} Service Requests \textemdash{} Work Orders (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Shop Owner-Employee Work Order (Mobile).png}
+	\caption{Shop Owner/Employee Dashboard \textemdash{} Service Requests \textemdash{} Work Orders (Mobile)}
+\end{figure}
+
+\subsubsection{Service Requests \textemdash{} Completed}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{mockups/Shop Owner Dashboard (Service Requests - Completed) (Desktop).png}
+	\caption{Shop Owner/Employee Dashboard \textemdash{} Service \textemdash{} Completed (Desktop)}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{mockups/Shop Owner Dashboard (Service Requests - Completed) (Mobile).png}
+	\caption{Shop Owner/Employee Dashboard \textemdash{} Service \textemdash{} Completed (Mobile)}
+\end{figure}
 
 \section{Design of Hardware}
 N/A
@@ -191,8 +538,71 @@ N/A
 
 \section{Timeline}
 
-\wss{Schedule of tasks and who is responsible}
+\subsection{Module Development}
 
+The development of the modules shall take place over the months of December 2022 and January 2023.
+Specific dates, and responsibilities are described in Table \ref{ModuleDevelopmentTimeline}.
+
+\begin{table}[H]
+	\caption{Module Development Timeline} \label{ModuleDevelopmentTimeline}
+	\begin{tabular}{|p{0.32\textwidth}|p{0.4\textwidth}|p{0.23\textwidth}|}
+		\hline
+		\textbf{Module Name}       & \textbf{Development Timeline}             & \textbf{Developer(s)}    \\
+		\hline
+		Database Driver Module     & Dec. 1, 2022 \textemdash{} Jan. 31, 2023  & \makecell[l]{Arkin Modi, \\Joy Xiao,\\Leon So,\\Timothy Choy} \\
+		\hline
+		Users Module               & Dec. 1, 2022 \textemdash{} Dec. 15, 2022  & \makecell[l]{Arkin Modi, \\Leon So} \\
+		\hline
+		Employee Management Module & Dec. 15, 2022 \textemdash{} Dec. 22, 2022 & \makecell[l]{Joy Xiao,   \\Leon So} \\
+		\hline
+		Shop Module                & Dec. 15, 2022 \textemdash{} Dec. 22, 2022 & \makecell[l]{Leon So,    \\Timothy Choy} \\
+		\hline
+		Quotes Module              & Jan. 1, 2023 \textemdash{} Jan. 8, 2023   & \makecell[l]{Arkin Modi, \\Timothy Choy} \\
+		\hline
+		Services Module            & Jan. 1, 2023 \textemdash{} Jan. 8, 2023   & \makecell[l]{Arkin Modi, \\Joy Xiao} \\
+		\hline
+		Appointments Module        & Jan. 15, 2023 \textemdash{} Jan. 22, 2023 & \makecell[l]{Arkin Modi, \\Joy Xiao,\\Timothy Choy} \\
+		\hline
+		Work Orders Module         & Jan. 15, 2023 \textemdash{} Jan. 24, 2023 & Arkin Modi               \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Module Testing}
+
+The testing of the modules shall take place over the months of December 2022 and January 2023. The
+tests conducted shall primarily consist of manual testing and have the primary goal of certifying
+confidence for the Revision 0 Demonstration. This testing will not include everything described in
+the System Verification and Validation Plan. Generally, testing will take place for the week after
+development is scheduled to finish. Specific dates, and responsibilities are described in Table
+\ref{ModuleTestingTimeline}.
+
+\begin{table}[H]
+	\caption{Module Testing Timeline} \label{ModuleTestingTimeline}
+	\begin{tabular}{|p{0.32\textwidth}|p{0.4\textwidth}|p{0.23\textwidth}|}
+		\hline
+		\textbf{Module Name}       & \textbf{Testing Timeline}                 & \textbf{Developer(s)}    \\
+		\hline
+		Database Driver Module     & Dec. 1, 2022 \textemdash{} Jan. 31, 2023  & \makecell[l]{Arkin Modi, \\Joy Xiao,\\Leon So,\\Timothy Choy} \\
+		\hline
+		Users Module               & Dec. 15, 2022 \textemdash{} Dec. 22, 2022 & \makecell[l]{Arkin Modi, \\Leon So} \\
+		\hline
+		Employee Management Module & Dec. 22, 2022 \textemdash{} Dec. 29, 2022 & \makecell[l]{Joy Xiao,   \\Leon So} \\
+		\hline
+		Shop Module                & Dec. 22, 2022 \textemdash{} Dec. 29, 2022 & \makecell[l]{Leon So,    \\Timothy Choy} \\
+		\hline
+		Quotes Module              & Jan. 8, 2023 \textemdash{} Jan. 15, 2023  & \makecell[l]{Arkin Modi, \\Timothy Choy} \\
+		\hline
+		Services Module            & Jan. 8, 2023 \textemdash{} Jan. 15, 2023  & \makecell[l]{Arkin Modi, \\Joy Xiao} \\
+		\hline
+		Appointments Module        & Jan. 22, 2023 \textemdash{} Jan. 29, 2023 & \makecell[l]{Arkin Modi, \\Joy Xiao,\\Timothy Choy} \\
+		\hline
+		Work Orders Module         & Jan. 24, 2023 \textemdash{} Jan. 31, 2023 & Arkin Modi               \\
+		\hline
+	\end{tabular}
+\end{table}
+
+% \newpage
 % \bibliographystyle {plainnat}
 % \bibliography{../../../refs/References}
 
@@ -200,10 +610,10 @@ N/A
 
 \section{Appendix}
 
-\subsection{Interface}
+% \subsection{Interface}
 
-\wss{Include additional information related to the appearance of, and
-	interaction with, the user interface}
+% \wss{Include additional information related to the appearance of, and
+% 	interaction with, the user interface}
 
 \subsection{Reflection}
 
@@ -213,9 +623,49 @@ of Problem Analysis and Design. Please answer the following questions:
 \begin{enumerate}
 	\item What are the limitations of your solution? Put another way, given unlimited resources, what could
 	      you do to make the project better? (LO\_ProbSolutions)
+
+	      One of the main limitations on the resources available is the time allotted for this project. This
+	      has limited the number of features which we could support for this project.
+
+	      To improve the project, we would propose adding the following features:
+	      \begin{itemize}
+		      \item Supporting multiple vehicles per customer
+		      \item Ability to specify employee skill sets and assign employees to service appointment bookings
+		            accordingly
+		      \item Adding email notification functionality
+		      \item Adding a profile page for employees and customers
+		      \item Add analytics dashboards for shop employees and owners
+		      \item Ability to delete and remove accounts
+		      \item Ability to sign up for employees to sign up to multiple shops
+		      \item Ability for shops to view and manage existing customers
+		      \item Add a parts entity and inventory management system
+		      \item Add a vehicle inspect checklist
+	      \end{itemize}
+
+	      In addition, there are some financial constraints on resources made available for the project. If
+	      we had unlimited financial resources, we would make the following improvements:
+	      \begin{itemize}
+		      \item Add a long-lived server to support and manage features that can benefit from being stateful
+		      \item Add an email server to support email communication and notifications
+	      \end{itemize}
+
 	\item Give a brief overview of other design solutions you considered. What are the benefits and tradeoffs
 	      of those other designs compared with the chosen design? From all the potential options, why did you
 	      select documented design? (LO\_Explores)
+
+	      Our supervisor provided us with existing mockups for a UI, however, our team took initiative to
+	      completely refactor and redesign the application to be more user-friendly. With this, we simplified
+	      workflows for the user, to make the user experience more efficient and tailored to fulfill the
+	      desired functionality. We also gathered feedback from the project supervisor, and incorporated such
+	      feedback into the designs.
+
+	      For the navigation bar, we considered two alternatives for the positioning of the navigation bar.
+	      We considered a top and bottom navigation bar for mobile devices. We decided on a top navigation
+	      bar, as many of the pages show lots of information and often require scrolling. A top navigation
+	      bar is less intrusive when it comes to interfering with scrolling on mobile devices. A top
+	      navigation is also more visible and noticeable as the user interacts with the application on their
+	      phone.
+
 \end{enumerate}
 
 \end{document}
