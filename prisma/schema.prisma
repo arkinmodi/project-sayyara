@@ -23,6 +23,7 @@ model Employee {
   image        String?
   type         UserType
   shop_id      String
+  status       EmployeeStatus
 
   appointments Appointment[]
   shop         Shop          @relation(fields: [shop_id], references: [id])
@@ -175,4 +176,9 @@ enum AppointmentStatus {
   PENDING_APPROVAL
   ACCEPTED
   REJECTED
+}
+
+enum EmployeeStatus {
+  ACTIVE
+  SUSPENDED
 }
