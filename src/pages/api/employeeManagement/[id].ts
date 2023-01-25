@@ -3,7 +3,7 @@ import {
   getAllEmployees,
   getEmployeeById,
   suspendEmployee,
-} from "@server/employee/employeeManagementService";
+} from "@server/services/employeeManagementService";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const employeeByIdHandler = async (
