@@ -1,20 +1,18 @@
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
-import { ServiceWithPartsType } from "@server/db/client";
 import {
-  deleteService,
-  getServiceById,
-  updateServiceById,
-  updateServiceSchema,
-} from "@server/services/employeeManagementService";
+  getAllEmployees,
+  getEmployeeById,
+  suspendEmployee,
+} from "@server/employee/employeeManagementService";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const serviceByIdHandler = async (
+const employeeByIdHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
   const { id } = req.query;
   if (typeof id !== "string") {
-    res.status(400).json({ message: "Invalid Service ID." });
+    res.status(400).json({ message: "Invalid employee ID." });
     return;
   }
 
@@ -24,29 +22,21 @@ const serviceByIdHandler = async (
     return;
   }
 
-  let service: ServiceWithPartsType | null;
-
   switch (req.method) {
     case "GET":
-      service = await getServiceById(id);
-      if (service) {
-        res.status(200).json(service);
+      let employees = await getAllEmployees(id);
+      if (employees) {
+        res.status(200).json(employees);
       } else {
-        res.status(404).json({ message: "Service not found." });
+        res.status(404).json({ message: "employees for shop not found." });
       }
       break;
 
     case "PATCH":
-      const patch = updateServiceSchema.safeParse(req.body);
-      if (!patch.success) {
-        res.status(400).json({ message: patch.error.issues });
-        return;
-      }
+      let employee = await getEmployeeById(id);
 
-      service = await getServiceById(id);
-
-      if (!service) {
-        res.status(404).json({ message: "Service not found." });
+      if (!employee) {
+        res.status(404).json({ message: "employee not found." });
         return;
       }
 
@@ -55,30 +45,13 @@ const serviceByIdHandler = async (
         return;
       }
 
-      service = await updateServiceById(id, patch.data).catch((reason) => {
-        if (reason === "Service not found.") res.status(404);
+      employee = await suspendEmployee(id).catch((reason) => {
+        if (reason === "employee not found.") res.status(404);
         else res.status(500);
         res.json({ message: reason });
         return null;
       });
-      if (service) res.status(200).json(service);
-      break;
-
-    case "DELETE":
-      service = await getServiceById(id);
-
-      if (!service) {
-        res.status(404).json({ message: "Service not found." });
-        return;
-      }
-
-      if (service && session.user.type !== "SHOP_OWNER") {
-        res.status(403).json({ message: "Forbidden." });
-        return;
-      }
-
-      await deleteService(id);
-      res.status(204).end();
+      if (employee) res.status(200).json(employee);
       break;
 
     default:
@@ -86,4 +59,4 @@ const serviceByIdHandler = async (
   }
 };
 
-export default serviceByIdHandler;
+export default employeeByIdHandler;
