@@ -22,6 +22,7 @@ const testEmployeeUser: Employee = {
   update_time: new Date(),
   type: "SHOP_OWNER",
   shop_id: "shop_id",
+  status: "ACTIVE",
 };
 
 //

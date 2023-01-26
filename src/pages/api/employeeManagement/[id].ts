@@ -22,7 +22,7 @@ const employeeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "GET":
       let employees = await getAllEmployees(id);
-      if (employees) {
+      if (employees.length !== 0) {
         res.status(200).json(employees);
       } else {
         res.status(404).json({ message: "employees for shop not found." });
