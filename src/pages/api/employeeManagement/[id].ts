@@ -6,10 +6,7 @@ import {
 } from "@server/services/employeeManagementService";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const employeeByIdHandler = async (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => {
+const employeeHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   if (typeof id !== "string") {
     res.status(400).json({ message: "Invalid employee ID." });
@@ -59,4 +56,4 @@ const employeeByIdHandler = async (
   }
 };
 
-export default employeeByIdHandler;
+export default employeeHandler;
