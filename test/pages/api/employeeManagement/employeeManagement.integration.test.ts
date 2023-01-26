@@ -29,9 +29,9 @@ jest.mock("@server/common/getServerAuthSession", () => ({
   getServerAuthSession: jest.fn<Session, []>(() => ({
     expires: "1",
     user: {
-      ...testEmployeeUser,
-      firstName: testEmployeeUser.first_name,
-      lastName: testEmployeeUser.last_name,
+      ...testEmployee,
+      firstName: testEmployee.first_name,
+      lastName: testEmployee.last_name,
     },
   })),
 }));
