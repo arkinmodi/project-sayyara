@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppointmentStatus, IAppointment } from "../../../types/appointment";
 import AppointmentCard from "./appointmentCard";
 
+//TODO: Need to add search functionality
 const Completed = () => {
   const dispatch = useDispatch();
 

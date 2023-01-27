@@ -32,6 +32,7 @@ const InProgress = () => {
         );
       });
 
+    console.log(inProgressAppointments);
     //put the appointments in a map of lists depending on the date
     var inProgressAppointmentsMap: { [key: string]: IAppointment[] } = {};
 

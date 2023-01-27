@@ -15,26 +15,11 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
 
   const { appointment, appointmentProgress } = props;
 
-  const handleAcceptButtonClick = (appointment: IAppointment): void => {
-    const payload = { id: appointment.id, status: AppointmentStatus.ACCEPTED };
-    dispatch({ type: AppointmentTypes.SET_APPOINTMENT_STATUS, payload });
-  };
-
-  const handleRejectButtonClick = (appointment: IAppointment): void => {
-    const payload = { id: appointment.id, status: AppointmentStatus.REJECTED };
-    dispatch({ type: AppointmentTypes.SET_APPOINTMENT_STATUS, payload });
-  };
-
-  const handleInProgressButtonClick = (appointment: IAppointment): void => {
-    const payload = {
-      id: appointment.id,
-      status: AppointmentStatus.IN_PROGRESS,
-    };
-    dispatch({ type: AppointmentTypes.SET_APPOINTMENT_STATUS, payload });
-  };
-
-  const handleCompletedButtonClick = (appointment: IAppointment): void => {
-    const payload = { id: appointment.id, status: AppointmentStatus.COMPLETED };
+  const handleButtonClick = (
+    appointment: IAppointment,
+    status: AppointmentStatus
+  ): void => {
+    const payload = { id: appointment.id, status: status };
     dispatch({ type: AppointmentTypes.SET_APPOINTMENT_STATUS, payload });
   };
 
@@ -47,12 +32,16 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
           <Button
             label="Reject"
             className={styles.appointmentButtonBlue}
-            onClick={() => handleRejectButtonClick(appointment)}
+            onClick={() =>
+              handleButtonClick(appointment, AppointmentStatus.REJECTED)
+            }
           />
           <Button
             label="Accept"
             className={styles.appointmentButtonGreen}
-            onClick={() => handleAcceptButtonClick(appointment)}
+            onClick={() =>
+              handleButtonClick(appointment, AppointmentStatus.ACCEPTED)
+            }
           />
         </div>
         <div>Estimated Price:</div>
@@ -69,12 +58,16 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
           <Button
             label="Cancel"
             className={styles.appointmentButtonRed}
-            onClick={() => handleRejectButtonClick(appointment)}
+            onClick={() =>
+              handleButtonClick(appointment, AppointmentStatus.REJECTED)
+            }
           />
           <Button
             label="In Progress"
             className={styles.appointmentButtonGreen}
-            onClick={() => handleInProgressButtonClick(appointment)}
+            onClick={() =>
+              handleButtonClick(appointment, AppointmentStatus.IN_PROGRESS)
+            }
           />
         </div>
         <div>Estimated Price:</div>
@@ -88,7 +81,9 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
         <Button
           label="Complete"
           className={styles.appointmentButtonGreen}
-          onClick={() => handleCompletedButtonClick(appointment)}
+          onClick={() =>
+            handleButtonClick(appointment, AppointmentStatus.COMPLETED)
+          }
         />
       </div>
     );
