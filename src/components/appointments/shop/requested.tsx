@@ -3,11 +3,7 @@ import AppointmentTypes from "@redux/types/appointmentTypes";
 import styles from "@styles/pages/appointments/Requests.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  AppointmentProgress,
-  AppointmentStatus,
-  IAppointment,
-} from "../../../types/appointment";
+import { AppointmentStatus, IAppointment } from "../../../types/appointment";
 import AppointmentCard from "./appointmentCard";
 
 const Requested = () => {
@@ -56,7 +52,7 @@ const Requested = () => {
         content.push(
           <AppointmentCard
             appointment={appointment}
-            appointmentProgress={AppointmentProgress.REQUESTED}
+            appointmentProgress={AppointmentStatus.PENDING_APPROVAL}
           />
         );
       });

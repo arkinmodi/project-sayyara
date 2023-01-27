@@ -3,11 +3,7 @@ import AppointmentTypes from "@redux/types/appointmentTypes";
 import styles from "@styles/pages/appointments/Requests.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  AppointmentProgress,
-  AppointmentStatus,
-  IAppointment,
-} from "../../../types/appointment";
+import { AppointmentStatus, IAppointment } from "../../../types/appointment";
 import AppointmentCard from "./appointmentCard";
 
 const Scheduled = () => {
@@ -24,7 +20,7 @@ const Scheduled = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const pendingAppointments = appointments
+    const scheduledAppointments = appointments
       .filter(
         (appointment: IAppointment) =>
           appointment.status == AppointmentStatus.ACCEPTED
@@ -39,7 +35,7 @@ const Scheduled = () => {
     //put the appointments in a map of lists depending on the date
     var scheduledAppointmentMap: { [key: string]: IAppointment[] } = {};
 
-    for (var appointment of pendingAppointments) {
+    for (var appointment of scheduledAppointments) {
       var date = new Date(appointment.startTime).toDateString();
       if (!(date in scheduledAppointmentMap)) {
         scheduledAppointmentMap[date] = [];
@@ -56,7 +52,7 @@ const Scheduled = () => {
         content.push(
           <AppointmentCard
             appointment={appointment}
-            appointmentProgress={AppointmentProgress.SCHEDULED}
+            appointmentProgress={AppointmentStatus.ACCEPTED}
           />
         );
       });

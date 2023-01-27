@@ -3,11 +3,7 @@ import AppointmentTypes from "@redux/types/appointmentTypes";
 import styles from "@styles/pages/appointments/Requests.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  AppointmentProgress,
-  AppointmentStatus,
-  IAppointment,
-} from "../../../types/appointment";
+import { AppointmentStatus, IAppointment } from "../../../types/appointment";
 import AppointmentCard from "./appointmentCard";
 
 const InProgress = () => {
@@ -24,10 +20,10 @@ const InProgress = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const pendingAppointments = appointments
+    const inProgressAppointments = appointments
       .filter(
         (appointment: IAppointment) =>
-          appointment.status == AppointmentStatus.ACCEPTED
+          appointment.status == AppointmentStatus.IN_PROGRESS
       )
       .sort((appointment1: IAppointment, appointment2: IAppointment) => {
         return (
@@ -39,7 +35,7 @@ const InProgress = () => {
     //put the appointments in a map of lists depending on the date
     var inProgressAppointmentsMap: { [key: string]: IAppointment[] } = {};
 
-    for (var appointment of pendingAppointments) {
+    for (var appointment of inProgressAppointments) {
       var date = new Date(appointment.startTime).toDateString();
       if (!(date in inProgressAppointmentsMap)) {
         inProgressAppointmentsMap[date] = [];
@@ -56,7 +52,7 @@ const InProgress = () => {
         content.push(
           <AppointmentCard
             appointment={appointment}
-            appointmentProgress={AppointmentProgress.IN_PROGRESS}
+            appointmentProgress={AppointmentStatus.IN_PROGRESS}
           />
         );
       });

@@ -142,4 +142,6 @@ enum AppointmentStatus {
   PENDING_APPROVAL
   ACCEPTED
   REJECTED
+  IN_PROGRESS
+  COMPLETED
 }

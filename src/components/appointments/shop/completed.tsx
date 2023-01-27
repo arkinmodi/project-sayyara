@@ -3,11 +3,7 @@ import AppointmentTypes from "@redux/types/appointmentTypes";
 import styles from "@styles/pages/appointments/Requests.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  AppointmentProgress,
-  AppointmentStatus,
-  IAppointment,
-} from "../../../types/appointment";
+import { AppointmentStatus, IAppointment } from "../../../types/appointment";
 import AppointmentCard from "./appointmentCard";
 
 const Completed = () => {
@@ -27,7 +23,7 @@ const Completed = () => {
     const pendingAppointments = appointments
       .filter(
         (appointment: IAppointment) =>
-          appointment.status == AppointmentStatus.ACCEPTED
+          appointment.status == AppointmentStatus.COMPLETED
       )
       .sort((appointment1: IAppointment, appointment2: IAppointment) => {
         return (
@@ -56,7 +52,7 @@ const Completed = () => {
         content.push(
           <AppointmentCard
             appointment={appointment}
-            appointmentProgress={AppointmentProgress.COMPLETED}
+            appointmentProgress={AppointmentStatus.COMPLETED}
           />
         );
       });

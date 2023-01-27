@@ -3,15 +3,11 @@ import styles from "@styles/pages/appointments/Requests.module.css";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { useDispatch } from "react-redux";
-import {
-  AppointmentProgress,
-  AppointmentStatus,
-  IAppointment,
-} from "../../../types/appointment";
+import { AppointmentStatus, IAppointment } from "../../../types/appointment";
 
 interface IAppointmentCardProps {
   appointment: IAppointment;
-  appointmentProgress: AppointmentProgress;
+  appointmentProgress: AppointmentStatus;
 }
 
 const AppointmentCard = (props: IAppointmentCardProps) => {
@@ -26,6 +22,19 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
 
   const handleRejectButtonClick = (appointment: IAppointment): void => {
     const payload = { id: appointment.id, status: AppointmentStatus.REJECTED };
+    dispatch({ type: AppointmentTypes.SET_APPOINTMENT_STATUS, payload });
+  };
+
+  const handleInProgressButtonClick = (appointment: IAppointment): void => {
+    const payload = {
+      id: appointment.id,
+      status: AppointmentStatus.IN_PROGRESS,
+    };
+    dispatch({ type: AppointmentTypes.SET_APPOINTMENT_STATUS, payload });
+  };
+
+  const handleCompletedButtonClick = (appointment: IAppointment): void => {
+    const payload = { id: appointment.id, status: AppointmentStatus.COMPLETED };
     dispatch({ type: AppointmentTypes.SET_APPOINTMENT_STATUS, payload });
   };
 
@@ -62,18 +71,37 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
             className={styles.appointmentButtonRed}
             onClick={() => handleRejectButtonClick(appointment)}
           />
+          <Button
+            label="In Progress"
+            className={styles.appointmentButtonGreen}
+            onClick={() => handleInProgressButtonClick(appointment)}
+          />
         </div>
         <div>Estimated Price:</div>
       </div>
     );
   };
 
-  const renderCardLeft = (appointmentProgress: AppointmentProgress) => {
+  const renderInProgressCardLeft = () => {
+    return (
+      <div className={styles.textAlignRight}>
+        <Button
+          label="Complete"
+          className={styles.appointmentButtonGreen}
+          onClick={() => handleCompletedButtonClick(appointment)}
+        />
+      </div>
+    );
+  };
+
+  const renderCardLeft = (appointmentProgress: AppointmentStatus) => {
     switch (appointmentProgress) {
-      case AppointmentProgress.REQUESTED:
+      case AppointmentStatus.PENDING_APPROVAL:
         return renderRequestedCardLeft();
-      case AppointmentProgress.SCHEDULED:
+      case AppointmentStatus.ACCEPTED:
         return renderScheduledCardLeft();
+      case AppointmentStatus.IN_PROGRESS:
+        return renderInProgressCardLeft();
       default:
     }
   };
