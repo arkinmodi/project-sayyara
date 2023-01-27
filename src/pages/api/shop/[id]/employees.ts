@@ -1,10 +1,12 @@
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
-import { getEmployeeById } from "@server/services/employeeManagementService";
-import { getQuotesByShopId } from "@server/services/quoteService";
+import {
+  getEmployeeById,
+  getEmployeesByShopId,
+} from "@server/services/employeeManagementService";
 import { NextApiRequest, NextApiResponse } from "next";
 import type { Session } from "next-auth";
 
-const quoteByShopIdHandler = async (
+const employeeByShopIdHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
@@ -25,10 +27,10 @@ const quoteByShopIdHandler = async (
     return;
   }
 
-  let quotes = await getQuotesByShopId(id);
-  if (quotes.length > 0 && quotes[0]) {
-    if (await isAuthorized(session, quotes[0].customer_id, quotes[0].shop_id)) {
-      res.status(200).json(quotes);
+  const employees = await getEmployeesByShopId(id);
+  if (employees.length > 0 && employees[0]) {
+    if (await isAuthorized(session, id)) {
+      res.status(200).json(employees);
     } else {
       res.status(403).json({ message: "Forbidden." });
     }
@@ -37,12 +39,8 @@ const quoteByShopIdHandler = async (
   }
 };
 
-const isAuthorized = async (
-  session: Session,
-  customerId: string,
-  shopId: string
-) => {
-  if (session.user.type === "CUSTOMER") return session.user.id === customerId;
+const isAuthorized = async (session: Session, shopId: string) => {
+  if (session.user.type === "CUSTOMER") return false;
 
   const user = await getEmployeeById(session.user.id);
   if (!user) return false;
@@ -50,4 +48,4 @@ const isAuthorized = async (
   return user.shop_id === shopId;
 };
 
-export default quoteByShopIdHandler;
+export default employeeByShopIdHandler;

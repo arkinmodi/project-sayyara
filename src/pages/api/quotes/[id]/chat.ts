@@ -4,6 +4,8 @@ import {
   createChatMessageSchema,
   getChatMessagesByQuoteId,
 } from "@server/services/chatService";
+import { getEmployeeById } from "@server/services/employeeManagementService";
+import { getQuoteById } from "@server/services/quoteService";
 import { NextApiRequest, NextApiResponse } from "next";
 import type { Session } from "next-auth";
 
@@ -58,21 +60,17 @@ const chatHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-// TODO: enable this when shop profiles can be fetched
 const isAuthorized = async (session: Session, quoteId: string) => {
-  return true;
+  const quote = await getQuoteById(quoteId);
+  if (!quote) return false;
 
-  // const quote = await getQuoteById(quoteId);
-  // if (!quote) return false;
-
-  // if (session.user.type === "CUSTOMER") {
-  //   return session.user.id === quote.customer_id;
-  // } else {
-  //   const shop = await getShopByEmployeeId(session.user.id);
-  //   OR
-  //   const shop = await getShopByEmployeeEmail(session.user.email);
-  //   return shop.id === quote.shop_id;
-  // }
+  if (session.user.type === "CUSTOMER") {
+    return session.user.id === quote.customer_id;
+  } else {
+    const user = await getEmployeeById(session.user.id);
+    if (!user) return false;
+    return user.shop_id === quote.shop_id;
+  }
 };
 
 export default chatHandler;

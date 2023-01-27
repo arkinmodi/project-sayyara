@@ -1,5 +1,6 @@
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import { Quote } from "@server/db/client";
+import { getEmployeeById } from "@server/services/employeeManagementService";
 import {
   deleteQuoteAndChatById,
   getQuoteById,
@@ -58,21 +59,17 @@ const quoteByIdHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-// TODO: enable this when shop profiles can be fetched
 const isAuthorized = async (
   session: Session,
   customerId: string,
   shopId: string
 ) => {
-  return true;
+  if (session.user.type === "CUSTOMER") return session.user.id === customerId;
 
-  // if (session.user.type === "CUSTOMER") return session.user.id === customerId;
+  const user = await getEmployeeById(session.user.id);
+  if (!user) return false;
 
-  // const shop = await getShopByEmployeeId(session.user.id);
-  // OR
-  // const shop = await getShopByEmployeeEmail(session.user.email);
-
-  // return shop.id === shopId;
+  return user.shop_id === shopId;
 };
 
 export default quoteByIdHandler;

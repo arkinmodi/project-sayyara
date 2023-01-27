@@ -1,4 +1,5 @@
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
+import { getEmployeeById } from "@server/services/employeeManagementService";
 import { getQuotesByCustomerId } from "@server/services/quoteService";
 import { NextApiRequest, NextApiResponse } from "next";
 import type { Session } from "next-auth";
@@ -36,21 +37,17 @@ const quoteByCustomerIdHandler = async (
   }
 };
 
-// TODO: enable this when shop profiles can be fetched
 const isAuthorized = async (
   session: Session,
   customerId: string,
   shopId: string
 ) => {
-  return true;
+  if (session.user.type === "CUSTOMER") return session.user.id === customerId;
 
-  // if (session.user.type === "CUSTOMER") return session.user.id === customerId;
+  const user = await getEmployeeById(session.user.id);
+  if (!user) return false;
 
-  // const shop = await getShopByEmployeeId(session.user.id);
-  // OR
-  // const shop = await getShopByEmployeeEmail(session.user.email);
-
-  // return shop.id === shopId;
+  return user.shop_id === shopId;
 };
 
 export default quoteByCustomerIdHandler;
