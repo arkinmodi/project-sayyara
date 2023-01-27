@@ -9,7 +9,7 @@
   text-align: right;
 }
 
-.appointmentRequestsAcceptButton {
+.appointmentButtonGreen {
   width: 150px;
   height: 40px;
   margin: 6px;
@@ -17,19 +17,19 @@
   border-color: #69ad96;
 }
 
-.appointmentRequestsAcceptButton:hover {
+.appointmentButtonGreen:hover {
   background: #69ad96 !important;
   border-color: transparent !important;
   opacity: 0.7;
 }
 
-.appointmentRequestsAcceptButton:active {
+.appointmentButtonGreen:active {
   background: #69ad96 !important;
   border-color: transparent !important;
   opacity: 0.7;
 }
 
-.appointmentRequestsRejectButton {
+.appointmentButtonBlue {
   width: 150px;
   height: 40px;
   margin: 6px;
@@ -39,14 +39,36 @@
   border-width: 3px;
 }
 
-.appointmentRequestsRejectButton:hover {
+.appointmentButtonBlue:hover {
   background: #436188 !important;
   border-color: transparent !important;
   opacity: 0.7;
 }
 
-.appointmentRequestsRejectButton:active {
+.appointmentButtonBlue:active {
   background: #436188 !important;
+  border-color: transparent !important;
+  opacity: 0.7;
+}
+
+.appointmentButtonRed {
+  width: 150px;
+  height: 40px;
+  margin: 6px;
+  background-color: white;
+  color: #ca3433;
+  border-color: #ca3433;
+  border-width: 3px;
+}
+
+.appointmentButtonRed:hover {
+  background: #ca3433 !important;
+  border-color: transparent !important;
+  opacity: 0.7;
+}
+
+.appointmentButtonRed:active {
+  background: #ca3433 !important;
   border-color: transparent !important;
   opacity: 0.7;
 }

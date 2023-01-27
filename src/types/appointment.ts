@@ -18,3 +18,10 @@ export enum AppointmentStatus {
   ACCEPTED = "ACCEPTED",
   REJECTED = "REJECTED",
 }
+
+export enum AppointmentProgress {
+  REQUESTED = "REQUESTED",
+  SCHEDULED = "SCHEDULED",
+  IN_PROGRESS = "IN PROGRESS",
+  COMPLETED = "COMPLETED",
+}

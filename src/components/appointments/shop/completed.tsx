@@ -10,12 +10,12 @@ import {
 } from "../../../types/appointment";
 import AppointmentCard from "./appointmentCard";
 
-const Requested = () => {
+const Completed = () => {
   const dispatch = useDispatch();
 
   const appointments = useSelector(AppointmentSelectors.getAppointments);
 
-  const [pendingAppointmentsMap, setPendingAppointmentsMap] = useState<{
+  const [completedAppointmentsMap, setCompletedAppointmentsMap] = useState<{
     [key: string]: Array<IAppointment>;
   }>({});
 
@@ -27,7 +27,7 @@ const Requested = () => {
     const pendingAppointments = appointments
       .filter(
         (appointment: IAppointment) =>
-          appointment.status == AppointmentStatus.PENDING_APPROVAL
+          appointment.status == AppointmentStatus.ACCEPTED
       )
       .sort((appointment1: IAppointment, appointment2: IAppointment) => {
         return (
@@ -37,26 +37,26 @@ const Requested = () => {
       });
 
     //put the appointments in a map of lists depending on the date
-    var pendingAppointmentsMap: { [key: string]: IAppointment[] } = {};
+    var completedAppointmentsMap: { [key: string]: IAppointment[] } = {};
 
     for (var appointment of pendingAppointments) {
       var date = new Date(appointment.startTime).toDateString();
-      if (!(date in pendingAppointmentsMap)) {
-        pendingAppointmentsMap[date] = [];
+      if (!(date in completedAppointmentsMap)) {
+        completedAppointmentsMap[date] = [];
       }
-      pendingAppointmentsMap[date]!.push(appointment);
+      completedAppointmentsMap[date]!.push(appointment);
     }
-    setPendingAppointmentsMap(pendingAppointmentsMap);
-  }, [appointments, setPendingAppointmentsMap]);
+    setCompletedAppointmentsMap(completedAppointmentsMap);
+  }, [appointments, setCompletedAppointmentsMap]);
 
   function listAppointmentCards(date: string) {
     let content: any = [];
     {
-      pendingAppointmentsMap[date]!.forEach((appointment) => {
+      completedAppointmentsMap[date]!.forEach((appointment) => {
         content.push(
           <AppointmentCard
             appointment={appointment}
-            appointmentProgress={AppointmentProgress.REQUESTED}
+            appointmentProgress={AppointmentProgress.COMPLETED}
           />
         );
       });
@@ -67,7 +67,7 @@ const Requested = () => {
 
   function listAllAppointments() {
     let content: any = [];
-    Object.keys(pendingAppointmentsMap).forEach((date) => {
+    Object.keys(completedAppointmentsMap).forEach((date) => {
       content.push(
         <div>
           <h4>{date}</h4>
@@ -81,15 +81,15 @@ const Requested = () => {
 
   return (
     <div>
-      {Object.entries(pendingAppointmentsMap).length > 0 ? (
+      {Object.entries(completedAppointmentsMap).length > 0 ? (
         listAllAppointments()
       ) : (
         <div className={styles.appointmentRequestsCardText}>
-          No pending appointments
+          No completed appointments
         </div>
       )}
     </div>
   );
 };
 
-export default Requested;
+export default Completed;

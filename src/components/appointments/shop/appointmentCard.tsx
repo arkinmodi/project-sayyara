@@ -2,19 +2,22 @@ import AppointmentTypes from "@redux/types/appointmentTypes";
 import styles from "@styles/pages/appointments/Requests.module.css";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { AppointmentStatus, IAppointment } from "../../../types/appointment";
+import {
+  AppointmentProgress,
+  AppointmentStatus,
+  IAppointment,
+} from "../../../types/appointment";
 
 interface IAppointmentCardProps {
   appointment: IAppointment;
+  appointmentProgress: AppointmentProgress;
 }
 
 const AppointmentCard = (props: IAppointmentCardProps) => {
-  const [pendingAppointments, setPendingAppointments] = useState<
-    IAppointment[]
-  >([]);
   const dispatch = useDispatch();
+
+  const { appointment, appointmentProgress } = props;
 
   const handleAcceptButtonClick = (appointment: IAppointment): void => {
     const payload = { id: appointment.id, status: AppointmentStatus.ACCEPTED };
@@ -26,48 +29,79 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     dispatch({ type: AppointmentTypes.SET_APPOINTMENT_STATUS, payload });
   };
 
+  const renderRequestedCardLeft = () => {
+    return (
+      <div className={styles.textAlignRight}>
+        {/* TODO: Link to quote and pass in quote id */}
+        <div className={styles.grayText}>View Quote </div>
+        <div className={styles.flex}>
+          <Button
+            label="Reject"
+            className={styles.appointmentButtonBlue}
+            onClick={() => handleRejectButtonClick(appointment)}
+          />
+          <Button
+            label="Accept"
+            className={styles.appointmentButtonGreen}
+            onClick={() => handleAcceptButtonClick(appointment)}
+          />
+        </div>
+        <div>Estimated Price:</div>
+      </div>
+    );
+  };
+
+  const renderScheduledCardLeft = () => {
+    return (
+      <div className={styles.textAlignRight}>
+        {/* TODO: Link to quote and pass in quote id */}
+        <div className={styles.grayText}>View Quote </div>
+        <div className={styles.flex}>
+          <Button
+            label="Cancel"
+            className={styles.appointmentButtonRed}
+            onClick={() => handleRejectButtonClick(appointment)}
+          />
+        </div>
+        <div>Estimated Price:</div>
+      </div>
+    );
+  };
+
+  const renderCardLeft = (appointmentProgress: AppointmentProgress) => {
+    switch (appointmentProgress) {
+      case AppointmentProgress.REQUESTED:
+        return renderRequestedCardLeft();
+      case AppointmentProgress.SCHEDULED:
+        return renderScheduledCardLeft();
+      default:
+    }
+  };
+
   return (
     <Card
-      key={props.appointment.id.toString()}
+      key={appointment.id.toString()}
       className={styles.appointmentRequestsCard}
     >
       <div className={styles.cardContents}>
         <div>
-          <h3>{props.appointment.serviceType}</h3>
+          <h3>{appointment.serviceType}</h3>
           <div>Customer Name:</div>
           <div>
             Start time:{" "}
-            {String(new Date(props.appointment.startTime).toLocaleString())}
+            {String(new Date(appointment.startTime).toLocaleString())}
           </div>
           <div>
-            End time:{" "}
-            {String(new Date(props.appointment.endTime).toLocaleString())}
+            End time: {String(new Date(appointment.endTime).toLocaleString())}
           </div>
-          {/* <div>Vehicle Make: {props.appointment.vehicleMake}</div>
-          <div>Vehicle Model: {props.appointment.vehicleModel}</div>
+          {/* <div>Vehicle Make: {appointment.vehicleMake}</div>
+          <div>Vehicle Model: {appointment.vehicleModel}</div>
           <div>
             Manufacture Year:{" "}
-            {props.appointment.vehicleManufactureYear.toString()}
+            {appointment.vehicleManufactureYear.toString()}
           </div> */}
         </div>
-
-        <div className={styles.textAlignRight}>
-          {/* TODO: Link to quote and pass in quote id */}
-          <div className={styles.grayText}>View Quote </div>
-          <div className={styles.flex}>
-            <Button
-              label="Reject"
-              className={styles.appointmentRequestsRejectButton}
-              onClick={() => handleRejectButtonClick(props.appointment)}
-            />
-            <Button
-              label="Accept"
-              className={styles.appointmentRequestsAcceptButton}
-              onClick={() => handleAcceptButtonClick(props.appointment)}
-            />
-          </div>
-          <div>Estimated Price:</div>
-        </div>
+        <div>{renderCardLeft(appointmentProgress)}</div>
       </div>
     </Card>
   );

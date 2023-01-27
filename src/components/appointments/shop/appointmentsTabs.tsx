@@ -1,5 +1,8 @@
 import { TabPanel, TabView } from "primereact/tabview";
+import Completed from "./completed";
+import InProgress from "./inProgress";
 import Requested from "./requested";
+import Scheduled from "./scheduled";
 
 const AppointmentsTab = () => {
   return (
@@ -9,13 +12,13 @@ const AppointmentsTab = () => {
           <Requested />
         </TabPanel>
         <TabPanel header="Scheduled">
-          {/* TODO: Link Scheduled tab here */}
+          <Scheduled />
         </TabPanel>
         <TabPanel header="In Progress">
-          {/* TODO: Link In Progress tab here */}
+          <InProgress />
         </TabPanel>
         <TabPanel header="Completed">
-          {/* TODO: Link Completed tab here */}
+          <Completed />
         </TabPanel>
       </TabView>
     </div>
