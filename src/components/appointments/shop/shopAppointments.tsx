@@ -17,7 +17,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
 
   const { appointmentTab } = props;
 
-  const [pendingAppointmentsMap, setPendingAppointmentsMap] = useState<{
+  const [appointmentsMap, setAppointmentsMap] = useState<{
     [key: string]: Array<IAppointment>;
   }>({});
 
@@ -26,7 +26,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
   }, [dispatch]);
 
   useEffect(() => {
-    const pendingAppointments = appointments
+    const appointmentsList = appointments
       .filter(
         (appointment: IAppointment) => appointment.status == appointmentTab
       )
@@ -38,22 +38,22 @@ const ShopAppointments = (props: IAppointmentsProps) => {
       });
 
     //put the appointments in a map of lists depending on the date
-    var pendingAppointmentsMap: { [key: string]: IAppointment[] } = {};
+    var appointmentsMap: { [key: string]: IAppointment[] } = {};
 
-    for (var appointment of pendingAppointments) {
+    for (var appointment of appointmentsList) {
       var date = new Date(appointment.startTime).toDateString();
-      if (!(date in pendingAppointmentsMap)) {
-        pendingAppointmentsMap[date] = [];
+      if (!(date in appointmentsMap)) {
+        appointmentsMap[date] = [];
       }
-      pendingAppointmentsMap[date]!.push(appointment);
+      appointmentsMap[date]!.push(appointment);
     }
-    setPendingAppointmentsMap(pendingAppointmentsMap);
-  }, [appointments, setPendingAppointmentsMap]);
+    setAppointmentsMap(appointmentsMap);
+  }, [appointments, setAppointmentsMap]);
 
   function listAppointmentCards(date: string) {
     let content: any = [];
     {
-      pendingAppointmentsMap[date]!.forEach((appointment) => {
+      appointmentsMap[date]!.forEach((appointment) => {
         content.push(
           <AppointmentCard
             appointment={appointment}
@@ -68,7 +68,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
 
   function listAllAppointments() {
     let content: any = [];
-    Object.keys(pendingAppointmentsMap).forEach((date) => {
+    Object.keys(appointmentsMap).forEach((date) => {
       content.push(
         <div>
           <h4>{date}</h4>
@@ -82,7 +82,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
 
   return (
     <div>
-      {Object.entries(pendingAppointmentsMap).length > 0 ? (
+      {Object.entries(appointmentsMap).length > 0 ? (
         listAllAppointments()
       ) : (
         <div className={styles.appointmentRequestsCardText}>
