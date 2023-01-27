@@ -1,18 +1,30 @@
+.appointmentsTab {
+  width: 80%;
+}
+
+.h3 {
+  margin-top: 0;
+}
+
 .cardContents {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
-.textAlignRight {
+.textAlign {
   text-align: right;
 }
 
-.appointmentButtonGreen {
+.buttonSize {
   width: 150px;
   height: 40px;
   margin: 6px;
+}
+
+.appointmentButtonGreen {
   background-color: #69ad96;
   border-color: #69ad96;
 }
@@ -30,9 +42,6 @@
 }
 
 .appointmentButtonBlue {
-  width: 150px;
-  height: 40px;
-  margin: 6px;
   background-color: white;
   color: #436188;
   border-color: #436188;
@@ -52,9 +61,6 @@
 }
 
 .appointmentButtonRed {
-  width: 150px;
-  height: 40px;
-  margin: 6px;
   background-color: white;
   color: #ca3433;
   border-color: #ca3433;
@@ -73,22 +79,36 @@
   opacity: 0.7;
 }
 
-.flex {
-  display: flex;
-}
-
 .grayText {
   color: gray;
 }
 
-.appointmentRequestsCard {
+.appointmentCard {
   border-style: solid;
   border-color: lightgray;
+  box-shadow: none;
   margin-bottom: 2%;
 }
 
-@media (max-width: 1000px) {
-  .appointmentRequestsCard {
-    width: 80%;
+.mobile {
+  display: none;
+}
+
+@media (max-width: 500px) {
+  .buttonSize {
+    width: 110px;
+  }
+
+  .desktop {
+    display: none;
+  }
+
+  .mobile {
+    display: inline;
+  }
+
+  .textAlign {
+    text-align: left;
+    margin-top: 15px;
   }
 }

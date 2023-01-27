@@ -1,5 +1,6 @@
 import AppointmentTypes from "@redux/types/appointmentTypes";
-import styles from "@styles/pages/appointments/Requests.module.css";
+import styles from "@styles/pages/appointments/ShopAppointments.module.css";
+import classNames from "classnames";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { useDispatch } from "react-redux";
@@ -25,20 +26,26 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
 
   const renderRequestedCardLeft = () => {
     return (
-      <div className={styles.textAlignRight}>
+      <div className={styles.textAlign}>
         {/* TODO: Link to quote and pass in quote id */}
         <div className={styles.grayText}>View Quote </div>
         <div className={styles.flex}>
           <Button
             label="Reject"
-            className={styles.appointmentButtonBlue}
+            className={classNames(
+              styles.appointmentButtonBlue,
+              styles.buttonSize
+            )}
             onClick={() =>
               handleButtonClick(appointment, AppointmentStatus.REJECTED)
             }
           />
           <Button
             label="Accept"
-            className={styles.appointmentButtonGreen}
+            className={classNames(
+              styles.appointmentButtonGreen,
+              styles.buttonSize
+            )}
             onClick={() =>
               handleButtonClick(appointment, AppointmentStatus.ACCEPTED)
             }
@@ -51,20 +58,26 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
 
   const renderScheduledCardLeft = () => {
     return (
-      <div className={styles.textAlignRight}>
+      <div className={styles.textAlign}>
         {/* TODO: Link to quote and pass in quote id */}
         <div className={styles.grayText}>View Quote </div>
         <div className={styles.flex}>
           <Button
             label="Cancel"
-            className={styles.appointmentButtonRed}
+            className={classNames(
+              styles.appointmentButtonRed,
+              styles.buttonSize
+            )}
             onClick={() =>
               handleButtonClick(appointment, AppointmentStatus.REJECTED)
             }
           />
           <Button
             label="In Progress"
-            className={styles.appointmentButtonGreen}
+            className={classNames(
+              styles.appointmentButtonGreen,
+              styles.buttonSize
+            )}
             onClick={() =>
               handleButtonClick(appointment, AppointmentStatus.IN_PROGRESS)
             }
@@ -77,10 +90,13 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
 
   const renderInProgressCardLeft = () => {
     return (
-      <div className={styles.textAlignRight}>
+      <div className={styles.textAlign}>
         <Button
           label="Complete"
-          className={styles.appointmentButtonGreen}
+          className={classNames(
+            styles.appointmentButtonGreen,
+            styles.buttonSize
+          )}
           onClick={() =>
             handleButtonClick(appointment, AppointmentStatus.COMPLETED)
           }
@@ -103,17 +119,13 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
 
   return (
     //TODO: Make card clickable so that it would go to the work order
-    <Card
-      key={appointment.id.toString()}
-      className={styles.appointmentRequestsCard}
-    >
+    <Card key={appointment.id.toString()} className={styles.appointmentCard}>
       <div className={styles.cardContents}>
         <div>
-          <h3>{appointment.serviceType}</h3>
+          <h3 className={styles.h3}>{appointment.serviceType}</h3>
           <div>Customer Name:</div>
           <div>
-            Start time:{" "}
-            {String(new Date(appointment.startTime).toLocaleString())}
+            Start time: {new Date(appointment.startTime).toLocaleString()}
           </div>
           <div>
             End time: {String(new Date(appointment.endTime).toLocaleString())}

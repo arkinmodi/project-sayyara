@@ -1,6 +1,6 @@
 import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
 import AppointmentTypes from "@redux/types/appointmentTypes";
-import styles from "@styles/pages/appointments/Requests.module.css";
+import styles from "@styles/pages/appointments/ShopAppointments.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppointmentStatus, IAppointment } from "../../../types/appointment";
