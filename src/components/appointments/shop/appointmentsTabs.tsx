@@ -1,10 +1,9 @@
-import styles from "@styles/pages/appointments/Requests.module.css";
 import { TabPanel, TabView } from "primereact/tabview";
 import Requested from "./requested";
 
 const AppointmentsTab = () => {
   return (
-    <div className={styles.appointmentRequestsContainer}>
+    <div>
       <TabView>
         <TabPanel header="Requested">
           <Requested />

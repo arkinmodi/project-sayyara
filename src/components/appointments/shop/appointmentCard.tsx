@@ -31,8 +31,8 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
       key={props.appointment.id.toString()}
       className={styles.appointmentRequestsCard}
     >
-      <div>
-        <div className={styles.floatLeft}>
+      <div className={styles.cardContents}>
+        <div>
           <h3>{props.appointment.serviceType}</h3>
           <div>Customer Name:</div>
           <div>
@@ -51,7 +51,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
           </div> */}
         </div>
 
-        <div className={styles.floatRight}>
+        <div className={styles.textAlignRight}>
           {/* TODO: Link to quote and pass in quote id */}
           <div className={styles.grayText}>View Quote </div>
           <div className={styles.flex}>

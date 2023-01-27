@@ -24,7 +24,7 @@ const AppointmentScheduledCard = (props: IAppointmentCardProps) => {
       className={styles.appointmentRequestsCard}
     >
       <div>
-        <div className={styles.floatLeft}>
+        <div>
           <h3>{props.appointment.serviceType}</h3>
           <div>Customer Name:</div>
           <div>
@@ -44,7 +44,7 @@ const AppointmentScheduledCard = (props: IAppointmentCardProps) => {
           </div>
         </div>
 
-        <div className={styles.floatRight}>
+        <div className={styles.textAlignRight}>
           {/* TODO: Link to quote and pass in quote id */}
           <span>View Quote </span>
           <Button

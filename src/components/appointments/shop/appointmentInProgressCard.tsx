@@ -23,7 +23,7 @@ const AppointmentInProgressCard = (props: IAppointmentCardProps) => {
       className={styles.appointmentRequestsCard}
     >
       <div>
-        <div className={styles.floatLeft}>
+        <div>
           <h3>{props.appointment.serviceType}</h3>
           <div>Customer Name:</div>
           <div>
@@ -43,7 +43,7 @@ const AppointmentInProgressCard = (props: IAppointmentCardProps) => {
           </div>
         </div>
 
-        <div className={styles.floatRight}>
+        <div className={styles.textAlignRight}>
           {/* TODO: link to work order */}
           <Button
             label="Work Order"

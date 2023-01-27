@@ -73,7 +73,7 @@ const Requested = () => {
   }
 
   return (
-    <div className={styles.appointmentRequestsContainer}>
+    <div>
       {console.log(pendingAppointmentsMap)}
       {Object.entries(pendingAppointmentsMap).length > 0 ? (
         listAllAppointments()
