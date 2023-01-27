@@ -102,6 +102,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
   };
 
   return (
+    //TODO: Make card clickable so that it would go to the work order
     <Card
       key={appointment.id.toString()}
       className={styles.appointmentRequestsCard}

@@ -1,24 +1,24 @@
 import { TabPanel, TabView } from "primereact/tabview";
-import Completed from "./completed";
-import InProgress from "./inProgress";
-import Requested from "./requested";
-import Scheduled from "./scheduled";
+import { AppointmentStatus } from "../../../types/appointment";
+import ShopAppointments from "./shopAppointments";
 
 const AppointmentsTab = () => {
   return (
     <div>
       <TabView>
         <TabPanel header="Requested">
-          <Requested />
+          <ShopAppointments
+            appointmentTab={AppointmentStatus.PENDING_APPROVAL}
+          />
         </TabPanel>
         <TabPanel header="Scheduled">
-          <Scheduled />
+          <ShopAppointments appointmentTab={AppointmentStatus.ACCEPTED} />{" "}
         </TabPanel>
         <TabPanel header="In Progress">
-          <InProgress />
+          <ShopAppointments appointmentTab={AppointmentStatus.IN_PROGRESS} />{" "}
         </TabPanel>
         <TabPanel header="Completed">
-          <Completed />
+          <ShopAppointments appointmentTab={AppointmentStatus.COMPLETED} />{" "}
         </TabPanel>
       </TabView>
     </div>

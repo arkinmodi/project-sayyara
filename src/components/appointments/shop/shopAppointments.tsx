@@ -6,12 +6,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppointmentStatus, IAppointment } from "../../../types/appointment";
 import AppointmentCard from "./appointmentCard";
 
-const Scheduled = () => {
+interface IAppointmentsProps {
+  appointmentTab: AppointmentStatus;
+}
+
+const ShopAppointments = (props: IAppointmentsProps) => {
   const dispatch = useDispatch();
 
   const appointments = useSelector(AppointmentSelectors.getAppointments);
 
-  const [scheduledAppointmentMap, setScheduledAppointmentMap] = useState<{
+  const { appointmentTab } = props;
+
+  const [pendingAppointmentsMap, setPendingAppointmentsMap] = useState<{
     [key: string]: Array<IAppointment>;
   }>({});
 
@@ -20,10 +26,9 @@ const Scheduled = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const scheduledAppointments = appointments
+    const pendingAppointments = appointments
       .filter(
-        (appointment: IAppointment) =>
-          appointment.status == AppointmentStatus.ACCEPTED
+        (appointment: IAppointment) => appointment.status == appointmentTab
       )
       .sort((appointment1: IAppointment, appointment2: IAppointment) => {
         return (
@@ -33,26 +38,26 @@ const Scheduled = () => {
       });
 
     //put the appointments in a map of lists depending on the date
-    var scheduledAppointmentMap: { [key: string]: IAppointment[] } = {};
+    var pendingAppointmentsMap: { [key: string]: IAppointment[] } = {};
 
-    for (var appointment of scheduledAppointments) {
+    for (var appointment of pendingAppointments) {
       var date = new Date(appointment.startTime).toDateString();
-      if (!(date in scheduledAppointmentMap)) {
-        scheduledAppointmentMap[date] = [];
+      if (!(date in pendingAppointmentsMap)) {
+        pendingAppointmentsMap[date] = [];
       }
-      scheduledAppointmentMap[date]!.push(appointment);
+      pendingAppointmentsMap[date]!.push(appointment);
     }
-    setScheduledAppointmentMap(scheduledAppointmentMap);
-  }, [appointments, setScheduledAppointmentMap]);
+    setPendingAppointmentsMap(pendingAppointmentsMap);
+  }, [appointments, setPendingAppointmentsMap]);
 
   function listAppointmentCards(date: string) {
     let content: any = [];
     {
-      scheduledAppointmentMap[date]!.forEach((appointment) => {
+      pendingAppointmentsMap[date]!.forEach((appointment) => {
         content.push(
           <AppointmentCard
             appointment={appointment}
-            appointmentProgress={AppointmentStatus.ACCEPTED}
+            appointmentProgress={appointmentTab}
           />
         );
       });
@@ -63,7 +68,7 @@ const Scheduled = () => {
 
   function listAllAppointments() {
     let content: any = [];
-    Object.keys(scheduledAppointmentMap).forEach((date) => {
+    Object.keys(pendingAppointmentsMap).forEach((date) => {
       content.push(
         <div>
           <h4>{date}</h4>
@@ -77,15 +82,15 @@ const Scheduled = () => {
 
   return (
     <div>
-      {Object.entries(scheduledAppointmentMap).length > 0 ? (
+      {Object.entries(pendingAppointmentsMap).length > 0 ? (
         listAllAppointments()
       ) : (
         <div className={styles.appointmentRequestsCardText}>
-          No scheduled appointments
+          No appointments
         </div>
       )}
     </div>
   );
 };
 
-export default Scheduled;
+export default ShopAppointments;
