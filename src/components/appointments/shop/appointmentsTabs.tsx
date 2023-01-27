@@ -12,13 +12,13 @@ const AppointmentsTab = () => {
           />
         </TabPanel>
         <TabPanel header="Scheduled">
-          <ShopAppointments appointmentTab={AppointmentStatus.ACCEPTED} />{" "}
+          <ShopAppointments appointmentTab={AppointmentStatus.ACCEPTED} />
         </TabPanel>
         <TabPanel header="In Progress">
-          <ShopAppointments appointmentTab={AppointmentStatus.IN_PROGRESS} />{" "}
+          <ShopAppointments appointmentTab={AppointmentStatus.IN_PROGRESS} />
         </TabPanel>
         <TabPanel header="Completed">
-          <ShopAppointments appointmentTab={AppointmentStatus.COMPLETED} />{" "}
+          <ShopAppointments appointmentTab={AppointmentStatus.COMPLETED} />
         </TabPanel>
       </TabView>
     </div>
