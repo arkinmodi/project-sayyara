@@ -8,20 +8,6 @@
   color: black;
 }
 
-.appointmentRequestsCardText {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin: 5%;
-}
-
-.appointmentRequestsCard {
-  border-radius: 5px;
-  margin: 3%;
-}
-
 .floatRight {
   margin-top: 5%;
   float: right;
@@ -36,19 +22,57 @@
 .appointmentRequestsAcceptButton {
   width: 150px;
   height: 40px;
-  margin: 2px;
+  margin: 6px;
   background-color: #69ad96;
   border-color: #69ad96;
+}
+
+.appointmentRequestsAcceptButton:hover {
+  background: #69ad96 !important;
+  border-color: transparent !important;
+  opacity: 0.7;
+}
+
+.appointmentRequestsAcceptButton:active {
+  background: #69ad96 !important;
+  border-color: transparent !important;
+  opacity: 0.7;
 }
 
 .appointmentRequestsRejectButton {
   width: 150px;
   height: 40px;
-  margin: 2px;
+  margin: 6px;
   background-color: white;
   color: #436188;
   border-color: #436188;
   border-width: 3px;
+}
+
+.appointmentRequestsRejectButton:hover {
+  background: #436188 !important;
+  border-color: transparent !important;
+  opacity: 0.7;
+}
+
+.appointmentRequestsRejectButton:active {
+  background: #436188 !important;
+  border-color: transparent !important;
+  opacity: 0.7;
+}
+
+.flex {
+  display: flex;
+}
+
+.grayText {
+  color: gray;
+}
+
+.appointmentRequestsCard {
+  border-style: solid;
+  border-color: lightgray;
+  margin-bottom: 2%;
 }
 
 @media (max-width: 1000px) {

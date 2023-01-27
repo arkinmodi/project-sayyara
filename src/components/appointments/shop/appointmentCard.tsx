@@ -10,7 +10,6 @@ interface IAppointmentCardProps {
   appointment: IAppointment;
 }
 
-// TODO: pass in information of a specific information, creates the cards with the information and then buttons to cancel, accept, etc.
 const AppointmentCard = (props: IAppointmentCardProps) => {
   const [pendingAppointments, setPendingAppointments] = useState<
     IAppointment[]
@@ -44,28 +43,29 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
             End time:{" "}
             {String(new Date(props.appointment.endTime).toLocaleString())}
           </div>
-
-          <div>Vehicle Make: {props.appointment.vehicleMake}</div>
+          {/* <div>Vehicle Make: {props.appointment.vehicleMake}</div>
           <div>Vehicle Model: {props.appointment.vehicleModel}</div>
           <div>
             Manufacture Year:{" "}
             {props.appointment.vehicleManufactureYear.toString()}
-          </div>
+          </div> */}
         </div>
 
         <div className={styles.floatRight}>
           {/* TODO: Link to quote and pass in quote id */}
-          <span>View Quote </span>
-          <Button
-            label="Reject"
-            className={styles.appointmentRequestsRejectButton}
-            onClick={() => handleRejectButtonClick(props.appointment)}
-          />
-          <Button
-            label="Accept"
-            className={styles.appointmentRequestsAcceptButton}
-            onClick={() => handleAcceptButtonClick(props.appointment)}
-          />
+          <div className={styles.grayText}>View Quote </div>
+          <div className={styles.flex}>
+            <Button
+              label="Reject"
+              className={styles.appointmentRequestsRejectButton}
+              onClick={() => handleRejectButtonClick(props.appointment)}
+            />
+            <Button
+              label="Accept"
+              className={styles.appointmentRequestsAcceptButton}
+              onClick={() => handleAcceptButtonClick(props.appointment)}
+            />
+          </div>
           <div>Estimated Price:</div>
         </div>
       </div>
