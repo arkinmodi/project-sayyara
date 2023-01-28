@@ -1,4 +1,9 @@
-import { partSchema, prisma, ServiceWithPartsType } from "@server/db/client";
+import {
+  partSchema,
+  prisma,
+  ServiceType,
+  ServiceWithPartsType,
+} from "@server/db/client";
 import { z } from "zod";
 
 export const createServiceSchema = z.object({
@@ -7,7 +12,8 @@ export const createServiceSchema = z.object({
   estimated_time: z.number().int(),
   parts: z.array(partSchema).default([]),
   total_price: z.number(),
-  // shop_id: z.string(),
+  shop_id: z.string(),
+  type: z.nativeEnum(ServiceType),
 });
 export type CreateServiceType = z.infer<typeof createServiceSchema>;
 
@@ -19,7 +25,8 @@ export const createService = async (service: CreateServiceType) => {
       estimated_time: service.estimated_time,
       total_price: service.total_price,
       parts: service.parts,
-      // shop: { connect: { id: service.shop_id } },
+      type: service.type,
+      shop: { connect: { id: service.shop_id } },
     },
   })) as ServiceWithPartsType;
 };
@@ -30,9 +37,21 @@ export const getServiceById = async (id: string) => {
   })) as ServiceWithPartsType;
 };
 
-// export const getServicesByShopId = async (shopId: string) => {
-//   return await prisma.service.findMany({ where: { shop_id: shopId } });
-// };
+export const getServicesByShopId = async (shopId: string) => {
+  return await prisma.service.findMany({ where: { shop_id: shopId } });
+};
+
+export const getCannedServicesByShopId = async (shopId: string) => {
+  return await prisma.service.findMany({
+    where: { shop_id: shopId, type: "CANNED" },
+  });
+};
+
+export const getCustomServicesByShopId = async (shopId: string) => {
+  return await prisma.service.findMany({
+    where: { shop_id: shopId, type: "CUSTOM" },
+  });
+};
 
 // Since Parts are stored as a JSON array (without IDs), to update the list of parts, you need to
 // send in the complete new list of parts, not just what you want to change
