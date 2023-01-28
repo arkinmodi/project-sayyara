@@ -28,6 +28,7 @@ const testEmployee: Employee = {
   update_time: new Date(),
   type: "EMPLOYEE",
   shop_id: "shop_id",
+  status: "ACTIVE",
 };
 
 const testShopOwner: EmployeeWithShop = {
@@ -41,6 +42,7 @@ const testShopOwner: EmployeeWithShop = {
   create_time: new Date(),
   update_time: new Date(),
   type: "SHOP_OWNER",
+  status: "ACTIVE",
   shop_id: "shop_id",
   shop: {
     id: "shop_id",
@@ -176,6 +178,7 @@ describe("new user registration", () => {
         image: null,
         type: testEmployee.type,
         shop_id: testEmployee.shop_id,
+        status: testEmployee.status,
       });
     });
 
@@ -208,6 +211,7 @@ describe("new user registration", () => {
         image: null,
         type: testShopOwner.type,
         shop_id: expect.any(String),
+        status: testEmployee.status,
       });
     });
   });

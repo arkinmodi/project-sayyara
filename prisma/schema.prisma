@@ -12,17 +12,18 @@ datasource db {
 }
 
 model Employee {
-  id           String   @id @default(cuid())
-  create_time  DateTime @default(now())
-  update_time  DateTime @updatedAt
+  id           String         @id @default(cuid())
+  create_time  DateTime       @default(now())
+  update_time  DateTime       @updatedAt
   first_name   String
   last_name    String
   phone_number String
-  email        String   @unique
+  email        String         @unique
   password     String
   image        String?
   type         UserType
   shop_id      String
+  status       EmployeeStatus @default(ACTIVE)
 
   work_orders  WorkOrder[]
   appointments Appointment[]
@@ -198,4 +199,9 @@ enum AppointmentStatus {
   PENDING_APPROVAL
   ACCEPTED
   REJECTED
+}
+
+enum EmployeeStatus {
+  ACTIVE
+  SUSPENDED
 }

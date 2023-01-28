@@ -31,6 +31,7 @@ const testEmployeeUser: Employee = {
   update_time: new Date(),
   type: "SHOP_OWNER",
   shop_id: "test_shop_id",
+  status: "ACTIVE",
 };
 
 const testCustomerUser: Customer = {
