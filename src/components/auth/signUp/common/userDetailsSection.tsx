@@ -3,14 +3,14 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import React, { ChangeEvent } from "react";
 import {
-  IAuthSignUpFormCustomerValues,
   IAuthSignUpFormShopEmployeeValues,
   IAuthSignUpFormShopOwnerValues,
+  IAuthSignUpFormValues,
 } from "../../types";
 
 interface IUserDetailsSectionProps {
   formValues:
-    | IAuthSignUpFormCustomerValues
+    | IAuthSignUpFormValues
     | IAuthSignUpFormShopOwnerValues
     | IAuthSignUpFormShopEmployeeValues;
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -23,12 +23,12 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
   return (
     <div className={authStyles.authForm}>
       <div className={authStyles.authFormBody}>
-        <label htmlFor="authSignUpFormCustomerFirstNameInput">
+        <label htmlFor="authSignUpFormFirstNameInput">
           First Name (Required)
         </label>
         <br />
         <InputText
-          id="authSignUpFormCustomerFirstNameInput"
+          id="authSignUpFormFirstNameInput"
           className={authStyles.authFormInput}
           value={formValues.firstName}
           onChange={handleInputChange}
@@ -36,12 +36,12 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
           placeholder="First Name"
         />
         <br />
-        <label htmlFor="authSignUpFormCustomerLastNameInput">
+        <label htmlFor="authSignUpFormLastNameInput">
           Last Name (Required)
         </label>
         <br />
         <InputText
-          id="authSignUpFormCustomerLastNameInput"
+          id="authSignUpFormLastNameInput"
           className={authStyles.authFormInput}
           value={formValues.lastName}
           onChange={handleInputChange}
@@ -49,12 +49,10 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
           placeholder="Last Name"
         />
         <br />
-        <label htmlFor="authSignUpFormCustomerEmailInput">
-          Email (Required)
-        </label>
+        <label htmlFor="authSignUpFormEmailInput">Email (Required)</label>
         <br />
         <InputText
-          id="authSignUpFormCustomerEmailInput"
+          id="authSignUpFormEmailInput"
           className={authStyles.authFormInput}
           value={formValues.email}
           onChange={handleInputChange}
@@ -62,12 +60,23 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
           placeholder="Email"
         />
         <br />
-        <label htmlFor="authSignUpFormCustomerPasswordInput">
-          Password (Required)
+        <label htmlFor="authSignUpFormPhoneInput">
+          Phone Number (Required)
         </label>
         <br />
         <InputText
-          id="authSignUpFormCustomerPasswordInput"
+          id="authSignUpFormPhoneNumberInput"
+          className={authStyles.authFormInput}
+          value={formValues.phoneNumber}
+          onChange={handleInputChange}
+          name="phoneNumber"
+          placeholder="Phone Number"
+        />
+        <br />
+        <label htmlFor="authSignUpFormPasswordInput">Password (Required)</label>
+        <br />
+        <InputText
+          id="authSignUpFormPasswordInput"
           type="password"
           placeholder="Password"
           className={authStyles.authFormInput}

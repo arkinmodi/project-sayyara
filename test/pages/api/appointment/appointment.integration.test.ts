@@ -16,11 +16,13 @@ const testEmployeeUser: Employee = {
   last_name: "last_name",
   email: "user@test.com",
   password: "test_password",
+  phone_number: "1234567890",
   image: null,
   create_time: new Date(),
   update_time: new Date(),
   type: "SHOP_OWNER",
   shop_id: "shop_id",
+  status: "ACTIVE",
 };
 
 //

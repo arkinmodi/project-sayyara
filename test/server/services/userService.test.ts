@@ -16,6 +16,7 @@ const testEmployeeUser: Employee = {
   id: "test_id",
   first_name: "first_name",
   last_name: "last_name",
+  phone_number: "1234567890",
   email: "user@test.com",
   password: hashPassword.hash,
   image: null,
@@ -23,6 +24,7 @@ const testEmployeeUser: Employee = {
   update_time: new Date(),
   type: "SHOP_OWNER",
   shop_id: "shop_id",
+  status: "ACTIVE",
 };
 
 describe("get user", () => {

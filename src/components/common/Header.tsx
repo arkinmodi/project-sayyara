@@ -14,7 +14,7 @@ import { Button } from "primereact/button";
 import { Menubar } from "primereact/menubar";
 import { MenuItem } from "primereact/menuitem";
 import logo from "public/logo.png";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthDialogType } from "src/types/auth";
 import AuthDialog from "../auth/authDialog";
@@ -25,55 +25,79 @@ const Header = () => {
   const userType = useSelector(AuthSelectors.getUserType);
   const dispatch = useDispatch();
 
-  const generalItems: MenuItem[] = [];
+  /**
+   * Handle navbar button clicks to open auth dialog
+   */
+  const openAuthDialog = useCallback(
+    (type: AuthDialogType) => {
+      dispatch(
+        setIsAuthDialogOpen({ isAuthDialogOpen: true, authDialogType: type })
+      );
+    },
+    [dispatch]
+  );
 
-  const generalShopItems = [
-    {
-      label: "Service Requests",
-      command: () => {
-        Router.push("/shop/dashboard");
-      },
-    },
-  ];
+  const generalItems: MenuItem[] = React.useMemo(() => {
+    return [
+      // Add general menu items
+    ];
+  }, []);
 
-  const generalCustomerItems = [
-    {
-      label: "Browse",
-      command: () => {
-        Router.push("/");
+  const generalShopItems = React.useMemo(() => {
+    return [
+      {
+        label: "Service Requests",
+        command: () => {
+          Router.push("/shop/dashboard");
+        },
       },
-    },
-    {
-      label: "My Service Requests",
-      command: () => {
-        Router.push("/dashboard");
-      },
-    },
-  ];
+    ];
+  }, []);
 
-  const mobileMenuItems = [
-    {
-      label: "Login",
-      command: () => {
-        openAuthDialog(AuthDialogType.CUSTOMER);
+  const generalCustomerItems = React.useMemo(() => {
+    return [
+      {
+        label: "Browse",
+        command: () => {
+          Router.push("/");
+        },
       },
-    },
-    {
-      label: "Are you a shop?",
-      command: () => {
-        openAuthDialog(AuthDialogType.SHOP);
+      {
+        label: "My Service Requests",
+        command: () => {
+          Router.push("/dashboard");
+        },
       },
-    },
-  ];
+    ];
+  }, []);
 
-  const mobileMenuItemsLoggedIn = [
-    {
-      label: "Logout",
-      command: () => {
-        signOut();
+  const mobileMenuItems = React.useMemo(() => {
+    return [
+      {
+        label: "Login",
+        command: () => {
+          openAuthDialog(AuthDialogType.CUSTOMER);
+        },
       },
-    },
-  ];
+      {
+        label: "Are you a shop?",
+        command: () => {
+          openAuthDialog(AuthDialogType.SHOP);
+        },
+      },
+    ];
+  }, [openAuthDialog]);
+
+  const mobileMenuItemsLoggedIn = React.useMemo(() => {
+    return [
+      {
+        label: "Logout",
+        command: () => {
+          signOut();
+        },
+      },
+    ];
+  }, []);
 
   // Set global isLoggedIn state based on user session
   useEffect(() => {
@@ -94,15 +118,6 @@ const Header = () => {
       dispatch(setUserType({ userType: undefined }));
     }
   }, [session?.user, isLoggedIn, dispatch]);
-
-  /**
-   * Handle navbar button clicks to open auth dialog
-   */
-  const openAuthDialog = (type: AuthDialogType) => {
-    dispatch(
-      setIsAuthDialogOpen({ isAuthDialogOpen: true, authDialogType: type })
-    );
-  };
 
   const start = (
     <Image
@@ -149,7 +164,13 @@ const Header = () => {
       }
     }
     return generalItems;
-  }, [isLoggedIn, userType]);
+  }, [
+    isLoggedIn,
+    userType,
+    generalItems,
+    generalCustomerItems,
+    generalShopItems,
+  ]);
 
   const getMobileMenuItems = React.useMemo(() => {
     if (isLoggedIn) {
@@ -157,7 +178,7 @@ const Header = () => {
     } else {
       return getMenuItems.concat(mobileMenuItems);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, getMenuItems, mobileMenuItemsLoggedIn, mobileMenuItems]);
 
   return (
     <div>

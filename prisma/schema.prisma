@@ -12,16 +12,18 @@ datasource db {
 }
 
 model Employee {
-  id          String   @id @default(cuid())
-  create_time DateTime @default(now())
-  update_time DateTime @updatedAt
-  first_name  String
-  last_name   String
-  email       String   @unique
-  password    String
-  image       String?
-  type        UserType
-  shop_id     String
+  id           String         @id @default(cuid())
+  create_time  DateTime       @default(now())
+  update_time  DateTime       @updatedAt
+  first_name   String
+  last_name    String
+  phone_number String
+  email        String         @unique
+  password     String
+  image        String?
+  type         UserType
+  shop_id      String
+  status       EmployeeStatus @default(ACTIVE)
 
   appointments Appointment[]
   shop         Shop          @relation(fields: [shop_id], references: [id])
@@ -30,17 +32,20 @@ model Employee {
 }
 
 model Customer {
-  id           String        @id @default(cuid())
-  create_time  DateTime      @default(now())
-  update_time  DateTime      @updatedAt
-  first_name   String
-  last_name    String
-  email        String        @unique
-  password     String
-  image        String?
-  type         UserType      @default(CUSTOMER)
-  appointments Appointment[]
-  vehicles     Vehicle[]
+  id            String        @id @default(cuid())
+  create_time   DateTime      @default(now())
+  update_time   DateTime      @updatedAt
+  first_name    String
+  last_name     String
+  phone_number  String
+  email         String        @unique
+  password      String
+  image         String?
+  type          UserType      @default(CUSTOMER)
+  appointments  Appointment[]
+  chat_messages ChatMessage[]
+  quotes        Quote[]
+  vehicles      Vehicle[]
 }
 
 // TODO: re-evaluate what should be optional for Appointment
@@ -71,10 +76,37 @@ model Appointment {
 }
 
 model Quote {
-  id          String       @id @default(cuid())
-  create_time DateTime     @default(now())
-  update_time DateTime     @updatedAt
-  appointment Appointment?
+  id          String   @id @default(cuid())
+  create_time DateTime @default(now())
+  update_time DateTime @updatedAt
+  customer_id String
+  shop_id     String
+
+  customer      Customer      @relation(fields: [customer_id], references: [id])
+  shop          Shop          @relation(fields: [shop_id], references: [id])
+  appointment   Appointment?
+  chat_messages ChatMessage[]
+
+  @@index([customer_id])
+  @@index([shop_id])
+}
+
+model ChatMessage {
+  id          String   @id @default(cuid())
+  create_time DateTime @default(now())
+  update_time DateTime @updatedAt
+  message     String
+  quote_id    String
+  customer_id String?
+  shop_id     String?
+
+  customer Customer? @relation(fields: [customer_id], references: [id])
+  shop     Shop?     @relation(fields: [shop_id], references: [id])
+  quote    Quote     @relation(fields: [quote_id], references: [id])
+
+  @@index([customer_id])
+  @@index([shop_id])
+  @@index([quote_id])
 }
 
 model Vehicle {
@@ -102,11 +134,13 @@ model WorkOrder {
 }
 
 model Shop {
-  id           String        @id @default(cuid())
-  create_time  DateTime      @default(now())
-  update_time  DateTime      @updatedAt
-  appointments Appointment[]
-  employees    Employee[]
+  id            String        @id @default(cuid())
+  create_time   DateTime      @default(now())
+  update_time   DateTime      @updatedAt
+  appointments  Appointment[]
+  employees     Employee[]
+  chat_messages ChatMessage[]
+  quotes        Quote[]
   // services     Service[]
 }
 
@@ -144,4 +178,9 @@ enum AppointmentStatus {
   REJECTED
   IN_PROGRESS
   COMPLETED
+}
+
+enum EmployeeStatus {
+  ACTIVE
+  SUSPENDED
 }
