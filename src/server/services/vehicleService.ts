@@ -1,3 +1,4 @@
+import { prisma } from "@server/db/client";
 import { z } from "zod";
 
 export const createVehicleSchema = z.object({
@@ -9,3 +10,7 @@ export const createVehicleSchema = z.object({
 });
 
 export type CreateVehicleType = z.infer<typeof createVehicleSchema>;
+
+export const getVehicleById = async (id: string) => {
+  return prisma.vehicle.findUnique({ where: { id } });
+};
