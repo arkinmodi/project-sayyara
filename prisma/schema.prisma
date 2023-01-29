@@ -141,23 +141,24 @@ model Shop {
   employees     Employee[]
   chat_messages ChatMessage[]
   quotes        Quote[]
-  // services     Service[]
+  services      Service[]
 }
 
 model Service {
-  id             String   @id @default(cuid())
-  create_time    DateTime @default(now())
-  update_time    DateTime @updatedAt
+  id             String      @id @default(cuid())
+  create_time    DateTime    @default(now())
+  update_time    DateTime    @updatedAt
   name           String
   description    String
   estimated_time Int
   total_price    Float
   parts          Json
-  // shop_id        String?
+  type           ServiceType
+  shop_id        String
 
-  // shop Shop? @relation(fields: [shop_id], references: [id])
+  shop Shop @relation(fields: [shop_id], references: [id])
 
-  // @@index([shop_id])
+  @@index([shop_id])
 }
 
 enum UserType {

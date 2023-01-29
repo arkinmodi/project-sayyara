@@ -1,10 +1,10 @@
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import { Quote } from "@server/db/client";
-import { getEmployeeById } from "@server/services/employeeManagementService";
 import {
   deleteQuoteAndChatById,
   getQuoteById,
 } from "@server/services/quoteService";
+import { getEmployeeById } from "@server/services/userService";
 import { NextApiRequest, NextApiResponse } from "next";
 import type { Session } from "next-auth";
 

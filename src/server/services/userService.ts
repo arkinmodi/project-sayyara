@@ -93,6 +93,14 @@ export const getUserByEmail = async (
   return user ?? (await prisma.employee.findUnique({ where: { email } }));
 };
 
+export const getEmployeeById = async (id: string) => {
+  return await prisma.employee.findUnique({ where: { id } });
+};
+
+export const getCustomerById = async (id: string) => {
+  return await prisma.customer.findUnique({ where: { id } });
+};
+
 export const authorize = async (email: string, password: string) => {
   const userData = await getUserByEmail(email);
 

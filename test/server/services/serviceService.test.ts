@@ -18,6 +18,8 @@ const testService: Service = {
   estimated_time: 2,
   total_price: 100,
   parts: null,
+  type: "CANNED",
+  shop_id: "test_shop_id",
 };
 
 describe("get service", () => {

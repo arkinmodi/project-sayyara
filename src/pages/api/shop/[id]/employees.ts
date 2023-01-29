@@ -1,8 +1,6 @@
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
-import {
-  getEmployeeById,
-  getEmployeesByShopId,
-} from "@server/services/employeeManagementService";
+import { getEmployeesByShopId } from "@server/services/employeeManagementService";
+import { getEmployeeById } from "@server/services/userService";
 import { NextApiRequest, NextApiResponse } from "next";
 import type { Session } from "next-auth";
 
