@@ -4,8 +4,8 @@ import {
   createChatMessageSchema,
   getChatMessagesByQuoteId,
 } from "@server/services/chatService";
-import { getEmployeeById } from "@server/services/employeeManagementService";
 import { getQuoteById } from "@server/services/quoteService";
+import { getEmployeeById } from "@server/services/userService";
 import { NextApiRequest, NextApiResponse } from "next";
 import type { Session } from "next-auth";
 
