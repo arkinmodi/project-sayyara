@@ -7,9 +7,21 @@
 
 import serviceHandler from "@pages/api/service";
 import serviceByIdHandler from "@pages/api/service/[id]";
-import { Employee, prisma, ServiceWithPartsType } from "@server/db/client";
+import serviceByShopIdHandler from "@pages/api/shop/[id]/services/[[...type]]";
+import {
+  Employee,
+  prisma,
+  ServiceWithPartsType,
+  Shop,
+} from "@server/db/client";
 import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 import { Session } from "next-auth";
+
+const testShop: Shop = {
+  id: "test_shop_id",
+  create_time: new Date(),
+  update_time: new Date(),
+};
 
 const testService: ServiceWithPartsType = {
   id: "",
@@ -19,6 +31,8 @@ const testService: ServiceWithPartsType = {
   description: "test_service_description",
   estimated_time: 2,
   total_price: 100,
+  shop_id: testShop.id,
+  type: "CANNED",
   parts: [
     {
       quantity: 2,
@@ -65,13 +79,18 @@ afterAll(async () => {
 });
 
 afterEach(async () => {
-  const deleteServices = prisma.service.deleteMany({});
-  await prisma.$transaction([deleteServices]);
+  await prisma.$transaction([
+    prisma.service.deleteMany({}),
+    prisma.shop.deleteMany({}),
+  ]);
 });
 
 describe("create service", () => {
   describe("given new service", () => {
     it("should create the service", async () => {
+      // Create Shop
+      await createShop();
+
       const { req, res } = createMockRequestResponse({ method: "POST" });
       req.body = testService;
       await serviceHandler(req, res);
@@ -88,6 +107,9 @@ describe("create service", () => {
 
   describe("given duplicate service", () => {
     it("should create a duplicate service", async () => {
+      // Create Shop
+      await createShop();
+
       // Create First Service
       const firstService = createMockRequestResponse({ method: "POST" });
       firstService.req.body = testService;
@@ -137,6 +159,9 @@ describe("get service", () => {
 
   describe("given service does exist", () => {
     it("should return service", async () => {
+      // Create Shop
+      await createShop();
+
       // Create Service
       const post = createMockRequestResponse({ method: "POST" });
       post.req.body = testService;
@@ -158,6 +183,108 @@ describe("get service", () => {
         update_time: expect.any(String),
       });
     });
+
+    describe("given a shop ID", () => {
+      it("should return all the services for the shop", async () => {
+        // Create Shop
+        await createShop();
+
+        // Create Service
+        const post = createMockRequestResponse({ method: "POST" });
+        post.req.body = testService;
+        await serviceHandler(post.req, post.res);
+
+        expect(post.res.statusCode).toBe(201);
+
+        testService.id = post.res._getJSONData()["id"];
+
+        // Get Service
+        const get = createMockRequestResponse({ method: "GET" });
+        get.req.query = { ...get.req.query, id: testService.shop_id };
+        await serviceByShopIdHandler(get.req, get.res);
+
+        expect(get.res.statusCode).toBe(200);
+        expect(get.res._getJSONData()["length"]).toBe(1);
+        expect(get.res._getJSONData()[0]).toMatchObject({
+          ...testService,
+          create_time: expect.any(String),
+          update_time: expect.any(String),
+        });
+      });
+
+      it("should return all the services for the shop which are of type CANNED", async () => {
+        // Create Shop
+        await createShop();
+
+        // Create 2 Services
+        const cannedService = createMockRequestResponse({ method: "POST" });
+        cannedService.req.body = testService;
+        await serviceHandler(cannedService.req, cannedService.res);
+        expect(cannedService.res.statusCode).toBe(201);
+
+        testService.type = "CUSTOM";
+        const customService = createMockRequestResponse({ method: "POST" });
+        customService.req.body = testService;
+        await serviceHandler(customService.req, customService.res);
+        expect(customService.res.statusCode).toBe(201);
+
+        testService.id = cannedService.res._getJSONData()["id"];
+        testService.type = "CANNED";
+
+        // Get Service
+        const get = createMockRequestResponse({ method: "GET" });
+        get.req.query = {
+          ...get.req.query,
+          id: testService.shop_id,
+          type: ["canned"],
+        };
+        await serviceByShopIdHandler(get.req, get.res);
+
+        expect(get.res.statusCode).toBe(200);
+        expect(get.res._getJSONData()["length"]).toBe(1);
+        expect(get.res._getJSONData()[0]).toMatchObject({
+          ...testService,
+          create_time: expect.any(String),
+          update_time: expect.any(String),
+        });
+      });
+
+      it("should return all the services for the shop which are of type CUSTOM", async () => {
+        // Create Shop
+        await createShop();
+
+        // Create 2 Services
+        const cannedService = createMockRequestResponse({ method: "POST" });
+        cannedService.req.body = testService;
+        await serviceHandler(cannedService.req, cannedService.res);
+        expect(cannedService.res.statusCode).toBe(201);
+
+        testService.type = "CUSTOM";
+        const customService = createMockRequestResponse({ method: "POST" });
+        customService.req.body = testService;
+        await serviceHandler(customService.req, customService.res);
+        expect(customService.res.statusCode).toBe(201);
+
+        testService.id = customService.res._getJSONData()["id"];
+
+        // Get Service
+        const get = createMockRequestResponse({ method: "GET" });
+        get.req.query = {
+          ...get.req.query,
+          id: testService.shop_id,
+          type: ["custom"],
+        };
+        await serviceByShopIdHandler(get.req, get.res);
+
+        expect(get.res.statusCode).toBe(200);
+        expect(get.res._getJSONData()["length"]).toBe(1);
+        expect(get.res._getJSONData()[0]).toMatchObject({
+          ...testService,
+          create_time: expect.any(String),
+          update_time: expect.any(String),
+        });
+      });
+    });
   });
 
   describe("given no service ID", () => {
@@ -176,6 +303,7 @@ describe("get service", () => {
 describe("update service", () => {
   describe("given new name", () => {
     it("should update name", async () => {
+      await createShop();
       const id = await createService();
       const update = createMockRequestResponse({ method: "PATCH" });
       update.req.query = { ...update.req.query, id };
@@ -205,6 +333,7 @@ describe("update service", () => {
 describe("delete service", () => {
   describe("given service ID", () => {
     it("should delete service", async () => {
+      await createShop();
       const id = await createService();
       const deleteMock = createMockRequestResponse({ method: "DELETE" });
       deleteMock.req.query = { ...deleteMock.req.query, id };
@@ -226,4 +355,8 @@ const createService = async () => {
   req.body = testService;
   await serviceHandler(req, res);
   return res._getJSONData()["id"] as string;
+};
+
+const createShop = async () => {
+  return await prisma.shop.create({ data: testShop });
 };
