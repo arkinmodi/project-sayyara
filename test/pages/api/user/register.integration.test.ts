@@ -48,6 +48,13 @@ const testShopOwner: EmployeeWithShopType = {
     id: "shop_id",
     create_time: new Date(),
     update_time: new Date(),
+    name: "test_shop_name",
+    address: "test_address",
+    phone_number: "test_phone_number",
+    email: "test@email.com",
+    postal_code: "test_postal_code",
+    city: "test_city",
+    province: "test_province",
   },
 };
 

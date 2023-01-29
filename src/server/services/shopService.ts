@@ -1,4 +1,4 @@
-import { prisma } from "@server/db/client";
+import { hoursOfOperationSchema, prisma } from "@server/db/client";
 import { z } from "zod";
 
 export const createShopSchema = z.object({
@@ -8,6 +8,7 @@ export const createShopSchema = z.object({
   province: z.string(),
   postal_code: z.string(),
   phone_number: z.string(),
+  email: z.string().email(),
 });
 
 export type CreateShopType = z.infer<typeof createShopSchema>;
@@ -21,6 +22,7 @@ export const createShop = async (shop: CreateShopType) => {
       province: shop.province,
       postal_code: shop.postal_code,
       phone_number: shop.phone_number,
+      email: shop.email,
     },
   });
 };
@@ -36,45 +38,8 @@ export const updateShopSchema = z.object({
   city: z.string().optional(),
   province: z.string().optional(),
   phone_number: z.string().optional(),
-  hours_of_operation: z
-    .object({
-      monday: z.object({
-        isOpen: z.boolean(),
-        openTime: z.date(),
-        closeTime: z.date(),
-      }),
-      tuesday: z.object({
-        isOpen: z.boolean(),
-        openTime: z.date(),
-        closeTime: z.date(),
-      }),
-      wednesday: z.object({
-        isOpen: z.boolean(),
-        openTime: z.date(),
-        closeTime: z.date(),
-      }),
-      thursday: z.object({
-        isOpen: z.boolean(),
-        openTime: z.date(),
-        closeTime: z.date(),
-      }),
-      friday: z.object({
-        isOpen: z.boolean(),
-        openTime: z.date(),
-        closeTime: z.date(),
-      }),
-      saturday: z.object({
-        isOpen: z.boolean(),
-        openTime: z.date(),
-        closeTime: z.date(),
-      }),
-      sunday: z.object({
-        isOpen: z.boolean(),
-        openTime: z.date(),
-        closeTime: z.date(),
-      }),
-    })
-    .optional(),
+  hours_of_operation: z.optional(hoursOfOperationSchema),
+  email: z.string().optional(),
 });
 export type UpdateShopType = z.infer<typeof updateShopSchema>;
 
@@ -82,33 +47,25 @@ export const updateShopById = async (id: string, patch: UpdateShopType) => {
   const shop = await getShopById(id);
   if (!shop) return Promise.reject("Shop not found.");
 
-  //   const now = new Date();
-  //   if (
-  //     (patch.start_time && patch.start_time < now) ||
-  //     (patch.end_time && patch.end_time < now) ||
-  //     (patch.start_time && patch.end_time && patch.start_time > patch.end_time)
-  //   ) {
-  //     return Promise.reject("Invalid start time and/or end time.");
-  //   }
+  const hoursOfOperation:
+    | {
+        [key: string]: { [key: string]: string | boolean };
+      }
+    | undefined = patch.hours_of_operation;
 
-  //   if (
-  //     appointment.status === "PENDING_APPROVAL" &&
-  //     patch.status === "ACCEPTED"
-  //   ) {
-  //     await acceptAppointment(appointment);
-  //   }
-
-  //   const workOrderUpdate = patch.work_order_id
-  //     ? { work_order: { connect: { id: patch.work_order_id } } }
-  //     : {};
-
-  //   const vehicleUpdate = patch.vehicle_id
-  //     ? { vehicle: { connect: { id: patch.vehicle_id } } }
-  //     : {};
-
-  //   const employeeUpdate = patch.employee_id
-  //     ? { employee: { connect: { id: patch.employee_id } } }
-  //     : {};
+  if (hoursOfOperation) {
+    Object.keys(hoursOfOperation).forEach((day) => {
+      if (
+        /**
+         * String comparison of time should work here as timezone is restricted to UTC with precision 0.
+         * See hoursOfOperationSchema for more details.
+         */
+        hoursOfOperation[day]!.openTime! > hoursOfOperation[day]!.closeTime!
+      ) {
+        return Promise.reject("Invalid open time and/or close time.");
+      }
+    });
+  }
 
   return await prisma.shop.update({
     where: { id },
@@ -119,7 +76,8 @@ export const updateShopById = async (id: string, patch: UpdateShopType) => {
       city: patch.city,
       province: patch.province,
       phone_number: patch.phone_number,
-      hours_of_operation: patch.hours_of_operation,
+      hours_of_operation: hoursOfOperation,
+      email: patch.email,
     },
   });
 };

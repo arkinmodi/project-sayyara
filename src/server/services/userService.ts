@@ -1,5 +1,5 @@
 import { Customer, Employee, prisma } from "@server/db/client";
-import { createShopSchema } from "@server/services/shopService";
+import { createShopSchema, getShopById } from "@server/services/shopService";
 import { createVehicleSchema } from "@server/services/vehicleService";
 import bcrypt from "bcrypt";
 import { z } from "zod";
@@ -41,9 +41,8 @@ export const createEmployeeSchema = z.object({
 export type CreateEmployeeType = z.infer<typeof createEmployeeSchema>;
 
 export const createEmployee = async (employee: CreateEmployeeType) => {
-  // TODO: Check for shop
-  // const shop = await getShopById(employee.shop_id);
-  // if (!shop) return Promise.reject("Shop not found.");
+  const shop = await getShopById(employee.shop_id);
+  if (!shop) return Promise.reject("Shop not found.");
 
   return await prisma.employee.create({
     data: {

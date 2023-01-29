@@ -148,6 +148,7 @@ model Shop {
   name String
   address String
   phone_number String
+  email String
   postal_code String
   city String
   province String
