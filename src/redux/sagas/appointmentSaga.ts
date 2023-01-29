@@ -14,6 +14,8 @@ import {
   IAppointmentActionSetAppointmentStatus,
 } from "../actions/appointmentAction";
 import AppointmentTypes from "../types/appointmentTypes";
+import { getCustomerById } from "./util/customerUtil";
+import { getVehicleById } from "./util/vehicleUtil";
 
 interface IPostCreateBody {
   service_type: ServiceType;
@@ -41,6 +43,33 @@ function patchAppointmentStatus(
   });
 }
 
+function appointmentPromise(
+  appointment: Appointment,
+  vehicleId: string,
+  customerId: string
+) {
+  const vehiclePromise = getVehicleById(vehicleId);
+
+  const customerPromise = getCustomerById(customerId);
+  return Promise.all([vehiclePromise, customerPromise]).then((values) => {
+    const vehicle = values[0];
+    const customer = values[1];
+
+    return {
+      id: appointment.id,
+      startTime: appointment.start_time,
+      endTime: appointment.end_time,
+      customer: customer,
+      shopId: appointment.shop_id,
+      quoteId: appointment.quote_id,
+      serviceType: appointment.service_type,
+      price: appointment.price,
+      status: appointment.status,
+      workOrderId: appointment.work_order_id,
+      vehicle: vehicle,
+    };
+  });
+}
 function getAllAppointments(): Promise<IAppointment[]> {
   //TODO: change to use endpoint with store ID
   return fetch(`/api/appointment/`, {
@@ -52,29 +81,49 @@ function getAllAppointments(): Promise<IAppointment[]> {
   }).then((res) => {
     if (res.status === 200) {
       return res.json().then((data) => {
-        const appointments = data.map((appointment: Appointment) => {
-          //call get vehicle saga
-          //call get customer saga
+        const appointments = data
+          .map((appointment: Appointment) => {
+            const vehicleId = appointment.vehicle_id;
+            const customerId = appointment.customer_id;
 
-          return {
-            id: appointment.id,
-            startTime: appointment.start_time,
-            endTime: appointment.end_time,
-            shopId: appointment.shop_id,
-            // customerFirstName: appointment.customer.first_name,
-            // customerLastName: appointment.customer.last_name,
-            // customerPhoneNumber: appointment.customer.phone_number,
-            quoteId: appointment.quote_id,
-            serviceType: appointment.service_type,
-            price: appointment.price,
-            status: appointment.status,
-            workOrderId: appointment.work_order_id,
-            // vehicleMake: appointment.vehicle.make,
-            // vehicleModel: appointment.vehicle.model,
-            // vehicleManufactureYear: appointment.vehicle.year,
-          };
+            if (vehicleId && customerId) {
+              const vehiclePromise = getVehicleById(vehicleId);
+
+              const customerPromise = getCustomerById(customerId);
+              return Promise.all([vehiclePromise, customerPromise]).then(
+                (values) => {
+                  const vehicle = values[0];
+                  const customer = values[1];
+
+                  return {
+                    id: appointment.id,
+                    startTime: appointment.start_time,
+                    endTime: appointment.end_time,
+                    customer: customer,
+                    shopId: appointment.shop_id,
+                    quoteId: appointment.quote_id,
+                    serviceType: appointment.service_type,
+                    price: appointment.price,
+                    status: appointment.status,
+                    workOrderId: appointment.work_order_id,
+                    vehicle: vehicle,
+                  };
+                }
+              );
+            }
+            /**
+             * TODO(joy):
+             * For now, an appointment can have shop or customer as optionals. To handle invalid appointments with no vehicleId or customerId, we will return an undefined object an filter it out.
+             * This will be removed when the appointment schema is updated.
+             */
+          })
+          .filter((appointment: IAppointment | undefined) => {
+            return appointment !== undefined;
+          });
+
+        return Promise.all(appointments).then((appointmentList) => {
+          return appointmentList;
         });
-        return appointments;
       });
     } else {
       // TODO: check and handle errors

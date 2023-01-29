@@ -119,7 +119,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
 
   return (
     //TODO: Make card clickable so that it would go to the work order
-    <Card key={appointment.id.toString()} className={styles.appointmentCard}>
+    <Card className={styles.appointmentCard}>
       <div className={styles.cardContents}>
         <div>
           <h3 className={styles.h3}>{appointment.serviceType}</h3>
@@ -130,11 +130,9 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
           <div>
             End time: {String(new Date(appointment.endTime).toLocaleString())}
           </div>
-          {/* <div>Vehicle Make: {appointment.vehicleMake}</div>
-          <div>Vehicle Model: {appointment.vehicleModel}</div>
-          <div>
-            Manufacture Year: {appointment.vehicleManufactureYear.toString()}
-          </div> */}
+          <div>Vehicle Make: {appointment.vehicle?.make}</div>
+          <div>Vehicle Model: {appointment.vehicle?.model}</div>
+          <div>Manufacture Year: {appointment.vehicle?.year.toString()}</div>
         </div>
         <div>{renderCardLeft(appointmentProgress)}</div>
       </div>

@@ -37,7 +37,6 @@ const ShopAppointments = (props: IAppointmentsProps) => {
         );
       });
 
-    console.log(appointmentsList);
     //put the appointments in a map of lists depending on the date
     var appointmentsMap: { [key: string]: IAppointment[] } = {};
 
@@ -57,6 +56,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
       appointmentsMap[date]!.forEach((appointment) => {
         content.push(
           <AppointmentCard
+            key={appointment.id}
             appointment={appointment}
             appointmentProgress={appointmentTab}
           />
@@ -71,7 +71,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
     let content: any = [];
     Object.keys(appointmentsMap).forEach((date) => {
       content.push(
-        <div>
+        <div key={date}>
           <h4>{date}</h4>
           {listAppointmentCards(date)}
         </div>

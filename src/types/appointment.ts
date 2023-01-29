@@ -1,19 +1,18 @@
+import { ICustomer } from "./customer";
+import { IVehicle } from "./vehicle";
+
 export interface IAppointment {
-  id: String;
+  id: string;
   startTime: Date;
   endTime: Date;
-  shopId: String;
-  customerFirstName: String;
-  customerLastName: String;
-  customerPhoneNumber: String;
-  quoteId: String;
-  serviceType: String;
-  price: Number;
+  shopId: string | null;
+  customer: ICustomer | null;
+  quoteId: string | null;
+  serviceType: string;
+  price: Number | null;
   status: AppointmentStatus;
-  workOrderId: String;
-  vehicleMake: String;
-  vehicleModel: String;
-  vehicleManufactureYear: Number;
+  workOrderId: string;
+  vehicle: IVehicle | null;
 }
 
 export enum AppointmentStatus {
