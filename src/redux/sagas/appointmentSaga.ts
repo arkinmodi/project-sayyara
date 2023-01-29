@@ -60,7 +60,7 @@ function getAllAppointments(): Promise<IAppointment[]> {
             shopId: appointment.shop_id,
             customerId: appointment.customer_id,
             quoteId: appointment.quote_id,
-            serviceType: appointment.service_type,
+            service_id: appointment.service_id,
             price: appointment.price,
             status: appointment.status,
           };
