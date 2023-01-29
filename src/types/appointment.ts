@@ -3,11 +3,14 @@ export interface IAppointment {
   startTime: Date;
   endTime: Date;
   shopId: String;
-  customerId: String;
+  customerFirstName: String;
+  customerLastName: String;
+  customerPhoneNumber: String;
   quoteId: String;
   serviceType: String;
   price: Number;
   status: AppointmentStatus;
+  workOrderId: String;
   vehicleMake: String;
   vehicleModel: String;
   vehicleManufactureYear: Number;

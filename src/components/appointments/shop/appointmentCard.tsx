@@ -133,8 +133,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
           {/* <div>Vehicle Make: {appointment.vehicleMake}</div>
           <div>Vehicle Model: {appointment.vehicleModel}</div>
           <div>
-            Manufacture Year:{" "}
-            {appointment.vehicleManufactureYear.toString()}
+            Manufacture Year: {appointment.vehicleManufactureYear.toString()}
           </div> */}
         </div>
         <div>{renderCardLeft(appointmentProgress)}</div>

@@ -53,16 +53,25 @@ function getAllAppointments(): Promise<IAppointment[]> {
     if (res.status === 200) {
       return res.json().then((data) => {
         const appointments = data.map((appointment: Appointment) => {
+          //call get vehicle saga
+          //call get customer saga
+
           return {
             id: appointment.id,
             startTime: appointment.start_time,
             endTime: appointment.end_time,
             shopId: appointment.shop_id,
-            customerId: appointment.customer_id,
+            // customerFirstName: appointment.customer.first_name,
+            // customerLastName: appointment.customer.last_name,
+            // customerPhoneNumber: appointment.customer.phone_number,
             quoteId: appointment.quote_id,
             serviceType: appointment.service_type,
             price: appointment.price,
             status: appointment.status,
+            workOrderId: appointment.work_order_id,
+            // vehicleMake: appointment.vehicle.make,
+            // vehicleModel: appointment.vehicle.model,
+            // vehicleManufactureYear: appointment.vehicle.year,
           };
         });
         return appointments;

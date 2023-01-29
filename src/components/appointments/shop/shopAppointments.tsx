@@ -37,6 +37,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
         );
       });
 
+    console.log(appointmentsList);
     //put the appointments in a map of lists depending on the date
     var appointmentsMap: { [key: string]: IAppointment[] } = {};
 
