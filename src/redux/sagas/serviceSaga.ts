@@ -8,11 +8,8 @@ import {
   takeEvery,
 } from "redux-saga/effects";
 import { IParts, IService, ServiceType } from "src/types/service";
-import {
-  IServiceActionCreateService,
-  IServiceActionSetServiceStatus,
-} from "../actions/ServiceAction";
-import ServiceTypes from "../types/ServiceTypes";
+import { IServiceActionCreateService } from "../actions/serviceAction";
+import ServiceTypes from "../types/serviceTypes";
 
 interface IPostCreateBody {
   id: string;
@@ -24,25 +21,25 @@ interface IPostCreateBody {
   type: ServiceType;
 }
 
-function patchService(
-  content: IServiceActionSetServiceStatus["payload"]
-): Promise<boolean> {
-  return fetch(`/api/service/${content.id}`, {
-    method: "PATCH",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ status: content.status }),
-  }).then((res) => {
-    if (res.status === 200) {
-      return true;
-    } else {
-      // TODO: check and handle errors
-      return false;
-    }
-  });
-}
+// function patchService(
+//   content: IServiceActionSetService["payload"]
+// ): Promise<boolean> {
+//   return fetch(`/api/service/${content.id}`, {
+//     method: "PATCH",
+//     headers: {
+//       Accept: "application/json",
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ status: content.status }),
+//   }).then((res) => {
+//     if (res.status === 200) {
+//       return true;
+//     } else {
+//       // TODO: check and handle errors
+//       return false;
+//     }
+//   });
+// }
 
 function getAllServices(shopId: string): Promise<IService[]> {
   return fetch(`/api/service/${shopId}`, {
@@ -74,14 +71,14 @@ function getAllServices(shopId: string): Promise<IService[]> {
   });
 }
 
-function* setService(
-  action: IServiceActionSetServiceStatus
-): Generator<CallEffect | PutEffect> {
-  const success = yield call(patchService, action.payload);
-  // if (success) {
-  //   yield call(readServices);
-  // }
-}
+// function* setService(
+//   action: IServiceActionSetService
+// ): Generator<CallEffect | PutEffect> {
+//   const success = yield call(patchService, action.payload);
+//   // if (success) {
+//   //   yield call(readServices);
+//   // }
+// }
 
 function* readServices(shopId: string): Generator<CallEffect | PutEffect> {
   const services = yield call(getAllServices, shopId);
@@ -99,6 +96,22 @@ function postCreate(body: IPostCreateBody, shopId: string): Promise<boolean> {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
+  }).then((res) => {
+    if (res.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
+
+function deleteService(serviceId: string): Promise<boolean> {
+  return fetch(`/api/service/${serviceId}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
   }).then((res) => {
     if (res.status === 200) {
       return true;
@@ -127,10 +140,11 @@ function* createService(
 /**
  * Saga to handle all Service related actions.
  */
-export function* ServiceSaga() {
+export function* serviceSaga() {
   yield all([
-    takeEvery(ServiceTypes.SET_SERVICE, setService),
+    // takeEvery(ServiceTypes.SET_SERVICE, setService),
     takeEvery(ServiceTypes.READ_SERVICES, readServices),
     takeEvery(ServiceTypes.CREATE_SERVICE, createService),
+    takeEvery(ServiceTypes.DELETE_SERVICE, deleteService),
   ]);
 }

@@ -10,8 +10,8 @@ export interface IServiceActionReadServices extends IServiceActionBase {
   payload: void;
 }
 
-export interface IServiceActionSetServices extends IServiceActionBase {
-  payload: { Services: IService[] };
+export interface IServiceActionSetService extends IServiceActionBase {
+  payload: { services: IService[] };
 }
 
 export interface IServiceActionCreateService extends IServiceActionBase {
@@ -26,17 +26,22 @@ export interface IServiceActionCreateService extends IServiceActionBase {
   };
 }
 
+export interface IServiceActionDeleteService extends IServiceActionBase {
+  payload: { id: string };
+}
+
 export type IServiceAction =
   | IServiceActionReadServices
-  | IServiceActionSetServices
-  | IServiceActionCreateService;
+  | IServiceActionSetService
+  | IServiceActionCreateService
+  | IServiceActionDeleteService;
 
 export const readServices = (payload: void) => ({
   type: ServiceTypes.READ_SERVICES,
   payload,
 });
 
-export const setServices = (payload: IServiceActionSetServices["payload"]) => ({
+export const setService = (payload: IServiceActionSetService["payload"]) => ({
   type: ServiceTypes.SET_SERVICE,
   payload,
 });
@@ -45,5 +50,12 @@ export const createService = (
   payload: IServiceActionCreateService["payload"]
 ) => ({
   type: ServiceTypes.CREATE_SERVICE,
+  payload,
+});
+
+export const deleteService = (
+  payload: IServiceActionDeleteService["payload"]
+) => ({
+  type: ServiceTypes.DELETE_SERVICE,
   payload,
 });
