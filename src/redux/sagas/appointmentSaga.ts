@@ -43,33 +43,6 @@ function patchAppointmentStatus(
   });
 }
 
-function appointmentPromise(
-  appointment: Appointment,
-  vehicleId: string,
-  customerId: string
-) {
-  const vehiclePromise = getVehicleById(vehicleId);
-
-  const customerPromise = getCustomerById(customerId);
-  return Promise.all([vehiclePromise, customerPromise]).then((values) => {
-    const vehicle = values[0];
-    const customer = values[1];
-
-    return {
-      id: appointment.id,
-      startTime: appointment.start_time,
-      endTime: appointment.end_time,
-      customer: customer,
-      shopId: appointment.shop_id,
-      quoteId: appointment.quote_id,
-      serviceType: appointment.service_type,
-      price: appointment.price,
-      status: appointment.status,
-      workOrderId: appointment.work_order_id,
-      vehicle: vehicle,
-    };
-  });
-}
 function getAllAppointments(): Promise<IAppointment[]> {
   //TODO: change to use endpoint with store ID
   return fetch(`/api/appointment/`, {
