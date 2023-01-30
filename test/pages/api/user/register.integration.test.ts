@@ -55,6 +55,7 @@ const testShopOwner: EmployeeWithShopType = {
     postal_code: "test_postal_code",
     city: "test_city",
     province: "test_province",
+    hours_of_operation: null,
   },
 };
 
@@ -154,7 +155,17 @@ describe("new user registration", () => {
     it("should create new employee", async () => {
       // Create Shop
       // TODO: Use REST controller
-      const shop = await prisma.shop.create({ data: {} });
+      const shop = await prisma.shop.create({
+        data: {
+          phone_number: testShopOwner.shop.phone_number,
+          email: testShopOwner.shop.email,
+          name: testShopOwner.shop.name,
+          address: testShopOwner.shop.address,
+          postal_code: testShopOwner.shop.postal_code,
+          city: testShopOwner.shop.city,
+          province: testShopOwner.shop.province,
+        },
+      });
       testEmployee.shop_id = shop.id;
 
       const { req, res } = createMockRequestResponse({ method: "POST" });
@@ -197,7 +208,7 @@ describe("new user registration", () => {
         first_name: testShopOwner.first_name,
         last_name: testShopOwner.last_name,
         phone_number: testShopOwner.phone_number,
-        shop: {},
+        shop: testShopOwner.shop,
       };
 
       await registerShopOwnerHandler(req, res);

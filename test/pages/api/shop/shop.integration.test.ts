@@ -140,38 +140,38 @@ describe("update shop", () => {
         const hoursOfOperation = {
           monday: {
             isOpen: true,
-            openTime: "1970-01-01T09:00:00:000Z",
-            closeTime: "1970-01-01T17:00:00:000Z",
+            openTime: "1970-01-01T09:00:00Z",
+            closeTime: "1970-01-01T17:00:00Z",
           },
           tuesday: {
             isOpen: true,
-            openTime: "1970-01-01T09:00:00:000Z",
-            closeTime: "1970-01-01T17:00:00:000Z",
+            openTime: "1970-01-01T09:00:00Z",
+            closeTime: "1970-01-01T17:00:00Z",
           },
           wednesday: {
             isOpen: true,
-            openTime: "1970-01-01T09:00:00:000Z",
-            closeTime: "1970-01-01T17:00:00:000Z",
+            openTime: "1970-01-01T09:00:00Z",
+            closeTime: "1970-01-01T17:00:00Z",
           },
           thursday: {
             isOpen: true,
-            openTime: "1970-01-01T09:00:00:000Z",
-            closeTime: "1970-01-01T17:00:00:000Z",
+            openTime: "1970-01-01T09:00:00Z",
+            closeTime: "1970-01-01T17:00:00Z",
           },
           friday: {
             isOpen: true,
-            openTime: "1970-01-01T09:00:00:000Z",
-            closeTime: "1970-01-01T17:00:00:000Z",
+            openTime: "1970-01-01T09:00:00Z",
+            closeTime: "1970-01-01T17:00:00Z",
           },
           saturday: {
             isOpen: false,
-            openTime: "1970-01-01T09:00:00:000Z",
-            closeTime: "1970-01-01T17:00:00:000Z",
+            openTime: "1970-01-01T09:00:00Z",
+            closeTime: "1970-01-01T17:00:00Z",
           },
           sunday: {
             isOpen: false,
-            openTime: "1970-01-01T09:00:00:000Z",
-            closeTime: "1970-01-01T17:00:00:000Z",
+            openTime: "1970-01-01T09:00:00Z",
+            closeTime: "1970-01-01T17:00:00Z",
           },
         };
         const shop = await createShop(testShop);
