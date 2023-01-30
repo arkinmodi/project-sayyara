@@ -38,9 +38,9 @@ const seed = async () => {
       type: "SHOP_OWNER",
       shop: {
         create: {
-          name: "Big Boss Mechanics",
+          name: "Sayyara",
           address: "1280 Main Street West",
-          phone_number: "905-525-9140",
+          phone_number: "9055259140",
           email: "example@sayyara.com",
           postal_code: "L8S 4L8",
           city: "Hamilton",
