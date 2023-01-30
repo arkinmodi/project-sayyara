@@ -1,0 +1,21 @@
+.chat {
+    flex-grow: 6;
+}
+
+.container {
+    display: flex;
+}
+
+.h2 {
+    color: #436188;
+    margin: 0px;
+}
+
+.hr {
+    height: 3px;
+    background-color: #436188;
+}
+
+.list {
+    flex-grow: 1;
+}

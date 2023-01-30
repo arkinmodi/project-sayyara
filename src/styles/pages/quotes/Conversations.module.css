@@ -1,0 +1,12 @@
+.chatItem {
+    display: flex;
+}
+
+.chatText {
+    margin-left: 2rem;
+}
+
+.h3 {
+    color: #436188;
+    margin: 0px;
+}

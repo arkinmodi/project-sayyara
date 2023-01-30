@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { TabPanel, TabView } from "primereact/tabview";
 import React from "react";
-import QuotesDashboard from "./quotes/dashboard";
+import QuotesDashboard from "../components/quotes/dashboard";
 
 const CustomerDashboard: NextPage = () => {
   return (
