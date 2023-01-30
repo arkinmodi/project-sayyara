@@ -9,9 +9,9 @@ import registerCustomerHandler from "@pages/api/user/register/customer";
 import registerEmployeeHandler from "@pages/api/user/register/employee";
 import registerShopOwnerHandler from "@pages/api/user/register/shopOwner";
 import {
-  CustomerWithVehicles,
+  CustomerWithVehiclesType,
   Employee,
-  EmployeeWithShop,
+  EmployeeWithShopType,
   prisma,
 } from "@server/db/client";
 import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
@@ -31,7 +31,7 @@ const testEmployee: Employee = {
   status: "ACTIVE",
 };
 
-const testShopOwner: EmployeeWithShop = {
+const testShopOwner: EmployeeWithShopType = {
   id: "",
   first_name: "shop_owner_first_name",
   last_name: "shop_owner_last_name",
@@ -51,7 +51,7 @@ const testShopOwner: EmployeeWithShop = {
   },
 };
 
-const testCustomer: CustomerWithVehicles = {
+const testCustomer: CustomerWithVehiclesType = {
   id: "",
   first_name: "customer_first_name",
   last_name: "customer_last_name",

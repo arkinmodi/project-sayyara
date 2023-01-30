@@ -1,15 +1,9 @@
-import {
-  Appointment,
-  AppointmentStatus,
-  prisma,
-  ServiceType,
-} from "@server/db/client";
+import { Appointment, AppointmentStatus, prisma } from "@server/db/client";
 import { z } from "zod";
 
 export const createAppointmentSchema = z.object({
   quote_id: z.string().optional(),
-  service_type: z.nativeEnum(ServiceType),
-  price: z.number().min(0).optional(),
+  price: z.number().min(0),
   employee_id: z.string().optional(),
   start_time: z.preprocess((arg) => {
     if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
@@ -17,12 +11,12 @@ export const createAppointmentSchema = z.object({
   end_time: z.preprocess((arg) => {
     if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
   }, z.date()),
-
-  // TODO: make these required
-  vehicle_id: z.string().optional(),
-  customer_id: z.string().optional(),
-  shop_id: z.string().optional(),
+  vehicle_id: z.string(),
+  customer_id: z.string(),
+  shop_id: z.string(),
+  service_id: z.string(),
 });
+
 export type CreateAppointmentType = z.infer<typeof createAppointmentSchema>;
 
 export const createAppointment = async (appointment: CreateAppointmentType) => {
@@ -46,32 +40,16 @@ export const createAppointment = async (appointment: CreateAppointmentType) => {
     ? { employee: { connect: { id: appointment.employee_id } } }
     : { employee: {} };
 
-  const vehicle = appointment.vehicle_id
-    ? { vehicle: { connect: { id: appointment.vehicle_id } } }
-    : { vehicle: {} };
-
-  const customer = appointment.customer_id
-    ? { customer: { connect: { id: appointment.customer_id } } }
-    : { customer: {} };
-
-  const shop = appointment.shop_id
-    ? { shop: { connect: { id: appointment.shop_id } } }
-    : { shop: {} };
-
   return await prisma.appointment.create({
     data: {
-      status: "PENDING_APPROVAL",
       start_time: appointment.start_time,
       end_time: appointment.end_time,
       price: appointment.price,
-      service_type: appointment.service_type,
       work_order: { create: { create_time: now, update_time: now } },
-      // vehicle: { connect: { id: appointment.vehicle_id } },
-      ...vehicle,
-      // customer: { connect: { id: appointment.customer_id } },
-      ...customer,
-      // shop: { connect: { id: appointment.shop_id } },
-      ...shop,
+      vehicle: { connect: { id: appointment.vehicle_id } },
+      customer: { connect: { id: appointment.customer_id } },
+      shop: { connect: { id: appointment.shop_id } },
+      service: { connect: { id: appointment.service_id } },
       ...quote,
       ...employee,
     },
@@ -94,13 +72,13 @@ export const updateAppointmentSchema = z.object({
   quote_id: z.string().optional(),
   work_order_id: z.string().optional(),
   vehicle_id: z.string().optional(),
-  service_type: z.nativeEnum(ServiceType).optional(),
   price: z.number().min(0).optional(),
   employee_id: z.string().optional(),
   status: z.nativeEnum(AppointmentStatus).optional(),
   start_time: z.date().optional(),
   end_time: z.date().optional(),
 });
+
 export type UpdateAppointmentType = z.infer<typeof updateAppointmentSchema>;
 
 export const updateAppointmentById = async (
@@ -141,7 +119,6 @@ export const updateAppointmentById = async (
   return await prisma.appointment.update({
     where: { id },
     data: {
-      service_type: patch.service_type,
       price: patch.price,
       status: patch.status,
       start_time: patch.start_time,
