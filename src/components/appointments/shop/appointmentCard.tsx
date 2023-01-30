@@ -140,4 +140,4 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
   );
 };
 
-export default AppointmentCard;
+export default React.memo(AppointmentCard);
