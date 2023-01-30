@@ -6,10 +6,49 @@
  */
 import appointmentHandler from "@pages/api/appointment";
 import appointmentByIdHandler from "@pages/api/appointment/[id]";
-import registerCustomerHandler from "@pages/api/user/register/customer";
-import { Customer, prisma, Shop, Vehicle } from "@server/db/client";
+import {
+  Customer,
+  Employee,
+  prisma,
+  ServiceWithPartsType,
+  Shop,
+  Vehicle,
+} from "@server/db/client";
 import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 import { Session } from "next-auth";
+
+const testShop: Shop = {
+  id: "test_shop_id",
+  create_time: new Date(),
+  update_time: new Date(),
+};
+
+const testEmployeeUser: Employee = {
+  id: "test_id",
+  first_name: "first_name",
+  last_name: "last_name",
+  phone_number: "1234567890",
+  email: "employee@test.com",
+  password: "test_password",
+  image: null,
+  create_time: new Date(),
+  update_time: new Date(),
+  type: "SHOP_OWNER",
+  shop_id: testShop.id,
+  status: "ACTIVE",
+};
+
+const testVehicle: Vehicle = {
+  id: "test_customer_vehicle_id",
+  create_time: new Date(),
+  update_time: new Date(),
+  customer_id: "test_customer_id",
+  license_plate: "test_license_plate",
+  make: "test_make",
+  model: "test_model",
+  vin: "test_vin",
+  year: 2017,
+};
 
 const testCustomerUser: Customer = {
   id: "test_customer_id",
@@ -24,22 +63,17 @@ const testCustomerUser: Customer = {
   type: "CUSTOMER",
 };
 
-const testShop: Shop = {
-  id: "test_shop_id",
+const testService: ServiceWithPartsType = {
+  id: "test_service_id",
   create_time: new Date(),
   update_time: new Date(),
-};
-
-const testVehicle: Vehicle = {
-  id: "",
-  create_time: new Date(),
-  update_time: new Date(),
-  year: 0,
-  make: "",
-  model: "",
-  vin: "",
-  license_plate: "",
-  customer_id: testCustomerUser.id,
+  name: "test_name",
+  description: "test_description",
+  estimated_time: 2,
+  total_price: 100,
+  parts: [],
+  type: "CANNED",
+  shop_id: testShop.id,
 };
 
 //
@@ -64,7 +98,7 @@ const testVehicle: Vehicle = {
 
 const appointment = {
   id: "",
-  service_type: "CANNED",
+  price: 200,
   start_time: new Date("2023-11-09T02:00:00.000Z"),
   end_time: new Date("2023-11-09T04:00:00.000Z"),
 };
@@ -72,31 +106,31 @@ const appointment = {
 const conflictingAppointments = [
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T01:30:00.000Z"),
     end_time: new Date("2023-11-09T02:30:00.000Z"),
   },
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T02:45:00.000Z"),
     end_time: new Date("2023-11-09T03:15:00.000Z"),
   },
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T03:30:00.000Z"),
     end_time: new Date("2023-11-09T04:30:00.000Z"),
   },
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T01:30:00.000Z"),
     end_time: new Date("2023-11-09T04:30:00.000Z"),
   },
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T02:00:00.000Z"),
     end_time: new Date("2023-11-09T04:00:00.000Z"),
   },
@@ -105,25 +139,25 @@ const conflictingAppointments = [
 const notConflictingAppointments = [
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T04:30:00.000Z"),
     end_time: new Date("2023-11-09T05:30:00.000Z"),
   },
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T01:00:00.000Z"),
     end_time: new Date("2023-11-09T02:00:00.000Z"),
   },
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T04:00:00.000Z"),
     end_time: new Date("2023-11-09T05:00:00.000Z"),
   },
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T01:00:00.000Z"),
     end_time: new Date("2023-11-09T01:30:00.000Z"),
   },
@@ -157,20 +191,25 @@ afterAll(async () => {
 
 afterEach(async () => {
   await prisma.$transaction([
-    prisma.customer.deleteMany(),
-    prisma.shop.deleteMany(),
-    prisma.vehicle.deleteMany(),
-    prisma.appointment.deleteMany(),
-    prisma.workOrder.deleteMany(),
+    prisma.appointment.deleteMany({}),
+    prisma.workOrder.deleteMany({}),
+    prisma.service.deleteMany({}),
+    prisma.customer.deleteMany({}),
+    prisma.vehicle.deleteMany({}),
+    prisma.employee.deleteMany({}),
+    prisma.shop.deleteMany({}),
   ]);
 });
 
 describe("update appointment", () => {
   describe("given appointment has been accepted", () => {
     it("should accept appointment and only reject conflicting appointments", async () => {
-      // Create Customer, vehicle, and Shop
-      const customer = await createCustomerAndVehicle();
-      const shop = await createShop();
+      // Create Customer, Vehicle, Shop, Employee and Service
+      await createCustomer();
+      await createVehicle();
+      await createShop();
+      await createEmployee();
+      await createService();
 
       // Create Appointments
       for (const ap of [
@@ -181,9 +220,10 @@ describe("update appointment", () => {
         const { req, res } = createMockRequestResponse({ method: "POST" });
         req.body = {
           ...ap,
-          vehicle_id: customer?.vehicles[0]?.id,
-          customer_id: customer?.id,
-          shop_id: shop.id,
+          vehicle_id: testVehicle.id,
+          customer_id: testCustomerUser.id,
+          shop_id: testShop.id,
+          service_id: testService.id,
         };
         await appointmentHandler(req, res);
 
@@ -227,30 +267,22 @@ describe("update appointment", () => {
   });
 });
 
+const createCustomer = async () => {
+  return await prisma.customer.create({ data: testCustomerUser });
+};
+
+const createEmployee = async () => {
+  return await prisma.employee.create({ data: testEmployeeUser });
+};
+
 const createShop = async () => {
   return await prisma.shop.create({ data: testShop });
 };
 
-const createCustomerAndVehicle = async () => {
-  const { req, res } = createMockRequestResponse({ method: "POST" });
-  req.body = {
-    email: testCustomerUser.email,
-    password: testCustomerUser.password,
-    first_name: testCustomerUser.first_name,
-    last_name: testCustomerUser.last_name,
-    phone_number: testCustomerUser.phone_number,
-    vehicle: {
-      year: testVehicle.year,
-      make: testVehicle.make,
-      model: testVehicle.model,
-      vin: testVehicle.vin,
-      license_plate: testVehicle.license_plate,
-    },
-  };
-  await registerCustomerHandler(req, res);
+const createVehicle = async () => {
+  return await prisma.vehicle.create({ data: testVehicle });
+};
 
-  return await prisma.customer.findUniqueOrThrow({
-    where: { email: testCustomerUser.email },
-    include: { vehicles: true },
-  });
+const createService = async () => {
+  return await prisma.service.create({ data: testService });
 };

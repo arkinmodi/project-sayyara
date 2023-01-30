@@ -41,10 +41,10 @@ export type ServiceWithPartsType = {
   parts: PartType[];
 } & Service;
 
-export type CustomerWithVehicles = {
+export type CustomerWithVehiclesType = {
   vehicles: Vehicle[];
 } & Customer;
 
-export type EmployeeWithShop = {
+export type EmployeeWithShopType = {
   shop: Shop;
 } & Employee;
