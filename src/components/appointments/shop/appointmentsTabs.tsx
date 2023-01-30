@@ -47,4 +47,4 @@ const AppointmentsTab = () => {
   );
 };
 
-export default AppointmentsTab;
+export default React.memo(AppointmentsTab);
