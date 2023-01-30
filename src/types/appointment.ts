@@ -1,17 +1,24 @@
+import { ICustomer } from "./customer";
+import { IVehicle } from "./vehicle";
+
 export interface IAppointment {
-  id: String;
+  id: string;
   startTime: Date;
   endTime: Date;
-  shopId: String;
-  customerId: String;
-  quoteId: String;
-  serviceType: String;
+  shopId: string;
+  customer: ICustomer;
+  quoteId: string | null;
+  serviceName: string;
   price: Number;
   status: AppointmentStatus;
+  workOrderId: string;
+  vehicle: IVehicle;
 }
 
 export enum AppointmentStatus {
   PENDING_APPROVAL = "PENDING_APPROVAL",
   ACCEPTED = "ACCEPTED",
+  IN_PROGRESS = "IN_PROGRESS",
+  COMPLETED = "COMPLETED",
   REJECTED = "REJECTED",
 }

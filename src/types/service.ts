@@ -15,12 +15,14 @@ export enum PartType {
 }
 
 export interface IService {
-  id: String;
-  name: String;
-  description: String;
-  estimated_time: Number;
-  total_price: Number;
-  parts: IParts;
+  id: string;
+  name: string;
+  description: string;
+  estimated_time: number;
+  total_price: string;
+  parts: string;
+  type: ServiceType;
+  shop_id: string;
 }
 
 export interface IParts {
