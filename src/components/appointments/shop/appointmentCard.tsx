@@ -122,7 +122,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     <Card className={styles.appointmentCard}>
       <div className={styles.cardContents}>
         <div>
-          <h3 className={styles.h3}>{appointment.serviceType}</h3>
+          <h3 className={styles.h3}>{appointment.serviceName}</h3>
           <div>Customer Name:</div>
           <div>
             Start time: {new Date(appointment.startTime).toLocaleString()}
