@@ -51,7 +51,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
             }
           />
         </div>
-        <div>Estimated Price:</div>
+        <div>Estimated Price: ${appointment.price.toFixed(2).toString()}</div>
       </div>
     );
   };
@@ -83,7 +83,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
             }
           />
         </div>
-        <div>Estimated Price:</div>
+        <div>Estimated Price: ${appointment.price.toFixed(2).toString()}</div>
       </div>
     );
   };
