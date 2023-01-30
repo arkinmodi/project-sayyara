@@ -95,7 +95,7 @@
 }
 
 @media (max-width: 500px) {
-  .buttonSize {
+  .appointmentCardButton {
     width: 110px;
   }
 

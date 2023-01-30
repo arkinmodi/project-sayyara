@@ -5,7 +5,7 @@ export interface IAppointment {
   id: string;
   startTime: Date;
   endTime: Date;
-  shopId: string | null;
+  shopId: string;
   customer: ICustomer;
   quoteId: string | null;
   serviceName: string;
