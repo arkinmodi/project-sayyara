@@ -59,6 +59,7 @@ const testQuote: Quote = {
   update_time: new Date(),
   customer_id: "test_customer_id",
   shop_id: "test_shop_id",
+  service_id: null,
 };
 
 const testChatMessage: ChatMessage = {
