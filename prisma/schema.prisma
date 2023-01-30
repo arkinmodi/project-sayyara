@@ -173,9 +173,9 @@ model Service {
   type           ServiceType
   appointments   Appointment[]
   quotes         Quote[]
-  shop_id        String?
+  shop_id        String
 
-  shop Shop? @relation(fields: [shop_id], references: [id])
+  shop Shop @relation(fields: [shop_id], references: [id])
 
   @@index([shop_id])
 }

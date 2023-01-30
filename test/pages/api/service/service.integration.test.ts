@@ -49,7 +49,7 @@ const testService: ServiceWithPartsType = {
       build: "OEM",
     },
   ],
-  shop_id: null,
+  shop_id: "test_shop_id",
 };
 
 const testEmployeeUser: Employee = {
