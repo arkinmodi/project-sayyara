@@ -40,11 +40,13 @@ export const readAppointments = (payload: void) => ({
 export const setAppointments = (
   payload: IAppointmentActionSetAppointments["payload"]
 ) => ({
-  type: AppointmentTypes.SET_APPOINTMENT_STATUS,
+  type: AppointmentTypes.SET_APPOINTMENTS,
   payload,
 });
 
-export const setAppointmentsStatus = (payload: AppointmentStatus) => ({
+export const setAppointmentStatus = (
+  payload: IAppointmentActionSetAppointmentStatus["payload"]
+) => ({
   type: AppointmentTypes.SET_APPOINTMENT_STATUS,
   payload,
 });

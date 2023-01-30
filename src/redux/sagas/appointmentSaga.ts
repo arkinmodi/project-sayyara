@@ -14,6 +14,9 @@ import {
   IAppointmentActionSetAppointmentStatus,
 } from "../actions/appointmentAction";
 import AppointmentTypes from "../types/appointmentTypes";
+import { getCustomerById } from "./util/customerUtil";
+import { getServiceById } from "./util/serviceUtil";
+import { getVehicleById } from "./util/vehicleUtil";
 
 interface IPostCreateBody {
   service_type: ServiceType;
@@ -52,20 +55,52 @@ function getAllAppointments(): Promise<IAppointment[]> {
   }).then((res) => {
     if (res.status === 200) {
       return res.json().then((data) => {
-        const appointments = data.map((appointment: Appointment) => {
-          return {
-            id: appointment.id,
-            startTime: appointment.start_time,
-            endTime: appointment.end_time,
-            shopId: appointment.shop_id,
-            customerId: appointment.customer_id,
-            quoteId: appointment.quote_id,
-            service_id: appointment.service_id,
-            price: appointment.price,
-            status: appointment.status,
-          };
+        const appointments = data
+          .map((appointment: Appointment) => {
+            const vehicleId = appointment.vehicle_id;
+            const customerId = appointment.customer_id;
+            const serviceId = appointment.service_id;
+
+            if (vehicleId && customerId && serviceId) {
+              const vehiclePromise = getVehicleById(vehicleId);
+              const customerPromise = getCustomerById(customerId);
+              const servicePromise = getServiceById(serviceId);
+
+              return Promise.all([
+                vehiclePromise,
+                customerPromise,
+                servicePromise,
+              ]).then((values) => {
+                const vehicle = values[0];
+                const customer = values[1];
+                const service = values[2];
+
+                return {
+                  id: appointment.id,
+                  startTime: appointment.start_time,
+                  endTime: appointment.end_time,
+                  customer: customer,
+                  shopId: appointment.shop_id,
+                  quoteId: appointment.quote_id,
+                  serviceName: service?.name,
+                  price: appointment.price,
+                  status: appointment.status,
+                  workOrderId: appointment.work_order_id,
+                  vehicle: vehicle,
+                };
+              });
+            } else {
+              // Return undefined if vehicle, customer, or service are null and filter out invalid appointments below
+              return;
+            }
+          })
+          .filter((appointment: IAppointment | undefined) => {
+            return appointment !== undefined;
+          });
+
+        return Promise.all(appointments).then((appointmentList) => {
+          return appointmentList;
         });
-        return appointments;
       });
     } else {
       // TODO: check and handle errors
