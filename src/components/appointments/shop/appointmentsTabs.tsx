@@ -1,5 +1,6 @@
 import styles from "@styles/pages/appointments/ShopAppointments.module.css";
 import { TabPanel, TabView } from "primereact/tabview";
+import React from "react";
 import { AppointmentStatus } from "../../../types/appointment";
 import ShopAppointments from "./shopAppointments";
 

@@ -2,7 +2,7 @@
   width: 80%;
 }
 
-.h3 {
+.serviceNameHeaderText {
   margin-top: 0;
 }
 
@@ -18,7 +18,7 @@
   text-align: right;
 }
 
-.buttonSize {
+.appointmentCardButton {
   width: 150px;
   height: 40px;
   margin: 6px;

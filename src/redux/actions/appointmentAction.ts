@@ -44,7 +44,9 @@ export const setAppointments = (
   payload,
 });
 
-export const setAppointmentsStatus = (payload: AppointmentStatus) => ({
+export const setAppointmentStatus = (
+  payload: IAppointmentActionSetAppointmentStatus["payload"]
+) => ({
   type: AppointmentTypes.SET_APPOINTMENT_STATUS,
   payload,
 });

@@ -1,8 +1,9 @@
-import AppointmentTypes from "@redux/types/appointmentTypes";
+import { setAppointmentStatus } from "@redux/actions/appointmentAction";
 import styles from "@styles/pages/appointments/ShopAppointments.module.css";
 import classNames from "classnames";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { AppointmentStatus, IAppointment } from "../../../types/appointment";
 
@@ -20,8 +21,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     appointment: IAppointment,
     status: AppointmentStatus
   ): void => {
-    const payload = { id: appointment.id, status: status };
-    dispatch({ type: AppointmentTypes.SET_APPOINTMENT_STATUS, payload });
+    dispatch(setAppointmentStatus({ id: appointment.id, status: status }));
   };
 
   const renderRequestedCardLeft = () => {
@@ -29,12 +29,12 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
       <div className={styles.textAlign}>
         {/* TODO: Link to quote and pass in quote id */}
         <div className={styles.grayText}>View Quote </div>
-        <div className={styles.flex}>
+        <div>
           <Button
             label="Reject"
             className={classNames(
               styles.appointmentButtonBlue,
-              styles.buttonSize
+              styles.appointmentCardButton
             )}
             onClick={() =>
               handleButtonClick(appointment, AppointmentStatus.REJECTED)
@@ -44,7 +44,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
             label="Accept"
             className={classNames(
               styles.appointmentButtonGreen,
-              styles.buttonSize
+              styles.appointmentCardButton
             )}
             onClick={() =>
               handleButtonClick(appointment, AppointmentStatus.ACCEPTED)
@@ -61,12 +61,12 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
       <div className={styles.textAlign}>
         {/* TODO: Link to quote and pass in quote id */}
         <div className={styles.grayText}>View Quote </div>
-        <div className={styles.flex}>
+        <div>
           <Button
             label="Cancel"
             className={classNames(
               styles.appointmentButtonRed,
-              styles.buttonSize
+              styles.appointmentCardButton
             )}
             onClick={() =>
               handleButtonClick(appointment, AppointmentStatus.REJECTED)
@@ -76,7 +76,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
             label="In Progress"
             className={classNames(
               styles.appointmentButtonGreen,
-              styles.buttonSize
+              styles.appointmentCardButton
             )}
             onClick={() =>
               handleButtonClick(appointment, AppointmentStatus.IN_PROGRESS)
@@ -95,7 +95,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
           label="Complete"
           className={classNames(
             styles.appointmentButtonGreen,
-            styles.buttonSize
+            styles.appointmentCardButton
           )}
           onClick={() =>
             handleButtonClick(appointment, AppointmentStatus.COMPLETED)
@@ -122,7 +122,9 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     <Card className={styles.appointmentCard}>
       <div className={styles.cardContents}>
         <div>
-          <h3 className={styles.h3}>{appointment.serviceName}</h3>
+          <h3 className={styles.serviceNameHeaderText}>
+            {appointment.serviceName}
+          </h3>
           <div>Customer Name:</div>
           <div>
             Start time: {new Date(appointment.startTime).toLocaleString()}
