@@ -36,7 +36,17 @@ const seed = async () => {
       last_name: "Stone",
       phone_number: "9055259140",
       type: "SHOP_OWNER",
-      shop: { create: {} },
+      shop: {
+        create: {
+          name: "Big Boss Mechanics",
+          address: "1280 Main Street West",
+          phone_number: "905-525-9140",
+          email: "example@sayyara.com",
+          postal_code: "L8S 4L8",
+          city: "Hamilton",
+          province: "Ontario",
+        },
+      },
     },
   });
 

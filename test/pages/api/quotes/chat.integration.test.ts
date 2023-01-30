@@ -58,6 +58,7 @@ const testShop: Shop = {
   postal_code: "test_postal_code",
   city: "test_city",
   province: "test_province",
+  hours_of_operation: null,
 };
 
 const testQuote: Quote = {
@@ -261,7 +262,18 @@ const createEmployee = async () => {
 };
 
 const createShop = async () => {
-  return await prisma.shop.create({ data: testShop });
+  return await prisma.shop.create({
+    data: {
+      id: testShop.id,
+      phone_number: testShop.phone_number,
+      email: testShop.email,
+      name: testShop.name,
+      address: testShop.address,
+      postal_code: testShop.postal_code,
+      city: testShop.city,
+      province: testShop.province,
+    },
+  });
 };
 
 const createQuote = async () => {
