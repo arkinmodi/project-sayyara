@@ -8,7 +8,10 @@ import {
   takeEvery,
 } from "redux-saga/effects";
 import { IParts, IService, ServiceType } from "src/types/service";
-import { IServiceActionCreateService } from "../actions/serviceAction";
+import {
+  IServiceActionCreateService,
+  IServiceActionSetService,
+} from "../actions/serviceAction";
 import ServiceTypes from "../types/serviceTypes";
 
 interface IPostCreateBody {
@@ -71,19 +74,19 @@ function getAllServices(shopId: string): Promise<IService[]> {
   });
 }
 
-// function* setService(
-//   action: IServiceActionSetService
-// ): Generator<CallEffect | PutEffect> {
-//   const success = yield call(patchService, action.payload);
-//   // if (success) {
-//   //   yield call(readServices);
-//   // }
-// }
+function* setService(
+  action: IServiceActionSetService
+): Generator<CallEffect | PutEffect> {
+  const success = yield call(patchService, action.payload);
+  // if (success) {
+  //   yield call(readServices);
+  // }
+}
 
 function* readServices(shopId: string): Generator<CallEffect | PutEffect> {
   const services = yield call(getAllServices, shopId);
   yield put({
-    type: ServiceTypes.SET_SERVICE,
+    type: ServiceTypes.SET_SERVICES,
     payload: { services },
   });
 }
@@ -142,7 +145,7 @@ function* createService(
  */
 export function* serviceSaga() {
   yield all([
-    // takeEvery(ServiceTypes.SET_SERVICE, setService),
+    takeEvery(ServiceTypes.SET_SERVICES, setService),
     takeEvery(ServiceTypes.READ_SERVICES, readServices),
     takeEvery(ServiceTypes.CREATE_SERVICE, createService),
     takeEvery(ServiceTypes.DELETE_SERVICE, deleteService),

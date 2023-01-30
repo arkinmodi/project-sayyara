@@ -9,6 +9,7 @@ import {
   initialAppointmentsState,
 } from "./state/user/appointmentState";
 import { IAuthState, initialAuthState } from "./state/user/authState";
+import { IServiceState } from "./state/user/serviceState";
 
 /**
  * Note: next-redux-wrapper automatically creates the store instances and ensures they all have the same state
@@ -21,6 +22,7 @@ interface SagaStore extends Store {
 export interface RootState {
   auth: IAuthState;
   appointments: IAppointmentsState;
+  services: IServiceState;
 }
 
 const initialState = {

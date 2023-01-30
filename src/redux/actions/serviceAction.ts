@@ -42,7 +42,7 @@ export const readServices = (payload: void) => ({
 });
 
 export const setService = (payload: IServiceActionSetService["payload"]) => ({
-  type: ServiceTypes.SET_SERVICE,
+  type: ServiceTypes.SET_SERVICES,
   payload,
 });
 
