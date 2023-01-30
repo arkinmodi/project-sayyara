@@ -48,7 +48,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
       appointmentsMap[date]!.push(appointment);
     }
     setAppointmentsMap(appointmentsMap);
-  }, [appointments, setAppointmentsMap]);
+  }, [appointments, setAppointmentsMap, appointmentTab]);
 
   function listAppointmentCards(date: string) {
     let content: any = [];
