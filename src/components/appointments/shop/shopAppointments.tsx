@@ -22,7 +22,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
   }>({});
 
   useEffect(() => {
-    dispatch({ type: AppointmentTypes.READ_APPOINTMENTS });
+    dispatch(readAppointments());
   }, [dispatch]);
 
   useEffect(() => {
