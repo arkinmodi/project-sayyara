@@ -9,6 +9,7 @@ import {
   initialAppointmentsState,
 } from "./state/user/appointmentState";
 import { IAuthState, initialAuthState } from "./state/user/authState";
+import { initialWorkOrderState, IWorkOrderState } from "./state/workOrderState";
 
 /**
  * Note: next-redux-wrapper automatically creates the store instances and ensures they all have the same state
@@ -21,11 +22,13 @@ interface SagaStore extends Store {
 export interface RootState {
   auth: IAuthState;
   appointments: IAppointmentsState;
+  workOrder: IWorkOrderState;
 }
 
 const initialState = {
   auth: initialAuthState,
   appointments: initialAppointmentsState,
+  workOrder: initialWorkOrderState,
 };
 
 export const makeStore = (_context: Context) => {
