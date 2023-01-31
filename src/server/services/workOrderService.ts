@@ -1,3 +1,4 @@
+import exclude from "@server/common/excludeField";
 import { prisma } from "@server/db/client";
 import { z } from "zod";
 
@@ -30,7 +31,7 @@ export const createWorkOrder = async (workOrder: CreateWorkOrderType) => {
 };
 
 export const getWorkOrderById = async (id: string) => {
-  return await prisma.workOrder.findUnique({
+  const workOrder = await prisma.workOrder.findUnique({
     where: { id },
     include: {
       customer: true,
@@ -38,10 +39,14 @@ export const getWorkOrderById = async (id: string) => {
       employee: true,
     },
   });
+  if (workOrder && workOrder.employee) {
+    exclude(workOrder.employee, ["password"]);
+  }
+  return workOrder;
 };
 
 export const getWorkOrdersByShopId = async (shopId: string) => {
-  return await prisma.workOrder.findMany({
+  const workOrders = await prisma.workOrder.findMany({
     where: { shop_id: shopId },
     include: {
       customer: true,
@@ -49,6 +54,13 @@ export const getWorkOrdersByShopId = async (shopId: string) => {
       employee: true,
     },
   });
+
+  for (const workOrder of workOrders) {
+    if (workOrder && workOrder.employee) {
+      exclude(workOrder.employee, ["password"]);
+    }
+  }
+  return workOrders;
 };
 
 export const updateWorkOrderSchema = z.object({
@@ -57,6 +69,7 @@ export const updateWorkOrderSchema = z.object({
   appointment_id: z.string().optional(),
   employee_id: z.string().optional(),
 });
+
 export type UpdateWorkOrderType = z.infer<typeof updateWorkOrderSchema>;
 
 export const updateWorkOrderById = async (
