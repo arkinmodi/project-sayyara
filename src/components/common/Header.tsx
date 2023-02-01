@@ -51,6 +51,12 @@ const Header = () => {
           Router.push("/shop/dashboard");
         },
       },
+      {
+        label: "Manage Shop",
+        command: () => {
+          Router.push("/shop/manage");
+        },
+      },
     ];
   }, []);
 

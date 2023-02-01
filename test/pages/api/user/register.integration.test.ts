@@ -9,9 +9,9 @@ import registerCustomerHandler from "@pages/api/user/register/customer";
 import registerEmployeeHandler from "@pages/api/user/register/employee";
 import registerShopOwnerHandler from "@pages/api/user/register/shopOwner";
 import {
-  CustomerWithVehicles,
+  CustomerWithVehiclesType,
   Employee,
-  EmployeeWithShop,
+  EmployeeWithShopType,
   prisma,
 } from "@server/db/client";
 import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
@@ -31,7 +31,7 @@ const testEmployee: Employee = {
   status: "ACTIVE",
 };
 
-const testShopOwner: EmployeeWithShop = {
+const testShopOwner: EmployeeWithShopType = {
   id: "",
   first_name: "shop_owner_first_name",
   last_name: "shop_owner_last_name",
@@ -48,10 +48,18 @@ const testShopOwner: EmployeeWithShop = {
     id: "shop_id",
     create_time: new Date(),
     update_time: new Date(),
+    name: "test_shop_name",
+    address: "test_address",
+    phone_number: "test_phone_number",
+    email: "test@email.com",
+    postal_code: "test_postal_code",
+    city: "test_city",
+    province: "test_province",
+    hours_of_operation: null,
   },
 };
 
-const testCustomer: CustomerWithVehicles = {
+const testCustomer: CustomerWithVehiclesType = {
   id: "",
   first_name: "customer_first_name",
   last_name: "customer_last_name",
@@ -147,7 +155,17 @@ describe("new user registration", () => {
     it("should create new employee", async () => {
       // Create Shop
       // TODO: Use REST controller
-      const shop = await prisma.shop.create({ data: {} });
+      const shop = await prisma.shop.create({
+        data: {
+          phone_number: testShopOwner.shop.phone_number,
+          email: testShopOwner.shop.email,
+          name: testShopOwner.shop.name,
+          address: testShopOwner.shop.address,
+          postal_code: testShopOwner.shop.postal_code,
+          city: testShopOwner.shop.city,
+          province: testShopOwner.shop.province,
+        },
+      });
       testEmployee.shop_id = shop.id;
 
       const { req, res } = createMockRequestResponse({ method: "POST" });
@@ -190,7 +208,7 @@ describe("new user registration", () => {
         first_name: testShopOwner.first_name,
         last_name: testShopOwner.last_name,
         phone_number: testShopOwner.phone_number,
-        shop: {},
+        shop: testShopOwner.shop,
       };
 
       await registerShopOwnerHandler(req, res);

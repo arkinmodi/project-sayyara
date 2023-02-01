@@ -1,10 +1,10 @@
 import { Employee } from "@prisma/client";
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import {
-  getEmployeeById,
   updateEmployeeById,
   updateEmployeeSchema,
 } from "@server/services/employeeManagementService";
+import { getEmployeeById } from "@server/services/userService";
 import { NextApiRequest, NextApiResponse } from "next";
 import type { Session } from "next-auth";
 

@@ -38,11 +38,13 @@ interface IPostShopEmployeeSignUpBody extends IPostSignUpBody {
 
 interface IPostShopOwnerSignUpBody extends IPostSignUpBody {
   shop: {
-    shop_address: string;
-    shop_city: string;
-    shop_province: string;
-    shop_postal_code: string;
-    shop_phone_number: string;
+    name: string;
+    address: string;
+    city: string;
+    province: string;
+    postal_code: string;
+    phone_number: string;
+    email: string;
   };
 }
 
@@ -199,11 +201,13 @@ function* shopOwnerSignUp(
     first_name: payload.firstName,
     last_name: payload.lastName,
     shop: {
-      shop_address: payload.shopAddress,
-      shop_city: payload.shopCity,
-      shop_province: payload.shopProvince,
-      shop_postal_code: payload.shopPostalCode,
-      shop_phone_number: payload.shopPhoneNumber,
+      name: payload.shopName,
+      address: payload.shopAddress,
+      city: payload.shopCity,
+      province: payload.shopProvince,
+      postal_code: payload.shopPostalCode,
+      phone_number: payload.shopPhoneNumber,
+      email: payload.shopEmail,
     },
   };
   const success = yield call(postShopOwnerSignUp, body);

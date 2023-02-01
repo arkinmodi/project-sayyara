@@ -6,23 +6,82 @@
  */
 import appointmentHandler from "@pages/api/appointment";
 import appointmentByIdHandler from "@pages/api/appointment/[id]";
-import { Employee, prisma } from "@server/db/client";
+import {
+  Customer,
+  Employee,
+  prisma,
+  ServiceWithPartsType,
+  Shop,
+  Vehicle,
+} from "@server/db/client";
 import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 import { Session } from "next-auth";
+
+const testShop: Shop = {
+  id: "test_shop_id",
+  create_time: new Date(),
+  update_time: new Date(),
+  name: "test_shop_name",
+  address: "test_address",
+  phone_number: "test_phone_number",
+  email: "test@email.com",
+  postal_code: "test_postal_code",
+  city: "test_city",
+  province: "test_province",
+  hours_of_operation: null,
+};
 
 const testEmployeeUser: Employee = {
   id: "test_id",
   first_name: "first_name",
   last_name: "last_name",
-  email: "user@test.com",
-  password: "test_password",
   phone_number: "1234567890",
+  email: "employee@test.com",
+  password: "test_password",
   image: null,
   create_time: new Date(),
   update_time: new Date(),
   type: "SHOP_OWNER",
-  shop_id: "shop_id",
+  shop_id: testShop.id,
   status: "ACTIVE",
+};
+
+const testVehicle: Vehicle = {
+  id: "test_customer_vehicle_id",
+  create_time: new Date(),
+  update_time: new Date(),
+  customer_id: "test_customer_id",
+  license_plate: "test_license_plate",
+  make: "test_make",
+  model: "test_model",
+  vin: "test_vin",
+  year: 2017,
+};
+
+const testCustomerUser: Customer = {
+  id: "test_customer_id",
+  create_time: new Date(),
+  update_time: new Date(),
+  first_name: "first_name",
+  last_name: "last_name",
+  phone_number: "1234567890",
+  email: "customer@test.com",
+  password: "test_password",
+  image: null,
+  type: "CUSTOMER",
+};
+
+const testService: ServiceWithPartsType = {
+  id: "test_service_id",
+  create_time: new Date(),
+  update_time: new Date(),
+  name: "test_name",
+  description: "test_description",
+  estimated_time: 2,
+  total_price: 100,
+  parts: [],
+  type: "CANNED",
+  shop_id: testShop.id,
 };
 
 //
@@ -47,7 +106,7 @@ const testEmployeeUser: Employee = {
 
 const appointment = {
   id: "",
-  service_type: "CANNED",
+  price: 200,
   start_time: new Date("2023-11-09T02:00:00.000Z"),
   end_time: new Date("2023-11-09T04:00:00.000Z"),
 };
@@ -55,31 +114,31 @@ const appointment = {
 const conflictingAppointments = [
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T01:30:00.000Z"),
     end_time: new Date("2023-11-09T02:30:00.000Z"),
   },
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T02:45:00.000Z"),
     end_time: new Date("2023-11-09T03:15:00.000Z"),
   },
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T03:30:00.000Z"),
     end_time: new Date("2023-11-09T04:30:00.000Z"),
   },
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T01:30:00.000Z"),
     end_time: new Date("2023-11-09T04:30:00.000Z"),
   },
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T02:00:00.000Z"),
     end_time: new Date("2023-11-09T04:00:00.000Z"),
   },
@@ -88,25 +147,25 @@ const conflictingAppointments = [
 const notConflictingAppointments = [
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T04:30:00.000Z"),
     end_time: new Date("2023-11-09T05:30:00.000Z"),
   },
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T01:00:00.000Z"),
     end_time: new Date("2023-11-09T02:00:00.000Z"),
   },
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T04:00:00.000Z"),
     end_time: new Date("2023-11-09T05:00:00.000Z"),
   },
   {
     id: "",
-    service_type: "CANNED",
+    price: 200,
     start_time: new Date("2023-11-09T01:00:00.000Z"),
     end_time: new Date("2023-11-09T01:30:00.000Z"),
   },
@@ -132,14 +191,27 @@ afterAll(async () => {
 });
 
 afterEach(async () => {
-  const deleteAppointments = prisma.appointment.deleteMany({});
-  const deleteWorkOrders = prisma.workOrder.deleteMany({});
-  await prisma.$transaction([deleteAppointments, deleteWorkOrders]);
+  await prisma.$transaction([
+    prisma.appointment.deleteMany({}),
+    prisma.workOrder.deleteMany({}),
+    prisma.service.deleteMany({}),
+    prisma.customer.deleteMany({}),
+    prisma.vehicle.deleteMany({}),
+    prisma.employee.deleteMany({}),
+    prisma.shop.deleteMany({}),
+  ]);
 });
 
 describe("update appointment", () => {
   describe("given appointment has been accepted", () => {
     it("should accept appointment and only reject conflicting appointments", async () => {
+      // Create Customer, Vehicle, Shop, Employee and Service
+      await createCustomer();
+      await createVehicle();
+      await createShop();
+      await createEmployee();
+      await createService();
+
       // Create Appointments
       for (const ap of [
         appointment,
@@ -147,7 +219,13 @@ describe("update appointment", () => {
         ...notConflictingAppointments,
       ]) {
         const { req, res } = createMockRequestResponse({ method: "POST" });
-        req.body = ap;
+        req.body = {
+          ...ap,
+          vehicle_id: testVehicle.id,
+          customer_id: testCustomerUser.id,
+          shop_id: testShop.id,
+          service_id: testService.id,
+        };
         await appointmentHandler(req, res);
 
         expect(res.statusCode).toBe(201);
@@ -189,3 +267,34 @@ describe("update appointment", () => {
     });
   });
 });
+
+const createCustomer = async () => {
+  return await prisma.customer.create({ data: testCustomerUser });
+};
+
+const createEmployee = async () => {
+  return await prisma.employee.create({ data: testEmployeeUser });
+};
+
+const createShop = async () => {
+  return await prisma.shop.create({
+    data: {
+      id: testShop.id,
+      phone_number: testShop.phone_number,
+      email: testShop.email,
+      name: testShop.name,
+      address: testShop.address,
+      postal_code: testShop.postal_code,
+      city: testShop.city,
+      province: testShop.province,
+    },
+  });
+};
+
+const createVehicle = async () => {
+  return await prisma.vehicle.create({ data: testVehicle });
+};
+
+const createService = async () => {
+  return await prisma.service.create({ data: testService });
+};

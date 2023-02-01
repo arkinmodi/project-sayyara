@@ -35,16 +35,32 @@ export const partSchema = z.object({
   build: z.enum(["OEM", "AFTER_MARKET"]),
 });
 
+const operatingDaySchema = z.object({
+  isOpen: z.boolean(),
+  openTime: z.string().datetime({ precision: 0 }),
+  closeTime: z.string().datetime({ precision: 0 }),
+});
+
+export const hoursOfOperationSchema = z.object({
+  monday: operatingDaySchema,
+  tuesday: operatingDaySchema,
+  wednesday: operatingDaySchema,
+  thursday: operatingDaySchema,
+  friday: operatingDaySchema,
+  saturday: operatingDaySchema,
+  sunday: operatingDaySchema,
+});
+
 export type PartType = z.infer<typeof partSchema>;
 
 export type ServiceWithPartsType = {
   parts: PartType[];
 } & Service;
 
-export type CustomerWithVehicles = {
+export type CustomerWithVehiclesType = {
   vehicles: Vehicle[];
 } & Customer;
 
-export type EmployeeWithShop = {
+export type EmployeeWithShopType = {
   shop: Shop;
 } & Employee;

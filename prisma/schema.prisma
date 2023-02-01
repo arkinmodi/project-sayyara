@@ -48,31 +48,36 @@ model Customer {
   vehicles      Vehicle[]
 }
 
-// TODO: re-evaluate what should be optional for Appointment
 model Appointment {
   id            String            @id @default(cuid())
   create_time   DateTime          @default(now())
   update_time   DateTime          @updatedAt
-  quote_id      String?           @unique
+  quote_id      String?
   work_order_id String            @unique
-  vehicle_id    String?           @unique
-  service_type  ServiceType
-  price         Float?
-  employee_id   String?           @unique
-  customer_id   String?           @unique
-  status        AppointmentStatus
+  vehicle_id    String
+  price         Float
+  employee_id   String?
+  customer_id   String
+  status        AppointmentStatus @default(PENDING_APPROVAL)
   start_time    DateTime
   end_time      DateTime
-  shop_id       String?
+  shop_id       String
+  service_id    String
 
-  vehicle    Vehicle?  @relation(fields: [vehicle_id], references: [id])
+  vehicle    Vehicle   @relation(fields: [vehicle_id], references: [id])
   quote      Quote?    @relation(fields: [quote_id], references: [id])
   work_order WorkOrder @relation(fields: [work_order_id], references: [id])
   employee   Employee? @relation(fields: [employee_id], references: [id])
-  customer   Customer? @relation(fields: [customer_id], references: [id])
-  shop       Shop?     @relation(fields: [shop_id], references: [id])
+  customer   Customer  @relation(fields: [customer_id], references: [id])
+  shop       Shop      @relation(fields: [shop_id], references: [id])
+  service    Service   @relation(fields: [service_id], references: [id])
 
   @@index([shop_id])
+  @@index([service_id])
+  @@index([vehicle_id])
+  @@index([customer_id])
+  @@index([employee_id])
+  @@index([quote_id])
 }
 
 model Quote {
@@ -81,14 +86,17 @@ model Quote {
   update_time DateTime @updatedAt
   customer_id String
   shop_id     String
+  service_id  String?
 
   customer      Customer      @relation(fields: [customer_id], references: [id])
   shop          Shop          @relation(fields: [shop_id], references: [id])
-  appointment   Appointment?
+  service       Service?      @relation(fields: [service_id], references: [id])
+  appointments  Appointment[]
   chat_messages ChatMessage[]
 
   @@index([customer_id])
   @@index([shop_id])
+  @@index([service_id])
 }
 
 model ChatMessage {
@@ -137,27 +145,39 @@ model Shop {
   id            String        @id @default(cuid())
   create_time   DateTime      @default(now())
   update_time   DateTime      @updatedAt
+  name String
+  address String
+  phone_number String
+  email String
+  postal_code String
+  city String
+  province String
+  hours_of_operation Json?
+
   appointments  Appointment[]
   employees     Employee[]
   chat_messages ChatMessage[]
   quotes        Quote[]
-  // services     Service[]
+  services      Service[]
 }
 
 model Service {
-  id             String   @id @default(cuid())
-  create_time    DateTime @default(now())
-  update_time    DateTime @updatedAt
+  id             String        @id @default(cuid())
+  create_time    DateTime      @default(now())
+  update_time    DateTime      @updatedAt
   name           String
   description    String
   estimated_time Int
   total_price    Float
   parts          Json
-  // shop_id        String?
+  type           ServiceType
+  appointments   Appointment[]
+  quotes         Quote[]
+  shop_id        String
 
-  // shop Shop? @relation(fields: [shop_id], references: [id])
+  shop Shop @relation(fields: [shop_id], references: [id])
 
-  // @@index([shop_id])
+  @@index([shop_id])
 }
 
 enum UserType {
@@ -176,6 +196,8 @@ enum AppointmentStatus {
   PENDING_APPROVAL
   ACCEPTED
   REJECTED
+  IN_PROGRESS
+  COMPLETED
 }
 
 enum EmployeeStatus {

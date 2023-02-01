@@ -44,6 +44,7 @@ export interface IAuthActionCreateShopEmployeeSignUp extends IAuthActionBase {
 
 export interface IAuthActionCreateShopOwnerSignUp extends IAuthActionBase {
   payload: {
+    shopName: string;
     csrfToken: string;
     email: string;
     phoneNumber: string;
@@ -55,6 +56,7 @@ export interface IAuthActionCreateShopOwnerSignUp extends IAuthActionBase {
     shopPostalCode: string;
     shopProvince: string;
     shopPhoneNumber: string;
+    shopEmail: string;
   };
 }
 
