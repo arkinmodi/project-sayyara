@@ -21,12 +21,13 @@ export interface IAuthSignUpFormShopEmployeeValues
 }
 
 export interface IAuthSignUpFormShopOwnerValues extends IAuthSignUpFormValues {
+  shopName: string;
   shopAddress: string;
   shopPostalCode: string;
   shopPhoneNumber: string;
-  shopName: string;
   shopCity: string;
   shopProvince: string;
+  shopEmail: string;
 }
 
 export interface ILoginFormValues {

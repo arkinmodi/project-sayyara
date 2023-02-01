@@ -17,12 +17,13 @@ const initialAuthSignUpFormShopOwnerValues: IAuthSignUpFormShopOwnerValues = {
   password: "",
   firstName: "",
   lastName: "",
+  shopName: "",
   shopAddress: "",
   shopProvince: "",
   shopPostalCode: "",
-  shopName: "",
   shopPhoneNumber: "",
   shopCity: "",
+  shopEmail: "",
 };
 
 const AuthSignUpFormShopOwner = (props: IAuthSignUpFormShopOwnerProps) => {
