@@ -83,6 +83,7 @@ const Conversations = () => {
         onChange={(e: ListBoxChangeParams) => setChat(e.value)}
         filterBy="name"
         itemTemplate={chatItem}
+        listStyle={{ maxHeight: "32.5rem" }}
       />
     </div>
   );
