@@ -8,7 +8,7 @@ const ManageShopTabs = () => {
         {/* TODO: Add manage services page here */}
       </TabPanel>
       <TabPanel header="Employees">
-        {/* //TODO: Add manage employees page here */}
+        {/* TODO: Add manage employees page here */}
       </TabPanel>
     </TabView>
   );
