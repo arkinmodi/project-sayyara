@@ -45,7 +45,7 @@
     "redux": "^4.2.0",
     "redux-saga": "^1.2.1",
     "reselect": "^4.1.7",
-    "zod": "^3.19.1"
+    "zod": "^3.20.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",

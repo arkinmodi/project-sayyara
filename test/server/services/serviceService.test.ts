@@ -19,7 +19,7 @@ const testService: Service = {
   total_price: 100,
   parts: null,
   type: "CANNED",
-  shop_id: "test_shop_id",
+  shop_id: "shop_id",
 };
 
 describe("get service", () => {

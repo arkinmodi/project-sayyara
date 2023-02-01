@@ -28,7 +28,7 @@
 
 .authFormBody {
   width: 100%;
-  min-height: 375px;
+  min-height: 450px;
 }
 
 .authFormGroup {
@@ -117,5 +117,10 @@
 
   .authFormShopRoleButtonGroup {
     margin-top: 40%;
+  }
+
+  .authFormBody {
+    width: 100%;
+    min-height: 200px;
   }
 }
