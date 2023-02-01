@@ -1,6 +1,10 @@
-import { getWorkOrderByIdActionBuilder } from "@redux/actions/workOrderAction";
+import {
+  getWorkOrderByIdActionBuilder,
+  patchWorkOrderByIdActionBuilder,
+} from "@redux/actions/workOrderAction";
 import { WorkOrderSelectors } from "@redux/selectors/workOrderSelector";
 import { NextPage } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button } from "primereact/button";
@@ -9,11 +13,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const WorkOrder: NextPage = () => {
-  const { query, isReady } = useRouter();
+  const { query } = useRouter();
   const { id } = query;
 
   const dispatch = useDispatch();
   const workOrder = useSelector(WorkOrderSelectors.getWorkOrder);
+
+  const [workOrderBody, setWorkOrderBody] = useState(workOrder?.body);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (typeof id === "string") {
@@ -21,35 +28,159 @@ const WorkOrder: NextPage = () => {
     }
   }, [dispatch, id]);
 
-  return (
-    <div>
-      <h1>Hello World</h1>
-      <h2>{id}</h2>
-      <p>{JSON.stringify(workOrder)}</p>
-
-      <Link href="/">
-        <Button
-          className="p-button-secondary"
-          icon="pi pi-angle-left"
-          label="Back"
-          aria-label="Back"
-        />
-      </Link>
-
-      <WorkOrderEditor />
-    </div>
-  );
-};
-
-const WorkOrderEditor: React.FC<{}> = (props) => {
-  const workOrder = useSelector(WorkOrderSelectors.getWorkOrder);
-  const [workOrderBody, setWorkOrderBody] = useState(workOrder?.body);
-
   useEffect(() => {
     if (workOrder) {
       setWorkOrderBody(workOrder.body);
     }
   }, [workOrder]);
+
+  const handleSave = () => {
+    if (typeof id === "string") {
+      setIsSaving(true);
+      dispatch(
+        patchWorkOrderByIdActionBuilder(id, {
+          body: workOrderBody,
+        })
+      );
+      setIsSaving(false);
+    }
+  };
+
+  const formatDate = (date: Date) => {
+    const pad = (n: number) => `${n}`.padStart(2, "0");
+
+    const month = pad(date.getMonth() + 1);
+    const day = pad(date.getDate());
+    const year = pad(date.getFullYear());
+    const hour = pad(date.getHours());
+    const minutes = pad(date.getMinutes());
+    const seconds = pad(date.getSeconds());
+
+    return `${month}/${day}/${year} ${hour}:${minutes}:${seconds}`;
+  };
+
+  return (
+    <div style={{ margin: "1rem" }}>
+      <Head>
+        <title>{workOrder?.title ?? "Sayyara"}</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <div
+        style={{
+          display: "flex",
+          gap: "1rem",
+          alignItems: "center",
+        }}
+      >
+        <Link href="/">
+          <Button
+            className="p-button-secondary"
+            icon="pi pi-angle-left"
+            label="Back"
+            aria-label="Back"
+            style={{
+              maxHeight: "3rem",
+            }}
+          />
+        </Link>
+        <h1 style={{}}>{workOrder?.title ?? ""}</h1>
+      </div>
+
+      {workOrder && (
+        <div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              gap: "1rem",
+            }}
+          >
+            <p>
+              <b>Status: </b>
+              {`IDK`}
+            </p>
+            <p>
+              <b>Last Update: </b>
+              {formatDate(new Date(workOrder.update_time))}
+            </p>
+            <p>
+              <b>Customer: </b>
+              {`${workOrder.customer.first_name} ${workOrder.customer.last_name}`}
+            </p>
+            <p>
+              <b>Customer Email: </b>
+              {workOrder.customer.email}
+            </p>
+            <p>
+              <b>Customer Phone Number: </b>
+              {workOrder.customer.phone_number}
+            </p>
+            <p>
+              <b>Vehicle: </b>
+              {`${workOrder.vehicle.year} ${workOrder.vehicle.make} ${workOrder.vehicle.model}`}
+            </p>
+            <p>
+              <b>Vehicle VIN: </b>
+              {workOrder.vehicle.vin}
+            </p>
+            <p>
+              <b>Assigned to: </b>
+              {workOrder.employee
+                ? `${workOrder.employee.first_name} ${workOrder.employee.last_name}`
+                : "Unassigned"}
+            </p>
+          </div>
+          <div
+            style={{
+              marginBottom: "1rem",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Button label="Edit Metadata" aria-label="Edit Metadata" />
+          </div>
+        </div>
+      )}
+
+      <WorkOrderEditor
+        body={workOrderBody ?? ""}
+        updateBody={setWorkOrderBody}
+      />
+      <div
+        style={{
+          marginTop: "1rem",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-end",
+        }}
+      >
+        <Button
+          className="p-button-success"
+          icon="pi pi-save"
+          label="Save"
+          aria-label="Save"
+          onClick={handleSave}
+          disabled={isSaving}
+          style={{
+            width: "10rem",
+          }}
+        />
+
+        {workOrder && (
+          <p>Last Saved: {formatDate(new Date(workOrder.update_time))}</p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const WorkOrderEditor: React.FC<{
+  body: string;
+  updateBody: (body: string) => void;
+}> = (props) => {
+  const { body, updateBody } = props;
 
   const editorToolbar = () => {
     return (
@@ -103,8 +234,8 @@ const WorkOrderEditor: React.FC<{}> = (props) => {
   return (
     <Editor
       style={{ height: "40vh" }}
-      value={workOrderBody}
-      onTextChange={(e) => setWorkOrderBody(e.htmlValue ?? "")}
+      value={body}
+      onTextChange={(e) => updateBody(e.htmlValue ?? "")}
       headerTemplate={editorToolbar()}
     />
   );
