@@ -5,7 +5,7 @@ const ManageShopTabs = () => {
   return (
     <TabView>
       <TabPanel header="Services">
-        {/* //TODO: Add manage services page here */}
+        {/* TODO: Add manage services page here */}
       </TabPanel>
       <TabPanel header="Employees">
         {/* //TODO: Add manage employees page here */}
