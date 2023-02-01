@@ -1,28 +1,60 @@
-import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
-import AppointmentTypes from "@redux/types/appointmentTypes";
-import styles from "@styles/pages/appointments/Services.module.css";
+import ServiceTypes from "@redux/types/serviceTypes";
+import styles from "@styles/pages/services/Services.module.css";
 import { NextPage } from "next";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { InputText } from "primereact/inputtext";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { IService } from "src/types/service";
+import { useDispatch } from "react-redux";
 
 const Services: NextPage = () => {
-  const [services, setServices] = useState<IService[]>([]);
+  // const [services, setServices] = useState<IService[]>([]);
   const dispatch = useDispatch();
 
   const [globalFilter, setGlobalFilter] = useState(null);
 
-  const appointments = useSelector(AppointmentSelectors.getAppointments);
+  // const services = useSelector(ServiceSelectors.getServices);
 
   useEffect(() => {
-    dispatch({ type: AppointmentTypes.READ_APPOINTMENTS });
+    dispatch({ type: ServiceTypes.READ_SERVICES });
   }, [dispatch]);
 
+  const services = [
+    {
+      id: "1",
+      name: "oil change",
+      description: "changes the engine oil",
+      estimated_time: 5,
+      total_price: "$100",
+      parts: {
+        quantity: 5,
+        cost: 100,
+        name: "nails",
+        condition: "NEW",
+        build: "OEM",
+      },
+      type: "CANNED",
+      shop_id: "1",
+    },
+    {
+      id: "2",
+      name: "oil change for fancy car",
+      description: "changes the engine oil",
+      estimated_time: 5,
+      total_price: "$200",
+      parts: {
+        quantity: 5,
+        cost: 100,
+        name: "nails",
+        condition: "NEW",
+        build: "OEM",
+      },
+      type: "CANNED",
+      shop_id: "1",
+    },
+  ];
+
   //   useEffect(() => {
-  //     const services = appointments;
+  //     const services = services;
 
   //     setServices(services);
   //   }, [services, setServices]);
@@ -32,19 +64,19 @@ const Services: NextPage = () => {
       <h5 className="mx-0 my-1">Basic Services</h5>
       <span className="p-input-icon-left">
         <i className="pi pi-search" />
-        <InputText
+        {/* <InputText
           type="search"
           onInput={(e) => setGlobalFilter(e.target.value)}
           placeholder="Search..."
-        />
+        /> */}
       </span>
     </div>
   );
 
   return (
-    <div className={styles.appointmentServicesContainer}>
+    <div className={styles.serviceServicesContainer}>
       <DataTable
-        value={appointments}
+        value={services}
         paginator
         // className="p-datatable-customers"
         showGridlines
