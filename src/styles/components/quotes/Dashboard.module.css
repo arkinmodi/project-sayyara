@@ -1,9 +1,13 @@
 .chat {
-    flex-grow: 6;
+    flex: 6 1 auto;
 }
 
 .container {
     display: flex;
+}
+
+.conversationList {
+    flex: 1 1 auto;
 }
 
 .h2 {
@@ -14,8 +18,4 @@
 .hr {
     height: 3px;
     background-color: #436188;
-}
-
-.list {
-    flex-grow: 1;
 }

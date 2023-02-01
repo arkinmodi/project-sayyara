@@ -1,0 +1,15 @@
+.chatTitle {
+    display: flex;
+    background-color: #CCCCCC;
+    padding-left: 2rem;
+    border-radius: 5px;
+    height: 70px;
+}
+
+.span {
+    margin-left: 2rem;
+    align-items: center;
+    display: flex;
+    font-size: large;
+    font-weight: bold;
+}
