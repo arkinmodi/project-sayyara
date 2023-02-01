@@ -1,11 +1,12 @@
 import { TabPanel, TabView } from "primereact/tabview";
 import React from "react";
+import Services from "../../components/manage/services";
 
 const ManageShopTabs = () => {
   return (
     <TabView>
       <TabPanel header="Services">
-        {/* TODO: Add manage services page here */}
+        <Services />
       </TabPanel>
       <TabPanel header="Employees">
         {/* TODO: Add manage employees page here */}

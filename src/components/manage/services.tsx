@@ -3,8 +3,9 @@ import styles from "@styles/pages/services/Services.module.css";
 import { NextPage } from "next";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import { IParts } from "src/types/service";
 
 const Services: NextPage = () => {
   // const [services, setServices] = useState<IService[]>([]);
@@ -16,7 +17,12 @@ const Services: NextPage = () => {
 
   useEffect(() => {
     dispatch({ type: ServiceTypes.READ_SERVICES });
+    setLoading(false);
   }, [dispatch]);
+
+  const [loading, setLoading] = useState(true);
+
+  const toast = useRef(null);
 
   const services = [
     {
@@ -25,13 +31,15 @@ const Services: NextPage = () => {
       description: "changes the engine oil",
       estimated_time: 5,
       total_price: "$100",
-      parts: {
-        quantity: 5,
-        cost: 100,
-        name: "nails",
-        condition: "NEW",
-        build: "OEM",
-      },
+      parts: [
+        {
+          quantity: 5,
+          cost: 100,
+          name: "nails",
+          condition: "NEW",
+          build: "OEM",
+        },
+      ],
       type: "CANNED",
       shop_id: "1",
     },
@@ -41,13 +49,15 @@ const Services: NextPage = () => {
       description: "changes the engine oil",
       estimated_time: 5,
       total_price: "$200",
-      parts: {
-        quantity: 5,
-        cost: 100,
-        name: "nails",
-        condition: "NEW",
-        build: "OEM",
-      },
+      parts: [
+        {
+          quantity: 5,
+          cost: 100,
+          name: "nails",
+          condition: "NEW",
+          build: "OEM",
+        },
+      ],
       type: "CANNED",
       shop_id: "1",
     },
@@ -61,20 +71,41 @@ const Services: NextPage = () => {
 
   const header = (
     <div className="table-header">
-      <h5 className="mx-0 my-1">Basic Services</h5>
-      <span className="p-input-icon-left">
-        <i className="pi pi-search" />
-        {/* <InputText
-          type="search"
-          onInput={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search..."
-        /> */}
-      </span>
+      <h3 className="mx-0 my-1">Basic Services</h3>
     </div>
   );
 
+  // const onRowExpand = (event) => {
+  //   toast.current.show({
+  //     severity: "info",
+  //     summary: "Product Expanded",
+  //     detail: event.data.name,
+  //     life: 3000,
+  //   });
+  // };
+
+  const rowExpansionTemplate = (parts: IParts[]) => {
+    return (
+      <div className="p-3">
+        <h5>Parts</h5>
+        <DataTable value={parts} responsiveLayout="scroll">
+          <Column field="name" header="Name" sortable></Column>
+          <Column field="quantity" header="Quantity" sortable></Column>
+          <Column field="cost" header="Cost Per Unit" sortable></Column>
+          <Column field="condition" header="Part Condition"></Column>
+          <Column field="build" header="Part Type"></Column>
+        </DataTable>
+      </div>
+    );
+  };
+
+  // const allowExpansion = (rowData) => {
+  //   return rowData.orders.length > 0;
+  // };
+
   return (
     <div className={styles.serviceServicesContainer}>
+      {/* Basic Services Table */}
       <DataTable
         value={services}
         paginator
@@ -84,58 +115,48 @@ const Services: NextPage = () => {
         dataKey="id"
         // filters={filters}
         filterDisplay="menu"
-        // loading={loading}
+        loading={loading}
         responsiveLayout="scroll"
-        globalFilterFields={[
-          "name",
-          "country.name",
-          "representative.name",
-          "balance",
-          "status",
-        ]}
-        // header={header}
-        emptyMessage="No customers found."
+        globalFilterFields={["name"]}
+        header={header}
+        rowExpansionTemplate={rowExpansionTemplate}
+        emptyMessage="No services found."
       >
         <Column
-          field="serviceType"
-          header="Service Type"
-          //   filter
-          //   filterPlaceholder="Search by name"
+          field="name"
+          header="Service Name"
+          filter
+          sortable
+          filterPlaceholder="Search by service name"
           style={{ minWidth: "12rem" }}
         />
         <Column
           field="description"
           header="Description"
-          //   filter
-          //   filterPlaceholder="Search by name"
           style={{ minWidth: "12rem" }}
         />
-        <Column
-          field="partType"
-          header="Part Type"
-          //   filter
-          //   filterPlaceholder="Search by name"
+        {/* <Column
+          field="parts"
+          header="Parts"
+          // expander={allowExpansion}
           style={{ minWidth: "12rem" }}
-        />
-        <Column
+        /> */}
+        {/* <Column
           field="partCondition"
           header="Part Condition"
           //   filter
           //   filterPlaceholder="Search by name"
           style={{ minWidth: "12rem" }}
-        />
+        /> */}
         <Column
-          field="duration"
+          field="estimated_time"
           header="Duration"
-          //   filter
-          //   filterPlaceholder="Search by name"
           style={{ minWidth: "12rem" }}
         />
         <Column
-          field="cost"
+          field="total_price"
           header="Estimated Cost"
-          //   filter
-          //   filterPlaceholder="Search by name"
+          sortable
           style={{ minWidth: "12rem" }}
         />
       </DataTable>
