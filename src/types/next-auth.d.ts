@@ -1,5 +1,5 @@
 import { UserType } from "@server/db/client";
-import { DefaultSession, DefaultUser } from "next-auth";
+import { DefaultUser } from "next-auth";
 
 declare module "next-auth" {
   /**
@@ -12,7 +12,9 @@ declare module "next-auth" {
       lastName: string;
       email: string;
       type: UserType;
-    } & DefaultSession["user"];
+      shopId?: string | null;
+      image?: string | null;
+    };
   }
 
   interface User extends DefaultUser {
@@ -29,5 +31,6 @@ declare module "next-auth/jwt" {
     firstName: string;
     lastName: string;
     type: UserType;
+    shopId?: string;
   }
 }
