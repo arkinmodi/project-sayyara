@@ -1,12 +1,19 @@
 import styles from "@styles/components/chat/ChatTitle.module.css";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
+import img from "public/icons/icon-192x192.png";
+import { useSelector } from "react-redux";
+import { QuoteSelectors } from "src/redux/selectors/quoteSelectors";
 
 // TODO Interface for quote conversations
-const ChatTitle = ({ selectedChat }) => {
+const ChatTitle = () => {
   let chatTitleContents = null;
 
-  if (selectedChat) {
-    let img: StaticImageData = selectedChat.image;
+  const selectedChatId = useSelector(QuoteSelectors.getActiveChat);
+
+  if (selectedChatId) {
+    const selectedChat = useSelector(QuoteSelectors.getQuotes).get(
+      selectedChatId
+    );
     let name: string = selectedChat.name;
     chatTitleContents = (
       <>

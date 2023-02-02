@@ -2,60 +2,14 @@ import styles from "@styles/components/quotes/Conversations.module.css";
 import Image from "next/image";
 import { ListBox, ListBoxChangeParams } from "primereact/listbox";
 import image from "public/icons/icon-192x192.png";
-import { useState } from "react";
+import { useSelector } from "react-redux";
+import { QuoteSelectors } from "src/redux/selectors/quoteSelectors";
+import { IQuote } from "src/types/quotes";
 
-interface IChatItem {
-  name: string;
-  address: string;
-  lastUpdated: string;
-}
+const Conversations = ({ quotes }) => {
+  const selectedChat = useSelector(QuoteSelectors.getActiveChat);
 
-const Conversations = () => {
-  const [selectedChat, setChat] = useState(null);
-  const temp = [
-    {
-      name: "Shop Name 1",
-      address: "123 Address St.",
-      lastUpdated: "XX/XX/XX XX:XX PM",
-    },
-    {
-      name: "Shop Name 2",
-      address: "123 Address St.",
-      lastUpdated: "XX/XX/XX XX:XX PM",
-    },
-    {
-      name: "Shop Name 3",
-      address: "123 Address St.",
-      lastUpdated: "XX/XX/XX XX:XX PM",
-    },
-    {
-      name: "Shop Name 4",
-      address: "123 Address St.",
-      lastUpdated: "XX/XX/XX XX:XX PM",
-    },
-    {
-      name: "Shop Name 1",
-      address: "123 Address St.",
-      lastUpdated: "XX/XX/XX XX:XX PM",
-    },
-    {
-      name: "Shop Name 2",
-      address: "123 Address St.",
-      lastUpdated: "XX/XX/XX XX:XX PM",
-    },
-    {
-      name: "Shop Name 3",
-      address: "123 Address St.",
-      lastUpdated: "XX/XX/XX XX:XX PM",
-    },
-    {
-      name: "Shop Name 4",
-      address: "123 Address St.",
-      lastUpdated: "XX/XX/XX XX:XX PM",
-    },
-  ];
-
-  const chatItem = (option: IChatItem) => {
+  const chatItem = (option: IQuote) => {
     return (
       <div className={styles.chatItem}>
         <Image
@@ -79,8 +33,8 @@ const Conversations = () => {
         filter
         className={styles.listBox}
         value={selectedChat}
-        options={temp}
-        onChange={(e: ListBoxChangeParams) => setChat(e.value)}
+        options={quotes}
+        onChange={(e: ListBoxChangeParams) => e.value}
         filterBy="name"
         itemTemplate={chatItem}
         listStyle={{ maxHeight: "32.5rem" }}

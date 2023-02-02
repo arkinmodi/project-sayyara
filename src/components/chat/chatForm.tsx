@@ -1,3 +1,4 @@
+import styles from "@styles/components/chat/ChatForm.module.css";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
@@ -18,7 +19,7 @@ const ChatForm = ({ selectedChat, onMessageSubmit }) => {
         onChange={(e) => setTextMessage(e.target.value)}
       />
       {/* TODO: Onclick functionality */}
-      <Button icon="pi pi-send" onClick={test} />
+      <Button icon="pi pi-send" className={styles.button} onClick={test} />
     </div>
   );
 };
