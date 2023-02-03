@@ -13,7 +13,7 @@ const ChatTitle = () => {
   const quotes: IQuoteList = useSelector(QuoteSelectors.getQuotes);
 
   if (selectedChatId !== null) {
-    const selectedChat: IQuote = quotes[selectedChatId];
+    const selectedChat: IQuote = quotes[selectedChatId]!;
     let name: string = selectedChat.name;
     chatTitleContents = (
       <>
