@@ -2,7 +2,7 @@ import { UserType } from "@prisma/client";
 import {
   setIsAuthDialogOpen,
   setIsLoggedIn,
-  setUserType,
+  setUserSession,
 } from "@redux/actions/authActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/components/common/Header.module.css";
@@ -111,17 +111,29 @@ const Header = () => {
     if (!isLoggedIn && userData != null) {
       dispatch(setIsLoggedIn({ isLoggedIn: true }));
       // Load user session state
-      if (Object.values(UserType).includes(userData?.type)) {
-        dispatch(
-          setUserType({
-            userType: userData?.type,
-          })
-        );
-      }
+      dispatch(
+        setUserSession({
+          id: userData.id,
+          email: userData.email,
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          userType: userData.type,
+          shopId: userData.shopId ?? null,
+        })
+      );
     } else if (isLoggedIn && userData == null) {
       dispatch(setIsLoggedIn({ isLoggedIn: false }));
       // Reset user session state
-      dispatch(setUserType({ userType: undefined }));
+      dispatch(
+        setUserSession({
+          id: null,
+          email: null,
+          firstName: null,
+          lastName: null,
+          userType: null,
+          shopId: null,
+        })
+      );
     }
   }, [session?.user, isLoggedIn, dispatch]);
 

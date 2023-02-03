@@ -3,7 +3,14 @@ import { AuthDialogType } from "src/types/auth";
 
 export interface IAuthState {
   isLoggedIn: boolean;
-  userType: UserType | undefined;
+  session: {
+    id: string | null;
+    email: string | null;
+    firstName: string | null;
+    lastName: string | null;
+    userType: UserType | null;
+    shopId: string | null;
+  };
   authDialogState: {
     isAuthDialogOpen: boolean;
     authDialogType: AuthDialogType;
@@ -12,7 +19,14 @@ export interface IAuthState {
 
 export const initialAuthState: IAuthState = {
   isLoggedIn: false,
-  userType: undefined,
+  session: {
+    id: null,
+    email: null,
+    firstName: null,
+    lastName: null,
+    userType: null,
+    shopId: null,
+  },
   authDialogState: {
     isAuthDialogOpen: false,
     authDialogType: AuthDialogType.CUSTOMER,
