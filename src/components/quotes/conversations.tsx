@@ -14,9 +14,7 @@ const Conversations = () => {
 
   // Loads quote list from store and sorts by last created
   const quotes = Object.values(useSelector(QuoteSelectors.getQuotes));
-  quotes.sort(
-    (a: IQuote, b: IQuote) => b.createdAt.valueOf() - a.createdAt.valueOf()
-  );
+  quotes.sort((a: IQuote, b: IQuote) => (b.createdAt >= a.createdAt ? 0 : -1));
 
   // Sets the selected chat via redux
   const setChat = (chatId: string) => {
@@ -35,7 +33,7 @@ const Conversations = () => {
         <div className={styles.chatText}>
           <h4 className={styles.h3}>{option.shopName}</h4>
           {option.address} <br />
-          {"Create " + option.createdAt.toLocaleString("en-US")}
+          {"Create " + new Date(option.createdAt).toLocaleString("en-US")}
         </div>
       </div>
     );

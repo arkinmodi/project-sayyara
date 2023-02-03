@@ -18,7 +18,7 @@ const Message = (props: IMessageProps) => {
       <div className={styles.messageContent}>
         <div className={styles.messageText}>{msg.message}</div>
         <div className={styles.messageTime}>
-          {msg.createdAt.toLocaleString("en-US")}
+          {new Date(msg.createdAt).toLocaleString("en-US")}
         </div>
       </div>
     </div>

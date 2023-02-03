@@ -10,23 +10,27 @@ const MessageList = () => {
   const messages = useSelector(QuoteSelectors.getQuotes)[selectedChatId!]
     ?.messageList;
 
-  let messageItems = (
-    <>
-      <NewChat></NewChat>
-    </>
-  );
+  const getMessageItems = () => {
+    if (messages && messages.length > 0) {
+      let messageItems: any = [];
+      messages.sort((a: IMessage, b: IMessage) =>
+        b.createdAt >= a.createdAt ? 0 : -1
+      );
+      messages.forEach((msg: IMessage) => {
+        messageItems.push(<Message key={msg.id} msg={msg} />);
+      });
 
-  if (messages!.length > 0) {
-    messages!.sort(
-      (a: IMessage, b: IMessage) =>
-        b.createdAt.valueOf() - a.createdAt.valueOf()
-    );
-    messageItems = messages!.map((msg: IMessage) => {
-      return <Message msg={msg} />;
-    });
-  }
+      return messageItems;
+    } else {
+      return (
+        <>
+          <NewChat></NewChat>
+        </>
+      );
+    }
+  };
 
-  return <div className={styles.messageList}>{messageItems}</div>;
+  return <div className={styles.messageList}>{getMessageItems()}</div>;
 };
 
 export default MessageList;

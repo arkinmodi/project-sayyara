@@ -8,8 +8,9 @@ export interface IQuotesState {
 }
 
 export interface IMessage {
+  id: string;
   message: string;
-  createdAt: Date;
+  createdAt: string;
   isMyMessage: boolean;
 }
 
@@ -18,6 +19,6 @@ export interface IQuote {
   shopName: string;
   serviceName: string;
   address: string;
-  createdAt: Date;
+  createdAt: string;
   messageList: IMessage[];
 }
