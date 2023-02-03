@@ -1,12 +1,13 @@
 import ServiceTypes from "@redux/types/serviceTypes";
 import styles from "@styles/pages/services/Services.module.css";
 import { NextPage } from "next";
+import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   IParts,
@@ -73,24 +74,6 @@ const Services: NextPage = () => {
       shop_id: "1",
     },
   ];
-
-  // const confirmDeleteProduct = (product) => {
-  //   setServices(product);
-  //   deleteProduct();
-  // };
-
-  // const deleteProduct = () => {
-  //   let _products = services.filter((val) => val.id !== services.id);
-  //   setServices(_products);
-  //   // setDeleteProductDialog(false);
-  //   setServices([]);
-  //   toast.current.show({
-  //     severity: "success",
-  //     summary: "Successful",
-  //     detail: "Product Deleted",
-  //     life: 3000,
-  //   });
-  // };
 
   //   useEffect(() => {
   //     const services = services;
@@ -193,18 +176,18 @@ const Services: NextPage = () => {
     setServices(_services);
   };
 
-  // const actionBodyTemplate = (rowData) => {
-  //   return (
-  //     <React.Fragment>
-  //       <Button
-  //         icon="pi pi-trash"
-  //         className="p-button"
-  //         // call the delete saga
-  //         onClick={() => confirmDeleteProduct(rowData)}
-  //       />
-  //     </React.Fragment>
-  //   );
-  // };
+  const deleteService = (rowData) => {
+    return (
+      <React.Fragment>
+        <Button
+          icon="pi pi-trash"
+          className="p-button-text p-button-danger p-button-rounded"
+          // call the delete saga pass in the id
+          // onClick={() => deleteSaga(rowData)}
+        />
+      </React.Fragment>
+    );
+  };
 
   return (
     <div className={styles.serviceServicesContainer}>
@@ -274,11 +257,11 @@ const Services: NextPage = () => {
           headerStyle={{ width: "10%", minWidth: "8rem" }}
           bodyStyle={{ textAlign: "center" }}
         ></Column>
-        {/* <Column
-          body={actionBodyTemplate}
+        <Column
+          body={deleteService}
           exportable={false}
           style={{ minWidth: "8rem" }}
-        ></Column> */}
+        ></Column>
       </DataTable>
     </div>
   );
