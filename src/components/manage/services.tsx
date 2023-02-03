@@ -7,10 +7,10 @@ import { DataTable } from "primereact/datatable";
 import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
+import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
-  IParts,
   IService,
   PartCondition,
   PartType,
@@ -26,6 +26,10 @@ const Services: NextPage = () => {
   // const services = useSelector(ServiceSelectors.getServices);
 
   const [editingRows, setEditingRows] = useState({});
+
+  const [editingRows2, setEditingRows2] = useState({});
+
+  const [expandedRows, setExpandedRows] = useState(null);
 
   useEffect(() => {
     dispatch({ type: ServiceTypes.READ_SERVICES });
@@ -61,11 +65,19 @@ const Services: NextPage = () => {
       description: "changes the engine oil",
       estimated_time: 5,
       total_price: "$200",
+      // parts_name: "nails",
       parts: [
         {
           quantity: 5,
           cost: 100,
           name: "nails",
+          condition: PartCondition.NEW,
+          build: PartType.OEM,
+        },
+        {
+          quantity: 5,
+          cost: 100,
+          name: "nails2",
           condition: PartCondition.NEW,
           build: PartType.OEM,
         },
@@ -75,37 +87,31 @@ const Services: NextPage = () => {
     },
   ];
 
-  //   useEffect(() => {
-  //     const services = services;
-
-  //     setServices(services);
-  //   }, [services, setServices]);
-
   const header = (
     <div className="table-header">
       <h3 className="mx-0 my-1">Basic Services</h3>
     </div>
   );
 
-  // const onRowExpand = (event) => {
-  //   toast.current.show({
-  //     severity: "info",
-  //     summary: "Product Expanded",
-  //     detail: event.data.name,
-  //     life: 3000,
-  //   });
-  // };
-
-  const rowExpansionTemplate = (parts: IParts[]) => {
+  const rowExpansionTemplate = (data) => {
+    console.log(data);
+    const parts = (data as IService).parts;
     return (
       <div className="p-3">
-        <h5>Parts</h5>
-        <DataTable value={parts} responsiveLayout="scroll">
+        <h3>Parts</h3>
+        <DataTable
+          value={parts}
+          responsiveLayout="scroll"
+          size="small"
+          // editMode="row"
+          // editingRows={editingRows2}
+          // onRowEditComplete={onRowEditComplete}
+        >
           <Column field="name" header="Name" sortable></Column>
           <Column field="quantity" header="Quantity" sortable></Column>
           <Column field="cost" header="Cost Per Unit" sortable></Column>
-          <Column field="condition" header="Part Condition"></Column>
-          <Column field="build" header="Part Type"></Column>
+          <Column field="condition" header="Condition"></Column>
+          <Column field="build" header="Type"></Column>
         </DataTable>
       </div>
     );
@@ -162,9 +168,9 @@ const Services: NextPage = () => {
     );
   };
 
-  // const allowExpansion = (rowData) => {
-  //   return rowData.orders.length > 0;
-  // };
+  const allowExpansion = (rowData) => {
+    return rowData.parts.length > 0;
+  };
 
   const onRowEditComplete = (e: any) => {
     let _services = [...services];
@@ -192,10 +198,10 @@ const Services: NextPage = () => {
   return (
     <div className={styles.serviceServicesContainer}>
       {/* Basic Services Table */}
+      <Toast ref={toast} />
       <DataTable
         value={servicesData}
         paginator
-        // className="p-datatable-customers"
         showGridlines
         rows={10}
         dataKey="id"
@@ -205,12 +211,15 @@ const Services: NextPage = () => {
         responsiveLayout="scroll"
         globalFilterFields={["name"]}
         header={header}
-        rowExpansionTemplate={rowExpansionTemplate}
+        rowExpansionTemplate={(e) => rowExpansionTemplate(e)}
+        expandedRows={expandedRows}
+        onRowToggle={(e) => setExpandedRows(e.data)}
         emptyMessage="No services found."
         editMode="row"
         editingRows={editingRows}
         onRowEditComplete={onRowEditComplete}
       >
+        <Column expander={allowExpansion} style={{ width: "3em" }} />
         <Column
           field="name"
           header="Service Name"
@@ -226,19 +235,6 @@ const Services: NextPage = () => {
           style={{ minWidth: "12rem" }}
           editor={(options) => textEditor(options)}
         />
-        {/* <Column
-          field="parts"
-          header="Parts"
-          // expander={allowExpansion}
-          style={{ minWidth: "12rem" }}
-        /> */}
-        {/* <Column
-          field="partCondition"
-          header="Part Condition"
-          //   filter
-          //   filterPlaceholder="Search by name"
-          style={{ minWidth: "12rem" }}
-        /> */}
         <Column
           field="estimated_time"
           header="Duration"

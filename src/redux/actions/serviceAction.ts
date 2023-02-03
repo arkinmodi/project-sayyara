@@ -41,7 +41,7 @@ export const readServices = (payload: void) => ({
   payload,
 });
 
-export const setService = (payload: IServiceActionSetService["payload"]) => ({
+export const setServices = (payload: IServiceActionSetService["payload"]) => ({
   type: ServiceTypes.SET_SERVICES,
   payload,
 });
