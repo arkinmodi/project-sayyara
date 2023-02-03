@@ -47,7 +47,7 @@ const Conversations = () => {
         value={selectedChat}
         options={quotes}
         onChange={(e: ListBoxChangeParams) => setChat(e.value.id)}
-        filterBy="name"
+        filterBy="shopName"
         itemTemplate={chatItem}
         listStyle={{ maxHeight: "32.5rem" }}
       />

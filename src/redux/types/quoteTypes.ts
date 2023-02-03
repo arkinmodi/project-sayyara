@@ -1,5 +1,7 @@
 enum QuoteTypes {
+  CREATE_MESSAGE = "CREATE MESSAGE",
   SET_SELECTED_CHAT = "SET SELECTED CHAT",
+  SET_MESSAGE = "SET MESSAGE",
 }
 
 export default QuoteTypes;

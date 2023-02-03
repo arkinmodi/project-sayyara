@@ -1,19 +1,20 @@
+import { createMessage } from "@redux/actions/quoteAction";
 import styles from "@styles/components/chat/ChatForm.module.css";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { QuoteSelectors } from "src/redux/selectors/quoteSelectors";
 
 const ChatForm = () => {
   const selectedChat = useSelector(QuoteSelectors.getActiveChat);
   const [textMessage, setTextMessage] = useState("");
+  const dispatch = useDispatch();
 
   // Sample function, will delete
   const submitMessage = () => {
-    const text: string = textMessage;
+    dispatch(createMessage({ id: selectedChat, message: textMessage }));
     setTextMessage("");
-    console.log(textMessage);
   };
 
   return (

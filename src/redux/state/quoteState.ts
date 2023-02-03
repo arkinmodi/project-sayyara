@@ -55,6 +55,32 @@ export const initialQuoteState: IQuotesState = {
       createdAt: "2022-12-12T23:59:59",
       messageList: [
         {
+          id: "6",
+          message:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+
+          createdAt: "2023-01-09T14:23:12",
+          isMyMessage: true,
+        },
+        {
+          id: "5",
+          message: "This is a test message.",
+          createdAt: "2023-01-06T06:13:15",
+          isMyMessage: true,
+        },
+        {
+          id: "4",
+          message: "This is a test message.",
+          createdAt: "2023-01-05T17:26:10",
+          isMyMessage: true,
+        },
+        {
+          id: "3",
+          message: "Lorem Ipsum",
+          createdAt: "2023-01-05T14:23:12",
+          isMyMessage: true,
+        },
+        {
           id: "2",
           message: "This is a test message.",
           createdAt: "2023-01-03T06:13:15",
