@@ -3,17 +3,28 @@ import styles from "@styles/pages/services/Services.module.css";
 import { NextPage } from "next";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
+import { Dropdown } from "primereact/dropdown";
+import { InputNumber } from "primereact/inputnumber";
+import { InputText } from "primereact/inputtext";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { IParts } from "src/types/service";
+import {
+  IParts,
+  IService,
+  PartCondition,
+  PartType,
+  ServiceType,
+} from "src/types/service";
 
 const Services: NextPage = () => {
-  // const [services, setServices] = useState<IService[]>([]);
+  const [services, setServices] = useState<IService[]>([]);
   const dispatch = useDispatch();
 
   const [globalFilter, setGlobalFilter] = useState(null);
 
   // const services = useSelector(ServiceSelectors.getServices);
+
+  const [editingRows, setEditingRows] = useState({});
 
   useEffect(() => {
     dispatch({ type: ServiceTypes.READ_SERVICES });
@@ -24,7 +35,7 @@ const Services: NextPage = () => {
 
   const toast = useRef(null);
 
-  const services = [
+  const servicesData: IService[] = [
     {
       id: "1",
       name: "oil change",
@@ -36,11 +47,11 @@ const Services: NextPage = () => {
           quantity: 5,
           cost: 100,
           name: "nails",
-          condition: "NEW",
-          build: "OEM",
+          condition: PartCondition.NEW,
+          build: PartType.OEM,
         },
       ],
-      type: "CANNED",
+      type: ServiceType.CANNED,
       shop_id: "1",
     },
     {
@@ -54,14 +65,32 @@ const Services: NextPage = () => {
           quantity: 5,
           cost: 100,
           name: "nails",
-          condition: "NEW",
-          build: "OEM",
+          condition: PartCondition.NEW,
+          build: PartType.OEM,
         },
       ],
-      type: "CANNED",
+      type: ServiceType.CANNED,
       shop_id: "1",
     },
   ];
+
+  // const confirmDeleteProduct = (product) => {
+  //   setServices(product);
+  //   deleteProduct();
+  // };
+
+  // const deleteProduct = () => {
+  //   let _products = services.filter((val) => val.id !== services.id);
+  //   setServices(_products);
+  //   // setDeleteProductDialog(false);
+  //   setServices([]);
+  //   toast.current.show({
+  //     severity: "success",
+  //     summary: "Successful",
+  //     detail: "Product Deleted",
+  //     life: 3000,
+  //   });
+  // };
 
   //   useEffect(() => {
   //     const services = services;
@@ -99,15 +128,89 @@ const Services: NextPage = () => {
     );
   };
 
+  const textEditor = (options: any) => {
+    return (
+      <InputText
+        type="text"
+        value={options.value}
+        onChange={(e) => options.editorCallback(e.target.value)}
+      />
+    );
+  };
+
+  // Possibly do this for the condition/build
+  const statuses = [
+    { label: "In Stock", value: "INSTOCK" },
+    { label: "Low Stock", value: "LOWSTOCK" },
+    { label: "Out of Stock", value: "OUTOFSTOCK" },
+  ];
+
+  const statusEditor = (options: any) => {
+    return (
+      <Dropdown
+        value={options.value}
+        options={statuses}
+        optionLabel="label"
+        optionValue="value"
+        onChange={(e) => options.editorCallback(e.value)}
+        placeholder="Select a Status"
+        itemTemplate={(option) => {
+          return (
+            <span
+              className={`product-badge status-${option.value.toLowerCase()}`}
+            >
+              {option.label}
+            </span>
+          );
+        }}
+      />
+    );
+  };
+
+  const priceEditor = (options: any) => {
+    return (
+      <InputNumber
+        value={options.value}
+        onValueChange={(e: { value: any }) => options.editorCallback(e.value)}
+        mode="currency"
+        currency="CAD"
+        locale="en-US"
+      />
+    );
+  };
+
   // const allowExpansion = (rowData) => {
   //   return rowData.orders.length > 0;
+  // };
+
+  const onRowEditComplete = (e: any) => {
+    let _services = [...services];
+    let { newData, index } = e;
+
+    _services = [...services];
+    [index] = newData;
+
+    setServices(_services);
+  };
+
+  // const actionBodyTemplate = (rowData) => {
+  //   return (
+  //     <React.Fragment>
+  //       <Button
+  //         icon="pi pi-trash"
+  //         className="p-button"
+  //         // call the delete saga
+  //         onClick={() => confirmDeleteProduct(rowData)}
+  //       />
+  //     </React.Fragment>
+  //   );
   // };
 
   return (
     <div className={styles.serviceServicesContainer}>
       {/* Basic Services Table */}
       <DataTable
-        value={services}
+        value={servicesData}
         paginator
         // className="p-datatable-customers"
         showGridlines
@@ -121,6 +224,9 @@ const Services: NextPage = () => {
         header={header}
         rowExpansionTemplate={rowExpansionTemplate}
         emptyMessage="No services found."
+        editMode="row"
+        editingRows={editingRows}
+        onRowEditComplete={onRowEditComplete}
       >
         <Column
           field="name"
@@ -129,11 +235,13 @@ const Services: NextPage = () => {
           sortable
           filterPlaceholder="Search by service name"
           style={{ minWidth: "12rem" }}
+          editor={(options) => textEditor(options)}
         />
         <Column
           field="description"
           header="Description"
           style={{ minWidth: "12rem" }}
+          editor={(options) => textEditor(options)}
         />
         {/* <Column
           field="parts"
@@ -152,13 +260,25 @@ const Services: NextPage = () => {
           field="estimated_time"
           header="Duration"
           style={{ minWidth: "12rem" }}
+          editor={(options) => textEditor(options)}
         />
         <Column
           field="total_price"
           header="Estimated Cost"
+          editor={(options) => priceEditor(options)}
           sortable
           style={{ minWidth: "12rem" }}
         />
+        <Column
+          rowEditor
+          headerStyle={{ width: "10%", minWidth: "8rem" }}
+          bodyStyle={{ textAlign: "center" }}
+        ></Column>
+        {/* <Column
+          body={actionBodyTemplate}
+          exportable={false}
+          style={{ minWidth: "8rem" }}
+        ></Column> */}
       </DataTable>
     </div>
   );

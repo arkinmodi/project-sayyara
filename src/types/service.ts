@@ -20,7 +20,7 @@ export interface IService {
   description: string;
   estimated_time: number;
   total_price: string;
-  parts: string;
+  parts: IParts[];
   type: ServiceType;
   shop_id: string;
 }
