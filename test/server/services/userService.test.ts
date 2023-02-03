@@ -69,6 +69,7 @@ describe("user authorization", () => {
         lastName: testEmployeeUser.last_name,
         email: testEmployeeUser.email,
         type: testEmployeeUser.type,
+        shopId: testEmployeeUser.shop_id,
       });
     });
   });
