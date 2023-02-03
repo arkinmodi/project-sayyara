@@ -2,9 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Context, createWrapper } from "next-redux-wrapper";
 import { Store } from "redux";
 import createSagaMiddleware, { Task } from "redux-saga";
+import { IQuotesState } from "src/types/quotes";
 import { rootReducer } from "./reducers/rootReducer";
 import { rootSaga } from "./sagas/rootSaga";
-import { initialQuoteState, IQuotesState } from "./state/quoteState";
+import { initialQuoteState } from "./state/quoteState";
 import {
   IAppointmentsState,
   initialAppointmentsState,
