@@ -26,6 +26,7 @@ export interface IService {
 }
 
 export interface IParts {
+  id: string;
   quantity: Number;
   cost: Number;
   name: String;

@@ -49,6 +49,7 @@ const Services: NextPage = () => {
       total_price: "$100",
       parts: [
         {
+          id: "0",
           quantity: 5,
           cost: 100,
           name: "nails",
@@ -68,6 +69,7 @@ const Services: NextPage = () => {
       // parts_name: "nails",
       parts: [
         {
+          id: "0",
           quantity: 5,
           cost: 100,
           name: "nails",
@@ -75,6 +77,7 @@ const Services: NextPage = () => {
           build: PartType.OEM,
         },
         {
+          id: "1",
           quantity: 5,
           cost: 100,
           name: "nails2",
@@ -97,21 +100,50 @@ const Services: NextPage = () => {
     console.log(data);
     const parts = (data as IService).parts;
     return (
-      <div className="p-3">
-        <h3>Parts</h3>
+      <div className={styles.partsTable}>
+        <h2>Parts</h2>
         <DataTable
           value={parts}
           responsiveLayout="scroll"
           size="small"
-          // editMode="row"
-          // editingRows={editingRows2}
-          // onRowEditComplete={onRowEditComplete}
+          dataKey="id"
+          editMode="row"
+          editingRows={editingRows}
+          onRowEditComplete={onRowEditComplete}
         >
-          <Column field="name" header="Name" sortable></Column>
+          <Column
+            field="name"
+            header="Name"
+            editor={(options) => textEditor(options)}
+            sortable
+          ></Column>
           <Column field="quantity" header="Quantity" sortable></Column>
-          <Column field="cost" header="Cost Per Unit" sortable></Column>
-          <Column field="condition" header="Condition"></Column>
-          <Column field="build" header="Type"></Column>
+          <Column
+            field="cost"
+            header="Cost Per Unit"
+            editor={(options) => priceEditor(options)}
+            sortable
+          ></Column>
+          <Column
+            field="condition"
+            header="Condition"
+            editor={(options) => textEditor(options)}
+          ></Column>
+          <Column
+            field="build"
+            header="Type"
+            editor={(options) => textEditor(options)}
+          ></Column>
+          <Column
+            rowEditor
+            headerStyle={{ width: "10%", minWidth: "4rem" }}
+            bodyStyle={{ textAlign: "center" }}
+          ></Column>
+          <Column
+            body={deleteService}
+            exportable={false}
+            style={{ minWidth: "4rem", textAlign: "center" }}
+          ></Column>
         </DataTable>
       </div>
     );
@@ -205,6 +237,7 @@ const Services: NextPage = () => {
         showGridlines
         rows={10}
         dataKey="id"
+        size="small"
         // filters={filters}
         filterDisplay="menu"
         loading={loading}
@@ -226,19 +259,19 @@ const Services: NextPage = () => {
           filter
           sortable
           filterPlaceholder="Search by service name"
-          style={{ minWidth: "12rem" }}
+          style={{ minWidth: "4rem" }}
           editor={(options) => textEditor(options)}
         />
         <Column
           field="description"
           header="Description"
-          style={{ minWidth: "12rem" }}
+          style={{ minWidth: "8rem" }}
           editor={(options) => textEditor(options)}
         />
         <Column
           field="estimated_time"
           header="Duration"
-          style={{ minWidth: "12rem" }}
+          style={{ minWidth: "4rem" }}
           editor={(options) => textEditor(options)}
         />
         <Column
@@ -246,17 +279,17 @@ const Services: NextPage = () => {
           header="Estimated Cost"
           editor={(options) => priceEditor(options)}
           sortable
-          style={{ minWidth: "12rem" }}
+          style={{ minWidth: "4rem" }}
         />
         <Column
           rowEditor
-          headerStyle={{ width: "10%", minWidth: "8rem" }}
+          headerStyle={{ minWidth: "4rem" }}
           bodyStyle={{ textAlign: "center" }}
         ></Column>
         <Column
           body={deleteService}
           exportable={false}
-          style={{ minWidth: "8rem" }}
+          style={{ minWidth: "4rem", textAlign: "center" }}
         ></Column>
       </DataTable>
     </div>
