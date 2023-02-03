@@ -15,6 +15,14 @@ const testShop: Shop = {
   id: "test_shop_id",
   create_time: new Date(),
   update_time: new Date(),
+  name: "test_shop_name",
+  address: "test_address",
+  phone_number: "test_phone_number",
+  email: "test@email.com",
+  postal_code: "test_postal_code",
+  city: "test_city",
+  province: "test_province",
+  hours_of_operation: null,
 };
 
 const testEmployee: Employee = {
@@ -133,7 +141,18 @@ describe("suspend employee", () => {
 });
 
 const createShop = async () => {
-  return await prisma.shop.create({ data: testShop });
+  return await prisma.shop.create({
+    data: {
+      id: testShop.id,
+      phone_number: testShop.phone_number,
+      email: testShop.email,
+      name: testShop.name,
+      address: testShop.address,
+      postal_code: testShop.postal_code,
+      city: testShop.city,
+      province: testShop.province,
+    },
+  });
 };
 
 const createEmployee = async () => {
