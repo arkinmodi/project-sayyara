@@ -1,21 +1,28 @@
 import styles from "@styles/components/chat/Message.module.css";
+import React from "react";
+import { IMessage } from "src/types/quotes";
 
-const Message = (props) => {
+interface IMessageProps {
+  msg: IMessage;
+}
+
+const Message = (props: IMessageProps) => {
+  const { msg } = props;
   let msgClass = styles.other;
-  if (props.isMyMessage) {
+  if (msg.isMyMessage) {
     msgClass = styles.you;
   }
 
   return (
     <div className={msgClass}>
       <div className={styles.messageContent}>
-        <div className={styles.messageText}>{props.message.messageText}</div>
+        <div className={styles.messageText}>{msg.message}</div>
         <div className={styles.messageTime}>
-          {props.message.createdAt.toLocaleString("en-US")}
+          {msg.createdAt.toLocaleString("en-US")}
         </div>
       </div>
     </div>
   );
 };
 
-export default Message;
+export default React.memo(Message);

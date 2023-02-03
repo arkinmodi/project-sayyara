@@ -3,7 +3,9 @@
 }
 
 .messageList {
-    display: block;
+    /* display: block; */
+    display: flex;
+    flex-direction: column-reverse;
     padding: 0 20px;
     overflow: scroll;
     height: 473px;

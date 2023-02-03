@@ -5,7 +5,7 @@ const NoChat = () => {
     <div className={styles.noChatContainer}>
       <div className={styles.noChatContent}>
         <h2>No Chat Selected</h2>
-        <p className={styles.p}>
+        <p>
           Select a chat from the left list or create a new conversation through
           requesting a quote from a shop.
         </p>

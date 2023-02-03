@@ -14,7 +14,7 @@ const ChatTitle = () => {
 
   if (selectedChatId !== null) {
     const selectedChat: IQuote = quotes[selectedChatId]!;
-    let name: string = selectedChat.name;
+    let name: string = selectedChat.shopName + " - " + selectedChat.serviceName;
     chatTitleContents = (
       <>
         {/* Conversation image */}
