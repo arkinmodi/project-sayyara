@@ -7,18 +7,21 @@ import { setSelectedChat } from "src/redux/actions/quoteAction";
 import { QuoteSelectors } from "src/redux/selectors/quoteSelectors";
 import { IQuote } from "src/types/quotes";
 
-const Conversations = (props: IQuote[]) => {
+const Conversations = () => {
   const dispatch = useDispatch();
 
   const selectedChat = useSelector(QuoteSelectors.getActiveChat);
-  const quotes = Object.values(props)[0];
+
+  // Loads quote list from store and sorts by last created
+  const quotes = Object.values(useSelector(QuoteSelectors.getQuotes));
+  quotes.sort(
+    (a: IQuote, b: IQuote) => b.lastUpdated.valueOf() - a.lastUpdated.valueOf()
+  );
 
   // Sets the selected chat via redux
   const setChat = (chatId: string) => {
     dispatch(setSelectedChat({ id: chatId }));
   };
-
-  console.log(selectedChat);
 
   const chatItem = (option: IQuote) => {
     return (

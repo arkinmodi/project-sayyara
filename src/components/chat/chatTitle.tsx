@@ -3,17 +3,17 @@ import Image from "next/image";
 import img from "public/icons/icon-192x192.png";
 import { useSelector } from "react-redux";
 import { QuoteSelectors } from "src/redux/selectors/quoteSelectors";
+import { IQuote, IQuoteList } from "src/types/quotes";
 
 // TODO Interface for quote conversations
 const ChatTitle = () => {
   let chatTitleContents = null;
 
   const selectedChatId = useSelector(QuoteSelectors.getActiveChat);
+  const quotes: IQuoteList = useSelector(QuoteSelectors.getQuotes);
 
-  if (selectedChatId) {
-    const selectedChat = useSelector(QuoteSelectors.getQuotes).get(
-      selectedChatId
-    );
+  if (selectedChatId !== null) {
+    const selectedChat: IQuote = quotes[selectedChatId];
     let name: string = selectedChat.name;
     chatTitleContents = (
       <>

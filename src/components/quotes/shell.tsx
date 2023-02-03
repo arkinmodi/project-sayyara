@@ -1,16 +1,10 @@
 import styles from "@styles/components/quotes/Dashboard.module.css";
-import { useSelector } from "react-redux";
-import { QuoteSelectors } from "src/redux/selectors/quoteSelectors";
-import { IQuote, IQuoteList } from "src/types/quotes";
+import ChatForm from "../chat/chatForm";
 import ChatTitle from "../chat/chatTitle";
 import NoChat from "../chat/noChat";
 import Conversations from "./conversations";
 
 const QuotesShell = () => {
-  const quotes: IQuoteList = useSelector(QuoteSelectors.getQuotes);
-  const quoteList: IQuote[] | undefined = Object.values(quotes);
-  const onMessageSubmit = () => {};
-
   let chatContent = (
     <>
       <NoChat></NoChat>
@@ -23,12 +17,12 @@ const QuotesShell = () => {
       <hr className={styles.hr} />
       <div className={styles.container}>
         <div className={styles.conversationList}>
-          <Conversations quotes={quoteList} />
+          <Conversations />
         </div>
         <div className={styles.chat}>
           <ChatTitle />
           {chatContent}
-          {/* <ChatForm /> */}
+          <ChatForm />
         </div>
       </div>
     </div>
