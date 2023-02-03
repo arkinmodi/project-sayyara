@@ -39,6 +39,10 @@ export const authOptions: NextAuthOptions = {
         session.user.firstName = token.firstName;
         session.user.lastName = token.lastName;
         session.user.type = token.type;
+
+        if (token.type !== "CUSTOMER" && token.shopId) {
+          session.user.shopId = token.shopId;
+        }
       }
       return session;
     },

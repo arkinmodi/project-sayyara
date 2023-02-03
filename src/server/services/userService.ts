@@ -2,6 +2,7 @@ import { Customer, Employee, prisma } from "@server/db/client";
 import { createShopSchema, getShopById } from "@server/services/shopService";
 import { createVehicleSchema } from "@server/services/vehicleService";
 import bcrypt from "bcrypt";
+import { Session } from "next-auth";
 import { z } from "zod";
 
 export const createCustomerSchema = z.object({
@@ -100,7 +101,10 @@ export const getCustomerById = async (id: string) => {
   return await prisma.customer.findUnique({ where: { id } });
 };
 
-export const authorize = async (email: string, password: string) => {
+export const authorize = async (
+  email: string,
+  password: string
+): Promise<Session["user"]> => {
   const userData = await getUserByEmail(email);
 
   if (!userData) return Promise.reject("user not found");
@@ -109,11 +113,17 @@ export const authorize = async (email: string, password: string) => {
     return Promise.reject("unauthorized");
   }
 
-  return {
+  const session: Session["user"] = {
     id: userData.id,
     firstName: userData.first_name,
     lastName: userData.last_name,
     email: userData.email,
     type: userData.type,
   };
+
+  if (userData.type !== "CUSTOMER") {
+    session.shopId = (userData as Employee).shop_id;
+  }
+
+  return session;
 };
