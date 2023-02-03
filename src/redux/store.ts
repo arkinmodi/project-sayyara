@@ -4,7 +4,7 @@ import { Store } from "redux";
 import createSagaMiddleware, { Task } from "redux-saga";
 import { rootReducer } from "./reducers/rootReducer";
 import { rootSaga } from "./sagas/rootSaga";
-import { initialQuoteState, IQuotesState } from "./state/quotesState";
+import { initialQuoteState, IQuotesState } from "./state/quoteState";
 import {
   IAppointmentsState,
   initialAppointmentsState,

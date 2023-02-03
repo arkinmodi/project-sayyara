@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { IQuotesState } from "../state/quotesState";
+import { IQuotesState } from "src/types/quotes";
 import { RootState } from "../store";
 
 const getQuotesState = (state: RootState): IQuotesState => state.quotes;
