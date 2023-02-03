@@ -10,7 +10,7 @@ const ChatForm = () => {
   const [textMessage, setTextMessage] = useState("");
 
   // Sample function, will delete
-  let test = () => {
+  const submitMessage = () => {
     const text: string = textMessage;
     setTextMessage("");
     console.log(textMessage);
@@ -25,7 +25,11 @@ const ChatForm = () => {
         disabled={selectedChat === null}
       />
       {/* TODO: Onclick functionality */}
-      <Button icon="pi pi-send" className={styles.button} onClick={test} />
+      <Button
+        icon="pi pi-send"
+        className={styles.button}
+        onClick={submitMessage}
+      />
     </div>
   );
 };

@@ -1,11 +1,11 @@
 import { NextPage } from "next";
 import { TabPanel, TabView } from "primereact/tabview";
 import React from "react";
-import QuotesShell from "../components/quotes/shell";
+import QuotesShell from "src/components/quotes/shell";
 
 const CustomerDashboard: NextPage = () => {
   return (
-    <div>
+    <div style={{ height: "100%" }}>
       <TabView>
         <TabPanel header="Quotes">
           <QuotesShell />

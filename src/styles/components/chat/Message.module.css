@@ -1,0 +1,56 @@
+.messageContent {
+    display: grid;
+}
+
+.messageList {
+    display: block;
+    padding: 0 20px;
+    overflow: scroll;
+    height: 473px;
+}
+
+.messageText {
+    padding: 9px 14px;
+    margin-bottom: 5px;
+}
+
+.messageTime {
+    font-size: smaller;
+    color: #777;
+}
+
+.other {
+    display: grid;
+    grid-template-columns: 70%;
+    margin-bottom: 20px;
+    justify-content: start;
+}
+
+.other .messageContent {
+   width: fit-content;
+}
+
+.other .messageText {
+    background: #eee;
+    color: #111;
+    border: 1px solid #ddd;
+    border-radius: 14px 14px 14px 0;
+}
+
+.you {
+    display: grid;
+    grid-template-columns: 70%;
+    margin-bottom: 20px;
+    justify-content: end;
+}
+
+.you .messageContent {
+    justify-items: end;
+}
+
+.you .messageText {
+    background: #0048AA;
+    color: #eee;
+    border: 1px solid #0048AA;
+    border-radius: 14px 14px 0 14px;
+}

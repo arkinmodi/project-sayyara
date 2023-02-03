@@ -1,13 +1,20 @@
 .chat {
-    flex: 6 1 auto;
+    flex: 0 1 65%;
+}
+
+.chatForm {
+    position: absolute;
+    bottom: 0;
+    width: 65%;
 }
 
 .container {
     display: flex;
+    position: relative;
 }
 
 .conversationList {
-    flex: 1 1 auto;
+    flex: 0 1 35%;
 }
 
 .h2 {
