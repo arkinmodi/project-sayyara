@@ -1,0 +1,44 @@
+.employeeTableContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.employeeTable {
+  width: 100%;
+}
+
+.employeeTableHeader {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.suspendEmployeeButtonColumn {
+  display: flex;
+  min-width: 4em;
+  text-align: center !important;
+}
+
+.inviteEmployeeMessage {
+  background-color: #69ad96 !important;
+  background: #e4f8f0;
+  border: solid #69ad96 !important;
+  color: white !important;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.inviteEmployeeMessage > * {
+  color: white !important;
+}
+
+@media (max-width: 600px) {
+  .employeeTableHeader {
+    justify-content: center;
+    flex-direction: column;
+  }
+}

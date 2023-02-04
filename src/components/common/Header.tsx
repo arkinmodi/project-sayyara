@@ -4,6 +4,7 @@ import {
   setIsLoggedIn,
   setUserSession,
 } from "@redux/actions/authActions";
+import { setShopEmployees } from "@redux/actions/shopActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/components/common/Header.module.css";
 import classNames from "classnames";
@@ -134,6 +135,8 @@ const Header = () => {
           shopId: null,
         })
       );
+      // Reset shop state
+      dispatch(setShopEmployees({ employees: null }));
     }
   }, [session?.user, isLoggedIn, dispatch]);
 
