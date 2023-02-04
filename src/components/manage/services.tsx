@@ -1,3 +1,4 @@
+import { deleteService } from "@redux/actions/serviceAction";
 import ServiceTypes from "@redux/types/serviceTypes";
 import styles from "@styles/pages/services/Services.module.css";
 import { NextPage } from "next";
@@ -21,13 +22,9 @@ const Services: NextPage = () => {
   const [services, setServices] = useState<IService[]>([]);
   const dispatch = useDispatch();
 
-  const [globalFilter, setGlobalFilter] = useState(null);
-
   // const services = useSelector(ServiceSelectors.getServices);
 
   const [editingRows, setEditingRows] = useState({});
-
-  const [editingRows2, setEditingRows2] = useState({});
 
   const [expandedRows, setExpandedRows] = useState(null);
 
@@ -135,7 +132,7 @@ const Services: NextPage = () => {
             bodyStyle={{ textAlign: "center" }}
           ></Column>
           <Column
-            body={deleteService}
+            body={deleteButton}
             style={{ minWidth: "4rem", textAlign: "center" }}
           ></Column>
         </DataTable>
@@ -147,8 +144,8 @@ const Services: NextPage = () => {
     let _services = [...services];
     let { newData, index } = e;
 
-    console.log(newData);
-    console.log(index);
+    // console.log(newData);
+    // console.log(index);
     //pass in the service
     //update the part at the index given with the newData given
 
@@ -242,25 +239,33 @@ const Services: NextPage = () => {
     let _services = [...services];
     let { newData, index } = e;
 
-    console.log(newData);
-    console.log(index);
+    // console.log(newData);
+    // console.log(index);
     // _services = [...services];
     // [index] = newData;
 
     // setServices(_services);
   };
 
-  const deleteService = (rowData) => {
+  const deleteButton = (service: IService) => {
     return (
       <React.Fragment>
         <Button
           icon="pi pi-trash"
           className="p-button-text p-button-danger p-button-rounded"
           // call the delete saga pass in the id
-          // onClick={() => deleteSaga(rowData)}
+          onClick={() => handleDeleteServiceButton(service)}
         />
       </React.Fragment>
     );
+  };
+
+  const handleDeleteServiceButton = (service: IService) => {
+    deleteServiceEvent(service.id);
+  };
+
+  const deleteServiceEvent = (serviceId: string) => {
+    dispatch(deleteService({ serviceId: serviceId }));
   };
 
   return (
@@ -322,7 +327,7 @@ const Services: NextPage = () => {
           bodyStyle={{ textAlign: "center" }}
         ></Column>
         <Column
-          body={deleteService}
+          body={deleteButton}
           style={{ minWidth: "4rem", textAlign: "center" }}
         ></Column>
       </DataTable>

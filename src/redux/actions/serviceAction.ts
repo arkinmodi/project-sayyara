@@ -30,7 +30,7 @@ export interface IServiceActionCreateService extends IServiceActionBase {
 }
 
 export interface IServiceActionDeleteService extends IServiceActionBase {
-  payload: { id: string };
+  payload: { serviceId: string };
 }
 
 export type IServiceAction =
