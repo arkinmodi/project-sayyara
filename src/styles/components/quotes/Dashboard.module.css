@@ -1,28 +1,28 @@
 .chat {
-    flex: 0 1 65%;
+  flex: 0 1 65%;
 }
 
 .chatForm {
-    position: absolute;
-    bottom: 0;
-    width: 65%;
+  position: absolute;
+  bottom: 0;
+  width: 65%;
 }
 
 .container {
-    display: flex;
-    position: relative;
+  display: flex;
+  position: relative;
 }
 
 .conversationList {
-    flex: 0 1 35%;
+  flex: 0 1 35%;
 }
 
 .h2 {
-    color: #436188;
-    margin: 0px;
+  color: #436188;
+  margin: 0px;
 }
 
 .hr {
-    height: 3px;
-    background-color: #436188;
+  height: 3px;
+  background-color: #436188;
 }

@@ -1,16 +1,12 @@
 .chatItem {
-    display: flex;
+  display: flex;
 }
 
-/* .chatText {
-    margin-left: 1rem;
-} */
-
 .h3 {
-    color: #436188;
-    margin: 0px;
+  color: #436188;
+  margin: 0px;
 }
 
 .listBox {
-    height: 37rem;
+  height: 37rem;
 }
