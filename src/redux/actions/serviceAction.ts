@@ -1,20 +1,12 @@
-import { IParts, IService, ServiceType } from "src/types/service";
+import { IParts, ServiceType } from "src/types/service";
 import ServiceTypes from "../types/serviceTypes";
 
 interface IServiceActionBase {
   type: ServiceTypes;
 }
 
-export interface IServiceActionReadServices extends IServiceActionBase {
-  payload: void;
-}
-
 export interface IServiceActionSetService extends IServiceActionBase {
   payload: { serviceId: string; patch: any };
-}
-
-export interface IServiceActionSetServices extends IServiceActionBase {
-  payload: { services: IService[] };
 }
 
 export interface IServiceActionDeleteService extends IServiceActionBase {
@@ -38,24 +30,12 @@ export interface IServiceActionDeleteService extends IServiceActionBase {
 }
 
 export type IServiceAction =
-  | IServiceActionReadServices
   | IServiceActionSetService
-  | IServiceActionSetServices
   | IServiceActionCreateService
   | IServiceActionDeleteService;
 
-export const readServices = (payload: void) => ({
-  type: ServiceTypes.READ_SERVICES,
-  payload,
-});
-
 export const setService = (payload: IServiceActionSetService["payload"]) => ({
   type: ServiceTypes.SET_SERVICE,
-  payload,
-});
-
-export const setServices = (payload: IServiceActionSetServices["payload"]) => ({
-  type: ServiceTypes.SET_SERVICES,
   payload,
 });
 

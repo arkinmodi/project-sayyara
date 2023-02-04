@@ -1,6 +1,5 @@
 import { IShopAction } from "@redux/actions/shopActions";
 import { initialShopState } from "@redux/state/shop/shopState";
-import ServiceTypes from "@redux/types/serviceTypes";
 import ShopTypes from "@redux/types/shopTypes";
 import { HYDRATE } from "next-redux-wrapper";
 import { IActionWithPayload } from "../actions/IActionWithPayload";
@@ -12,7 +11,7 @@ const shopReducer = (
   switch (action.type) {
     case ShopTypes.SET_SHOP_EMPLOYEES:
       return { ...state, employees: action?.payload?.employees };
-    case ServiceTypes.SET_SERVICES:
+    case ShopTypes.SET_SHOP_SERVICES:
       return { ...state, services: action?.payload?.services };
     // This will overwrite client state - required for Next.js
     case HYDRATE: {

@@ -1,16 +1,14 @@
-import { AuthSelectors } from "@redux/selectors/authSelectors";
-import { Service, ServiceType } from "@server/db/client";
+import ShopTypes from "@redux/types/shopTypes";
+import { ServiceType } from "@server/db/client";
 import {
   all,
   call,
   CallEffect,
   put,
   PutEffect,
-  select,
-  SelectEffect,
   takeEvery,
 } from "redux-saga/effects";
-import { IParts, IService } from "src/types/service";
+import { IParts } from "src/types/service";
 import {
   IServiceActionCreateService,
   IServiceActionDeleteService,
@@ -58,36 +56,6 @@ function patchService(
   });
 }
 
-function getAllServices(shopId: string): Promise<IService[]> {
-  return fetch(`/api/service/${shopId}`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  }).then((res) => {
-    if (res.status === 200) {
-      return res.json().then((data) => {
-        const services = data.map((service: Service) => {
-          return {
-            id: service.id,
-            name: service.id,
-            description: service.description,
-            estimated_time: service.estimated_time,
-            total_price: service.total_price,
-            parts: service.parts,
-            type: service.type,
-          };
-        });
-        return services;
-      });
-    } else {
-      // TODO: check and handle errors
-      return [];
-    }
-  });
-}
-
 function* updateService(
   action: IServiceActionSetService
 ): Generator<CallEffect | PutEffect> {
@@ -102,18 +70,7 @@ function* updateService(
   };
   const success = yield call(patchService, action.payload.serviceId, body);
   if (success) {
-    yield put({ type: ServiceTypes.READ_SERVICES });
-  }
-}
-
-function* readServices(): Generator<CallEffect | PutEffect | SelectEffect> {
-  const shopId = (yield select(AuthSelectors.getShopId)) as string | null;
-  if (shopId) {
-    const employees = yield call(getAllServices, shopId);
-    yield put({
-      type: ServiceTypes.SET_SERVICES,
-      payload: { employees },
-    });
+    yield put({ type: ShopTypes.READ_SHOP_SERVICES });
   }
 }
 
@@ -178,9 +135,8 @@ function* createService(
  */
 export function* serviceSaga() {
   yield all([
-    takeEvery(ServiceTypes.READ_SERVICES, readServices),
+    takeEvery(ServiceTypes.SET_SERVICE, updateService),
     takeEvery(ServiceTypes.CREATE_SERVICE, createService),
     takeEvery(ServiceTypes.DELETE_SERVICE, deleteService),
-    takeEvery(ServiceTypes.SET_SERVICE, updateService),
   ]);
 }

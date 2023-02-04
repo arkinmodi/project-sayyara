@@ -1,4 +1,4 @@
-import { Employee } from "@prisma/client";
+import { Employee, Service } from "@prisma/client";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import ShopTypes from "@redux/types/shopTypes";
 import {
@@ -12,6 +12,7 @@ import {
   takeEvery,
 } from "redux-saga/effects";
 import { IEmployee } from "src/types/employee";
+import { IService } from "src/types/service";
 
 function getAllEmployees(shopId: string): Promise<IEmployee[] | null> {
   return fetch(`/api/shop/${shopId}/employees`, {
@@ -56,9 +57,53 @@ function* readShopEmployees(): Generator<
   }
 }
 
+function getAllServices(shopId: string): Promise<IService[]> {
+  return fetch(`/api/service/${shopId}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((res) => {
+    if (res.status === 200) {
+      return res.json().then((data) => {
+        const services = data.map((service: Service) => {
+          return {
+            id: service.id,
+            name: service.id,
+            description: service.description,
+            estimated_time: service.estimated_time,
+            total_price: service.total_price,
+            parts: service.parts,
+            type: service.type,
+          };
+        });
+        return services;
+      });
+    } else {
+      // TODO: check and handle errors
+      return [];
+    }
+  });
+}
+
+function* readShopServices(): Generator<CallEffect | PutEffect | SelectEffect> {
+  const shopId = (yield select(AuthSelectors.getShopId)) as string | null;
+  if (shopId) {
+    const services = yield call(getAllServices, shopId);
+    yield put({
+      type: ShopTypes.SET_SHOP_SERVICES,
+      payload: { services },
+    });
+  }
+}
+
 /**
  * Saga to handle all employee related actions.
  */
 export function* shopSaga() {
-  yield all([takeEvery(ShopTypes.READ_SHOP_EMPLOYEES, readShopEmployees)]);
+  yield all([
+    takeEvery(ShopTypes.READ_SHOP_EMPLOYEES, readShopEmployees),
+    takeEvery(ShopTypes.READ_SHOP_SERVICES, readShopServices),
+  ]);
 }
