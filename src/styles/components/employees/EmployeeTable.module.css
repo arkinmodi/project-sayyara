@@ -1,0 +1,19 @@
+.employeeTableHeader {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.suspendEmployeeButtonColumn {
+  display: flex;
+  min-width: 4em;
+  text-align: center !important;
+}
+
+@media (max-width: 1000px) {
+  .employeeTableHeader {
+    justify-content: center;
+  }
+}
