@@ -49,7 +49,6 @@ const Services: NextPage = () => {
       total_price: "$100",
       parts: [
         {
-          id: "0",
           quantity: 5,
           cost: 100,
           name: "nails",
@@ -66,10 +65,8 @@ const Services: NextPage = () => {
       description: "changes the engine oil",
       estimated_time: 5,
       total_price: "$200",
-      // parts_name: "nails",
       parts: [
         {
-          id: "0",
           quantity: 5,
           cost: 100,
           name: "nails",
@@ -77,7 +74,6 @@ const Services: NextPage = () => {
           build: PartType.OEM,
         },
         {
-          id: "1",
           quantity: 5,
           cost: 100,
           name: "nails2",
@@ -97,7 +93,6 @@ const Services: NextPage = () => {
   );
 
   const rowExpansionTemplate = (data) => {
-    console.log(data);
     const parts = (data as IService).parts;
     return (
       <div className={styles.partsTable}>
@@ -106,10 +101,10 @@ const Services: NextPage = () => {
           value={parts}
           responsiveLayout="scroll"
           size="small"
-          dataKey="id"
+          dataKey="name"
           editMode="row"
           editingRows={editingRows}
-          onRowEditComplete={onRowEditComplete}
+          onRowEditComplete={(data, e) => onPartsRowEditComplete(data, e)}
         >
           <Column
             field="name"
@@ -127,12 +122,12 @@ const Services: NextPage = () => {
           <Column
             field="condition"
             header="Condition"
-            editor={(options) => textEditor(options)}
+            editor={(options) => partsConditionEditor(options)}
           ></Column>
           <Column
             field="build"
             header="Type"
-            editor={(options) => textEditor(options)}
+            editor={(options) => partsTypeEditor(options)}
           ></Column>
           <Column
             rowEditor
@@ -141,12 +136,26 @@ const Services: NextPage = () => {
           ></Column>
           <Column
             body={deleteService}
-            exportable={false}
             style={{ minWidth: "4rem", textAlign: "center" }}
           ></Column>
         </DataTable>
       </div>
     );
+  };
+
+  const onPartsRowEditComplete = (data, e: any) => {
+    let _services = [...services];
+    let { newData, index } = e;
+
+    console.log(newData);
+    console.log(index);
+    //pass in the service
+    //update the part at the index given with the newData given
+
+    // _services = [...services];
+    // [index] = newData;
+
+    // setServices(_services);
   };
 
   const textEditor = (options: any) => {
@@ -159,22 +168,47 @@ const Services: NextPage = () => {
     );
   };
 
-  // Possibly do this for the condition/build
-  const statuses = [
-    { label: "In Stock", value: "INSTOCK" },
-    { label: "Low Stock", value: "LOWSTOCK" },
-    { label: "Out of Stock", value: "OUTOFSTOCK" },
+  const parts_condition = [
+    { label: "NEW", value: PartCondition.NEW },
+    { label: "USED", value: PartCondition.USED },
   ];
 
-  const statusEditor = (options: any) => {
+  const partsConditionEditor = (options: any) => {
     return (
       <Dropdown
         value={options.value}
-        options={statuses}
+        options={parts_condition}
         optionLabel="label"
         optionValue="value"
         onChange={(e) => options.editorCallback(e.value)}
-        placeholder="Select a Status"
+        placeholder="Select a condition"
+        itemTemplate={(option) => {
+          return (
+            <span
+              className={`product-badge status-${option.value.toLowerCase()}`}
+            >
+              {option.label}
+            </span>
+          );
+        }}
+      />
+    );
+  };
+
+  const parts_type = [
+    { label: "OEM", value: PartType.OEM },
+    { label: "AFTERMARKET", value: PartType.AFTER_MARKET },
+  ];
+
+  const partsTypeEditor = (options: any) => {
+    return (
+      <Dropdown
+        value={options.value}
+        options={parts_type}
+        optionLabel="label"
+        optionValue="value"
+        onChange={(e) => options.editorCallback(e.value)}
+        placeholder="Select a type"
         itemTemplate={(option) => {
           return (
             <span
@@ -208,10 +242,12 @@ const Services: NextPage = () => {
     let _services = [...services];
     let { newData, index } = e;
 
-    _services = [...services];
-    [index] = newData;
+    console.log(newData);
+    console.log(index);
+    // _services = [...services];
+    // [index] = newData;
 
-    setServices(_services);
+    // setServices(_services);
   };
 
   const deleteService = (rowData) => {
@@ -229,16 +265,15 @@ const Services: NextPage = () => {
 
   return (
     <div className={styles.serviceServicesContainer}>
-      {/* Basic Services Table */}
       <Toast ref={toast} />
       <DataTable
         value={servicesData}
         paginator
         showGridlines
+        stripedRows
         rows={10}
         dataKey="id"
         size="small"
-        // filters={filters}
         filterDisplay="menu"
         loading={loading}
         responsiveLayout="scroll"
@@ -258,7 +293,7 @@ const Services: NextPage = () => {
           header="Service Name"
           filter
           sortable
-          filterPlaceholder="Search by service name"
+          filterPlaceholder="Search"
           style={{ minWidth: "4rem" }}
           editor={(options) => textEditor(options)}
         />
@@ -288,7 +323,6 @@ const Services: NextPage = () => {
         ></Column>
         <Column
           body={deleteService}
-          exportable={false}
           style={{ minWidth: "4rem", textAlign: "center" }}
         ></Column>
       </DataTable>

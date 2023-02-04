@@ -1,5 +1,4 @@
 import { IParts, ServiceType } from "src/types/service";
-import { IService } from "../../types/service";
 import ServiceTypes from "../types/serviceTypes";
 
 interface IServiceActionBase {
@@ -11,7 +10,11 @@ export interface IServiceActionReadServices extends IServiceActionBase {
 }
 
 export interface IServiceActionSetService extends IServiceActionBase {
-  payload: { services: IService[] };
+  payload: { serviceId: string; patch: any };
+}
+
+export interface IServiceActionDeleteService extends IServiceActionBase {
+  payload: { serviceId: string };
 }
 
 export interface IServiceActionCreateService extends IServiceActionBase {
