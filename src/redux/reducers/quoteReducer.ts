@@ -15,16 +15,18 @@ const quoteReducer = (
     case QuoteTypes.SET_MESSAGE:
       const quoteId = action?.payload?.quoteId;
       const message = action?.payload?.message;
+
       if (quoteId && message && quoteId in state.quotes) {
+        console.log(state);
         return {
           ...state,
           quotes: {
             ...state.quotes,
-            quoteId: {
-              ...state.quotes.quoteId,
+            [quoteId]: {
+              ...state.quotes[quoteId],
               messageList: [
-                ...(state.quotes.quoteId as IQuote).messageList,
                 message,
+                ...(state.quotes[quoteId] as IQuote).messageList,
               ],
             },
           },

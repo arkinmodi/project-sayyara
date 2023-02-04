@@ -13,7 +13,9 @@ const ChatForm = () => {
 
   // Sample function, will delete
   const submitMessage = () => {
-    dispatch(createMessage({ id: selectedChat, message: textMessage }));
+    if (selectedChat && textMessage !== "") {
+      dispatch(createMessage({ quoteId: selectedChat, message: textMessage }));
+    }
     setTextMessage("");
   };
 
@@ -29,6 +31,7 @@ const ChatForm = () => {
       <Button
         icon="pi pi-send"
         className={styles.button}
+        disabled={textMessage === ""}
         onClick={submitMessage}
       />
     </div>
