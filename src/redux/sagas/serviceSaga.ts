@@ -13,6 +13,7 @@ import {
 import { IParts, IService } from "src/types/service";
 import {
   IServiceActionCreateService,
+  IServiceActionDeleteService,
   IServiceActionSetService,
 } from "../actions/serviceAction";
 import ServiceTypes from "../types/serviceTypes";
@@ -90,7 +91,15 @@ function getAllServices(shopId: string): Promise<IService[]> {
 function* updateService(
   action: IServiceActionSetService
 ): Generator<CallEffect | PutEffect> {
-  const body: IPatchServiceBody = { patch: action.payload.patch };
+  const patch = action.payload.patch;
+  const body: IPatchServiceBody = {
+    id: patch.id,
+    name: patch.name,
+    description: patch.description,
+    estimated_time: patch.estimated_time,
+    total_price: patch.total_price,
+    parts: patch.parts,
+  };
   const success = yield call(patchService, action.payload.serviceId, body);
   if (success) {
     yield put({ type: ServiceTypes.READ_SERVICES });
@@ -109,9 +118,9 @@ function* readServices(): Generator<CallEffect | PutEffect | SelectEffect> {
 }
 
 function* deleteService(
-  action: IServiceActionSetService
+  action: IServiceActionDeleteService
 ): Generator<CallEffect | PutEffect> {
-  const serviceId = { serviceId: action.payload.serviceId };
+  const serviceId = action.payload.serviceId;
   yield call(deleteServiceById, serviceId);
 }
 
@@ -172,5 +181,6 @@ export function* serviceSaga() {
     takeEvery(ServiceTypes.READ_SERVICES, readServices),
     takeEvery(ServiceTypes.CREATE_SERVICE, createService),
     takeEvery(ServiceTypes.DELETE_SERVICE, deleteService),
+    takeEvery(ServiceTypes.SET_SERVICE, updateService),
   ]);
 }

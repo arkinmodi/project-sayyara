@@ -1,10 +1,14 @@
-import { deleteService } from "@redux/actions/serviceAction";
+import { deleteService, setService } from "@redux/actions/serviceAction";
 import ServiceTypes from "@redux/types/serviceTypes";
 import styles from "@styles/pages/services/Services.module.css";
 import { NextPage } from "next";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
-import { DataTable } from "primereact/datatable";
+import {
+  DataTable,
+  DataTableExpandedRows,
+  DataTableRowEditCompleteParams,
+} from "primereact/datatable";
 import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
@@ -24,9 +28,9 @@ const Services: NextPage = () => {
 
   // const services = useSelector(ServiceSelectors.getServices);
 
-  const [editingRows, setEditingRows] = useState({});
-
-  const [expandedRows, setExpandedRows] = useState(null);
+  const [expandedRows, setExpandedRows] = useState<
+    DataTableExpandedRows | undefined
+  >(undefined);
 
   useEffect(() => {
     dispatch({ type: ServiceTypes.READ_SERVICES });
@@ -83,25 +87,36 @@ const Services: NextPage = () => {
     },
   ];
 
-  const header = (
+  const basicServicesHeader = (
     <div className="table-header">
       <h3 className="mx-0 my-1">Basic Services</h3>
     </div>
   );
 
-  const rowExpansionTemplate = (data) => {
-    const parts = (data as IService).parts;
+  const customServicesHeader = (
+    <div className="table-header">
+      <h3 className="mx-0 my-1">Custom Services</h3>
+    </div>
+  );
+
+  const rowExpansionTemplate = (serviceData: IService) => {
+    const parts = serviceData.parts;
     return (
       <div className={styles.partsTable}>
         <h2>Parts</h2>
         <DataTable
           value={parts}
           responsiveLayout="scroll"
+          paginator
+          showGridlines
+          stripedRows
+          rows={5}
           size="small"
           dataKey="name"
           editMode="row"
-          editingRows={editingRows}
-          onRowEditComplete={(data, e) => onPartsRowEditComplete(data, e)}
+          onRowEditComplete={(params) => {
+            onPartsRowEditComplete(params, serviceData);
+          }}
         >
           <Column
             field="name"
@@ -140,19 +155,15 @@ const Services: NextPage = () => {
     );
   };
 
-  const onPartsRowEditComplete = (data, e: any) => {
-    let _services = [...services];
-    let { newData, index } = e;
+  const onPartsRowEditComplete = (
+    params: DataTableRowEditCompleteParams,
+    serviceData: IService
+  ) => {
+    let { newData, index } = params;
 
-    // console.log(newData);
-    // console.log(index);
-    //pass in the service
-    //update the part at the index given with the newData given
+    serviceData.parts[index] = newData;
 
-    // _services = [...services];
-    // [index] = newData;
-
-    // setServices(_services);
+    dispatch(setService({ serviceId: serviceData.id, patch: serviceData }));
   };
 
   const textEditor = (options: any) => {
@@ -231,18 +242,16 @@ const Services: NextPage = () => {
     );
   };
 
-  const allowExpansion = (rowData) => {
-    return rowData.parts.length > 0;
+  const allowExpansion = (service: IService) => {
+    return service.parts.length > 0;
   };
 
-  const onRowEditComplete = (e: any) => {
+  const onServiceRowEditComplete = (e: any) => {
     let _services = [...services];
     let { newData, index } = e;
 
-    // console.log(newData);
-    // console.log(index);
-    // _services = [...services];
-    // [index] = newData;
+    _services = [...services];
+    [index] = newData;
 
     // setServices(_services);
   };
@@ -283,14 +292,13 @@ const Services: NextPage = () => {
         loading={loading}
         responsiveLayout="scroll"
         globalFilterFields={["name"]}
-        header={header}
-        rowExpansionTemplate={(e) => rowExpansionTemplate(e)}
+        header={basicServicesHeader}
+        rowExpansionTemplate={(data) => rowExpansionTemplate(data)}
         expandedRows={expandedRows}
-        onRowToggle={(e) => setExpandedRows(e.data)}
+        onRowToggle={(e) => setExpandedRows(e.data as DataTableExpandedRows)}
         emptyMessage="No services found."
         editMode="row"
-        editingRows={editingRows}
-        onRowEditComplete={onRowEditComplete}
+        onRowEditComplete={onServiceRowEditComplete}
       >
         <Column expander={allowExpansion} style={{ width: "3em" }} />
         <Column
