@@ -64,8 +64,15 @@ export interface IAuthActionSetIsAuthDialogOpen extends IAuthActionBase {
   payload: { isAuthDialogOpen: boolean; authDialogType: AuthDialogType };
 }
 
-export interface IAuthActionSetUserType extends IAuthActionBase {
-  payload: { userType: UserType | undefined };
+export interface IAuthActionSetUserSession extends IAuthActionBase {
+  payload: {
+    id: string | null;
+    email: string | null;
+    firstName: string | null;
+    lastName: string | null;
+    userType: UserType | null;
+    shopId: string | null;
+  };
 }
 
 export type IAuthAction =
@@ -75,7 +82,7 @@ export type IAuthAction =
   | IAuthActionCreateShopOwnerSignUp
   | IAuthActionSetIsLoggedIn
   | IAuthActionSetIsAuthDialogOpen
-  | IAuthActionSetUserType;
+  | IAuthActionSetUserSession;
 
 export const createLogin = (payload: IAuthActionCreateLogin["payload"]) => ({
   type: AuthType.CREATE_LOGIN,
@@ -117,7 +124,9 @@ export const setIsLoggedIn = (
   payload,
 });
 
-export const setUserType = (payload: IAuthActionSetUserType["payload"]) => ({
-  type: AuthType.SET_USER_TYPE,
+export const setUserSession = (
+  payload: IAuthActionSetUserSession["payload"]
+) => ({
+  type: AuthType.SET_USER_SESSION,
   payload,
 });

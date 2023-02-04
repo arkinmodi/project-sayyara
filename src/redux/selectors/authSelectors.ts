@@ -20,9 +20,34 @@ const getAuthDialogType = createSelector(
 /**
  * Session Selectors
  */
+const getUserId = createSelector(
+  getAuthState,
+  (authState) => authState.session.id
+);
+
+const getFirstName = createSelector(
+  getAuthState,
+  (authState) => authState.session.firstName
+);
+
+const getLastName = createSelector(
+  getAuthState,
+  (authState) => authState.session.lastName
+);
+
+const getEmail = createSelector(
+  getAuthState,
+  (authState) => authState.session.email
+);
+
 const getUserType = createSelector(
   getAuthState,
-  (authState) => authState.userType
+  (authState) => authState.session.userType
+);
+
+const getShopId = createSelector(
+  getAuthState,
+  (authState) => authState.session.shopId
 );
 
 const getIsLoggedIn = createSelector(
@@ -32,7 +57,12 @@ const getIsLoggedIn = createSelector(
 
 export const AuthSelectors = {
   getIsLoggedIn,
+  getUserId,
+  getFirstName,
+  getLastName,
+  getEmail,
   getUserType,
+  getShopId,
   getAuthDialogIsOpen,
   getAuthDialogType,
 };
