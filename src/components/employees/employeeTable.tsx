@@ -14,6 +14,7 @@ import {
 } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
+import { Message } from "primereact/message";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ShopRoles } from "src/types/auth";
@@ -53,6 +54,7 @@ const EmployeeTable = () => {
 
   const employees = useSelector(ShopSelectors.getShopEmployees);
   const userType = useSelector(AuthSelectors.getUserType);
+  const shopId = useSelector(AuthSelectors.getShopId);
 
   const dispatch = useDispatch();
 
@@ -155,8 +157,20 @@ const EmployeeTable = () => {
   );
 
   return (
-    <div>
+    <div className={styles.employeeTableContainer}>
+      <Message
+        className={styles.inviteEmployeeMessage}
+        style={{
+          display:
+            userType === UserType.SHOP_OWNER && employeeList.length > 1
+              ? "inline-flex"
+              : "none",
+        }}
+        severity="info"
+        text={`To invite an employee, please provide them with your shop ID: ${shopId}`}
+      />
       <DataTable
+        className={styles.employeeTable}
         header={renderTableHeader()}
         value={employeeList}
         showGridlines
@@ -191,7 +205,6 @@ const EmployeeTable = () => {
           }}
         ></Column>
       </DataTable>
-
       <Dialog
         visible={showSuspendEmployeeDialog}
         style={{ width: "450px" }}
