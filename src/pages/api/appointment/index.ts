@@ -2,7 +2,7 @@ import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import {
   createAppointment,
   createAppointmentSchema,
-  getAllAppointment,
+  getAllAppointments,
 } from "@server/services/appointmentService";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -30,7 +30,7 @@ const appointmentHandler = async (
 
     // TODO: Remove this GET method when shops are setup
     case "GET":
-      const appointments = await getAllAppointment();
+      const appointments = await getAllAppointments();
       res.status(200).json(appointments);
       break;
 
