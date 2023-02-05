@@ -31,16 +31,21 @@ interface IServiceProps {
 }
 
 const ServicesTable = (props: IServiceProps) => {
+  const [expandedRows, setExpandedRows] = useState<
+    DataTableExpandedRows | undefined
+  >(undefined);
+  const [addServiceDialogVisible, setAddServiceDialogVisible] = useState(false);
+
   const { serviceType, services, isLoading } = props;
   const toast = useRef(null);
   const userType = useSelector(AuthSelectors.getUserType);
 
-  const [expandedRows, setExpandedRows] = useState<
-    DataTableExpandedRows | undefined
-  >(undefined);
-
   const serviceList = useSelector(ShopSelectors.getShopServices);
   const dispatch = useDispatch();
+
+  const hideAddServiceDialog = () => {
+    setAddServiceDialogVisible(false);
+  };
 
   const serviceTableHeader = () => {
     return (
@@ -59,7 +64,7 @@ const ServicesTable = (props: IServiceProps) => {
           icon="pi pi-plus"
           className={styles.addServiceButtonGreen}
           onClick={() => {
-            <AddServicePopup serviceType={serviceType} visible={true} />;
+            setAddServiceDialogVisible(true);
           }}
         />
       </div>
@@ -349,6 +354,11 @@ const ServicesTable = (props: IServiceProps) => {
           }}
         ></Column>
       </DataTable>
+      <AddServicePopup
+        serviceType={serviceType}
+        visible={addServiceDialogVisible}
+        onHideDialog={hideAddServiceDialog}
+      />
     </div>
   );
 };
