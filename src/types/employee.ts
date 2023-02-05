@@ -1,9 +1,11 @@
+import { EmployeeStatus, UserType } from "@prisma/client";
+
 export interface IEmployee {
   id: string;
-  first_name: string;
-  last_name: string;
-  phone_number: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
   email: string;
-  type: "SHOP_OWNER" | "EMPLOYEE";
-  shop_id: string;
+  type: UserType;
+  status: EmployeeStatus;
 }
