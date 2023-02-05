@@ -17,7 +17,6 @@ import {
 import ServiceTypes from "../types/serviceTypes";
 
 interface IPatchServiceBody {
-  id?: string;
   name?: string;
   description?: string;
   estimated_time?: string;
@@ -61,7 +60,6 @@ function* updateService(
 ): Generator<CallEffect | PutEffect> {
   const patch = action.payload.patch;
   const body: IPatchServiceBody = {
-    id: patch.id,
     name: patch.name,
     description: patch.description,
     estimated_time: patch.estimated_time,

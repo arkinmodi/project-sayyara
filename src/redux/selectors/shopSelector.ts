@@ -9,6 +9,12 @@ const getShopEmployees = createSelector(
   (shopState) => shopState.employees
 );
 
+const getShopServices = createSelector(
+  getShopState,
+  (shopState) => shopState.services
+);
+
 export const ShopSelectors = {
   getShopEmployees,
+  getShopServices,
 };

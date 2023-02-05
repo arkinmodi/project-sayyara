@@ -1,6 +1,5 @@
 import { IParts, ServiceType } from "src/types/service";
 import ServiceTypes from "../types/serviceTypes";
-
 interface IServiceActionBase {
   type: ServiceTypes;
 }

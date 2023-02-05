@@ -1,5 +1,6 @@
 import { deleteService, setService } from "@redux/actions/serviceAction";
-import ServiceTypes from "@redux/types/serviceTypes";
+import { readShopServices } from "@redux/actions/shopActions";
+import { ShopSelectors } from "@redux/selectors/shopSelector";
 import styles from "@styles/pages/services/Services.module.css";
 import { NextPage } from "next";
 import { Button } from "primereact/button";
@@ -14,7 +15,7 @@ import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   IService,
   PartCondition,
@@ -26,16 +27,22 @@ const Services: NextPage = () => {
   const [services, setServices] = useState<IService[]>([]);
   const dispatch = useDispatch();
 
-  // const services = useSelector(ServiceSelectors.getServices);
+  const serviceList = useSelector(ShopSelectors.getShopServices);
 
   const [expandedRows, setExpandedRows] = useState<
     DataTableExpandedRows | undefined
   >(undefined);
 
   useEffect(() => {
-    dispatch({ type: ServiceTypes.READ_SERVICES });
+    dispatch(readShopServices());
     setLoading(false);
   }, [dispatch]);
+
+  useEffect(() => {
+    if (serviceList) {
+      setServices(serviceList);
+    }
+  }, [serviceList]);
 
   const [loading, setLoading] = useState(true);
 
@@ -247,13 +254,10 @@ const Services: NextPage = () => {
   };
 
   const onServiceRowEditComplete = (e: any) => {
-    let _services = [...services];
     let { newData, index } = e;
-
-    _services = [...services];
-    [index] = newData;
-
-    // setServices(_services);
+    if (services.length > index) {
+      dispatch(setService({ serviceId: services[index]!.id, patch: newData }));
+    }
   };
 
   const deleteButton = (service: IService) => {
