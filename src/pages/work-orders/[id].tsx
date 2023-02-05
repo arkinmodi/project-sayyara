@@ -150,7 +150,7 @@ const WorkOrderPage = () => {
             <p>
               <b>Assigned to: </b>
               {workOrder.employee
-                ? `${workOrder.employee.first_name} ${workOrder.employee.last_name}`
+                ? `${workOrder.employee.firstName} ${workOrder.employee.lastName}`
                 : "Unassigned"}
             </p>
           </div>
