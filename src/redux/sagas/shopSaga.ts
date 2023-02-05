@@ -58,7 +58,7 @@ function* readShopEmployees(): Generator<
 }
 
 function getAllServices(shopId: string): Promise<IService[]> {
-  return fetch(`/api/service/${shopId}`, {
+  return fetch(`/api/shop/${shopId}/services`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -70,7 +70,7 @@ function getAllServices(shopId: string): Promise<IService[]> {
         const services = data.map((service: Service) => {
           return {
             id: service.id,
-            name: service.id,
+            name: service.name,
             description: service.description,
             estimated_time: service.estimated_time,
             total_price: service.total_price,

@@ -1,8 +1,9 @@
+import { UserType } from "@prisma/client";
 import { deleteService, setService } from "@redux/actions/serviceAction";
 import { readShopServices } from "@redux/actions/shopActions";
+import { AuthSelectors } from "@redux/selectors/authSelectors";
 import { ShopSelectors } from "@redux/selectors/shopSelector";
 import styles from "@styles/pages/services/Services.module.css";
-import { NextPage } from "next";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import {
@@ -23,96 +24,59 @@ import {
   ServiceType,
 } from "src/types/service";
 
-const Services: NextPage = () => {
-  const [cannedServices, setCannedServices] = useState<IService[]>([]);
+const Services = () => {
+  const [customServices, setCustomServices] = useState<IService[]>([]);
   const [basicServices, setBasicServices] = useState<IService[]>([]);
-
-  const dispatch = useDispatch();
-
-  const serviceList = useSelector(ShopSelectors.getShopServices);
+  const [loading, setLoading] = useState(true);
+  const toast = useRef(null);
+  const userType = useSelector(AuthSelectors.getUserType);
 
   const [expandedRows, setExpandedRows] = useState<
     DataTableExpandedRows | undefined
   >(undefined);
 
+  const serviceList = useSelector(ShopSelectors.getShopServices);
+  const shopId = useSelector(AuthSelectors.getShopId);
+  const dispatch = useDispatch();
+
+  /**
+   * If we refresh the page, the session may not be loaded yet.
+   * If shopId value changes, we want to retrieve the services again.
+   */
   useEffect(() => {
     dispatch(readShopServices());
-    setLoading(false);
-  }, [dispatch]);
+  }, [dispatch, shopId]);
 
   useEffect(() => {
-    if (serviceList) {
+    if (serviceList != null) {
+      let custom: IService[] = [];
+      let basic: IService[] = [];
+
       serviceList.forEach((service) => {
         if (service.type == ServiceType.CANNED) {
-          cannedServices.push(service);
+          basic.push(service);
         } else {
-          basicServices.push(service);
+          custom.push(service);
         }
       });
+
+      setCustomServices(custom);
+      setBasicServices(basic);
+      setLoading(false);
     }
   }, [serviceList]);
 
-  const [loading, setLoading] = useState(true);
-
-  const toast = useRef(null);
-
-  // const servicesData: IService[] = [
-  //   {
-  //     id: "1",
-  //     name: "oil change",
-  //     description: "changes the engine oil",
-  //     estimated_time: 5,
-  //     total_price: "$100",
-  //     parts: [
-  //       {
-  //         quantity: 5,
-  //         cost: 100,
-  //         name: "nails",
-  //         condition: PartCondition.NEW,
-  //         build: PartType.OEM,
-  //       },
-  //     ],
-  //     type: ServiceType.CANNED,
-  //     shop_id: "1",
-  //   },
-  //   {
-  //     id: "2",
-  //     name: "oil change for fancy car",
-  //     description: "changes the engine oil",
-  //     estimated_time: 5,
-  //     total_price: "$200",
-  //     parts: [
-  //       {
-  //         quantity: 5,
-  //         cost: 100,
-  //         name: "nails",
-  //         condition: PartCondition.NEW,
-  //         build: PartType.OEM,
-  //       },
-  //       {
-  //         quantity: 5,
-  //         cost: 100,
-  //         name: "nails2",
-  //         condition: PartCondition.NEW,
-  //         build: PartType.OEM,
-  //       },
-  //     ],
-  //     type: ServiceType.CANNED,
-  //     shop_id: "1",
-  //   },
-  // ];
-
   const basicServicesHeader = () => {
     return (
-      <React.Fragment>
+      <div className={styles.servicesTableHeader}>
         <h2 className="mx-0 my-1">Basic Services</h2>
         <Button
           label="Add Basic Service"
           icon="pi pi-plus"
-          className="p-button-success mr-2"
+          className={styles.addServiceButtonGreen}
           // onClick={openNewBasicService}
         />
-      </React.Fragment>
+      </div>
     );
   };
 
@@ -184,7 +148,7 @@ const Services: NextPage = () => {
           ></Column>
           <Column
             body={deleteButton}
-            style={{ minWidth: "4rem", textAlign: "center" }}
+            className={styles.servicesTableDeleteButton}
           ></Column>
         </DataTable>
       </div>
@@ -197,9 +161,17 @@ const Services: NextPage = () => {
   ) => {
     let { newData, index } = params;
 
-    serviceData.parts[index] = newData;
+    let newParts = [...serviceData.parts];
+    newParts[index] = newData;
 
-    dispatch(setService({ serviceId: serviceData.id, patch: serviceData }));
+    dispatch(
+      setService({
+        serviceId: serviceData.id,
+        patch: {
+          parts: newParts,
+        },
+      })
+    );
   };
 
   const parts_condition = [
@@ -293,11 +265,19 @@ const Services: NextPage = () => {
 
   const onServiceRowEditComplete = (e: any) => {
     let { newData, index } = e;
-    if (cannedServices.length > index) {
-      dispatch(
-        setService({ serviceId: cannedServices[index]!.id, patch: newData })
-      );
-    }
+    console.log("here", newData);
+    dispatch(
+      setService({
+        serviceId: newData.id,
+        patch: {
+          name: newData.name,
+          description: newData.description,
+          estimated_time: newData.estimated_time,
+          total_price: newData.total_price,
+          parts: newData.parts,
+        },
+      })
+    );
   };
 
   const deleteButton = (service: IService) => {
@@ -306,7 +286,6 @@ const Services: NextPage = () => {
         <Button
           icon="pi pi-trash"
           className="p-button-text p-button-danger p-button-rounded"
-          // call the delete saga pass in the id
           onClick={() => handleDeleteServiceButton(service)}
         />
       </React.Fragment>
@@ -325,7 +304,7 @@ const Services: NextPage = () => {
     <div className={styles.serviceServicesContainer}>
       <Toast ref={toast} />
       <DataTable
-        value={cannedServices}
+        value={basicServices}
         paginator
         showGridlines
         stripedRows
@@ -364,7 +343,7 @@ const Services: NextPage = () => {
           field="estimated_time"
           header="Duration"
           style={{ minWidth: "4rem" }}
-          editor={(options) => textEditor(options)}
+          editor={(options) => quantityEditor(options)}
         />
         <Column
           field="total_price"
@@ -377,14 +356,20 @@ const Services: NextPage = () => {
           rowEditor
           headerStyle={{ minWidth: "4rem" }}
           bodyStyle={{ textAlign: "center" }}
+          style={{
+            display: userType === UserType.SHOP_OWNER ? "table-cell" : "none",
+          }}
         ></Column>
         <Column
           body={deleteButton}
-          style={{ minWidth: "4rem", textAlign: "center" }}
+          className={styles.servicesTableDeleteButton}
+          style={{
+            display: userType === UserType.SHOP_OWNER ? "table-cell" : "none",
+          }}
         ></Column>
       </DataTable>
     </div>
   );
 };
 
-export default Services;
+export default React.memo(Services);

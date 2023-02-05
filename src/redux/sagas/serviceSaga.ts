@@ -19,7 +19,7 @@ import ServiceTypes from "../types/serviceTypes";
 interface IPatchServiceBody {
   name?: string;
   description?: string;
-  estimated_time?: string;
+  estimated_time?: number;
   total_price?: number;
   parts?: IParts[];
 }
@@ -30,7 +30,7 @@ interface IPostServiceBody {
   description: string;
   estimated_time: string;
   total_price: number;
-  parts: IParts[];
+  parts: IParts[] | {};
   type: ServiceType;
 }
 
@@ -46,6 +46,7 @@ function patchService(
     },
     body: JSON.stringify(body),
   }).then((res) => {
+    console.log(res);
     if (res.status === 200) {
       return true;
     } else {
@@ -76,7 +77,10 @@ function* deleteService(
   action: IServiceActionDeleteService
 ): Generator<CallEffect | PutEffect> {
   const serviceId = action.payload.serviceId;
-  yield call(deleteServiceById, serviceId);
+  const success = yield call(deleteServiceById, serviceId);
+  if (success) {
+    yield put({ type: ShopTypes.READ_SHOP_SERVICES });
+  }
 }
 
 function postCreate(body: IPostServiceBody, shopId: string): Promise<boolean> {
@@ -104,7 +108,7 @@ function deleteServiceById(serviceId: string): Promise<boolean> {
       "Content-Type": "application/json",
     },
   }).then((res) => {
-    if (res.status === 200) {
+    if (res.status === 204) {
       return true;
     } else {
       return false;
