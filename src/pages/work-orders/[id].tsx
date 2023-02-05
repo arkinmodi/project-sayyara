@@ -9,10 +9,32 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button } from "primereact/button";
 import { Editor } from "primereact/editor";
+import { TabPanel, TabView } from "primereact/tabview";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const WorkOrder: NextPage = () => {
+  const router = useRouter();
+
+  const handleTabChange = (idx: number) => {
+    if (idx !== 1) {
+      router.push("/");
+    }
+  };
+
+  return (
+    <div>
+      <TabView activeIndex={1} onTabChange={(e) => handleTabChange(e.index)}>
+        <TabPanel header="Quotes"></TabPanel>
+        <TabPanel header="Service Requests">
+          <WorkOrderPage />
+        </TabPanel>
+      </TabView>
+    </div>
+  );
+};
+
+const WorkOrderPage = () => {
   const { query } = useRouter();
   const { id } = query;
 
@@ -60,7 +82,7 @@ const WorkOrder: NextPage = () => {
   };
 
   return (
-    <div style={{ margin: "1rem" }}>
+    <div style={{ marginLeft: "1rem", marginRight: "1rem" }}>
       <Head>
         <title>{workOrder?.title ?? "Sayyara"}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -99,7 +121,7 @@ const WorkOrder: NextPage = () => {
           >
             <p>
               <b>Status: </b>
-              {`IDK`}
+              {workOrder.status}
             </p>
             <p>
               <b>Last Update: </b>
@@ -233,7 +255,7 @@ const WorkOrderEditor: React.FC<{
 
   return (
     <Editor
-      style={{ height: "40vh" }}
+      style={{ height: "50vh" }}
       value={body}
       onTextChange={(e) => updateBody(e.htmlValue ?? "")}
       headerTemplate={editorToolbar()}

@@ -1,4 +1,4 @@
-// Wrapper for unstable_getServerSession https://next-auth.js.org/configuration/nextjs
+// Wrapper for getServerSession https://next-auth.js.org/configuration/nextjs
 
 import { authOptions as nextAuthOptions } from "@pages/api/auth/[...nextauth]";
 import type { GetServerSidePropsContext } from "next";
