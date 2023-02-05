@@ -75,59 +75,73 @@ const ServicesTable = (props: IServiceProps) => {
     const parts = serviceData.parts;
     return (
       <div className={styles.partsTable}>
-        <h2>Parts</h2>
-        <DataTable
-          value={parts}
-          responsiveLayout="scroll"
-          paginator
-          showGridlines
-          stripedRows
-          rows={5}
-          size="small"
-          dataKey="name"
-          editMode="row"
-          onRowEditComplete={(params) => {
-            onPartsRowEditComplete(params, serviceData);
-          }}
-        >
-          <Column
-            field="name"
-            header="Name"
-            editor={(options) => textEditor(options)}
-            sortable
-          ></Column>
-          <Column
-            field="quantity"
-            header="Quantity"
-            editor={(options) => quantityEditor(options)}
-            sortable
-          ></Column>
-          <Column
-            field="cost"
-            header="Cost Per Unit"
-            editor={(options) => priceEditor(options)}
-            sortable
-          ></Column>
-          <Column
-            field="condition"
-            header="Condition"
-            editor={(options) => partsConditionEditor(options)}
-          ></Column>
-          <Column
-            field="build"
-            header="Type"
-            editor={(options) => partsTypeEditor(options)}
-          ></Column>
-          <Column
-            rowEditor
-            headerStyle={{ width: "10%", minWidth: "4rem" }}
-            bodyStyle={{ textAlign: "center" }}
-          ></Column>
-          <Column
-            body={deleteButton}
-            className={styles.servicesTableDeleteButton}
-          ></Column>
-        </DataTable>
+        <div className={styles.servicesTableHeader}>
+          <h2>Parts</h2>
+          <Button
+            label={"Add Part"}
+            icon="pi pi-plus"
+            className={styles.addServiceButtonGreen}
+            // onClick={() => {
+            // TODO: Set parts popup to true
+            // }}
+          />
+        </div>
+        {parts.length > 0 ? (
+          <DataTable
+            value={parts}
+            responsiveLayout="scroll"
+            paginator
+            showGridlines
+            stripedRows
+            rows={5}
+            size="small"
+            dataKey="name"
+            editMode="row"
+            onRowEditComplete={(params) => {
+              onPartsRowEditComplete(params, serviceData);
+            }}
+          >
+            <Column
+              field="name"
+              header="Name"
+              editor={(options) => textEditor(options)}
+              sortable
+            ></Column>
+            <Column
+              field="quantity"
+              header="Quantity"
+              editor={(options) => quantityEditor(options)}
+              sortable
+            ></Column>
+            <Column
+              field="cost"
+              header="Cost Per Unit"
+              editor={(options) => priceEditor(options)}
+              sortable
+            ></Column>
+            <Column
+              field="condition"
+              header="Condition"
+              editor={(options) => partsConditionEditor(options)}
+            ></Column>
+            <Column
+              field="build"
+              header="Type"
+              editor={(options) => partsTypeEditor(options)}
+            ></Column>
+            <Column
+              rowEditor
+              headerStyle={{ width: "10%", minWidth: "4rem" }}
+              bodyStyle={{ textAlign: "center" }}
+            ></Column>
+            <Column
+              body={deleteButton}
+              className={styles.servicesTableDeleteButton}
+            ></Column>
+          </DataTable>
+        ) : (
+          <div></div>
+        )}
       </div>
     );
   };
@@ -236,13 +250,8 @@ const ServicesTable = (props: IServiceProps) => {
     );
   };
 
-  const allowExpansion = (service: IService) => {
-    return service.parts.length > 0;
-  };
-
   const onServiceRowEditComplete = (e: any) => {
-    let { newData, index } = e;
-    console.log("here", newData);
+    let { newData } = e;
     dispatch(
       setService({
         serviceId: newData.id,
@@ -301,7 +310,7 @@ const ServicesTable = (props: IServiceProps) => {
         onRowEditComplete={onServiceRowEditComplete}
       >
         <Column
-          expander={allowExpansion}
+          expander={true}
           style={{
             display: serviceType === ServiceType.CANNED ? "table-cell" : "none",
           }}
@@ -359,6 +368,7 @@ const ServicesTable = (props: IServiceProps) => {
         visible={addServiceDialogVisible}
         onHideDialog={hideAddServiceDialog}
       />
+      {/* TODO: Add part popup */}
     </div>
   );
 };
