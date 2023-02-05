@@ -26,7 +26,7 @@ import {
 interface IServiceProps {
   serviceType: ServiceType;
   services: IService[];
-  isLoading: Boolean;
+  isLoading: boolean;
 }
 
 const ServicesTable = (props: IServiceProps) => {

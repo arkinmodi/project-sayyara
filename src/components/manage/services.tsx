@@ -11,7 +11,6 @@ const Services = () => {
   const [customServices, setCustomServices] = useState<IService[]>([]);
   const [basicServices, setBasicServices] = useState<IService[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeIndex, setActiveIndex] = useState([0, 1]);
   const serviceList = useSelector(ShopSelectors.getShopServices);
   const dispatch = useDispatch();
   const shopId = useSelector(AuthSelectors.getShopId);
@@ -58,7 +57,7 @@ const Services = () => {
             serviceType={ServiceType.CUSTOM}
             services={customServices}
             isLoading={loading}
-          />{" "}
+          />
         </TabPanel>
       </TabView>
     </div>
