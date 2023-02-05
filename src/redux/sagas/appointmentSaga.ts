@@ -1,3 +1,4 @@
+import { AuthSelectors } from "@redux/selectors/authSelectors";
 import { Appointment } from "@server/db/client";
 import {
   all,
@@ -5,6 +6,8 @@ import {
   CallEffect,
   put,
   PutEffect,
+  select,
+  SelectEffect,
   takeEvery,
 } from "redux-saga/effects";
 import { IAppointment } from "src/types/appointment";
@@ -44,9 +47,9 @@ function patchAppointmentStatus(
   });
 }
 
-function getAllAppointments(): Promise<IAppointment[]> {
+function getAllAppointments(shopId: string): Promise<IAppointment[]> {
   //TODO: change to use endpoint with store ID
-  return fetch(`/api/appointment/`, {
+  return fetch(`/api/shop/${shopId}/appointments/`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -118,12 +121,15 @@ function* setAppointmentStatus(
   }
 }
 
-function* readAppointments(): Generator<CallEffect | PutEffect> {
-  const appointments = yield call(getAllAppointments);
-  yield put({
-    type: AppointmentTypes.SET_APPOINTMENTS,
-    payload: { appointments },
-  });
+function* readAppointments(): Generator<CallEffect | PutEffect | SelectEffect> {
+  const shopId = (yield select(AuthSelectors.getShopId)) as string | null;
+  if (shopId) {
+    const appointments = yield call(getAllAppointments, shopId);
+    yield put({
+      type: AppointmentTypes.SET_APPOINTMENTS,
+      payload: { shopId, appointments },
+    });
+  }
 }
 
 function postCreate(body: IPostCreateBody): Promise<boolean> {
