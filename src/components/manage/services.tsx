@@ -24,7 +24,9 @@ import {
 } from "src/types/service";
 
 const Services: NextPage = () => {
-  const [services, setServices] = useState<IService[]>([]);
+  const [cannedServices, setCannedServices] = useState<IService[]>([]);
+  const [basicServices, setBasicServices] = useState<IService[]>([]);
+
   const dispatch = useDispatch();
 
   const serviceList = useSelector(ShopSelectors.getShopServices);
@@ -40,7 +42,13 @@ const Services: NextPage = () => {
 
   useEffect(() => {
     if (serviceList) {
-      setServices(serviceList);
+      serviceList.forEach((service) => {
+        if (service.type == ServiceType.CANNED) {
+          cannedServices.push(service);
+        } else {
+          basicServices.push(service);
+        }
+      });
     }
   }, [serviceList]);
 
@@ -48,63 +56,79 @@ const Services: NextPage = () => {
 
   const toast = useRef(null);
 
-  const servicesData: IService[] = [
-    {
-      id: "1",
-      name: "oil change",
-      description: "changes the engine oil",
-      estimated_time: 5,
-      total_price: "$100",
-      parts: [
-        {
-          quantity: 5,
-          cost: 100,
-          name: "nails",
-          condition: PartCondition.NEW,
-          build: PartType.OEM,
-        },
-      ],
-      type: ServiceType.CANNED,
-      shop_id: "1",
-    },
-    {
-      id: "2",
-      name: "oil change for fancy car",
-      description: "changes the engine oil",
-      estimated_time: 5,
-      total_price: "$200",
-      parts: [
-        {
-          quantity: 5,
-          cost: 100,
-          name: "nails",
-          condition: PartCondition.NEW,
-          build: PartType.OEM,
-        },
-        {
-          quantity: 5,
-          cost: 100,
-          name: "nails2",
-          condition: PartCondition.NEW,
-          build: PartType.OEM,
-        },
-      ],
-      type: ServiceType.CANNED,
-      shop_id: "1",
-    },
-  ];
+  // const servicesData: IService[] = [
+  //   {
+  //     id: "1",
+  //     name: "oil change",
+  //     description: "changes the engine oil",
+  //     estimated_time: 5,
+  //     total_price: "$100",
+  //     parts: [
+  //       {
+  //         quantity: 5,
+  //         cost: 100,
+  //         name: "nails",
+  //         condition: PartCondition.NEW,
+  //         build: PartType.OEM,
+  //       },
+  //     ],
+  //     type: ServiceType.CANNED,
+  //     shop_id: "1",
+  //   },
+  //   {
+  //     id: "2",
+  //     name: "oil change for fancy car",
+  //     description: "changes the engine oil",
+  //     estimated_time: 5,
+  //     total_price: "$200",
+  //     parts: [
+  //       {
+  //         quantity: 5,
+  //         cost: 100,
+  //         name: "nails",
+  //         condition: PartCondition.NEW,
+  //         build: PartType.OEM,
+  //       },
+  //       {
+  //         quantity: 5,
+  //         cost: 100,
+  //         name: "nails2",
+  //         condition: PartCondition.NEW,
+  //         build: PartType.OEM,
+  //       },
+  //     ],
+  //     type: ServiceType.CANNED,
+  //     shop_id: "1",
+  //   },
+  // ];
 
-  const basicServicesHeader = (
-    <div className="table-header">
-      <h3 className="mx-0 my-1">Basic Services</h3>
-    </div>
-  );
+  const basicServicesHeader = () => {
+    return (
+      <React.Fragment>
+        <h2 className="mx-0 my-1">Basic Services</h2>
+        <Button
+          label="Add Basic Service"
+          icon="pi pi-plus"
+          className="p-button-success mr-2"
+          // onClick={openNewBasicService}
+        />
+      </React.Fragment>
+    );
+  };
 
-  const customServicesHeader = (
-    <div className="table-header">
-      <h3 className="mx-0 my-1">Custom Services</h3>
-    </div>
-  );
+  const customServicesHeader = () => {
+    return (
+      <React.Fragment>
+        <h2 className="mx-0 my-1">Custom Services</h2>
+        <Button
+          label="Add Custom Service"
+          icon="pi pi-plus"
+          className="p-button-success mr-2"
+          // onClick={openNewCustomService}
+        />
+      </React.Fragment>
+    );
+  };
 
   const rowExpansionTemplate = (serviceData: IService) => {
     const parts = serviceData.parts;
@@ -131,7 +155,12 @@ const Services: NextPage = () => {
             editor={(options) => textEditor(options)}
             sortable
           ></Column>
-          <Column field="quantity" header="Quantity" sortable></Column>
+          <Column
+            field="quantity"
+            header="Quantity"
+            editor={(options) => quantityEditor(options)}
+            sortable
+          ></Column>
           <Column
             field="cost"
             header="Cost Per Unit"
@@ -171,16 +200,6 @@ const Services: NextPage = () => {
     serviceData.parts[index] = newData;
 
     dispatch(setService({ serviceId: serviceData.id, patch: serviceData }));
-  };
-
-  const textEditor = (options: any) => {
-    return (
-      <InputText
-        type="text"
-        value={options.value}
-        onChange={(e) => options.editorCallback(e.target.value)}
-      />
-    );
   };
 
   const parts_condition = [
@@ -249,14 +268,35 @@ const Services: NextPage = () => {
     );
   };
 
+  const textEditor = (options: any) => {
+    return (
+      <InputText
+        type="text"
+        value={options.value}
+        onChange={(e) => options.editorCallback(e.target.value)}
+      />
+    );
+  };
+
+  const quantityEditor = (options: any) => {
+    return (
+      <InputNumber
+        value={options.value}
+        onValueChange={(e: { value: any }) => options.editorCallback(e.value)}
+      />
+    );
+  };
+
   const allowExpansion = (service: IService) => {
     return service.parts.length > 0;
   };
 
   const onServiceRowEditComplete = (e: any) => {
     let { newData, index } = e;
-    if (services.length > index) {
-      dispatch(setService({ serviceId: services[index]!.id, patch: newData }));
+    if (cannedServices.length > index) {
+      dispatch(
+        setService({ serviceId: cannedServices[index]!.id, patch: newData })
+      );
     }
   };
 
@@ -285,7 +325,7 @@ const Services: NextPage = () => {
     <div className={styles.serviceServicesContainer}>
       <Toast ref={toast} />
       <DataTable
-        value={servicesData}
+        value={cannedServices}
         paginator
         showGridlines
         stripedRows
