@@ -22,6 +22,7 @@ import {
   PartType,
   ServiceType,
 } from "src/types/service";
+import AddServicePopup from "./addServicePopup";
 
 interface IServiceProps {
   serviceType: ServiceType;
@@ -57,7 +58,9 @@ const ServicesTable = (props: IServiceProps) => {
           }
           icon="pi pi-plus"
           className={styles.addServiceButtonGreen}
-          // onClick={openNewBasicService}
+          onClick={() => {
+            <AddServicePopup serviceType={serviceType} visible={true} />;
+          }}
         />
       </div>
     );
