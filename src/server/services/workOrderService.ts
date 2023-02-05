@@ -68,6 +68,7 @@ export const updateWorkOrderSchema = z.object({
   body: z.string().optional(),
   appointment_id: z.string().optional(),
   employee_id: z.string().optional(),
+  employee_email: z.string().email().optional(),
   status: z.nativeEnum(WorkOrderStatus).optional(),
 });
 
@@ -80,9 +81,14 @@ export const updateWorkOrderById = async (
   const workOrder = await prisma.workOrder.findUnique({ where: { id } });
   if (!workOrder) return Promise.reject("Work Order not found.");
 
-  const employee = patch.employee_id
-    ? { connect: { id: patch.employee_id } }
-    : undefined;
+  let employee: { connect: { id: string } } | undefined;
+  if (patch.employee_id) {
+    employee = { connect: { id: patch.employee_id } };
+  } else if (patch.employee_email) {
+    employee = { connect: { id: patch.employee_email } };
+  } else {
+    employee = undefined;
+  }
 
   const appointment = patch.appointment_id
     ? { connect: { id: patch.appointment_id } }
@@ -93,6 +99,7 @@ export const updateWorkOrderById = async (
     data: {
       title: patch.title,
       body: patch.body,
+      status: patch.status,
       employee: employee,
       appointment: appointment,
     },

@@ -1,5 +1,5 @@
 import WorkOrderTypes from "@redux/types/workOrderTypes";
-import { IWorkOrder } from "src/types/workOrder";
+import { IWorkOrder, WorkOrderStatus } from "src/types/workOrder";
 
 interface IWorkOrderActionBase {
   type: WorkOrderTypes;
@@ -12,8 +12,9 @@ export interface IWorkOrderActionGetWorkOrderById extends IWorkOrderActionBase {
 export interface IWorkOrderActionPatchWorkOrderByIdBody {
   title?: string;
   body?: string;
-  appointment_id?: string;
   employee_id?: string;
+  employee_email?: string;
+  status?: WorkOrderStatus;
 }
 
 export interface IWorkOrderActionPatchWorkOrderById

@@ -5,13 +5,16 @@ import {
 import { WorkOrderSelectors } from "@redux/selectors/workOrderSelector";
 import { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
+import { Dropdown } from "primereact/dropdown";
 import { Editor } from "primereact/editor";
+import { InputText } from "primereact/inputtext";
 import { TabPanel, TabView } from "primereact/tabview";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { WorkOrderStatus } from "src/types/workOrder";
 
 const WorkOrder: NextPage = () => {
   const router = useRouter();
@@ -35,14 +38,16 @@ const WorkOrder: NextPage = () => {
 };
 
 const WorkOrderPage = () => {
-  const { query } = useRouter();
-  const { id } = query;
+  const router = useRouter();
+  const { id } = router.query;
 
   const dispatch = useDispatch();
   const workOrder = useSelector(WorkOrderSelectors.getWorkOrder);
 
   const [workOrderBody, setWorkOrderBody] = useState(workOrder?.body);
   const [isSaving, setIsSaving] = useState(false);
+  const [isEditMetaDataDialogVisible, setIsEditMetaDataDialogVisible] =
+    useState(false);
 
   useEffect(() => {
     if (typeof id === "string") {
@@ -68,6 +73,10 @@ const WorkOrderPage = () => {
     }
   };
 
+  const handleHideEditMetaDataDialog = () => {
+    setIsEditMetaDataDialogVisible(!isEditMetaDataDialogVisible);
+  };
+
   const formatDate = (date: Date) => {
     const pad = (n: number) => `${n}`.padStart(2, "0");
 
@@ -84,7 +93,9 @@ const WorkOrderPage = () => {
   return (
     <div style={{ marginLeft: "1rem", marginRight: "1rem" }}>
       <Head>
-        <title>{workOrder?.title ?? "Sayyara"}</title>
+        <title>
+          {workOrder !== null ? `Work Order - ${workOrder.title}` : "Sayyara"}
+        </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -95,17 +106,16 @@ const WorkOrderPage = () => {
           alignItems: "center",
         }}
       >
-        <Link href="/">
-          <Button
-            className="p-button-secondary"
-            icon="pi pi-angle-left"
-            label="Back"
-            aria-label="Back"
-            style={{
-              maxHeight: "3rem",
-            }}
-          />
-        </Link>
+        <Button
+          className="p-button-secondary"
+          icon="pi pi-angle-left"
+          label="Back"
+          aria-label="Back"
+          onClick={() => router.back()}
+          style={{
+            maxHeight: "3rem",
+          }}
+        />
         <h1 style={{}}>{workOrder?.title ?? ""}</h1>
       </div>
 
@@ -161,7 +171,11 @@ const WorkOrderPage = () => {
               justifyContent: "flex-end",
             }}
           >
-            <Button label="Edit Metadata" aria-label="Edit Metadata" />
+            <Button
+              label="Edit Metadata"
+              aria-label="Edit Metadata"
+              onClick={handleHideEditMetaDataDialog}
+            />
           </div>
         </div>
       )}
@@ -194,6 +208,10 @@ const WorkOrderPage = () => {
           <p>Last Saved: {formatDate(new Date(workOrder.update_time))}</p>
         )}
       </div>
+      <MetadataDialog
+        isVisible={isEditMetaDataDialogVisible}
+        onHide={handleHideEditMetaDataDialog}
+      />
     </div>
   );
 };
@@ -260,6 +278,119 @@ const WorkOrderEditor: React.FC<{
       onTextChange={(e) => updateBody(e.htmlValue ?? "")}
       headerTemplate={editorToolbar()}
     />
+  );
+};
+
+const MetadataDialog: React.FC<{
+  isVisible: boolean;
+  onHide: () => void;
+}> = (props) => {
+  const { query } = useRouter();
+  const { id } = query;
+
+  const dispatch = useDispatch();
+  const workOrder = useSelector(WorkOrderSelectors.getWorkOrder);
+
+  const [workOrderStatus, setWorkOrderStatus] = useState<
+    WorkOrderStatus | undefined
+  >(workOrder?.status);
+  const [workOrderTitle, setWorkOrderTitle] = useState<string>(
+    workOrder?.title ?? ""
+  );
+  const [workOrderAssignedEmployeeEmail, setWorkOrderAssignedEmployeeEmail] =
+    useState<string>(workOrder?.employee?.email ?? "");
+
+  useEffect(() => {
+    if (workOrder) {
+      setWorkOrderStatus(workOrder.status);
+      setWorkOrderTitle(workOrder.title);
+      if (workOrder.employee) {
+        setWorkOrderAssignedEmployeeEmail(workOrder.employee.email);
+      }
+    }
+  }, [workOrder]);
+
+  const handleSave = () => {
+    if (typeof id === "string") {
+      dispatch(
+        patchWorkOrderByIdActionBuilder(id, {
+          title: workOrderTitle,
+          employee_email:
+            workOrderAssignedEmployeeEmail !== ""
+              ? workOrderAssignedEmployeeEmail
+              : undefined,
+          status: workOrderStatus,
+        })
+      );
+    }
+
+    props.onHide();
+  };
+
+  const footer = () => {
+    return (
+      <div>
+        <Button
+          className="p-button-success"
+          icon="pi pi-save"
+          label="Save"
+          aria-label="Save"
+          style={{
+            width: "10rem",
+          }}
+          onClick={handleSave}
+        />
+        <Button
+          className="p-button-danger"
+          icon="pi pi-times"
+          label="Cancel"
+          aria-label="Cancel"
+          style={{
+            width: "10rem",
+          }}
+          onClick={props.onHide}
+        />
+      </div>
+    );
+  };
+
+  return (
+    <Dialog visible={props.isVisible} onHide={props.onHide} footer={footer}>
+      <div>
+        <label htmlFor="workOrderTitle">Title</label>
+        <br />
+        <InputText
+          id="workOrderTitle"
+          name="title"
+          placeholder={workOrderTitle}
+          value={workOrderTitle}
+          onChange={(e) => setWorkOrderTitle(e.target.value)}
+        />
+        <br />
+
+        <label htmlFor="workOrderAssignedEmployee">Assigned Employee</label>
+        <br />
+        <InputText
+          id="workOrderAssignedEmployee"
+          name="assignedEmployee"
+          placeholder={workOrderAssignedEmployeeEmail}
+          value={workOrderAssignedEmployeeEmail}
+          onChange={(e) => setWorkOrderAssignedEmployeeEmail(e.target.value)}
+        />
+        <br />
+
+        <label htmlFor="workOrderStatus">Status</label>
+        <br />
+        <Dropdown
+          id="workOrderStatus"
+          name="status"
+          options={Object.values(WorkOrderStatus)}
+          placeholder={workOrderStatus}
+          value={workOrderStatus}
+          onChange={(e) => setWorkOrderStatus(e.target.value)}
+        />
+      </div>
+    </Dialog>
   );
 };
 

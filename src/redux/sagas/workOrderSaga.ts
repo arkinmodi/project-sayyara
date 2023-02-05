@@ -50,8 +50,7 @@ function* getWorkOrderByIdGenerator(
 
 function* patchWorkOrderByIdGenerator(
   action: IWorkOrderActionPatchWorkOrderById
-): Generator<CallEffect | PutEffect> {
-  console.log("generator", action);
+): Generator<CallEffect> {
   yield call(patchWorkOrderById, action.payload.id, action.payload.patch);
   yield call(
     getWorkOrderByIdGenerator,
