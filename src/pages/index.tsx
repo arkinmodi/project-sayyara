@@ -1,9 +1,12 @@
+import classNames from "classnames";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
 import { DataView } from "primereact/dataview";
+import { InputText } from "primereact/inputtext";
 import { Panel } from "primereact/panel";
-import { RadioButton } from "primereact/radiobutton";
+import { Slider } from "primereact/slider";
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
 
@@ -17,17 +20,16 @@ const Home: NextPage = () => {
     { name: "Name A-Z", key: "name" },
     { name: "Location", key: "location" },
   ];
-  const filterByServices: IFilter[] = [
-    { name: "Oil Change", key: "oil" },
-    { name: "Tire Rotation", key: "tire" },
+  const filterByPartType: IFilter[] = [
+    { name: "OEM", key: "oem" },
+    { name: "Aftermarket", key: "aftermarket" },
   ];
-  const filterByPart: IFilter[] = [
+  const filterByPartCondition: IFilter[] = [
     { name: "New", key: "new" },
-    { name: "Third-party", key: "thirdparty" },
+    { name: "Used", key: "used" },
   ];
-  const [selectedCategory, setSelectedCategory] = useState(sortByCategories[0]);
   const [selectedFilters, setSelectedFilters] = useState<IFilter[]>([]);
-
+  const [locationRange, setLocationRange] = useState([1, 50]);
   const [shops, setShops] = useState(null);
 
   const onFilterChange = (e: { value: any; checked: boolean }) => {
@@ -56,29 +58,9 @@ const Home: NextPage = () => {
 
       <div className={styles.main}>
         <div className={styles.filter}>
-          <Panel header="Sort By" toggleable>
-            {sortByCategories.map((category) => {
-              if (selectedCategory) {
-                return (
-                  <div key={category.key} className={styles.buttonList}>
-                    <RadioButton
-                      inputId={category.key}
-                      name="category"
-                      value={category}
-                      onChange={(e) => setSelectedCategory(e.value)}
-                      checked={selectedCategory.key === category.key}
-                    />
-                    <label className={styles.label} htmlFor={category.key}>
-                      {category.name}
-                    </label>
-                  </div>
-                );
-              }
-            })}
-          </Panel>
-          <Panel header="Filter By" toggleable>
-            <h5>Services Offered</h5>
-            {filterByServices.map((category) => {
+          <Panel header="Filter By">
+            <h5 className={styles.h5Top}>Part Type</h5>
+            {filterByPartType.map((category) => {
               return (
                 <div key={category.key} className={styles.buttonList}>
                   <Checkbox
@@ -96,8 +78,8 @@ const Home: NextPage = () => {
                 </div>
               );
             })}
-            <h5>Part Type</h5>
-            {filterByPart.map((category) => {
+            <h5>Part Condition</h5>
+            {filterByPartCondition.map((category) => {
               return (
                 <div key={category.key} className={styles.buttonList}>
                   <Checkbox
@@ -115,9 +97,23 @@ const Home: NextPage = () => {
                 </div>
               );
             })}
+            <h5>
+              Location Range (km): [{locationRange[0]} - {locationRange[1]}]
+            </h5>
+            <Slider
+              value={locationRange}
+              min={1}
+              max={50}
+              onChange={(e) => setLocationRange(e.value)}
+              range
+            />
           </Panel>
         </div>
         <div className={styles.content}>
+          <div className={classNames("p-inputgroup", styles.search)}>
+            <InputText placeholder="Search" />
+            <Button label="Search" />
+          </div>
           <DataView value={shops} layout="list" />
         </div>
       </div>
