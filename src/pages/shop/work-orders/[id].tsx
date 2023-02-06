@@ -1,10 +1,12 @@
+import { UserType } from "@prisma/client";
 import {
   getWorkOrderByIdActionBuilder,
   patchWorkOrderByIdActionBuilder,
 } from "@redux/actions/workOrderAction";
 import { WorkOrderSelectors } from "@redux/selectors/workOrderSelector";
+import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import styles from "@styles/pages/WorkOrders.module.css";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Button } from "primereact/button";
@@ -415,6 +417,19 @@ const MetadataDialog: React.FC<{
       </div>
     </Dialog>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getServerAuthSession(context);
+  if (session && session.user.type === UserType.CUSTOMER) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  return { props: {} };
 };
 
 export default WorkOrder;
