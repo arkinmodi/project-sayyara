@@ -1,3 +1,4 @@
+import { createService } from "@redux/actions/serviceAction";
 import classNames from "classnames";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
@@ -5,6 +6,7 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/InputTextarea";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { IParts, ServiceType } from "src/types/service";
 
 interface IServicePopupProps {
@@ -57,6 +59,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
       ? initialAddBasicServiceValues
       : initialAddCustomServiceValues
   );
+  const dispatch = useDispatch();
 
   const openServicePopup = () => {
     if (serviceType === ServiceType.CANNED) {
@@ -99,7 +102,18 @@ const AddServicePopup = (props: IServicePopupProps) => {
   const saveService = () => {
     setSubmitted(true);
     //Call create service API
-    onHideDialog();
+    console.log("dispatch");
+    dispatch(
+      createService({
+        name: formValues.name,
+        description: formValues.description,
+        estimated_time: formValues.estimated_time,
+        total_price: formValues.total_price,
+        parts: formValues.parts,
+        type: serviceType,
+      })
+    );
+    // onHideDialog();
   };
 
   const serviceDialogFooter = (

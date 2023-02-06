@@ -1,3 +1,4 @@
+import { AuthSelectors } from "@redux/selectors/authSelectors";
 import ShopTypes from "@redux/types/shopTypes";
 import { ServiceType } from "@server/db/client";
 import {
@@ -6,6 +7,8 @@ import {
   CallEffect,
   put,
   PutEffect,
+  select,
+  SelectEffect,
   takeEvery,
 } from "redux-saga/effects";
 import { IParts } from "src/types/service";
@@ -25,7 +28,6 @@ interface IPatchServiceBody {
 }
 
 interface IPostServiceBody {
-  id: string;
   name: string;
   description: string;
   estimated_time: string;
@@ -118,18 +120,21 @@ function deleteServiceById(serviceId: string): Promise<boolean> {
 
 function* createService(
   action: IServiceActionCreateService
-): Generator<CallEffect | PutEffect> {
-  const payload = action.payload;
-  const body: IPostServiceBody = {
-    id: payload.id,
-    name: payload.name,
-    description: payload.description,
-    estimated_time: payload.estimated_time,
-    total_price: payload.total_price,
-    parts: payload.parts,
-    type: payload.type,
-  };
-  yield call(postCreate, body, payload.id);
+): Generator<CallEffect | PutEffect | SelectEffect> {
+  const shopId = (yield select(AuthSelectors.getShopId)) as string | null;
+
+  if (shopId) {
+    const payload = action.payload;
+    const body: IPostServiceBody = {
+      name: payload.name,
+      description: payload.description,
+      estimated_time: payload.estimated_time,
+      total_price: payload.total_price,
+      parts: payload.parts,
+      type: payload.type,
+    };
+    yield call(postCreate, body, shopId);
+  }
 }
 
 /**

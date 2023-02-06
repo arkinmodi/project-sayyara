@@ -63,7 +63,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
   const savePart = () => {
     setSubmitted(true);
     //Call the patch api. Add the part to the service and send the entire service.
-    onHideDialog();
+    //onHideDialog();
   };
 
   const partDialogFooter = (

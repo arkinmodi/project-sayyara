@@ -14,12 +14,11 @@ export interface IServiceActionDeleteService extends IServiceActionBase {
 
 export interface IServiceActionCreateService extends IServiceActionBase {
   payload: {
-    id: string;
     name: string;
     description: string;
-    estimated_time: string;
-    total_price: number;
-    parts: IParts[];
+    estimated_time?: string;
+    total_price?: number;
+    parts?: IParts[];
     type: ServiceType;
   };
 }
