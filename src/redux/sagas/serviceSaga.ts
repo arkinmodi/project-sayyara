@@ -28,6 +28,7 @@ interface IPatchServiceBody {
 }
 
 interface IPostServiceBody {
+  shop_id: string;
   name: string;
   description: string;
   estimated_time: string;
@@ -85,8 +86,8 @@ function* deleteService(
   }
 }
 
-function postCreate(body: IPostServiceBody, shopId: string): Promise<boolean> {
-  return fetch(`/api/service/${shopId}`, {
+function postCreate(body: IPostServiceBody): Promise<boolean> {
+  return fetch(`/api/service/`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -126,6 +127,7 @@ function* createService(
   if (shopId) {
     const payload = action.payload;
     const body: IPostServiceBody = {
+      shop_id: shopId,
       name: payload.name,
       description: payload.description,
       estimated_time: payload.estimated_time,
@@ -133,7 +135,7 @@ function* createService(
       parts: payload.parts,
       type: payload.type,
     };
-    yield call(postCreate, body, shopId);
+    yield call(postCreate, body);
   }
 }
 

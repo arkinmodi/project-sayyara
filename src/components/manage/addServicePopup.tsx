@@ -101,19 +101,23 @@ const AddServicePopup = (props: IServicePopupProps) => {
 
   const saveService = () => {
     setSubmitted(true);
-    //Call create service API
-    console.log("dispatch");
-    dispatch(
-      createService({
-        name: formValues.name,
-        description: formValues.description,
-        estimated_time: formValues.estimated_time,
-        total_price: formValues.total_price,
-        parts: formValues.parts,
-        type: serviceType,
-      })
-    );
-    // onHideDialog();
+    if (
+      formValues.name != "" ||
+      formValues.description != "" ||
+      formValues.estimated_time > 0
+    ) {
+      dispatch(
+        createService({
+          name: formValues.name,
+          description: formValues.description,
+          estimated_time: formValues.estimated_time,
+          total_price: formValues.total_price,
+          parts: formValues.parts,
+          type: serviceType,
+        })
+      );
+      onHideDialog();
+    }
   };
 
   const serviceDialogFooter = (
