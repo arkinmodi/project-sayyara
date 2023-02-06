@@ -4,17 +4,17 @@ import { IVehicle } from "./vehicle";
 
 export interface IWorkOrder {
   id: string;
-  create_time: Date;
-  update_time: Date;
+  createTime: Date;
+  updateTime: Date;
   status: WorkOrderStatus;
   title: string;
   body: string;
-  shop_id: string;
-  customer_id: string;
+  shopId: string;
+  customerId: string;
   customer: ICustomer;
-  vehicle_id: string;
+  vehicleId: string;
   vehicle: IVehicle;
-  employee_id: string | null;
+  employeeId: string | null;
   employee: IEmployee | null;
 }
 

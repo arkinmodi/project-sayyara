@@ -81,11 +81,11 @@ export const updateWorkOrderById = async (
   const workOrder = await prisma.workOrder.findUnique({ where: { id } });
   if (!workOrder) return Promise.reject("Work Order not found.");
 
-  let employee: { connect: { id: string } } | undefined;
+  let employee: { connect: { id?: string; email?: string } } | undefined;
   if (patch.employee_id) {
     employee = { connect: { id: patch.employee_id } };
   } else if (patch.employee_email) {
-    employee = { connect: { id: patch.employee_email } };
+    employee = { connect: { email: patch.employee_email } };
   } else {
     employee = undefined;
   }

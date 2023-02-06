@@ -137,7 +137,7 @@ const WorkOrderPage: React.FC<{}> = () => {
             </p>
             <p>
               <b>Last Update: </b>
-              {formatDate(new Date(workOrder.update_time))}
+              {formatDate(new Date(workOrder.updateTime))}
             </p>
             <p>
               <b>Customer: </b>
@@ -194,7 +194,7 @@ const WorkOrderPage: React.FC<{}> = () => {
         />
 
         {workOrder && (
-          <p>Last Saved: {formatDate(new Date(workOrder.update_time))}</p>
+          <p>Last Saved: {formatDate(new Date(workOrder.updateTime))}</p>
         )}
       </div>
       <MetadataDialog

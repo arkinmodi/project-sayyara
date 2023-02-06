@@ -13,6 +13,8 @@ import {
   PutEffect,
   takeEvery,
 } from "redux-saga/effects";
+import { IEmployee } from "src/types/employee";
+import { IWorkOrder } from "src/types/workOrder";
 
 const getWorkOrderById = async (id: string) => {
   return fetch(`/api/work-order/${id}`, {
@@ -21,7 +23,53 @@ const getWorkOrderById = async (id: string) => {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-  }).then((res) => res.json());
+  }).then((res) => {
+    if (res.ok) {
+      return res.json().then((data): IWorkOrder => {
+        const employee: IEmployee | null =
+          data.employee !== null
+            ? {
+                id: data.employee.id,
+                firstName: data.employee.first_name,
+                lastName: data.employee.last_name,
+                phoneNumber: data.employee.phone_number,
+                email: data.employee.email,
+                type: data.employee.type,
+                status: data.employee.status,
+              }
+            : null;
+
+        return {
+          id: data.id,
+          createTime: data.create_time,
+          updateTime: data.update_time,
+          status: data.status,
+          title: data.title,
+          customerId: data.customer_id,
+          vehicleId: data.vehicle_id,
+          employeeId: data.employee_id,
+          body: data.body,
+          shopId: data.shop_id,
+          customer: {
+            id: data.customer.id,
+            first_name: data.customer.first_name,
+            last_name: data.customer.last_name,
+            phone_number: data.customer.phone_number,
+            email: data.customer.email,
+          },
+          vehicle: {
+            id: data.vehicle.id,
+            make: data.vehicle.make,
+            model: data.vehicle.model,
+            year: data.vehicle.year,
+            vin: data.vehicle.vin,
+            license_plate: data.vehicle.license_plate,
+          },
+          employee: employee,
+        };
+      });
+    }
+  });
 };
 
 const patchWorkOrderById = async (
