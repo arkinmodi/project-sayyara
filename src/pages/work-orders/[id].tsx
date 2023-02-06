@@ -3,6 +3,7 @@ import {
   patchWorkOrderByIdActionBuilder,
 } from "@redux/actions/workOrderAction";
 import { WorkOrderSelectors } from "@redux/selectors/workOrderSelector";
+import styles from "@styles/pages/WorkOrders.module.css";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -37,17 +38,19 @@ const WorkOrder: NextPage = () => {
   );
 };
 
-const WorkOrderPage = () => {
+const WorkOrderPage: React.FC<{}> = () => {
   const router = useRouter();
   const { id } = router.query;
 
   const dispatch = useDispatch();
   const workOrder = useSelector(WorkOrderSelectors.getWorkOrder);
 
-  const [workOrderBody, setWorkOrderBody] = useState(workOrder?.body);
-  const [isSaving, setIsSaving] = useState(false);
+  const [workOrderBody, setWorkOrderBody] = useState<string | undefined>(
+    workOrder?.body
+  );
+  const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isEditMetaDataDialogVisible, setIsEditMetaDataDialogVisible] =
-    useState(false);
+    useState<boolean>(false);
 
   useEffect(() => {
     if (typeof id === "string") {
@@ -91,7 +94,7 @@ const WorkOrderPage = () => {
   };
 
   return (
-    <div style={{ marginLeft: "1rem", marginRight: "1rem" }}>
+    <div className={styles.workOrderPageContainer}>
       <Head>
         <title>
           {workOrder !== null ? `Work Order - ${workOrder.title}` : "Sayyara"}
@@ -99,36 +102,20 @@ const WorkOrderPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div
-        style={{
-          display: "flex",
-          gap: "1rem",
-          alignItems: "center",
-        }}
-      >
+      <div className={styles.workOrderTitleContainer}>
         <Button
           className="p-button-secondary"
           icon="pi pi-angle-left"
           label="Back"
           aria-label="Back"
           onClick={() => router.back()}
-          style={{
-            maxHeight: "3rem",
-          }}
         />
-        <h1 style={{}}>{workOrder?.title ?? ""}</h1>
+        <h1>{workOrder?.title ?? ""}</h1>
       </div>
 
       {workOrder && (
         <div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: "1rem",
-            }}
-          >
+          <div className={styles.workOrderMetadataContainer}>
             <p>
               <b>Status: </b>
               {workOrder.status}
@@ -164,13 +151,7 @@ const WorkOrderPage = () => {
                 : "Unassigned"}
             </p>
           </div>
-          <div
-            style={{
-              marginBottom: "1rem",
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
+          <div className={styles.workOrderMetadataEditButton}>
             <Button
               label="Edit Metadata"
               aria-label="Edit Metadata"
@@ -184,24 +165,14 @@ const WorkOrderPage = () => {
         body={workOrderBody ?? ""}
         updateBody={setWorkOrderBody}
       />
-      <div
-        style={{
-          marginTop: "1rem",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-end",
-        }}
-      >
+      <div className={styles.workOrderSaveContainer}>
         <Button
-          className="p-button-success"
+          className={`p-button-success ${styles.workOrderSaveContainerSaveButton}`}
           icon="pi pi-save"
           label="Save"
           aria-label="Save"
           onClick={handleSave}
           disabled={isSaving}
-          style={{
-            width: "10rem",
-          }}
         />
 
         {workOrder && (
@@ -273,6 +244,7 @@ const WorkOrderEditor: React.FC<{
 
   return (
     <Editor
+      // Moving this to CSS file breaks it
       style={{ height: "50vh" }}
       value={body}
       onTextChange={(e) => updateBody(e.htmlValue ?? "")}
@@ -294,11 +266,11 @@ const MetadataDialog: React.FC<{
   const [workOrderStatus, setWorkOrderStatus] = useState<
     WorkOrderStatus | undefined
   >(workOrder?.status);
-  const [workOrderTitle, setWorkOrderTitle] = useState<string>(
-    workOrder?.title ?? ""
+  const [workOrderTitle, setWorkOrderTitle] = useState<string | undefined>(
+    workOrder?.title
   );
   const [workOrderAssignedEmployeeEmail, setWorkOrderAssignedEmployeeEmail] =
-    useState<string>(workOrder?.employee?.email ?? "");
+    useState<string | undefined>(workOrder?.employee?.email);
 
   useEffect(() => {
     if (workOrder) {
@@ -315,10 +287,7 @@ const MetadataDialog: React.FC<{
       dispatch(
         patchWorkOrderByIdActionBuilder(id, {
           title: workOrderTitle,
-          employee_email:
-            workOrderAssignedEmployeeEmail !== ""
-              ? workOrderAssignedEmployeeEmail
-              : undefined,
+          employee_email: workOrderAssignedEmployeeEmail,
           status: workOrderStatus,
         })
       );
@@ -331,23 +300,17 @@ const MetadataDialog: React.FC<{
     return (
       <div>
         <Button
-          className="p-button-success"
+          className={`p-button-success ${styles.workOrderMetadataDialogFooterContainerButtons}`}
           icon="pi pi-save"
           label="Save"
           aria-label="Save"
-          style={{
-            width: "10rem",
-          }}
           onClick={handleSave}
         />
         <Button
-          className="p-button-danger"
+          className={`p-button-danger ${styles.workOrderMetadataDialogFooterContainerButtons}`}
           icon="pi pi-times"
           label="Cancel"
           aria-label="Cancel"
-          style={{
-            width: "10rem",
-          }}
           onClick={props.onHide}
         />
       </div>
@@ -355,7 +318,12 @@ const MetadataDialog: React.FC<{
   };
 
   return (
-    <Dialog visible={props.isVisible} onHide={props.onHide} footer={footer}>
+    <Dialog
+      visible={props.isVisible}
+      onHide={props.onHide}
+      footer={footer}
+      header="Edit Metadata"
+    >
       <div>
         <label htmlFor="workOrderTitle">Title</label>
         <br />

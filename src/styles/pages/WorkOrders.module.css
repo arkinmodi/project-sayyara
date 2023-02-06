@@ -1,0 +1,38 @@
+.workOrderPageContainer {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.workOrderTitleContainer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.workOrderMetadataContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.workOrderMetadataEditButton {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.workOrderSaveContainer {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.workOrderSaveContainerSaveButton {
+  width: 10rem;
+}
+
+.workOrderMetadataDialogFooterContainerButtons {
+  width: 10rem !important;
+}
