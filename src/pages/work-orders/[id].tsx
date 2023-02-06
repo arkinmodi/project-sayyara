@@ -314,6 +314,16 @@ const MetadataDialog: React.FC<{
     props.onHide();
   };
 
+  const handleWorkOrderStatusUpdate = (status: string) => {
+    if (status === "Pending") {
+      setWorkOrderStatus(WorkOrderStatus.PENDING);
+    } else if (status === "In Progress") {
+      setWorkOrderStatus(WorkOrderStatus.IN_PROGRESS);
+    } else if (status === "Completed") {
+      setWorkOrderStatus(WorkOrderStatus.COMPLETED);
+    }
+  };
+
   const footer = () => {
     return (
       <div>
@@ -351,6 +361,7 @@ const MetadataDialog: React.FC<{
           placeholder={workOrderTitle}
           value={workOrderTitle}
           onChange={(e) => setWorkOrderTitle(e.target.value)}
+          className={styles.workOrderMetadataDialogTitleTextBox}
         />
         <br />
 
@@ -364,6 +375,7 @@ const MetadataDialog: React.FC<{
           placeholder={workOrderAssignedEmployeeEmail}
           value={workOrderAssignedEmployeeEmail}
           onChange={(e) => setWorkOrderAssignedEmployeeEmail(e.target.value)}
+          className={styles.workOrderMetadataDialogEmployeeEmailTextBox}
         />
         <br />
 
@@ -372,10 +384,11 @@ const MetadataDialog: React.FC<{
         <Dropdown
           id="workOrderStatus"
           name="status"
-          options={Object.values(WorkOrderStatus)}
+          options={["Pending", "In Progress", "Completed"]}
           placeholder={workOrderStatus}
           value={workOrderStatus}
-          onChange={(e) => setWorkOrderStatus(e.target.value)}
+          onChange={(e) => handleWorkOrderStatusUpdate(e.target.value)}
+          className={styles.workOrderMetadataDialogStatusSelector}
         />
       </div>
     </Dialog>
