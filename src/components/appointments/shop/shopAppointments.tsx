@@ -1,5 +1,6 @@
 import { readAppointments } from "@redux/actions/appointmentAction";
 import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
+import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/pages/appointments/ShopAppointments.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,9 +22,11 @@ const ShopAppointments = (props: IAppointmentsProps) => {
     [key: string]: Array<IAppointment>;
   }>({});
 
+  const shopId = useSelector(AuthSelectors.getShopId);
+
   useEffect(() => {
     dispatch(readAppointments());
-  }, [dispatch]);
+  }, [dispatch, shopId]);
 
   useEffect(() => {
     const appointmentsList = appointments
