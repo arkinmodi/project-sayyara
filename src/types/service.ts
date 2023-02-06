@@ -28,7 +28,7 @@ export interface IService {
 export interface IParts {
   quantity: Number;
   cost: Number;
-  name: String;
-  condition: PartCondition;
-  build: PartType;
+  name: string;
+  condition: string;
+  build: string;
 }

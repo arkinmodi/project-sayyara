@@ -4,7 +4,7 @@ import { AuthSelectors } from "@redux/selectors/authSelectors";
 import { ShopSelectors } from "@redux/selectors/shopSelector";
 import styles from "@styles/pages/services/Services.module.css";
 import { Button } from "primereact/button";
-import { Column } from "primereact/column";
+import { Column, ColumnBodyOptions } from "primereact/column";
 import {
   DataTable,
   DataTableExpandedRows,
@@ -17,6 +17,7 @@ import { Toast } from "primereact/toast";
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  IParts,
   IService,
   PartCondition,
   PartType,
@@ -145,7 +146,17 @@ const ServicesTable = (props: IServiceProps) => {
               bodyStyle={{ textAlign: "center" }}
             ></Column>
             <Column
-              body={deleteButton}
+              body={(data, props) => (
+                <div>
+                  <Button
+                    icon="pi pi-trash"
+                    className="p-button-text p-button-danger p-button-rounded"
+                    onClick={() =>
+                      handleDeletePartButton(data, props, serviceData)
+                    }
+                  />
+                </div>
+              )}
               className={styles.servicesTableDeleteButton}
             ></Column>
           </DataTable>
@@ -294,6 +305,18 @@ const ServicesTable = (props: IServiceProps) => {
 
   const deleteServiceEvent = (serviceId: string) => {
     dispatch(deleteService({ serviceId: serviceId }));
+  };
+
+  const handleDeletePartButton = (
+    parts: IParts,
+    props: ColumnBodyOptions,
+    serviceData: IService
+  ) => {
+    let newParts = [...serviceData.parts];
+    newParts.splice(props.rowIndex, 1);
+    dispatch(
+      setService({ serviceId: serviceData.id, patch: { parts: newParts } })
+    );
   };
 
   return (

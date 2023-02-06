@@ -5,7 +5,7 @@ import { Checkbox } from "primereact/checkbox";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/InputTextarea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { IParts, ServiceType } from "src/types/service";
 
@@ -59,6 +59,18 @@ const AddServicePopup = (props: IServicePopupProps) => {
       ? initialAddBasicServiceValues
       : initialAddCustomServiceValues
   );
+
+  useEffect(() => {
+    let emptyTemplate;
+
+    if (serviceType === ServiceType.CANNED) {
+      emptyTemplate = initialAddBasicServiceValues;
+    } else {
+      emptyTemplate = initialAddCustomServiceValues;
+    }
+    setFormValues(emptyTemplate);
+  }, [visible]);
+
   const dispatch = useDispatch();
 
   const openServicePopup = () => {
@@ -101,10 +113,31 @@ const AddServicePopup = (props: IServicePopupProps) => {
 
   const saveService = () => {
     setSubmitted(true);
+
     if (
-      formValues.name != "" ||
-      formValues.description != "" ||
-      formValues.estimated_time > 0
+      serviceType == ServiceType.CANNED &&
+      formValues.name != "" &&
+      formValues.description != ""
+    ) {
+      dispatch(
+        createService({
+          name: formValues.name,
+          description: formValues.description,
+          estimated_time: formValues.estimated_time,
+          total_price: formValues.total_price,
+          parts: formValues.parts,
+          type: serviceType,
+        })
+      );
+      onHideDialog();
+    }
+
+    if (
+      serviceType == ServiceType.CUSTOM &&
+      formValues.name != "" &&
+      formValues.description != "" &&
+      (formValues.oem || formValues.aftermarket) &&
+      (formValues.new || formValues.used)
     ) {
       dispatch(
         createService({

@@ -1,10 +1,12 @@
+import { setService } from "@redux/actions/serviceAction";
 import classNames from "classnames";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { IService, PartCondition, PartType } from "src/types/service";
 
 interface IPartPopupProps {
@@ -34,6 +36,11 @@ const AddPartPopup = (props: IPartPopupProps) => {
   const [submitted, setSubmitted] = useState(false);
   const [formValues, setFormValues] =
     useState<IAddPartsValues>(initialPartValues);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setFormValues(initialPartValues);
+  }, [visible]);
 
   const openPartPopup = () => {
     setFormValues(initialPartValues);
@@ -62,8 +69,26 @@ const AddPartPopup = (props: IPartPopupProps) => {
 
   const savePart = () => {
     setSubmitted(true);
-    //Call the patch api. Add the part to the service and send the entire service.
-    //onHideDialog();
+    if (
+      formValues.name != "" &&
+      formValues.cost > 0 &&
+      formValues.quantity > 0 &&
+      formValues.condition != "" &&
+      formValues.build != ""
+    ) {
+      let newParts = [...service.parts];
+      newParts.push(formValues);
+
+      dispatch(
+        setService({
+          serviceId: service.id,
+          patch: {
+            parts: newParts,
+          },
+        })
+      );
+      onHideDialog();
+    }
   };
 
   const partDialogFooter = (
@@ -143,7 +168,6 @@ const AddPartPopup = (props: IPartPopupProps) => {
             id="quantity"
             value={formValues.quantity}
             onValueChange={(e) => onInputNumberChange(e, "quantity")}
-            integeronly
             className={classNames({
               "p-invalid": submitted && formValues.quantity <= 0,
             })}
