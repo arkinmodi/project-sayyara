@@ -48,6 +48,7 @@ const WorkOrderPage: React.FC<{}> = () => {
   const [workOrderBody, setWorkOrderBody] = useState<string | undefined>(
     workOrder?.body
   );
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isEditMetaDataDialogVisible, setIsEditMetaDataDialogVisible] =
     useState<boolean>(false);
@@ -63,6 +64,12 @@ const WorkOrderPage: React.FC<{}> = () => {
       setWorkOrderBody(workOrder.body);
     }
   }, [workOrder]);
+
+  useEffect(() => {
+    window.addEventListener("resize", () =>
+      setIsMobile(window.innerWidth <= 600)
+    );
+  });
 
   const handleSave = () => {
     if (typeof id === "string") {
@@ -103,13 +110,21 @@ const WorkOrderPage: React.FC<{}> = () => {
       </Head>
 
       <div className={styles.workOrderTitleContainer}>
-        <Button
-          className="p-button-secondary"
-          icon="pi pi-angle-left"
-          label="Back"
-          aria-label="Back"
-          onClick={() => router.back()}
-        />
+        {isMobile ? (
+          <Button
+            className="p-button-secondary p-button-text"
+            icon="pi pi-angle-left"
+            onClick={() => router.push("/")}
+          />
+        ) : (
+          <Button
+            className="p-button-secondary"
+            icon="pi pi-angle-left"
+            label="Back"
+            aria-label="Back"
+            onClick={() => router.push("/")}
+          />
+        )}
         <h1>{workOrder?.title ?? ""}</h1>
       </div>
 
@@ -151,8 +166,9 @@ const WorkOrderPage: React.FC<{}> = () => {
                 : "Unassigned"}
             </p>
           </div>
-          <div className={styles.workOrderMetadataEditButton}>
+          <div className={styles.workOrderMetadataContainerEditButtonContainer}>
             <Button
+              className={styles.workOrderMetadataContainerEditButton}
               label="Edit Metadata"
               aria-label="Edit Metadata"
               onClick={handleHideEditMetaDataDialog}
@@ -173,6 +189,8 @@ const WorkOrderPage: React.FC<{}> = () => {
           aria-label="Save"
           onClick={handleSave}
           disabled={isSaving}
+          loading={isSaving}
+          loadingIcon="pi pi-spin pi-sun"
         />
 
         {workOrder && (
@@ -336,7 +354,9 @@ const MetadataDialog: React.FC<{
         />
         <br />
 
-        <label htmlFor="workOrderAssignedEmployee">Assigned Employee</label>
+        <label htmlFor="workOrderAssignedEmployee">
+          Assigned Employee (Email)
+        </label>
         <br />
         <InputText
           id="workOrderAssignedEmployee"
