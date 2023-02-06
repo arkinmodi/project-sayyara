@@ -10,6 +10,12 @@ const getWorkOrder = createSelector(
   (workOrderState) => workOrderState.workOrder
 );
 
+const getWorkOrderError = createSelector(
+  getWorkOrderState,
+  (workOrderState) => workOrderState.error
+);
+
 export const WorkOrderSelectors = {
   getWorkOrder,
+  getWorkOrderError,
 };

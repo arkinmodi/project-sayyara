@@ -26,10 +26,16 @@ export interface IWorkOrderActionSetWorkOrder extends IWorkOrderActionBase {
   payload: { workOrder: IWorkOrder };
 }
 
+export interface IWorkOrderActionSetWorkOrderError
+  extends IWorkOrderActionBase {
+  payload: { error: string };
+}
+
 export type IWorkOrderAction =
   | IWorkOrderActionGetWorkOrderById
   | IWorkOrderActionPatchWorkOrderById
-  | IWorkOrderActionSetWorkOrder;
+  | IWorkOrderActionSetWorkOrder
+  | IWorkOrderActionSetWorkOrderError;
 
 export const getWorkOrderByIdActionBuilder = (id: string) => ({
   type: WorkOrderTypes.GET_WORK_ORDER_BY_ID,

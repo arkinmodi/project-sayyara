@@ -23,9 +23,9 @@ const getWorkOrderById = async (id: string) => {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-  }).then((res) => {
+  }).then(async (res) => {
     if (res.ok) {
-      return res.json().then((data): IWorkOrder => {
+      const data = await res.json().then((data): IWorkOrder => {
         const employee: IEmployee | null =
           data.employee !== null
             ? {
@@ -68,6 +68,16 @@ const getWorkOrderById = async (id: string) => {
           employee: employee,
         };
       });
+
+      return {
+        data,
+        success: true,
+      };
+    } else {
+      return {
+        data: await res.json(),
+        success: false,
+      };
     }
   });
 };
@@ -83,27 +93,57 @@ const patchWorkOrderById = async (
       "Content-Type": "application/json",
     },
     body: JSON.stringify(patch),
-  }).then((res) => res.json());
+  }).then(async (res) => ({ data: await res.json(), success: res.ok }));
 };
 
 function* getWorkOrderByIdGenerator(
   action: IWorkOrderActionGetWorkOrderById
 ): Generator<CallEffect | PutEffect> {
-  const workOrder = yield call(getWorkOrderById, action.payload.id);
-  yield put({
-    type: WorkOrderTypes.SET_WORK_ORDER,
-    payload: { workOrder },
-  });
+  const workOrder = (yield call(getWorkOrderById, action.payload.id)) as {
+    data: any;
+    success: boolean;
+  };
+  if (workOrder.success) {
+    yield put({
+      type: WorkOrderTypes.SET_WORK_ORDER_ERROR,
+      payload: { error: null },
+    });
+
+    yield put({
+      type: WorkOrderTypes.SET_WORK_ORDER,
+      payload: { workOrder: workOrder.data },
+    });
+  } else {
+    yield put({
+      type: WorkOrderTypes.SET_WORK_ORDER_ERROR,
+      payload: { error: workOrder.data },
+    });
+  }
 }
 
 function* patchWorkOrderByIdGenerator(
   action: IWorkOrderActionPatchWorkOrderById
-): Generator<CallEffect> {
-  yield call(patchWorkOrderById, action.payload.id, action.payload.patch);
-  yield call(
-    getWorkOrderByIdGenerator,
-    getWorkOrderByIdActionBuilder(action.payload.id)
-  );
+): Generator<CallEffect | PutEffect> {
+  const workOrder = (yield call(
+    patchWorkOrderById,
+    action.payload.id,
+    action.payload.patch
+  )) as {
+    data: any;
+    success: boolean;
+  };
+
+  if (workOrder.success) {
+    yield call(
+      getWorkOrderByIdGenerator,
+      getWorkOrderByIdActionBuilder(action.payload.id)
+    );
+  } else {
+    yield put({
+      type: WorkOrderTypes.SET_WORK_ORDER_ERROR,
+      payload: { error: workOrder.data },
+    });
+  }
 }
 
 /**

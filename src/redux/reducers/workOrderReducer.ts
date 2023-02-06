@@ -12,6 +12,13 @@ const workOrderReducer = (
     case WorkOrderTypes.SET_WORK_ORDER:
       return { ...state, workOrder: action?.payload?.workOrder };
 
+    case WorkOrderTypes.SET_WORK_ORDER_ERROR:
+      const error =
+        action?.payload?.error !== null
+          ? { message: JSON.stringify(action?.payload?.error?.message) }
+          : undefined;
+      return { ...state, error };
+
     // This will overwrite client state - required for Next.js
     case HYDRATE:
       return { ...action.payload.workOrderReducer };

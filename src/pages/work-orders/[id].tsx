@@ -13,18 +13,39 @@ import { Dropdown } from "primereact/dropdown";
 import { Editor } from "primereact/editor";
 import { InputText } from "primereact/inputtext";
 import { TabPanel, TabView } from "primereact/tabview";
-import React, { useEffect, useState } from "react";
+import { Toast } from "primereact/toast";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { WorkOrderStatus } from "src/types/workOrder";
 
 const WorkOrder: NextPage = () => {
   const router = useRouter();
+  const workOrderError = useSelector(WorkOrderSelectors.getWorkOrderError);
+
+  const toastRef = useRef<Toast>(null);
 
   const handleTabChange = (idx: number) => {
     if (idx !== 1) {
       router.push("/");
     }
   };
+
+  const showErrorToast = (msg: string) => {
+    if (toastRef.current) {
+      toastRef.current.show({
+        sticky: true,
+        severity: "error",
+        summary: "Error",
+        detail: msg,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (workOrderError) {
+      showErrorToast(workOrderError.message);
+    }
+  }, [workOrderError]);
 
   return (
     <div>
@@ -34,6 +55,7 @@ const WorkOrder: NextPage = () => {
           <WorkOrderPage />
         </TabPanel>
       </TabView>
+      <Toast ref={toastRef} position="top-right" />
     </div>
   );
 };
