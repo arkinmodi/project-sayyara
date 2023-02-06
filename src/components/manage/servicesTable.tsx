@@ -22,6 +22,7 @@ import {
   PartType,
   ServiceType,
 } from "src/types/service";
+import AddPartPopup from "./addPartPopup";
 import AddServicePopup from "./addServicePopup";
 
 interface IServiceProps {
@@ -35,6 +36,9 @@ const ServicesTable = (props: IServiceProps) => {
     DataTableExpandedRows | undefined
   >(undefined);
   const [addServiceDialogVisible, setAddServiceDialogVisible] = useState(false);
+  const [addPartDialogVisible, setAddPartDialogVisible] = useState(false);
+  const [serviceOnButtonClick, setServiceOnButtonClick] =
+    useState<IService | null>(null);
 
   const { serviceType, services, isLoading } = props;
   const toast = useRef(null);
@@ -45,6 +49,11 @@ const ServicesTable = (props: IServiceProps) => {
 
   const hideAddServiceDialog = () => {
     setAddServiceDialogVisible(false);
+  };
+
+  const hideAddPartDialog = () => {
+    setAddPartDialogVisible(false);
+    setServiceOnButtonClick(null);
   };
 
   const serviceTableHeader = () => {
@@ -81,9 +90,10 @@ const ServicesTable = (props: IServiceProps) => {
             label={"Add Part"}
             icon="pi pi-plus"
             className={styles.addServiceButtonGreen}
-            // onClick={() => {
-            // TODO: Set parts popup to true
-            // }}
+            onClick={() => {
+              setServiceOnButtonClick(serviceData);
+              setAddPartDialogVisible(true);
+            }}
           />
         </div>
         {parts.length > 0 ? (
@@ -368,7 +378,15 @@ const ServicesTable = (props: IServiceProps) => {
         visible={addServiceDialogVisible}
         onHideDialog={hideAddServiceDialog}
       />
-      {/* TODO: Add part popup */}
+      {serviceOnButtonClick != null ? (
+        <AddPartPopup
+          visible={addPartDialogVisible}
+          onHideDialog={hideAddPartDialog}
+          service={serviceOnButtonClick}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

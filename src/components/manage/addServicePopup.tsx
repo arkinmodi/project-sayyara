@@ -1,7 +1,7 @@
+import classNames from "classnames";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
 import { Dialog } from "primereact/dialog";
-import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/InputTextarea";
 import { useState } from "react";
@@ -58,11 +58,6 @@ const AddServicePopup = (props: IServicePopupProps) => {
       : initialAddCustomServiceValues
   );
 
-  const onSubmit = () => {
-    setSubmitted(true);
-    onHideDialog();
-  };
-
   const openServicePopup = () => {
     if (serviceType === ServiceType.CANNED) {
       setFormValues(initialAddCustomServiceValues);
@@ -101,8 +96,10 @@ const AddServicePopup = (props: IServicePopupProps) => {
     onHideDialog();
   };
 
-  const saveProduct = () => {
+  const saveService = () => {
     setSubmitted(true);
+    //Call create service API
+    onHideDialog();
   };
 
   const serviceDialogFooter = (
@@ -117,7 +114,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
         label="Save"
         icon="pi pi-check"
         className="p-button-text"
-        onClick={saveProduct}
+        onClick={saveService}
       />
     </div>
   );
@@ -144,11 +141,13 @@ const AddServicePopup = (props: IServicePopupProps) => {
           onChange={(e) => onInputChange(e, "name")}
           required
           autoFocus
-          // className={classNames({ "p-invalid": submitted && !product.name })}
+          className={classNames({
+            "p-invalid": submitted && formValues.name == "",
+          })}
         />
-        {/* {submitted && !product.name && (
-          <small className="p-error">Name is required.</small>
-        )} */}
+        {submitted && formValues.name == "" && (
+          <small className="p-error">Name required</small>
+        )}
       </div>
       <div className="field">
         <label htmlFor="description">Description</label>
@@ -159,74 +158,84 @@ const AddServicePopup = (props: IServicePopupProps) => {
           required
           rows={3}
           cols={20}
+          className={classNames({
+            "p-invalid": submitted && formValues.description == "",
+          })}
         />
+        {submitted && formValues.description == "" && (
+          <small className="p-error">Description required</small>
+        )}
       </div>
       {serviceType == ServiceType.CUSTOM ? (
         <div className="col-12">
-          <div>Part Type</div>
-          <Checkbox
-            inputId="oem"
-            value="OEM"
-            onChange={(e) => onCheckedChange(e, "oem")}
-            checked={formValues.oem}
-          ></Checkbox>
-          <label htmlFor="cb1" className="p-checkbox-label">
-            OEM
-          </label>
-          <Checkbox
-            inputId="aftermarket"
-            value="aftermarket"
-            onChange={(e) => onCheckedChange(e, "aftermarket")}
-            checked={formValues.aftermarket}
-          ></Checkbox>
-          <label htmlFor="cb1" className="p-checkbox-label">
-            Aftermarket
-          </label>
-          <div>Part Condition</div>
-          <Checkbox
-            inputId="new"
-            value="new"
-            onChange={(e) => onCheckedChange(e, "new")}
-            checked={formValues.new}
-          ></Checkbox>
-          <label htmlFor="cb1" className="p-checkbox-label">
-            New
-          </label>
-          <Checkbox
-            inputId="used"
-            value="used"
-            onChange={(e) => onCheckedChange(e, "used")}
-            checked={formValues.used}
-          ></Checkbox>
-          <label htmlFor="cb1" className="p-checkbox-label">
-            Used
-          </label>
+          {/* Part Condition Dropdown */}
+          <div
+            className={classNames({
+              "p-invalid":
+                submitted && formValues.new == "" && formValues.used == "",
+            })}
+          >
+            <div>Part Condition</div>
+            <Checkbox
+              inputId="new"
+              value="new"
+              onChange={(e) => onCheckedChange(e, "new")}
+              checked={formValues.new}
+            ></Checkbox>
+            <label htmlFor="cb1" className="p-checkbox-label">
+              New
+            </label>
+            <Checkbox
+              inputId="used"
+              value="used"
+              onChange={(e) => onCheckedChange(e, "used")}
+              checked={formValues.used}
+            ></Checkbox>
+            <label htmlFor="cb1" className="p-checkbox-label">
+              Used
+            </label>
+          </div>
+          {submitted && formValues.new == "" && formValues.used == "" && (
+            <small className="p-error">Condition required</small>
+          )}
+          {/* Part Type Dropdown */}
+          <div
+            className={classNames({
+              "p-invalid":
+                submitted &&
+                formValues.oem == "" &&
+                formValues.aftermarket == "",
+            })}
+          >
+            <div>Part Type</div>
+            <Checkbox
+              inputId="oem"
+              value="OEM"
+              onChange={(e) => onCheckedChange(e, "oem")}
+              checked={formValues.oem}
+            ></Checkbox>
+            <label htmlFor="cb1" className="p-checkbox-label">
+              OEM
+            </label>
+            <Checkbox
+              inputId="aftermarket"
+              value="aftermarket"
+              onChange={(e) => onCheckedChange(e, "aftermarket")}
+              checked={formValues.aftermarket}
+            ></Checkbox>
+            <label htmlFor="cb1" className="p-checkbox-label">
+              Aftermarket
+            </label>
+          </div>
+          {submitted &&
+            formValues.oem == "" &&
+            formValues.aftermarket == "" && (
+              <small className="p-error">Type required</small>
+            )}
         </div>
       ) : (
-        <div className="col-12"></div>
+        <></>
       )}
-      <div className="formgrid grid">
-        <div className="field col">
-          <label htmlFor="price">Price</label>
-          <InputNumber
-            id="price"
-            value={formValues.price}
-            onValueChange={(e) => onInputNumberChange(e, "price")}
-            mode="currency"
-            currency="CAD"
-            locale="en-US"
-          />
-        </div>
-        <div className="field col">
-          <label htmlFor="quantity">Quantity</label>
-          <InputNumber
-            id="quantity"
-            value={formValues.quantity}
-            onValueChange={(e) => onInputNumberChange(e, "quantity")}
-            integeronly
-          />
-        </div>
-      </div>
     </Dialog>
   );
 };
