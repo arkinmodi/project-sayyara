@@ -39,3 +39,11 @@
 .search {
   margin-bottom: 1rem;
 }
+
+.inputtext {
+  flex: 3 1 auto !important;
+}
+
+.dropdown {
+  flex: 1 1 auto !important;
+}

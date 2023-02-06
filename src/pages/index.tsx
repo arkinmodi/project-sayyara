@@ -4,6 +4,7 @@ import Head from "next/head";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
 import { DataView } from "primereact/dataview";
+import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Panel } from "primereact/panel";
 import { Slider } from "primereact/slider";
@@ -28,8 +29,13 @@ const Home: NextPage = () => {
     { name: "New", key: "new" },
     { name: "Used", key: "used" },
   ];
+  const searchFilterList = ["Service", "Shop Name"];
+
   const [selectedFilters, setSelectedFilters] = useState<IFilter[]>([]);
   const [locationRange, setLocationRange] = useState([1, 50]);
+
+  const [searchFilter, setSearchFilter] = useState("Service");
+
   const [shops, setShops] = useState(null);
 
   const onFilterChange = (e: { value: any; checked: boolean }) => {
@@ -46,6 +52,10 @@ const Home: NextPage = () => {
       }
     }
     setSelectedFilters(_selectedFilters);
+  };
+
+  const onSearchFilterChange = (e: { value: any }) => {
+    setSearchFilter(e.value);
   };
 
   return (
@@ -111,7 +121,14 @@ const Home: NextPage = () => {
         </div>
         <div className={styles.content}>
           <div className={classNames("p-inputgroup", styles.search)}>
-            <InputText placeholder="Search" />
+            <InputText className={styles.inputtext} placeholder="Search" />
+            <Dropdown
+              className={styles.dropdown}
+              value={searchFilter}
+              options={searchFilterList}
+              onChange={onSearchFilterChange}
+              placeholder="Service"
+            />
             <Button label="Search" />
           </div>
           <DataView value={shops} layout="list" />
