@@ -1,10 +1,14 @@
+import { readCustomerAppointments } from "@redux/actions/appointmentAction";
+import { AuthSelectors } from "@redux/selectors/authSelectors";
+import { NextPage } from "next";
 import { Button } from "primereact/button";
 import { Carousel } from "primereact/carousel";
 import { useEffect, useState } from "react";
-import { ProductService } from "./service/ProductService";
+import { useDispatch, useSelector } from "react-redux";
+import { IAppointment } from "src/types/appointment";
 
 const CustomerAppointments: NextPage = () => {
-  const [products, setProducts] = useState([]);
+  const [appointments, setAppointments] = useState<IAppointment[]>([]);
   const responsiveOptions = [
     {
       breakpoint: "1199px",
@@ -22,32 +26,37 @@ const CustomerAppointments: NextPage = () => {
       numScroll: 1,
     },
   ];
+  const dispatch = useDispatch();
+
+  const customerId = useSelector(AuthSelectors.getUserId);
 
   useEffect(() => {
-    ProductService.getProductsSmall().then((data) =>
-      setProducts(data.slice(0, 9))
-    );
-  }, []);
+    dispatch(readCustomerAppointments());
+  }, [dispatch, customerId]);
 
-  const appointments = (appointment) => {
+  const appointmentsCard = (appointment: IAppointment) => {
+    // id: string;
+    // startTime: Date;
+    // endTime: Date;
+    // shopId: string;
+    // customer: ICustomer;
+    // quoteId: string | null;
+    // serviceName: string;
+    // price: Number;
+    // status: AppointmentStatus;
+    // workOrderId: string;
+    // vehicle: IVehicle;
+
+    // Need shop name, shop address, service description, date, shop phone number, date
     return (
-      <div className="product-item">
-        <div className="product-item-content">
-          <div className="mb-3">
-            <img
-              src={`https://primefaces.org/cdn/primereact/images/product/${product.image}`}
-              alt={product.name}
-              className="product-image"
-            />
-          </div>
+      <div className="appointment-item">
+        <div className="appointment-item-content">
           <div>
-            <h4 className="mb-1">{product.name}</h4>
-            <h6 className="mt-0 mb-3">${product.price}</h6>
-            <span
-              className={`product-badge status-${product.inventoryStatus.toLowerCase()}`}
-            >
-              {product.inventoryStatus}
-            </span>
+            <h4 className="mb-1">{appointment.serviceName}</h4>
+            <h4 className="mb-1">{appointment.price.toString()}</h4>
+            <h4 className="mb-1">{appointment.startTime.toDateString()}</h4>
+            <h4 className="mb-1">{appointment.endTime.toDateString()}</h4>
+
             <div className="car-buttons mt-5">
               <Button
                 icon="pi pi-search"
@@ -73,33 +82,33 @@ const CustomerAppointments: NextPage = () => {
       {/*Scheduled Appointments*/}
       <div className="card">
         <Carousel
-          value={products}
+          value={appointments}
           numVisible={3}
           numScroll={3}
           responsiveOptions={responsiveOptions}
-          itemTemplate={productTemplate}
+          itemTemplate={appointmentsCard}
         />
       </div>
 
-      {/*Pending Appointments*/}
+      {/*In Progress Appointments*/}
       <div className="card">
         <Carousel
-          value={products}
+          value={appointments}
           numVisible={3}
           numScroll={3}
           responsiveOptions={responsiveOptions}
-          itemTemplate={productTemplate}
+          itemTemplate={appointmentsCard}
         />
       </div>
 
-      {/*Previous Appointments*/}
+      {/*Past Appointments*/}
       <div className="card">
         <Carousel
-          value={products}
+          value={appointments}
           numVisible={3}
           numScroll={3}
           responsiveOptions={responsiveOptions}
-          itemTemplate={productTemplate}
+          itemTemplate={appointmentsCard}
         />
       </div>
     </div>

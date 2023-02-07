@@ -48,7 +48,6 @@ function patchAppointmentStatus(
 }
 
 function getAllAppointments(shopId: string): Promise<IAppointment[]> {
-  //TODO: change to use endpoint with store ID
   return fetch(`/api/shop/${shopId}/appointments/`, {
     method: "GET",
     headers: {
@@ -112,6 +111,40 @@ function getAllAppointments(shopId: string): Promise<IAppointment[]> {
   });
 }
 
+function getCustomerAppointments(customerId: string): Promise<IAppointment[]> {
+  return fetch(`/api/customer/${customerId}/appointments/`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((res) => {
+    if (res.status === 200) {
+      return res.json().then((data) => {
+        const appointments = data.map((appointment: Appointment) => {
+          return {
+            id: appointment.id,
+            startTime: appointment.start_time,
+            endTime: appointment.end_time,
+            customer: customer,
+            shopId: appointment.shop_id,
+            quoteId: appointment.quote_id,
+            serviceName: service?.name,
+            price: appointment.price,
+            status: appointment.status,
+            workOrderId: appointment.work_order_id,
+            vehicle: vehicle,
+          };
+        });
+      });
+      return appointments;
+    } else {
+      // TODO: check and handle errors
+      return [];
+    }
+  });
+}
+
 function* setAppointmentStatus(
   action: IAppointmentActionSetAppointmentStatus
 ): Generator<CallEffect | PutEffect> {
@@ -128,6 +161,19 @@ function* readAppointments(): Generator<CallEffect | PutEffect | SelectEffect> {
     yield put({
       type: AppointmentTypes.SET_APPOINTMENTS,
       payload: { shopId, appointments },
+    });
+  }
+}
+
+function* readCustomerAppointments(): Generator<
+  CallEffect | PutEffect | SelectEffect
+> {
+  const customerId = (yield select(AuthSelectors.userId)) as string | null;
+  if (customerId) {
+    const appointments = yield call(getCustomerAppointments, customerId);
+    yield put({
+      type: AppointmentTypes.SET_APPOINTMENTS,
+      payload: { customerId, appointments },
     });
   }
 }
@@ -168,6 +214,10 @@ export function* appointmentSaga() {
   yield all([
     takeEvery(AppointmentTypes.SET_APPOINTMENT_STATUS, setAppointmentStatus),
     takeEvery(AppointmentTypes.READ_APPOINTMENTS, readAppointments),
+    takeEvery(
+      AppointmentTypes.READ_CUSTOMER_APPOINTMENTS,
+      readCustomerAppointments
+    ),
     takeEvery(AppointmentTypes.CREATE_APPOINTMENT, createAppointment),
   ]);
 }

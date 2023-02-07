@@ -16,6 +16,11 @@ export interface IAppointmentActionReadAppointments
   payload: void;
 }
 
+export interface IAppointmentActionReadCustomerAppointments
+  extends IAppointmentActionBase {
+  payload: void;
+}
+
 export interface IAppointmentActionSetAppointments
   extends IAppointmentActionBase {
   payload: { appointments: IAppointment[] };
@@ -29,10 +34,16 @@ export interface IAppointmentActionCreateAppointment
 export type IAppointmentAction =
   | IAppointmentActionSetAppointmentStatus
   | IAppointmentActionReadAppointments
+  | IAppointmentActionReadCustomerAppointments
   | IAppointmentActionSetAppointments
   | IAppointmentActionCreateAppointment;
 
 export const readAppointments = (payload: void) => ({
+  type: AppointmentTypes.READ_APPOINTMENTS,
+  payload,
+});
+
+export const readCustomerAppointments = (payload: void) => ({
   type: AppointmentTypes.READ_APPOINTMENTS,
   payload,
 });
