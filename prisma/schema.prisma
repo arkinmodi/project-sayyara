@@ -141,7 +141,6 @@ model WorkOrder {
   id          String          @id @default(cuid())
   create_time DateTime        @default(now())
   update_time DateTime        @updatedAt
-  status      WorkOrderStatus @default(PENDING)
   appointment Appointment?
   title       String
   customer_id String
@@ -224,10 +223,4 @@ enum AppointmentStatus {
 enum EmployeeStatus {
   ACTIVE
   SUSPENDED
-}
-
-enum WorkOrderStatus {
-  PENDING
-  IN_PROGRESS
-  COMPLETED
 }

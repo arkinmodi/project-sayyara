@@ -1,5 +1,5 @@
 import exclude from "@server/common/excludeField";
-import { prisma, WorkOrderStatus } from "@server/db/client";
+import { prisma } from "@server/db/client";
 import { z } from "zod";
 
 export const createWorkOrderSchema = z.object({
@@ -11,6 +11,7 @@ export const createWorkOrderSchema = z.object({
   employee_id: z.string().optional(),
   shop_id: z.string(),
 });
+
 export type CreateWorkOrderType = z.infer<typeof createWorkOrderSchema>;
 
 export const createWorkOrder = async (workOrder: CreateWorkOrderType) => {
@@ -34,6 +35,7 @@ export const getWorkOrderById = async (id: string) => {
   const workOrder = await prisma.workOrder.findUnique({
     where: { id },
     include: {
+      appointment: true,
       customer: true,
       vehicle: true,
       employee: true,
@@ -69,7 +71,6 @@ export const updateWorkOrderSchema = z.object({
   appointment_id: z.string().optional(),
   employee_id: z.string().optional(),
   employee_email: z.string().email().optional(),
-  status: z.nativeEnum(WorkOrderStatus).optional(),
 });
 
 export type UpdateWorkOrderType = z.infer<typeof updateWorkOrderSchema>;
@@ -99,7 +100,6 @@ export const updateWorkOrderById = async (
     data: {
       title: patch.title,
       body: patch.body,
-      status: patch.status,
       employee: employee,
       appointment: appointment,
     },

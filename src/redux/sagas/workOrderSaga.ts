@@ -13,6 +13,7 @@ import {
   PutEffect,
   takeEvery,
 } from "redux-saga/effects";
+import { IAppointment } from "src/types/appointment";
 import { IEmployee } from "src/types/employee";
 import { IWorkOrder } from "src/types/workOrder";
 
@@ -39,11 +40,27 @@ const getWorkOrderById = async (id: string) => {
               }
             : null;
 
+        const appointment: IAppointment | null =
+          data.appointment !== null
+            ? {
+                id: data.appointment.id,
+                startTime: data.appointment.start_time,
+                endTime: data.appointment.end_time,
+                shopId: data.appointment.shop_id,
+                customer: data.appointment.customer_id,
+                quoteId: data.appointment.quote_id,
+                serviceName: data.appointment.service_id,
+                price: data.appointment.price,
+                status: data.appointment.status,
+                workOrderId: data.appointment.work_order_id,
+                vehicle: data.appointment.vehicle_id,
+              }
+            : null;
+
         return {
           id: data.id,
           createTime: data.create_time,
           updateTime: data.update_time,
-          status: data.status,
           title: data.title,
           customerId: data.customer_id,
           vehicleId: data.vehicle_id,
@@ -65,7 +82,8 @@ const getWorkOrderById = async (id: string) => {
             vin: data.vehicle.vin,
             license_plate: data.vehicle.license_plate,
           },
-          employee: employee,
+          employee,
+          appointment,
         };
       });
 

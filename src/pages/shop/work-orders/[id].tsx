@@ -154,7 +154,7 @@ const WorkOrderPage: React.FC<{}> = () => {
           <div className={styles.workOrderMetadataContainer}>
             <p>
               <b>Status: </b>
-              {workOrder.status}
+              {workOrder.appointment?.status}
             </p>
             <p>
               <b>Last Update: </b>

@@ -4,11 +4,9 @@ import styles from "@styles/components/workOrders/WorkOrderMetadataDialog.module
 import { useRouter } from "next/router";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { WorkOrderStatus } from "src/types/workOrder";
 
 const WorkOrderMetadataDialog: React.FC<{
   isVisible: boolean;
@@ -20,9 +18,6 @@ const WorkOrderMetadataDialog: React.FC<{
   const dispatch = useDispatch();
   const workOrder = useSelector(WorkOrderSelectors.getWorkOrder);
 
-  const [workOrderStatus, setWorkOrderStatus] = useState<
-    WorkOrderStatus | undefined
-  >(workOrder?.status);
   const [workOrderTitle, setWorkOrderTitle] = useState<string | undefined>(
     workOrder?.title
   );
@@ -31,7 +26,6 @@ const WorkOrderMetadataDialog: React.FC<{
 
   useEffect(() => {
     if (workOrder) {
-      setWorkOrderStatus(workOrder.status);
       setWorkOrderTitle(workOrder.title);
       if (workOrder.employee) {
         setWorkOrderAssignedEmployeeEmail(workOrder.employee.email);
@@ -45,22 +39,11 @@ const WorkOrderMetadataDialog: React.FC<{
         patchWorkOrderByIdActionBuilder(id, {
           title: workOrderTitle,
           employee_email: workOrderAssignedEmployeeEmail,
-          status: workOrderStatus,
         })
       );
     }
 
     props.onHide();
-  };
-
-  const handleWorkOrderStatusUpdate = (status: string) => {
-    if (status === "Pending") {
-      setWorkOrderStatus(WorkOrderStatus.PENDING);
-    } else if (status === "In Progress") {
-      setWorkOrderStatus(WorkOrderStatus.IN_PROGRESS);
-    } else if (status === "Completed") {
-      setWorkOrderStatus(WorkOrderStatus.COMPLETED);
-    }
   };
 
   const footer = () => {
@@ -117,18 +100,6 @@ const WorkOrderMetadataDialog: React.FC<{
           className={styles.workOrderMetadataDialogEmployeeEmailTextBox}
         />
         <br />
-
-        <label htmlFor="workOrderStatus">Status</label>
-        <br />
-        <Dropdown
-          id="workOrderStatus"
-          name="status"
-          options={["Pending", "In Progress", "Completed"]}
-          placeholder={workOrderStatus}
-          value={workOrderStatus}
-          onChange={(e) => handleWorkOrderStatusUpdate(e.target.value)}
-          className={styles.workOrderMetadataDialogStatusSelector}
-        />
       </div>
     </Dialog>
   );
