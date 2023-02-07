@@ -12,14 +12,14 @@ import {
 } from "redux-saga/effects";
 import { IAppointment } from "src/types/appointment";
 import { ServiceType } from "src/types/service";
+import { getCustomerById } from "src/util/customerUtil";
+import { getServiceById } from "src/util/serviceUtil";
+import { getVehicleById } from "src/util/vehicleUtil";
 import {
   IAppointmentActionCreateAppointment,
   IAppointmentActionSetAppointmentStatus,
 } from "../actions/appointmentAction";
 import AppointmentTypes from "../types/appointmentTypes";
-import { getCustomerById } from "./util/customerUtil";
-import { getServiceById } from "./util/serviceUtil";
-import { getVehicleById } from "./util/vehicleUtil";
 
 interface IPostCreateBody {
   service_type: ServiceType;
