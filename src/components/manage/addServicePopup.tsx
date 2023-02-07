@@ -7,7 +7,12 @@ import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/InputTextarea";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { IParts, ServiceType } from "src/types/service";
+import {
+  IParts,
+  PartCondition,
+  PartType,
+  ServiceType,
+} from "src/types/service";
 
 interface IServicePopupProps {
   serviceType: ServiceType;
@@ -83,7 +88,6 @@ const AddServicePopup = (props: IServicePopupProps) => {
 
   const onCheckedChange = (e: any, key: string) => {
     let _formValues = { ...formValues };
-    console.log(_formValues);
     _formValues[`${key}`] = !_formValues[`${key}`];
 
     setFormValues(_formValues);
@@ -95,7 +99,6 @@ const AddServicePopup = (props: IServicePopupProps) => {
     _formValues[`${key}`] = val;
 
     setFormValues(_formValues);
-    console.log(formValues);
   };
 
   const onInputNumberChange = (e, key) => {
@@ -139,13 +142,37 @@ const AddServicePopup = (props: IServicePopupProps) => {
       (formValues.oem || formValues.aftermarket) &&
       (formValues.new || formValues.used)
     ) {
+      var partCondition: PartCondition;
+      var partBuild: PartType;
+
+      if (formValues.oem && formValues.aftermarket) {
+        partBuild = PartType.OEM_AND_AFTERMARKET;
+      } else if (formValues.oem) {
+        partBuild = PartType.OEM;
+      } else {
+        partBuild = PartType.AFTERMARKET;
+      }
+
+      if (formValues.new && formValues.used) {
+        partCondition = PartCondition.NEW_AND_USED;
+      } else if (formValues.new) {
+        partCondition = PartCondition.NEW;
+      } else {
+        partCondition = PartCondition.USED;
+      }
+
       dispatch(
         createService({
           name: formValues.name,
           description: formValues.description,
-          estimated_time: formValues.estimated_time,
-          total_price: formValues.total_price,
-          parts: formValues.parts,
+          estimated_time: 0,
+          total_price: 0,
+          parts: [
+            {
+              condition: partCondition,
+              build: partBuild,
+            },
+          ],
           type: serviceType,
         })
       );

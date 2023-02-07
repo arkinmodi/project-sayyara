@@ -81,7 +81,7 @@ const ServicesTable = (props: IServiceProps) => {
     );
   };
 
-  const rowExpansionTemplate = (serviceData: IService) => {
+  const rowExpansionPartsTable = (serviceData: IService) => {
     const parts = serviceData.parts;
     return (
       <div className={styles.partsTable}>
@@ -167,6 +167,16 @@ const ServicesTable = (props: IServiceProps) => {
     );
   };
 
+  const partsCondition = (serviceData: IService) => {
+    const parts = serviceData.parts;
+    return <div>{parts[0]?.condition}</div>;
+  };
+
+  const partsType = (serviceData: IService) => {
+    const parts = serviceData.parts;
+    return <div>{parts[0]?.build}</div>;
+  };
+
   const onPartsRowEditComplete = (
     params: DataTableRowEditCompleteParams,
     serviceData: IService
@@ -189,6 +199,7 @@ const ServicesTable = (props: IServiceProps) => {
   const parts_condition = [
     { label: "NEW", value: PartCondition.NEW },
     { label: "USED", value: PartCondition.USED },
+    { label: "NEW_AND_USED", value: PartCondition.NEW_AND_USED },
   ];
 
   const partsConditionEditor = (options: any) => {
@@ -199,15 +210,13 @@ const ServicesTable = (props: IServiceProps) => {
         optionLabel="label"
         optionValue="value"
         onChange={(e) => options.editorCallback(e.value)}
-        placeholder="Select a condition"
+        placeholder={
+          serviceType == ServiceType.CUSTOM
+            ? options.rowData.parts[0].condition
+            : options.rowData.condition
+        }
         itemTemplate={(option) => {
-          return (
-            <span
-              className={`product-badge status-${option.value.toLowerCase()}`}
-            >
-              {option.label}
-            </span>
-          );
+          return <div>{option.label}</div>;
         }}
       />
     );
@@ -215,7 +224,8 @@ const ServicesTable = (props: IServiceProps) => {
 
   const parts_type = [
     { label: "OEM", value: PartType.OEM },
-    { label: "AFTERMARKET", value: PartType.AFTER_MARKET },
+    { label: "AFTERMARKET", value: PartType.AFTERMARKET },
+    { label: "OEM_AND_AFTERMARKET", value: PartType.OEM_AND_AFTERMARKET },
   ];
 
   const partsTypeEditor = (options: any) => {
@@ -226,15 +236,13 @@ const ServicesTable = (props: IServiceProps) => {
         optionLabel="label"
         optionValue="value"
         onChange={(e) => options.editorCallback(e.value)}
-        placeholder="Select a type"
+        placeholder={
+          serviceType == ServiceType.CUSTOM
+            ? options.rowData.parts[0].build
+            : options.rowData.build
+        }
         itemTemplate={(option) => {
-          return (
-            <span
-              className={`product-badge status-${option.value.toLowerCase()}`}
-            >
-              {option.label}
-            </span>
-          );
+          return <div>{option.label}</div>;
         }}
       />
     );
@@ -273,18 +281,53 @@ const ServicesTable = (props: IServiceProps) => {
 
   const onServiceRowEditComplete = (e: any) => {
     let { newData } = e;
-    dispatch(
-      setService({
-        serviceId: newData.id,
-        patch: {
-          name: newData.name,
-          description: newData.description,
-          estimated_time: newData.estimated_time,
-          total_price: newData.total_price,
-          parts: newData.parts,
-        },
-      })
-    );
+
+    if (serviceType === ServiceType.CUSTOM) {
+      let newParts = [...newData.parts];
+
+      if (newData.field_5 && newData.field_6) {
+        newParts[0] = {
+          condition: newData.field_5,
+          build: newData.field_6,
+        };
+      } else if (newData.field_5) {
+        newParts[0] = {
+          condition: newData.field_5,
+          build: newData.parts[0].type,
+        };
+      } else if (newData.field_6) {
+        newParts[0] = {
+          condition: newData.parts[0].condition,
+          build: newData.field_6,
+        };
+      }
+
+      dispatch(
+        setService({
+          serviceId: newData.id,
+          patch: {
+            name: newData.name,
+            description: newData.description,
+            estimated_time: 0,
+            total_price: 0,
+            parts: newParts,
+          },
+        })
+      );
+    } else {
+      dispatch(
+        setService({
+          serviceId: newData.id,
+          patch: {
+            name: newData.name,
+            description: newData.description,
+            estimated_time: newData.estimated_time,
+            total_price: newData.total_price,
+            parts: newData.parts,
+          },
+        })
+      );
+    }
   };
 
   const deleteButton = (service: IService) => {
@@ -335,7 +378,7 @@ const ServicesTable = (props: IServiceProps) => {
         responsiveLayout="scroll"
         globalFilterFields={["name"]}
         header={serviceTableHeader}
-        rowExpansionTemplate={(data) => rowExpansionTemplate(data)}
+        rowExpansionTemplate={(data) => rowExpansionPartsTable(data)}
         expandedRows={expandedRows}
         onRowToggle={(e) => setExpandedRows(e.data as DataTableExpandedRows)}
         emptyMessage="No services found."
@@ -378,6 +421,22 @@ const ServicesTable = (props: IServiceProps) => {
           sortable
           style={{
             display: serviceType === ServiceType.CANNED ? "table-cell" : "none",
+          }}
+        />
+        <Column
+          header="Part Condition"
+          body={(data) => partsCondition(data)}
+          editor={(options) => partsConditionEditor(options)}
+          style={{
+            display: serviceType === ServiceType.CUSTOM ? "table-cell" : "none",
+          }}
+        />
+        <Column
+          header="Part Type"
+          body={(data) => partsType(data)}
+          editor={(options) => partsTypeEditor(options)}
+          style={{
+            display: serviceType === ServiceType.CUSTOM ? "table-cell" : "none",
           }}
         />
         <Column

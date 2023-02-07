@@ -31,7 +31,7 @@ interface IPostServiceBody {
   shop_id: string;
   name: string;
   description: string;
-  estimated_time: string;
+  estimated_time: number;
   total_price: number;
   parts: IParts[] | {};
   type: ServiceType;
@@ -49,7 +49,6 @@ function patchService(
     },
     body: JSON.stringify(body),
   }).then((res) => {
-    console.log(res);
     if (res.status === 200) {
       return true;
     } else {

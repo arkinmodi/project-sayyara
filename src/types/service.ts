@@ -7,11 +7,13 @@ export enum ServiceType {
 export enum PartCondition {
   NEW = "NEW",
   USED = "USED",
+  NEW_AND_USED = "NEW_AND_USED",
 }
 
 export enum PartType {
   OEM = "OEM",
-  AFTER_MARKET = "AFTER_MARKET",
+  AFTERMARKET = "AFTERMARKET",
+  OEM_AND_AFTERMARKET = "OEM_AND_AFTERMARKET",
 }
 
 export interface IService {
@@ -19,16 +21,16 @@ export interface IService {
   name: string;
   description: string;
   estimated_time: number;
-  total_price: string;
+  total_price: number;
   parts: IParts[];
   type: ServiceType;
   shop_id: string;
 }
 
 export interface IParts {
-  quantity: Number;
-  cost: Number;
-  name: string;
+  quantity?: number;
+  cost?: number;
+  name?: string;
   condition: string;
   build: string;
 }

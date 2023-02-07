@@ -28,11 +28,11 @@ if (process.env.NODE_ENV !== "production") {
 export * from "@prisma/client";
 
 export const partSchema = z.object({
-  quantity: z.number().int(),
-  cost: z.number(),
-  name: z.string(),
-  condition: z.enum(["NEW", "USED"]),
-  build: z.enum(["OEM", "AFTER_MARKET"]),
+  quantity: z.number().int().optional(),
+  cost: z.number().optional(),
+  name: z.string().optional(),
+  condition: z.enum(["NEW", "USED", "NEW_AND_USED"]),
+  build: z.enum(["OEM", "AFTERMARKET", "OEM_AND_AFTERMARKET"]),
 });
 
 const operatingDaySchema = z.object({

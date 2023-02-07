@@ -115,7 +115,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
 
   const parts_type = [
     { label: "OEM", value: PartType.OEM },
-    { label: "AFTERMARKET", value: PartType.AFTER_MARKET },
+    { label: "AFTERMARKET", value: PartType.AFTERMARKET },
   ];
 
   return (
@@ -190,13 +190,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
             : formValues.condition
         }
         itemTemplate={(option) => {
-          return (
-            <span
-              className={`product-badge status-${option.value.toLowerCase()}`}
-            >
-              {option.label}
-            </span>
-          );
+          return <div>{option.label}</div>;
         }}
         className={classNames({
           "p-invalid": submitted && formValues.condition == "",
@@ -216,13 +210,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
           formValues.build == "" ? "Select a type" : formValues.build
         }
         itemTemplate={(option) => {
-          return (
-            <span
-              className={`product-badge status-${option.value.toLowerCase()}`}
-            >
-              {option.label}
-            </span>
-          );
+          return <div>{option.label}</div>;
         }}
         className={classNames({
           "p-invalid": submitted && formValues.build == "",
