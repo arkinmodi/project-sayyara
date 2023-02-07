@@ -1,5 +1,5 @@
 import { AuthSelectors } from "@redux/selectors/authSelectors";
-import { Appointment } from "@server/db/client";
+import { Appointment, UserType } from "@server/db/client";
 import {
   all,
   call,
@@ -10,7 +10,7 @@ import {
   SelectEffect,
   takeEvery,
 } from "redux-saga/effects";
-import { IAppointment } from "src/types/appointment";
+import { IAppointment, ICustomerAppointment } from "src/types/appointment";
 import { ServiceType } from "src/types/service";
 import {
   IAppointmentActionCreateAppointment,
@@ -111,7 +111,9 @@ function getAllAppointments(shopId: string): Promise<IAppointment[]> {
   });
 }
 
-function getCustomerAppointments(customerId: string): Promise<IAppointment[]> {
+function getCustomerAppointments(
+  customerId: string
+): Promise<ICustomerAppointment[]> {
   return fetch(`/api/customer/${customerId}/appointments/`, {
     method: "GET",
     headers: {
@@ -122,22 +124,41 @@ function getCustomerAppointments(customerId: string): Promise<IAppointment[]> {
     if (res.status === 200) {
       return res.json().then((data) => {
         const appointments = data.map((appointment: Appointment) => {
-          return {
-            id: appointment.id,
-            startTime: appointment.start_time,
-            endTime: appointment.end_time,
-            customer: customer,
-            shopId: appointment.shop_id,
-            quoteId: appointment.quote_id,
-            serviceName: service?.name,
-            price: appointment.price,
-            status: appointment.status,
-            workOrderId: appointment.work_order_id,
-            vehicle: vehicle,
-          };
+          const serviceId = appointment.service_id;
+          const shopId = appointment.shop_id;
+
+          if (shopId && serviceId) {
+            // const shopPromise = getShopById(shopId);
+            const servicePromise = getServiceById(serviceId);
+
+            return Promise.all([
+              // shopPromise,
+              servicePromise,
+            ]).then((values) => {
+              // const shop = values[0];
+              const service = values[0];
+
+              return {
+                id: appointment.id,
+                startTime: appointment.start_time,
+                endTime: appointment.end_time,
+                // shopName: appointment.name,
+                // shopAddress: shop.address,
+                // shopPhoneNumber: shop.phone_number,
+                quoteId: appointment.quote_id,
+                serviceName: service?.name,
+                price: appointment.price,
+                status: appointment.status,
+                workOrderId: appointment.work_order_id,
+              };
+            });
+          }
+        });
+
+        return Promise.all(appointments).then((appointmentList) => {
+          return appointmentList;
         });
       });
-      return appointments;
     } else {
       // TODO: check and handle errors
       return [];
@@ -168,13 +189,16 @@ function* readAppointments(): Generator<CallEffect | PutEffect | SelectEffect> {
 function* readCustomerAppointments(): Generator<
   CallEffect | PutEffect | SelectEffect
 > {
-  const customerId = (yield select(AuthSelectors.userId)) as string | null;
-  if (customerId) {
-    const appointments = yield call(getCustomerAppointments, customerId);
-    yield put({
-      type: AppointmentTypes.SET_APPOINTMENTS,
-      payload: { customerId, appointments },
-    });
+  const userType = yield select(AuthSelectors.getUserType);
+  if (userType == UserType.CUSTOMER) {
+    const customerId = (yield select(AuthSelectors.getUserId)) as string;
+    if (customerId) {
+      const appointments = yield call(getCustomerAppointments, customerId);
+      yield put({
+        type: AppointmentTypes.SET_APPOINTMENTS,
+        payload: { customerId, appointments },
+      });
+    }
   }
 }
 

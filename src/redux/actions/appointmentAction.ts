@@ -1,5 +1,9 @@
 import { ServiceType } from "src/types/service";
-import { AppointmentStatus, IAppointment } from "../../types/appointment";
+import {
+  AppointmentStatus,
+  IAppointment,
+  ICustomerAppointment,
+} from "../../types/appointment";
 import AppointmentTypes from "../types/appointmentTypes";
 
 interface IAppointmentActionBase {
@@ -23,7 +27,7 @@ export interface IAppointmentActionReadCustomerAppointments
 
 export interface IAppointmentActionSetAppointments
   extends IAppointmentActionBase {
-  payload: { appointments: IAppointment[] };
+  payload: { appointments: IAppointment[] | ICustomerAppointment[] };
 }
 
 export interface IAppointmentActionCreateAppointment

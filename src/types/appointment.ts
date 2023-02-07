@@ -15,6 +15,20 @@ export interface IAppointment {
   vehicle: IVehicle;
 }
 
+export interface ICustomerAppointment {
+  id: string;
+  startTime: Date;
+  endTime: Date;
+  shopName: string;
+  shopAddress: string;
+  quoteId: string | null;
+  workOrderId: string;
+  serviceName: string;
+  price: Number;
+  status: AppointmentStatus;
+  vehicle: IVehicle;
+}
+
 export enum AppointmentStatus {
   PENDING_APPROVAL = "PENDING_APPROVAL",
   ACCEPTED = "ACCEPTED",
