@@ -3,6 +3,7 @@ import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import { GetServerSideProps } from "next";
 import { TabPanel, TabView } from "primereact/tabview";
 import React from "react";
+import EmployeeTable from "src/components/employees/employeeTable";
 
 const ManageShopTabs = () => {
   return (
@@ -11,7 +12,7 @@ const ManageShopTabs = () => {
         {/* TODO: Add manage services page here */}
       </TabPanel>
       <TabPanel header="Employees">
-        {/* TODO: Add manage employees page here */}
+        <EmployeeTable />
       </TabPanel>
     </TabView>
   );

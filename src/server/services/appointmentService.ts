@@ -56,7 +56,7 @@ export const createAppointment = async (appointment: CreateAppointmentType) => {
   });
 };
 
-export const getAllAppointment = async () => {
+export const getAllAppointments = async () => {
   return await prisma.appointment.findMany({});
 };
 
@@ -64,8 +64,12 @@ export const getAppointmentById = async (id: string) => {
   return await prisma.appointment.findUnique({ where: { id } });
 };
 
-export const getAppointmentByShopId = async (shopId: string) => {
-  return await prisma.appointment.findMany({ where: { shop_id: shopId } });
+export const getAppointmentsByShopId = async (shop_id: string) => {
+  return await prisma.appointment.findMany({ where: { shop_id } });
+};
+
+export const getAppointmentsByCustomerId = async (customer_id: string) => {
+  return await prisma.appointment.findMany({ where: { customer_id } });
 };
 
 export const updateAppointmentSchema = z.object({

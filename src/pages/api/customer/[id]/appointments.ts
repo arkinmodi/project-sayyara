@@ -1,8 +1,8 @@
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
-import { getAppointmentsByShopId } from "@server/services/appointmentService";
+import { getAppointmentsByCustomerId } from "@server/services/appointmentService";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const appointmentByShopIdHandler = async (
+const appointmentByCustomerIdHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
@@ -13,21 +13,18 @@ const appointmentByShopIdHandler = async (
 
   const { id } = req.query;
   if (typeof id !== "string") {
-    res.status(400).json({ message: "Invalid Shop ID." });
+    res.status(400).json({ message: "Invalid Customer ID." });
     return;
   }
 
   const session = await getServerAuthSession({ req, res });
-  if (!session) {
+  if (!session || session.user.id !== id) {
     res.status(403).json({ message: "Forbidden." });
     return;
   }
 
-  const appointment = await getAppointmentsByShopId(id);
-
-  // TODO: if the caller is a customer, appointment's response should hide unnecessary information
-
+  const appointment = await getAppointmentsByCustomerId(id);
   res.status(200).json(appointment);
 };
 
-export default appointmentByShopIdHandler;
+export default appointmentByCustomerIdHandler;
