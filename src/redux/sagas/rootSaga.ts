@@ -1,8 +1,16 @@
 import { all } from "redux-saga/effects";
 import { appointmentSaga } from "./appointmentSaga";
 import { authSaga } from "./authSaga";
+import { employeeSaga } from "./employeeSaga";
 import { quoteSaga } from "./quoteSaga";
+import { shopSaga } from "./shopSaga";
 
 export function* rootSaga() {
-  yield all([authSaga(), appointmentSaga(), quoteSaga()]);
+  yield all([
+    authSaga(),
+    appointmentSaga(),
+    shopSaga(),
+    employeeSaga(),
+    quoteSaga(),
+  ]);
 }

@@ -6,6 +6,7 @@ import { IQuotesState } from "src/types/quotes";
 import { rootReducer } from "./reducers/rootReducer";
 import { rootSaga } from "./sagas/rootSaga";
 import { initialQuoteState } from "./state/quoteState";
+import { initialShopState, IShopState } from "./state/shop/shopState";
 import {
   IAppointmentsState,
   initialAppointmentsState,
@@ -24,12 +25,14 @@ export interface RootState {
   auth: IAuthState;
   appointments: IAppointmentsState;
   quotes: IQuotesState;
+  shop: IShopState;
 }
 
 const initialState = {
   auth: initialAuthState,
   appointments: initialAppointmentsState,
   quotes: initialQuoteState,
+  shop: initialShopState,
 };
 
 export const makeStore = (_context: Context) => {
