@@ -25,7 +25,7 @@ const WorkOrder: NextPage = () => {
 
   const handleTabChange = (idx: number) => {
     if (idx !== 1) {
-      router.push("/");
+      router.push("/shop/dashboard");
     }
   };
 
