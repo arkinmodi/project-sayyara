@@ -38,7 +38,7 @@ export type IWorkOrderAction =
   | IWorkOrderActionSetWorkOrderError;
 
 export const getWorkOrderByIdActionBuilder = (id: string) => ({
-  type: WorkOrderTypes.GET_WORK_ORDER_BY_ID,
+  type: WorkOrderTypes.READ_WORK_ORDER_BY_ID,
   payload: { id },
 });
 
