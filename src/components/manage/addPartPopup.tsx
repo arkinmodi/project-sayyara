@@ -1,11 +1,12 @@
 import { setService } from "@redux/actions/serviceAction";
+import styles from "@styles/pages/services/Services.module.css";
 import classNames from "classnames";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { Dropdown } from "primereact/dropdown";
-import { InputNumber } from "primereact/inputnumber";
+import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
+import { InputNumber, InputNumberChangeParams } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { IService, PartCondition, PartType } from "src/types/service";
 
@@ -15,7 +16,7 @@ interface IPartPopupProps {
   onHideDialog: () => void;
 }
 
-interface IAddPartsValues {
+interface IAddPartsValues extends IObjectKeys {
   name: string;
   cost: number;
   quantity: number;
@@ -31,6 +32,10 @@ const initialPartValues = {
   build: "",
 };
 
+interface IObjectKeys {
+  [key: string]: string | number | undefined;
+}
+
 const AddPartPopup = (props: IPartPopupProps) => {
   const { service, visible, onHideDialog } = props;
   const [submitted, setSubmitted] = useState(false);
@@ -42,11 +47,10 @@ const AddPartPopup = (props: IPartPopupProps) => {
     setFormValues(initialPartValues);
   }, [visible]);
 
-  const openPartPopup = () => {
-    setFormValues(initialPartValues);
-  };
-
-  const onInputChange = (e: any, key: string) => {
+  const onInputChange = (
+    e: DropdownChangeParams | ChangeEvent<HTMLInputElement>,
+    key: string
+  ) => {
     const val = (e.target && e.target.value) || "";
     let _formValues = { ...formValues };
     _formValues[`${key}`] = val;
@@ -54,7 +58,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
     setFormValues(_formValues);
   };
 
-  const onInputNumberChange = (e, key) => {
+  const onInputNumberChange = (e: InputNumberChangeParams, key: string) => {
     const val = e.value || 0;
     let _formValues = { ...formValues };
     _formValues[`${key}`] = val;
@@ -128,7 +132,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
       footer={partDialogFooter}
       onHide={hideDialog}
     >
-      <div className="field">
+      <div className={styles.servicesFormFields}>
         <label htmlFor="name">Name</label>
         <InputText
           id="name"
@@ -144,39 +148,37 @@ const AddPartPopup = (props: IPartPopupProps) => {
           <small className="p-error">Name required</small>
         )}
       </div>
-      <div className="formgrid grid">
-        <div className="field col">
-          <label htmlFor="cost">Cost Per Part</label>
-          <InputNumber
-            id="cost"
-            value={formValues.cost}
-            onValueChange={(e) => onInputNumberChange(e, "cost")}
-            mode="currency"
-            currency="CAD"
-            className={classNames({
-              "p-invalid": submitted && formValues.cost <= 0,
-            })}
-          />
-          {submitted && formValues.cost <= 0 && (
-            <small className="p-error">Cost required</small>
-          )}
-        </div>
-        <div className="field col">
-          <label htmlFor="quantity">Quantity</label>
-          <InputNumber
-            id="quantity"
-            value={formValues.quantity}
-            onValueChange={(e) => onInputNumberChange(e, "quantity")}
-            className={classNames({
-              "p-invalid": submitted && formValues.quantity <= 0,
-            })}
-          />
-          {submitted && formValues.quantity <= 0 && (
-            <small className="p-error">Quantity required</small>
-          )}
-        </div>
+      <div className={styles.servicesFormFields}>
+        <label htmlFor="cost">Cost Per Part</label>
+        <InputNumber
+          id="cost"
+          value={formValues.cost}
+          onValueChange={(e) => onInputNumberChange(e, "cost")}
+          mode="currency"
+          currency="CAD"
+          className={classNames({
+            "p-invalid": submitted && formValues.cost <= 0,
+          })}
+        />
+        {submitted && formValues.cost <= 0 && (
+          <small className="p-error">Cost required</small>
+        )}
       </div>
-      <div>Part Condition</div>
+      <div className={styles.servicesFormFields}>
+        <label htmlFor="quantity">Quantity</label>
+        <InputNumber
+          id="quantity"
+          value={formValues.quantity}
+          onValueChange={(e) => onInputNumberChange(e, "quantity")}
+          className={classNames({
+            "p-invalid": submitted && formValues.quantity <= 0,
+          })}
+        />
+        {submitted && formValues.quantity <= 0 && (
+          <small className="p-error">Quantity required</small>
+        )}
+      </div>
+      <div className={styles.servicesFormFields}>Part Condition</div>
       <Dropdown
         value={formValues.condition}
         options={parts_condition}
@@ -198,7 +200,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
       {submitted && formValues.condition == "" && (
         <small className="p-error">Condition required</small>
       )}
-      <div>Part Type</div>
+      <div className={styles.servicesFormFields}>Part Type</div>
       <Dropdown
         value={formValues.build}
         options={parts_type}

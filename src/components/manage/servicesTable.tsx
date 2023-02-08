@@ -407,7 +407,7 @@ const ServicesTable = (props: IServiceProps) => {
         />
         <Column
           field="estimated_time"
-          header="Duration"
+          header="Duration (Hours)"
           editor={(options) => quantityEditor(options)}
           style={{
             display: serviceType === ServiceType.CANNED ? "table-cell" : "none",

@@ -33,7 +33,7 @@ interface IPostServiceBody {
   description: string;
   estimated_time?: number;
   total_price?: number;
-  parts?: IParts[];
+  parts: IParts[];
   type: ServiceType;
 }
 

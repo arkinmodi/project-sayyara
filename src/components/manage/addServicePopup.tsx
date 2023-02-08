@@ -4,10 +4,11 @@ import classNames from "classnames";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
 import { Dialog } from "primereact/dialog";
-import { InputNumber } from "primereact/inputnumber";
+import { DropdownChangeParams } from "primereact/dropdown";
+import { InputNumber, InputNumberChangeParams } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/InputTextarea";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   IParts,
@@ -22,7 +23,11 @@ interface IServicePopupProps {
   onHideDialog: () => void;
 }
 
-interface IAddBasicServiceValues {
+interface IObjectKeys {
+  [key: string]: string | number | boolean | IParts[];
+}
+
+interface IAddBasicServiceValues extends IObjectKeys {
   name: string;
   description: string;
   estimated_time: number;
@@ -30,7 +35,7 @@ interface IAddBasicServiceValues {
   parts: IParts[];
 }
 
-interface IAddCustomServiceValues {
+interface IAddCustomServiceValues extends IObjectKeys {
   name: string;
   description: string;
   new: boolean;
@@ -78,7 +83,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
       emptyTemplate = initialAddCustomServiceValues;
     }
     setFormValues(emptyTemplate);
-  }, [visible]);
+  }, [visible, serviceType]);
 
   const dispatch = useDispatch();
 
@@ -89,7 +94,13 @@ const AddServicePopup = (props: IServicePopupProps) => {
     setFormValues(_formValues);
   };
 
-  const onInputChange = (e: any, key: string) => {
+  const onInputChange = (
+    e:
+      | DropdownChangeParams
+      | ChangeEvent<HTMLInputElement>
+      | ChangeEvent<HTMLTextAreaElement>,
+    key: string
+  ) => {
     const val = (e.target && e.target.value) || "";
     let _formValues = { ...formValues };
     _formValues[`${key}`] = val;
@@ -97,7 +108,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
     setFormValues(_formValues);
   };
 
-  const onInputNumberChange = (e: any, key: string) => {
+  const onInputNumberChange = (e: InputNumberChangeParams, key: string) => {
     const val = e.value || 0;
     let _formValues = { ...formValues };
     _formValues[`${key}`] = val;
@@ -117,14 +128,15 @@ const AddServicePopup = (props: IServicePopupProps) => {
       serviceType == ServiceType.CANNED &&
       formValues.name != "" &&
       formValues.description != "" &&
+      formValues.total_price != null &&
       formValues.total_price > 0
     ) {
       dispatch(
         createService({
           name: formValues.name,
           description: formValues.description,
-          estimated_time: formValues.estimated_time,
-          total_price: formValues.total_price,
+          estimated_time: Number(formValues.estimated_time),
+          total_price: Number(formValues.total_price),
           parts: formValues.parts,
           type: serviceType,
         })
@@ -309,22 +321,37 @@ const AddServicePopup = (props: IServicePopupProps) => {
             )}
         </div>
       ) : (
-        <div className={styles.servicesFormFields}>
-          <label htmlFor="total_price">Price</label>
-          <InputNumber
-            id="description"
-            value={formValues.total_price}
-            onChange={(e) => onInputNumberChange(e, "total_price")}
-            required
-            mode="currency"
-            currency="CAD"
-            className={classNames({
-              "p-invalid": submitted && formValues.total_price <= 0,
-            })}
-          />
-          {submitted && formValues.total_price <= 0 && (
-            <small className="p-error">Price required</small>
-          )}
+        <div>
+          <div className={styles.servicesFormFields}>
+            <label htmlFor="estimated_time">Estimated Duration (hours)</label>
+            <InputNumber
+              id="estimated_time"
+              value={Number(formValues.estimated_time)}
+              onChange={(e) => onInputNumberChange(e, "estimated_time")}
+              className={classNames({
+                "p-invalid": submitted && formValues.estimated_time <= 0,
+              })}
+            />
+            {submitted && formValues.estimated_time <= 0 && (
+              <small className="p-error">Estimated time required</small>
+            )}
+          </div>
+          <div className={styles.servicesFormFields}>
+            <label htmlFor="total_price">Price</label>
+            <InputNumber
+              id="description"
+              value={Number(formValues.total_price)}
+              onChange={(e) => onInputNumberChange(e, "total_price")}
+              mode="currency"
+              currency="CAD"
+              className={classNames({
+                "p-invalid": submitted && formValues.total_price <= 0,
+              })}
+            />
+            {submitted && formValues.total_price <= 0 && (
+              <small className="p-error">Price required</small>
+            )}
+          </div>
         </div>
       )}
     </Dialog>
