@@ -136,7 +136,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
               " " +
               appointment.customer.last_name}
           </div>
-          <div>Customer phone number: {appointment.customer.phone_number}</div>
+          <div>Customer Phone Number: {appointment.customer.phone_number}</div>
           <div>
             Start time: {new Date(appointment.startTime).toLocaleString()}
           </div>
