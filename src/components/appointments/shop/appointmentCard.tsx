@@ -1,6 +1,7 @@
 import { setAppointmentStatus } from "@redux/actions/appointmentAction";
 import styles from "@styles/pages/appointments/ShopAppointments.module.css";
 import classNames from "classnames";
+import Router from "next/router";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import React from "react";
@@ -118,20 +119,31 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
   };
 
   return (
-    //TODO: Make card clickable so that it would go to the work order
-    <Card className={styles.appointmentCard}>
+    <Card
+      className={styles.appointmentCard}
+      onClick={() =>
+        Router.push(`/shop/work-orders/${appointment.workOrderId}`)
+      }
+    >
       <div className={styles.cardContents}>
         <div>
           <h3 className={styles.serviceNameHeaderText}>
             {appointment.serviceName}
           </h3>
-          <div>Customer Name:</div>
+          <div>
+            Customer Name:{" "}
+            {appointment.customer.first_name +
+              " " +
+              appointment.customer.last_name}
+          </div>
+          <div>Customer phone number: {appointment.customer.phone_number}</div>
           <div>
             Start time: {new Date(appointment.startTime).toLocaleString()}
           </div>
           <div>
             End time: {String(new Date(appointment.endTime).toLocaleString())}
           </div>
+          <br />
           <div>Vehicle Make: {appointment.vehicle?.make}</div>
           <div>Vehicle Model: {appointment.vehicle?.model}</div>
           <div>Manufacture Year: {appointment.vehicle?.year.toString()}</div>
