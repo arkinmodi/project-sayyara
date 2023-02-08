@@ -54,12 +54,12 @@ const ShopDetailsSection = (props: IShopDetailsSectionProps) => {
           />
           <br />
           <label htmlFor="authSignUpFormShopOwnerShopCityInput">
-            Shop City (Required)
+            City (Required)
           </label>
           <br />
           <InputText
             id="authSignUpFormShopOwnerShopCityInput"
-            placeholder="Shop City"
+            placeholder="City"
             className={authStyles.authFormInput}
             value={formValues.shopCity}
             onChange={handleInputChange}
@@ -80,6 +80,19 @@ const ShopDetailsSection = (props: IShopDetailsSectionProps) => {
             showClear
             placeholder="Select a province"
             name="shopProvince"
+          />
+          <br />
+          <label htmlFor="authSignUpFormShopOwnerShopPostalCodeInput">
+            Postal Code (Required)
+          </label>
+          <br />
+          <InputText
+            id="authSignUpFormShopOwnerShopPostalCodeInput"
+            placeholder="Postal Code"
+            className={authStyles.authFormInput}
+            value={formValues.shopPostalCode}
+            onChange={handleInputChange}
+            name="shopPostalCode"
           />
           <br />
           <label htmlFor="authSignUpFormShopEmailInput">
