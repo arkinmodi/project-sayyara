@@ -1,23 +1,13 @@
-import {
-  getWorkOrderByIdActionBuilder,
-  IWorkOrderActionGetWorkOrderById,
-  IWorkOrderActionPatchWorkOrderById,
-  IWorkOrderActionPatchWorkOrderByIdBody,
-} from "@redux/actions/workOrderAction";
-import WorkOrderTypes from "@redux/types/workOrderTypes";
-import {
-  all,
-  call,
-  CallEffect,
-  put,
-  PutEffect,
-  takeEvery,
-} from "redux-saga/effects";
 import { IAppointment } from "src/types/appointment";
 import { IEmployee } from "src/types/employee";
 import { IWorkOrder } from "src/types/workOrder";
 
-const getWorkOrderById = async (id: string) => {
+export const getWorkOrderById = async (
+  id: string
+): Promise<
+  | { success: true; data: IWorkOrder }
+  | { success: false; data: { message: string } }
+> => {
   return fetch(`/api/work-order/${id}`, {
     method: "GET",
     headers: {
@@ -93,17 +83,27 @@ const getWorkOrderById = async (id: string) => {
       };
     } else {
       return {
-        data: await res.json(),
+        data: (await res.json()) as { message: string },
         success: false,
       };
     }
   });
 };
 
-const patchWorkOrderById = async (
+export type PatchWorkOrderByIdBody = {
+  title?: string;
+  body?: string;
+  employee_id?: string;
+  employee_email?: string;
+};
+
+export const patchWorkOrderById = async (
   id: string,
-  patch: IWorkOrderActionPatchWorkOrderByIdBody
-) => {
+  patch: PatchWorkOrderByIdBody
+): Promise<
+  | { success: true; data: IWorkOrder }
+  | { success: false; data: { message: string } }
+> => {
   return fetch(`/api/work-order/${id}`, {
     method: "PATCH",
     headers: {
@@ -111,68 +111,16 @@ const patchWorkOrderById = async (
       "Content-Type": "application/json",
     },
     body: JSON.stringify(patch),
-  }).then(async (res) => ({ data: await res.json(), success: res.ok }));
+  }).then(async (res) => {
+    if (res.ok) {
+      return getWorkOrderById(id);
+    } else {
+      const data = (await res.json()) as { message: string };
+      data.message = JSON.stringify(data.message);
+      return {
+        success: false,
+        data,
+      };
+    }
+  });
 };
-
-function* getWorkOrderByIdGenerator(
-  action: IWorkOrderActionGetWorkOrderById
-): Generator<CallEffect | PutEffect> {
-  const workOrder = (yield call(getWorkOrderById, action.payload.id)) as {
-    data: any;
-    success: boolean;
-  };
-  if (workOrder.success) {
-    yield put({
-      type: WorkOrderTypes.SET_WORK_ORDER_ERROR,
-      payload: { error: null },
-    });
-
-    yield put({
-      type: WorkOrderTypes.SET_WORK_ORDER,
-      payload: { workOrder: workOrder.data },
-    });
-  } else {
-    yield put({
-      type: WorkOrderTypes.SET_WORK_ORDER_ERROR,
-      payload: { error: workOrder.data },
-    });
-  }
-}
-
-function* patchWorkOrderByIdGenerator(
-  action: IWorkOrderActionPatchWorkOrderById
-): Generator<CallEffect | PutEffect> {
-  const workOrder = (yield call(
-    patchWorkOrderById,
-    action.payload.id,
-    action.payload.patch
-  )) as {
-    data: any;
-    success: boolean;
-  };
-
-  if (workOrder.success) {
-    yield call(
-      getWorkOrderByIdGenerator,
-      getWorkOrderByIdActionBuilder(action.payload.id)
-    );
-  } else {
-    yield put({
-      type: WorkOrderTypes.SET_WORK_ORDER_ERROR,
-      payload: { error: workOrder.data },
-    });
-  }
-}
-
-/**
- * Saga to handle all work order related actions.
- */
-export function* workOrderSaga() {
-  yield all([
-    takeEvery(WorkOrderTypes.READ_WORK_ORDER_BY_ID, getWorkOrderByIdGenerator),
-    takeEvery(
-      WorkOrderTypes.PATCH_WORK_ORDER_BY_ID,
-      patchWorkOrderByIdGenerator
-    ),
-  ]);
-}

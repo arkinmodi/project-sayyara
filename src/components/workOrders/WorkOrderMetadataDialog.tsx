@@ -1,47 +1,28 @@
-import { patchWorkOrderByIdActionBuilder } from "@redux/actions/workOrderAction";
-import { WorkOrderSelectors } from "@redux/selectors/workOrderSelector";
 import styles from "@styles/components/workOrders/WorkOrderMetadataDialog.module.css";
-import { useRouter } from "next/router";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { IWorkOrder } from "src/types/workOrder";
+import { PatchWorkOrderByIdBody } from "src/utils/workOrderUtil";
 
 const WorkOrderMetadataDialog: React.FC<{
   isVisible: boolean;
   onHide: () => void;
+  workOrder: IWorkOrder;
+  saveWorkOrder: (patch: PatchWorkOrderByIdBody) => Promise<void>;
 }> = (props) => {
-  const { query } = useRouter();
-  const { id } = query;
+  const { workOrder } = props;
 
-  const dispatch = useDispatch();
-  const workOrder = useSelector(WorkOrderSelectors.getWorkOrder);
-
-  const [workOrderTitle, setWorkOrderTitle] = useState<string | undefined>(
-    workOrder?.title
-  );
+  const [workOrderTitle, setWorkOrderTitle] = useState<string>(workOrder.title);
   const [workOrderAssignedEmployeeEmail, setWorkOrderAssignedEmployeeEmail] =
-    useState<string | undefined>(workOrder?.employee?.email);
+    useState<string | undefined>(workOrder.employee?.email);
 
-  useEffect(() => {
-    if (workOrder) {
-      setWorkOrderTitle(workOrder.title);
-      if (workOrder.employee) {
-        setWorkOrderAssignedEmployeeEmail(workOrder.employee.email);
-      }
-    }
-  }, [workOrder]);
-
-  const handleSave = () => {
-    if (typeof id === "string") {
-      dispatch(
-        patchWorkOrderByIdActionBuilder(id, {
-          title: workOrderTitle,
-          employee_email: workOrderAssignedEmployeeEmail,
-        })
-      );
-    }
+  const handleSave = async () => {
+    await props.saveWorkOrder({
+      title: workOrderTitle,
+      employee_email: workOrderAssignedEmployeeEmail,
+    });
 
     props.onHide();
   };

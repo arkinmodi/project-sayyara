@@ -1,11 +1,6 @@
 import WorkOrderEditor from "@components/workOrders/WorkOrderEditor";
 import WorkOrderMetadataDialog from "@components/workOrders/WorkOrderMetadataDialog";
 import { UserType } from "@prisma/client";
-import {
-  getWorkOrderByIdActionBuilder,
-  patchWorkOrderByIdActionBuilder,
-} from "@redux/actions/workOrderAction";
-import { WorkOrderSelectors } from "@redux/selectors/workOrderSelector";
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import styles from "@styles/pages/WorkOrders.module.css";
 import { GetServerSideProps, NextPage } from "next";
@@ -15,11 +10,18 @@ import { Button } from "primereact/button";
 import { TabPanel, TabView } from "primereact/tabview";
 import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { IWorkOrder } from "src/types/workOrder";
+import {
+  getWorkOrderById,
+  patchWorkOrderById,
+  PatchWorkOrderByIdBody,
+} from "src/utils/workOrderUtil";
 
 const WorkOrder: NextPage = () => {
   const router = useRouter();
-  const workOrderError = useSelector(WorkOrderSelectors.getWorkOrderError);
+  const { id } = router.query;
+
+  const [workOrder, setWorkOrder] = useState<IWorkOrder | undefined>(undefined);
 
   const toastRef = useRef<Toast>(null);
 
@@ -40,18 +42,48 @@ const WorkOrder: NextPage = () => {
     }
   };
 
-  useEffect(() => {
-    if (workOrderError) {
-      showErrorToast(workOrderError.message);
+  const updateWorkOrder = async (patch: PatchWorkOrderByIdBody) => {
+    if (typeof id === "string") {
+      await patchWorkOrderById(id, patch).then((res) => {
+        if (res.success) {
+          setWorkOrder(res.data);
+        } else {
+          showErrorToast(res.data.message);
+        }
+      });
+    } else {
+      showErrorToast("Invalid Work Order ID.");
     }
-  }, [workOrderError]);
+  };
+
+  useEffect(() => {
+    if (typeof id === "string") {
+      getWorkOrderById(id).then((res) => {
+        if (res.success) {
+          setWorkOrder(res.data);
+        } else {
+          showErrorToast(res.data.message);
+        }
+      });
+    } else {
+      showErrorToast("Invalid Work Order ID.");
+    }
+  }, [id]);
 
   return (
     <div>
       <TabView activeIndex={1} onTabChange={(e) => handleTabChange(e.index)}>
         <TabPanel header="Quotes"></TabPanel>
         <TabPanel header="Service Requests">
-          <WorkOrderPage />
+          {workOrder === undefined ? (
+            // TODO: Create skelton
+            <></>
+          ) : (
+            <WorkOrderPage
+              workOrder={workOrder}
+              saveWorkOrder={updateWorkOrder}
+            />
+          )}
         </TabPanel>
       </TabView>
       <Toast ref={toastRef} position="top-right" />
@@ -59,50 +91,25 @@ const WorkOrder: NextPage = () => {
   );
 };
 
-const WorkOrderPage: React.FC<{}> = () => {
+const WorkOrderPage: React.FC<{
+  workOrder: IWorkOrder;
+  saveWorkOrder: (patch: PatchWorkOrderByIdBody) => Promise<void>;
+}> = (props) => {
+  const { workOrder } = props;
+
   const router = useRouter();
-  const { id } = router.query;
 
-  const dispatch = useDispatch();
-  const workOrder = useSelector(WorkOrderSelectors.getWorkOrder);
-
-  const [workOrderBody, setWorkOrderBody] = useState<string | undefined>(
-    workOrder?.body
-  );
+  const [workOrderBody, setWorkOrderBody] = useState<string>(workOrder.body);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isEditMetaDataDialogVisible, setIsEditMetaDataDialogVisible] =
     useState<boolean>(false);
 
   useEffect(() => {
-    if (typeof id === "string") {
-      dispatch(getWorkOrderByIdActionBuilder(id));
-    }
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    if (workOrder) {
-      setWorkOrderBody(workOrder.body);
-    }
-  }, [workOrder]);
-
-  useEffect(() => {
     window.addEventListener("resize", () =>
       setIsMobile(window.innerWidth <= 600)
     );
   });
-
-  const handleSave = () => {
-    if (typeof id === "string") {
-      setIsSaving(true);
-      dispatch(
-        patchWorkOrderByIdActionBuilder(id, {
-          body: workOrderBody,
-        })
-      );
-      setIsSaving(false);
-    }
-  };
 
   const handleHideEditMetaDataDialog = () => {
     setIsEditMetaDataDialogVisible(!isEditMetaDataDialogVisible);
@@ -119,6 +126,12 @@ const WorkOrderPage: React.FC<{}> = () => {
     const seconds = pad(date.getSeconds());
 
     return `${month}/${day}/${year} ${hour}:${minutes}:${seconds}`;
+  };
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    await props.saveWorkOrder({ body: workOrderBody });
+    setIsSaving(false);
   };
 
   return (
@@ -146,7 +159,7 @@ const WorkOrderPage: React.FC<{}> = () => {
             onClick={() => router.push("/")}
           />
         )}
-        <h1>{workOrder?.title ?? ""}</h1>
+        <h1>{workOrder.title}</h1>
       </div>
 
       {workOrder && (
@@ -211,7 +224,7 @@ const WorkOrderPage: React.FC<{}> = () => {
           onClick={handleSave}
           disabled={isSaving}
           loading={isSaving}
-          loadingIcon="pi pi-spin pi-sun"
+          loadingIcon="pi pi-spin pi-spinner"
         />
 
         {workOrder && (
@@ -221,6 +234,8 @@ const WorkOrderPage: React.FC<{}> = () => {
       <WorkOrderMetadataDialog
         isVisible={isEditMetaDataDialogVisible}
         onHide={handleHideEditMetaDataDialog}
+        workOrder={workOrder}
+        saveWorkOrder={props.saveWorkOrder}
       />
     </div>
   );
