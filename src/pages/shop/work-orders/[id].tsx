@@ -153,7 +153,7 @@ const WorkOrderPage: React.FC<{
           />
         ) : (
           <Button
-            className="p-button-secondary"
+            className="p-button-secondary blueButton"
             icon="pi pi-angle-left"
             label="Back"
             aria-label="Back"
@@ -220,7 +220,7 @@ const WorkOrderPage: React.FC<{
               className={styles.workOrderMetadataContainerEditButtonContainer}
             >
               <Button
-                className={styles.workOrderMetadataContainerEditButton}
+                className={`${styles.workOrderMetadataContainerEditButton} blueButton`}
                 label="Edit Metadata"
                 aria-label="Edit Metadata"
                 onClick={handleHideEditMetaDataDialog}
@@ -236,7 +236,7 @@ const WorkOrderPage: React.FC<{
       />
       <div className={styles.workOrderSaveContainer}>
         <Button
-          className={`p-button-success ${styles.workOrderSaveContainerSaveButton}`}
+          className={`p-button-success greenButton ${styles.workOrderSaveContainerSaveButton}`}
           icon="pi pi-save"
           label="Save"
           aria-label="Save"

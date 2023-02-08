@@ -31,14 +31,14 @@ const WorkOrderMetadataDialog: React.FC<{
     return (
       <div>
         <Button
-          className={`p-button-success ${styles.workOrderMetadataDialogFooterContainerButtons}`}
+          className={`p-button-success greenButton ${styles.workOrderMetadataDialogFooterContainerButtons}`}
           icon="pi pi-save"
           label="Save"
           aria-label="Save"
           onClick={handleSave}
         />
         <Button
-          className={`p-button-danger ${styles.workOrderMetadataDialogFooterContainerButtons}`}
+          className={`p-button-danger blueButton ${styles.workOrderMetadataDialogFooterContainerButtons}`}
           icon="pi pi-times"
           label="Cancel"
           aria-label="Cancel"
