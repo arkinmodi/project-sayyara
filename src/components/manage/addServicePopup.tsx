@@ -30,8 +30,8 @@ interface IObjectKeys {
 interface IAddBasicServiceValues extends IObjectKeys {
   name: string;
   description: string;
-  estimated_time: number;
-  total_price: number;
+  estimatedTime: number;
+  totalPrice: number;
   parts: IParts[];
 }
 
@@ -48,8 +48,8 @@ interface IAddCustomServiceValues extends IObjectKeys {
 const initialAddBasicServiceValues = {
   name: "",
   description: "",
-  estimated_time: 0,
-  total_price: 0,
+  estimatedTime: 0,
+  totalPrice: 0,
   parts: [],
 };
 
@@ -128,15 +128,15 @@ const AddServicePopup = (props: IServicePopupProps) => {
       serviceType == ServiceType.CANNED &&
       formValues.name != "" &&
       formValues.description != "" &&
-      formValues.total_price != null &&
-      formValues.total_price > 0
+      formValues.totalPrice != null &&
+      formValues.totalPrice > 0
     ) {
       dispatch(
         createService({
           name: formValues.name,
           description: formValues.description,
-          estimated_time: Number(formValues.estimated_time),
-          total_price: Number(formValues.total_price),
+          estimated_time: Number(formValues.estimatedTime),
+          total_price: Number(formValues.totalPrice),
           parts: formValues.parts,
           type: serviceType,
         })
@@ -323,32 +323,32 @@ const AddServicePopup = (props: IServicePopupProps) => {
       ) : (
         <div>
           <div className={styles.servicesFormFields}>
-            <label htmlFor="estimated_time">Estimated Duration (hours)</label>
+            <label htmlFor="estimatedTime">Estimated Duration (hours)</label>
             <InputNumber
-              id="estimated_time"
-              value={Number(formValues.estimated_time)}
-              onChange={(e) => onInputNumberChange(e, "estimated_time")}
+              id="estimatedTime"
+              value={Number(formValues.estimatedTime)}
+              onChange={(e) => onInputNumberChange(e, "estimatedTime")}
               className={classNames({
-                "p-invalid": submitted && formValues.estimated_time <= 0,
+                "p-invalid": submitted && formValues.estimatedTime <= 0,
               })}
             />
-            {submitted && formValues.estimated_time <= 0 && (
+            {submitted && formValues.estimatedTime <= 0 && (
               <small className="p-error">Estimated time required</small>
             )}
           </div>
           <div className={styles.servicesFormFields}>
-            <label htmlFor="total_price">Price</label>
+            <label htmlFor="totalPrice">Price</label>
             <InputNumber
               id="description"
-              value={Number(formValues.total_price)}
-              onChange={(e) => onInputNumberChange(e, "total_price")}
+              value={Number(formValues.totalPrice)}
+              onChange={(e) => onInputNumberChange(e, "totalPrice")}
               mode="currency"
               currency="CAD"
               className={classNames({
-                "p-invalid": submitted && formValues.total_price <= 0,
+                "p-invalid": submitted && formValues.totalPrice <= 0,
               })}
             />
-            {submitted && formValues.total_price <= 0 && (
+            {submitted && formValues.totalPrice <= 0 && (
               <small className="p-error">Price required</small>
             )}
           </div>

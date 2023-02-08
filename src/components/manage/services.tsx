@@ -28,7 +28,7 @@ const Services = () => {
       let custom: IService[] = [];
       let basic: IService[] = [];
 
-      serviceList.forEach((service) => {
+      serviceList.forEach((service: IService) => {
         if (service.type == ServiceType.CANNED) {
           basic.push(service);
         } else {
