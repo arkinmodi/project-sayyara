@@ -37,6 +37,20 @@
   display: none;
 }
 
+.customMenuItemButton {
+  background-color: transparent;
+  background: transparent;
+  border-color: transparent;
+  color: #495057;
+  line-height: 1;
+}
+
+.customMenuItemButton:hover {
+  background: #e9ecef !important;
+  border-color: transparent !important;
+  color: #495057 !important;
+}
+
 @media (max-width: 1000px) {
   .desktop {
     display: none;

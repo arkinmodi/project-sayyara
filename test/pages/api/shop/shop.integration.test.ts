@@ -141,38 +141,38 @@ describe("update shop", () => {
         const hoursOfOperation = {
           monday: {
             isOpen: true,
-            openTime: "1970-01-01T09:00:00Z",
-            closeTime: "1970-01-01T17:00:00Z",
+            openTime: "1970-01-01T09:00:00.000Z",
+            closeTime: "1970-01-01T17:00:00.000Z",
           },
           tuesday: {
             isOpen: true,
-            openTime: "1970-01-01T09:00:00Z",
-            closeTime: "1970-01-01T17:00:00Z",
+            openTime: "1970-01-01T09:00:00.000Z",
+            closeTime: "1970-01-01T17:00:00.000Z",
           },
           wednesday: {
             isOpen: true,
-            openTime: "1970-01-01T09:00:00Z",
-            closeTime: "1970-01-01T17:00:00Z",
+            openTime: "1970-01-01T09:00:00.000Z",
+            closeTime: "1970-01-01T17:00:00.000Z",
           },
           thursday: {
             isOpen: true,
-            openTime: "1970-01-01T09:00:00Z",
-            closeTime: "1970-01-01T17:00:00Z",
+            openTime: "1970-01-01T09:00:00.000Z",
+            closeTime: "1970-01-01T17:00:00.000Z",
           },
           friday: {
             isOpen: true,
-            openTime: "1970-01-01T09:00:00Z",
-            closeTime: "1970-01-01T17:00:00Z",
+            openTime: "1970-01-01T09:00:00.000Z",
+            closeTime: "1970-01-01T17:00:00.000Z",
           },
           saturday: {
             isOpen: false,
-            openTime: "1970-01-01T09:00:00Z",
-            closeTime: "1970-01-01T17:00:00Z",
+            openTime: "1970-01-01T09:00:00.000Z",
+            closeTime: "1970-01-01T17:00:00.000Z",
           },
           sunday: {
             isOpen: false,
-            openTime: "1970-01-01T09:00:00Z",
-            closeTime: "1970-01-01T17:00:00Z",
+            openTime: "1970-01-01T09:00:00.000Z",
+            closeTime: "1970-01-01T17:00:00.000Z",
           },
         };
         const shop = await createShop(testShop);

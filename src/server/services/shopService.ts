@@ -60,7 +60,17 @@ export const updateShopById = async (id: string, patch: UpdateShopType) => {
          * String comparison of time should work here as timezone is restricted to UTC with precision 0.
          * See hoursOfOperationSchema for more details.
          */
-        hoursOfOperation[day]!.openTime! > hoursOfOperation[day]!.closeTime!
+        new Date(hoursOfOperation[day]!.openTime! as string).toLocaleTimeString(
+          "en-US",
+          { hour: "numeric", minute: "numeric", hour12: false }
+        ) >
+        new Date(
+          hoursOfOperation[day]!.closeTime! as string
+        ).toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "numeric",
+          hour12: false,
+        })
       ) {
         return Promise.reject("Invalid open time and/or close time.");
       }
