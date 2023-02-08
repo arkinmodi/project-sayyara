@@ -1,11 +1,15 @@
+import { UserType } from "@prisma/client";
+import { AuthSelectors } from "@redux/selectors/authSelectors";
 import { Editor } from "primereact/editor";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const WorkOrderEditor: React.FC<{
   body: string;
   updateBody: (body: string) => void;
 }> = (props) => {
   const { body, updateBody } = props;
+  const userType = useSelector(AuthSelectors.getUserType);
 
   const editorToolbar = () => {
     return (
@@ -63,6 +67,7 @@ const WorkOrderEditor: React.FC<{
       value={body}
       onTextChange={(e) => updateBody(e.htmlValue ?? "")}
       headerTemplate={editorToolbar()}
+      readOnly={userType === UserType.CUSTOMER}
     />
   );
 };

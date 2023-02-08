@@ -32,11 +32,7 @@ const workOrderByIdHandler = async (
     case "GET":
       workOrder = await getWorkOrderById(id);
       if (workOrder) {
-        if (await isAuthorized(session, workOrder)) {
-          res.status(200).json(workOrder);
-        } else {
-          res.status(403).json({ message: "Forbidden." });
-        }
+        res.status(200).json(workOrder);
       } else {
         res.status(404).json({ message: "Work Order not found." });
       }

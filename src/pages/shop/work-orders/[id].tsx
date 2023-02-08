@@ -1,15 +1,16 @@
 import WorkOrderEditor from "@components/workOrders/WorkOrderEditor";
 import WorkOrderMetadataDialog from "@components/workOrders/WorkOrderMetadataDialog";
 import { UserType } from "@prisma/client";
-import { getServerAuthSession } from "@server/common/getServerAuthSession";
+import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/pages/WorkOrders.module.css";
-import { GetServerSideProps, NextPage } from "next";
+import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Button } from "primereact/button";
 import { TabPanel, TabView } from "primereact/tabview";
 import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { IWorkOrder } from "src/types/workOrder";
 import {
   getWorkOrderById,
@@ -65,8 +66,6 @@ const WorkOrder: NextPage = () => {
           showErrorToast(res.data.message);
         }
       });
-    } else {
-      showErrorToast("Invalid Work Order ID.");
     }
   }, [id]);
 
@@ -99,8 +98,10 @@ const WorkOrderPage: React.FC<{
 
   const router = useRouter();
 
+  const userType = useSelector(AuthSelectors.getUserType);
+
   const [workOrderBody, setWorkOrderBody] = useState<string>(workOrder.body);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 600);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isEditMetaDataDialogVisible, setIsEditMetaDataDialogVisible] =
     useState<boolean>(false);
@@ -194,20 +195,38 @@ const WorkOrderPage: React.FC<{
               {workOrder.vehicle.vin}
             </p>
             <p>
+              <b>Appointment Time: </b>
+              {`${
+                workOrder.appointment?.startTime === undefined
+                  ? "Unknown Start Time"
+                  : formatDate(new Date(workOrder.appointment?.startTime))
+              } to ${
+                workOrder.appointment?.endTime === undefined
+                  ? "Unknown End Time"
+                  : formatDate(new Date(workOrder.appointment?.endTime))
+              }`}
+            </p>
+            <p>
               <b>Assigned to: </b>
               {workOrder.employee
                 ? `${workOrder.employee.firstName} ${workOrder.employee.lastName}`
                 : "Unassigned"}
             </p>
           </div>
-          <div className={styles.workOrderMetadataContainerEditButtonContainer}>
-            <Button
-              className={styles.workOrderMetadataContainerEditButton}
-              label="Edit Metadata"
-              aria-label="Edit Metadata"
-              onClick={handleHideEditMetaDataDialog}
-            />
-          </div>
+          {userType === UserType.CUSTOMER ? (
+            <></>
+          ) : (
+            <div
+              className={styles.workOrderMetadataContainerEditButtonContainer}
+            >
+              <Button
+                className={styles.workOrderMetadataContainerEditButton}
+                label="Edit Metadata"
+                aria-label="Edit Metadata"
+                onClick={handleHideEditMetaDataDialog}
+              />
+            </div>
+          )}
         </div>
       )}
 
@@ -239,19 +258,6 @@ const WorkOrderPage: React.FC<{
       />
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getServerAuthSession(context);
-  if (session && session.user.type === UserType.CUSTOMER) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-  return { props: {} };
 };
 
 export default WorkOrder;
