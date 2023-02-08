@@ -10,14 +10,14 @@ export function getCustomerById(id: string): Promise<ICustomer | null> {
   }).then((res) => {
     if (res.status === 200) {
       return res.json().then((data) => {
-        const Customer: ICustomer = {
+        const customer: ICustomer = {
           id: data.id,
           first_name: data.first_name,
           last_name: data.last_name,
           phone_number: data.phone_number,
           email: data.email,
         };
-        return Customer;
+        return customer;
       });
     } else {
       // TODO: check and handle errors

@@ -24,6 +24,7 @@ const Header = () => {
   const { data: session } = useSession();
   const isLoggedIn = useSelector(AuthSelectors.getIsLoggedIn);
   const userType = useSelector(AuthSelectors.getUserType);
+  const shopId = useSelector(AuthSelectors.getShopId);
   const dispatch = useDispatch();
 
   /**
@@ -96,15 +97,32 @@ const Header = () => {
   }, [openAuthDialog]);
 
   const mobileMenuItemsLoggedIn = React.useMemo(() => {
-    return [
-      {
-        label: "Logout",
-        command: () => {
-          signOut();
-        },
-      },
-    ];
-  }, []);
+    {
+      return userType === UserType.SHOP_OWNER && shopId
+        ? [
+            {
+              label: "Profile",
+              command: () => {
+                Router.push(`/shop/${shopId}`);
+              },
+            },
+            {
+              label: "Logout",
+              command: () => {
+                signOut();
+              },
+            },
+          ]
+        : [
+            {
+              label: "Logout",
+              command: () => {
+                signOut();
+              },
+            },
+          ];
+    }
+  }, [userType, shopId]);
 
   // Set global isLoggedIn state based on user session
   useEffect(() => {
@@ -165,6 +183,16 @@ const Header = () => {
     </div>
   ) : (
     <div>
+      {userType === UserType.SHOP_OWNER && shopId ? (
+        <Button
+          className={styles.customMenuItemButton}
+          onClick={() => Router.push(`/shop/${shopId}`)}
+        >
+          <span className="p-menuitem-text">Shop Profile</span>
+        </Button>
+      ) : (
+        <></>
+      )}
       <Button
         label="Logout"
         className={classNames(styles.loginBtn, "blueText")}

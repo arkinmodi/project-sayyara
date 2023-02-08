@@ -14,10 +14,6 @@ const shopByIdHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const session = await getServerAuthSession({ req, res });
-  if (!session) {
-    res.status(403).json({ message: "Forbidden." });
-    return;
-  }
 
   let shop;
 
@@ -32,6 +28,11 @@ const shopByIdHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       break;
 
     case "PATCH":
+      if (!session) {
+        res.status(403).json({ message: "Forbidden." });
+        return;
+      }
+
       const patch = updateShopSchema.safeParse(req.body);
       if (!patch.success) {
         res.status(400).json({ message: patch.error.issues });
