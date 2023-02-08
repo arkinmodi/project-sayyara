@@ -32,6 +32,7 @@
     "bcrypt": "^5.1.0",
     "classnames": "^2.3.2",
     "date-fns": "^2.29.3",
+    "md5-hash": "^1.0.1",
     "next": "12.3.4",
     "next-auth": "^4.13.0",
     "next-pwa": "^5.6.0",

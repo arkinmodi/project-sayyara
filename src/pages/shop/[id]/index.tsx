@@ -19,7 +19,7 @@ import {
   IShopHoursOfOperation,
   IShopOperatingDay,
 } from "src/types/shop";
-import { getServicesByShopId, getShopId } from "src/util/shopUtil";
+import { getServicesByShopId, getShopId } from "src/utils/shopUtil";
 
 const days = [
   "monday",
