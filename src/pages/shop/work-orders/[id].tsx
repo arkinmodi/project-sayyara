@@ -75,7 +75,7 @@ const WorkOrder: NextPage = () => {
         <TabPanel header="Quotes"></TabPanel>
         <TabPanel header="Service Requests">
           {workOrder === undefined ? (
-            // TODO: Create skelton
+            // TODO: Create skeleton
             <></>
           ) : (
             <WorkOrderPage
