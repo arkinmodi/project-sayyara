@@ -14,6 +14,7 @@ import { IAppointment, ICustomerAppointment } from "src/types/appointment";
 import { ServiceType } from "src/types/service";
 import { getCustomerById } from "src/util/customerUtil";
 import { getServiceById } from "src/util/serviceUtil";
+import { getShopId } from "src/util/shopUtil";
 import { getVehicleById } from "src/util/vehicleUtil";
 import {
   IAppointmentActionCreateAppointment,
@@ -128,23 +129,20 @@ function getCustomerAppointments(
           const shopId = appointment.shop_id;
 
           if (shopId && serviceId) {
-            // const shopPromise = getShopById(shopId);
+            const shopPromise = getShopId(shopId);
             const servicePromise = getServiceById(serviceId);
 
-            return Promise.all([
-              // shopPromise,
-              servicePromise,
-            ]).then((values) => {
-              // const shop = values[0];
-              const service = values[0];
+            return Promise.all([shopPromise, servicePromise]).then((values) => {
+              const shop = values[0];
+              const service = values[1];
 
               return {
                 id: appointment.id,
                 startTime: appointment.start_time,
                 endTime: appointment.end_time,
-                // shopName: appointment.name,
-                // shopAddress: shop.address,
-                // shopPhoneNumber: shop.phone_number,
+                shopName: shop?.name,
+                shopAddress: shop?.address,
+                shopPhoneNumber: shop?.phoneNumber,
                 quoteId: appointment.quote_id,
                 serviceName: service?.name,
                 price: appointment.price,
