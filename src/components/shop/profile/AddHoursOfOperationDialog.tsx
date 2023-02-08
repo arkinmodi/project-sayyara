@@ -6,7 +6,7 @@ import { Dialog } from "primereact/dialog";
 import { InputSwitch } from "primereact/inputswitch";
 import React, { useState } from "react";
 import { IShop, IShopHoursOfOperation } from "src/types/shop";
-import { patchShop } from "src/util/shopUtil";
+import { patchShop } from "src/utils/shopUtil";
 
 interface IAddHoursOfOperationDialog {
   visible: boolean;

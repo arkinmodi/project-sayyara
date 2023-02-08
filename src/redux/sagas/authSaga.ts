@@ -6,6 +6,7 @@ import {
   PutEffect,
   takeEvery,
 } from "redux-saga/effects";
+import { hashPassword } from "src/utils/authUtil";
 import {
   IAuthActionCreateCustomerSignUp,
   IAuthActionCreateLogin,
@@ -143,7 +144,7 @@ function* customerSignUp(
   const body: IPostCustomerSignUpBody = {
     email: payload.email,
     phone_number: payload.phoneNumber,
-    password: payload.password,
+    password: hashPassword(payload.password),
     first_name: payload.firstName,
     last_name: payload.lastName,
     vehicle: {
@@ -160,7 +161,7 @@ function* customerSignUp(
     const loginBody: IAuthActionCreateLogin["payload"] = {
       csrfToken: payload.csrfToken,
       email: payload.email,
-      password: payload.password,
+      password: hashPassword(payload.password),
     };
     yield put({ type: AuthTypes.CREATE_LOGIN, payload: loginBody });
   }
@@ -173,7 +174,7 @@ function* shopEmployeeSignUp(
   const body: IPostShopEmployeeSignUpBody = {
     email: payload.email,
     phone_number: payload.phoneNumber,
-    password: payload.password,
+    password: hashPassword(payload.password),
     first_name: payload.firstName,
     last_name: payload.lastName,
     shop_id: payload.shopId,
@@ -184,7 +185,7 @@ function* shopEmployeeSignUp(
     const loginBody: IAuthActionCreateLogin["payload"] = {
       csrfToken: payload.csrfToken,
       email: payload.email,
-      password: payload.password,
+      password: hashPassword(payload.password),
     };
     yield put({ type: AuthTypes.CREATE_LOGIN, payload: loginBody });
   }
@@ -197,7 +198,7 @@ function* shopOwnerSignUp(
   const body: IPostShopOwnerSignUpBody = {
     email: payload.email,
     phone_number: payload.phoneNumber,
-    password: payload.password,
+    password: hashPassword(payload.password),
     first_name: payload.firstName,
     last_name: payload.lastName,
     shop: {
@@ -216,7 +217,7 @@ function* shopOwnerSignUp(
     const loginBody: IAuthActionCreateLogin["payload"] = {
       csrfToken: payload.csrfToken,
       email: payload.email,
-      password: payload.password,
+      password: hashPassword(payload.password),
     };
     yield put({ type: AuthTypes.CREATE_LOGIN, payload: loginBody });
   }
