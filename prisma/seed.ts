@@ -1,5 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
+
+var md5 = require("md5-hash");
+
 const prisma = new PrismaClient();
 
 const shopOwnerCredentials = {
@@ -25,7 +28,8 @@ const clearDatabase = async () => {
   ]);
 };
 
-const hash = (plaintext: string) => bcrypt.hashSync(plaintext, 10);
+const bcryptHash = (plaintext: string) => bcrypt.hashSync(plaintext, 10);
+const md5Hash = (plaintext: string) => md5.default(plaintext);
 
 const seed = async () => {
   await clearDatabase();
@@ -34,7 +38,7 @@ const seed = async () => {
   const shopOwnerData = await prisma.employee.create({
     data: {
       email: shopOwnerCredentials.email,
-      password: hash(shopOwnerCredentials.password),
+      password: bcryptHash(md5Hash(shopOwnerCredentials.password)),
       first_name: "John",
       last_name: "Stone",
       phone_number: "9055259140",
@@ -57,7 +61,7 @@ const seed = async () => {
   const customerData = await prisma.customer.create({
     data: {
       email: customerCredentials.email,
-      password: hash(customerCredentials.password),
+      password: bcryptHash(md5Hash(customerCredentials.password)),
       first_name: "Mia",
       last_name: "Wong",
       phone_number: "9055259140",
