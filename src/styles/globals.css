@@ -23,6 +23,41 @@ a {
   color: #69ad96;
 }
 
+.greenButton {
+  background-color: #69ad96 !important;
+  border-color: #69ad96 !important;
+}
+
+.greenButton:hover {
+  background: #69ad96 !important;
+  border-color: transparent !important;
+  opacity: 0.7;
+}
+
+.greenButton:active {
+  background: #69ad96 !important;
+  border-color: transparent !important;
+  opacity: 0.7;
+}
+
+.blueButton {
+  background-color: #436188 !important;
+  color: white !important;
+  border-color: #436188 !important;
+}
+
+.blueButton:hover {
+  background: #436188 !important;
+  border-color: transparent !important;
+  opacity: 0.7;
+}
+
+.blueButton:active {
+  background: #436188 !important;
+  border-color: transparent !important;
+  opacity: 0.7;
+}
+
 /**
  * Global override to center TabView
  */
