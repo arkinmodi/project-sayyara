@@ -131,10 +131,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
             {appointment.serviceName}
           </h3>
           <div>
-            Customer Name:{" "}
-            {appointment.customer.first_name +
-              " " +
-              appointment.customer.last_name}
+            {`Customer Name: ${appointment.customer.first_name} ${appointment.customer.last_name}`}
           </div>
           <div>Customer Phone Number: {appointment.customer.phone_number}</div>
           <div>
