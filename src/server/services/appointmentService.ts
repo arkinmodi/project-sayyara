@@ -45,7 +45,17 @@ export const createAppointment = async (appointment: CreateAppointmentType) => {
       start_time: appointment.start_time,
       end_time: appointment.end_time,
       price: appointment.price,
-      work_order: { create: { create_time: now, update_time: now } },
+      work_order: {
+        create: {
+          create_time: now,
+          update_time: now,
+          title: "New Work Order",
+          body: "",
+          customer: { connect: { id: appointment.customer_id } },
+          vehicle: { connect: { id: appointment.vehicle_id } },
+          shop: { connect: { id: appointment.shop_id } },
+        },
+      },
       vehicle: { connect: { id: appointment.vehicle_id } },
       customer: { connect: { id: appointment.customer_id } },
       shop: { connect: { id: appointment.shop_id } },
