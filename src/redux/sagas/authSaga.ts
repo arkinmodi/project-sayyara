@@ -162,7 +162,7 @@ function* customerSignUp(
     const loginBody: IAuthActionCreateLogin["payload"] = {
       csrfToken: payload.csrfToken,
       email: payload.email,
-      password: md5Hash.default(payload.password),
+      password: payload.password,
     };
     yield put({ type: AuthTypes.CREATE_LOGIN, payload: loginBody });
   }
@@ -186,7 +186,7 @@ function* shopEmployeeSignUp(
     const loginBody: IAuthActionCreateLogin["payload"] = {
       csrfToken: payload.csrfToken,
       email: payload.email,
-      password: md5Hash.default(payload.password),
+      password: payload.password,
     };
     yield put({ type: AuthTypes.CREATE_LOGIN, payload: loginBody });
   }
@@ -218,7 +218,7 @@ function* shopOwnerSignUp(
     const loginBody: IAuthActionCreateLogin["payload"] = {
       csrfToken: payload.csrfToken,
       email: payload.email,
-      password: md5Hash.default(payload.password),
+      password: payload.password,
     };
     yield put({ type: AuthTypes.CREATE_LOGIN, payload: loginBody });
   }
