@@ -1,7 +1,6 @@
 import { UserType } from "@prisma/client";
 import { deleteService, setService } from "@redux/actions/serviceAction";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
-import { ShopSelectors } from "@redux/selectors/shopSelector";
 import styles from "@styles/pages/services/Services.module.css";
 import { Button } from "primereact/button";
 import { Column, ColumnBodyOptions } from "primereact/column";
@@ -45,7 +44,6 @@ const ServicesTable = (props: IServiceProps) => {
   const toast = useRef(null);
   const userType = useSelector(AuthSelectors.getUserType);
 
-  const serviceList = useSelector(ShopSelectors.getShopServices);
   const dispatch = useDispatch();
 
   const hideAddServiceDialog = () => {

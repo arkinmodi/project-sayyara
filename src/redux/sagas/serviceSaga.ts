@@ -94,7 +94,7 @@ function postCreate(body: IPostServiceBody): Promise<boolean> {
     },
     body: JSON.stringify(body),
   }).then((res) => {
-    if (res.status === 200) {
+    if (res.status === 201) {
       return true;
     } else {
       return false;
@@ -134,7 +134,10 @@ function* createService(
       parts: payload.parts,
       type: payload.type,
     };
-    yield call(postCreate, body);
+    const success = yield call(postCreate, body);
+    if (success) {
+      yield put({ type: ShopTypes.READ_SHOP_SERVICES });
+    }
   }
 }
 
