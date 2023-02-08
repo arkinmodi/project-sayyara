@@ -153,7 +153,6 @@ const AddPartPopup = (props: IPartPopupProps) => {
             onValueChange={(e) => onInputNumberChange(e, "cost")}
             mode="currency"
             currency="CAD"
-            locale="en-US"
             className={classNames({
               "p-invalid": submitted && formValues.cost <= 0,
             })}

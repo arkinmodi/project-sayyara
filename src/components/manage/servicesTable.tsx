@@ -255,7 +255,6 @@ const ServicesTable = (props: IServiceProps) => {
         onValueChange={(e: { value: any }) => options.editorCallback(e.value)}
         mode="currency"
         currency="CAD"
-        locale="en-US"
       />
     );
   };
@@ -416,7 +415,7 @@ const ServicesTable = (props: IServiceProps) => {
         />
         <Column
           field="total_price"
-          header="Estimated Cost"
+          header="Estimated Cost (CA$)"
           editor={(options) => priceEditor(options)}
           sortable
           style={{

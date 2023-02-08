@@ -31,9 +31,9 @@ interface IPostServiceBody {
   shop_id: string;
   name: string;
   description: string;
-  estimated_time: number;
-  total_price: number;
-  parts: IParts[] | {};
+  estimated_time?: number;
+  total_price?: number;
+  parts?: IParts[];
   type: ServiceType;
 }
 

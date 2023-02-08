@@ -1,8 +1,10 @@
 import { createService } from "@redux/actions/serviceAction";
+import styles from "@styles/pages/services/Services.module.css";
 import classNames from "classnames";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
 import { Dialog } from "primereact/dialog";
+import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/InputTextarea";
 import { useEffect, useState } from "react";
@@ -35,6 +37,7 @@ interface IAddCustomServiceValues {
   used: boolean;
   oem: boolean;
   aftermarket: boolean;
+  parts: IParts[];
 }
 
 const initialAddBasicServiceValues = {
@@ -52,6 +55,7 @@ const initialAddCustomServiceValues = {
   used: false,
   oem: false,
   aftermarket: false,
+  parts: [],
 };
 
 const AddServicePopup = (props: IServicePopupProps) => {
@@ -78,15 +82,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
 
   const dispatch = useDispatch();
 
-  const openServicePopup = () => {
-    if (serviceType === ServiceType.CANNED) {
-      setFormValues(initialAddCustomServiceValues);
-    } else {
-      setFormValues(initialAddBasicServiceValues);
-    }
-  };
-
-  const onCheckedChange = (e: any, key: string) => {
+  const onCheckedChange = (key: string) => {
     let _formValues = { ...formValues };
     _formValues[`${key}`] = !_formValues[`${key}`];
 
@@ -101,7 +97,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
     setFormValues(_formValues);
   };
 
-  const onInputNumberChange = (e, key) => {
+  const onInputNumberChange = (e: any, key: string) => {
     const val = e.value || 0;
     let _formValues = { ...formValues };
     _formValues[`${key}`] = val;
@@ -120,7 +116,8 @@ const AddServicePopup = (props: IServicePopupProps) => {
     if (
       serviceType == ServiceType.CANNED &&
       formValues.name != "" &&
-      formValues.description != ""
+      formValues.description != "" &&
+      formValues.total_price > 0
     ) {
       dispatch(
         createService({
@@ -211,7 +208,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
       footer={serviceDialogFooter}
       onHide={hideDialog}
     >
-      <div className="field">
+      <div className={styles.servicesFormFields}>
         <label htmlFor="name">Name</label>
         <InputText
           id="name"
@@ -227,7 +224,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
           <small className="p-error">Name required</small>
         )}
       </div>
-      <div className="field">
+      <div className={styles.servicesFormFields}>
         <label htmlFor="description">Description</label>
         <InputTextarea
           id="description"
@@ -253,11 +250,11 @@ const AddServicePopup = (props: IServicePopupProps) => {
                 submitted && formValues.new == "" && formValues.used == "",
             })}
           >
-            <div>Part Condition</div>
+            <div className={styles.servicesFormFields}>Part Condition</div>
             <Checkbox
               inputId="new"
               value="new"
-              onChange={(e) => onCheckedChange(e, "new")}
+              onChange={(e) => onCheckedChange("new")}
               checked={formValues.new}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
@@ -266,7 +263,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
             <Checkbox
               inputId="used"
               value="used"
-              onChange={(e) => onCheckedChange(e, "used")}
+              onChange={(e) => onCheckedChange("used")}
               checked={formValues.used}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
@@ -285,11 +282,11 @@ const AddServicePopup = (props: IServicePopupProps) => {
                 formValues.aftermarket == "",
             })}
           >
-            <div>Part Type</div>
+            <div className={styles.servicesFormFields}>Part Type</div>
             <Checkbox
               inputId="oem"
               value="OEM"
-              onChange={(e) => onCheckedChange(e, "oem")}
+              onChange={(e) => onCheckedChange("oem")}
               checked={formValues.oem}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
@@ -298,7 +295,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
             <Checkbox
               inputId="aftermarket"
               value="aftermarket"
-              onChange={(e) => onCheckedChange(e, "aftermarket")}
+              onChange={(e) => onCheckedChange("aftermarket")}
               checked={formValues.aftermarket}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
@@ -312,7 +309,23 @@ const AddServicePopup = (props: IServicePopupProps) => {
             )}
         </div>
       ) : (
-        <></>
+        <div className={styles.servicesFormFields}>
+          <label htmlFor="total_price">Price</label>
+          <InputNumber
+            id="description"
+            value={formValues.total_price}
+            onChange={(e) => onInputNumberChange(e, "total_price")}
+            required
+            mode="currency"
+            currency="CAD"
+            className={classNames({
+              "p-invalid": submitted && formValues.total_price <= 0,
+            })}
+          />
+          {submitted && formValues.total_price <= 0 && (
+            <small className="p-error">Price required</small>
+          )}
+        </div>
       )}
     </Dialog>
   );

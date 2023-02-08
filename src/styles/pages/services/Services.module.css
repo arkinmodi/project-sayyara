@@ -16,6 +16,10 @@
   text-align: center !important;
 }
 
+.servicesFormFields {
+  margin-top: 3%;
+}
+
 .addServiceButtonGreen {
   background-color: #69ad96 !important;
   border-color: #69ad96 !important;
