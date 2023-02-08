@@ -7,7 +7,7 @@ import { Dialog } from "primereact/dialog";
 import { DropdownChangeParams } from "primereact/dropdown";
 import { InputNumber, InputNumberChangeParams } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
-import { InputTextarea } from "primereact/InputTextarea";
+import { InputTextarea } from "primereact/inputtextarea";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
