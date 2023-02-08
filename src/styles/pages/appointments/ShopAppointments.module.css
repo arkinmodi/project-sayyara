@@ -90,6 +90,13 @@
   margin-bottom: 2%;
 }
 
+.appointmentCard:hover {
+  border-style: solid;
+  border-color: lightgray;
+  background-color: #f7f7f7;
+  margin-bottom: 2%;
+}
+
 .mobile {
   display: none;
 }
