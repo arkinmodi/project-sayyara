@@ -127,10 +127,10 @@ const AddPartPopup = (props: IPartPopupProps) => {
           required
           autoFocus
           className={classNames({
-            "p-invalid": submitted && formValues.name == "",
+            "p-invalid": submitted && formValues.name.length === 0,
           })}
         />
-        {submitted && formValues.name == "" && (
+        {submitted && formValues.name.length === 0 && (
           <small className="p-error">Name required</small>
         )}
       </div>
@@ -174,7 +174,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
         optionValue="value"
         onChange={(e) => onInputChange(e, "condition")}
         placeholder={
-          formValues.condition == ""
+          formValues.condition.length === 0
             ? "Select a condition"
             : formValues.condition
         }
@@ -182,10 +182,10 @@ const AddPartPopup = (props: IPartPopupProps) => {
           return <div>{option.label}</div>;
         }}
         className={classNames({
-          "p-invalid": submitted && formValues.condition == "",
+          "p-invalid": submitted && formValues.condition.length === 0,
         })}
       />
-      {submitted && formValues.condition == "" && (
+      {submitted && formValues.condition.length === 0 && (
         <small className="p-error">Condition required</small>
       )}
       <div className={styles.servicesFormFields}>Part Type</div>
@@ -196,16 +196,16 @@ const AddPartPopup = (props: IPartPopupProps) => {
         optionValue="value"
         onChange={(e) => onInputChange(e, "build")}
         placeholder={
-          formValues.build == "" ? "Select a type" : formValues.build
+          formValues.build.length === 0 ? "Select a type" : formValues.build
         }
         itemTemplate={(option) => {
           return <div>{option.label}</div>;
         }}
         className={classNames({
-          "p-invalid": submitted && formValues.build == "",
+          "p-invalid": submitted && formValues.build.length === 0,
         })}
       />
-      {submitted && formValues.build == "" && (
+      {submitted && formValues.build.length === 0 && (
         <small className="p-error">Type required</small>
       )}
     </Dialog>

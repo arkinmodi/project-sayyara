@@ -57,36 +57,6 @@ function* readShopEmployees(): Generator<
   }
 }
 
-// function getAllServices(shopId: string): Promise<IService[]> {
-//   return fetch(`/api/shop/${shopId}/services`, {
-//     method: "GET",
-//     headers: {
-//       Accept: "application/json",
-//       "Content-Type": "application/json",
-//     },
-//   }).then((res) => {
-//     if (res.status === 200) {
-//       return res.json().then((data) => {
-//         const services = data.map((service: Service) => {
-//           return {
-//             id: service.id,
-//             name: service.name,
-//             description: service.description,
-//             estimatedTime: service.estimated_time,
-//             totalPrice: service.total_price,
-//             parts: service.parts,
-//             type: service.type,
-//           };
-//         });
-//         return services;
-//       });
-//     } else {
-//       // TODO: check and handle errors
-//       return [];
-//     }
-//   });
-// }
-
 function* readShopServices(): Generator<CallEffect | PutEffect | SelectEffect> {
   const shopId = (yield select(AuthSelectors.getShopId)) as string | null;
   if (shopId) {

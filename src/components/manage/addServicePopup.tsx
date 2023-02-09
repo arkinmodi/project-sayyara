@@ -258,10 +258,10 @@ const AddServicePopup = (props: IServicePopupProps) => {
           required
           autoFocus
           className={classNames({
-            "p-invalid": submitted && formValues.name == "",
+            "p-invalid": submitted && formValues.name.length === 0,
           })}
         />
-        {submitted && formValues.name == "" && (
+        {submitted && formValues.name.length === 0 && (
           <small className="p-error">Name required</small>
         )}
       </div>
@@ -275,10 +275,10 @@ const AddServicePopup = (props: IServicePopupProps) => {
           rows={3}
           cols={20}
           className={classNames({
-            "p-invalid": submitted && formValues.description == "",
+            "p-invalid": submitted && formValues.description.length === 0,
           })}
         />
-        {submitted && formValues.description == "" && (
+        {submitted && formValues.description.length === 0 && (
           <small className="p-error">Description required</small>
         )}
       </div>
