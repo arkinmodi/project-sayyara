@@ -1,3 +1,5 @@
+import { IService } from "./service";
+
 export interface IShopOperatingDay {
   isOpen: boolean;
   openTime: string;
@@ -22,4 +24,5 @@ export interface IShop {
   phoneNumber: string;
   hoursOfOperation?: IShopHoursOfOperation;
   email: string;
+  services?: IService[] | null;
 }

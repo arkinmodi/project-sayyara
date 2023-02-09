@@ -47,3 +47,36 @@
 .dropdown {
   flex: 1 1 auto !important;
 }
+
+.itemContainer {
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: row;
+  height: 7rem;
+}
+
+.itemContainer:hover {
+  /* May need to change because it does not match theme */
+  background-color: #99afcb;
+}
+
+.itemText {
+  padding: 0.5rem 0 0.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.itemShopName {
+  margin: 0;
+}
+
+.chip {
+  background: #69ad96;
+  color: white;
+}
+
+.fullListChip {
+  background: #436188;
+  color: white;
+}

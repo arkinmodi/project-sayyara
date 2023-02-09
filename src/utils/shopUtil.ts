@@ -147,3 +147,39 @@ export function patchShop(shopId: string, patch: IShop): Promise<IShop | null> {
     }
   });
 }
+
+export function getFilteredShops(
+  name: string,
+  isShop: string
+): Promise<(IShop & { services: IService[] })[] | null> {
+  const url = `/api/shop/lookup?name=${name}&shop=${isShop}`;
+
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((res) => {
+    if (res.status === 200) {
+      return res.json().then((data) => {
+        const shops = data.map((shop: IShop) => {
+          return {
+            name: shop.name,
+            address: shop.address,
+            postalCode: shop.postalCode,
+            city: shop.city,
+            province: shop.province,
+            phoneNumber: shop.phoneNumber,
+            hoursOfOperation: shop.hoursOfOperation,
+            email: shop.email,
+            services: shop.services,
+          };
+        });
+        return shops;
+      });
+    } else {
+      return null;
+    }
+  });
+}

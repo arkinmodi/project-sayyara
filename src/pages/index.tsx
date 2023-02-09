@@ -1,61 +1,154 @@
 import classNames from "classnames";
 import type { NextPage } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
+import { Chip } from "primereact/chip";
 import { DataView } from "primereact/dataview";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Panel } from "primereact/panel";
-import { Slider } from "primereact/slider";
-import { useState } from "react";
+import { Slider, SliderChangeParams } from "primereact/slider";
+import image from "public/icons/icon-192x192.png";
+import { useEffect, useState } from "react";
+import { IService } from "src/types/service";
+import { IShop } from "src/types/shop";
+import { getFilteredShops } from "src/utils/shopUtil";
 import styles from "../styles/Home.module.css";
 
-interface IFilter {
-  name: string;
-  key: string;
-}
-
 const Home: NextPage = () => {
-  const sortByCategories: IFilter[] = [
-    { name: "Name A-Z", key: "name" },
-    { name: "Location", key: "location" },
-  ];
-  const filterByPartType: IFilter[] = [
-    { name: "OEM", key: "oem" },
-    { name: "Aftermarket", key: "aftermarket" },
-  ];
-  const filterByPartCondition: IFilter[] = [
-    { name: "New", key: "new" },
-    { name: "Used", key: "used" },
-  ];
+  const MAX_CHIP = 3;
+  const filterByPartType = ["OEM", "Aftermarket"];
+  const filterByPartCondition = ["New", "Used"];
   const searchFilterList = ["Service", "Shop Name"];
 
-  const [selectedFilters, setSelectedFilters] = useState<IFilter[]>([]);
-  const [locationRange, setLocationRange] = useState([1, 50]);
+  const [selectedTypeFilters, setSelectedTypeFilters] =
+    useState(filterByPartType);
+  const [selectedConditionFilters, setSelectedConditionFilters] = useState(
+    filterByPartCondition
+  );
+  const [locationRange, setLocationRange] = useState<[number, number]>([1, 50]);
 
+  const [searchString, setSearchString] = useState("");
   const [searchFilter, setSearchFilter] = useState("Service");
 
-  const [shops, setShops] = useState(null);
+  const [shops, setShops] = useState<
+    (IShop & { services: IService[] })[] | never[]
+  >([]);
 
-  const onFilterChange = (e: { value: any; checked: boolean }) => {
-    let _selectedFilters = [...selectedFilters];
+  // Initial fetch
+  useEffect(() => {
+    getFilteredShops("", "true").then((data) => {
+      if (data) {
+        setShops(data);
+      }
+    });
+  }, []);
+
+  const onTypeChange = (e: { value: any; checked: boolean }) => {
+    console.log(e);
+    let _selectedTypeFilters = [...selectedTypeFilters];
+
     if (e.checked) {
-      _selectedFilters.push(e.value);
+      _selectedTypeFilters.push(e.value);
     } else {
-      for (let i = 0; i < _selectedFilters.length; i++) {
-        const selectedFilter = _selectedFilters[i];
-        if (selectedFilter && selectedFilter.key === e.value.key) {
-          _selectedFilters.splice(i, 1);
+      for (let i = 0; i < _selectedTypeFilters.length; i++) {
+        const filter = _selectedTypeFilters[i];
+        if (filter && filter === e.value) {
+          _selectedTypeFilters.splice(i, 1);
           break;
         }
       }
     }
-    setSelectedFilters(_selectedFilters);
+    setSelectedTypeFilters(_selectedTypeFilters);
   };
 
-  const onSearchFilterChange = (e: { value: any }) => {
-    setSearchFilter(e.value);
+  const onConditionChange = (e: { value: any; checked: boolean }) => {
+    console.log(e);
+    let _selectedConditionFilters = [...selectedConditionFilters];
+
+    if (e.checked) {
+      _selectedConditionFilters.push(e.value);
+    } else {
+      for (let i = 0; i < _selectedConditionFilters.length; i++) {
+        const filter = _selectedConditionFilters[i];
+        if (filter && filter === e.value) {
+          _selectedConditionFilters.splice(i, 1);
+          break;
+        }
+      }
+    }
+    setSelectedConditionFilters(_selectedConditionFilters);
+  };
+
+  const setRange = (e: SliderChangeParams) => {
+    if (typeof e.value !== "number") {
+      setLocationRange(e.value);
+    }
+  };
+
+  const onSearch = () => {
+    // Fetch via search parameters
+    if (searchString !== "") {
+      switch (searchFilter) {
+        case "Service":
+          getFilteredShops(searchString, "false").then((data) => {
+            if (data) {
+              // Filter by part type here
+              // let filteredData = data.filter((shop) => {
+
+              // });
+              setShops(data);
+            }
+          });
+          break;
+        case "Shop Name":
+          getFilteredShops(searchString, "true").then((data) => {
+            if (data) {
+              // Filter by part type here
+              setShops(data);
+            }
+          });
+          break;
+        default:
+          break;
+      }
+    }
+  };
+
+  // Todo finish shop onclick
+  const shopOnClick = (shop: IShop & { services: IService[] }) => {
+    console.log(shop.services);
+  };
+
+  const itemTemplate = (shop: IShop & { services: IService[] }) => {
+    let serviceList: any = [];
+    for (let i = 0; i <= MAX_CHIP - 1; i++) {
+      let service = shop.services[i];
+      if (service) {
+        serviceList.push(<Chip className={styles.chip} label={service.name} />);
+      }
+    }
+    serviceList.push(
+      <Chip className={styles.fullListChip} label="See Full List" />
+    );
+
+    return (
+      <div className={styles.itemContainer} onClick={() => shopOnClick(shop)}>
+        <Image
+          src={image}
+          alt={shop.name}
+          width={image.width * 0.4}
+          height={image.height * 0.17}
+        />
+        <div className={styles.itemText}>
+          <h4 className={styles.itemShopName}>{shop.name}</h4>
+          <div>{shop.address}</div>
+          <div>{serviceList}</div>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -72,18 +165,18 @@ const Home: NextPage = () => {
             <h5 className={styles.h5Top}>Part Type</h5>
             {filterByPartType.map((category) => {
               return (
-                <div key={category.key} className={styles.buttonList}>
+                <div key={category} className={styles.buttonList}>
                   <Checkbox
-                    inputId={category.key}
+                    inputId={category}
                     name="category"
                     value={category}
-                    onChange={onFilterChange}
-                    checked={selectedFilters.some(
-                      (item) => item.key === category.key
+                    onChange={onTypeChange}
+                    checked={selectedTypeFilters.some(
+                      (item) => item === category
                     )}
                   />
-                  <label className={styles.label} htmlFor={category.key}>
-                    {category.name}
+                  <label className={styles.label} htmlFor={category}>
+                    {category}
                   </label>
                 </div>
               );
@@ -91,18 +184,18 @@ const Home: NextPage = () => {
             <h5>Part Condition</h5>
             {filterByPartCondition.map((category) => {
               return (
-                <div key={category.key} className={styles.buttonList}>
+                <div key={category} className={styles.buttonList}>
                   <Checkbox
-                    inputId={category.key}
+                    inputId={category}
                     name="category"
                     value={category}
-                    onChange={onFilterChange}
-                    checked={selectedFilters.some(
-                      (item) => item.key === category.key
+                    onChange={onConditionChange}
+                    checked={selectedConditionFilters.some(
+                      (item) => item === category
                     )}
                   />
-                  <label className={styles.label} htmlFor={category.key}>
-                    {category.name}
+                  <label className={styles.label} htmlFor={category}>
+                    {category}
                   </label>
                 </div>
               );
@@ -114,24 +207,36 @@ const Home: NextPage = () => {
               value={locationRange}
               min={1}
               max={50}
-              onChange={(e) => setLocationRange(e.value)}
+              onChange={(e) => setRange(e)}
               range
             />
           </Panel>
         </div>
         <div className={styles.content}>
           <div className={classNames("p-inputgroup", styles.search)}>
-            <InputText className={styles.inputtext} placeholder="Search" />
+            <InputText
+              className={styles.inputtext}
+              placeholder="Search"
+              value={searchString}
+              onChange={(e) => setSearchString(e.target.value)}
+            />
             <Dropdown
               className={styles.dropdown}
               value={searchFilter}
               options={searchFilterList}
-              onChange={onSearchFilterChange}
+              onChange={(e) => setSearchFilter(e.value)}
               placeholder="Service"
             />
-            <Button label="Search" />
+            <Button label="Search" onClick={onSearch} />
           </div>
-          <DataView value={shops} layout="list" />
+          <DataView
+            value={shops}
+            layout="list"
+            // header={header}
+            itemTemplate={itemTemplate}
+            paginator
+            rows={4}
+          />
         </div>
       </div>
     </div>
