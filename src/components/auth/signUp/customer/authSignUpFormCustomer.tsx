@@ -3,6 +3,7 @@ import { getCsrfToken } from "next-auth/react";
 import { DropdownChangeParams } from "primereact/dropdown";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { formatName, formatPhoneNumber } from "src/utils/formFormatUtil";
 import { IAuthSignUpFormCustomerValues } from "../../types";
 import UserDetailsSection from "../common/userDetailsSection";
 import VehicleDetailsSection from "./vehicleDetailsSection";
@@ -54,7 +55,6 @@ const AuthSignUpFormCustomer = () => {
   };
 
   const handleSignUpButtonClick = (): void => {
-    // TODO: validate inputs and require non-null inputs before form submission
     if (formValues.vehicleYear != null) {
       dispatch(
         createCustomerSignUp({
@@ -66,11 +66,32 @@ const AuthSignUpFormCustomer = () => {
     }
   };
 
+  const formatValue = (name: string, value: any) => {
+    switch (name) {
+      case "email":
+        return (value as string).toLowerCase();
+      case "phoneNumber":
+        return formatPhoneNumber(value as string);
+      case "firstName":
+        return formatName(value as string);
+      case "lastName":
+        return formatName(value as string);
+      case "vin":
+        return (value as string).toUpperCase().replace(/\s/g, "");
+      case "licensePlate":
+        // Remove all spaces to accommodate for different province formats
+        return (value as string).toUpperCase().replace(/\s/g, "");
+      default:
+        return value;
+    }
+  };
+
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+
     setFormValues({
       ...formValues,
-      [name]: value,
+      [name]: typeof value === "string" ? formatValue(name, value) : value,
     });
   };
 

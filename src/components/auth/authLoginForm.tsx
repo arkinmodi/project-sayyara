@@ -1,9 +1,11 @@
 import { createLogin } from "@redux/actions/authActions";
+import classNames from "classnames";
 import { getCsrfToken } from "next-auth/react";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { validateEmail } from "src/utils/formValidationUtil";
 import authStyles from "../../styles/components/auth/Auth.module.css";
 import { ILoginFormValues } from "./types";
 
@@ -17,6 +19,7 @@ const AuthLoginForm = () => {
   const [formValues, setFormValues] = useState<ILoginFormValues>({
     ...initialLoginFormValues,
   });
+  const [isEmailValid, setIsEmailValid] = useState(true);
 
   useEffect(() => {
     async function fetchCSRF() {
@@ -35,16 +38,35 @@ const AuthLoginForm = () => {
   }, [formValues]);
 
   const dispatch = useDispatch();
+
+  const formatValue = (name: string, value: any) => {
+    switch (name) {
+      case "email":
+        return (value as string).toLowerCase();
+      default:
+        return value;
+    }
+  };
+
+  const validateInputs = () => {
+    const isValidEmail = validateEmail(formValues.email);
+    setIsEmailValid(isValidEmail);
+
+    return isValidEmail;
+  };
+
   const handleLoginButtonClick = (): void => {
-    // TODO: validate inputs
-    dispatch(createLogin(formValues));
+    if (validateInputs()) {
+      dispatch(createLogin(formValues));
+    }
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+
     setFormValues({
       ...formValues,
-      [name]: value,
+      [name]: typeof value === "string" ? formatValue(name, value) : value,
     });
   };
 
@@ -55,12 +77,21 @@ const AuthLoginForm = () => {
         <br />
         <InputText
           id="authLoginFormEmailInput"
-          className={authStyles.authFormInput}
+          className={classNames(
+            authStyles.authFormInput,
+            !isEmailValid ? "p-invalid block" : ""
+          )}
           value={formValues.email}
           onChange={handleInputChange}
           name="email"
           placeholder="Email"
         />
+        <small
+          id="emailHelp"
+          className={!isEmailValid ? "p-error block" : "p-hidden"}
+        >
+          Email is invalid
+        </small>
         <br />
         <label htmlFor="authLoginFormPasswordInput">Password (Required)</label>
         <br />

@@ -3,6 +3,11 @@ import { getCsrfToken } from "next-auth/react";
 import { DropdownChangeParams } from "primereact/dropdown";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import {
+  formatName,
+  formatPhoneNumber,
+  formatPostalCode,
+} from "src/utils/formFormatUtil";
 import { IAuthSignUpFormShopOwnerValues } from "../../../types";
 import UserDetailsSection from "../../common/userDetailsSection";
 import ShopDetailsSection from "./shopDetailsSection";
@@ -64,15 +69,36 @@ const AuthSignUpFormShopOwner = (props: IAuthSignUpFormShopOwnerProps) => {
   };
 
   const handleSignUpButtonClick = (): void => {
-    // TODO: validate inputs
     dispatch(createShopOwnerSignup(formValues));
+  };
+
+  const formatValue = (name: string, value: any) => {
+    switch (name) {
+      case "email":
+        return (value as string).toLowerCase();
+      case "phoneNumber":
+        return formatPhoneNumber(value as string);
+      case "firstName":
+        return formatName(value as string);
+      case "lastName":
+        return formatName(value as string);
+      case "shopEmail":
+        return (value as string).toLowerCase();
+      case "shopPostalCode":
+        return formatPostalCode(value as string);
+      case "shopPhoneNumber":
+        return formatPhoneNumber(value as string);
+      default:
+        return value;
+    }
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+
     setFormValues({
       ...formValues,
-      [name]: value,
+      [name]: typeof value === "string" ? formatValue(name, value) : value,
     });
   };
 

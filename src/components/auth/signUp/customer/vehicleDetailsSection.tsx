@@ -1,8 +1,9 @@
 import authStyles from "@styles/components/auth/Auth.module.css";
+import classNames from "classnames";
 import { Button } from "primereact/button";
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { MAKES_AND_MODELS, VEHICLE_YEARS } from "src/constants/vehicles";
 import { IAuthSignUpFormCustomerValues } from "../../types";
 
@@ -15,6 +16,12 @@ interface IUserDetailsSectionProps {
 }
 
 const UserDetailsSection = (props: IUserDetailsSectionProps) => {
+  const [isVehicleMakeValid, setIsVehicleMakeValid] = useState(true);
+  const [isVehicleModelValid, setIsVehicleModelValid] = useState(true);
+  const [isVehicleYearValid, setIsVehicleYearValid] = useState(true);
+  const [isVinValid, setIsVinValid] = useState(true);
+  const [isLicensePlateValid, setIsLicensePlateValid] = useState(true);
+
   const {
     formValues,
     handleInputChange,
@@ -22,6 +29,37 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
     prevStep,
     handleSubmit,
   } = props;
+
+  const validateInputs = () => {
+    const isValidVehicleMake = formValues.vehicleMake.length > 0;
+    setIsVehicleMakeValid(isValidVehicleMake);
+
+    const isValidVehicleModel = formValues.vehicleModel.length > 0;
+    setIsVehicleModelValid(isValidVehicleModel);
+
+    const isValidVehicleYear = formValues.vehicleYear != null;
+    setIsVehicleYearValid(isValidVehicleYear);
+
+    const isValidVIN = formValues.vin.length > 0;
+    setIsVinValid(isValidVIN);
+
+    const isValidLicensePlate = formValues.licensePlate.length > 0;
+    setIsLicensePlateValid(isValidLicensePlate);
+
+    return (
+      isValidVehicleMake &&
+      isValidVehicleModel &&
+      isValidVehicleYear &&
+      isValidVIN &&
+      isValidLicensePlate
+    );
+  };
+
+  const handleSubmitButtonClick = () => {
+    if (validateInputs()) {
+      handleSubmit();
+    }
+  };
 
   return (
     <div className={authStyles.authForm}>
@@ -32,7 +70,10 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
         <br />
         <Dropdown
           id="authSignUpFormCustomerVehicleMakeDropdown"
-          className={authStyles.authFormDropdown}
+          className={classNames(
+            authStyles.authFormDropdown,
+            !isVehicleMakeValid ? "p-invalid block" : ""
+          )}
           value={formValues.vehicleMake}
           options={Object.keys(MAKES_AND_MODELS)}
           onChange={handleDropDownChange}
@@ -41,6 +82,12 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
           placeholder="Select a make"
           name="vehicleMake"
         />
+        <small
+          id="vehicleMakeHelp"
+          className={!isVehicleMakeValid ? "p-error block" : "p-hidden"}
+        >
+          Vehicle make is required
+        </small>
         <br />
         <label htmlFor="authSignUpFormCustomerVehicleYearDropdown">
           Vehicle Year (Required)
@@ -48,7 +95,10 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
         <br />
         <Dropdown
           id="authSignUpFormCustomerVehicleYearDropdown"
-          className={authStyles.authFormDropdown}
+          className={classNames(
+            authStyles.authFormDropdown,
+            !isVehicleYearValid ? "p-invalid block" : ""
+          )}
           value={formValues.vehicleYear}
           options={VEHICLE_YEARS}
           optionLabel="label"
@@ -58,6 +108,12 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
           placeholder="Select a year"
           name="vehicleYear"
         />
+        <small
+          id="vehicleYearHelp"
+          className={!isVehicleYearValid ? "p-error block" : "p-hidden"}
+        >
+          Vehicle year is required
+        </small>
         <br />
         <label htmlFor="authSignUpFormCustomerVehicleModelDropdown">
           Vehicle Model (Required)
@@ -65,7 +121,10 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
         <br />
         <Dropdown
           id="authSignUpFormCustomerVehicleModelDropdown"
-          className={authStyles.authFormDropdown}
+          className={classNames(
+            authStyles.authFormDropdown,
+            !isVehicleModelValid ? "p-invalid block" : ""
+          )}
           value={formValues.vehicleModel}
           options={MAKES_AND_MODELS[formValues.vehicleMake]}
           onChange={handleDropDownChange}
@@ -74,17 +133,32 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
           placeholder="Select a model"
           name="vehicleModel"
         />
+        <small
+          id="vehicleModelHelp"
+          className={!isVehicleModelValid ? "p-error block" : "p-hidden"}
+        >
+          Vehicle model is required
+        </small>
         <br />
         <label htmlFor="authSignUpFormCustomerVinInput">VIN (Required)</label>
         <br />
         <InputText
           id="authSignUpFormCustomerVinInput"
-          className={authStyles.authFormInput}
+          className={classNames(
+            authStyles.authFormInput,
+            !isVinValid ? "p-invalid block" : ""
+          )}
           value={formValues.vin}
           onChange={handleInputChange}
           name="vin"
           placeholder="VIN"
         />
+        <small
+          id="vinHelp"
+          className={!isVinValid ? "p-error block" : "p-hidden"}
+        >
+          VIN is required
+        </small>
         <br />
         <label htmlFor="authSignUpFormCustomerLicensePlateInput">
           License Plate (Required)
@@ -93,11 +167,20 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
         <InputText
           id="authSignUpFormCustomerLicensePlateInput"
           placeholder="License Plate"
-          className={authStyles.authFormInput}
+          className={classNames(
+            authStyles.authFormInput,
+            !isLicensePlateValid ? "p-invalid block" : ""
+          )}
           value={formValues.licensePlate}
           onChange={handleInputChange}
           name="licensePlate"
         />
+        <small
+          id="licensePlateHelp"
+          className={!isVinValid ? "p-error block" : "p-hidden"}
+        >
+          License plate is required
+        </small>
       </div>
       <div className={authStyles.authFormButtonGroup}>
         <Button
@@ -108,7 +191,7 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
         <Button
           label="Submit"
           className={authStyles.authFormButton}
-          onClick={handleSubmit}
+          onClick={handleSubmitButtonClick}
         />
       </div>
     </div>
