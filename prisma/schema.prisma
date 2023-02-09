@@ -25,6 +25,7 @@ model Employee {
   shop_id      String
   status       EmployeeStatus @default(ACTIVE)
 
+  work_orders  WorkOrder[]
   appointments Appointment[]
   shop         Shop          @relation(fields: [shop_id], references: [id])
 
@@ -46,6 +47,7 @@ model Customer {
   chat_messages ChatMessage[]
   quotes        Quote[]
   vehicles      Vehicle[]
+  work_orders   WorkOrder[]
 }
 
 model Appointment {
@@ -127,7 +129,8 @@ model Vehicle {
   vin           String
   license_plate String
   customer_id   String
-  appointment   Appointment[]
+  appointments  Appointment[]
+  work_orders   WorkOrder[]
 
   customer Customer @relation(fields: [customer_id], references: [id])
 
@@ -135,29 +138,46 @@ model Vehicle {
 }
 
 model WorkOrder {
-  id          String       @id @default(cuid())
-  create_time DateTime     @default(now())
-  update_time DateTime     @updatedAt
+  id          String          @id @default(cuid())
+  create_time DateTime        @default(now())
+  update_time DateTime        @updatedAt
   appointment Appointment?
+  title       String
+  customer_id String
+  vehicle_id  String
+  employee_id String?
+  body        String
+  shop_id     String
+
+  customer Customer  @relation(fields: [customer_id], references: [id])
+  vehicle  Vehicle   @relation(fields: [vehicle_id], references: [id])
+  employee Employee? @relation(fields: [employee_id], references: [id])
+  shop     Shop      @relation(fields: [shop_id], references: [id])
+
+  @@index([customer_id])
+  @@index([vehicle_id])
+  @@index([employee_id])
+  @@index([shop_id])
 }
 
 model Shop {
-  id            String        @id @default(cuid())
-  create_time   DateTime      @default(now())
-  update_time   DateTime      @updatedAt
-  name String
-  address String
-  phone_number String
-  email String
-  postal_code String
-  city String
-  province String
+  id                 String   @id @default(cuid())
+  create_time        DateTime @default(now())
+  update_time        DateTime @updatedAt
+  name               String
+  address            String
+  phone_number       String
+  email              String
+  postal_code        String
+  city               String
+  province           String
   hours_of_operation Json?
 
   appointments  Appointment[]
   employees     Employee[]
   chat_messages ChatMessage[]
   quotes        Quote[]
+  work_orders   WorkOrder[]
   services      Service[]
 }
 

@@ -172,14 +172,21 @@ const notConflictingAppointments = [
 ];
 
 jest.mock("@server/common/getServerAuthSession", () => ({
-  getServerAuthSession: jest.fn<Session, []>(() => ({
-    expires: "1",
-    user: {
-      ...testEmployeeUser,
-      firstName: testEmployeeUser.first_name,
-      lastName: testEmployeeUser.last_name,
-    },
-  })),
+  getServerAuthSession: jest.fn<Promise<Session>, []>(async () => {
+    const customer = await prisma.customer.findUniqueOrThrow({
+      where: { email: testCustomerUser.email },
+    });
+    return {
+      expires: "1",
+      user: {
+        id: customer.id,
+        email: customer.email,
+        type: customer.type,
+        firstName: customer.first_name,
+        lastName: customer.last_name,
+      },
+    };
+  }),
 }));
 
 beforeAll(async () => {

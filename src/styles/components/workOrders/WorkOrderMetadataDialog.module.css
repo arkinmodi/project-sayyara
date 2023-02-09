@@ -1,0 +1,20 @@
+.workOrderMetadataDialogFooterContainerButtons {
+  width: 10rem !important;
+}
+
+.workOrderMetadataDialogTitleTextBox {
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.workOrderMetadataDialogEmployeeEmailTextBox {
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.workOrderMetadataDialogStatusSelector {
+  width: 100%;
+  margin-top: 1rem;
+}

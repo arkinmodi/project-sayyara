@@ -37,8 +37,8 @@ export const partSchema = z.object({
 
 const operatingDaySchema = z.object({
   isOpen: z.boolean(),
-  openTime: z.string().datetime({ precision: 0 }),
-  closeTime: z.string().datetime({ precision: 0 }),
+  openTime: z.string().datetime({ precision: 3 }),
+  closeTime: z.string().datetime({ precision: 3 }),
 });
 
 export const hoursOfOperationSchema = z.object({
