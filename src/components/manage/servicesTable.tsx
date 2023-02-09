@@ -248,7 +248,7 @@ const ServicesTable = (props: IServiceProps) => {
           if (options.editorCallback) options.editorCallback(e.value);
         }}
         placeholder={
-          serviceType == ServiceType.CUSTOM
+          serviceType === ServiceType.CUSTOM
             ? options.rowData.parts[0].build
             : options.rowData.build
         }
