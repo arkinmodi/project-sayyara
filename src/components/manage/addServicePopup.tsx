@@ -84,7 +84,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
   const dispatch = useDispatch();
 
   const onCheckedChange = (e: CheckboxChangeParams, key: string) => {
-    const val = e.checked || false;
+    const val = e.checked ?? false;
 
     setFormValues({
       ...formValues,
