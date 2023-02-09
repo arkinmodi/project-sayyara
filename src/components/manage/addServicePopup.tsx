@@ -163,7 +163,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
     }
 
     if (
-      serviceType == ServiceType.CUSTOM &&
+      serviceType === ServiceType.CUSTOM &&
       formValues.name != "" &&
       formValues.description != "" &&
       ((formValues as IAddCustomServiceValues).oem ||
