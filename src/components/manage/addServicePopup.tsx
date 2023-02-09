@@ -2,7 +2,7 @@ import { createService } from "@redux/actions/serviceAction";
 import styles from "@styles/pages/services/Services.module.css";
 import classNames from "classnames";
 import { Button } from "primereact/button";
-import { Checkbox } from "primereact/checkbox";
+import { Checkbox, CheckboxChangeParams } from "primereact/checkbox";
 import { Dialog } from "primereact/dialog";
 import { DropdownChangeParams } from "primereact/dropdown";
 import { InputNumber, InputNumberChangeParams } from "primereact/inputnumber";
@@ -23,11 +23,7 @@ interface IServicePopupProps {
   onHideDialog: () => void;
 }
 
-interface IObjectKeys {
-  [key: string]: string | number | boolean | IParts[];
-}
-
-interface IAddBasicServiceValues extends IObjectKeys {
+interface IAddBasicServiceValues {
   name: string;
   description: string;
   estimatedTime: number;
@@ -35,7 +31,7 @@ interface IAddBasicServiceValues extends IObjectKeys {
   parts: IParts[];
 }
 
-interface IAddCustomServiceValues extends IObjectKeys {
+interface IAddCustomServiceValues {
   name: string;
   description: string;
   new: boolean;
@@ -87,11 +83,13 @@ const AddServicePopup = (props: IServicePopupProps) => {
 
   const dispatch = useDispatch();
 
-  const onCheckedChange = (key: string) => {
-    let _formValues = { ...formValues };
-    _formValues[`${key}`] = !_formValues[`${key}`];
+  const onCheckedChange = (e: CheckboxChangeParams, key: string) => {
+    const val = e.checked || false;
 
-    setFormValues(_formValues);
+    setFormValues({
+      ...formValues,
+      [key as keyof IAddCustomServiceValues]: val,
+    });
   };
 
   const onInputChange = (
@@ -102,18 +100,34 @@ const AddServicePopup = (props: IServicePopupProps) => {
     key: string
   ) => {
     const val = (e.target && e.target.value) || "";
-    let _formValues = { ...formValues };
-    _formValues[`${key}`] = val;
 
-    setFormValues(_formValues);
+    if (serviceType == ServiceType.CANNED) {
+      setFormValues({
+        ...formValues,
+        [key as keyof IAddBasicServiceValues]: val,
+      });
+    } else {
+      setFormValues({
+        ...formValues,
+        [key as keyof IAddCustomServiceValues]: val,
+      });
+    }
   };
 
   const onInputNumberChange = (e: InputNumberChangeParams, key: string) => {
     const val = e.value || 0;
-    let _formValues = { ...formValues };
-    _formValues[`${key}`] = val;
 
-    setFormValues(_formValues);
+    if (serviceType == ServiceType.CANNED) {
+      setFormValues({
+        ...formValues,
+        [key as keyof IAddBasicServiceValues]: val,
+      });
+    } else {
+      setFormValues({
+        ...formValues,
+        [key as keyof IAddCustomServiceValues]: val,
+      });
+    }
   };
 
   const hideDialog = () => {
@@ -131,8 +145,9 @@ const AddServicePopup = (props: IServicePopupProps) => {
       formValues.totalPrice != null &&
       formValues.totalPrice > 0
     ) {
+      // turn off input validation
       setSubmitted(false);
-      console.log(formValues);
+
       dispatch(
         createService({
           name: formValues.name,
@@ -157,7 +172,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
       var partBuild: PartType;
 
       if (formValues.oem && formValues.aftermarket) {
-        partBuild = PartType.OEM_AND_AFTERMARKET;
+        partBuild = PartType.OEM_OR_AFTERMARKET;
       } else if (formValues.oem) {
         partBuild = PartType.OEM;
       } else {
@@ -165,14 +180,16 @@ const AddServicePopup = (props: IServicePopupProps) => {
       }
 
       if (formValues.new && formValues.used) {
-        partCondition = PartCondition.NEW_AND_USED;
+        partCondition = PartCondition.NEW_OR_USED;
       } else if (formValues.new) {
         partCondition = PartCondition.NEW;
       } else {
         partCondition = PartCondition.USED;
       }
+
+      // turn off input validation
       setSubmitted(false);
-      console.log(formValues);
+
       dispatch(
         createService({
           name: formValues.name,
@@ -269,7 +286,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
             <Checkbox
               inputId="new"
               value="new"
-              onChange={(e) => onCheckedChange("new")}
+              onChange={(e) => onCheckedChange(e, "new")}
               checked={formValues.new}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
@@ -278,7 +295,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
             <Checkbox
               inputId="used"
               value="used"
-              onChange={(e) => onCheckedChange("used")}
+              onChange={(e) => onCheckedChange(e, "used")}
               checked={formValues.used}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
@@ -301,7 +318,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
             <Checkbox
               inputId="oem"
               value="OEM"
-              onChange={(e) => onCheckedChange("oem")}
+              onChange={(e) => onCheckedChange(e, "oem")}
               checked={formValues.oem}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
@@ -310,7 +327,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
             <Checkbox
               inputId="aftermarket"
               value="aftermarket"
-              onChange={(e) => onCheckedChange("aftermarket")}
+              onChange={(e) => onCheckedChange(e, "aftermarket")}
               checked={formValues.aftermarket}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
@@ -330,6 +347,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
             <InputNumber
               id="estimatedTime"
               value={Number(formValues.estimatedTime)}
+              min={0}
               maxFractionDigits={1}
               onChange={(e) => onInputNumberChange(e, "estimatedTime")}
               className={classNames({
@@ -343,8 +361,9 @@ const AddServicePopup = (props: IServicePopupProps) => {
           <div className={styles.servicesFormFields}>
             <label htmlFor="totalPrice">Price</label>
             <InputNumber
-              id="description"
+              id="totalPrice"
               value={Number(formValues.totalPrice)}
+              min={0}
               onChange={(e) => onInputNumberChange(e, "totalPrice")}
               mode="currency"
               currency="CAD"

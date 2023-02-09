@@ -31,8 +31,8 @@ export const partSchema = z.object({
   quantity: z.number().int().optional(),
   cost: z.number().optional(),
   name: z.string().optional(),
-  condition: z.enum(["NEW", "USED", "NEW_AND_USED"]),
-  build: z.enum(["OEM", "AFTERMARKET", "OEM_AND_AFTERMARKET"]),
+  condition: z.enum(["NEW", "USED", "NEW OR USED"]),
+  build: z.enum(["OEM", "AFTERMARKET", "OEM OR AFTERMARKET"]),
 });
 
 const operatingDaySchema = z.object({

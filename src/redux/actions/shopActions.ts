@@ -15,22 +15,23 @@ export interface IShopActionSetShopEmployees extends IShopActionBase {
   payload: { employees: IEmployee[] | null };
 }
 
-export interface IServiceActionReadShopServices extends IShopActionBase {
+export interface IShopActionReadShopServices extends IShopActionBase {
   payload: void;
 }
 
-export interface IServiceActionSetShopServices extends IShopActionBase {
+export interface IShopActionSetShopServices extends IShopActionBase {
   payload: { services: IService[] };
 }
 
-export interface IServiceActionSetShopState extends IShopActionBase {
+export interface IShopActionSetShopState extends IShopActionBase {
   payload: IShopState;
 }
 
 export type IShopAction =
   | IShopActionReadShopEmployees
+  | IShopActionSetShopState
   | IShopActionSetShopEmployees
-  | IServiceActionSetShopServices;
+  | IShopActionSetShopServices;
 
 export const readShopEmployees = (payload: void) => ({
   type: ShopTypes.READ_SHOP_EMPLOYEES,
@@ -50,15 +51,13 @@ export const readShopServices = (payload: void) => ({
 });
 
 export const setShopServices = (
-  payload: IServiceActionSetShopServices["payload"]
+  payload: IShopActionSetShopServices["payload"]
 ) => ({
   type: ShopTypes.SET_SHOP_SERVICES,
   payload,
 });
 
-export const setShopState = (
-  payload: IServiceActionSetShopState["payload"]
-) => ({
+export const setShopState = (payload: IShopActionSetShopState["payload"]) => ({
   type: ShopTypes.SET_SHOP_STATE,
   payload,
 });

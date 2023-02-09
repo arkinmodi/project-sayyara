@@ -8,7 +8,11 @@ import { InputNumber, InputNumberChangeParams } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { IService, PartCondition, PartType } from "src/types/service";
+import {
+  IService,
+  parts_condition_basic,
+  parts_type_basic,
+} from "src/types/service";
 
 interface IPartPopupProps {
   service: IService;
@@ -104,16 +108,6 @@ const AddPartPopup = (props: IPartPopupProps) => {
     </div>
   );
 
-  const parts_condition = [
-    { label: "NEW", value: PartCondition.NEW },
-    { label: "USED", value: PartCondition.USED },
-  ];
-
-  const parts_type = [
-    { label: "OEM", value: PartType.OEM },
-    { label: "AFTERMARKET", value: PartType.AFTERMARKET },
-  ];
-
   return (
     <Dialog
       visible={visible}
@@ -145,6 +139,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
         <InputNumber
           id="cost"
           value={formValues.cost}
+          min={0}
           onValueChange={(e) => onInputNumberChange(e, "cost")}
           mode="currency"
           currency="CAD"
@@ -161,6 +156,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
         <InputNumber
           id="quantity"
           value={formValues.quantity}
+          min={0}
           onValueChange={(e) => onInputNumberChange(e, "quantity")}
           className={classNames({
             "p-invalid": submitted && formValues.quantity <= 0,
@@ -173,7 +169,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
       <div className={styles.servicesFormFields}>Part Condition</div>
       <Dropdown
         value={formValues.condition}
-        options={parts_condition}
+        options={parts_condition_basic}
         optionLabel="label"
         optionValue="value"
         onChange={(e) => onInputChange(e, "condition")}
@@ -195,7 +191,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
       <div className={styles.servicesFormFields}>Part Type</div>
       <Dropdown
         value={formValues.build}
-        options={parts_type}
+        options={parts_type_basic}
         optionLabel="label"
         optionValue="value"
         onChange={(e) => onInputChange(e, "build")}

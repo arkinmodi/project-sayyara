@@ -17,8 +17,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   IParts,
   IService,
-  PartCondition,
-  PartType,
+  parts_condition_basic,
+  parts_condition_custom,
+  parts_type_basic,
+  parts_type_custom,
   ServiceType,
 } from "src/types/service";
 import AddPartPopup from "./addPartPopup";
@@ -52,6 +54,15 @@ const ServicesTable = (props: IServiceProps) => {
     setAddPartDialogVisible(false);
     setServiceOnButtonClick(null);
   };
+
+  const displayColForCannedOnly =
+    serviceType === ServiceType.CANNED ? "table-cell" : "none";
+
+  const displayColForCustomOnly =
+    serviceType === ServiceType.CUSTOM ? "table-cell" : "none";
+
+  const displayColForShopOwnerOnly =
+    userType === UserType.SHOP_OWNER ? "table-cell" : "none";
 
   const serviceTableHeader = () => {
     return (
@@ -192,17 +203,15 @@ const ServicesTable = (props: IServiceProps) => {
     );
   };
 
-  const parts_condition = [
-    { label: "NEW", value: PartCondition.NEW },
-    { label: "USED", value: PartCondition.USED },
-    { label: "NEW_AND_USED", value: PartCondition.NEW_AND_USED },
-  ];
-
   const partsConditionEditor = (options: any) => {
     return (
       <Dropdown
         value={options.value}
-        options={parts_condition}
+        options={
+          serviceType == ServiceType.CANNED
+            ? parts_condition_basic
+            : parts_condition_custom
+        }
         optionLabel="label"
         optionValue="value"
         onChange={(e) => options.editorCallback(e.value)}
@@ -218,17 +227,15 @@ const ServicesTable = (props: IServiceProps) => {
     );
   };
 
-  const parts_type = [
-    { label: "OEM", value: PartType.OEM },
-    { label: "AFTERMARKET", value: PartType.AFTERMARKET },
-    { label: "OEM_AND_AFTERMARKET", value: PartType.OEM_AND_AFTERMARKET },
-  ];
-
   const partsTypeEditor = (options: any) => {
     return (
       <Dropdown
         value={options.value}
-        options={parts_type}
+        options={
+          serviceType == ServiceType.CANNED
+            ? parts_type_basic
+            : parts_type_custom
+        }
         optionLabel="label"
         optionValue="value"
         onChange={(e) => options.editorCallback(e.value)}
@@ -248,6 +255,7 @@ const ServicesTable = (props: IServiceProps) => {
     return (
       <InputNumber
         value={options.value}
+        min={0}
         onValueChange={(e: { value: any }) => options.editorCallback(e.value)}
         mode="currency"
         currency="CAD"
@@ -268,6 +276,7 @@ const ServicesTable = (props: IServiceProps) => {
   const quantityEditor = (options: any) => {
     return (
       <InputNumber
+        min={0}
         value={options.value}
         onValueChange={(e: { value: any }) => options.editorCallback(e.value)}
       />
@@ -277,6 +286,7 @@ const ServicesTable = (props: IServiceProps) => {
   const estimatedTimeEditor = (options: any) => {
     return (
       <InputNumber
+        min={0}
         maxFractionDigits={1}
         value={options.value}
         onValueChange={(e: { value: any }) => options.editorCallback(e.value)}
@@ -392,7 +402,7 @@ const ServicesTable = (props: IServiceProps) => {
         <Column
           expander={true}
           style={{
-            display: serviceType === ServiceType.CANNED ? "table-cell" : "none",
+            display: displayColForCannedOnly,
           }}
         />
         <Column
@@ -415,7 +425,7 @@ const ServicesTable = (props: IServiceProps) => {
           header="Duration (Hours)"
           editor={(options) => estimatedTimeEditor(options)}
           style={{
-            display: serviceType === ServiceType.CANNED ? "table-cell" : "none",
+            display: displayColForCannedOnly,
           }}
         />
         <Column
@@ -424,7 +434,7 @@ const ServicesTable = (props: IServiceProps) => {
           editor={(options) => priceEditor(options)}
           sortable
           style={{
-            display: serviceType === ServiceType.CANNED ? "table-cell" : "none",
+            display: displayColForCannedOnly,
           }}
         />
         <Column
@@ -432,7 +442,7 @@ const ServicesTable = (props: IServiceProps) => {
           body={(data) => partsCondition(data)}
           editor={(options) => partsConditionEditor(options)}
           style={{
-            display: serviceType === ServiceType.CUSTOM ? "table-cell" : "none",
+            display: displayColForCustomOnly,
           }}
         />
         <Column
@@ -440,7 +450,7 @@ const ServicesTable = (props: IServiceProps) => {
           body={(data) => partsType(data)}
           editor={(options) => partsTypeEditor(options)}
           style={{
-            display: serviceType === ServiceType.CUSTOM ? "table-cell" : "none",
+            display: displayColForCustomOnly,
           }}
         />
         <Column
@@ -448,14 +458,14 @@ const ServicesTable = (props: IServiceProps) => {
           headerStyle={{ minWidth: "4rem" }}
           bodyStyle={{ textAlign: "center" }}
           style={{
-            display: userType === UserType.SHOP_OWNER ? "table-cell" : "none",
+            display: displayColForShopOwnerOnly,
           }}
         ></Column>
         <Column
           body={deleteButton}
           className={styles.servicesTableDeleteButton}
           style={{
-            display: userType === UserType.SHOP_OWNER ? "table-cell" : "none",
+            display: displayColForShopOwnerOnly,
           }}
         ></Column>
       </DataTable>
