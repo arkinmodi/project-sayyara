@@ -138,7 +138,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
   const saveService = () => {
     setSubmitted(true);
     if (
-      serviceType == ServiceType.CANNED &&
+      serviceType === ServiceType.CANNED &&
       formValues.name != "" &&
       formValues.description != "" &&
       (formValues as IAddBasicServiceValues).estimatedTime > 0 &&
