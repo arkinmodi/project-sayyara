@@ -101,7 +101,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
   ) => {
     const val = e?.target?.value ?? "";
 
-    if (serviceType == ServiceType.CANNED) {
+    if (serviceType === ServiceType.CANNED) {
       setFormValues({
         ...formValues,
         [key as keyof IAddBasicServiceValues]: val,
