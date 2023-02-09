@@ -115,7 +115,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
   };
 
   const onInputNumberChange = (e: InputNumberChangeParams, key: string) => {
-    const val = e.value || 0;
+    const val = e.value ?? 0;
 
     if (serviceType == ServiceType.CANNED) {
       setFormValues({
