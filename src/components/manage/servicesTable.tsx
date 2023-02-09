@@ -274,6 +274,16 @@ const ServicesTable = (props: IServiceProps) => {
     );
   };
 
+  const estimatedTimeEditor = (options: any) => {
+    return (
+      <InputNumber
+        maxFractionDigits={1}
+        value={options.value}
+        onValueChange={(e: { value: any }) => options.editorCallback(e.value)}
+      />
+    );
+  };
+
   const onServiceRowEditComplete = (e: any) => {
     let { newData } = e;
 
@@ -403,7 +413,7 @@ const ServicesTable = (props: IServiceProps) => {
         <Column
           field="estimated_time"
           header="Duration (Hours)"
-          editor={(options) => quantityEditor(options)}
+          editor={(options) => estimatedTimeEditor(options)}
           style={{
             display: serviceType === ServiceType.CANNED ? "table-cell" : "none",
           }}

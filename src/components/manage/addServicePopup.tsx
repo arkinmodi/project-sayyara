@@ -123,14 +123,16 @@ const AddServicePopup = (props: IServicePopupProps) => {
 
   const saveService = () => {
     setSubmitted(true);
-
     if (
       serviceType == ServiceType.CANNED &&
       formValues.name != "" &&
       formValues.description != "" &&
+      formValues.estimatedTime > 0 &&
       formValues.totalPrice != null &&
       formValues.totalPrice > 0
     ) {
+      setSubmitted(false);
+      console.log(formValues);
       dispatch(
         createService({
           name: formValues.name,
@@ -169,7 +171,8 @@ const AddServicePopup = (props: IServicePopupProps) => {
       } else {
         partCondition = PartCondition.USED;
       }
-
+      setSubmitted(false);
+      console.log(formValues);
       dispatch(
         createService({
           name: formValues.name,
@@ -327,6 +330,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
             <InputNumber
               id="estimatedTime"
               value={Number(formValues.estimatedTime)}
+              maxFractionDigits={1}
               onChange={(e) => onInputNumberChange(e, "estimatedTime")}
               className={classNames({
                 "p-invalid": submitted && formValues.estimatedTime <= 0,
