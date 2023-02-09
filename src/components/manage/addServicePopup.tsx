@@ -141,9 +141,8 @@ const AddServicePopup = (props: IServicePopupProps) => {
       serviceType == ServiceType.CANNED &&
       formValues.name != "" &&
       formValues.description != "" &&
-      formValues.estimatedTime > 0 &&
-      formValues.totalPrice != null &&
-      formValues.totalPrice > 0
+      (formValues as IAddBasicServiceValues).estimatedTime > 0 &&
+      (formValues as IAddBasicServiceValues).totalPrice > 0
     ) {
       // turn off input validation
       setSubmitted(false);
@@ -152,8 +151,10 @@ const AddServicePopup = (props: IServicePopupProps) => {
         createService({
           name: formValues.name,
           description: formValues.description,
-          estimated_time: Number(formValues.estimatedTime),
-          total_price: Number(formValues.totalPrice),
+          estimatedTime: Number(
+            (formValues as IAddBasicServiceValues).estimatedTime
+          ),
+          totalPrice: Number((formValues as IAddBasicServiceValues).totalPrice),
           parts: formValues.parts,
           type: serviceType,
         })
@@ -165,23 +166,31 @@ const AddServicePopup = (props: IServicePopupProps) => {
       serviceType == ServiceType.CUSTOM &&
       formValues.name != "" &&
       formValues.description != "" &&
-      (formValues.oem || formValues.aftermarket) &&
-      (formValues.new || formValues.used)
+      ((formValues as IAddCustomServiceValues).oem ||
+        (formValues as IAddCustomServiceValues).aftermarket) &&
+      ((formValues as IAddCustomServiceValues).new ||
+        (formValues as IAddCustomServiceValues).used)
     ) {
       var partCondition: PartCondition;
       var partBuild: PartType;
 
-      if (formValues.oem && formValues.aftermarket) {
+      if (
+        (formValues as IAddCustomServiceValues).oem &&
+        (formValues as IAddCustomServiceValues).aftermarket
+      ) {
         partBuild = PartType.OEM_OR_AFTERMARKET;
-      } else if (formValues.oem) {
+      } else if ((formValues as IAddCustomServiceValues).oem) {
         partBuild = PartType.OEM;
       } else {
         partBuild = PartType.AFTERMARKET;
       }
 
-      if (formValues.new && formValues.used) {
+      if (
+        (formValues as IAddCustomServiceValues).new &&
+        (formValues as IAddCustomServiceValues).used
+      ) {
         partCondition = PartCondition.NEW_OR_USED;
-      } else if (formValues.new) {
+      } else if ((formValues as IAddCustomServiceValues).new) {
         partCondition = PartCondition.NEW;
       } else {
         partCondition = PartCondition.USED;
@@ -194,8 +203,8 @@ const AddServicePopup = (props: IServicePopupProps) => {
         createService({
           name: formValues.name,
           description: formValues.description,
-          estimated_time: 0,
-          total_price: 0,
+          estimatedTime: 0,
+          totalPrice: 0,
           parts: [
             {
               condition: partCondition,
@@ -279,7 +288,9 @@ const AddServicePopup = (props: IServicePopupProps) => {
           <div
             className={classNames({
               "p-invalid":
-                submitted && formValues.new == "" && formValues.used == "",
+                submitted &&
+                !(formValues as IAddCustomServiceValues).new &&
+                !(formValues as IAddCustomServiceValues).used,
             })}
           >
             <div className={styles.servicesFormFields}>Part Condition</div>
@@ -287,7 +298,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
               inputId="new"
               value="new"
               onChange={(e) => onCheckedChange(e, "new")}
-              checked={formValues.new}
+              checked={(formValues as IAddCustomServiceValues).new}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
               New
@@ -296,22 +307,24 @@ const AddServicePopup = (props: IServicePopupProps) => {
               inputId="used"
               value="used"
               onChange={(e) => onCheckedChange(e, "used")}
-              checked={formValues.used}
+              checked={(formValues as IAddCustomServiceValues).used}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
               Used
             </label>
           </div>
-          {submitted && formValues.new == "" && formValues.used == "" && (
-            <small className="p-error">Condition required</small>
-          )}
+          {submitted &&
+            !(formValues as IAddCustomServiceValues).new &&
+            !(formValues as IAddCustomServiceValues).used && (
+              <small className="p-error">Condition required</small>
+            )}
           {/* Part Type Dropdown */}
           <div
             className={classNames({
               "p-invalid":
                 submitted &&
-                formValues.oem == "" &&
-                formValues.aftermarket == "",
+                !(formValues as IAddCustomServiceValues).oem &&
+                !(formValues as IAddCustomServiceValues).aftermarket,
             })}
           >
             <div className={styles.servicesFormFields}>Part Type</div>
@@ -319,7 +332,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
               inputId="oem"
               value="OEM"
               onChange={(e) => onCheckedChange(e, "oem")}
-              checked={formValues.oem}
+              checked={(formValues as IAddCustomServiceValues).oem}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
               OEM
@@ -328,15 +341,15 @@ const AddServicePopup = (props: IServicePopupProps) => {
               inputId="aftermarket"
               value="aftermarket"
               onChange={(e) => onCheckedChange(e, "aftermarket")}
-              checked={formValues.aftermarket}
+              checked={(formValues as IAddCustomServiceValues).aftermarket}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
               Aftermarket
             </label>
           </div>
           {submitted &&
-            formValues.oem == "" &&
-            formValues.aftermarket == "" && (
+            !(formValues as IAddCustomServiceValues).oem &&
+            !(formValues as IAddCustomServiceValues).aftermarket && (
               <small className="p-error">Type required</small>
             )}
         </div>
@@ -346,34 +359,42 @@ const AddServicePopup = (props: IServicePopupProps) => {
             <label htmlFor="estimatedTime">Estimated Duration (hours)</label>
             <InputNumber
               id="estimatedTime"
-              value={Number(formValues.estimatedTime)}
+              value={Number(
+                (formValues as IAddBasicServiceValues).estimatedTime
+              )}
               min={0}
               maxFractionDigits={1}
               onChange={(e) => onInputNumberChange(e, "estimatedTime")}
               className={classNames({
-                "p-invalid": submitted && formValues.estimatedTime <= 0,
+                "p-invalid":
+                  submitted &&
+                  (formValues as IAddBasicServiceValues).estimatedTime <= 0,
               })}
             />
-            {submitted && formValues.estimatedTime <= 0 && (
-              <small className="p-error">Estimated time required</small>
-            )}
+            {submitted &&
+              (formValues as IAddBasicServiceValues).estimatedTime <= 0 && (
+                <small className="p-error">Estimated time required</small>
+              )}
           </div>
           <div className={styles.servicesFormFields}>
             <label htmlFor="totalPrice">Price</label>
             <InputNumber
               id="totalPrice"
-              value={Number(formValues.totalPrice)}
+              value={Number((formValues as IAddBasicServiceValues).totalPrice)}
               min={0}
               onChange={(e) => onInputNumberChange(e, "totalPrice")}
               mode="currency"
               currency="CAD"
               className={classNames({
-                "p-invalid": submitted && formValues.totalPrice <= 0,
+                "p-invalid":
+                  submitted &&
+                  (formValues as IAddBasicServiceValues).totalPrice <= 0,
               })}
             />
-            {submitted && formValues.totalPrice <= 0 && (
-              <small className="p-error">Price required</small>
-            )}
+            {submitted &&
+              (formValues as IAddBasicServiceValues).totalPrice <= 0 && (
+                <small className="p-error">Price required</small>
+              )}
           </div>
         </div>
       )}

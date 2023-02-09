@@ -65,8 +65,8 @@ function* updateService(
   const body: IPatchServiceBody = {
     name: patch.name,
     description: patch.description,
-    estimated_time: patch.estimated_time,
-    total_price: patch.total_price,
+    estimated_time: patch.estimatedTime,
+    total_price: patch.totalPrice,
     parts: patch.parts,
   };
   const success = yield call(patchService, action.payload.serviceId, body);
@@ -129,8 +129,8 @@ function* createService(
       shop_id: shopId,
       name: payload.name,
       description: payload.description,
-      estimated_time: payload.estimated_time,
-      total_price: payload.total_price,
+      estimated_time: payload.estimatedTime,
+      total_price: payload.totalPrice,
       parts: payload.parts,
       type: payload.type,
     };

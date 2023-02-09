@@ -3,19 +3,25 @@ import { deleteService, setService } from "@redux/actions/serviceAction";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/pages/services/Services.module.css";
 import { Button } from "primereact/button";
-import { Column, ColumnBodyOptions } from "primereact/column";
+import {
+  Column,
+  ColumnBodyOptions,
+  ColumnEditorOptions,
+} from "primereact/column";
 import {
   DataTable,
   DataTableExpandedRows,
   DataTableRowEditCompleteParams,
 } from "primereact/datatable";
 import { Dropdown } from "primereact/dropdown";
-import { InputNumber } from "primereact/inputnumber";
+import {
+  InputNumber,
+  InputNumberValueChangeParams,
+} from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  IParts,
   IService,
   parts_condition_basic,
   parts_condition_custom,
@@ -133,7 +139,7 @@ const ServicesTable = (props: IServiceProps) => {
             ></Column>
             <Column
               field="cost"
-              header="Cost Per Unit"
+              header="Cost Per Unit (CA$)"
               editor={(options) => priceEditor(options)}
               sortable
             ></Column>
@@ -158,9 +164,7 @@ const ServicesTable = (props: IServiceProps) => {
                   <Button
                     icon="pi pi-trash"
                     className="p-button-text p-button-danger p-button-rounded"
-                    onClick={() =>
-                      handleDeletePartButton(data, props, serviceData)
-                    }
+                    onClick={() => handleDeletePartButton(props, serviceData)}
                   />
                 </div>
               )}
@@ -203,7 +207,7 @@ const ServicesTable = (props: IServiceProps) => {
     );
   };
 
-  const partsConditionEditor = (options: any) => {
+  const partsConditionEditor = (options: ColumnEditorOptions) => {
     return (
       <Dropdown
         value={options.value}
@@ -214,7 +218,9 @@ const ServicesTable = (props: IServiceProps) => {
         }
         optionLabel="label"
         optionValue="value"
-        onChange={(e) => options.editorCallback(e.value)}
+        onChange={(e) => {
+          if (options.editorCallback) options.editorCallback(e.value);
+        }}
         placeholder={
           serviceType == ServiceType.CUSTOM
             ? options.rowData.parts[0].condition
@@ -227,7 +233,7 @@ const ServicesTable = (props: IServiceProps) => {
     );
   };
 
-  const partsTypeEditor = (options: any) => {
+  const partsTypeEditor = (options: ColumnEditorOptions) => {
     return (
       <Dropdown
         value={options.value}
@@ -238,7 +244,9 @@ const ServicesTable = (props: IServiceProps) => {
         }
         optionLabel="label"
         optionValue="value"
-        onChange={(e) => options.editorCallback(e.value)}
+        onChange={(e) => {
+          if (options.editorCallback) options.editorCallback(e.value);
+        }}
         placeholder={
           serviceType == ServiceType.CUSTOM
             ? options.rowData.parts[0].build
@@ -251,50 +259,58 @@ const ServicesTable = (props: IServiceProps) => {
     );
   };
 
-  const priceEditor = (options: any) => {
+  const priceEditor = (options: ColumnEditorOptions) => {
     return (
       <InputNumber
         value={options.value}
         min={0}
-        onValueChange={(e: { value: any }) => options.editorCallback(e.value)}
+        onValueChange={(e: InputNumberValueChangeParams) => {
+          if (options.editorCallback) options.editorCallback(e.value);
+        }}
         mode="currency"
         currency="CAD"
       />
     );
   };
 
-  const textEditor = (options: any) => {
+  const textEditor = (options: ColumnEditorOptions) => {
     return (
       <InputText
         type="text"
         value={options.value}
-        onChange={(e) => options.editorCallback(e.target.value)}
+        onChange={(e) => {
+          if (options.editorCallback) options.editorCallback(e.target.value);
+        }}
       />
     );
   };
 
-  const quantityEditor = (options: any) => {
+  const quantityEditor = (options: ColumnEditorOptions) => {
     return (
       <InputNumber
         min={0}
         value={options.value}
-        onValueChange={(e: { value: any }) => options.editorCallback(e.value)}
+        onValueChange={(e: InputNumberValueChangeParams) => {
+          if (options.editorCallback) options.editorCallback(e.value);
+        }}
       />
     );
   };
 
-  const estimatedTimeEditor = (options: any) => {
+  const estimatedTimeEditor = (options: ColumnEditorOptions) => {
     return (
       <InputNumber
         min={0}
         maxFractionDigits={1}
         value={options.value}
-        onValueChange={(e: { value: any }) => options.editorCallback(e.value)}
+        onValueChange={(e: InputNumberValueChangeParams) => {
+          if (options.editorCallback) options.editorCallback(e.value);
+        }}
       />
     );
   };
 
-  const onServiceRowEditComplete = (e: any) => {
+  const onServiceRowEditComplete = (e: DataTableRowEditCompleteParams) => {
     let { newData } = e;
 
     if (serviceType === ServiceType.CUSTOM) {
@@ -323,8 +339,8 @@ const ServicesTable = (props: IServiceProps) => {
           patch: {
             name: newData.name,
             description: newData.description,
-            estimated_time: 0,
-            total_price: 0,
+            estimatedTime: 0,
+            totalPrice: 0,
             parts: newParts,
           },
         })
@@ -336,8 +352,8 @@ const ServicesTable = (props: IServiceProps) => {
           patch: {
             name: newData.name,
             description: newData.description,
-            estimated_time: newData.estimated_time,
-            total_price: newData.total_price,
+            estimatedTime: newData.estimatedTime,
+            totalPrice: newData.totalPrice,
             parts: newData.parts,
           },
         })
@@ -366,7 +382,6 @@ const ServicesTable = (props: IServiceProps) => {
   };
 
   const handleDeletePartButton = (
-    parts: IParts,
     props: ColumnBodyOptions,
     serviceData: IService
   ) => {
@@ -421,7 +436,7 @@ const ServicesTable = (props: IServiceProps) => {
           editor={(options) => textEditor(options)}
         />
         <Column
-          field="estimated_time"
+          field="estimatedTime"
           header="Duration (Hours)"
           editor={(options) => estimatedTimeEditor(options)}
           style={{
@@ -429,7 +444,7 @@ const ServicesTable = (props: IServiceProps) => {
           }}
         />
         <Column
-          field="total_price"
+          field="totalPrice"
           header="Estimated Cost (CA$)"
           editor={(options) => priceEditor(options)}
           sortable

@@ -5,7 +5,16 @@ interface IServiceActionBase {
 }
 
 export interface IServiceActionSetService extends IServiceActionBase {
-  payload: { serviceId: string; patch: any };
+  payload: {
+    serviceId: string;
+    patch: {
+      name?: string;
+      description?: string;
+      estimatedTime?: number;
+      totalPrice?: number;
+      parts?: IParts[];
+    };
+  };
 }
 
 export interface IServiceActionDeleteService extends IServiceActionBase {
@@ -16,8 +25,8 @@ export interface IServiceActionCreateService extends IServiceActionBase {
   payload: {
     name: string;
     description: string;
-    estimated_time: number;
-    total_price: number;
+    estimatedTime: number;
+    totalPrice: number;
     parts: IParts[];
     type: ServiceType;
   };

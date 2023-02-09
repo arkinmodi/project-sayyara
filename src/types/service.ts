@@ -42,11 +42,11 @@ export interface IService {
   id: string;
   name: string;
   description: string;
-  estimated_time: number;
-  total_price: number;
+  estimatedTime: number;
+  totalPrice: number;
   parts: IParts[];
   type: ServiceType;
-  shop_id: string;
+  shopId: string;
 }
 
 export interface IParts {
