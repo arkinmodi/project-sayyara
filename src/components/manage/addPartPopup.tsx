@@ -57,7 +57,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
   };
 
   const onInputNumberChange = (e: InputNumberChangeParams, key: string) => {
-    const val = e.value || 0;
+    const val = e.value ?? 0;
 
     setFormValues({ ...formValues, [key as keyof IAddPartsValues]: val });
   };
