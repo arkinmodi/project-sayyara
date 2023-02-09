@@ -51,7 +51,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
     e: DropdownChangeParams | ChangeEvent<HTMLInputElement>,
     key: string
   ) => {
-    const val = (e.target && e.target.value) || "";
+    const val = e?.target?.value ?? "";
 
     setFormValues({ ...formValues, [key as keyof IAddPartsValues]: val });
   };

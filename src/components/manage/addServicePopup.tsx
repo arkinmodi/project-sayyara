@@ -99,7 +99,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
       | ChangeEvent<HTMLTextAreaElement>,
     key: string
   ) => {
-    const val = (e.target && e.target.value) || "";
+    const val = e?.target?.value ?? "";
 
     if (serviceType == ServiceType.CANNED) {
       setFormValues({
