@@ -238,7 +238,7 @@ const ServicesTable = (props: IServiceProps) => {
       <Dropdown
         value={options.value}
         options={
-          serviceType == ServiceType.CANNED
+          serviceType === ServiceType.CANNED
             ? parts_type_basic
             : parts_type_custom
         }
