@@ -16,7 +16,7 @@ interface IPartPopupProps {
   onHideDialog: () => void;
 }
 
-interface IAddPartsValues extends IObjectKeys {
+interface IAddPartsValues {
   name: string;
   cost: number;
   quantity: number;
@@ -31,10 +31,6 @@ const initialPartValues = {
   condition: "",
   build: "",
 };
-
-interface IObjectKeys {
-  [key: string]: string | number | undefined;
-}
 
 const AddPartPopup = (props: IPartPopupProps) => {
   const { service, visible, onHideDialog } = props;
@@ -52,18 +48,14 @@ const AddPartPopup = (props: IPartPopupProps) => {
     key: string
   ) => {
     const val = (e.target && e.target.value) || "";
-    let _formValues = { ...formValues };
-    _formValues[`${key}`] = val;
 
-    setFormValues(_formValues);
+    setFormValues({ ...formValues, [key as keyof IAddPartsValues]: val });
   };
 
   const onInputNumberChange = (e: InputNumberChangeParams, key: string) => {
     const val = e.value || 0;
-    let _formValues = { ...formValues };
-    _formValues[`${key}`] = val;
 
-    setFormValues(_formValues);
+    setFormValues({ ...formValues, [key as keyof IAddPartsValues]: val });
   };
 
   const hideDialog = () => {

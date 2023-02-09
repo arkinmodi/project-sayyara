@@ -12,8 +12,7 @@ import {
 import { Dropdown } from "primereact/dropdown";
 import { InputNumber } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
-import { Toast } from "primereact/toast";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   IParts,
@@ -41,7 +40,6 @@ const ServicesTable = (props: IServiceProps) => {
     useState<IService | null>(null);
 
   const { serviceType, services, isLoading } = props;
-  const toast = useRef(null);
   const userType = useSelector(AuthSelectors.getUserType);
 
   const dispatch = useDispatch();
@@ -361,7 +359,6 @@ const ServicesTable = (props: IServiceProps) => {
 
   return (
     <div className={styles.serviceServicesContainer}>
-      <Toast ref={toast} />
       <DataTable
         value={services}
         paginator
