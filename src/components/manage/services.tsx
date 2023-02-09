@@ -29,7 +29,7 @@ const Services = () => {
       let basic: IService[] = [];
 
       serviceList.forEach((service: IService) => {
-        if (service.type == ServiceType.CANNED) {
+        if (service.type === ServiceType.CANNED) {
           basic.push(service);
         } else {
           custom.push(service);
