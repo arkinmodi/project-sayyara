@@ -74,6 +74,7 @@
 .chip {
   background: #69ad96;
   color: white;
+  margin-right: 5px;
 }
 
 .fullListChip {

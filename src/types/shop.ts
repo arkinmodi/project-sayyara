@@ -16,6 +16,7 @@ export interface IShopHoursOfOperation {
 }
 
 export interface IShop {
+  id?: string;
   name: string;
   address: string;
   postalCode: string;

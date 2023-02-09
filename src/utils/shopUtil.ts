@@ -165,6 +165,7 @@ export function getFilteredShops(
       return res.json().then((data) => {
         const shops = data.map((shop: IShop) => {
           return {
+            id: shop.id,
             name: shop.name,
             address: shop.address,
             postalCode: shop.postalCode,

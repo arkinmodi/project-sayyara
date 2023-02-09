@@ -2,6 +2,7 @@ import classNames from "classnames";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import Router from "next/router";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
 import { Chip } from "primereact/chip";
@@ -17,12 +18,12 @@ import { IShop } from "src/types/shop";
 import { getFilteredShops } from "src/utils/shopUtil";
 import styles from "../styles/Home.module.css";
 
-const Home: NextPage = () => {
-  const MAX_CHIP = 3;
-  const filterByPartType = ["OEM", "Aftermarket"];
-  const filterByPartCondition = ["New", "Used"];
-  const searchFilterList = ["Service", "Shop Name"];
+const MAX_CHIP = 3;
+const filterByPartType = ["OEM", "Aftermarket"];
+const filterByPartCondition = ["New", "Used"];
+const searchFilterList = ["Service", "Shop Name"];
 
+const Home: NextPage = () => {
   const [selectedTypeFilters, setSelectedTypeFilters] =
     useState(filterByPartType);
   const [selectedConditionFilters, setSelectedConditionFilters] = useState(
@@ -119,7 +120,8 @@ const Home: NextPage = () => {
 
   // Todo finish shop onclick
   const shopOnClick = (shop: IShop & { services: IService[] }) => {
-    console.log(shop.services);
+    console.log(shop);
+    Router.push(`/shop/${shop.id}`);
   };
 
   const itemTemplate = (shop: IShop & { services: IService[] }) => {
