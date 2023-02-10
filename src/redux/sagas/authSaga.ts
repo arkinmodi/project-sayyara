@@ -60,9 +60,12 @@ function postLogin(body: IAuthActionCreateLogin["payload"]): Promise<boolean> {
     body: JSON.stringify({ ...body, password: md5Hash.default(body.password) }),
   }).then((res) => {
     if (res.status === 200) {
-      return true;
+      if (res.url.includes("error=CredentialsSignin")) {
+        return false;
+      } else {
+        return true;
+      }
     } else {
-      // TODO: check and handle errors
       return false;
     }
   });
@@ -136,6 +139,10 @@ function* login(
     });
     window.location.reload();
   }
+  yield put({
+    type: AuthTypes.SET_SHOW_INVALID_LOGIN_TOAST,
+    payload: { showInvalidLoginToast: !isLoggedIn },
+  });
 }
 
 function* customerSignUp(

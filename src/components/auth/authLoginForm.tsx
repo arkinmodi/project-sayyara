@@ -1,10 +1,12 @@
 import { createLogin } from "@redux/actions/authActions";
+import { AuthSelectors } from "@redux/selectors/authSelectors";
 import classNames from "classnames";
 import { getCsrfToken } from "next-auth/react";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { Toast } from "primereact/toast";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { validateEmail } from "src/utils/formValidationUtil";
 import authStyles from "../../styles/components/auth/Auth.module.css";
 import { ILoginFormValues } from "./types";
@@ -20,6 +22,24 @@ const AuthLoginForm = () => {
     ...initialLoginFormValues,
   });
   const [isEmailValid, setIsEmailValid] = useState(true);
+  const toast = useRef<Toast>(null);
+
+  const showErrorToast = () => {
+    if (toast.current) {
+      toast.current.show({
+        severity: "error",
+        summary: "Invalid Login",
+        detail: "Please try again.",
+        sticky: true,
+      });
+    }
+  };
+
+  const dispatch = useDispatch();
+
+  const showInvalidLoginToast = useSelector(
+    AuthSelectors.getShowInvalidLoginToast
+  );
 
   useEffect(() => {
     async function fetchCSRF() {
@@ -37,8 +57,6 @@ const AuthLoginForm = () => {
     fetchCSRF();
   }, [formValues]);
 
-  const dispatch = useDispatch();
-
   const formatValue = (name: string, value: any) => {
     switch (name) {
       case "email":
@@ -54,6 +72,16 @@ const AuthLoginForm = () => {
 
     return isValidEmail;
   };
+  useEffect(() => {
+    if (showInvalidLoginToast) {
+      showErrorToast();
+      setFormValues({
+        ...formValues,
+        email: initialLoginFormValues.email,
+        password: initialLoginFormValues.password,
+      });
+    }
+  }, [showInvalidLoginToast]);
 
   const handleLoginButtonClick = (): void => {
     if (validateInputs()) {
@@ -72,6 +100,7 @@ const AuthLoginForm = () => {
 
   return (
     <div className={authStyles.authForm}>
+      <Toast ref={toast} />
       <div className={authStyles.authFormBody}>
         <label htmlFor="authLoginFormEmailInput">Email (Required)</label>
         <br />

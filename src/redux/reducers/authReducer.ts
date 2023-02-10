@@ -18,6 +18,11 @@ const authReducer = (
         ...state,
         authDialogState: action?.payload,
       };
+    case AuthType.SET_SHOW_INVALID_LOGIN_TOAST:
+      return {
+        ...state,
+        showInvalidLoginToast: action?.payload?.showInvalidLoginToast,
+      };
     // This will overwrite client state - required for Next.js
     case HYDRATE: {
       return { ...action.payload.authReducer };
