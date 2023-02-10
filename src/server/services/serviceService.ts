@@ -9,7 +9,7 @@ import { z } from "zod";
 export const createServiceSchema = z.object({
   name: z.string(),
   description: z.string(),
-  estimated_time: z.number().int(),
+  estimated_time: z.number(),
   parts: z.array(partSchema).default([]),
   total_price: z.number(),
   shop_id: z.string(),
@@ -58,7 +58,7 @@ export const getCustomServicesByShopId = async (shopId: string) => {
 export const updateServiceSchema = z.object({
   name: z.string().optional(),
   description: z.string().optional(),
-  estimated_time: z.number().int().optional(),
+  estimated_time: z.number().optional(),
   parts: z.array(partSchema).optional(),
   total_price: z.number().optional(),
 });

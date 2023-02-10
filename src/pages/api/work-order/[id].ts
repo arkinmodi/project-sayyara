@@ -1,6 +1,5 @@
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import { WorkOrder } from "@server/db/client";
-import { getEmployeeById } from "@server/services/userService";
 import {
   deleteWorkOrderById,
   getWorkOrderById,
@@ -32,7 +31,11 @@ const workOrderByIdHandler = async (
     case "GET":
       workOrder = await getWorkOrderById(id);
       if (workOrder) {
-        res.status(200).json(workOrder);
+        if (await isGetAuthorized(session, workOrder)) {
+          res.status(200).json(workOrder);
+        } else {
+          res.status(403).json({ message: "Forbidden." });
+        }
       } else {
         res.status(404).json({ message: "Work Order not found." });
       }
@@ -70,9 +73,14 @@ const workOrderByIdHandler = async (
   }
 };
 
+const isGetAuthorized = async (session: Session, workOrder: WorkOrder) => {
+  return session.user.type === "CUSTOMER"
+    ? session.user.id === workOrder.customer_id
+    : session.user.shopId === workOrder.shop_id;
+};
+
 const isAuthorized = async (session: Session, workOrder: WorkOrder) => {
-  const employee = await getEmployeeById(session.user.id);
-  return employee && employee.shop_id === workOrder.shop_id;
+  return session.user.shopId === workOrder.shop_id;
 };
 
 export default workOrderByIdHandler;

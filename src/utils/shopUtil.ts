@@ -54,8 +54,8 @@ export function getServicesByShopId(
             id: service.id,
             name: service.name,
             description: service.description,
-            estimated_time: service.estimated_time,
-            total_price: service.total_price,
+            estimatedTime: service.estimated_time,
+            totalPrice: service.total_price,
             parts: service.parts,
             type: service.type,
           };

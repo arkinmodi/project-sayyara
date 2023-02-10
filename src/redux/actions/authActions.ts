@@ -1,4 +1,4 @@
-import { UserType } from "@prisma/client";
+import { IAuthState } from "@redux/state/user/authState";
 import { AuthDialogType } from "src/types/auth";
 import AuthType from "../types/authTypes";
 
@@ -65,14 +65,11 @@ export interface IAuthActionSetIsAuthDialogOpen extends IAuthActionBase {
 }
 
 export interface IAuthActionSetUserSession extends IAuthActionBase {
-  payload: {
-    id: string | null;
-    email: string | null;
-    firstName: string | null;
-    lastName: string | null;
-    userType: UserType | null;
-    shopId: string | null;
-  };
+  payload: IAuthState["session"];
+}
+
+export interface IAuthActionSetShowInvalidLoginToast extends IAuthActionBase {
+  payload: { showInvalidLoginToast: boolean };
 }
 
 export type IAuthAction =
@@ -82,7 +79,8 @@ export type IAuthAction =
   | IAuthActionCreateShopOwnerSignUp
   | IAuthActionSetIsLoggedIn
   | IAuthActionSetIsAuthDialogOpen
-  | IAuthActionSetUserSession;
+  | IAuthActionSetUserSession
+  | IAuthActionSetShowInvalidLoginToast;
 
 export const createLogin = (payload: IAuthActionCreateLogin["payload"]) => ({
   type: AuthType.CREATE_LOGIN,
@@ -128,5 +126,12 @@ export const setUserSession = (
   payload: IAuthActionSetUserSession["payload"]
 ) => ({
   type: AuthType.SET_USER_SESSION,
+  payload,
+});
+
+export const setShowInvalidLoginToast = (
+  payload: IAuthActionSetShowInvalidLoginToast["payload"]
+) => ({
+  type: AuthType.SET_SHOW_INVALID_LOGIN_TOAST,
   payload,
 });

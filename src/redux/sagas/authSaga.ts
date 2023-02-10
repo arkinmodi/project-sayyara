@@ -60,9 +60,12 @@ function postLogin(body: IAuthActionCreateLogin["payload"]): Promise<boolean> {
     body: JSON.stringify({ ...body, password: md5Hash.default(body.password) }),
   }).then((res) => {
     if (res.status === 200) {
-      return true;
+      if (res.url.includes("error=CredentialsSignin")) {
+        return false;
+      } else {
+        return true;
+      }
     } else {
-      // TODO: check and handle errors
       return false;
     }
   });
@@ -136,6 +139,10 @@ function* login(
     });
     window.location.reload();
   }
+  yield put({
+    type: AuthTypes.SET_SHOW_INVALID_LOGIN_TOAST,
+    payload: { showInvalidLoginToast: !isLoggedIn },
+  });
 }
 
 function* customerSignUp(
@@ -162,7 +169,7 @@ function* customerSignUp(
     const loginBody: IAuthActionCreateLogin["payload"] = {
       csrfToken: payload.csrfToken,
       email: payload.email,
-      password: md5Hash.default(payload.password),
+      password: payload.password,
     };
     yield put({ type: AuthTypes.CREATE_LOGIN, payload: loginBody });
   }
@@ -186,7 +193,7 @@ function* shopEmployeeSignUp(
     const loginBody: IAuthActionCreateLogin["payload"] = {
       csrfToken: payload.csrfToken,
       email: payload.email,
-      password: md5Hash.default(payload.password),
+      password: payload.password,
     };
     yield put({ type: AuthTypes.CREATE_LOGIN, payload: loginBody });
   }
@@ -218,7 +225,7 @@ function* shopOwnerSignUp(
     const loginBody: IAuthActionCreateLogin["payload"] = {
       csrfToken: payload.csrfToken,
       email: payload.email,
-      password: md5Hash.default(payload.password),
+      password: payload.password,
     };
     yield put({ type: AuthTypes.CREATE_LOGIN, payload: loginBody });
   }
