@@ -1,10 +1,10 @@
 import styles from "@styles/components/shop/profile/AddHoursOfOperationDialog.module.css";
 import classNames from "classnames";
 import { Button } from "primereact/button";
-import { Calendar } from "primereact/calendar";
+import { Calendar, CalendarChangeParams } from "primereact/calendar";
 import { Dialog } from "primereact/dialog";
 import { InputSwitch } from "primereact/inputswitch";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { IShop, IShopHoursOfOperation } from "src/types/shop";
 import { patchShop } from "src/utils/shopUtil";
 
@@ -54,9 +54,28 @@ interface IFormValues {
   };
 }
 
+interface IOperatingTimeValid {
+  monday: boolean;
+  tuesday: boolean;
+  wednesday: boolean;
+  thursday: boolean;
+  friday: boolean;
+  saturday: boolean;
+  sunday: boolean;
+}
+
 const defaultIsOpen = true;
 const defaultStartTime = "1970-01-01T14:00:00Z";
 const defaultEndTime = "1970-01-01T22:00:00Z";
+const initialOperatingTimeValid = {
+  monday: true,
+  tuesday: true,
+  wednesday: true,
+  thursday: true,
+  friday: true,
+  saturday: true,
+  sunday: true,
+};
 
 const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
   const { visible, onHide, shopId, shop, updateShop } = props;
@@ -138,9 +157,62 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
             closeTime: new Date(defaultEndTime),
           },
         };
-  const [formValues, setFormValues] = useState<IFormValues>(initialFormValues);
 
-  const renderDayForm = (d: string) => {
+  const [formValues, setFormValues] = useState<IFormValues>(initialFormValues);
+  const [operatingTimeValid, setOperatingTimeValid] =
+    useState<IOperatingTimeValid>(initialOperatingTimeValid);
+  /**
+   * We need this state change listener because React does not re-render the DOM after change in object (or non-primitive) state values
+   */
+  const [validationUpdateListener, setValidationUpdateListener] = useState(0);
+
+  useEffect(() => {
+    if (shop.hoursOfOperation != null) {
+      const existingHoursOfOperation = shop.hoursOfOperation;
+      setFormValues({
+        monday: {
+          isOpen: existingHoursOfOperation.monday.isOpen,
+          openTime: new Date(existingHoursOfOperation.monday.openTime),
+          closeTime: new Date(existingHoursOfOperation.monday.closeTime),
+        },
+        tuesday: {
+          isOpen: existingHoursOfOperation.tuesday.isOpen,
+          openTime: new Date(existingHoursOfOperation.tuesday.openTime),
+          closeTime: new Date(existingHoursOfOperation.tuesday.closeTime),
+        },
+        wednesday: {
+          isOpen: existingHoursOfOperation.wednesday.isOpen,
+          openTime: new Date(existingHoursOfOperation.wednesday.openTime),
+          closeTime: new Date(existingHoursOfOperation.wednesday.closeTime),
+        },
+        thursday: {
+          isOpen: existingHoursOfOperation.thursday.isOpen,
+          openTime: new Date(existingHoursOfOperation.thursday.openTime),
+          closeTime: new Date(existingHoursOfOperation.thursday.closeTime),
+        },
+        friday: {
+          isOpen: existingHoursOfOperation.friday.isOpen,
+          openTime: new Date(existingHoursOfOperation.friday.openTime),
+          closeTime: new Date(existingHoursOfOperation.friday.closeTime),
+        },
+        saturday: {
+          isOpen: existingHoursOfOperation.saturday.isOpen,
+          openTime: new Date(existingHoursOfOperation.saturday.openTime),
+          closeTime: new Date(existingHoursOfOperation.saturday.closeTime),
+        },
+        sunday: {
+          isOpen: existingHoursOfOperation.sunday.isOpen,
+          openTime: new Date(existingHoursOfOperation.sunday.openTime),
+          closeTime: new Date(existingHoursOfOperation.sunday.closeTime),
+        },
+      });
+    }
+  }, [shop]);
+
+  const renderDayForm = (
+    d: string,
+    operatingTimeValid: IOperatingTimeValid
+  ) => {
     const day = d as keyof IShopHoursOfOperation;
     return (
       <div key={day}>
@@ -171,81 +243,158 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
           <Calendar
             id={`${day}OpenTimeInput`}
             value={formValues[day].openTime}
-            className={styles.openCalendarInput}
-            onChange={(e) =>
-              setFormValues({
-                ...formValues,
-                [day]: { ...formValues[day], openTime: e.value },
-              })
-            }
+            className={classNames(
+              styles.openCalendarInput,
+              !operatingTimeValid[day] ? "p-invalid" : ""
+            )}
+            onChange={(e) => handleOpenTimeInputChange(e, day)}
             timeOnly
             hourFormat="12"
           />
           <Calendar
             id={`${day}CloseTimeInput`}
+            className={!operatingTimeValid[day] ? "p-invalid" : ""}
             value={formValues[day].closeTime}
-            onChange={(e) =>
-              setFormValues({
-                ...formValues,
-                [day]: { ...formValues[day], closeTime: e.value },
-              })
-            }
+            onChange={(e) => handleCloseTimeInputChange(e, day)}
             timeOnly
             hourFormat="12"
           />
         </div>
+        <small
+          id="timeHelp"
+          className={
+            !operatingTimeValid[day] && validationUpdateListener != null
+              ? "p-error block"
+              : "p-hidden"
+          }
+        >
+          Invalid: open time cannot be after close time
+        </small>
       </div>
     );
   };
 
-  const handleSubmit = () => {
-    // TODO: input validation
-    patchShop(shopId, {
-      ...shop,
-      hoursOfOperation: {
-        ...formValues,
-        monday: {
-          ...formValues.monday,
-          openTime: formValues.monday.openTime.toISOString(),
-          closeTime: formValues.monday.closeTime.toISOString(),
-        },
-        tuesday: {
-          ...formValues.tuesday,
-          openTime: formValues.tuesday.openTime.toISOString(),
-          closeTime: formValues.tuesday.closeTime.toISOString(),
-        },
-        wednesday: {
-          ...formValues.wednesday,
-          openTime: formValues.wednesday.openTime.toISOString(),
-          closeTime: formValues.wednesday.closeTime.toISOString(),
-        },
-        thursday: {
-          ...formValues.thursday,
-          openTime: formValues.thursday.openTime.toISOString(),
-          closeTime: formValues.thursday.closeTime.toISOString(),
-        },
-        friday: {
-          ...formValues.friday,
-          openTime: formValues.friday.openTime.toISOString(),
-          closeTime: formValues.friday.closeTime.toISOString(),
-        },
-        saturday: {
-          ...formValues.saturday,
-          openTime: formValues.saturday.openTime.toISOString(),
-          closeTime: formValues.saturday.closeTime.toISOString(),
-        },
-        sunday: {
-          ...formValues.sunday,
-          openTime: formValues.sunday.openTime.toISOString(),
-          closeTime: formValues.sunday.closeTime.toISOString(),
-        },
-      },
-    }).then((shop) => {
-      if (shop) {
-        updateShop(shop);
+  const handleOpenTimeInputChange = (e: CalendarChangeParams, d: string) => {
+    const day = d as keyof IShopHoursOfOperation;
+    const value = e.value;
+
+    const updatedFormValues = {
+      ...formValues,
+      [day]: { ...formValues[day], openTime: value },
+    };
+
+    setFormValues((formValues) => {
+      return Object.assign(formValues, updatedFormValues);
+    });
+  };
+
+  const handleCloseTimeInputChange = (e: CalendarChangeParams, d: string) => {
+    const day = d as keyof IShopHoursOfOperation;
+    const value = e.value;
+
+    const updatedFormValues = {
+      ...formValues,
+      [day]: { ...formValues[day], closeTime: value },
+    };
+
+    setFormValues((formValues) => {
+      return Object.assign(formValues, updatedFormValues);
+    });
+  };
+
+  const validateInputs = () => {
+    const updatedOperatingTimeValid = {
+      ...operatingTimeValid,
+    };
+
+    Object.keys(formValues).forEach((day) => {
+      if (
+        /**
+         * String comparison of time should work here as timezone is restricted to UTC with precision 0.
+         * See hoursOfOperationSchema for more details.
+         */
+        formValues[day as keyof IFormValues].openTime.toLocaleTimeString(
+          "en-US",
+          { hour: "numeric", minute: "numeric", hour12: false }
+        ) >
+        formValues[day as keyof IFormValues].closeTime.toLocaleTimeString(
+          "en-US",
+          {
+            hour: "numeric",
+            minute: "numeric",
+            hour12: false,
+          }
+        )
+      ) {
+        updatedOperatingTimeValid[day as keyof IOperatingTimeValid] = false;
+      } else {
+        updatedOperatingTimeValid[day as keyof IOperatingTimeValid] = true;
       }
     });
-    onHide();
+
+    setOperatingTimeValid((operatingTimeValid) => {
+      return Object.assign(operatingTimeValid, updatedOperatingTimeValid);
+    });
+
+    const valid = Object.keys(updatedOperatingTimeValid)
+      .map((day) => {
+        return operatingTimeValid[day as keyof IOperatingTimeValid];
+      })
+      .every((isValidTime) => isValidTime === true);
+
+    setValidationUpdateListener((validationUpdateListener + 1) % 2);
+    return valid;
+  };
+
+  const handleSubmit = () => {
+    if (validateInputs()) {
+      patchShop(shopId, {
+        ...shop,
+        hoursOfOperation: {
+          ...formValues,
+          monday: {
+            ...formValues.monday,
+            openTime: formValues.monday.openTime.toISOString(),
+            closeTime: formValues.monday.closeTime.toISOString(),
+          },
+          tuesday: {
+            ...formValues.tuesday,
+            openTime: formValues.tuesday.openTime.toISOString(),
+            closeTime: formValues.tuesday.closeTime.toISOString(),
+          },
+          wednesday: {
+            ...formValues.wednesday,
+            openTime: formValues.wednesday.openTime.toISOString(),
+            closeTime: formValues.wednesday.closeTime.toISOString(),
+          },
+          thursday: {
+            ...formValues.thursday,
+            openTime: formValues.thursday.openTime.toISOString(),
+            closeTime: formValues.thursday.closeTime.toISOString(),
+          },
+          friday: {
+            ...formValues.friday,
+            openTime: formValues.friday.openTime.toISOString(),
+            closeTime: formValues.friday.closeTime.toISOString(),
+          },
+          saturday: {
+            ...formValues.saturday,
+            openTime: formValues.saturday.openTime.toISOString(),
+            closeTime: formValues.saturday.closeTime.toISOString(),
+          },
+          sunday: {
+            ...formValues.sunday,
+            openTime: formValues.sunday.openTime.toISOString(),
+            closeTime: formValues.sunday.closeTime.toISOString(),
+          },
+        },
+      }).then((shop) => {
+        if (shop) {
+          updateShop(shop);
+        }
+      });
+      onHide();
+    }
   };
 
   return (
@@ -259,7 +408,9 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
         >
           Edit Hours of Operation
         </div>
-        {Object.keys(formValues).map((day) => renderDayForm(day))}
+        {Object.keys(formValues).map((day) =>
+          renderDayForm(day, operatingTimeValid)
+        )}
         <Button
           className={styles.submitHoursOfOperationButton}
           onClick={() => handleSubmit()}
@@ -271,4 +422,4 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
   );
 };
 
-export default React.memo(AddHoursOfOperationDialog);
+export default AddHoursOfOperationDialog;
