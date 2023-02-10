@@ -18,6 +18,7 @@ import { IShop } from "src/types/shop";
 import { getFilteredShops } from "src/utils/shopUtil";
 import styles from "../styles/Home.module.css";
 
+const MAX_CHIP_MOBILE = 2;
 const MAX_CHIP = 3;
 const filterByPartType = ["OEM", "Aftermarket"];
 const filterByPartCondition = ["New", "Used"];
@@ -124,17 +125,34 @@ const Home: NextPage = () => {
     Router.push(`/shop/${shop.id}`);
   };
 
-  const itemTemplate = (shop: IShop & { services: IService[] }) => {
+  const generateServiceList = (
+    shop: IShop & { services: IService[] },
+    view: string
+  ) => {
+    const maxChip = view === "desktop" ? MAX_CHIP : MAX_CHIP_MOBILE;
     let serviceList: any = [];
-    for (let i = 0; i <= MAX_CHIP - 1; i++) {
+    for (let i = 0; i <= maxChip - 1; i++) {
       let service = shop.services[i];
       if (service) {
         serviceList.push(<Chip className={styles.chip} label={service.name} />);
       }
     }
-    serviceList.push(
-      <Chip className={styles.fullListChip} label="See Full List" />
-    );
+    if (view === "desktop") {
+      serviceList.push(
+        <Chip className={styles.fullListChip} label="See Full List" />
+      );
+    } else {
+      serviceList.push(<Chip className={styles.fullListChip} label="..." />);
+    }
+
+    return serviceList;
+  };
+
+  const itemTemplate = (
+    shop: IShop & { services: IService[] },
+    view: string
+  ) => {
+    const serviceList = generateServiceList(shop, view);
 
     return (
       <div className={styles.itemContainer} onClick={() => shopOnClick(shop)}>
@@ -163,7 +181,62 @@ const Home: NextPage = () => {
 
       <div className={styles.main}>
         <div className={styles.filter}>
-          <Panel header="Filter By">
+          <Panel className={styles.desktopFilter} header="Filter By">
+            <h5 className={styles.h5Top}>Part Type</h5>
+            {filterByPartType.map((category) => {
+              return (
+                <div key={category} className={styles.buttonList}>
+                  <Checkbox
+                    inputId={category}
+                    name="category"
+                    value={category}
+                    onChange={onTypeChange}
+                    checked={selectedTypeFilters.some(
+                      (item) => item === category
+                    )}
+                  />
+                  <label className={styles.label} htmlFor={category}>
+                    {category}
+                  </label>
+                </div>
+              );
+            })}
+            <h5>Part Condition</h5>
+            {filterByPartCondition.map((category) => {
+              return (
+                <div key={category} className={styles.buttonList}>
+                  <Checkbox
+                    inputId={category}
+                    name="category"
+                    value={category}
+                    onChange={onConditionChange}
+                    checked={selectedConditionFilters.some(
+                      (item) => item === category
+                    )}
+                  />
+                  <label className={styles.label} htmlFor={category}>
+                    {category}
+                  </label>
+                </div>
+              );
+            })}
+            <h5>
+              Location Range (km): [{locationRange[0]} - {locationRange[1]}]
+            </h5>
+            <Slider
+              value={locationRange}
+              min={1}
+              max={50}
+              onChange={(e) => setRange(e)}
+              range
+            />
+          </Panel>
+          <Panel
+            className={styles.mobileFilter}
+            header="Filter By"
+            toggleable
+            collapsed
+          >
             <h5 className={styles.h5Top}>Part Type</h5>
             {filterByPartType.map((category) => {
               return (
@@ -215,7 +288,29 @@ const Home: NextPage = () => {
           </Panel>
         </div>
         <div className={styles.content}>
-          <div className={classNames("p-inputgroup", styles.search)}>
+          <div
+            className={classNames(
+              "p-inputgroup",
+              styles.search,
+              styles.desktopSearch
+            )}
+          >
+            <InputText
+              className={styles.inputtext}
+              placeholder="Search"
+              value={searchString}
+              onChange={(e) => setSearchString(e.target.value)}
+            />
+            <Dropdown
+              className={styles.dropdown}
+              value={searchFilter}
+              options={searchFilterList}
+              onChange={(e) => setSearchFilter(e.value)}
+              placeholder="Service"
+            />
+            <Button label="Search" onClick={onSearch} />
+          </div>
+          <div className={classNames(styles.search, styles.mobileSearch)}>
             <InputText
               className={styles.inputtext}
               placeholder="Search"
@@ -232,10 +327,20 @@ const Home: NextPage = () => {
             <Button label="Search" onClick={onSearch} />
           </div>
           <DataView
+            className={styles.desktopData}
             value={shops}
             layout="list"
             // header={header}
-            itemTemplate={itemTemplate}
+            itemTemplate={(shop) => itemTemplate(shop, "desktop")}
+            paginator
+            rows={4}
+          />
+          <DataView
+            className={styles.mobileData}
+            value={shops}
+            layout="list"
+            // header={header}
+            itemTemplate={(shop) => itemTemplate(shop, "mobile")}
             paginator
             rows={4}
           />
