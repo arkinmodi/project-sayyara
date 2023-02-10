@@ -5,7 +5,10 @@ import { Button } from "primereact/button";
 import { Checkbox, CheckboxChangeParams } from "primereact/checkbox";
 import { Dialog } from "primereact/dialog";
 import { DropdownChangeParams } from "primereact/dropdown";
-import { InputNumber, InputNumberChangeParams } from "primereact/inputnumber";
+import {
+  InputNumber,
+  InputNumberValueChangeParams,
+} from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -83,12 +86,12 @@ const AddServicePopup = (props: IServicePopupProps) => {
 
   const dispatch = useDispatch();
 
-  const onCheckedChange = (e: CheckboxChangeParams, key: string) => {
+  const onCheckedChange = (e: CheckboxChangeParams) => {
     const val = e.checked || false;
 
     setFormValues({
       ...formValues,
-      [key as keyof IAddCustomServiceValues]: val,
+      [e.target.name]: val,
     });
   };
 
@@ -96,38 +99,23 @@ const AddServicePopup = (props: IServicePopupProps) => {
     e:
       | DropdownChangeParams
       | ChangeEvent<HTMLInputElement>
-      | ChangeEvent<HTMLTextAreaElement>,
-    key: string
+      | ChangeEvent<HTMLTextAreaElement>
   ) => {
-    const val = e?.target?.value ?? "";
+    const val = e.target.value ?? "";
 
-    if (serviceType == ServiceType.CANNED) {
-      setFormValues({
-        ...formValues,
-        [key as keyof IAddBasicServiceValues]: val,
-      });
-    } else {
-      setFormValues({
-        ...formValues,
-        [key as keyof IAddCustomServiceValues]: val,
-      });
-    }
+    setFormValues({
+      ...formValues,
+      [e.target.name]: val,
+    });
   };
 
-  const onInputNumberChange = (e: InputNumberChangeParams, key: string) => {
-    const val = e.value || 0;
-
-    if (serviceType == ServiceType.CANNED) {
-      setFormValues({
-        ...formValues,
-        [key as keyof IAddBasicServiceValues]: val,
-      });
-    } else {
-      setFormValues({
-        ...formValues,
-        [key as keyof IAddCustomServiceValues]: val,
-      });
-    }
+  const onInputNumberChange = (e: InputNumberValueChangeParams) => {
+    const val = e.value ?? 0;
+    const key: string = e.target.name;
+    setFormValues({
+      ...formValues,
+      [key]: val,
+    });
   };
 
   const hideDialog = () => {
@@ -254,7 +242,8 @@ const AddServicePopup = (props: IServicePopupProps) => {
         <InputText
           id="name"
           value={formValues.name}
-          onChange={(e) => onInputChange(e, "name")}
+          name="name"
+          onChange={onInputChange}
           required
           autoFocus
           className={classNames({
@@ -270,7 +259,8 @@ const AddServicePopup = (props: IServicePopupProps) => {
         <InputTextarea
           id="description"
           value={formValues.description}
-          onChange={(e) => onInputChange(e, "description")}
+          name="description"
+          onChange={onInputChange}
           required
           rows={3}
           cols={20}
@@ -297,7 +287,8 @@ const AddServicePopup = (props: IServicePopupProps) => {
             <Checkbox
               inputId="new"
               value="new"
-              onChange={(e) => onCheckedChange(e, "new")}
+              name="new"
+              onChange={onCheckedChange}
               checked={(formValues as IAddCustomServiceValues).new}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
@@ -306,7 +297,8 @@ const AddServicePopup = (props: IServicePopupProps) => {
             <Checkbox
               inputId="used"
               value="used"
-              onChange={(e) => onCheckedChange(e, "used")}
+              name="used"
+              onChange={onCheckedChange}
               checked={(formValues as IAddCustomServiceValues).used}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
@@ -330,8 +322,9 @@ const AddServicePopup = (props: IServicePopupProps) => {
             <div className={styles.servicesFormFields}>Part Type</div>
             <Checkbox
               inputId="oem"
-              value="OEM"
-              onChange={(e) => onCheckedChange(e, "oem")}
+              value="oem"
+              name="oem"
+              onChange={onCheckedChange}
               checked={(formValues as IAddCustomServiceValues).oem}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
@@ -340,7 +333,8 @@ const AddServicePopup = (props: IServicePopupProps) => {
             <Checkbox
               inputId="aftermarket"
               value="aftermarket"
-              onChange={(e) => onCheckedChange(e, "aftermarket")}
+              name="aftermarket"
+              onChange={onCheckedChange}
               checked={(formValues as IAddCustomServiceValues).aftermarket}
             ></Checkbox>
             <label htmlFor="cb1" className="p-checkbox-label">
@@ -356,15 +350,16 @@ const AddServicePopup = (props: IServicePopupProps) => {
       ) : (
         <div>
           <div className={styles.servicesFormFields}>
-            <label htmlFor="estimatedTime">Estimated Duration (hours)</label>
+            <label htmlFor="estimatedTime">Estimated Duration (Hours)</label>
             <InputNumber
               id="estimatedTime"
               value={Number(
                 (formValues as IAddBasicServiceValues).estimatedTime
               )}
               min={0}
+              name="estimatedTime"
               maxFractionDigits={1}
-              onChange={(e) => onInputNumberChange(e, "estimatedTime")}
+              onValueChange={onInputNumberChange}
               className={classNames({
                 "p-invalid":
                   submitted &&
@@ -382,7 +377,8 @@ const AddServicePopup = (props: IServicePopupProps) => {
               id="totalPrice"
               value={Number((formValues as IAddBasicServiceValues).totalPrice)}
               min={0}
-              onChange={(e) => onInputNumberChange(e, "totalPrice")}
+              name="totalPrice"
+              onValueChange={onInputNumberChange}
               mode="currency"
               currency="CAD"
               className={classNames({

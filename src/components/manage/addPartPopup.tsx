@@ -4,7 +4,10 @@ import classNames from "classnames";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
-import { InputNumber, InputNumberChangeParams } from "primereact/inputnumber";
+import {
+  InputNumber,
+  InputNumberValueChangeParams,
+} from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -48,16 +51,19 @@ const AddPartPopup = (props: IPartPopupProps) => {
   }, [visible]);
 
   const onInputChange = (
-    e: DropdownChangeParams | ChangeEvent<HTMLInputElement>,
-    key: string
+    e: DropdownChangeParams | ChangeEvent<HTMLInputElement>
   ) => {
-    const val = e?.target?.value ?? "";
+    const val = e.target.value ?? "";
+
+    const key: string = e.target.name;
 
     setFormValues({ ...formValues, [key as keyof IAddPartsValues]: val });
   };
 
-  const onInputNumberChange = (e: InputNumberChangeParams, key: string) => {
+  const onInputNumberChange = (e: InputNumberValueChangeParams) => {
     const val = e.value || 0;
+
+    const key: string = e.target.name;
 
     setFormValues({ ...formValues, [key as keyof IAddPartsValues]: val });
   };
@@ -111,10 +117,9 @@ const AddPartPopup = (props: IPartPopupProps) => {
   return (
     <Dialog
       visible={visible}
-      style={{ width: "450px" }}
+      className={classNames("p-fluid", styles.servicesDropdown)}
       header={`Add part for ${service.name}`}
       modal
-      className="p-fluid"
       footer={partDialogFooter}
       onHide={hideDialog}
     >
@@ -123,7 +128,8 @@ const AddPartPopup = (props: IPartPopupProps) => {
         <InputText
           id="name"
           value={formValues.name}
-          onChange={(e) => onInputChange(e, "name")}
+          name="name"
+          onChange={onInputChange}
           required
           autoFocus
           className={classNames({
@@ -140,7 +146,8 @@ const AddPartPopup = (props: IPartPopupProps) => {
           id="cost"
           value={formValues.cost}
           min={0}
-          onValueChange={(e) => onInputNumberChange(e, "cost")}
+          name="cost"
+          onValueChange={onInputNumberChange}
           mode="currency"
           currency="CAD"
           className={classNames({
@@ -155,9 +162,10 @@ const AddPartPopup = (props: IPartPopupProps) => {
         <label htmlFor="quantity">Quantity</label>
         <InputNumber
           id="quantity"
+          name="quantity"
           value={formValues.quantity}
           min={0}
-          onValueChange={(e) => onInputNumberChange(e, "quantity")}
+          onValueChange={onInputNumberChange}
           className={classNames({
             "p-invalid": submitted && formValues.quantity <= 0,
           })}
@@ -170,9 +178,10 @@ const AddPartPopup = (props: IPartPopupProps) => {
       <Dropdown
         value={formValues.condition}
         options={parts_condition_basic}
+        name="condition"
         optionLabel="label"
         optionValue="value"
-        onChange={(e) => onInputChange(e, "condition")}
+        onChange={onInputChange}
         placeholder={
           formValues.condition.length === 0
             ? "Select a condition"
@@ -194,7 +203,8 @@ const AddPartPopup = (props: IPartPopupProps) => {
         options={parts_type_basic}
         optionLabel="label"
         optionValue="value"
-        onChange={(e) => onInputChange(e, "build")}
+        name="build"
+        onChange={onInputChange}
         placeholder={
           formValues.build.length === 0 ? "Select a type" : formValues.build
         }
