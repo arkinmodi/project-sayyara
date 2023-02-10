@@ -1,5 +1,6 @@
 import { AppointmentStatus, UserType } from "@prisma/client";
 import { readCustomerAppointments } from "@redux/actions/appointmentAction";
+import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import { NextPage } from "next";
 import { Carousel } from "primereact/carousel";
@@ -8,7 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { ICustomerAppointment } from "src/types/appointment";
 
 const CustomerAppointments: NextPage = () => {
-  const [appointments, setAppointments] = useState<ICustomerAppointment[]>([]);
+  const appointments = useSelector(
+    AppointmentSelectors.getCustomerAppointments
+  );
   const [inProgressAppointments, setInProgressAppointments] = useState<
     ICustomerAppointment[]
   >([]);
@@ -49,6 +52,7 @@ const CustomerAppointments: NextPage = () => {
   }, [dispatch, customerId]);
 
   useEffect(() => {
+    console.log(appointments);
     const appointmentsList = appointments.sort(
       (
         appointment1: ICustomerAppointment,
