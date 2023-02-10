@@ -78,18 +78,22 @@ const ServicesTable = (props: IServiceProps) => {
             ? "Basic Services"
             : "Custom Services"}
         </h2>
-        <Button
-          label={
-            serviceType === ServiceType.CANNED
-              ? "Add Basic Service"
-              : "Add Custom Service"
-          }
-          icon="pi pi-plus"
-          className={styles.addServiceButtonGreen}
-          onClick={() => {
-            setAddServiceDialogVisible(true);
-          }}
-        />
+        {userType === UserType.SHOP_OWNER ? (
+          <Button
+            label={
+              serviceType === ServiceType.CANNED
+                ? "Add Basic Service"
+                : "Add Custom Service"
+            }
+            icon="pi pi-plus"
+            className={styles.addServiceButtonGreen}
+            onClick={() => {
+              setAddServiceDialogVisible(true);
+            }}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     );
   };
@@ -100,15 +104,19 @@ const ServicesTable = (props: IServiceProps) => {
       <div className={styles.partsTable}>
         <div className={styles.servicesTableHeader}>
           <h2>Parts</h2>
-          <Button
-            label={"Add Part"}
-            icon="pi pi-plus"
-            className={styles.addServiceButtonGreen}
-            onClick={() => {
-              setServiceOnButtonClick(serviceData);
-              setAddPartDialogVisible(true);
-            }}
-          />
+          {userType === UserType.SHOP_OWNER ? (
+            <Button
+              label={"Add Part"}
+              icon="pi pi-plus"
+              className={styles.addServiceButtonGreen}
+              onClick={() => {
+                setServiceOnButtonClick(serviceData);
+                setAddPartDialogVisible(true);
+              }}
+            />
+          ) : (
+            <></>
+          )}
         </div>
         {parts.length > 0 ? (
           <DataTable
@@ -155,11 +163,14 @@ const ServicesTable = (props: IServiceProps) => {
             ></Column>
             <Column
               rowEditor
-              headerStyle={{ width: "10%", minWidth: "4rem" }}
+              headerStyle={{ minWidth: "4rem" }}
               bodyStyle={{ textAlign: "center" }}
+              style={{
+                display: displayColForShopOwnerOnly,
+              }}
             ></Column>
             <Column
-              body={(data, props) => (
+              body={(props) => (
                 <div>
                   <Button
                     icon="pi pi-trash"
@@ -169,6 +180,9 @@ const ServicesTable = (props: IServiceProps) => {
                 </div>
               )}
               className={styles.servicesTableDeleteButton}
+              style={{
+                display: displayColForShopOwnerOnly,
+              }}
             ></Column>
           </DataTable>
         ) : (
