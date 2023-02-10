@@ -3,6 +3,7 @@ import { AuthDialogType } from "src/types/auth";
 
 export interface IAuthState {
   isLoggedIn: boolean;
+  showInvalidLoginToast: boolean;
   session: {
     id: string | null;
     email: string | null;
@@ -19,6 +20,7 @@ export interface IAuthState {
 
 export const initialAuthState: IAuthState = {
   isLoggedIn: false,
+  showInvalidLoginToast: false,
   session: {
     id: null,
     email: null,

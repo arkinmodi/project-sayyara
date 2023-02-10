@@ -1,8 +1,8 @@
 import { createShopEmployeeSignUp } from "@redux/actions/authActions";
 import { getCsrfToken } from "next-auth/react";
-import { DropdownChangeParams } from "primereact/dropdown";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { formatName, formatPhoneNumber } from "src/utils/formFormatUtil";
 import { IAuthSignUpFormShopEmployeeValues } from "../../../types";
 import UserDetailsSection from "../../common/userDetailsSection";
 import ShopIdSection from "./shopIdSection";
@@ -62,24 +62,30 @@ const AuthSignUpFormShopEmployee = (
   };
 
   const handleSignUpButtonClick = (): void => {
-    // TODO: validate inputs
     dispatch(createShopEmployeeSignUp(formValues));
+  };
+
+  const formatValue = (name: string, value: any) => {
+    switch (name) {
+      case "email":
+        return (value as string).toLowerCase();
+      case "phoneNumber":
+        return formatPhoneNumber(value as string);
+      case "firstName":
+        return formatName(value as string);
+      case "lastName":
+        return formatName(value as string);
+      default:
+        return value;
+    }
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFormValues({
-      ...formValues,
-      [name]: value,
-    });
-  };
 
-  const handleDropDownChange = (dropdownParams: DropdownChangeParams) => {
-    const value = dropdownParams.value;
-    const name = dropdownParams.target.name;
     setFormValues({
       ...formValues,
-      [name]: value,
+      [name]: typeof value === "string" ? formatValue(name, value) : value,
     });
   };
 
