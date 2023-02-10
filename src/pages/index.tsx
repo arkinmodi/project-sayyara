@@ -4,7 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Router from "next/router";
 import { Button } from "primereact/button";
-import { Checkbox } from "primereact/checkbox";
+import { Checkbox, CheckboxChangeParams } from "primereact/checkbox";
 import { Chip } from "primereact/chip";
 import { DataView } from "primereact/dataview";
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
@@ -46,15 +46,17 @@ const Home: NextPage = () => {
     });
   }, []);
 
-  const onTypeChange = (e: { value: any; checked: boolean }) => {
+  const onTypeChange = (e: CheckboxChangeParams) => {
+    const value = e.value;
+    const checked = e.checked;
     let _selectedTypeFilters = [...selectedTypeFilters];
 
-    if (e.checked) {
-      _selectedTypeFilters.push(e.value);
+    if (checked) {
+      _selectedTypeFilters.push(value);
     } else {
       for (let i = 0; i < _selectedTypeFilters.length; i++) {
         const filter = _selectedTypeFilters[i];
-        if (filter && filter === e.value) {
+        if (filter && filter === value) {
           _selectedTypeFilters.splice(i, 1);
           break;
         }
@@ -63,15 +65,17 @@ const Home: NextPage = () => {
     setSelectedTypeFilters(_selectedTypeFilters);
   };
 
-  const onConditionChange = (e: { value: any; checked: boolean }) => {
+  const onConditionChange = (e: CheckboxChangeParams) => {
+    const value = e.value;
+    const checked = e.checked;
     let _selectedConditionFilters = [...selectedConditionFilters];
 
-    if (e.checked) {
-      _selectedConditionFilters.push(e.value);
+    if (checked) {
+      _selectedConditionFilters.push(value);
     } else {
       for (let i = 0; i < _selectedConditionFilters.length; i++) {
         const filter = _selectedConditionFilters[i];
-        if (filter && filter === e.value) {
+        if (filter && filter === value) {
           _selectedConditionFilters.splice(i, 1);
           break;
         }
@@ -145,6 +149,7 @@ const Home: NextPage = () => {
     } else {
       getFilteredShops("", true).then((data) => {
         if (data) {
+          console.log(data);
           let filteredData = data.filter(filterByParts);
           setShops(filteredData);
         }
