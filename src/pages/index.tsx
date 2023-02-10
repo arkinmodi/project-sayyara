@@ -346,7 +346,11 @@ const Home: NextPage = () => {
               onChange={onChangeFilter}
               placeholder="Service"
             />
-            <Button label="Search" onClick={onSearch} />
+            <Button
+              className={styles.searchButton}
+              label="Search"
+              onClick={onSearch}
+            />
           </div>
           <div className={classNames(styles.search, styles.mobileSearch)}>
             <InputText
@@ -362,7 +366,11 @@ const Home: NextPage = () => {
               onChange={onChangeFilter}
               placeholder="Service"
             />
-            <Button label="Search" onClick={onSearch} />
+            <Button
+              className={styles.searchButton}
+              label="Search"
+              onClick={onSearch}
+            />
           </div>
           <DataView
             className={styles.desktopData}
