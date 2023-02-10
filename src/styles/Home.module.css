@@ -4,7 +4,7 @@
 }
 
 .main {
-  min-height: 90vh;
+  min-height: 95vh;
   padding: 2rem 1rem;
   flex: 1;
   display: flex;
@@ -17,6 +17,10 @@
 
 .label {
   margin-left: 20px;
+}
+
+.filterButton {
+  margin-top: 1.5rem;
 }
 
 .buttonList {

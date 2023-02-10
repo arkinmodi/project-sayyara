@@ -25,14 +25,17 @@ const filterByPartCondition = ["NEW", "USED"];
 const searchFilterList = ["Service", "Shop Name"];
 
 const Home: NextPage = () => {
-  const [selectedTypeFilters, setSelectedTypeFilters] =
-    useState(filterByPartType);
-  const [selectedConditionFilters, setSelectedConditionFilters] = useState(
-    filterByPartCondition
-  );
+  const [selectedTypeFilters, setSelectedTypeFilters] = useState<string[]>([]);
+  const [selectedConditionFilters, setSelectedConditionFilters] = useState<
+    string[]
+  >([]);
   const [locationRange, setLocationRange] = useState<[number, number]>([1, 50]);
 
   const [searchString, setSearchString] = useState("");
+  const [lastSearch, setLastSearch] = useState<[string, string]>([
+    "",
+    "Service",
+  ]);
   const [searchFilter, setSearchFilter] = useState(searchFilterList[0]);
 
   const [shops, setShops] = useState<(IShop & { services: IService[] })[]>([]);
@@ -90,6 +93,11 @@ const Home: NextPage = () => {
     }
   };
 
+  const resetFilters = () => {
+    setSelectedTypeFilters([]);
+    setSelectedConditionFilters([]);
+  };
+
   const onChangeString = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchString(e.target.value);
   };
@@ -98,19 +106,43 @@ const Home: NextPage = () => {
     setSearchFilter(e.value);
   };
 
-  const filterByParts = (shop: IShop & { services: IService[] }) => {
+  const filterByPartsType = (shop: IShop & { services: IService[] }) => {
     // Filters parts by checking if any service in a shop has all parts that match any criteria
     // If any service contains all parts in the filter, then the shop is passed through
+    // If there are no filters selected, skip this filter
+    if (selectedTypeFilters.length === 0) {
+      return true;
+    }
+
     const numServices = shop.services.length;
     for (let i = 0; i < numServices; i++) {
       if (shop.services[i]) {
         const parts = shop.services[i]?.parts;
         if (parts && parts.length !== 0) {
           const flag = parts.every((part) => {
-            return (
-              selectedTypeFilters.includes(part.build) &&
-              selectedConditionFilters.includes(part.condition)
-            );
+            return selectedTypeFilters.includes(part.build);
+          });
+          if (flag) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  };
+
+  const filterByPartsCondition = (shop: IShop & { services: IService[] }) => {
+    if (selectedConditionFilters.length === 0) {
+      return true;
+    }
+
+    const numServices = shop.services.length;
+    for (let i = 0; i < numServices; i++) {
+      if (shop.services[i]) {
+        const parts = shop.services[i]?.parts;
+        if (parts && parts.length !== 0) {
+          const flag = parts.every((part) => {
+            return selectedConditionFilters.includes(part.condition);
           });
           if (flag) {
             return true;
@@ -123,39 +155,55 @@ const Home: NextPage = () => {
 
   const onSearch = () => {
     // Fetch via search parameters
-    if (searchString !== "") {
-      switch (searchFilter) {
-        case "Service":
-          getFilteredShops(searchString, false).then((data) => {
-            if (data) {
-              // Filter by part type here
-              let filteredData = data.filter(filterByParts);
-              setShops(filteredData);
-            }
-          });
-          break;
-        case "Shop Name":
-          getFilteredShops(searchString, true).then((data) => {
-            if (data) {
-              // Filter by part type here
-              let filteredData = data.filter(filterByParts);
-              setShops(filteredData);
-            }
-          });
-          break;
-        default:
-          break;
-      }
-    } else {
-      getFilteredShops("", true).then((data) => {
-        if (data) {
-          console.log(data);
-          let filteredData = data.filter(filterByParts);
-          setShops(filteredData);
+    if (searchFilter) {
+      setLastSearch([searchString, searchFilter]);
+
+      if (lastSearch[0] !== "") {
+        switch (lastSearch[1]) {
+          case "Service":
+            getFilteredShops(lastSearch[0], false).then((data) => {
+              if (data) {
+                // Filter by part type here
+                let filteredData = data
+                  .filter(filterByPartsType)
+                  .filter(filterByPartsCondition);
+                setShops(filteredData);
+              }
+            });
+            break;
+          case "Shop Name":
+            getFilteredShops(lastSearch[0], true).then((data) => {
+              if (data) {
+                // Filter by part type here
+                let filteredData = data
+                  .filter(filterByPartsType)
+                  .filter(filterByPartsCondition);
+                setShops(filteredData);
+              }
+            });
+            break;
+          default:
+            break;
         }
-      });
+      } else {
+        getFilteredShops("", true).then((data) => {
+          if (data) {
+            console.log(data);
+            let filteredData = data
+              .filter(filterByPartsType)
+              .filter(filterByPartsCondition);
+            setShops(filteredData);
+          }
+        });
+      }
     }
   };
+
+  useEffect(() => {
+    setSearchString(lastSearch[0]);
+    setSearchFilter(lastSearch[1]);
+    onSearch();
+  }, [selectedTypeFilters, selectedConditionFilters]);
 
   const shopOnClick = (shop: IShop & { services: IService[] }) => {
     Router.push(`/shop/${shop.id}`);
@@ -267,6 +315,9 @@ const Home: NextPage = () => {
               range
               disabled
             />
+            <Button className={styles.filterButton} onClick={resetFilters}>
+              Reset Filters
+            </Button>
           </Panel>
           <Panel
             className={styles.mobileFilter}
@@ -323,6 +374,9 @@ const Home: NextPage = () => {
               range
               disabled
             />
+            <Button className={styles.filterButton} onClick={resetFilters}>
+              Reset Filters
+            </Button>
           </Panel>
         </div>
         <div className={styles.content}>
