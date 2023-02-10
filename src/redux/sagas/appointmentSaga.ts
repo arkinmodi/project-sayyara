@@ -12,10 +12,10 @@ import {
 } from "redux-saga/effects";
 import { IAppointment, ICustomerAppointment } from "src/types/appointment";
 import { ServiceType } from "src/types/service";
-import { getCustomerById } from "src/util/customerUtil";
-import { getServiceById } from "src/util/serviceUtil";
-import { getShopId } from "src/util/shopUtil";
-import { getVehicleById } from "src/util/vehicleUtil";
+import { getCustomerById } from "src/utils/customerUtil";
+import { getServiceById } from "src/utils/serviceUtil";
+import { getShopId } from "src/utils/shopUtil";
+import { getVehicleById } from "src/utils/vehicleUtil";
 import {
   IAppointmentActionCreateAppointment,
   IAppointmentActionSetAppointmentStatus,
