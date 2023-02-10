@@ -22,7 +22,7 @@ export interface IAppointmentActionReadAppointments
 
 export interface IAppointmentActionReadCustomerAppointments
   extends IAppointmentActionBase {
-  payload: void;
+  payload: { customerId: string };
 }
 
 export interface IAppointmentActionSetAppointments
@@ -47,8 +47,10 @@ export const readAppointments = (payload: void) => ({
   payload,
 });
 
-export const readCustomerAppointments = (payload: void) => ({
-  type: AppointmentTypes.READ_APPOINTMENTS,
+export const readCustomerAppointments = (
+  payload: IAppointmentActionReadCustomerAppointments["payload"]
+) => ({
+  type: AppointmentTypes.READ_CUSTOMER_APPOINTMENTS,
   payload,
 });
 

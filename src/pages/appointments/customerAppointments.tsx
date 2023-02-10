@@ -39,11 +39,13 @@ const CustomerAppointments: NextPage = () => {
 
   const dispatch = useDispatch();
   const userType = useSelector(AuthSelectors.getUserType);
-  const customerId =
-    userType == UserType.CUSTOMER ? useSelector(AuthSelectors.getUserId) : null;
+  const userId = useSelector(AuthSelectors.getUserId);
+  const customerId = userType == UserType.CUSTOMER ? userId : null;
 
   useEffect(() => {
-    dispatch(readCustomerAppointments());
+    if (customerId) {
+      dispatch(readCustomerAppointments({ customerId }));
+    }
   }, [dispatch, customerId]);
 
   useEffect(() => {
@@ -69,13 +71,13 @@ const CustomerAppointments: NextPage = () => {
       (appointment: ICustomerAppointment) =>
         appointment.status == AppointmentStatus.IN_PROGRESS
     );
-    setScheduledAppointments(inProgressAppointmentsList);
+    setInProgressAppointments(inProgressAppointmentsList);
 
     const pastAppointmentsList = appointmentsList.filter(
       (appointment: ICustomerAppointment) =>
         appointment.status == AppointmentStatus.COMPLETED
     );
-    setScheduledAppointments(pastAppointmentsList);
+    setPastAppointments(pastAppointmentsList);
   }, [appointments]);
 
   const appointmentsCard = (appointment: ICustomerAppointment) => {
@@ -100,7 +102,7 @@ const CustomerAppointments: NextPage = () => {
       <div>Scheduled Appointments</div>
       <div className="card">
         <Carousel
-          value={appointments}
+          value={scheduledAppointments}
           numVisible={3}
           numScroll={1}
           responsiveOptions={responsiveOptions}
@@ -111,7 +113,7 @@ const CustomerAppointments: NextPage = () => {
       <div>In Progress Appointments</div>
       <div className="card">
         <Carousel
-          value={appointments}
+          value={inProgressAppointments}
           numVisible={3}
           numScroll={1}
           responsiveOptions={responsiveOptions}
@@ -122,7 +124,7 @@ const CustomerAppointments: NextPage = () => {
       <div>Past Appointments</div>
       <div className="card">
         <Carousel
-          value={appointments}
+          value={pastAppointments}
           numVisible={3}
           numScroll={1}
           responsiveOptions={responsiveOptions}

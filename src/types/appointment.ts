@@ -9,7 +9,7 @@ export interface IAppointment {
   customer: ICustomer;
   quoteId: string | null;
   serviceName: string;
-  price: Number;
+  price: number;
   status: AppointmentStatus;
   workOrderId: string;
   vehicle: IVehicle;
@@ -24,7 +24,7 @@ export interface ICustomerAppointment {
   quoteId: string | null;
   workOrderId: string;
   serviceName: string;
-  price: Number;
+  price: number;
   status: AppointmentStatus;
   vehicle: IVehicle;
 }

@@ -1,5 +1,5 @@
 import { AuthSelectors } from "@redux/selectors/authSelectors";
-import { Appointment, UserType } from "@server/db/client";
+import { Appointment } from "@server/db/client";
 import {
   all,
   call,
@@ -187,16 +187,13 @@ function* readAppointments(): Generator<CallEffect | PutEffect | SelectEffect> {
 function* readCustomerAppointments(): Generator<
   CallEffect | PutEffect | SelectEffect
 > {
-  const userType = yield select(AuthSelectors.getUserType);
-  if (userType == UserType.CUSTOMER) {
-    const customerId = (yield select(AuthSelectors.getUserId)) as string;
-    if (customerId) {
-      const appointments = yield call(getCustomerAppointments, customerId);
-      yield put({
-        type: AppointmentTypes.SET_APPOINTMENTS,
-        payload: { customerId, appointments },
-      });
-    }
+  const customerId = (yield select(AuthSelectors.getUserId)) as string;
+  if (customerId) {
+    const appointments = yield call(getCustomerAppointments, customerId);
+    yield put({
+      type: AppointmentTypes.SET_APPOINTMENTS,
+      payload: { customerId, appointments },
+    });
   }
 }
 
