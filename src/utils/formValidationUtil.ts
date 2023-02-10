@@ -11,6 +11,6 @@ export const validatePhoneNumber = (phoneNumber: string) => {
 };
 
 export const validatePostalCode = (postalCode: string) => {
-  const phoneNumberRegex = /^[A-Z]\d[A-Z][ ]?\d[A-Z]\d$/i;
-  return phoneNumberRegex.test(postalCode);
+  const postalCodeRegex = /^[A-Z]\d[A-Z][ ]?\d[A-Z]\d$/i;
+  return postalCodeRegex.test(postalCode);
 };
