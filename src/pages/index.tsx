@@ -7,12 +7,12 @@ import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
 import { Chip } from "primereact/chip";
 import { DataView } from "primereact/dataview";
-import { Dropdown } from "primereact/dropdown";
+import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Panel } from "primereact/panel";
 import { Slider, SliderChangeParams } from "primereact/slider";
 import image from "public/icons/icon-192x192.png";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { IService } from "src/types/service";
 import { IShop } from "src/types/shop";
 import { getFilteredShops } from "src/utils/shopUtil";
@@ -88,6 +88,14 @@ const Home: NextPage = () => {
     if (typeof e.value !== "number") {
       setLocationRange(e.value);
     }
+  };
+
+  const onChangeString = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchString(e.target.value);
+  };
+
+  const onChangeFilter = (e: DropdownChangeParams) => {
+    setSearchFilter(e.value);
   };
 
   const onSearch = () => {
@@ -299,13 +307,13 @@ const Home: NextPage = () => {
               className={styles.inputtext}
               placeholder="Search"
               value={searchString}
-              onChange={(e) => setSearchString(e.target.value)}
+              onChange={onChangeString}
             />
             <Dropdown
               className={styles.dropdown}
               value={searchFilter}
               options={searchFilterList}
-              onChange={(e) => setSearchFilter(e.value)}
+              onChange={onChangeFilter}
               placeholder="Service"
             />
             <Button label="Search" onClick={onSearch} />
@@ -315,13 +323,13 @@ const Home: NextPage = () => {
               className={styles.inputtext}
               placeholder="Search"
               value={searchString}
-              onChange={(e) => setSearchString(e.target.value)}
+              onChange={onChangeString}
             />
             <Dropdown
               className={styles.dropdown}
               value={searchFilter}
               options={searchFilterList}
-              onChange={(e) => setSearchFilter(e.value)}
+              onChange={onChangeFilter}
               placeholder="Service"
             />
             <Button label="Search" onClick={onSearch} />
