@@ -22,6 +22,8 @@ const AuthLoginForm = () => {
     ...initialLoginFormValues,
   });
   const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+
   const toast = useRef<Toast>(null);
 
   const showErrorToast = () => {
@@ -70,7 +72,10 @@ const AuthLoginForm = () => {
     const isValidEmail = validateEmail(formValues.email);
     setIsEmailValid(isValidEmail);
 
-    return isValidEmail;
+    const isValidPassword = formValues.password.length > 0;
+    setIsPasswordValid(isValidPassword);
+
+    return isValidEmail && isValidPassword;
   };
   useEffect(() => {
     if (showInvalidLoginToast) {
@@ -126,13 +131,23 @@ const AuthLoginForm = () => {
         <br />
         <InputText
           id="authLoginFormPasswordInput"
+          className={classNames(
+            authStyles.authFormInput,
+            !isPasswordValid ? "p-invalid block" : ""
+          )}
           type="password"
           placeholder="Password"
-          className={authStyles.authFormInput}
           value={formValues.password}
           onChange={handleInputChange}
           name="password"
         />
+        <br />
+        <small
+          id="passwordHelp"
+          className={!isPasswordValid ? "p-error block" : "p-hidden"}
+        >
+          Password is required
+        </small>
       </div>
       <div className={authStyles.authFormButtonGroup}>
         <Button
