@@ -24,6 +24,14 @@ const filterByPartType = ["OEM", "Aftermarket"];
 const filterByPartCondition = ["New", "Used"];
 const searchFilterList = ["Service", "Shop Name"];
 
+interface IPart {
+  name: string;
+  cost: number;
+  quantity: number;
+  build: string;
+  condition: string;
+}
+
 const Home: NextPage = () => {
   const [selectedTypeFilters, setSelectedTypeFilters] =
     useState(filterByPartType);
@@ -98,6 +106,19 @@ const Home: NextPage = () => {
     setSearchFilter(e.value);
   };
 
+  const filterByParts = (shop: IShop & { services: IService[] }) => {
+    // Filters parts by checking if any service in a shop has all parts that match any criteria
+    // If any service contains all parts in the filter, then the shop is passed through
+    const numServices = shop.services.length;
+    for (let i = 0; i < numServices; i++) {
+      if (shop.services[i].parts) {
+      }
+      const parts: IPart[] = shop.services[i]?.parts;
+      console.log("parts", parts[0]);
+    }
+    return true;
+  };
+
   const onSearch = () => {
     // Fetch via search parameters
     if (searchString !== "") {
@@ -106,9 +127,8 @@ const Home: NextPage = () => {
           getFilteredShops(searchString, "false").then((data) => {
             if (data) {
               // Filter by part type here
-              // let filteredData = data.filter((shop) => {
-
-              // });
+              let filteredData = data.filter(filterByParts);
+              console.log(filteredData);
               setShops(data);
             }
           });
@@ -117,6 +137,8 @@ const Home: NextPage = () => {
           getFilteredShops(searchString, "true").then((data) => {
             if (data) {
               // Filter by part type here
+              let filteredData = data.filter(filterByParts);
+              console.log(filteredData);
               setShops(data);
             }
           });
@@ -127,9 +149,7 @@ const Home: NextPage = () => {
     }
   };
 
-  // Todo finish shop onclick
   const shopOnClick = (shop: IShop & { services: IService[] }) => {
-    console.log(shop);
     Router.push(`/shop/${shop.id}`);
   };
 
@@ -237,6 +257,7 @@ const Home: NextPage = () => {
               max={50}
               onChange={(e) => setRange(e)}
               range
+              disabled
             />
           </Panel>
           <Panel
@@ -292,6 +313,7 @@ const Home: NextPage = () => {
               max={50}
               onChange={(e) => setRange(e)}
               range
+              disabled
             />
           </Panel>
         </div>
