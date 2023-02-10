@@ -20,17 +20,9 @@ import styles from "../styles/Home.module.css";
 
 const MAX_CHIP_MOBILE = 2;
 const MAX_CHIP = 3;
-const filterByPartType = ["OEM", "Aftermarket"];
-const filterByPartCondition = ["New", "Used"];
+const filterByPartType = ["OEM", "AFTERMARKET"];
+const filterByPartCondition = ["NEW", "USED"];
 const searchFilterList = ["Service", "Shop Name"];
-
-interface IPart {
-  name: string;
-  cost: number;
-  quantity: number;
-  build: string;
-  condition: string;
-}
 
 const Home: NextPage = () => {
   const [selectedTypeFilters, setSelectedTypeFilters] =
@@ -57,7 +49,6 @@ const Home: NextPage = () => {
   }, []);
 
   const onTypeChange = (e: { value: any; checked: boolean }) => {
-    console.log(e);
     let _selectedTypeFilters = [...selectedTypeFilters];
 
     if (e.checked) {
@@ -75,7 +66,6 @@ const Home: NextPage = () => {
   };
 
   const onConditionChange = (e: { value: any; checked: boolean }) => {
-    console.log(e);
     let _selectedConditionFilters = [...selectedConditionFilters];
 
     if (e.checked) {
@@ -111,12 +101,22 @@ const Home: NextPage = () => {
     // If any service contains all parts in the filter, then the shop is passed through
     const numServices = shop.services.length;
     for (let i = 0; i < numServices; i++) {
-      if (shop.services[i].parts) {
+      if (shop.services[i]) {
+        const parts = shop.services[i]?.parts;
+        if (parts && parts.length !== 0) {
+          const flag = parts.every((part) => {
+            return (
+              selectedTypeFilters.includes(part.build) &&
+              selectedConditionFilters.includes(part.condition)
+            );
+          });
+          if (flag) {
+            return true;
+          }
+        }
       }
-      const parts: IPart[] = shop.services[i]?.parts;
-      console.log("parts", parts[0]);
     }
-    return true;
+    return false;
   };
 
   const onSearch = () => {
@@ -128,8 +128,7 @@ const Home: NextPage = () => {
             if (data) {
               // Filter by part type here
               let filteredData = data.filter(filterByParts);
-              console.log(filteredData);
-              setShops(data);
+              setShops(filteredData);
             }
           });
           break;
@@ -138,8 +137,7 @@ const Home: NextPage = () => {
             if (data) {
               // Filter by part type here
               let filteredData = data.filter(filterByParts);
-              console.log(filteredData);
-              setShops(data);
+              setShops(filteredData);
             }
           });
           break;
