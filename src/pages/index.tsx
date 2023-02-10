@@ -188,7 +188,6 @@ const Home: NextPage = () => {
       } else {
         getFilteredShops("", true).then((data) => {
           if (data) {
-            console.log(data);
             let filteredData = data
               .filter(filterByPartsType)
               .filter(filterByPartsCondition);
