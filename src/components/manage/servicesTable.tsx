@@ -212,7 +212,7 @@ const ServicesTable = (props: IServiceProps) => {
       <Dropdown
         value={options.value}
         options={
-          serviceType == ServiceType.CANNED
+          serviceType === ServiceType.CANNED
             ? parts_condition_basic
             : parts_condition_custom
         }
@@ -222,7 +222,7 @@ const ServicesTable = (props: IServiceProps) => {
           if (options.editorCallback) options.editorCallback(e.value);
         }}
         placeholder={
-          serviceType == ServiceType.CUSTOM
+          serviceType === ServiceType.CUSTOM
             ? options.rowData.parts[0].condition
             : options.rowData.condition
         }
@@ -238,7 +238,7 @@ const ServicesTable = (props: IServiceProps) => {
       <Dropdown
         value={options.value}
         options={
-          serviceType == ServiceType.CANNED
+          serviceType === ServiceType.CANNED
             ? parts_type_basic
             : parts_type_custom
         }
@@ -248,7 +248,7 @@ const ServicesTable = (props: IServiceProps) => {
           if (options.editorCallback) options.editorCallback(e.value);
         }}
         placeholder={
-          serviceType == ServiceType.CUSTOM
+          serviceType === ServiceType.CUSTOM
             ? options.rowData.parts[0].build
             : options.rowData.build
         }

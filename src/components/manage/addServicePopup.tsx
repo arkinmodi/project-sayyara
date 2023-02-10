@@ -87,7 +87,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
   const dispatch = useDispatch();
 
   const onCheckedChange = (e: CheckboxChangeParams) => {
-    const val = e.checked || false;
+    const val = e.checked ?? false;
 
     setFormValues({
       ...formValues,
@@ -126,7 +126,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
   const saveService = () => {
     setSubmitted(true);
     if (
-      serviceType == ServiceType.CANNED &&
+      serviceType === ServiceType.CANNED &&
       formValues.name != "" &&
       formValues.description != "" &&
       (formValues as IAddBasicServiceValues).estimatedTime > 0 &&
@@ -151,7 +151,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
     }
 
     if (
-      serviceType == ServiceType.CUSTOM &&
+      serviceType === ServiceType.CUSTOM &&
       formValues.name != "" &&
       formValues.description != "" &&
       ((formValues as IAddCustomServiceValues).oem ||

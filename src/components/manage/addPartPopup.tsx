@@ -61,7 +61,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
   };
 
   const onInputNumberChange = (e: InputNumberValueChangeParams) => {
-    const val = e.value || 0;
+    const val = e.value ?? 0;
 
     const key: string = e.target.name;
 
