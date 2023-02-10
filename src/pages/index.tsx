@@ -33,15 +33,13 @@ const Home: NextPage = () => {
   const [locationRange, setLocationRange] = useState<[number, number]>([1, 50]);
 
   const [searchString, setSearchString] = useState("");
-  const [searchFilter, setSearchFilter] = useState("Service");
+  const [searchFilter, setSearchFilter] = useState(searchFilterList[0]);
 
-  const [shops, setShops] = useState<
-    (IShop & { services: IService[] })[] | never[]
-  >([]);
+  const [shops, setShops] = useState<(IShop & { services: IService[] })[]>([]);
 
   // Initial fetch
   useEffect(() => {
-    getFilteredShops("", "true").then((data) => {
+    getFilteredShops("", true).then((data) => {
       if (data) {
         setShops(data);
       }
@@ -124,7 +122,7 @@ const Home: NextPage = () => {
     if (searchString !== "") {
       switch (searchFilter) {
         case "Service":
-          getFilteredShops(searchString, "false").then((data) => {
+          getFilteredShops(searchString, false).then((data) => {
             if (data) {
               // Filter by part type here
               let filteredData = data.filter(filterByParts);
@@ -133,7 +131,7 @@ const Home: NextPage = () => {
           });
           break;
         case "Shop Name":
-          getFilteredShops(searchString, "true").then((data) => {
+          getFilteredShops(searchString, true).then((data) => {
             if (data) {
               // Filter by part type here
               let filteredData = data.filter(filterByParts);
@@ -144,6 +142,13 @@ const Home: NextPage = () => {
         default:
           break;
       }
+    } else {
+      getFilteredShops("", true).then((data) => {
+        if (data) {
+          let filteredData = data.filter(filterByParts);
+          setShops(filteredData);
+        }
+      });
     }
   };
 
@@ -156,7 +161,7 @@ const Home: NextPage = () => {
     view: string
   ) => {
     const maxChip = view === "desktop" ? MAX_CHIP : MAX_CHIP_MOBILE;
-    let serviceList: any = [];
+    let serviceList: JSX.Element[] = [];
     for (let i = 0; i <= maxChip - 1; i++) {
       let service = shop.services[i];
       if (service) {
@@ -253,7 +258,7 @@ const Home: NextPage = () => {
               value={locationRange}
               min={1}
               max={50}
-              onChange={(e) => setRange(e)}
+              onChange={setRange}
               range
               disabled
             />
@@ -309,7 +314,7 @@ const Home: NextPage = () => {
               value={locationRange}
               min={1}
               max={50}
-              onChange={(e) => setRange(e)}
+              onChange={setRange}
               range
               disabled
             />
@@ -358,7 +363,6 @@ const Home: NextPage = () => {
             className={styles.desktopData}
             value={shops}
             layout="list"
-            // header={header}
             itemTemplate={(shop) => itemTemplate(shop, "desktop")}
             paginator
             rows={4}
@@ -367,7 +371,6 @@ const Home: NextPage = () => {
             className={styles.mobileData}
             value={shops}
             layout="list"
-            // header={header}
             itemTemplate={(shop) => itemTemplate(shop, "mobile")}
             paginator
             rows={4}

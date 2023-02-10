@@ -150,7 +150,7 @@ export function patchShop(shopId: string, patch: IShop): Promise<IShop | null> {
 
 export function getFilteredShops(
   name: string,
-  isShop: string
+  isShop: boolean
 ): Promise<(IShop & { services: IService[] })[] | null> {
   const url = `/api/shop/lookup?name=${name}&shop=${isShop}`;
 
