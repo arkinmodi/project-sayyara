@@ -187,8 +187,11 @@ const Profile: NextPage = () => {
               {` ${shop.email}`}
             </span>
           </div>
-          <Button className={styles.shopProfileButtonGreen}>
-            Request Service
+          <Button
+            className={styles.shopProfileButtonGreen}
+            disabled={userType === null}
+          >
+            {userType === null ? "Login to Request Service" : "Request Service"}
           </Button>
         </div>
       </div>
