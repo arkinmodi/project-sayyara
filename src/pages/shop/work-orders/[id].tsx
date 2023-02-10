@@ -234,22 +234,26 @@ const WorkOrderPage: React.FC<{
         body={workOrderBody ?? ""}
         updateBody={setWorkOrderBody}
       />
-      <div className={styles.workOrderSaveContainer}>
-        <Button
-          className={`p-button-success greenButton ${styles.workOrderSaveContainerSaveButton}`}
-          icon="pi pi-save"
-          label="Save"
-          aria-label="Save"
-          onClick={handleSave}
-          disabled={isSaving}
-          loading={isSaving}
-          loadingIcon="pi pi-spin pi-spinner"
-        />
+      {userType === UserType.CUSTOMER ? (
+        <></>
+      ) : (
+        <div className={styles.workOrderSaveContainer}>
+          <Button
+            className={`p-button-success greenButton ${styles.workOrderSaveContainerSaveButton}`}
+            icon="pi pi-save"
+            label="Save"
+            aria-label="Save"
+            onClick={handleSave}
+            disabled={isSaving}
+            loading={isSaving}
+            loadingIcon="pi pi-spin pi-spinner"
+          />
 
-        {workOrder && (
-          <p>Last Saved: {formatDate(new Date(workOrder.updateTime))}</p>
-        )}
-      </div>
+          {workOrder && (
+            <p>Last Saved: {formatDate(new Date(workOrder.updateTime))}</p>
+          )}
+        </div>
+      )}
       <WorkOrderMetadataDialog
         isVisible={isEditMetaDataDialogVisible}
         onHide={handleHideEditMetaDataDialog}
