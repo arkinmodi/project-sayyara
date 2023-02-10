@@ -11,37 +11,8 @@
   flex-direction: row;
 }
 
-@media (max-width: 500px) {
-  .main {
-    flex-direction: column;
-  }
-}
-
-@media (min-width: 500px) {
-  .filter {
-    flex: 0 1 28%;
-    margin-right: 1rem;
-    padding-right: 0.5rem;
-    border-right: 2px solid #cccccc;
-  }
-}
-
 .mobileFilter {
   display: none;
-}
-
-@media (max-width: 500px) {
-  .filter {
-    margin-bottom: 1rem;
-  }
-
-  .mobileFilter {
-    display: block;
-  }
-
-  .desktopFilter {
-    display: none;
-  }
 }
 
 .label {
@@ -76,21 +47,6 @@
 
 .mobileSearch {
   display: none;
-}
-
-@media (max-width: 500px) {
-  .desktopSearch {
-    display: none;
-  }
-
-  .mobileSearch {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .inputtext {
-    flex-basis: 100% !important;
-  }
 }
 
 .itemContainer {
@@ -132,6 +88,35 @@
 }
 
 @media (max-width: 500px) {
+  .main {
+    flex-direction: column;
+  }
+
+  .filter {
+    margin-bottom: 1rem;
+  }
+
+  .mobileFilter {
+    display: block;
+  }
+
+  .desktopFilter {
+    display: none;
+  }
+
+  .desktopSearch {
+    display: none;
+  }
+
+  .mobileSearch {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .inputtext {
+    flex-basis: 100% !important;
+  }
+
   .itemContainer {
     padding: 0;
   }
@@ -151,5 +136,14 @@
 
   .mobileData {
     display: block;
+  }
+}
+
+@media (min-width: 500px) {
+  .filter {
+    flex: 0 1 28%;
+    margin-right: 1rem;
+    padding-right: 0.5rem;
+    border-right: 2px solid #cccccc;
   }
 }
