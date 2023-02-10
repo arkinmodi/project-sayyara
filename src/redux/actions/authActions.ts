@@ -1,4 +1,4 @@
-import { UserType } from "@prisma/client";
+import { IAuthState } from "@redux/state/user/authState";
 import { AuthDialogType } from "src/types/auth";
 import AuthType from "../types/authTypes";
 
@@ -65,14 +65,7 @@ export interface IAuthActionSetIsAuthDialogOpen extends IAuthActionBase {
 }
 
 export interface IAuthActionSetUserSession extends IAuthActionBase {
-  payload: {
-    id: string | null;
-    email: string | null;
-    firstName: string | null;
-    lastName: string | null;
-    userType: UserType | null;
-    shopId: string | null;
-  };
+  payload: IAuthState["session"];
 }
 
 export type IAuthAction =

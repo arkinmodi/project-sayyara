@@ -8,5 +8,6 @@ export const config = {
     "/dashboard/:path*",
     "/shop/dashboard/:path*",
     "/shop/manage/:path*",
+    "/shop/work-orders/:path*",
   ],
 };

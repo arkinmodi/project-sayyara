@@ -12,6 +12,7 @@ import {
   takeEvery,
 } from "redux-saga/effects";
 import { IEmployee } from "src/types/employee";
+import { getServicesByShopId } from "src/utils/shopUtil";
 
 function getAllEmployees(shopId: string): Promise<IEmployee[] | null> {
   return fetch(`/api/shop/${shopId}/employees`, {
@@ -56,9 +57,23 @@ function* readShopEmployees(): Generator<
   }
 }
 
+function* readShopServices(): Generator<CallEffect | PutEffect | SelectEffect> {
+  const shopId = (yield select(AuthSelectors.getShopId)) as string | null;
+  if (shopId) {
+    const services = yield call(getServicesByShopId, shopId);
+    yield put({
+      type: ShopTypes.SET_SHOP_SERVICES,
+      payload: { services },
+    });
+  }
+}
+
 /**
  * Saga to handle all employee related actions.
  */
 export function* shopSaga() {
-  yield all([takeEvery(ShopTypes.READ_SHOP_EMPLOYEES, readShopEmployees)]);
+  yield all([
+    takeEvery(ShopTypes.READ_SHOP_EMPLOYEES, readShopEmployees),
+    takeEvery(ShopTypes.READ_SHOP_SERVICES, readShopServices),
+  ]);
 }

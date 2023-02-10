@@ -1,4 +1,8 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
+
+var md5 = require("md5-hash");
+
 const prisma = new PrismaClient();
 
 const shopOwnerCredentials = {
@@ -13,25 +17,28 @@ const customerCredentials = {
 
 const clearDatabase = async () => {
   await prisma.$transaction([
-    prisma.employee.deleteMany({}),
-    prisma.customer.deleteMany({}),
-    prisma.appointment.deleteMany({}),
-    prisma.quote.deleteMany({}),
-    prisma.vehicle.deleteMany({}),
-    prisma.workOrder.deleteMany({}),
-    prisma.shop.deleteMany({}),
-    prisma.service.deleteMany({}),
+    prisma.appointment.deleteMany(),
+    prisma.quote.deleteMany(),
+    prisma.vehicle.deleteMany(),
+    prisma.workOrder.deleteMany(),
+    prisma.service.deleteMany(),
+    prisma.customer.deleteMany(),
+    prisma.employee.deleteMany(),
+    prisma.shop.deleteMany(),
   ]);
 };
+
+const bcryptHash = (plaintext: string) => bcrypt.hashSync(plaintext, 10);
+const md5Hash = (plaintext: string) => md5.default(plaintext);
 
 const seed = async () => {
   await clearDatabase();
 
   // Create Shop Owner
-  await prisma.employee.create({
+  const shopOwnerData = await prisma.employee.create({
     data: {
       email: shopOwnerCredentials.email,
-      password: shopOwnerCredentials.password,
+      password: bcryptHash(md5Hash(shopOwnerCredentials.password)),
       first_name: "John",
       last_name: "Stone",
       phone_number: "9055259140",
@@ -51,10 +58,10 @@ const seed = async () => {
   });
 
   // Create Customer and Vehicle
-  await prisma.customer.create({
+  const customerData = await prisma.customer.create({
     data: {
       email: customerCredentials.email,
-      password: customerCredentials.password,
+      password: bcryptHash(md5Hash(customerCredentials.password)),
       first_name: "Mia",
       last_name: "Wong",
       phone_number: "9055259140",
@@ -63,15 +70,72 @@ const seed = async () => {
         create: [
           {
             year: 2013,
-            make: "Subaru",
-            model: "Forester",
+            make: "Toyota",
+            model: "4Runner",
             vin: "JF2SHADC3DG417185",
             license_plate: "BPNW958",
           },
         ],
       },
     },
+    include: {
+      vehicles: true,
+    },
   });
+
+  // Create Service
+  const serviceData = await prisma.service.create({
+    data: {
+      name: "Oil Change",
+      description: "Change the engine oil",
+      estimated_time: 2,
+      total_price: 30.55,
+      parts: [
+        {
+          quantity: 1,
+          condition: "NEW",
+          build: "OEM",
+          cost: 10.0,
+          name: "Engine Oil",
+        },
+      ],
+      type: "CANNED",
+      shop: { connect: { id: shopOwnerData.shop_id } },
+    },
+  });
+
+  // Create Appointment and Work Order
+  const appointmentData = await prisma.appointment.create({
+    data: {
+      start_time: new Date("2023-11-09T02:00:00.000Z"),
+      end_time: new Date("2023-11-09T04:00:00.000Z"),
+      price: 30.55,
+      vehicle: { connect: { id: customerData.vehicles[0]?.id } },
+      customer: { connect: { id: customerData.id } },
+      shop: { connect: { id: shopOwnerData.shop_id } },
+      service: { connect: { id: serviceData.id } },
+      work_order: {
+        create: {
+          create_time: new Date(),
+          update_time: new Date(),
+          title: "Oil Change",
+          body: "",
+          customer: { connect: { id: customerData.id } },
+          vehicle: { connect: { id: customerData.vehicles[0]?.id } },
+          shop: { connect: { id: shopOwnerData.shop_id } },
+        },
+      },
+    },
+  });
+
+  // Log all IDs
+  console.log("Shop Owner ID: \t", shopOwnerData.id);
+  console.log("Shop ID: \t", shopOwnerData.shop_id);
+  console.log("Customer ID: \t", customerData.id);
+  console.log("Vehicle ID: \t", customerData.vehicles[0]?.id);
+  console.log("Service ID: \t", serviceData.id);
+  console.log("Appointment ID: ", appointmentData.id);
+  console.log("Work Order ID: \t", appointmentData.work_order_id);
 };
 
 seed()

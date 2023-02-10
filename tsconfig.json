@@ -18,6 +18,7 @@
     "baseUrl": ".",
     "paths": {
       "@server/*": ["src/server/*"],
+      "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
       "@styles/*": ["src/styles/*"],
       "@redux/*": ["src/redux/*"],

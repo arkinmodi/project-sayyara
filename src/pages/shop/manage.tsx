@@ -4,12 +4,13 @@ import { GetServerSideProps } from "next";
 import { TabPanel, TabView } from "primereact/tabview";
 import React from "react";
 import EmployeeTable from "src/components/employees/employeeTable";
+import Services from "../../components/manage/services";
 
 const ManageShopTabs = () => {
   return (
     <TabView>
       <TabPanel header="Services">
-        {/* TODO: Add manage services page here */}
+        <Services />
       </TabPanel>
       <TabPanel header="Employees">
         <EmployeeTable />

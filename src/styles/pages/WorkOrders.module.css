@@ -1,0 +1,54 @@
+.workOrderPageContainer {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.workOrderTitleContainer {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.workOrderMetadataContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0rem 1rem;
+}
+
+.workOrderMetadataContainerEditButtonContainer {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.workOrderSaveContainer {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.workOrderSaveContainerSaveButton {
+  width: 10rem;
+}
+
+@media (max-width: 600px) {
+  .workOrderPageContainer {
+    margin-left: 0rem;
+    margin-right: 0rem;
+  }
+
+  .workOrderMetadataContainer {
+    flex-direction: column;
+    gap: 0rem;
+  }
+
+  .workOrderMetadataContainerEditButton {
+    width: 100%;
+  }
+
+  .workOrderSaveContainerSaveButton {
+    width: 100%;
+  }
+}
