@@ -19,9 +19,11 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
   const { appointment, appointmentProgress } = props;
 
   const handleButtonClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     appointment: IAppointment,
     status: AppointmentStatus
   ): void => {
+    e.stopPropagation();
     dispatch(setAppointmentStatus({ id: appointment.id, status: status }));
   };
 
@@ -37,8 +39,8 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
               styles.appointmentButtonBlue,
               styles.appointmentCardButton
             )}
-            onClick={() =>
-              handleButtonClick(appointment, AppointmentStatus.REJECTED)
+            onClick={(e) =>
+              handleButtonClick(e, appointment, AppointmentStatus.REJECTED)
             }
           />
           <Button
@@ -47,8 +49,8 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
               styles.appointmentButtonGreen,
               styles.appointmentCardButton
             )}
-            onClick={() =>
-              handleButtonClick(appointment, AppointmentStatus.ACCEPTED)
+            onClick={(e) =>
+              handleButtonClick(e, appointment, AppointmentStatus.ACCEPTED)
             }
           />
         </div>
@@ -69,8 +71,8 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
               styles.appointmentButtonRed,
               styles.appointmentCardButton
             )}
-            onClick={() =>
-              handleButtonClick(appointment, AppointmentStatus.REJECTED)
+            onClick={(e) =>
+              handleButtonClick(e, appointment, AppointmentStatus.REJECTED)
             }
           />
           <Button
@@ -79,8 +81,8 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
               styles.appointmentButtonGreen,
               styles.appointmentCardButton
             )}
-            onClick={() =>
-              handleButtonClick(appointment, AppointmentStatus.IN_PROGRESS)
+            onClick={(e) =>
+              handleButtonClick(e, appointment, AppointmentStatus.IN_PROGRESS)
             }
           />
         </div>
@@ -98,8 +100,8 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
             styles.appointmentButtonGreen,
             styles.appointmentCardButton
           )}
-          onClick={() =>
-            handleButtonClick(appointment, AppointmentStatus.COMPLETED)
+          onClick={(e) =>
+            handleButtonClick(e, appointment, AppointmentStatus.COMPLETED)
           }
         />
       </div>
