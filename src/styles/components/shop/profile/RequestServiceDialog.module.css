@@ -1,0 +1,20 @@
+.dialogMobile {
+  display: none;
+}
+
+.dialogContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 75%;
+  padding: 1rem 2rem;
+  margin: auto;
+}
+
+.dialogDropdown {
+  margin-bottom: 5rem;
+}
+
+.dialogButton {
+  max-width: fit-content;
+  margin: auto;
+}

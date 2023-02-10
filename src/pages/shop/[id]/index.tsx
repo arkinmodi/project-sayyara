@@ -1,3 +1,4 @@
+import RequestServiceDialog from "@components/shop/profile/RequestServiceDialog";
 import { ServiceType, UserType } from "@prisma/client";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/pages/shop/ShopProfile.module.css";
@@ -41,6 +42,8 @@ const Profile: NextPage = () => {
     addHoursOfOperationDialogVisible,
     setAddHoursOfOperationDialogVisible,
   ] = useState(false);
+  const [requestServiceDialogVisible, setRequestServiceDialogVisible] =
+    useState(false);
   const router = useRouter();
   const id = router.query.id as string | undefined;
 
@@ -190,6 +193,9 @@ const Profile: NextPage = () => {
           <Button
             className={styles.shopProfileButtonGreen}
             disabled={userType === null}
+            onClick={() => {
+              setRequestServiceDialogVisible(true);
+            }}
           >
             {userType === null ? "Login to Request Service" : "Request Service"}
           </Button>
@@ -210,6 +216,10 @@ const Profile: NextPage = () => {
 
   const hideHoursOfOperationDialog = () => {
     setAddHoursOfOperationDialogVisible(false);
+  };
+
+  const hideRequestServiceDialog = () => {
+    setRequestServiceDialogVisible(false);
   };
 
   const updateShop = (shop: IShop) => {
@@ -275,6 +285,14 @@ const Profile: NextPage = () => {
             shopId={id}
             shop={shop}
             updateShop={updateShop}
+          />
+          <RequestServiceDialog
+            visible={requestServiceDialogVisible}
+            onHide={hideRequestServiceDialog}
+            shopId={id}
+            shop={shop}
+            basicServices={basicServices !== null ? basicServices : []}
+            customServices={customServices !== null ? customServices : []}
           />
         </div>
       ) : (
