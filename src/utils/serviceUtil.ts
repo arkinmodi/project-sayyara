@@ -14,11 +14,11 @@ export function getServiceById(id: string): Promise<IService | null> {
           id: data.id,
           name: data.name,
           description: data.description,
-          estimated_time: data.estimated_time,
-          total_price: data.total_price,
+          estimatedTime: data.estimated_time,
+          totalPrice: data.total_price,
           parts: data.parts,
           type: data.type,
-          shop_id: data.shop_id,
+          shopId: data.shop_id,
         };
         return service;
       });

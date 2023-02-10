@@ -4,8 +4,10 @@ import {
   setIsLoggedIn,
   setUserSession,
 } from "@redux/actions/authActions";
-import { setShopEmployees } from "@redux/actions/shopActions";
+import { setShopState } from "@redux/actions/shopActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
+import { initialShopState } from "@redux/state/shop/shopState";
+import { initialAuthState } from "@redux/state/user/authState";
 import styles from "@styles/components/common/Header.module.css";
 import classNames from "classnames";
 import { signOut, useSession } from "next-auth/react";
@@ -143,18 +145,9 @@ const Header = () => {
     } else if (isLoggedIn && userData == null) {
       dispatch(setIsLoggedIn({ isLoggedIn: false }));
       // Reset user session state
-      dispatch(
-        setUserSession({
-          id: null,
-          email: null,
-          firstName: null,
-          lastName: null,
-          userType: null,
-          shopId: null,
-        })
-      );
+      dispatch(setUserSession(initialAuthState.session));
       // Reset shop state
-      dispatch(setShopEmployees({ employees: null }));
+      dispatch(setShopState(initialShopState));
     }
   }, [session?.user, isLoggedIn, dispatch]);
 
