@@ -214,6 +214,11 @@ const Home: NextPage = () => {
   ) => {
     const maxChip = view === "desktop" ? MAX_CHIP : MAX_CHIP_MOBILE;
     let serviceList: JSX.Element[] = [];
+    // Return nothing if no services
+    if (shop.services.length === 0) {
+      return serviceList;
+    }
+
     for (let i = 0; i <= maxChip - 1; i++) {
       let service = shop.services[i];
       if (service) {
@@ -229,6 +234,27 @@ const Home: NextPage = () => {
     }
 
     return serviceList;
+  };
+
+  const renderAddress = (
+    shop: IShop & { services: IService[] },
+    view: string
+  ) => {
+    console.log(view);
+    switch (view) {
+      case "desktop":
+        return (
+          <div>{`${shop.address}, ${shop.city}, ${shop.province}, ${shop.postalCode}`}</div>
+        );
+      case "mobile":
+        return (
+          <div>
+            <div>{shop.address}</div>
+            <div>{`${shop.city}, ${shop.province}`}</div>
+            <div>{shop.postalCode}</div>
+          </div>
+        );
+    }
   };
 
   const itemTemplate = (
@@ -247,7 +273,7 @@ const Home: NextPage = () => {
         />
         <div className={styles.itemText}>
           <h4 className={styles.itemShopName}>{shop.name}</h4>
-          <div>{shop.address}</div>
+          <div>{renderAddress(shop, view)}</div>
           <div>{serviceList}</div>
         </div>
       </div>
@@ -431,7 +457,7 @@ const Home: NextPage = () => {
             layout="list"
             itemTemplate={(shop) => itemTemplate(shop, "desktop")}
             paginator
-            rows={4}
+            rows={5}
           />
           <DataView
             className={styles.mobileData}

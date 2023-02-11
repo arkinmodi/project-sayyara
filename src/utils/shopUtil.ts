@@ -1,4 +1,4 @@
-import { Service, ServiceType } from "@prisma/client";
+import { Service, ServiceType, Shop } from "@prisma/client";
 import { IService } from "src/types/service";
 import { IShop } from "src/types/shop";
 
@@ -163,16 +163,16 @@ export function getFilteredShops(
   }).then((res) => {
     if (res.status === 200) {
       return res.json().then((data) => {
-        const shops = data.map((shop: IShop) => {
+        const shops = data.map((shop: Shop & { services: Service }) => {
           return {
             id: shop.id,
             name: shop.name,
             address: shop.address,
-            postalCode: shop.postalCode,
+            postalCode: shop.postal_code,
             city: shop.city,
             province: shop.province,
-            phoneNumber: shop.phoneNumber,
-            hoursOfOperation: shop.hoursOfOperation,
+            phoneNumber: shop.phone_number,
+            hoursOfOperation: shop.hours_of_operation,
             email: shop.email,
             services: shop.services,
           };

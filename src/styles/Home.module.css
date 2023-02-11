@@ -134,7 +134,11 @@
   }
 
   .itemContainer {
-    padding: 0;
+    padding: 0 1rem;
+  }
+
+  .itemText {
+    padding: 0.5rem 0 0.5rem 1rem;
   }
 
   .chip {
