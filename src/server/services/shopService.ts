@@ -92,25 +92,31 @@ export const updateShopById = async (id: string, patch: UpdateShopType) => {
   });
 };
 
-export const getFilteredShops = async (name: string, service: string) => {
+export const getShopsByName = async (name: string) => {
   const shops = await prisma.shop.findMany({
     where: {
-      AND: [
-        {
+      name: {
+        contains: name,
+      },
+    },
+    include: {
+      services: true,
+    },
+  });
+
+  return shops;
+};
+
+export const getShopsByService = async (service: string) => {
+  const shops = await prisma.shop.findMany({
+    where: {
+      services: {
+        some: {
           name: {
-            contains: name,
+            contains: service,
           },
         },
-        {
-          services: {
-            some: {
-              name: {
-                contains: service,
-              },
-            },
-          },
-        },
-      ],
+      },
     },
     include: {
       services: true,

@@ -1,4 +1,4 @@
-import { Service, ServiceType } from "@prisma/client";
+import { Service, ServiceType, Shop } from "@prisma/client";
 import { IService } from "src/types/service";
 import { IShop } from "src/types/shop";
 
@@ -143,6 +143,43 @@ export function patchShop(shopId: string, patch: IShop): Promise<IShop | null> {
       });
     } else {
       // TODO: check and handle errors
+      return null;
+    }
+  });
+}
+
+export function getFilteredShops(
+  name: string,
+  isShop: boolean
+): Promise<(IShop & { services: IService[] })[] | null> {
+  const url = `/api/shop/lookup?name=${name}&shop=${isShop}`;
+
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((res) => {
+    if (res.status === 200) {
+      return res.json().then((data) => {
+        const shops = data.map((shop: Shop & { services: Service }) => {
+          return {
+            id: shop.id,
+            name: shop.name,
+            address: shop.address,
+            postalCode: shop.postal_code,
+            city: shop.city,
+            province: shop.province,
+            phoneNumber: shop.phone_number,
+            hoursOfOperation: shop.hours_of_operation,
+            email: shop.email,
+            services: shop.services,
+          };
+        });
+        return shops;
+      });
+    } else {
       return null;
     }
   });

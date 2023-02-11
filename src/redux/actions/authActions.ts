@@ -68,6 +68,10 @@ export interface IAuthActionSetUserSession extends IAuthActionBase {
   payload: IAuthState["session"];
 }
 
+export interface IAuthActionSetShowInvalidLoginToast extends IAuthActionBase {
+  payload: { showInvalidLoginToast: boolean };
+}
+
 export type IAuthAction =
   | IAuthActionCreateLogin
   | IAuthActionCreateCustomerSignUp
@@ -75,7 +79,8 @@ export type IAuthAction =
   | IAuthActionCreateShopOwnerSignUp
   | IAuthActionSetIsLoggedIn
   | IAuthActionSetIsAuthDialogOpen
-  | IAuthActionSetUserSession;
+  | IAuthActionSetUserSession
+  | IAuthActionSetShowInvalidLoginToast;
 
 export const createLogin = (payload: IAuthActionCreateLogin["payload"]) => ({
   type: AuthType.CREATE_LOGIN,
@@ -121,5 +126,12 @@ export const setUserSession = (
   payload: IAuthActionSetUserSession["payload"]
 ) => ({
   type: AuthType.SET_USER_SESSION,
+  payload,
+});
+
+export const setShowInvalidLoginToast = (
+  payload: IAuthActionSetShowInvalidLoginToast["payload"]
+) => ({
+  type: AuthType.SET_SHOW_INVALID_LOGIN_TOAST,
   payload,
 });
