@@ -70,6 +70,22 @@ const ShopAppointments = (props: IAppointmentsProps) => {
     return content;
   }
 
+  function noAppointmentsText() {
+    let text = "";
+    switch (appointmentTab) {
+      case AppointmentStatus.PENDING_APPROVAL:
+        return `No requested appointments.`;
+      case AppointmentStatus.ACCEPTED:
+        return `No scheduled appointments.`;
+      case AppointmentStatus.IN_PROGRESS:
+        return `No in progress appointments.`;
+      case AppointmentStatus.COMPLETED:
+        return `No completed appointments.`;
+      default:
+        return `No appointments.`;
+    }
+  }
+
   function listAllAppointments() {
     let content: any = [];
     Object.keys(appointmentsMap).forEach((date) => {
@@ -89,9 +105,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
       {Object.entries(appointmentsMap).length > 0 ? (
         listAllAppointments()
       ) : (
-        <div className={styles.appointmentRequestsCardText}>
-          No appointments
-        </div>
+        <div className={styles.noAppointmentsText}>{noAppointmentsText()}</div>
       )}
     </div>
   );

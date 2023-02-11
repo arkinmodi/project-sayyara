@@ -15,6 +15,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { ICustomerAppointment } from "src/types/appointment";
 import { AppointmentStatus } from "../../../types/appointment";
 
+const responsiveOptions = [
+  {
+    breakpoint: "1199px",
+    numVisible: 3,
+    numScroll: 3,
+  },
+  {
+    breakpoint: "991px",
+    numVisible: 2,
+    numScroll: 2,
+  },
+  {
+    breakpoint: "767px",
+    numVisible: 1,
+    numScroll: 1,
+  },
+];
+
 const CustomerAppointments = () => {
   const appointments = useSelector(AppointmentSelectors.getAppointments);
   const [inProgressAppointments, setInProgressAppointments] = useState<
@@ -57,24 +75,6 @@ const CustomerAppointments = () => {
         return addPlaceholderItems(appointments, 3);
     }
   };
-
-  const responsiveOptions = [
-    {
-      breakpoint: "1199px",
-      numVisible: 3,
-      numScroll: 3,
-    },
-    {
-      breakpoint: "991px",
-      numVisible: 2,
-      numScroll: 2,
-    },
-    {
-      breakpoint: "767px",
-      numVisible: 1,
-      numScroll: 1,
-    },
-  ];
 
   const dispatch = useDispatch();
   const userType = useSelector(AuthSelectors.getUserType);
