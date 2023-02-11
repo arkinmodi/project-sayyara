@@ -1,9 +1,10 @@
 import styles from "@styles/components/shop/profile/RequestServiceDialog.module.css";
+import classNames from "classnames";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
 import React, { useState } from "react";
-import { IService } from "src/types/service";
+import { IService, ServiceType } from "src/types/service";
 import { IShop } from "src/types/shop";
 
 interface IRequestServiceDialog {
@@ -19,10 +20,25 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
   const { visible, onHide, shopId, shop, basicServices, customServices } =
     props;
   const allServices = [...basicServices, ...customServices];
-  const [selectedService, setSelectedService] = useState("");
+  const [selectedService, setSelectedService] = useState<string | IService>("");
 
   const onServiceChange = (e: { value: any }) => {
     setSelectedService(e.value);
+  };
+
+  const displayButton = () => {
+    if (typeof selectedService === "string") {
+      return "Schedule Service";
+    } else {
+      return selectedService.type === ServiceType.CANNED
+        ? "Schedule Service"
+        : "Proceed to Quote";
+    }
+  };
+
+  const onSubmit = () => {
+    // Create appointment, or create quote, based on service type
+    // Submit information to redux then route
   };
 
   return (
@@ -32,7 +48,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
         onHide={() => onHide()}
         header={shop.name}
         draggable={false}
-        style={{ width: "50vw" }}
+        className={styles.requestDialog}
       >
         <div className={styles.dialogContainer}>
           <h3>Request a Service</h3>
@@ -43,7 +59,13 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
             onChange={onServiceChange}
             optionLabel="name"
           />
-          <Button className={styles.dialogButton}>Request a Service</Button>
+          <Button
+            className={classNames(styles.dialogButton, "blueButton")}
+            disabled={selectedService === ""}
+            onClick={onSubmit}
+          >
+            {displayButton()}
+          </Button>
         </div>
       </Dialog>
     </div>

@@ -1,7 +1,3 @@
-.dialogMobile {
-  display: none;
-}
-
 .dialogContainer {
   display: flex;
   flex-direction: column;
@@ -17,4 +13,20 @@
 .dialogButton {
   max-width: fit-content;
   margin: auto;
+}
+
+@media (min-width: 500px) {
+  .requestDialog {
+    width: 50vw;
+  }
+}
+
+@media (max-width: 500px) {
+  .requestDialog {
+    width: 80vw;
+  }
+
+  .dialogContainer {
+    max-width: 100%;
+  }
 }
