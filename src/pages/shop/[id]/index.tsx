@@ -275,7 +275,7 @@ const Profile: NextPage = () => {
               legend="Hours of Operation"
               style={{
                 display:
-                  userType !== UserType.SHOP_OWNER &&
+                  (userType !== UserType.SHOP_OWNER || !isShopOwner) &&
                   shop?.hoursOfOperation == null
                     ? "none"
                     : "block",
