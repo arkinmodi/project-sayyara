@@ -1,4 +1,4 @@
-import RequestServiceDialog from "@components/shop/profile/RequestServiceDialog";
+import RequestServiceDialog from "@components/shop/profile/appointment/RequestServiceDialog";
 import { ServiceType, UserType } from "@prisma/client";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/pages/shop/ShopProfile.module.css";

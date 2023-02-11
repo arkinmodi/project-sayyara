@@ -72,6 +72,14 @@ export interface IAuthActionSetShowInvalidLoginToast extends IAuthActionBase {
   payload: { showInvalidLoginToast: boolean };
 }
 
+export interface IAuthActionReadCustomerVehicle extends IAuthActionBase {
+  payload: void;
+}
+
+export interface IAuthActionSetCustomerVehicle extends IAuthActionBase {
+  payload: IAuthState["vehicle"];
+}
+
 export type IAuthAction =
   | IAuthActionCreateLogin
   | IAuthActionCreateCustomerSignUp
@@ -80,7 +88,9 @@ export type IAuthAction =
   | IAuthActionSetIsLoggedIn
   | IAuthActionSetIsAuthDialogOpen
   | IAuthActionSetUserSession
-  | IAuthActionSetShowInvalidLoginToast;
+  | IAuthActionSetShowInvalidLoginToast
+  | IAuthActionReadCustomerVehicle
+  | IAuthActionSetCustomerVehicle;
 
 export const createLogin = (payload: IAuthActionCreateLogin["payload"]) => ({
   type: AuthType.CREATE_LOGIN,
@@ -133,5 +143,17 @@ export const setShowInvalidLoginToast = (
   payload: IAuthActionSetShowInvalidLoginToast["payload"]
 ) => ({
   type: AuthType.SET_SHOW_INVALID_LOGIN_TOAST,
+  payload,
+});
+
+export const readCustomerVehicleInfo = (payload: void) => ({
+  type: AuthType.READ_CUSTOMER_VEHICLE_INFO,
+  payload,
+});
+
+export const setCustomerVehicleInfo = (
+  payload: IAuthActionSetCustomerVehicle["payload"]
+) => ({
+  type: AuthType.SET_CUSTOMER_VEHICLE_INFO,
   payload,
 });

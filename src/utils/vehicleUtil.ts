@@ -26,3 +26,31 @@ export function getVehicleById(id: string): Promise<IVehicle | null> {
     }
   });
 }
+
+export function getVehicleByCustomerId(id: string): Promise<IVehicle | null> {
+  return fetch(`/api/vehicle/customer/${id}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((res) => {
+    if (res.status === 200) {
+      return res.json().then((dataList) => {
+        // TODO: Rev 1 - multiple cars for a user
+        const data = dataList[0];
+        const vehicle: IVehicle = {
+          id: data.id,
+          make: data.make,
+          model: data.model,
+          year: data.year,
+          vin: data.vin,
+          license_plate: data.license_plate,
+        };
+        return vehicle;
+      });
+    } else {
+      return null;
+    }
+  });
+}
