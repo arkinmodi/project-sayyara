@@ -1,12 +1,34 @@
 .appointmentCarouselCard {
   border: 1px solid var(--surface-d);
-  border-radius: 3px;
+  border-radius: 40px;
   margin: 0.3rem;
   padding: 2rem 2rem;
+  height: 95%;
+  box-shadow: 0 3px 3px rgb(0 0 0 / 0.2);
+}
+
+.appointmentCarouselCardPlaceholder {
+  border: 1px solid var(--surface-d);
+  border-radius: 40px;
+  background-color: #f7f7f7;
+  margin: 0.3rem;
+  padding: 2rem 2rem;
+  height: 95%;
+}
+
+.carouselFieldSet {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.appointmentCarouselCardContainer {
+  height: 100%;
 }
 
 .appointmentCarouselCard:hover {
-  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  background-color: #f7f7f7;
+  border-color: #436188;
+  opacity: 0.9;
 }
 
 .appointmentButtonRed {

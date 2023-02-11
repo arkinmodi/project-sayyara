@@ -9,7 +9,8 @@ import styles from "@styles/pages/appointments/CustomerAppointments.module.css";
 import Router from "next/router";
 import { Button } from "primereact/button";
 import { Carousel } from "primereact/carousel";
-import React, { useEffect, useState } from "react";
+import { Fieldset } from "primereact/fieldset";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ICustomerAppointment } from "src/types/appointment";
 import { AppointmentStatus } from "../../../types/appointment";
@@ -25,6 +26,37 @@ const CustomerAppointments = () => {
   const [pastAppointments, setPastAppointments] = useState<
     ICustomerAppointment[]
   >([]);
+  const [_numItemVisible, setNumItemVisible] = useState(0);
+
+  /**
+   * Carousel resizes items if there are less than numVisible items.
+   * To prevent undesirable resizing of cards, we add placeholder cards.
+   */
+  const addPlaceholderItems = (
+    appointments: ICustomerAppointment[],
+    numItemVisible: number
+  ) => {
+    const updatedItems: (ICustomerAppointment | null)[] = [...appointments];
+    while (updatedItems.length % numItemVisible !== 0) {
+      updatedItems.push(null);
+    }
+
+    return updatedItems;
+  };
+
+  const getAppointmentsWithPlaceholders = (
+    appointments: ICustomerAppointment[]
+  ) => {
+    const width = window.innerWidth;
+    switch (true) {
+      case width < 767:
+        return addPlaceholderItems(appointments, 1);
+      case width > 767 && width < 991:
+        return addPlaceholderItems(appointments, 2);
+      default:
+        return addPlaceholderItems(appointments, 3);
+    }
+  };
 
   const responsiveOptions = [
     {
@@ -54,6 +86,41 @@ const CustomerAppointments = () => {
       dispatch(readAppointments({ id: customerId }));
     }
   }, [dispatch, customerId]);
+
+  const debounce = (callback: () => void, wait: number) => {
+    let timeout: NodeJS.Timeout;
+    return (...args: []) => {
+      const context = this;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => callback.apply(context, args), wait);
+    };
+  };
+
+  /**
+   * Listen to window size to trigger re-render of carousel.
+   * Debounce window resize to prevent overload.
+   */
+  const handleResize = useCallback(
+    debounce(() => {
+      const width = window.innerWidth;
+      switch (true) {
+        case width <= 767:
+          setNumItemVisible(1);
+          break;
+        case width > 767 && width <= 991:
+          setNumItemVisible(2);
+          break;
+        default:
+          setNumItemVisible(3);
+          break;
+      }
+    }, 1000),
+    []
+  );
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const appointmentValues = Object.values(appointments);
@@ -97,71 +164,119 @@ const CustomerAppointments = () => {
     dispatch(setAppointmentStatus({ id: appointment.id, status: status }));
   };
 
-  const appointmentsCard = (appointment: ICustomerAppointment) => {
+  const appointmentsCard = (appointment: ICustomerAppointment | null) => {
     return (
-      <div
-        className={styles.appointmentCarouselCard}
-        onClick={() =>
-          Router.push(`/shop/work-orders/${appointment.workOrderId}`)
-        }
-      >
-        <div>
-          <h2 className="mb-1">{appointment.shopName}</h2>
-          <h2 className="mb-1">{appointment.shopAddress}</h2>
-          <h4 className="mb-1">{appointment.serviceName}</h4>
-          <h4 className="mb-1">
-            {new Date(appointment.startTime).toLocaleString()}
-          </h4>
-          {appointment.status === AppointmentStatus.ACCEPTED ? (
-            <Button
-              label="Cancel"
-              className={styles.appointmentButtonRed}
-              onClick={(e) =>
-                handleButtonClick(e, appointment, AppointmentStatus.REJECTED)
-              }
-            />
-          ) : (
-            <></>
-          )}
-        </div>
+      <div className={styles.appointmentCarouselCardContainer}>
+        {appointment ? (
+          <div
+            className={styles.appointmentCarouselCard}
+            onClick={() =>
+              Router.push(
+                `/shop/work-orders/${
+                  (appointment as ICustomerAppointment).workOrderId
+                }`
+              )
+            }
+          >
+            <div>
+              <h2 className="mb-1">
+                {(appointment as ICustomerAppointment).shopName}
+              </h2>
+              <h2 className="mb-1">
+                {(appointment as ICustomerAppointment).shopAddress}
+              </h2>
+              <h4 className="mb-1">
+                {(appointment as ICustomerAppointment).serviceName}
+              </h4>
+              <h4 className="mb-1">
+                {new Date(
+                  (appointment as ICustomerAppointment).startTime
+                ).toLocaleString()}
+              </h4>
+              {(appointment as ICustomerAppointment).status ===
+              AppointmentStatus.ACCEPTED ? (
+                <Button
+                  label="Cancel"
+                  className={styles.appointmentButtonRed}
+                  onClick={(e) =>
+                    handleButtonClick(
+                      e,
+                      appointment as ICustomerAppointment,
+                      AppointmentStatus.REJECTED
+                    )
+                  }
+                />
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className={styles.appointmentCarouselCardPlaceholder}></div>
+        )}
       </div>
     );
   };
 
   return (
     <div>
-      <h2>Scheduled Appointments</h2>
-      <div className={styles.appointmentsCarousel}>
-        <Carousel
-          value={scheduledAppointments}
-          numVisible={3}
-          numScroll={1}
-          responsiveOptions={responsiveOptions}
-          itemTemplate={appointmentsCard}
-        />
-      </div>
-
-      <h2>In Progress Appointments</h2>
-      <div className={styles.appointmentsCarousel}>
-        <Carousel
-          value={inProgressAppointments}
-          numVisible={3}
-          numScroll={1}
-          responsiveOptions={responsiveOptions}
-          itemTemplate={appointmentsCard}
-        />
-      </div>
-
-      <h2>Past Appointments</h2>
-      <div className={styles.appointmentsCarousel}>
-        <Carousel
-          value={pastAppointments}
-          numVisible={3}
-          numScroll={1}
-          responsiveOptions={responsiveOptions}
-          itemTemplate={appointmentsCard}
-        />
-      </div>
+      <Fieldset
+        className={styles.carouselFieldSet}
+        toggleable={true}
+        legend="Scheduled Services"
+      >
+        <div className={styles.appointmentsCarousel}>
+          {scheduledAppointments.length > 0 ? (
+            <Carousel
+              value={getAppointmentsWithPlaceholders(scheduledAppointments)}
+              numVisible={3}
+              numScroll={1}
+              responsiveOptions={responsiveOptions}
+              itemTemplate={appointmentsCard}
+            />
+          ) : (
+            <div> No scheduled services.</div>
+          )}
+        </div>
+      </Fieldset>
+      <Fieldset
+        className={styles.carouselFieldSet}
+        toggleable={true}
+        legend="In Progress Services"
+      >
+        <div className={styles.appointmentsCarousel}>
+          {inProgressAppointments.length > 0 ? (
+            <Carousel
+              value={getAppointmentsWithPlaceholders(inProgressAppointments)}
+              numVisible={3}
+              numScroll={1}
+              responsiveOptions={responsiveOptions}
+              itemTemplate={appointmentsCard}
+            />
+          ) : (
+            <div> No in progress services.</div>
+          )}
+        </div>
+      </Fieldset>
+      <Fieldset
+        className={styles.carouselFieldSet}
+        toggleable={true}
+        legend="Past Services"
+      >
+        <div className={styles.appointmentsCarousel}>
+          {pastAppointments.length > 0 ? (
+            <Carousel
+              value={getAppointmentsWithPlaceholders(pastAppointments)}
+              numVisible={3}
+              numScroll={1}
+              responsiveOptions={responsiveOptions}
+              itemTemplate={appointmentsCard}
+            />
+          ) : (
+            <div> No past services.</div>
+          )}
+        </div>
+      </Fieldset>
     </div>
   );
 };
