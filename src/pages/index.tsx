@@ -240,7 +240,6 @@ const Home: NextPage = () => {
     shop: IShop & { services: IService[] },
     view: string
   ) => {
-    console.log(view);
     switch (view) {
       case "desktop":
         return (
@@ -413,7 +412,7 @@ const Home: NextPage = () => {
             )}
           >
             <InputText
-              className={styles.inputtext}
+              className={styles.searchInputText}
               placeholder="Search"
               value={searchString}
               onChange={onChangeString}

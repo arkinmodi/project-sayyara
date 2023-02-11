@@ -27,8 +27,8 @@
 }
 
 .filterButton:hover {
-  background: #436188;
-  border-color: transparent;
+  background: #436188 !important;
+  border-color: #436188 !important;
   opacity: 0.7;
 }
 
@@ -50,7 +50,7 @@
   margin-bottom: 1rem;
 }
 
-.inputtext {
+.searchInputText {
   flex: 3 1 auto !important;
 }
 
@@ -65,8 +65,8 @@
 }
 
 .searchButton:hover {
-  background: #436188;
-  border-color: transparent;
+  background: #436188 !important;
+  border-color: #436188 !important;
   opacity: 0.7;
 }
 
