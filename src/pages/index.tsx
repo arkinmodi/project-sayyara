@@ -457,7 +457,7 @@ const Home: NextPage = () => {
             layout="list"
             itemTemplate={(shop) => itemTemplate(shop, "desktop")}
             paginator
-            rows={5}
+            rows={7}
           />
           <DataView
             className={styles.mobileData}
@@ -465,7 +465,7 @@ const Home: NextPage = () => {
             layout="list"
             itemTemplate={(shop) => itemTemplate(shop, "mobile")}
             paginator
-            rows={4}
+            rows={5}
           />
         </div>
       </div>
