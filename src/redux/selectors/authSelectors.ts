@@ -18,6 +18,14 @@ const getAuthDialogType = createSelector(
 );
 
 /**
+ * Invalid login toast
+ */
+const getShowInvalidLoginToast = createSelector(
+  getAuthState,
+  (authState) => authState.showInvalidLoginToast
+);
+
+/**
  * Session Selectors
  */
 const getUserId = createSelector(
@@ -65,4 +73,5 @@ export const AuthSelectors = {
   getShopId,
   getAuthDialogIsOpen,
   getAuthDialogType,
+  getShowInvalidLoginToast,
 };

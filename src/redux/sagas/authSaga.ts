@@ -14,6 +14,8 @@ import {
 } from "../actions/authActions";
 import AuthTypes from "../types/authTypes";
 
+var md5Hash = require("md5-hash");
+
 interface IPostSignUpBody {
   email: string;
   phone_number: string;
@@ -55,12 +57,15 @@ function postLogin(body: IAuthActionCreateLogin["payload"]): Promise<boolean> {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify({ ...body, password: md5Hash.default(body.password) }),
   }).then((res) => {
     if (res.status === 200) {
-      return true;
+      if (res.url.includes("error=CredentialsSignin")) {
+        return false;
+      } else {
+        return true;
+      }
     } else {
-      // TODO: check and handle errors
       return false;
     }
   });
@@ -134,6 +139,10 @@ function* login(
     });
     window.location.reload();
   }
+  yield put({
+    type: AuthTypes.SET_SHOW_INVALID_LOGIN_TOAST,
+    payload: { showInvalidLoginToast: !isLoggedIn },
+  });
 }
 
 function* customerSignUp(
@@ -143,7 +152,7 @@ function* customerSignUp(
   const body: IPostCustomerSignUpBody = {
     email: payload.email,
     phone_number: payload.phoneNumber,
-    password: payload.password,
+    password: md5Hash.default(payload.password),
     first_name: payload.firstName,
     last_name: payload.lastName,
     vehicle: {
@@ -173,7 +182,7 @@ function* shopEmployeeSignUp(
   const body: IPostShopEmployeeSignUpBody = {
     email: payload.email,
     phone_number: payload.phoneNumber,
-    password: payload.password,
+    password: md5Hash.default(payload.password),
     first_name: payload.firstName,
     last_name: payload.lastName,
     shop_id: payload.shopId,
@@ -197,7 +206,7 @@ function* shopOwnerSignUp(
   const body: IPostShopOwnerSignUpBody = {
     email: payload.email,
     phone_number: payload.phoneNumber,
-    password: payload.password,
+    password: md5Hash.default(payload.password),
     first_name: payload.firstName,
     last_name: payload.lastName,
     shop: {

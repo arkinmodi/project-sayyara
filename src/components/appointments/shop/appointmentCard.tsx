@@ -1,6 +1,7 @@
 import { setAppointmentStatus } from "@redux/actions/appointmentAction";
 import styles from "@styles/pages/appointments/ShopAppointments.module.css";
 import classNames from "classnames";
+import Router from "next/router";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import React from "react";
@@ -18,9 +19,11 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
   const { appointment, appointmentProgress } = props;
 
   const handleButtonClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     appointment: IAppointment,
     status: AppointmentStatus
   ): void => {
+    e.stopPropagation();
     dispatch(setAppointmentStatus({ id: appointment.id, status: status }));
   };
 
@@ -36,8 +39,8 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
               styles.appointmentButtonBlue,
               styles.appointmentCardButton
             )}
-            onClick={() =>
-              handleButtonClick(appointment, AppointmentStatus.REJECTED)
+            onClick={(e) =>
+              handleButtonClick(e, appointment, AppointmentStatus.REJECTED)
             }
           />
           <Button
@@ -46,8 +49,8 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
               styles.appointmentButtonGreen,
               styles.appointmentCardButton
             )}
-            onClick={() =>
-              handleButtonClick(appointment, AppointmentStatus.ACCEPTED)
+            onClick={(e) =>
+              handleButtonClick(e, appointment, AppointmentStatus.ACCEPTED)
             }
           />
         </div>
@@ -68,8 +71,8 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
               styles.appointmentButtonRed,
               styles.appointmentCardButton
             )}
-            onClick={() =>
-              handleButtonClick(appointment, AppointmentStatus.REJECTED)
+            onClick={(e) =>
+              handleButtonClick(e, appointment, AppointmentStatus.REJECTED)
             }
           />
           <Button
@@ -78,8 +81,8 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
               styles.appointmentButtonGreen,
               styles.appointmentCardButton
             )}
-            onClick={() =>
-              handleButtonClick(appointment, AppointmentStatus.IN_PROGRESS)
+            onClick={(e) =>
+              handleButtonClick(e, appointment, AppointmentStatus.IN_PROGRESS)
             }
           />
         </div>
@@ -97,8 +100,8 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
             styles.appointmentButtonGreen,
             styles.appointmentCardButton
           )}
-          onClick={() =>
-            handleButtonClick(appointment, AppointmentStatus.COMPLETED)
+          onClick={(e) =>
+            handleButtonClick(e, appointment, AppointmentStatus.COMPLETED)
           }
         />
       </div>
@@ -118,20 +121,28 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
   };
 
   return (
-    //TODO: Make card clickable so that it would go to the work order
-    <Card className={styles.appointmentCard}>
+    <Card
+      className={styles.appointmentCard}
+      onClick={() =>
+        Router.push(`/shop/work-orders/${appointment.workOrderId}`)
+      }
+    >
       <div className={styles.cardContents}>
         <div>
           <h3 className={styles.serviceNameHeaderText}>
             {appointment.serviceName}
           </h3>
-          <div>Customer Name:</div>
+          <div>
+            {`Customer Name: ${appointment.customer.first_name} ${appointment.customer.last_name}`}
+          </div>
+          <div>Customer Phone Number: {appointment.customer.phone_number}</div>
           <div>
             Start time: {new Date(appointment.startTime).toLocaleString()}
           </div>
           <div>
             End time: {String(new Date(appointment.endTime).toLocaleString())}
           </div>
+          <br />
           <div>Vehicle Make: {appointment.vehicle?.make}</div>
           <div>Vehicle Model: {appointment.vehicle?.model}</div>
           <div>Manufacture Year: {appointment.vehicle?.year.toString()}</div>

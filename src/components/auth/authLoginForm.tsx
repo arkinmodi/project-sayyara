@@ -1,9 +1,13 @@
 import { createLogin } from "@redux/actions/authActions";
+import { AuthSelectors } from "@redux/selectors/authSelectors";
+import classNames from "classnames";
 import { getCsrfToken } from "next-auth/react";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { Toast } from "primereact/toast";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { validateEmail } from "src/utils/formValidationUtil";
 import authStyles from "../../styles/components/auth/Auth.module.css";
 import { ILoginFormValues } from "./types";
 
@@ -17,6 +21,27 @@ const AuthLoginForm = () => {
   const [formValues, setFormValues] = useState<ILoginFormValues>({
     ...initialLoginFormValues,
   });
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+
+  const toast = useRef<Toast>(null);
+
+  const showErrorToast = () => {
+    if (toast.current) {
+      toast.current.show({
+        severity: "error",
+        summary: "Invalid Login",
+        detail: "Please try again.",
+        sticky: true,
+      });
+    }
+  };
+
+  const dispatch = useDispatch();
+
+  const showInvalidLoginToast = useSelector(
+    AuthSelectors.getShowInvalidLoginToast
+  );
 
   useEffect(() => {
     async function fetchCSRF() {
@@ -34,45 +59,95 @@ const AuthLoginForm = () => {
     fetchCSRF();
   }, [formValues]);
 
-  const dispatch = useDispatch();
+  const formatValue = (name: string, value: any) => {
+    switch (name) {
+      case "email":
+        return (value as string).toLowerCase();
+      default:
+        return value;
+    }
+  };
+
+  const validateInputs = () => {
+    const isValidEmail = validateEmail(formValues.email);
+    setIsEmailValid(isValidEmail);
+
+    const isValidPassword = formValues.password.length > 0;
+    setIsPasswordValid(isValidPassword);
+
+    return isValidEmail && isValidPassword;
+  };
+  useEffect(() => {
+    if (showInvalidLoginToast) {
+      showErrorToast();
+      setFormValues({
+        ...formValues,
+        email: initialLoginFormValues.email,
+        password: initialLoginFormValues.password,
+      });
+    }
+  }, [showInvalidLoginToast]);
+
   const handleLoginButtonClick = (): void => {
-    // TODO: validate inputs
-    dispatch(createLogin(formValues));
+    if (validateInputs()) {
+      dispatch(createLogin(formValues));
+    }
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+
     setFormValues({
       ...formValues,
-      [name]: value,
+      [name]: typeof value === "string" ? formatValue(name, value) : value,
     });
   };
 
   return (
     <div className={authStyles.authForm}>
+      <Toast ref={toast} />
       <div className={authStyles.authFormBody}>
         <label htmlFor="authLoginFormEmailInput">Email (Required)</label>
         <br />
         <InputText
           id="authLoginFormEmailInput"
-          className={authStyles.authFormInput}
+          className={classNames(
+            authStyles.authFormInput,
+            !isEmailValid ? "p-invalid block" : ""
+          )}
           value={formValues.email}
           onChange={handleInputChange}
           name="email"
           placeholder="Email"
         />
+        <small
+          id="emailHelp"
+          className={!isEmailValid ? "p-error block" : "p-hidden"}
+        >
+          Email is invalid
+        </small>
         <br />
         <label htmlFor="authLoginFormPasswordInput">Password (Required)</label>
         <br />
         <InputText
           id="authLoginFormPasswordInput"
+          className={classNames(
+            authStyles.authFormInput,
+            !isPasswordValid ? "p-invalid block" : ""
+          )}
           type="password"
           placeholder="Password"
-          className={authStyles.authFormInput}
           value={formValues.password}
           onChange={handleInputChange}
           name="password"
         />
+        <br />
+        <small
+          id="passwordHelp"
+          className={!isPasswordValid ? "p-error block" : "p-hidden"}
+        >
+          Password is required
+        </small>
       </div>
       <div className={authStyles.authFormButtonGroup}>
         <Button

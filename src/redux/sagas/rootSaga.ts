@@ -3,6 +3,7 @@ import { appointmentSaga } from "./appointmentSaga";
 import { authSaga } from "./authSaga";
 import { employeeSaga } from "./employeeSaga";
 import { quoteSaga } from "./quoteSaga";
+import { serviceSaga } from "./serviceSaga";
 import { shopSaga } from "./shopSaga";
 
 export function* rootSaga() {
@@ -12,5 +13,6 @@ export function* rootSaga() {
     shopSaga(),
     employeeSaga(),
     quoteSaga(),
+    serviceSaga(),
   ]);
 }
