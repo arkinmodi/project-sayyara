@@ -50,8 +50,8 @@ const CustomerAppointments: NextPage = () => {
   }, [dispatch, customerId]);
 
   useEffect(() => {
-    console.log(appointments);
-    const appointmentsList = appointments.sort(
+    const appointmentValues = Object.values(appointments);
+    const appointmentsList = appointmentValues.sort(
       (
         appointment1: ICustomerAppointment,
         appointment2: ICustomerAppointment

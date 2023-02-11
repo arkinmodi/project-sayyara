@@ -95,16 +95,17 @@ function getCustomerAppointments(
         });
 
         return Promise.all(promises)
-          .then((appointment: ICustomerAppointment) => {
-            appointments[appointment.id] = appointment;
+          .then((appointmentList) => {
+            appointmentList.forEach(
+              (appointment) => (appointments[appointment.id] = appointment)
+            );
           })
           .then(() => {
             return appointments;
           });
       });
     } else {
-      // TODO: check and handle errors
-      return [];
+      return {};
     }
   });
 }
