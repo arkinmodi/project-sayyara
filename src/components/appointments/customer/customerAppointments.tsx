@@ -35,6 +35,9 @@ const responsiveOptions = [
 
 const CustomerAppointments = () => {
   const appointments = useSelector(AppointmentSelectors.getAppointments);
+  const [requestedAppointments, setRequestedAppointments] = useState<
+    ICustomerAppointment[]
+  >([]);
   const [inProgressAppointments, setInProgressAppointments] = useState<
     ICustomerAppointment[]
   >([]);
@@ -136,6 +139,12 @@ const CustomerAppointments = () => {
       }
     );
 
+    const requestedAppointmentsList = appointmentsList.filter(
+      (appointment: ICustomerAppointment) =>
+        appointment.status == AppointmentStatus.PENDING_APPROVAL
+    );
+    setRequestedAppointments(requestedAppointmentsList);
+
     const scheduledAppointmentsList = appointmentsList.filter(
       (appointment: ICustomerAppointment) =>
         appointment.status == AppointmentStatus.ACCEPTED
@@ -152,6 +161,7 @@ const CustomerAppointments = () => {
       (appointment: ICustomerAppointment) =>
         appointment.status == AppointmentStatus.COMPLETED
     );
+
     setPastAppointments(pastAppointmentsList);
   }, [appointments]);
 
@@ -194,7 +204,9 @@ const CustomerAppointments = () => {
                 ).toLocaleString()}
               </h4>
               {(appointment as ICustomerAppointment).status ===
-              AppointmentStatus.ACCEPTED ? (
+                AppointmentStatus.PENDING_APPROVAL ||
+              (appointment as ICustomerAppointment).status ===
+                AppointmentStatus.ACCEPTED ? (
                 <Button
                   label="Cancel"
                   className={styles.appointmentButtonRed}
@@ -220,6 +232,25 @@ const CustomerAppointments = () => {
 
   return (
     <div>
+      <Fieldset
+        className={styles.carouselFieldSet}
+        toggleable={true}
+        legend="Requested Services"
+      >
+        <div className={styles.appointmentsCarousel}>
+          {requestedAppointments.length > 0 ? (
+            <Carousel
+              value={getAppointmentsWithPlaceholders(requestedAppointments)}
+              numVisible={3}
+              numScroll={1}
+              responsiveOptions={responsiveOptions}
+              itemTemplate={appointmentsCard}
+            />
+          ) : (
+            <div> No requested services.</div>
+          )}
+        </div>
+      </Fieldset>
       <Fieldset
         className={styles.carouselFieldSet}
         toggleable={true}
