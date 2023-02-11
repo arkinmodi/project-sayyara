@@ -28,7 +28,10 @@ const WorkOrder: NextPage = () => {
 
   const handleTabChange = (idx: number) => {
     if (idx !== 1) {
-      router.push("/shop/dashboard");
+      router.push({
+        pathname: "/shop/dashboard",
+        query: { tab: "quotes" },
+      });
     }
   };
 
@@ -135,6 +138,13 @@ const WorkOrderPage: React.FC<{
     setIsSaving(false);
   };
 
+  const handleBackButton = () => {
+    router.push({
+      pathname: "/shop/dashboard",
+      query: { tab: "service-requests" },
+    });
+  };
+
   return (
     <div className={styles.workOrderPageContainer}>
       <Head>
@@ -149,7 +159,7 @@ const WorkOrderPage: React.FC<{
           <Button
             className="p-button-secondary p-button-text"
             icon="pi pi-angle-left"
-            onClick={() => router.push("/")}
+            onClick={handleBackButton}
           />
         ) : (
           <Button
@@ -157,7 +167,7 @@ const WorkOrderPage: React.FC<{
             icon="pi pi-angle-left"
             label="Back"
             aria-label="Back"
-            onClick={() => router.push("/")}
+            onClick={handleBackButton}
           />
         )}
         <h1>{workOrder.title}</h1>
