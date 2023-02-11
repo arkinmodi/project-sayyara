@@ -8,9 +8,11 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button } from "primereact/button";
 import { Chip } from "primereact/chip";
+import { Dialog } from "primereact/dialog";
 import { Fieldset } from "primereact/fieldset";
+import { Toast } from "primereact/toast";
 import defaultProfilePicture from "public/icons/icon-maskable-1024x1024.png";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import AddHoursOfOperationDialog from "src/components/shop/profile/AddHoursOfOperationDialog";
 import ShopProfileSkeleton from "src/components/shop/profile/ShopProfileSkeleton";
@@ -35,6 +37,7 @@ const days = [
 const Profile: NextPage = () => {
   const [shop, setShop] = useState<IShop | null>();
   const [isLoading, setIsLoading] = useState(true);
+  const [errorDialogVisible, setErrorDialogVisible] = useState(false);
   const [isShopOwner, setIsShopOwner] = useState(false);
   const [basicServices, setBasicServices] = useState<IService[] | null>(null);
   const [customServices, setCustomServices] = useState<IService[] | null>(null);
@@ -50,12 +53,25 @@ const Profile: NextPage = () => {
   const userShopId = useSelector(AuthSelectors.getShopId);
   const userType = useSelector(AuthSelectors.getUserType);
 
+  const toast = useRef<Toast>(null);
+
   useEffect(() => {
     if (id) {
       getShopId(id).then((shopData) => {
         if (shopData) {
           setShop(shopData);
           setIsLoading(false);
+        } else {
+          if (toast.current) {
+            toast.current.show({
+              sticky: false,
+              severity: "error",
+              summary: "Error",
+              detail: "Shop not found",
+            });
+          }
+
+          setErrorDialogVisible(true);
         }
       });
 
@@ -228,6 +244,27 @@ const Profile: NextPage = () => {
 
   return (
     <div>
+      <Toast ref={toast} />
+
+      <Dialog
+        header={"Oh no! We couldn't find the shop that you're looking for!"}
+        visible={errorDialogVisible}
+        closeOnEscape={false}
+        closable={false}
+        className={styles.shopProfileErrorDialog}
+        onHide={() => {}}
+      >
+        <div className={styles.shopProfileErrorDialogDiv}>
+          <Button
+            className="blueButton"
+            onClick={() => {
+              router.push("/");
+            }}
+          >
+            Return to Home Page
+          </Button>
+        </div>
+      </Dialog>
       {!isLoading && shop && id ? (
         <div>
           {renderShopHeader(shop)}{" "}
