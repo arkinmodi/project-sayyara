@@ -1,4 +1,7 @@
-import { getFilteredShops } from "@server/services/shopService";
+import {
+  getShopsByName,
+  getShopsByService,
+} from "@server/services/shopService";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const shopLookupHandler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -7,14 +10,19 @@ const shopLookupHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const { shopName, serviceName } = req.query;
+  const { name, shop } = req.query;
 
-  if (typeof shopName !== "string" || typeof serviceName !== "string") {
-    res.status(400).json({ message: "Invalid inputs." });
+  if (typeof name !== "string" || typeof shop !== "string") {
+    res.status(400).json({ message: "Invalid input." });
     return;
   } else {
-    const result = await getFilteredShops(shopName, serviceName);
-    res.status(200).json(result);
+    if (shop === "true") {
+      const result = await getShopsByName(name);
+      res.status(200).json(result);
+    } else {
+      const result = await getShopsByService(name);
+      res.status(200).json(result);
+    }
   }
 };
 
