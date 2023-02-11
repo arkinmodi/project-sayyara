@@ -139,10 +139,17 @@ const WorkOrderPage: React.FC<{
   };
 
   const handleBackButton = () => {
-    router.push({
-      pathname: "/shop/dashboard",
-      query: { tab: "service-requests" },
-    });
+    if (userType === UserType.CUSTOMER) {
+      router.push({
+        pathname: "/dashboard",
+        query: { tab: "service-requests" },
+      });
+    } else {
+      router.push({
+        pathname: "/shop/dashboard",
+        query: { tab: "service-requests" },
+      });
+    }
   };
 
   return (
