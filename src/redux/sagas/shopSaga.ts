@@ -1,9 +1,6 @@
 import { Appointment, Employee } from "@prisma/client";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import ShopTypes from "@redux/types/shopTypes";
-import { getServiceById } from "@server/services/serviceService";
-import { getCustomerById } from "@server/services/userService";
-import { getVehicleById } from "@server/services/vehicleService";
 import {
   all,
   call,
@@ -16,7 +13,10 @@ import {
 } from "redux-saga/effects";
 import { IAppointment } from "src/types/appointment";
 import { IEmployee } from "src/types/employee";
+import { getCustomerById } from "src/utils/customerUtil";
+import { getServiceById } from "src/utils/serviceUtil";
 import { getServicesByShopId } from "src/utils/shopUtil";
+import { getVehicleById } from "src/utils/vehicleUtil";
 
 function getAllEmployees(shopId: string): Promise<IEmployee[] | null> {
   return fetch(`/api/shop/${shopId}/employees`, {

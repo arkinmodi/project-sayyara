@@ -20,6 +20,10 @@ export interface IShopActionReadShopServices extends IShopActionBase {
   payload: void;
 }
 
+export interface IShopActionReadShopAppointments extends IShopActionBase {
+  payload: void;
+}
+
 export interface IShopActionSetShopServices extends IShopActionBase {
   payload: { services: IService[] };
 }
@@ -34,7 +38,9 @@ export interface IShopActionSetAppointments extends IShopActionBase {
 
 export type IShopAction =
   | IShopActionReadShopEmployees
+  | IShopActionReadShopAppointments
   | IShopActionSetShopState
+  | IShopActionSetAppointments
   | IShopActionSetShopEmployees
   | IShopActionSetShopServices;
 

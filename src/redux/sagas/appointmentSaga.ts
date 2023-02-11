@@ -1,5 +1,6 @@
-import { Appointment } from "@prisma/client";
+import { Appointment, UserType } from "@prisma/client";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
+import ShopTypes from "@redux/types/shopTypes";
 import {
   all,
   call,
@@ -112,10 +113,15 @@ function getCustomerAppointments(
 
 function* setAppointmentStatus(
   action: IAppointmentActionSetAppointmentStatus
-): Generator<CallEffect | PutEffect> {
+): Generator<CallEffect | PutEffect | SelectEffect> {
+  const userType = yield select(AuthSelectors.getUserType);
   const success = yield call(patchAppointmentStatus, action.payload);
   if (success) {
-    yield call(readAppointments);
+    if (userType === UserType.SHOP_OWNER) {
+      yield put({ type: ShopTypes.READ_SHOP_APPOINTMENTS });
+    } else {
+      yield call(readAppointments);
+    }
   }
 }
 
