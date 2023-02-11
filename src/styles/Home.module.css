@@ -21,6 +21,15 @@
 
 .filterButton {
   margin-top: 1.5rem;
+  background-color: #436188;
+  color: white;
+  border-color: #436188;
+}
+
+.filterButton:hover {
+  background: #436188;
+  border-color: transparent;
+  opacity: 0.7;
 }
 
 .buttonList {
