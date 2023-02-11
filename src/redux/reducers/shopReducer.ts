@@ -13,6 +13,8 @@ const shopReducer = (
       return { ...state, employees: action?.payload?.employees };
     case ShopTypes.SET_SHOP_SERVICES:
       return { ...state, services: action?.payload?.services };
+    case ShopTypes.SET_SHOP_APPOINTMENTS:
+      return { ...state, appointments: action?.payload?.appointments ?? [] };
     // This will overwrite client state - required for Next.js
     case HYDRATE: {
       return { ...action.payload.shopReducer };

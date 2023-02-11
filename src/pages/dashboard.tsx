@@ -1,3 +1,4 @@
+import CustomerAppointments from "@components/appointments/customer/customerAppointments";
 import { UserType } from "@prisma/client";
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import { GetServerSideProps, NextPage } from "next";
@@ -9,7 +10,9 @@ const CustomerDashboard: NextPage = () => {
     <div>
       <TabView>
         <TabPanel header="Quotes"></TabPanel>
-        <TabPanel header="Service Requests"></TabPanel>
+        <TabPanel header="Service Requests">
+          <CustomerAppointments />
+        </TabPanel>
       </TabView>
     </div>
   );
