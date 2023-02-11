@@ -11,6 +11,7 @@ const ShopDashboard: NextPage = () => {
       <TabView>
         <TabPanel header="Quotes"></TabPanel>
         <TabPanel header="Service Requests">
+          
           <AppointmentsTab />
         </TabPanel>
       </TabView>

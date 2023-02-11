@@ -1,9 +1,9 @@
 import { ICustomerAppointment } from "src/types/appointment";
 
 export interface IAppointmentsState {
-  appointments: ICustomerAppointment[];
+  appointments: { [key: string]: ICustomerAppointment };
 }
 
 export const initialAppointmentsState: IAppointmentsState = {
-  appointments: [],
+  appointments: {},
 };

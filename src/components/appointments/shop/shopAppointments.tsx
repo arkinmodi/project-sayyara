@@ -1,6 +1,6 @@
-import { readAppointments } from "@redux/actions/appointmentAction";
-import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
+import { readShopAppointments } from "@redux/actions/shopActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
+import { ShopSelectors } from "@redux/selectors/shopSelector";
 import styles from "@styles/pages/appointments/ShopAppointments.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +14,7 @@ interface IAppointmentsProps {
 const ShopAppointments = (props: IAppointmentsProps) => {
   const dispatch = useDispatch();
 
-  const appointments = useSelector(AppointmentSelectors.getAppointments);
+  const appointments = useSelector(ShopSelectors.getShopAppointments) ?? [];
 
   const { appointmentTab } = props;
 
@@ -25,7 +25,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
   const shopId = useSelector(AuthSelectors.getShopId);
 
   useEffect(() => {
-    dispatch(readAppointments());
+    dispatch(readShopAppointments());
   }, [dispatch, shopId]);
 
   useEffect(() => {

@@ -1,7 +1,6 @@
 import { ServiceType } from "src/types/service";
 import {
   AppointmentStatus,
-  IAppointment,
   ICustomerAppointment,
 } from "../../types/appointment";
 import AppointmentTypes from "../types/appointmentTypes";
@@ -17,17 +16,12 @@ export interface IAppointmentActionSetAppointmentStatus
 
 export interface IAppointmentActionReadAppointments
   extends IAppointmentActionBase {
-  payload: void;
-}
-
-export interface IAppointmentActionReadCustomerAppointments
-  extends IAppointmentActionBase {
-  payload: { customerId: string };
+  payload: { id: string };
 }
 
 export interface IAppointmentActionSetAppointments
   extends IAppointmentActionBase {
-  payload: { appointments: IAppointment[] | ICustomerAppointment[] };
+  payload: { appointments: { id: string; appointments: ICustomerAppointment } };
 }
 
 export interface IAppointmentActionCreateAppointment
@@ -38,26 +32,12 @@ export interface IAppointmentActionCreateAppointment
 export type IAppointmentAction =
   | IAppointmentActionSetAppointmentStatus
   | IAppointmentActionReadAppointments
-  | IAppointmentActionReadCustomerAppointments
-  | IAppointmentActionSetAppointments
   | IAppointmentActionCreateAppointment;
 
-export const readAppointments = (payload: void) => ({
+export const readAppointments = (
+  payload: IAppointmentActionReadAppointments["payload"]
+) => ({
   type: AppointmentTypes.READ_APPOINTMENTS,
-  payload,
-});
-
-export const readCustomerAppointments = (
-  payload: IAppointmentActionReadCustomerAppointments["payload"]
-) => ({
-  type: AppointmentTypes.READ_CUSTOMER_APPOINTMENTS,
-  payload,
-});
-
-export const setAppointments = (
-  payload: IAppointmentActionSetAppointments["payload"]
-) => ({
-  type: AppointmentTypes.SET_APPOINTMENTS,
   payload,
 });
 

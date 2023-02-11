@@ -14,7 +14,13 @@ const getShopServices = createSelector(
   (shopState) => shopState.services
 );
 
+const getShopAppointments = createSelector(
+  getShopState,
+  (shopState) => shopState.appointments
+);
+
 export const ShopSelectors = {
   getShopEmployees,
   getShopServices,
+  getShopAppointments,
 };

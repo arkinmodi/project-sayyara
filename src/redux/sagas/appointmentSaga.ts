@@ -1,5 +1,5 @@
+import { Appointment } from "@prisma/client";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
-import { Appointment } from "@server/db/client";
 import {
   all,
   call,
@@ -10,12 +10,10 @@ import {
   SelectEffect,
   takeEvery,
 } from "redux-saga/effects";
-import { IAppointment, ICustomerAppointment } from "src/types/appointment";
+import { ICustomerAppointment } from "src/types/appointment";
 import { ServiceType } from "src/types/service";
-import { getCustomerById } from "src/utils/customerUtil";
 import { getServiceById } from "src/utils/serviceUtil";
 import { getShopId } from "src/utils/shopUtil";
-import { getVehicleById } from "src/utils/vehicleUtil";
 import {
   IAppointmentActionCreateAppointment,
   IAppointmentActionSetAppointmentStatus,
@@ -26,6 +24,10 @@ interface IPostCreateBody {
   service_type: ServiceType;
   start_time: string;
   end_time: string;
+}
+
+interface ICustomerAppointments {
+  [key: string]: ICustomerAppointment;
 }
 
 function patchAppointmentStatus(
@@ -48,73 +50,9 @@ function patchAppointmentStatus(
   });
 }
 
-function getAllAppointments(shopId: string): Promise<IAppointment[]> {
-  return fetch(`/api/shop/${shopId}/appointments/`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  }).then((res) => {
-    if (res.status === 200) {
-      return res.json().then((data) => {
-        const appointments = data
-          .map((appointment: Appointment) => {
-            const vehicleId = appointment.vehicle_id;
-            const customerId = appointment.customer_id;
-            const serviceId = appointment.service_id;
-
-            if (vehicleId && customerId && serviceId) {
-              const vehiclePromise = getVehicleById(vehicleId);
-              const customerPromise = getCustomerById(customerId);
-              const servicePromise = getServiceById(serviceId);
-
-              return Promise.all([
-                vehiclePromise,
-                customerPromise,
-                servicePromise,
-              ]).then((values) => {
-                const vehicle = values[0];
-                const customer = values[1];
-                const service = values[2];
-
-                return {
-                  id: appointment.id,
-                  startTime: appointment.start_time,
-                  endTime: appointment.end_time,
-                  customer: customer,
-                  shopId: appointment.shop_id,
-                  quoteId: appointment.quote_id,
-                  serviceName: service?.name,
-                  price: appointment.price,
-                  status: appointment.status,
-                  workOrderId: appointment.work_order_id,
-                  vehicle: vehicle,
-                };
-              });
-            } else {
-              // Return undefined if vehicle, customer, or service are null and filter out invalid appointments below
-              return;
-            }
-          })
-          .filter((appointment: IAppointment | undefined) => {
-            return appointment !== undefined;
-          });
-
-        return Promise.all(appointments).then((appointmentList) => {
-          return appointmentList;
-        });
-      });
-    } else {
-      // TODO: check and handle errors
-      return [];
-    }
-  });
-}
-
 function getCustomerAppointments(
   customerId: string
-): Promise<ICustomerAppointment[]> {
+): Promise<ICustomerAppointments> {
   return fetch(`/api/customer/${customerId}/appointments/`, {
     method: "GET",
     headers: {
@@ -124,7 +62,8 @@ function getCustomerAppointments(
   }).then((res) => {
     if (res.status === 200) {
       return res.json().then((data) => {
-        const appointments = data.map((appointment: Appointment) => {
+        const appointments: ICustomerAppointments = {};
+        const promises = data.map((appointment: Appointment) => {
           const serviceId = appointment.service_id;
           const shopId = appointment.shop_id;
 
@@ -136,7 +75,7 @@ function getCustomerAppointments(
               const shop = values[0];
               const service = values[1];
 
-              return {
+              const customerAppointment = {
                 id: appointment.id,
                 startTime: appointment.start_time,
                 endTime: appointment.end_time,
@@ -149,13 +88,19 @@ function getCustomerAppointments(
                 status: appointment.status,
                 workOrderId: appointment.work_order_id,
               };
+
+              return customerAppointment;
             });
           }
         });
 
-        return Promise.all(appointments).then((appointmentList) => {
-          return appointmentList;
-        });
+        return Promise.all(promises)
+          .then((appointment: ICustomerAppointment) => {
+            appointments[appointment.id] = appointment;
+          })
+          .then(() => {
+            return appointments;
+          });
       });
     } else {
       // TODO: check and handle errors
@@ -174,19 +119,6 @@ function* setAppointmentStatus(
 }
 
 function* readAppointments(): Generator<CallEffect | PutEffect | SelectEffect> {
-  const shopId = (yield select(AuthSelectors.getShopId)) as string | null;
-  if (shopId) {
-    const appointments = yield call(getAllAppointments, shopId);
-    yield put({
-      type: AppointmentTypes.SET_APPOINTMENTS,
-      payload: { shopId, appointments },
-    });
-  }
-}
-
-function* readCustomerAppointments(): Generator<
-  CallEffect | PutEffect | SelectEffect
-> {
   const customerId = (yield select(AuthSelectors.getUserId)) as string;
   if (customerId) {
     const appointments = yield call(getCustomerAppointments, customerId);
@@ -233,10 +165,6 @@ export function* appointmentSaga() {
   yield all([
     takeEvery(AppointmentTypes.SET_APPOINTMENT_STATUS, setAppointmentStatus),
     takeEvery(AppointmentTypes.READ_APPOINTMENTS, readAppointments),
-    takeEvery(
-      AppointmentTypes.READ_CUSTOMER_APPOINTMENTS,
-      readCustomerAppointments
-    ),
     takeEvery(AppointmentTypes.CREATE_APPOINTMENT, createAppointment),
   ]);
 }
