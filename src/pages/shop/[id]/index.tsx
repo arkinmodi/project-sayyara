@@ -184,6 +184,22 @@ const Profile: NextPage = () => {
     );
   };
 
+  const renderButton = (shop: IShop) => {
+    if (shop.hoursOfOperation) {
+      return (
+        <Button
+          className={styles.shopProfileButtonGreen}
+          disabled={userType === null}
+          onClick={() => {
+            setRequestServiceDialogVisible(true);
+          }}
+        >
+          {userType === null ? "Login to Request Service" : "Request Service"}
+        </Button>
+      );
+    }
+  };
+
   const renderShopHeader = (shop: IShop) => {
     return (
       <div className={styles.shopProfileHeader}>
@@ -206,15 +222,7 @@ const Profile: NextPage = () => {
               {` ${shop.email}`}
             </span>
           </div>
-          <Button
-            className={styles.shopProfileButtonGreen}
-            disabled={userType === null}
-            onClick={() => {
-              setRequestServiceDialogVisible(true);
-            }}
-          >
-            {userType === null ? "Login to Request Service" : "Request Service"}
-          </Button>
+          {renderButton(shop)}
         </div>
       </div>
     );

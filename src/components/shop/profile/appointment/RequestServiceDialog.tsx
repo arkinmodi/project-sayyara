@@ -21,27 +21,28 @@ interface IRequestServiceDialog {
 }
 
 interface ICreateAppointmentForm {
-  vehicleYear: string;
-  vehicleMake: string;
-  vehicleModel: string;
+  year: number | string;
+  make: string;
+  model: string;
   service: string;
-  appointmentDate: Date;
-  estimatedCost: number;
-  estimatedTime: number;
+  date: Date | null;
+  cost: number;
+  time: number;
   description: string;
 }
 
 const RequestServiceDialog = (props: IRequestServiceDialog) => {
   const dispatch = useDispatch();
 
-  const vehicle = useSelector(AuthSelectors.getVehicleInfo);
-
   const { visible, onHide, shopId, shop, basicServices, customServices } =
     props;
   const allServices = [...basicServices, ...customServices];
   const [selectedService, setSelectedService] = useState<string | IService>("");
-  const [formInfo, setFormInfo] = useState<ICreateAppointmentForm>();
+  const [preloaded, setPreloaded] = useState<boolean>(false);
+  const [form, setForm] = useState<ICreateAppointmentForm>();
   const [step, setStep] = useState<number>(1);
+
+  const vehicle = useSelector(AuthSelectors.getVehicleInfo);
 
   const hideDialog = () => {
     setStep(1);
@@ -71,8 +72,41 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     // Create appointment, or create quote, based on service type
     // Store information and move to next step
     if (typeof selectedService !== "string") {
+      let form: ICreateAppointmentForm;
+      if (vehicle) {
+        setPreloaded(true);
+        form = {
+          year: vehicle.year,
+          make: vehicle.make,
+          model: vehicle.model,
+          service: selectedService.name,
+          date: null,
+          cost: selectedService.totalPrice,
+          time: selectedService.estimatedTime,
+          description: selectedService.description,
+        };
+      } else {
+        form = {
+          year: "",
+          make: "",
+          model: "",
+          service: selectedService.name,
+          date: null,
+          cost: selectedService.totalPrice,
+          time: selectedService.estimatedTime,
+          description: selectedService.description,
+        };
+      }
+      setForm(form);
       setStep(2);
     }
+  };
+
+  const disabledDays = () => {
+    const hoursOfOperation = shop.hoursOfOperation;
+    if (hoursOfOperation) {
+    }
+    return Array.from(Array(7).keys());
   };
 
   const renderStep = () => {
@@ -99,56 +133,78 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
         );
       case 2:
         // Second window, shows vehicle information
-        return (
-          <div className={styles.dialogInputCol}>
-            <div className={styles.dialogInputRow}>
-              <div>
-                <p>Vehicle Year</p>
-                <InputText value={"test"} />
+        if (form) {
+          return (
+            <div className={styles.dialogInputCol}>
+              <div className={styles.dialogInputRow}>
+                <div>
+                  <p>Vehicle Year</p>
+                  <InputText value={form.year} disabled={preloaded} />
+                </div>
+                <div>
+                  <p>Vehicle Make</p>
+                  <InputText value={form.make} disabled={preloaded} />
+                </div>
+                <div>
+                  <p>Vehicle Model</p>
+                  <InputText value={form.model} disabled={preloaded} />
+                </div>
               </div>
-              <div>
-                <p>Vehicle Make</p>
-                <InputText value={"test"} />
+              <div className={styles.dialogInputRow}>
+                <div className={styles.fill}>
+                  <p>Service</p>
+                  <InputText
+                    value={form.service}
+                    disabled
+                    className={styles.maxWidth}
+                  />
+                </div>
+                <div className={styles.fill}>
+                  <p>Appointment Date</p>
+                  <Calendar
+                    className={styles.maxWidth}
+                    readOnlyInput
+                    minDate={new Date()} // Sets first date to be today
+                    disabledDays={disabledDays()}
+                  />
+                </div>
               </div>
-              <div>
-                <p>Vehicle Model</p>
-                <InputText value={"test"} />
+              <div className={styles.dialogInputRow}>
+                <div className={styles.fill}>
+                  <p>Estimated Cost ($)</p>
+                  <InputText
+                    value={form.cost}
+                    disabled={preloaded}
+                    className={styles.maxWidth}
+                  />
+                </div>
+                <div className={styles.fill}>
+                  <p>Estimated Time (Hours)</p>
+                  <InputText
+                    value={form.time}
+                    disabled={preloaded}
+                    className={styles.maxWidth}
+                  />
+                </div>
+              </div>
+              <div className={styles.dialogInputRow}>
+                <div className={styles.maxWidth}>
+                  <p>Description</p>
+                  <InputText
+                    value={form.description}
+                    className={styles.maxWidth}
+                  />
+                </div>
+              </div>
+              <div
+                className={classnames(styles.dialogInputRow, styles.buttonRow)}
+              >
+                <Button className="blueButton" label="Back" onClick={goBack} />
+                <Button className="greenButton" label={displayButton()} />
               </div>
             </div>
-            <div className={styles.dialogInputRow}>
-              <div className={styles.fill}>
-                <p>Service</p>
-                <InputText value={"test"} className={styles.maxWidth} />
-              </div>
-              <div className={styles.fill}>
-                <p>Appointment Date</p>
-                <Calendar className={styles.maxWidth} />
-              </div>
-            </div>
-            <div className={styles.dialogInputRow}>
-              <div className={styles.fill}>
-                <p>Estimated Cost</p>
-                <InputText value={"test"} className={styles.maxWidth} />
-              </div>
-              <div className={styles.fill}>
-                <p>Estimated Time</p>
-                <InputText value={"test"} className={styles.maxWidth} />
-              </div>
-            </div>
-            <div className={styles.dialogInputRow}>
-              <div className={styles.maxWidth}>
-                <p>Description</p>
-                <InputText value={"test"} className={styles.maxWidth} />
-              </div>
-            </div>
-            <div
-              className={classnames(styles.dialogInputRow, styles.buttonRow)}
-            >
-              <Button className="blueButton" label="Back" onClick={goBack} />
-              <Button className="greenButton" label={displayButton()} />
-            </div>
-          </div>
-        );
+          );
+        }
       default:
         break;
     }
