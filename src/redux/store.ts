@@ -4,11 +4,11 @@ import { Store } from "redux";
 import createSagaMiddleware, { Task } from "redux-saga";
 import { rootReducer } from "./reducers/rootReducer";
 import { rootSaga } from "./sagas/rootSaga";
-import { initialShopState, IShopState } from "./state/shop/shopState";
 import {
   IAppointmentsState,
   initialAppointmentsState,
-} from "./state/user/appointmentState";
+} from "./state/shop/appointmentState";
+import { initialShopState, IShopState } from "./state/shop/shopState";
 import { IAuthState, initialAuthState } from "./state/user/authState";
 
 /**

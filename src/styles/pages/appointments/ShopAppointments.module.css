@@ -6,6 +6,11 @@
   margin-top: 0;
 }
 
+.noAppointmentsText {
+  text-align: center;
+  height: 100%;
+}
+
 .cardContents {
   display: flex;
   flex-direction: row;

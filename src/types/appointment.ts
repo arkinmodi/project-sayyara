@@ -9,7 +9,7 @@ export interface IAppointment {
   customer: ICustomer;
   quoteId: string | null;
   serviceName: string;
-  price: Number;
+  price: number;
   status: AppointmentStatus;
   workOrderId: string;
   vehicle: IVehicle;
@@ -18,6 +18,20 @@ export interface IAppointment {
 export interface IAppointmentTimes {
   startTime: Date;
   endTime: Date;
+}
+
+export interface ICustomerAppointment {
+  id: string;
+  startTime: Date;
+  endTime: Date;
+  shopName: string;
+  shopAddress: string;
+  quoteId: string | null;
+  workOrderId: string;
+  serviceName: string;
+  price: number;
+  status: AppointmentStatus;
+  vehicle: IVehicle;
 }
 
 export enum AppointmentStatus {
