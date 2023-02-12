@@ -78,3 +78,14 @@ a {
 .p-carousel-indicator.p-highlight > .p-link {
   background-color: #436188 !important;
 }
+
+/**
+ * Global override for appointment card in carousel
+ */
+.p-fieldset .p-fieldset-content {
+  padding: 1rem 0 !important;
+}
+
+.p-carousel .p-carousel-indicators {
+  padding: 0.5rem !important;
+}

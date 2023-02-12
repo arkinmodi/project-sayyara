@@ -53,3 +53,9 @@
 .grayText {
   color: gray;
 }
+
+@media (max-width: 500px) {
+  .appointmentCarouselCard {
+    max-width: 300px;
+  }
+}
