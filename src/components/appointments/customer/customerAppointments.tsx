@@ -199,9 +199,7 @@ const CustomerAppointments = () => {
                 {(appointment as ICustomerAppointment).serviceName}
               </h4>
               <h4 className="mb-1">
-                {new Date(
-                  (appointment as ICustomerAppointment).startTime
-                ).toLocaleString()}
+                {new Date(appointment.startTime).toLocaleString()}
               </h4>
               {(appointment as ICustomerAppointment).status ===
                 AppointmentStatus.PENDING_APPROVAL ||
