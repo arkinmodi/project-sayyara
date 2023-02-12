@@ -65,11 +65,8 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
         59
       )
     );
-    console.log(startDate);
-    console.log(endDate);
     getAvailabilities(shopId, startDate, endDate, shop.hoursOfOperation!).then(
       (data) => {
-        //TODO
         if (data) {
           setAvailableTimeslots(data);
         }
@@ -225,7 +222,6 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
   };
 
   const onSubmitStepThree = () => {
-    console.log(form);
     if (
       form &&
       form.startTime &&
