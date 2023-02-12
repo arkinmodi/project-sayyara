@@ -2,7 +2,8 @@ import { readShopAppointments } from "@redux/actions/shopActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import { ShopSelectors } from "@redux/selectors/shopSelector";
 import styles from "@styles/pages/appointments/ShopAppointments.module.css";
-import { useEffect, useState } from "react";
+import { Toast } from "primereact/toast";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppointmentStatus, IAppointment } from "../../../types/appointment";
 import AppointmentCard from "./appointmentCard";
@@ -23,6 +24,45 @@ const ShopAppointments = (props: IAppointmentsProps) => {
   }>({});
 
   const shopId = useSelector(AuthSelectors.getShopId);
+
+  const toast = useRef<Toast>(null);
+
+  const showToast = (status: AppointmentStatus) => {
+    if (toast.current) {
+      switch (status) {
+        case AppointmentStatus.ACCEPTED:
+          toast.current.show({
+            severity: "success",
+            detail: "Appointment accepted",
+            sticky: true,
+          });
+          break;
+        case AppointmentStatus.IN_PROGRESS:
+          toast.current.show({
+            severity: "success",
+            detail: "Appointment moved to in progress",
+            sticky: true,
+          });
+          break;
+        case AppointmentStatus.COMPLETED:
+          toast.current.show({
+            severity: "success",
+            detail: "Appointment completed",
+            sticky: true,
+          });
+          break;
+        case AppointmentStatus.REJECTED:
+          toast.current.show({
+            severity: "info",
+            detail: "Appointment rejected/canceled",
+            sticky: true,
+          });
+          break;
+        default:
+          return;
+      }
+    }
+  };
 
   useEffect(() => {
     dispatch(readShopAppointments());
@@ -62,6 +102,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
             key={appointment.id}
             appointment={appointment}
             appointmentProgress={appointmentTab}
+            showToast={showToast}
           />
         );
       });
@@ -71,7 +112,6 @@ const ShopAppointments = (props: IAppointmentsProps) => {
   }
 
   function noAppointmentsText() {
-    let text = "";
     switch (appointmentTab) {
       case AppointmentStatus.PENDING_APPROVAL:
         return `No requested appointments.`;
@@ -102,6 +142,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
 
   return (
     <div>
+      <Toast ref={toast} />
       {Object.entries(appointmentsMap).length > 0 ? (
         listAllAppointments()
       ) : (
