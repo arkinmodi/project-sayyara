@@ -153,15 +153,15 @@ const Home: NextPage = () => {
     return false;
   };
 
-  const onSearch = () => {
+  const onSearch = (str: string, filter: string) => {
     // Fetch via search parameters
-    if (searchFilter) {
-      setLastSearch([searchString, searchFilter]);
+    if (filter) {
+      setLastSearch([str, filter]);
 
-      if (lastSearch[0] !== "") {
-        switch (lastSearch[1]) {
+      if (str !== "") {
+        switch (filter) {
           case "Service":
-            getFilteredShops(lastSearch[0], false).then((data) => {
+            getFilteredShops(str, false).then((data) => {
               if (data) {
                 // Filter by part type here
                 let filteredData = data
@@ -172,7 +172,7 @@ const Home: NextPage = () => {
             });
             break;
           case "Shop Name":
-            getFilteredShops(lastSearch[0], true).then((data) => {
+            getFilteredShops(str, true).then((data) => {
               if (data) {
                 // Filter by part type here
                 let filteredData = data
@@ -201,7 +201,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     setSearchString(lastSearch[0]);
     setSearchFilter(lastSearch[1]);
-    onSearch();
+    onSearch(lastSearch[0], lastSearch[1]);
   }, [selectedTypeFilters, selectedConditionFilters]);
 
   const shopOnClick = (shop: IShop & { services: IService[] }) => {
@@ -439,7 +439,7 @@ const Home: NextPage = () => {
             <Button
               className={styles.searchButton}
               label="Search"
-              onClick={onSearch}
+              onClick={() => onSearch(searchString, searchFilter!)}
             />
           </div>
           <div className={classNames(styles.search, styles.mobileSearch)}>
@@ -459,7 +459,7 @@ const Home: NextPage = () => {
             <Button
               className={styles.searchButton}
               label="Search"
-              onClick={onSearch}
+              onClick={() => onSearch(searchString, searchFilter!)}
             />
           </div>
           <DataView
