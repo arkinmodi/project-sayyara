@@ -237,7 +237,11 @@ const Home: NextPage = () => {
       );
     } else {
       serviceList.push(
-        <Chip key={`${view}SeeFullListChip`} className={styles.fullListChip} label="..." />
+        <Chip
+          key={`${view}SeeFullListChip`}
+          className={styles.fullListChip}
+          label="..."
+        />
       );
     }
 
