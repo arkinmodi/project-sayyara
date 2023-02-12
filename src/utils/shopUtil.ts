@@ -1,4 +1,10 @@
-import { Appointment, Service, ServiceType, Shop } from "@prisma/client";
+import {
+  Appointment,
+  AppointmentStatus,
+  Service,
+  ServiceType,
+  Shop,
+} from "@prisma/client";
 import { IAppointmentTimes } from "src/types/appointment";
 import { IService } from "src/types/service";
 import {
@@ -217,14 +223,17 @@ export function getAvailabilities(
     if (hoursOfOperation != null) {
       if (res.status === 200) {
         return res.json().then((data) => {
-          const appointments: IAppointmentTimes[] = data.map(
-            (appointment: Appointment) => {
+          // Gets appointments that are not `PENDING_APPROVAL`
+          const appointments: IAppointmentTimes[] = data
+            .filter((appointment: Appointment) => {
+              return appointment.status !== AppointmentStatus.PENDING_APPROVAL;
+            })
+            .map((appointment: Appointment) => {
               return {
                 startTime: new Date(appointment.start_time),
                 endTime: new Date(appointment.end_time),
               };
-            }
-          );
+            });
 
           let availabilities = [];
           let currentDate = startDate;
