@@ -222,15 +222,27 @@ const Home: NextPage = () => {
     for (let i = 0; i <= maxChip - 1; i++) {
       let service = shop.services[i];
       if (service) {
-        serviceList.push(<Chip className={styles.chip} label={service.name} />);
+        serviceList.push(
+          <Chip key={service.id} className={styles.chip} label={service.name} />
+        );
       }
     }
     if (view === "desktop") {
       serviceList.push(
-        <Chip className={styles.fullListChip} label="See Full List" />
+        <Chip
+          key={`${view}SeeFullListChip`}
+          className={styles.fullListChip}
+          label="See Full List"
+        />
       );
     } else {
-      serviceList.push(<Chip className={styles.fullListChip} label="..." />);
+      serviceList.push(
+        <Chip
+          key={`${view}SeeFullListChip`}
+          className={styles.fullListChip}
+          label="..."
+        />
+      );
     }
 
     return serviceList;
