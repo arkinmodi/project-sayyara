@@ -147,7 +147,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     field: string
   ) => {
     if (form && field) {
-      let _form = form;
+      let _form = { ...form };
       switch (field) {
         case "year":
           _form.year = parseInt(e.target.value);
