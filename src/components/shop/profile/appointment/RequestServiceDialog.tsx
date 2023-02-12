@@ -1,3 +1,4 @@
+import { createAppointment } from "@redux/actions/appointmentAction";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/components/shop/profile/appointment/RequestServiceDialog.module.css";
 import { default as classnames, default as classNames } from "classnames";
@@ -8,6 +9,7 @@ import { InputText } from "primereact/inputtext";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ScheduleMeeting, StartTimeEventEmit } from "react-schedule-meeting";
+import { AppointmentStatus } from "src/types/appointment";
 import { IService, ServiceType } from "src/types/service";
 import { IAvailabilitiesTime, IShop } from "src/types/shop";
 import { getAvailabilities } from "src/utils/shopUtil";
@@ -22,6 +24,7 @@ interface IRequestServiceDialog {
 }
 
 interface ICreateAppointmentForm {
+  vehicleId: string;
   year: number | string;
   make: string;
   model: string;
@@ -50,6 +53,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
   const [step, setStep] = useState<number>(1);
 
   const vehicle = useSelector(AuthSelectors.getVehicleInfo);
+  const customerId = useSelector(AuthSelectors.getUserId);
 
   useEffect(() => {
     const startDate = new Date(new Date().setHours(0, 0, 0, 0));
@@ -105,6 +109,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
       if (vehicle) {
         setPreloaded(true);
         form = {
+          vehicleId: vehicle.id,
           year: vehicle.year,
           make: vehicle.make,
           model: vehicle.model,
@@ -117,6 +122,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
         };
       } else {
         form = {
+          vehicleId: "",
           year: "",
           make: "",
           model: "",
@@ -220,6 +226,30 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
 
   const onSubmitStepThree = () => {
     console.log(form);
+    if (
+      form &&
+      form.startTime &&
+      form.endTime &&
+      typeof selectedService !== "string" &&
+      customerId
+    ) {
+      const body = {
+        shopId: shopId,
+        customerId: customerId,
+        serviceId: selectedService.id,
+        vehicleId: form.vehicleId,
+        quoteId: undefined,
+        price: form.cost,
+        status: AppointmentStatus.PENDING_APPROVAL,
+        startTime: form.startTime.toString(),
+        endTime: form.endTime.toString(),
+      };
+
+      dispatch(createAppointment(body));
+    }
+
+    // Toast success
+    hideDialog();
   };
 
   const renderStep = () => {

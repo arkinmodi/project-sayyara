@@ -1,4 +1,4 @@
-import { Appointment, UserType } from "@prisma/client";
+import { Appointment, AppointmentStatus, UserType } from "@prisma/client";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import ShopTypes from "@redux/types/shopTypes";
 import {
@@ -12,7 +12,6 @@ import {
   takeEvery,
 } from "redux-saga/effects";
 import { ICustomerAppointment } from "src/types/appointment";
-import { ServiceType } from "src/types/service";
 import { getServiceById } from "src/utils/serviceUtil";
 import { getShopId } from "src/utils/shopUtil";
 import {
@@ -22,7 +21,13 @@ import {
 import AppointmentTypes from "../types/appointmentTypes";
 
 interface IPostCreateBody {
-  service_type: ServiceType;
+  shop_id: string;
+  customer_id: string;
+  service_id: string;
+  vehicle_id: string;
+  quote_id?: string;
+  price: number;
+  status: AppointmentStatus;
   start_time: string;
   end_time: string;
 }
@@ -158,11 +163,20 @@ function* createAppointment(
 ): Generator<CallEffect | PutEffect> {
   const payload = action.payload;
   const body: IPostCreateBody = {
-    service_type: payload.serviceType,
+    shop_id: payload.shopId,
+    customer_id: payload.customerId,
+    service_id: payload.serviceId,
+    vehicle_id: payload.vehicleId,
+    quote_id: payload.quoteId,
+    price: payload.price,
+    status: payload.status,
     start_time: payload.startTime,
     end_time: payload.endTime,
   };
   yield call(postCreate, body);
+  yield put({
+    type: AppointmentTypes.READ_APPOINTMENTS,
+  });
 }
 
 /**
