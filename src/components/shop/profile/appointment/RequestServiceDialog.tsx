@@ -49,6 +49,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     IAvailabilitiesTime[]
   >([]);
   const [allowSubmit, setAllowSubmit] = useState<boolean>(false);
+  const [updateAvails, setUpdateAvails] = useState<boolean>(false);
 
   const [step, setStep] = useState<number>(1);
 
@@ -72,7 +73,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
         }
       }
     );
-  }, []);
+  }, [visible, updateAvails]);
 
   const hideDialog = () => {
     setStep(1);
@@ -243,12 +244,12 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
 
       dispatch(createAppointment(body));
     }
-
+    setUpdateAvails(!updateAvails);
     // Toast success
     hideDialog();
   };
 
-  const renderStep = () => {
+  const renderStep = (availableTimeslots: IAvailabilitiesTime[]) => {
     switch (step) {
       case 1:
         return (
@@ -347,7 +348,6 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
                   label={displayButton()}
                   disabled={!allowSubmit}
                   onClick={onSubmitStepThree}
-                  // onClick={} TODO
                 />
               </div>
             </div>
@@ -367,10 +367,10 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
         draggable={false}
         className={styles.requestDialog}
       >
-        {renderStep()}
+        {renderStep(availableTimeslots)}
       </Dialog>
     </div>
   );
 };
 
-export default React.memo(RequestServiceDialog);
+export default RequestServiceDialog;
