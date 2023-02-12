@@ -1,0 +1,126 @@
+{
+  "shopOwner": {
+    "email": "shop_j@sayyara.com",
+    "password": "password",
+    "firstName": "William",
+    "lastName": "Smith",
+    "phoneNumber": "(613) 555-0120"
+  },
+  "shop": {
+    "name": "Auto Fix",
+    "address": "1234 Yonge Street",
+    "phoneNumber": "(613) 555-0120",
+    "email": "shop_j@sayyara.com",
+    "postalCode": "M4N 2N5",
+    "city": "Toronto",
+    "province": "Ontario",
+    "hoursOfOperation": {
+      "monday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "tuesday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "wednesday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "thursday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "friday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "saturday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "sunday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      }
+    }
+  },
+  "services": [
+    {
+      "name": "Oil Change",
+      "description": "",
+      "parts": [
+        {
+          "cost": 45,
+          "name": "Engine Oil",
+          "build": "AFTERMARKET",
+          "quantity": 1,
+          "condition": "NEW"
+        },
+        {
+          "cost": 10,
+          "name": "Oil filter",
+          "build": "OEM",
+          "quantity": 1,
+          "condition": "NEW"
+        }
+      ],
+      "price": 100,
+      "estimatedTime": 1,
+      "type": "CANNED"
+    },
+    {
+      "name": "17 Inch Tire Replacement",
+      "description": "",
+      "parts": [
+        {
+          "cost": 200,
+          "name": "17 inch Tire",
+          "build": "OEM",
+          "quantity": 4,
+          "condition": "NEW"
+        },
+        {
+          "cost": 100,
+          "name": "17 inch Rims",
+          "build": "OEM",
+          "quantity": 4,
+          "condition": "NEW"
+        },
+        {
+          "cost": 30,
+          "name": "17 inch Hubcap",
+          "build": "OEM",
+          "quantity": 4,
+          "condition": "NEW"
+        }
+      ],
+      "price": 1200,
+      "estimatedTime": 1,
+      "type": "CANNED"
+    },
+    {
+      "name": "Windshield Wiper Replacement",
+      "description": "",
+      "parts": [
+        {
+          "cost": 20,
+          "name": "Windshield wiper",
+          "build": "OEM",
+          "quantity": 2,
+          "condition": "NEW"
+        }
+      ],
+      "price": 50,
+      "estimatedTime": 0.1,
+      "type": "CANNED"
+    }
+  ]
+}

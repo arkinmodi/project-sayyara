@@ -1,0 +1,80 @@
+{
+  "shopOwner": {
+    "email": "shopowner@sayyara.com",
+    "password": "password",
+    "firstName": "Eric",
+    "lastName": "Martinez",
+    "phoneNumber": "(905) 525-9140"
+  },
+  "shop": {
+    "name": "Sayyara",
+    "address": "1280 Main Street West",
+    "phoneNumber": "(905) 525-9140",
+    "email": "shopowner@sayyara.com",
+    "postalCode": "L8S 4L8",
+    "city": "Hamilton",
+    "province": "Ontario",
+    "hoursOfOperation": {
+      "monday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "tuesday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "wednesday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "thursday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "friday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "saturday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "sunday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      }
+    }
+  },
+  "services": [
+    {
+      "name": "Oil Change",
+      "description": "Change the engine oil",
+      "parts": [
+        {
+          "quantity": 1,
+          "condition": "NEW",
+          "build": "OEM",
+          "cost": 20.0,
+          "name": "Engine Oil"
+        },
+        {
+          "quantity": 1,
+          "condition": "NEW",
+          "build": "OEM",
+          "cost": 10.0,
+          "name": "Engine Oil Filter"
+        }
+      ],
+      "price": 30.55,
+      "estimatedTime": 2,
+      "type": "CANNED"
+    }
+  ]
+}
