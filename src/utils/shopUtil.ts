@@ -287,7 +287,6 @@ export function getAvailabilities(
             // Increment to next day
             currentDate.setDate(currentDate.getDate() + 1);
           }
-          console.log(availabilities);
           return availabilities;
         });
       } else {

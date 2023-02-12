@@ -1,4 +1,5 @@
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
+import { Vehicle } from "@server/db/client";
 import { getVehicleByCustomerId } from "@server/services/vehicleService";
 import { NextApiRequest, NextApiResponse } from "next";
 import type { Session } from "next-auth";
@@ -24,10 +25,10 @@ const vehicleByCustomerIdHandler = async (
     return;
   }
 
-  const vehicle = await getVehicleByCustomerId(id);
-  if (vehicle) {
-    if (isAuthorized(session)) {
-      res.status(200).json(vehicle);
+  const vehicles = await getVehicleByCustomerId(id);
+  if (vehicles) {
+    if (isAuthorized(session, vehicles)) {
+      res.status(200).json(vehicles);
     } else {
       res.status(403).json({ message: "Forbidden." });
     }
@@ -36,8 +37,13 @@ const vehicleByCustomerIdHandler = async (
   }
 };
 
-const isAuthorized = (session: Session) => {
-  return session.user.type === "CUSTOMER";
+const isAuthorized = (session: Session, vehicles: Vehicle[]) => {
+  return (
+    session.user.type === "CUSTOMER" &&
+    vehicles.every((vehicle) => {
+      return session.user.id === vehicle.customer_id;
+    })
+  );
 };
 
 export default vehicleByCustomerIdHandler;
