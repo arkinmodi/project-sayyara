@@ -1,3 +1,4 @@
+import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import { getAvailabilitiesByShopId } from "@server/services/appointmentService";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -21,11 +22,11 @@ const availabilitiesByShopIdHandler = async (
     return;
   }
 
-  // const session = await getServerAuthSession({ req, res });
-  // if (!session) {
-  //   res.status(403).json({ message: "Forbidden." });
-  //   return;
-  // }
+  const session = await getServerAuthSession({ req, res });
+  if (!session) {
+    res.status(403).json({ message: "Forbidden." });
+    return;
+  }
 
   const availabilities = await getAvailabilitiesByShopId(
     id,
