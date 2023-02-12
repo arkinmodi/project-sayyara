@@ -348,7 +348,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
               >
                 <Button className="blueButton" label="Back" onClick={goBack} />
                 <Button
-                  className="greenButton"
+                  className={classNames(styles.dialogButton, "greenButton")}
                   label={displayButtonText()}
                   disabled={!allowSubmit}
                   onClick={onSubmitStepThree}
