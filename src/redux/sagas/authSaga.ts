@@ -1,16 +1,23 @@
+import { UserType } from "@prisma/client";
+import { AuthSelectors } from "@redux/selectors/authSelectors";
 import {
   all,
   call,
   CallEffect,
   put,
   PutEffect,
+  select,
+  SelectEffect,
   takeEvery,
 } from "redux-saga/effects";
+import { IVehicle } from "src/types/vehicle";
+import { getVehicleByCustomerId } from "src/utils/vehicleUtil";
 import {
   IAuthActionCreateCustomerSignUp,
   IAuthActionCreateLogin,
   IAuthActionCreateShopEmployeeSignUp,
   IAuthActionCreateShopOwnerSignUp,
+  IAuthActionReadCustomerVehicle,
 } from "../actions/authActions";
 import AuthTypes from "../types/authTypes";
 
@@ -231,6 +238,26 @@ function* shopOwnerSignUp(
   }
 }
 
+function* readCustomerVehicleInfo(
+  action: IAuthActionReadCustomerVehicle
+): Generator<CallEffect | PutEffect | SelectEffect> {
+  const userType = (yield select(AuthSelectors.getUserType)) as UserType | null;
+  if (userType === UserType.CUSTOMER) {
+    // Add vehicle information to state
+    const customerId = (yield select(AuthSelectors.getUserId)) as string;
+    const vehicle: IVehicle | null = (yield call(
+      getVehicleByCustomerId,
+      customerId
+    )) as IVehicle | null;
+    if (vehicle) {
+      yield put({
+        type: AuthTypes.SET_CUSTOMER_VEHICLE_INFO,
+        payload: vehicle,
+      });
+    }
+  }
+}
+
 /**
  * Saga to handle all auth related actions.
  */
@@ -240,5 +267,6 @@ export function* authSaga() {
     takeEvery(AuthTypes.CREATE_CUSTOMER_SIGN_UP, customerSignUp),
     takeEvery(AuthTypes.CREATE_SHOP_EMPLOYEE_SIGN_UP, shopEmployeeSignUp),
     takeEvery(AuthTypes.CREATE_SHOP_OWNER_SIGN_UP, shopOwnerSignUp),
+    takeEvery(AuthTypes.READ_CUSTOMER_VEHICLE_INFO, readCustomerVehicleInfo),
   ]);
 }

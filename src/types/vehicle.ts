@@ -1,8 +1,8 @@
 export interface IVehicle {
-  id: String;
-  make: String;
-  model: String;
-  year: Number;
-  vin: String;
-  license_plate: String;
+  id: string;
+  make: string;
+  model: string;
+  year: number;
+  vin: string;
+  license_plate: string;
 }

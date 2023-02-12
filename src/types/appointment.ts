@@ -15,6 +15,11 @@ export interface IAppointment {
   vehicle: IVehicle;
 }
 
+export interface IAppointmentTimes {
+  startTime: Date;
+  endTime: Date;
+}
+
 export interface ICustomerAppointment {
   id: string;
   startTime: Date;

@@ -1,5 +1,6 @@
 import { UserType } from "@prisma/client";
 import { AuthDialogType } from "src/types/auth";
+import { IVehicle } from "src/types/vehicle";
 
 export interface IAuthState {
   isLoggedIn: boolean;
@@ -16,6 +17,7 @@ export interface IAuthState {
     isAuthDialogOpen: boolean;
     authDialogType: AuthDialogType;
   };
+  vehicle: IVehicle | null;
 }
 
 export const initialAuthState: IAuthState = {
@@ -33,4 +35,5 @@ export const initialAuthState: IAuthState = {
     isAuthDialogOpen: false,
     authDialogType: AuthDialogType.CUSTOMER,
   },
+  vehicle: null,
 };

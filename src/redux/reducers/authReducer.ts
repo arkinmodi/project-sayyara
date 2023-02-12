@@ -23,6 +23,8 @@ const authReducer = (
         ...state,
         showInvalidLoginToast: action?.payload?.showInvalidLoginToast,
       };
+    case AuthType.SET_CUSTOMER_VEHICLE_INFO:
+      return { ...state, vehicle: action?.payload };
     // This will overwrite client state - required for Next.js
     case HYDRATE: {
       return { ...action.payload.authReducer };

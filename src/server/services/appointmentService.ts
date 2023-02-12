@@ -78,6 +78,23 @@ export const getAppointmentsByShopId = async (shop_id: string) => {
   return await prisma.appointment.findMany({ where: { shop_id } });
 };
 
+export const getAvailabilitiesByShopId = async (
+  shop_id: string,
+  start_date: Date,
+  end_date: Date
+) => {
+  return await prisma.appointment.findMany({
+    where: {
+      AND: [
+        { shop_id: { equals: shop_id } },
+        { start_time: { gte: start_date } },
+        { end_time: { lte: end_date } },
+      ],
+    },
+    orderBy: { start_time: "asc" },
+  });
+};
+
 export const getAppointmentsByCustomerId = async (customer_id: string) => {
   return await prisma.appointment.findMany({ where: { customer_id } });
 };

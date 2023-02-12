@@ -1,3 +1,4 @@
+import RequestServiceDialog from "@components/shop/profile/appointment/RequestServiceDialog";
 import { ServiceType, UserType } from "@prisma/client";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/pages/shop/ShopProfile.module.css";
@@ -44,6 +45,8 @@ const Profile: NextPage = () => {
     addHoursOfOperationDialogVisible,
     setAddHoursOfOperationDialogVisible,
   ] = useState(false);
+  const [requestServiceDialogVisible, setRequestServiceDialogVisible] =
+    useState(false);
   const router = useRouter();
   const id = router.query.id as string | undefined;
 
@@ -181,6 +184,22 @@ const Profile: NextPage = () => {
     );
   };
 
+  const renderButton = (shop: IShop) => {
+    if (shop.hoursOfOperation) {
+      return (
+        <Button
+          className={styles.shopProfileButtonGreen}
+          disabled={userType === null}
+          onClick={() => {
+            setRequestServiceDialogVisible(true);
+          }}
+        >
+          {userType === null ? "Login to Request Service" : "Request Service"}
+        </Button>
+      );
+    }
+  };
+
   const renderShopHeader = (shop: IShop) => {
     return (
       <div className={styles.shopProfileHeader}>
@@ -203,9 +222,7 @@ const Profile: NextPage = () => {
               {` ${shop.email}`}
             </span>
           </div>
-          <Button className={styles.shopProfileButtonGreen}>
-            Request Service
-          </Button>
+          {renderButton(shop)}
         </div>
       </div>
     );
@@ -223,6 +240,10 @@ const Profile: NextPage = () => {
 
   const hideHoursOfOperationDialog = () => {
     setAddHoursOfOperationDialogVisible(false);
+  };
+
+  const hideRequestServiceDialog = () => {
+    setRequestServiceDialogVisible(false);
   };
 
   const updateShop = (shop: IShop) => {
@@ -309,6 +330,14 @@ const Profile: NextPage = () => {
             shopId={id}
             shop={shop}
             updateShop={updateShop}
+          />
+          <RequestServiceDialog
+            visible={requestServiceDialogVisible}
+            onHide={hideRequestServiceDialog}
+            shopId={id}
+            shop={shop}
+            basicServices={basicServices !== null ? basicServices : []}
+            customServices={customServices !== null ? customServices : []}
           />
         </div>
       ) : (
