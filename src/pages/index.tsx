@@ -230,7 +230,7 @@ const Home: NextPage = () => {
     if (view === "desktop") {
       serviceList.push(
         <Chip
-          key={view}
+          key={`${view}SeeFullListChip`}
           className={styles.fullListChip}
           label="See Full List"
         />
