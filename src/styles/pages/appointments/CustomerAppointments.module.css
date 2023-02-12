@@ -16,11 +16,6 @@
   height: 95%;
 }
 
-.carouselFieldSet {
-  margin-top: 30px;
-  margin-bottom: 20px;
-}
-
 .appointmentCarouselCardContainer {
   height: 100%;
 }
@@ -52,4 +47,10 @@
 
 .grayText {
   color: gray;
+}
+
+@media (max-width: 500px) {
+  .appointmentCarouselCard {
+    max-width: 300px;
+  }
 }

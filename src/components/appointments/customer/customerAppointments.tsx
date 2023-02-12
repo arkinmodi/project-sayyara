@@ -7,9 +7,9 @@ import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/pages/appointments/CustomerAppointments.module.css";
 import Router from "next/router";
+import { Accordion, AccordionTab } from "primereact/accordion";
 import { Button } from "primereact/button";
 import { Carousel } from "primereact/carousel";
-import { Fieldset } from "primereact/fieldset";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ICustomerAppointment } from "src/types/appointment";
@@ -68,14 +68,14 @@ const CustomerAppointments = () => {
   const getAppointmentsWithPlaceholders = (
     appointments: ICustomerAppointment[]
   ) => {
-    const width = window.innerWidth;
+    const width = window.outerWidth;
     switch (true) {
-      case width < 767:
-        return addPlaceholderItems(appointments, 1);
-      case width > 767 && width < 991:
+      case width > 767 && width <= 991:
         return addPlaceholderItems(appointments, 2);
-      default:
+      case width > 991:
         return addPlaceholderItems(appointments, 3);
+      default:
+        return appointments;
     }
   };
 
@@ -232,82 +232,68 @@ const CustomerAppointments = () => {
 
   return (
     <div>
-      <Fieldset
-        className={styles.carouselFieldSet}
-        toggleable={true}
-        legend="Requested Services"
-      >
-        <div className={styles.appointmentsCarousel}>
-          {requestedAppointments.length > 0 ? (
-            <Carousel
-              value={getAppointmentsWithPlaceholders(requestedAppointments)}
-              numVisible={3}
-              numScroll={1}
-              responsiveOptions={responsiveOptions}
-              itemTemplate={appointmentsCard}
-            />
-          ) : (
-            <div> No requested services.</div>
-          )}
-        </div>
-      </Fieldset>
-      <Fieldset
-        className={styles.carouselFieldSet}
-        toggleable={true}
-        legend="Scheduled Services"
-      >
-        <div className={styles.appointmentsCarousel}>
-          {scheduledAppointments.length > 0 ? (
-            <Carousel
-              value={getAppointmentsWithPlaceholders(scheduledAppointments)}
-              numVisible={3}
-              numScroll={1}
-              responsiveOptions={responsiveOptions}
-              itemTemplate={appointmentsCard}
-            />
-          ) : (
-            <div> No scheduled services.</div>
-          )}
-        </div>
-      </Fieldset>
-      <Fieldset
-        className={styles.carouselFieldSet}
-        toggleable={true}
-        legend="In Progress Services"
-      >
-        <div className={styles.appointmentsCarousel}>
-          {inProgressAppointments.length > 0 ? (
-            <Carousel
-              value={getAppointmentsWithPlaceholders(inProgressAppointments)}
-              numVisible={3}
-              numScroll={1}
-              responsiveOptions={responsiveOptions}
-              itemTemplate={appointmentsCard}
-            />
-          ) : (
-            <div> No in progress services.</div>
-          )}
-        </div>
-      </Fieldset>
-      <Fieldset
-        className={styles.carouselFieldSet}
-        toggleable={true}
-        legend="Past Services"
-      >
-        <div className={styles.appointmentsCarousel}>
-          {pastAppointments.length > 0 ? (
-            <Carousel
-              value={getAppointmentsWithPlaceholders(pastAppointments)}
-              numVisible={3}
-              numScroll={1}
-              responsiveOptions={responsiveOptions}
-              itemTemplate={appointmentsCard}
-            />
-          ) : (
-            <div> No past services.</div>
-          )}
-        </div>
-      </Fieldset>
+      <Accordion multiple={true} activeIndex={[0, 1, 2, 3]}>
+        <AccordionTab header="Requested Services">
+          <div className={styles.appointmentsCarousel}>
+            {requestedAppointments.length > 0 ? (
+              <Carousel
+                value={getAppointmentsWithPlaceholders(requestedAppointments)}
+                numVisible={3}
+                numScroll={1}
+                responsiveOptions={responsiveOptions}
+                itemTemplate={appointmentsCard}
+              />
+            ) : (
+              <div> No requested services.</div>
+            )}
+          </div>
+        </AccordionTab>
+        <AccordionTab header="Scheduled Services">
+          <div className={styles.appointmentsCarousel}>
+            {scheduledAppointments.length > 0 ? (
+              <Carousel
+                value={getAppointmentsWithPlaceholders(scheduledAppointments)}
+                numVisible={3}
+                numScroll={1}
+                responsiveOptions={responsiveOptions}
+                itemTemplate={appointmentsCard}
+              />
+            ) : (
+              <div> No scheduled services.</div>
+            )}
+          </div>
+        </AccordionTab>
+        <AccordionTab header="In Progress Services">
+          <div className={styles.appointmentsCarousel}>
+            {inProgressAppointments.length > 0 ? (
+              <Carousel
+                value={getAppointmentsWithPlaceholders(inProgressAppointments)}
+                numVisible={3}
+                numScroll={1}
+                responsiveOptions={responsiveOptions}
+                itemTemplate={appointmentsCard}
+              />
+            ) : (
+              <div> No in progress services.</div>
+            )}
+          </div>
+        </AccordionTab>
+        <AccordionTab header="Past Services">
+          <div className={styles.appointmentsCarousel}>
+            {pastAppointments.length > 0 ? (
+              <Carousel
+                value={getAppointmentsWithPlaceholders(pastAppointments)}
+                numVisible={3}
+                numScroll={1}
+                responsiveOptions={responsiveOptions}
+                itemTemplate={appointmentsCard}
+              />
+            ) : (
+              <div> No past services.</div>
+            )}
+          </div>
+        </AccordionTab>
+      </Accordion>
     </div>
   );
 };
