@@ -210,7 +210,7 @@ export function getAvailabilities(
   shopId: string,
   startDate: Date,
   endDate: Date,
-  hoursOfOperation: IShopHoursOfOperation
+  hoursOfOperation: IShopHoursOfOperation | null
 ): Promise<IAvailabilitiesTime[] | null> {
   const url = `/api/shop/${shopId}/availabilities?start=${startDate.toString()}&end=${endDate.toString()}`;
   return fetch(url, {
@@ -223,10 +223,10 @@ export function getAvailabilities(
     if (hoursOfOperation != null) {
       if (res.status === 200) {
         return res.json().then((data) => {
-          // Gets appointments that are not `PENDING_APPROVAL`
+          // Gets appointments that are not `REJECTED`
           const appointments: IAppointmentTimes[] = data
             .filter((appointment: Appointment) => {
-              return appointment.status !== AppointmentStatus.PENDING_APPROVAL;
+              return appointment.status !== AppointmentStatus.REJECTED;
             })
             .map((appointment: Appointment) => {
               return {
@@ -287,6 +287,7 @@ export function getAvailabilities(
             // Increment to next day
             currentDate.setDate(currentDate.getDate() + 1);
           }
+          console.log(availabilities);
           return availabilities;
         });
       } else {

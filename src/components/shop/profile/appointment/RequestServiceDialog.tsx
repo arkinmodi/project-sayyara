@@ -1,4 +1,5 @@
 import { createAppointment } from "@redux/actions/appointmentAction";
+import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/components/shop/profile/appointment/RequestServiceDialog.module.css";
 import { default as classnames, default as classNames } from "classnames";
@@ -55,6 +56,9 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
 
   const vehicle = useSelector(AuthSelectors.getVehicleInfo);
   const customerId = useSelector(AuthSelectors.getUserId);
+  const customerAppointments = useSelector(
+    AppointmentSelectors.getAppointments
+  );
 
   useEffect(() => {
     const startDate = new Date(new Date().setHours(0, 0, 0, 0));
@@ -66,14 +70,17 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
         59
       )
     );
-    getAvailabilities(shopId, startDate, endDate, shop.hoursOfOperation!).then(
-      (data) => {
-        if (data) {
-          setAvailableTimeslots(data);
-        }
+    getAvailabilities(
+      shopId,
+      startDate,
+      endDate,
+      shop.hoursOfOperation ?? null
+    ).then((data) => {
+      if (data) {
+        setAvailableTimeslots(data);
       }
-    );
-  }, [visible, updateAvails]);
+    });
+  }, [visible, updateAvails, shop?.hoursOfOperation, customerAppointments]);
 
   const hideDialog = () => {
     setStep(1);
