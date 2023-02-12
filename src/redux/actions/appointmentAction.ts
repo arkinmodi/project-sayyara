@@ -1,4 +1,3 @@
-import { ServiceType } from "src/types/service";
 import {
   AppointmentStatus,
   ICustomerAppointment,
@@ -26,7 +25,17 @@ export interface IAppointmentActionSetAppointments
 
 export interface IAppointmentActionCreateAppointment
   extends IAppointmentActionBase {
-  payload: { serviceType: ServiceType; startTime: string; endTime: string };
+  payload: {
+    shopId: string;
+    customerId: string;
+    serviceId: string;
+    vehicleId: string;
+    quoteId?: string;
+    price: number;
+    status: AppointmentStatus;
+    startTime: string;
+    endTime: string;
+  };
 }
 
 export type IAppointmentAction =

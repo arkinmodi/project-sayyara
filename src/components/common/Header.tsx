@@ -1,5 +1,6 @@
 import { UserType } from "@prisma/client";
 import {
+  readCustomerVehicleInfo,
   setIsAuthDialogOpen,
   setIsLoggedIn,
   setUserSession,
@@ -28,6 +29,12 @@ const Header = () => {
   const userType = useSelector(AuthSelectors.getUserType);
   const shopId = useSelector(AuthSelectors.getShopId);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (userType === UserType.CUSTOMER) {
+      dispatch(readCustomerVehicleInfo());
+    }
+  }, [userType]);
 
   /**
    * Handle navbar button clicks to open auth dialog

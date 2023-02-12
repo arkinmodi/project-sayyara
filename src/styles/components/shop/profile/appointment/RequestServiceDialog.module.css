@@ -1,0 +1,74 @@
+/* Step 1 CSS */
+.dialogContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 75%;
+  padding: 1rem 2rem;
+  margin: auto;
+  align-items: center;
+}
+
+.dialogDropdown {
+  margin-bottom: 5rem;
+}
+
+.dialogButton {
+  max-width: fit-content;
+}
+
+.dialogDropdown {
+  min-width: 80%;
+}
+
+@media (min-width: 500px) {
+  .requestDialog {
+    width: 70vw;
+  }
+}
+
+@media (max-width: 1000px) {
+  .requestDialog {
+    width: 90vw;
+  }
+
+  .dialogContainer {
+    max-width: 100%;
+  }
+
+  .dialogButton {
+    margin-top: 10px;
+  }
+}
+
+/* Step 2 CSS */
+.dialogInputCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.dialogInputRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.buttonRow {
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 500px) {
+  .fill {
+    flex-basis: 40%;
+  }
+
+  .maxWidth {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .dialogInputRow {
+    flex-direction: column;
+    align-self: center;
+  }
+}

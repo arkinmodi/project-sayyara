@@ -63,6 +63,11 @@ const getIsLoggedIn = createSelector(
   (authState) => authState.isLoggedIn
 );
 
+const getVehicleInfo = createSelector(
+  getAuthState,
+  (authState) => authState.vehicle
+);
+
 export const AuthSelectors = {
   getIsLoggedIn,
   getUserId,
@@ -74,4 +79,5 @@ export const AuthSelectors = {
   getAuthDialogIsOpen,
   getAuthDialogType,
   getShowInvalidLoginToast,
+  getVehicleInfo,
 };
