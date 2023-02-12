@@ -50,8 +50,6 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     IAvailabilitiesTime[]
   >([]);
   const [allowSubmit, setAllowSubmit] = useState<boolean>(false);
-  const [updateAvails, setUpdateAvails] = useState<boolean>(false);
-
   const [step, setStep] = useState<number>(1);
 
   const vehicle = useSelector(AuthSelectors.getVehicleInfo);
@@ -80,7 +78,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
         setAvailableTimeslots(data);
       }
     });
-  }, [visible, updateAvails, shop?.hoursOfOperation, customerAppointments]);
+  }, [shop?.hoursOfOperation, customerAppointments]);
 
   const hideDialog = () => {
     setStep(1);
@@ -251,7 +249,6 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
 
       dispatch(createAppointment(body));
     }
-    setUpdateAvails(!updateAvails);
     // Toast success
     hideDialog();
   };
