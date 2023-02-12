@@ -4,7 +4,7 @@ import styles from "@styles/components/shop/profile/appointment/RequestServiceDi
 import { default as classnames, default as classNames } from "classnames";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { Dropdown } from "primereact/dropdown";
+import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -81,15 +81,15 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
   };
 
   const goBack = () => {
-    let _step = step;
-    setStep(--_step);
+    setStep(step - 1);
   };
 
-  const onServiceChange = (e: { value: any }) => {
-    setSelectedService(e.value);
+  const onServiceChange = (e: DropdownChangeParams) => {
+    const value = e.value;
+    setSelectedService(value);
   };
 
-  const displayButton = () => {
+  const displayButtonText = () => {
     if (typeof selectedService === "string") {
       return "Schedule Service";
     } else {
@@ -254,7 +254,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
       case 1:
         return (
           <div className={styles.dialogContainer}>
-            <h3>Request a Service</h3>
+            <h3>Select a Service</h3>
             <Dropdown
               className={styles.dialogDropdown}
               value={selectedService}
@@ -267,7 +267,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
               disabled={selectedService === ""}
               onClick={onSubmitStepOne}
             >
-              {displayButton()}
+              {displayButtonText()}
             </Button>
           </div>
         );
@@ -312,15 +312,15 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
                   />
                 </div>
               </div>
-              <div>{renderCostAndTime()}</div>
-              <div>{renderDescription()}</div>
+              {renderCostAndTime()}
+              {renderDescription()}
               <div
                 className={classnames(styles.dialogInputRow, styles.buttonRow)}
               >
                 <Button className="blueButton" label="Back" onClick={goBack} />
                 <Button
-                  className="greenButton"
-                  label={displayButton()}
+                  className={classNames(styles.dialogButton, "greenButton")}
+                  label={displayButtonText()}
                   onClick={onSubmitStepTwo}
                 />
               </div>
@@ -345,7 +345,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
                 <Button className="blueButton" label="Back" onClick={goBack} />
                 <Button
                   className="greenButton"
-                  label={displayButton()}
+                  label={displayButtonText()}
                   disabled={!allowSubmit}
                   onClick={onSubmitStepThree}
                 />
@@ -363,7 +363,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
       <Dialog
         visible={visible}
         onHide={hideDialog}
-        header={shop.name}
+        header={"Request a service"}
         draggable={false}
         className={styles.requestDialog}
       >

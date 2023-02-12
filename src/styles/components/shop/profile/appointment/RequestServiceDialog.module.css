@@ -5,6 +5,7 @@
   max-width: 75%;
   padding: 1rem 2rem;
   margin: auto;
+  align-items: center;
 }
 
 .dialogDropdown {
@@ -13,7 +14,10 @@
 
 .dialogButton {
   max-width: fit-content;
-  margin: auto;
+}
+
+.dialogDropdown {
+  min-width: 80%;
 }
 
 @media (min-width: 500px) {
@@ -22,13 +26,17 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 1000px) {
   .requestDialog {
-    width: 80vw;
+    width: 90vw;
   }
 
   .dialogContainer {
     max-width: 100%;
+  }
+
+  .dialogButton {
+    margin-top: 20px;
   }
 }
 
@@ -55,5 +63,12 @@
 
   .maxWidth {
     width: 100%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .dialogInputRow {
+    flex-direction: column;
+    align-self: center;
   }
 }

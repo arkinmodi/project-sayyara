@@ -220,76 +220,79 @@ export function getAvailabilities(
       "Content-Type": "application/json",
     },
   }).then((res) => {
-    if (res.status === 200) {
-      return res.json().then((data) => {
-        // Gets appointments that are not `PENDING_APPROVAL`
-        const appointments: IAppointmentTimes[] = data
-          .filter((appointment: Appointment) => {
-            return appointment.status !== AppointmentStatus.PENDING_APPROVAL;
-          })
-          .map((appointment: Appointment) => {
-            return {
-              startTime: new Date(appointment.start_time),
-              endTime: new Date(appointment.end_time),
-            };
-          });
-
-        let availabilities = [];
-        let currentDate = startDate;
-        while (currentDate < endDate) {
-          // Checks availabilities for the day
-          const currentBusy = appointments.filter(
-            (appointment: IAppointmentTimes) => {
-              return (
-                appointment.startTime.toDateString() ===
-                currentDate.toDateString()
-              );
-            }
-          );
-          // Find available timeslots from busy timeslots
-          // Check if shop is open on day
-          const day = mapDayToString[
-            currentDate.getDay()
-          ] as keyof IShopHoursOfOperation;
-          if (hoursOfOperation[day].isOpen) {
-            // Get opening hours
-            const openTime = new Date(hoursOfOperation[day].openTime);
-            const openHours = openTime.getHours();
-            const openMinutes = openTime.getMinutes();
-            let start = new Date(
-              new Date(currentDate).setHours(openHours, openMinutes)
-            );
-            for (let i = 0; i < currentBusy.length; i++) {
-              let end = new Date(currentBusy[i]!.startTime);
-
-              if (end > start) {
-                availabilities.push({
-                  startTime: start,
-                  endTime: end,
-                });
-              }
-              start = new Date(currentBusy[i]!.endTime);
-            }
-
-            // Set closing time
-            const closeTime = new Date(hoursOfOperation[day].closeTime);
-            const closeHour = closeTime.getHours();
-            const closeMinute = closeTime.getMinutes();
-
-            availabilities.push({
-              startTime: start,
-              endTime: new Date(
-                new Date(start).setHours(closeHour, closeMinute)
-              ),
+    if (hoursOfOperation != null) {
+      if (res.status === 200) {
+        return res.json().then((data) => {
+          // Gets appointments that are not `PENDING_APPROVAL`
+          const appointments: IAppointmentTimes[] = data
+            .filter((appointment: Appointment) => {
+              return appointment.status !== AppointmentStatus.PENDING_APPROVAL;
+            })
+            .map((appointment: Appointment) => {
+              return {
+                startTime: new Date(appointment.start_time),
+                endTime: new Date(appointment.end_time),
+              };
             });
+
+          let availabilities = [];
+          let currentDate = startDate;
+          while (currentDate < endDate) {
+            // Checks availabilities for the day
+            const currentBusy = appointments.filter(
+              (appointment: IAppointmentTimes) => {
+                return (
+                  appointment.startTime.toDateString() ===
+                  currentDate.toDateString()
+                );
+              }
+            );
+            // Find available timeslots from busy timeslots
+            // Check if shop is open on day
+            const day = mapDayToString[
+              currentDate.getDay()
+            ] as keyof IShopHoursOfOperation;
+            if (hoursOfOperation[day].isOpen) {
+              // Get opening hours
+              const openTime = new Date(hoursOfOperation[day].openTime);
+              const openHours = openTime.getHours();
+              const openMinutes = openTime.getMinutes();
+              let start = new Date(
+                new Date(currentDate).setHours(openHours, openMinutes)
+              );
+              for (let i = 0; i < currentBusy.length; i++) {
+                let end = new Date(currentBusy[i]!.startTime);
+
+                if (end > start) {
+                  availabilities.push({
+                    startTime: start,
+                    endTime: end,
+                  });
+                }
+                start = new Date(currentBusy[i]!.endTime);
+              }
+
+              // Set closing time
+              const closeTime = new Date(hoursOfOperation[day].closeTime);
+              const closeHour = closeTime.getHours();
+              const closeMinute = closeTime.getMinutes();
+
+              availabilities.push({
+                startTime: start,
+                endTime: new Date(
+                  new Date(start).setHours(closeHour, closeMinute)
+                ),
+              });
+            }
+            // Increment to next day
+            currentDate.setDate(currentDate.getDate() + 1);
           }
-          // Increment to next day
-          currentDate.setDate(currentDate.getDate() + 1);
-        }
-        return availabilities;
-      });
-    } else {
-      return null;
+          return availabilities;
+        });
+      } else {
+        return null;
+      }
     }
+    return null;
   });
 }
