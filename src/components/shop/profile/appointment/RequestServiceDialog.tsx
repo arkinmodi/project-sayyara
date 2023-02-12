@@ -4,7 +4,7 @@ import styles from "@styles/components/shop/profile/appointment/RequestServiceDi
 import { default as classnames, default as classNames } from "classnames";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { Dropdown } from "primereact/dropdown";
+import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -81,12 +81,12 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
   };
 
   const goBack = () => {
-    let _step = step;
-    setStep(--_step);
+    setStep(step - 1);
   };
 
-  const onServiceChange = (e: { value: any }) => {
-    setSelectedService(e.value);
+  const onServiceChange = (e: DropdownChangeParams) => {
+    const value = e.value;
+    setSelectedService(value);
   };
 
   const displayButtonText = () => {
