@@ -74,3 +74,7 @@ a {
   border-color: #436188;
   color: #436188;
 }
+
+.p-carousel-indicator.p-highlight > .p-link {
+  background-color: #436188 !important;
+}

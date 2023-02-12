@@ -6,11 +6,11 @@ import { IQuotesState } from "src/types/quotes";
 import { rootReducer } from "./reducers/rootReducer";
 import { rootSaga } from "./sagas/rootSaga";
 import { initialQuoteState } from "./state/quoteState";
-import { initialShopState, IShopState } from "./state/shop/shopState";
 import {
   IAppointmentsState,
   initialAppointmentsState,
-} from "./state/user/appointmentState";
+} from "./state/shop/appointmentState";
+import { initialShopState, IShopState } from "./state/shop/shopState";
 import { IAuthState, initialAuthState } from "./state/user/authState";
 
 /**

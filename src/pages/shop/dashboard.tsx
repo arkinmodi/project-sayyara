@@ -1,10 +1,10 @@
+import AppointmentsTabs from "@components/appointments/shop/appointmentsTabs";
 import { UserType } from "@prisma/client";
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import { TabPanel, TabView, TabViewTabChangeParams } from "primereact/tabview";
 import React, { useEffect, useState } from "react";
-import AppointmentsTab from "src/components/appointments/shop/appointmentsTabs";
 
 const ShopDashboard: NextPage = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -30,7 +30,7 @@ const ShopDashboard: NextPage = () => {
       <TabView activeIndex={activeIndex} onTabChange={handleTabChange}>
         <TabPanel header="Quotes"></TabPanel>
         <TabPanel header="Service Requests">
-          <AppointmentsTab />
+          <AppointmentsTabs />
         </TabPanel>
       </TabView>
     </div>
