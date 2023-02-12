@@ -10,6 +10,16 @@ const quoteReducer = (
   action: IQuoteAction | IActionWithPayload<any>
 ) => {
   switch (action.type) {
+    case QuoteTypes.UPDATE_INITIAL_STATE:
+      return { ...state, quotes: action?.payload.data };
+    case QuoteTypes.ADD_QUOTE_TO_STATE:
+      return {
+        ...state,
+        quotes: {
+          ...state.quotes,
+          [action?.payload?.id]: action?.payload?.data,
+        },
+      };
     case QuoteTypes.SET_SELECTED_CHAT:
       return { ...state, activeChat: action?.payload?.id ?? null };
     case QuoteTypes.SET_MESSAGE:
@@ -17,7 +27,6 @@ const quoteReducer = (
       const message = action?.payload?.message;
 
       if (quoteId && message && quoteId in state.quotes) {
-        console.log(state);
         return {
           ...state,
           quotes: {

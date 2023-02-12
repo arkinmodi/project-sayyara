@@ -1,21 +1,35 @@
+import { UserType } from "@prisma/client";
+import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/components/quotes/Conversations.module.css";
 import Image from "next/image";
 import { ListBox, ListBoxChangeParams } from "primereact/listbox";
 import image from "public/icons/icon-192x192.png";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedChat } from "src/redux/actions/quoteAction";
+import {
+  getCustomerQuotes,
+  getShopQuotes,
+  setSelectedChat,
+} from "src/redux/actions/quoteAction";
 import { QuoteSelectors } from "src/redux/selectors/quoteSelectors";
 import { IQuote } from "src/types/quotes";
 
 const Conversations = () => {
+  const userType = useSelector(AuthSelectors.getUserType);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (userType === UserType.CUSTOMER) {
+      dispatch(getCustomerQuotes());
+    } else {
+      dispatch(getShopQuotes());
+    }
+  }, [dispatch]);
+
   const selectedChat = useSelector(QuoteSelectors.getActiveChat);
+  let quotes = Object.values(useSelector(QuoteSelectors.getQuotes));
 
-  // Loads quote list from store and sorts by last created
-  const quotes = Object.values(useSelector(QuoteSelectors.getQuotes));
-  quotes.sort((a: IQuote, b: IQuote) => (b.createdAt >= a.createdAt ? 0 : -1));
-
+  console.log("From conversations", quotes);
   // Sets the selected chat via redux
   const setChat = (chatId: string) => {
     dispatch(setSelectedChat({ id: chatId }));
@@ -26,14 +40,14 @@ const Conversations = () => {
       <div className={styles.chatItem}>
         <Image
           src={image}
-          alt={option.shopName}
+          alt={option.shop.name}
           height={image.height * 0.3}
           width={image.width * 0.3}
         />
         <div className={styles.chatText}>
-          <h4 className={styles.h3}>{option.shopName}</h4>
-          {option.address} <br />
-          {"Create " + new Date(option.createdAt).toLocaleString("en-US")}
+          <h4 className={styles.h3}>{option.shop.name}</h4>
+          {option.shop.address} <br />
+          {"Create " + new Date(option.createTime).toLocaleString("en-US")}
         </div>
       </div>
     );

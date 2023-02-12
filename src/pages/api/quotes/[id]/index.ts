@@ -1,5 +1,4 @@
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
-import { Quote } from "@server/db/client";
 import {
   deleteQuoteAndChatById,
   getQuoteById,
@@ -21,7 +20,7 @@ const quoteByIdHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  let quote: Quote | null;
+  let quote: Awaited<ReturnType<typeof getQuoteById>>;
 
   switch (req.method) {
     case "GET":

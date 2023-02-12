@@ -1,8 +1,10 @@
 import { createAppointment } from "@redux/actions/appointmentAction";
+import { createQuote } from "@redux/actions/quoteAction";
 import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/components/shop/profile/appointment/RequestServiceDialog.module.css";
 import { default as classnames, default as classNames } from "classnames";
+import Router from "next/router";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
@@ -223,8 +225,20 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     // Two cases:
     // 1. Service is a CANNED service, immediately go to step 3 for appointment scheduling
     // 2. Service is a CUSTOM service, create a quote and move to quotes page
-    setAllowSubmit(false);
-    setStep(3);
+    if (typeof selectedService !== "string") {
+      if (selectedService.type === ServiceType.CANNED) {
+        setAllowSubmit(false);
+        setStep(3);
+      } else {
+        // CUSTOM Service, create quote
+        if (customerId) {
+          dispatch(
+            createQuote({ customerId, shopId, serviceId: selectedService.id })
+          );
+          Router.push("/dashboard/");
+        }
+      }
+    }
   };
 
   const onSubmitStepThree = () => {
