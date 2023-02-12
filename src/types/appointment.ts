@@ -15,6 +15,11 @@ export interface IAppointment {
   vehicle: IVehicle;
 }
 
+export interface IAppointmentTimes {
+  startTime: Date;
+  endTime: Date;
+}
+
 export enum AppointmentStatus {
   PENDING_APPROVAL = "PENDING_APPROVAL",
   ACCEPTED = "ACCEPTED",

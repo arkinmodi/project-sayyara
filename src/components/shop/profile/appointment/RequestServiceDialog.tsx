@@ -2,24 +2,16 @@ import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/components/shop/profile/appointment/RequestServiceDialog.module.css";
 import { default as classnames, default as classNames } from "classnames";
 import { Button } from "primereact/button";
-import { Calendar, CalendarChangeParams } from "primereact/calendar";
 import { Dialog } from "primereact/dialog";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ScheduleMeeting, StartTimeEventEmit } from "react-schedule-meeting";
 import { IService, ServiceType } from "src/types/service";
-import { IShop, IShopHoursOfOperation } from "src/types/shop";
+import { IAvailabilitiesTime, IShop } from "src/types/shop";
+import { getAvailabilities } from "src/utils/shopUtil";
 
-const mapDayToNumber: { [key: string]: number } = {
-  sunday: 0,
-  monday: 1,
-  tuesday: 2,
-  wednesday: 3,
-  thursday: 4,
-  friday: 5,
-  saturday: 6,
-};
 interface IRequestServiceDialog {
   visible: boolean;
   onHide: () => void;
@@ -34,7 +26,8 @@ interface ICreateAppointmentForm {
   make: string;
   model: string;
   service: string;
-  date: Date | undefined;
+  startTime: Date | undefined;
+  endTime: Date | undefined;
   cost: number;
   time: number;
   description: string;
@@ -49,9 +42,36 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
   const [selectedService, setSelectedService] = useState<string | IService>("");
   const [preloaded, setPreloaded] = useState<boolean>(false);
   const [form, setForm] = useState<ICreateAppointmentForm>();
+  const [availableTimeslots, setAvailableTimeslots] = useState<
+    IAvailabilitiesTime[]
+  >([]);
+  const [allowSubmit, setAllowSubmit] = useState<boolean>(false);
+
   const [step, setStep] = useState<number>(1);
 
   const vehicle = useSelector(AuthSelectors.getVehicleInfo);
+
+  useEffect(() => {
+    const startDate = new Date(new Date().setHours(0, 0, 0, 0));
+    const endDate = new Date(
+      new Date(new Date().setDate(startDate.getDate() + 30)).setHours(
+        23,
+        59,
+        59,
+        59
+      )
+    );
+    console.log(startDate);
+    console.log(endDate);
+    getAvailabilities(shopId, startDate, endDate, shop.hoursOfOperation!).then(
+      (data) => {
+        //TODO
+        if (data) {
+          setAvailableTimeslots(data);
+        }
+      }
+    );
+  }, []);
 
   const hideDialog = () => {
     setStep(1);
@@ -89,7 +109,8 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
           make: vehicle.make,
           model: vehicle.model,
           service: selectedService.name,
-          date: undefined,
+          startTime: undefined,
+          endTime: undefined,
           cost: selectedService.totalPrice,
           time: selectedService.estimatedTime,
           description: selectedService.description,
@@ -100,7 +121,8 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
           make: "",
           model: "",
           service: selectedService.name,
-          date: undefined,
+          startTime: undefined,
+          endTime: undefined,
           cost: selectedService.totalPrice,
           time: selectedService.estimatedTime,
           description: selectedService.description,
@@ -109,23 +131,6 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
       setForm(form);
       setStep(2);
     }
-  };
-
-  const disabledDays = () => {
-    const hoursOfOperation = shop.hoursOfOperation;
-    if (hoursOfOperation) {
-      let dayList: number[] = [];
-      for (let day in mapDayToNumber) {
-        if (
-          !hoursOfOperation[day as keyof IShopHoursOfOperation].isOpen &&
-          typeof mapDayToNumber[day] !== "undefined"
-        ) {
-          dayList.push(mapDayToNumber[day]!);
-        }
-      }
-      return dayList;
-    }
-    return Array.from(Array(7).keys());
   };
 
   const setFormData = (
@@ -147,11 +152,15 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     }
   };
 
-  const setDate = (e: CalendarChangeParams) => {
+  const onTimeSelect = (e: StartTimeEventEmit) => {
     if (form) {
       let _form = form;
-      _form.date = e.value as Date;
+      _form.startTime = e.startTime;
+      _form.endTime = new Date(
+        e.startTime.getTime() + Math.ceil(form.time * 60) * 60000
+      );
       setForm(_form);
+      setAllowSubmit(true);
     }
   };
 
@@ -205,6 +214,11 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     // Two cases:
     // 1. Service is a CANNED service, immediately go to step 3 for appointment scheduling
     // 2. Service is a CUSTOM service, create a quote and move to quotes page
+    setAllowSubmit(false);
+    setStep(3);
+  };
+
+  const onSubmitStepThree = () => {
     console.log(form);
   };
 
@@ -270,16 +284,6 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
                     className={styles.maxWidth}
                   />
                 </div>
-                <div className={styles.fill}>
-                  <p>Appointment Date</p>
-                  <Calendar
-                    className={styles.maxWidth}
-                    readOnlyInput
-                    minDate={new Date()} // Sets first date to be today
-                    disabledDays={disabledDays()}
-                    onChange={setDate}
-                  />
-                </div>
               </div>
               <div>{renderCostAndTime()}</div>
               <div>{renderDescription()}</div>
@@ -297,8 +301,32 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
           );
         }
       case 3:
-        // Select a timeslot from a predefined list of timeslots
-        return;
+        if (form) {
+          return (
+            <div className={styles.dialogInputCol}>
+              <ScheduleMeeting
+                borderRadius={10}
+                primaryColor="#436188"
+                backgroundColor="#f7f7f7"
+                eventDurationInMinutes={Math.ceil(form.time * 60)}
+                availableTimeslots={availableTimeslots}
+                onStartTimeSelect={onTimeSelect}
+              />
+              <div
+                className={classnames(styles.dialogInputRow, styles.buttonRow)}
+              >
+                <Button className="blueButton" label="Back" onClick={goBack} />
+                <Button
+                  className="greenButton"
+                  label={displayButton()}
+                  disabled={!allowSubmit}
+                  onClick={onSubmitStepThree}
+                  // onClick={} TODO
+                />
+              </div>
+            </div>
+          );
+        }
       default:
         break;
     }

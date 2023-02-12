@@ -27,3 +27,12 @@ export interface IShop {
   email: string;
   services?: IService[] | null;
 }
+
+export interface IAvailabilitiesTime {
+  startTime: Date;
+  endTime: Date;
+}
+
+export interface IAvailabilities {
+  [key: string]: IAvailabilitiesTime[];
+}
