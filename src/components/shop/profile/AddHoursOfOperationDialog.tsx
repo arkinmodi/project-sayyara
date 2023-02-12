@@ -321,18 +321,8 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
          * String comparison of time should work here as timezone is restricted to UTC with precision 0.
          * See hoursOfOperationSchema for more details.
          */
-        formValues[day as keyof IFormValues].openTime.toLocaleTimeString(
-          "en-US",
-          { hour: "numeric", minute: "numeric", hour12: false }
-        ) >
-        formValues[day as keyof IFormValues].closeTime.toLocaleTimeString(
-          "en-US",
-          {
-            hour: "numeric",
-            minute: "numeric",
-            hour12: false,
-          }
-        )
+        formValues[day as keyof IFormValues].openTime.toTimeString() >
+        formValues[day as keyof IFormValues].closeTime.toTimeString()
       ) {
         updatedOperatingTimeValid[day as keyof IOperatingTimeValid] = false;
       } else {
