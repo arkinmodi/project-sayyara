@@ -1,0 +1,60 @@
+{
+  "shopOwner": {
+    "email": "shop_d@sayyara.com",
+    "password": "password",
+    "firstName": "James",
+    "lastName": "Davis",
+    "phoneNumber": "(613) 555-0131"
+  },
+  "shop": {
+    "name": "The Auto Doctor",
+    "address": "456 King Street East",
+    "phoneNumber": "(613) 555-0131",
+    "email": "shop_d@sayyara.com",
+    "postalCode": "M5A 1L4",
+    "city": "Toronto",
+    "province": "Ontario"
+  },
+  "services": [
+    {
+      "name": "Brake Light Replacement",
+      "description": "",
+      "parts": [
+        {
+          "cost": 10,
+          "name": "Lightbulb",
+          "build": "AFTERMARKET",
+          "quantity": 1,
+          "condition": "NEW"
+        }
+      ],
+      "price": 30,
+      "estimatedTime": 0.2,
+      "type": "CANNED"
+    },
+    {
+      "name": "A/C Recharge & Diagnostic Service",
+      "description": "Diagnostic and A/C recharge",
+      "parts": [
+        {
+          "cost": 40,
+          "name": "A/C",
+          "build": "AFTERMARKET",
+          "quantity": 1,
+          "condition": "NEW"
+        }
+      ],
+      "price": 70,
+      "estimatedTime": 1,
+      "type": "CANNED"
+    },
+    {
+      "name": "Battery Change",
+      "description": "New battery",
+      "parts": [{ "build": "AFTERMARKET", "condition": "NEW" }],
+      "price": 0,
+      "estimatedTime": 0,
+      "type": "CUSTOM"
+    }
+  ]
+}

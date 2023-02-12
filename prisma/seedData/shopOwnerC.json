@@ -1,0 +1,52 @@
+{
+  "shopOwner": {
+    "email": "shop_c@sayyara.com",
+    "password": "password",
+    "firstName": "David",
+    "lastName": "Brown",
+    "phoneNumber": "(613) 555-0109"
+  },
+  "shop": {
+    "name": "Rapid Repair",
+    "address": "123 Main Street",
+    "phoneNumber": "(613) 555-0109",
+    "email": "shop_c@sayyara.com",
+    "postalCode": "H3Z 2Y7",
+    "city": "Montreal",
+    "province": "Quebec"
+  },
+  "services": [
+    {
+      "name": "Fuel Cap Replacement",
+      "description": "Replace fuel cap",
+      "parts": [
+        {
+          "cost": 10,
+          "name": "Fuel cap",
+          "build": "AFTERMARKET",
+          "quantity": 1,
+          "condition": "USED"
+        }
+      ],
+      "price": 25,
+      "estimatedTime": 0.1,
+      "type": "CANNED"
+    },
+    {
+      "name": "Power Window Switch Replacement",
+      "description": "New window switch",
+      "parts": [{ "build": "OEM", "condition": "USED" }],
+      "price": 0,
+      "estimatedTime": 0,
+      "type": "CUSTOM"
+    },
+    {
+      "name": "Windshield Replacement",
+      "description": "Replace front windshield of any size",
+      "parts": [{ "build": "OEM", "condition": "NEW" }],
+      "price": 0,
+      "estimatedTime": 0,
+      "type": "CUSTOM"
+    }
+  ]
+}

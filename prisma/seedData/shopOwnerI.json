@@ -1,0 +1,52 @@
+{
+  "shopOwner": {
+    "email": "shop_i@sayyara.com",
+    "password": "password",
+    "firstName": "Kevin",
+    "lastName": "Chen",
+    "phoneNumber": "(613) 555-0183"
+  },
+  "shop": {
+    "name": "Master Mechanics",
+    "address": "678 Richmond Street West",
+    "phoneNumber": "(613) 555-0183",
+    "email": "shop_i@sayyara.com",
+    "postalCode": "M6J 1C9",
+    "city": "Toronto",
+    "province": "Ontario"
+  },
+  "services": [
+    {
+      "name": "Brake Light Replacement",
+      "description": "",
+      "parts": [
+        {
+          "cost": 10,
+          "name": "Lightbulb",
+          "build": "AFTERMARKET",
+          "quantity": 1,
+          "condition": "NEW"
+        }
+      ],
+      "price": 30,
+      "estimatedTime": 0.2,
+      "type": "CANNED"
+    },
+    {
+      "name": "Car Wrap",
+      "description": "Wrap your car",
+      "parts": [{ "build": "AFTERMARKET", "condition": "NEW" }],
+      "price": 0,
+      "estimatedTime": 0,
+      "type": "CUSTOM"
+    },
+    {
+      "name": "Body Work",
+      "description": "Custom Body Work",
+      "parts": [{ "build": "OEM OR AFTERMARKET", "condition": "NEW OR USED" }],
+      "price": 0,
+      "estimatedTime": 0,
+      "type": "CUSTOM"
+    }
+  ]
+}

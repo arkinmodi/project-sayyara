@@ -1,0 +1,159 @@
+[
+  {
+    "name": "Oil Change",
+    "description": "",
+    "parts": [
+      {
+        "cost": 45,
+        "name": "Engine Oil",
+        "build": "AFTERMARKET",
+        "quantity": 1,
+        "condition": "NEW"
+      },
+      {
+        "cost": 10,
+        "name": "Oil filter",
+        "build": "OEM",
+        "quantity": 1,
+        "condition": "NEW"
+      }
+    ],
+    "price": 100,
+    "estimatedTime": 1,
+    "type": "CANNED"
+  },
+  {
+    "name": "17 Inch Tire Replacement",
+    "description": "",
+    "parts": [
+      {
+        "cost": 200,
+        "name": "17 inch Tire",
+        "build": "OEM",
+        "quantity": 4,
+        "condition": "NEW"
+      },
+      {
+        "cost": 100,
+        "name": "17 inch Rims",
+        "build": "OEM",
+        "quantity": 4,
+        "condition": "NEW"
+      },
+      {
+        "cost": 30,
+        "name": "17 inch Hubcap",
+        "build": "OEM",
+        "quantity": 4,
+        "condition": "NEW"
+      }
+    ],
+    "price": 1200,
+    "estimatedTime": 1,
+    "type": "CANNED"
+  },
+  {
+    "name": "Windshield Wiper Replacement",
+    "description": "",
+    "parts": [
+      {
+        "cost": 20,
+        "name": "Windshield wiper",
+        "build": "OEM",
+        "quantity": 2,
+        "condition": "NEW"
+      }
+    ],
+    "price": 50,
+    "estimatedTime": 0.1,
+    "type": "CANNED"
+  },
+  {
+    "name": "Brake Light Replacement",
+    "description": "",
+    "parts": [
+      {
+        "cost": 10,
+        "name": "Lightbulb",
+        "build": "AFTERMARKET",
+        "quantity": 1,
+        "condition": "NEW"
+      }
+    ],
+    "price": 30,
+    "estimatedTime": 0.2,
+    "type": "CANNED"
+  },
+  {
+    "name": "A/C Recharge & Diagnostic Service",
+    "description": "Diagnostic and A/C recharge",
+    "parts": [
+      {
+        "cost": 40,
+        "name": "A/C",
+        "build": "AFTERMARKET",
+        "quantity": 1,
+        "condition": "NEW"
+      }
+    ],
+    "price": 70,
+    "estimatedTime": 1,
+    "type": "CANNED"
+  },
+  {
+    "name": "Fuel Cap Replacement",
+    "description": "Replace fuel cap",
+    "parts": [
+      {
+        "cost": 10,
+        "name": "Fuel cap",
+        "build": "AFTERMARKET",
+        "quantity": 1,
+        "condition": "USED"
+      }
+    ],
+    "price": 25,
+    "estimatedTime": 0.1,
+    "type": "CANNED"
+  },
+  {
+    "name": "Car Wrap",
+    "description": "Wrap your car",
+    "parts": [{ "build": "AFTERMARKET", "condition": "NEW" }],
+    "price": 0,
+    "estimatedTime": 0,
+    "type": "CUSTOM"
+  },
+  {
+    "name": "Body Work",
+    "description": "Custom Body Work",
+    "parts": [{ "build": "OEM OR AFTERMARKET", "condition": "NEW OR USED" }],
+    "price": 0,
+    "estimatedTime": 0,
+    "type": "CUSTOM"
+  },
+  {
+    "name": "Battery Change",
+    "description": "New battery",
+    "parts": [{ "build": "AFTERMARKET", "condition": "NEW" }],
+    "price": 0,
+    "estimatedTime": 0,
+    "type": "CUSTOM"
+  },
+  {
+    "name": "Power Window Switch Replacement",
+    "description": "New window switch",
+    "parts": [{ "build": "OEM", "condition": "USED" }],
+    "price": 0,
+    "estimatedTime": 0,
+    "type": "CUSTOM"
+  },
+  {
+    "name": "Windshield Replacement",
+    "description": "Replace front windshield of any size",
+    "parts": [{ "build": "OEM", "condition": "NEW" }],
+    "price": 0,
+    "estimatedTime": 0,
+    "type": "CUSTOM"
+  }
+]

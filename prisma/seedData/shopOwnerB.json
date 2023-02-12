@@ -1,0 +1,44 @@
+{
+  "shopOwner": {
+    "email": "shop_b@sayyara.com",
+    "password": "password",
+    "firstName": "Michael",
+    "lastName": "Johnson",
+    "phoneNumber": "(613) 555-0120"
+  },
+  "shop": {
+    "name": "The Mechanic's Garage",
+    "address": "567 Queen Street West",
+    "phoneNumber": "(613) 555-0198",
+    "email": "shop_b@sayyara.com",
+    "postalCode": "M5V 2B7",
+    "city": "Toronto",
+    "province": "Ontario"
+  },
+  "services": [
+    {
+      "name": "Fuel Cap Replacement",
+      "description": "Replace fuel cap",
+      "parts": [
+        {
+          "cost": 10,
+          "name": "Fuel cap",
+          "build": "AFTERMARKET",
+          "quantity": 1,
+          "condition": "USED"
+        }
+      ],
+      "price": 25,
+      "estimatedTime": 0.1,
+      "type": "CANNED"
+    },
+    {
+      "name": "Power Window Switch Replacement",
+      "description": "New window switch",
+      "parts": [{ "build": "OEM", "condition": "USED" }],
+      "price": 0,
+      "estimatedTime": 0,
+      "type": "CUSTOM"
+    }
+  ]
+}

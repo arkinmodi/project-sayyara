@@ -138,9 +138,9 @@ model Vehicle {
 }
 
 model WorkOrder {
-  id          String          @id @default(cuid())
-  create_time DateTime        @default(now())
-  update_time DateTime        @updatedAt
+  id          String       @id @default(cuid())
+  create_time DateTime     @default(now())
+  update_time DateTime     @updatedAt
   appointment Appointment?
   title       String
   customer_id String

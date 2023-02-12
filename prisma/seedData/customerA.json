@@ -1,0 +1,16 @@
+{
+  "customer": {
+    "email": "customer@sayyara.com",
+    "password": "password",
+    "firstName": "Mia",
+    "lastName": "Wong",
+    "phoneNumber": "(905) 525-9140"
+  },
+  "vehicle": {
+    "year": 2006,
+    "make": "Toyota",
+    "model": "4Runner",
+    "vin": "JTEB414R260104439",
+    "licensePlate": "BPNW958"
+  }
+}

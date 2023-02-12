@@ -1,0 +1,16 @@
+{
+  "customer": {
+    "email": "customer_b@sayyara.com",
+    "password": "password",
+    "firstName": "Sophia",
+    "lastName": "Thomas",
+    "phoneNumber": "(403) 987-6543"
+  },
+  "vehicle": {
+    "year": 2013,
+    "make": "BMW",
+    "model": "3 Series",
+    "vin": "WBA3B3G57DNF00000",
+    "licensePlate": "BPNW912"
+  }
+}
