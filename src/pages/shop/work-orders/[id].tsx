@@ -119,19 +119,6 @@ const WorkOrderPage: React.FC<{
     setIsEditMetaDataDialogVisible(!isEditMetaDataDialogVisible);
   };
 
-  const formatDate = (date: Date) => {
-    const pad = (n: number) => `${n}`.padStart(2, "0");
-
-    const month = pad(date.getMonth() + 1);
-    const day = pad(date.getDate());
-    const year = pad(date.getFullYear());
-    const hour = pad(date.getHours());
-    const minutes = pad(date.getMinutes());
-    const seconds = pad(date.getSeconds());
-
-    return `${month}/${day}/${year} ${hour}:${minutes}:${seconds}`;
-  };
-
   const handleSave = async () => {
     setIsSaving(true);
     await props.saveWorkOrder({ body: workOrderBody });
@@ -189,7 +176,7 @@ const WorkOrderPage: React.FC<{
             </p>
             <p>
               <b>Last Update: </b>
-              {formatDate(new Date(workOrder.updateTime))}
+              {new Date(workOrder.updateTime).toLocaleString()}
             </p>
             <p>
               <b>Customer: </b>
@@ -216,11 +203,11 @@ const WorkOrderPage: React.FC<{
               {`${
                 workOrder.appointment?.startTime === undefined
                   ? "Unknown Start Time"
-                  : formatDate(new Date(workOrder.appointment?.startTime))
+                  : new Date(workOrder.appointment?.startTime).toLocaleString()
               } to ${
                 workOrder.appointment?.endTime === undefined
                   ? "Unknown End Time"
-                  : formatDate(new Date(workOrder.appointment?.endTime))
+                  : new Date(workOrder.appointment?.endTime).toLocaleString()
               }`}
             </p>
             <p>
@@ -267,7 +254,7 @@ const WorkOrderPage: React.FC<{
           />
 
           {workOrder && (
-            <p>Last Saved: {formatDate(new Date(workOrder.updateTime))}</p>
+            <p>Last Saved: {new Date(workOrder.updateTime).toLocaleString()}</p>
           )}
         </div>
       )}
