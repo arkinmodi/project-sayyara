@@ -89,6 +89,7 @@ const seed = async () => {
             postal_code: seedData.shop.postalCode,
             city: seedData.shop.city,
             province: seedData.shop.province,
+            hours_of_operation: seedData.shop.hoursOfOperation,
           },
         },
       },
