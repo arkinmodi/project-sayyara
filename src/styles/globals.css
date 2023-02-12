@@ -82,10 +82,6 @@ a {
 /**
  * Global override for appointment card in carousel
  */
-.p-fieldset .p-fieldset-content {
-  padding: 1rem 0 !important;
-}
-
 .p-carousel .p-carousel-indicators {
   padding: 0.5rem !important;
 }
