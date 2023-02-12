@@ -33,7 +33,6 @@ const ShopAppointments = (props: IAppointmentsProps) => {
         case AppointmentStatus.ACCEPTED:
           toast.current.show({
             severity: "success",
-            summary: "Success",
             detail: "Appointment accepted",
             sticky: true,
           });
@@ -41,7 +40,6 @@ const ShopAppointments = (props: IAppointmentsProps) => {
         case AppointmentStatus.IN_PROGRESS:
           toast.current.show({
             severity: "success",
-            summary: "Success",
             detail: "Appointment moved to in progress",
             sticky: true,
           });
