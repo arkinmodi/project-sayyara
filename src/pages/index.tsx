@@ -32,7 +32,9 @@ const Home: NextPage = () => {
   const [locationRange, setLocationRange] = useState<[number, number]>([1, 50]);
 
   const [searchString, setSearchString] = useState("");
-  const [searchFilter, setSearchFilter] = useState(searchFilterList[0]);
+  const [searchFilter, setSearchFilter] = useState<string>(
+    searchFilterList[0] as string
+  );
   const [lastSearch, setLastSearch] = useState<[string, string]>([
     "",
     searchFilterList[0] as string,
@@ -66,6 +68,14 @@ const Home: NextPage = () => {
       }
     }
     setSelectedTypeFilters(_selectedTypeFilters);
+
+    // Search with previous parameters and new filters
+    onSearch(
+      lastSearch[0],
+      lastSearch[1],
+      selectedConditionFilters,
+      _selectedTypeFilters
+    );
   };
 
   const onConditionChange = (e: CheckboxChangeParams) => {
@@ -85,6 +95,14 @@ const Home: NextPage = () => {
       }
     }
     setSelectedConditionFilters(_selectedConditionFilters);
+
+    // Search with previous parameters and new filters
+    onSearch(
+      lastSearch[0],
+      lastSearch[1],
+      _selectedConditionFilters,
+      selectedTypeFilters
+    );
   };
 
   const setRange = (e: SliderChangeParams) => {
@@ -94,8 +112,11 @@ const Home: NextPage = () => {
   };
 
   const resetFilters = () => {
+    // Resets filters
     setSelectedTypeFilters([]);
     setSelectedConditionFilters([]);
+
+    onSearch(lastSearch[0], lastSearch[1], [], []);
   };
 
   const onChangeString = (e: ChangeEvent<HTMLInputElement>) => {
@@ -106,11 +127,14 @@ const Home: NextPage = () => {
     setSearchFilter(e.value);
   };
 
-  const filterByPartsType = (shop: IShop & { services: IService[] }) => {
+  const filterByPartsType = (
+    shop: IShop & { services: IService[] },
+    types: string[]
+  ) => {
     // Filters parts by checking if any service in a shop has all parts that match any criteria
     // If any service contains all parts in the filter, then the shop is passed through
     // If there are no filters selected, skip this filter
-    if (selectedTypeFilters.length === 0) {
+    if (types.length === 0) {
       return true;
     }
 
@@ -120,7 +144,7 @@ const Home: NextPage = () => {
         const parts = shop.services[i]?.parts;
         if (parts && parts.length !== 0) {
           const flag = parts.every((part) => {
-            return selectedTypeFilters.includes(part.build);
+            return types.includes(part.build);
           });
           if (flag) {
             return true;
@@ -131,8 +155,11 @@ const Home: NextPage = () => {
     return false;
   };
 
-  const filterByPartsCondition = (shop: IShop & { services: IService[] }) => {
-    if (selectedConditionFilters.length === 0) {
+  const filterByPartsCondition = (
+    shop: IShop & { services: IService[] },
+    conditions: string[]
+  ) => {
+    if (conditions.length === 0) {
       return true;
     }
 
@@ -142,7 +169,7 @@ const Home: NextPage = () => {
         const parts = shop.services[i]?.parts;
         if (parts && parts.length !== 0) {
           const flag = parts.every((part) => {
-            return selectedConditionFilters.includes(part.condition);
+            return conditions.includes(part.condition);
           });
           if (flag) {
             return true;
@@ -153,69 +180,63 @@ const Home: NextPage = () => {
     return false;
   };
 
-  const onSearch = (from: string) => {
+  const onSearch = (
+    str: string,
+    filter: string,
+    conditions: string[],
+    types: string[],
+    fromButton?: boolean
+  ) => {
     // Two scenarios:
     // 1. Input from search bar & search filter, on button press
     // 2. Immediately after a checkbox change, use previous search values
-    let str, filter;
-    if (from === "button" && searchFilter) {
-      setLastSearch([searchString, searchFilter]);
-      str = searchString;
-      filter = searchFilter;
-    } else if (from === "checkbox") {
-      str = lastSearch[0];
-      filter = lastSearch[1];
-
-      // Reset search string to last query
-      setSearchString(str);
-      setSearchFilter(filter);
+    if (fromButton) {
+      setLastSearch([str, filter]);
+    } else {
+      // Resets search parameters to previous search
+      setSearchString(lastSearch[0]);
+      setSearchFilter(lastSearch[1]);
     }
 
     // Fetch via search parameters
-    if (typeof str === "string" && typeof filter === "string") {
-      if (str !== "") {
-        switch (filter) {
-          case "Service":
-            getFilteredShops(str, false).then((data) => {
-              if (data) {
-                // Filter by part type here
-                let filteredData = data
-                  .filter(filterByPartsType)
-                  .filter(filterByPartsCondition);
-                setShops(filteredData);
-              }
-            });
-            break;
-          case "Shop Name":
-            getFilteredShops(str, true).then((data) => {
-              if (data) {
-                // Filter by part type here
-                let filteredData = data
-                  .filter(filterByPartsType)
-                  .filter(filterByPartsCondition);
-                setShops(filteredData);
-              }
-            });
-            break;
-          default:
-            break;
-        }
-      } else {
-        getFilteredShops("", true).then((data) => {
-          if (data) {
-            let filteredData = data
-              .filter(filterByPartsType)
-              .filter(filterByPartsCondition);
-            setShops(filteredData);
-          }
-        });
+    if (str !== "") {
+      switch (filter) {
+        case "Service":
+          getFilteredShops(str, false).then((data) => {
+            if (data) {
+              // Filter by part type here
+              let filteredData = data
+                .filter((shop) => filterByPartsType(shop, types))
+                .filter((shop) => filterByPartsCondition(shop, conditions));
+              setShops(filteredData);
+            }
+          });
+          break;
+        case "Shop Name":
+          getFilteredShops(str, true).then((data) => {
+            if (data) {
+              // Filter by part type here
+              let filteredData = data
+                .filter((shop) => filterByPartsType(shop, types))
+                .filter((shop) => filterByPartsCondition(shop, conditions));
+              setShops(filteredData);
+            }
+          });
+          break;
+        default:
+          break;
       }
+    } else {
+      getFilteredShops("", true).then((data) => {
+        if (data) {
+          let filteredData = data
+            .filter((shop) => filterByPartsType(shop, types))
+            .filter((shop) => filterByPartsCondition(shop, conditions));
+          setShops(filteredData);
+        }
+      });
     }
   };
-
-  useEffect(() => {
-    onSearch("checkbox");
-  }, [selectedTypeFilters, selectedConditionFilters, onSearch]);
 
   const shopOnClick = (shop: IShop & { services: IService[] }) => {
     Router.push(`/shop/${shop.id}`);
@@ -452,7 +473,15 @@ const Home: NextPage = () => {
             <Button
               className={styles.searchButton}
               label="Search"
-              onClick={() => onSearch("button")}
+              onClick={() =>
+                onSearch(
+                  searchString,
+                  searchFilter,
+                  selectedConditionFilters,
+                  selectedTypeFilters,
+                  true
+                )
+              }
             />
           </div>
           <div className={classNames(styles.search, styles.mobileSearch)}>
@@ -472,7 +501,15 @@ const Home: NextPage = () => {
             <Button
               className={styles.searchButton}
               label="Search"
-              onClick={() => onSearch("button")}
+              onClick={() =>
+                onSearch(
+                  searchString,
+                  searchFilter,
+                  selectedConditionFilters,
+                  selectedTypeFilters,
+                  true
+                )
+              }
             />
           </div>
           <DataView
