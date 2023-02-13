@@ -1,4 +1,5 @@
 import AppointmentsTabs from "@components/appointments/shop/appointmentsTabs";
+import QuotesShell from "@components/quotes/shell";
 import { UserType } from "@prisma/client";
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import { GetServerSideProps, NextPage } from "next";
@@ -28,7 +29,9 @@ const ShopDashboard: NextPage = () => {
   return (
     <div>
       <TabView activeIndex={activeIndex} onTabChange={handleTabChange}>
-        <TabPanel header="Quotes"></TabPanel>
+        <TabPanel header="Quotes">
+          <QuotesShell />
+        </TabPanel>
         <TabPanel header="Service Requests">
           <AppointmentsTabs />
         </TabPanel>

@@ -6,7 +6,6 @@ import {
   IQuoteActionGetShopQuotes,
 } from "@redux/actions/quoteAction";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
-import { QuoteSelectors } from "@redux/selectors/quoteSelectors";
 import QuoteTypes from "@redux/types/quoteTypes";
 import {
   all,
@@ -27,8 +26,8 @@ import {
 import { getMessageListByQuoteId } from "src/utils/quotesUtil";
 
 interface IPostCreateMessageBody {
-  customerId: string | null;
-  shopId: string | null;
+  customer_id?: string;
+  shop_id?: string;
   message: string;
 }
 
@@ -45,20 +44,30 @@ function getCustomerQuotesHandler(
     if (res.status === 200) {
       return res.json().then((data) => {
         const quotes: IQuoteList = {};
-        data.forEach((quote: any) => {
-          getMessageListByQuoteId(quote.id).then((messageList) => {
-            quotes[quote.id] = {
+        const promises = data.map((quote: any) => {
+          const messageListPromise = getMessageListByQuoteId(quote.id);
+          return Promise.all([messageListPromise]).then((values) => {
+            const message = values[0];
+            const quoteObj = {
               id: quote.id,
               customer: quote.customer,
               shop: quote.shop,
               service: quote.service,
               createTime: quote.create_time,
               updateTime: quote.update_time,
-              messageList: messageList,
+              messageList: message,
             };
+            return quoteObj;
           });
         });
-        return quotes;
+
+        return Promise.all(promises)
+          .then((quoteList) => {
+            quoteList.forEach((quote) => (quotes[quote.id] = quote));
+          })
+          .then(() => {
+            return quotes;
+          });
       });
     } else {
       return {};
@@ -77,20 +86,31 @@ function getShopQuotesHandler(shopId: string): Promise<IQuoteList | {}> {
     if (res.status === 200) {
       return res.json().then((data) => {
         const quotes: IQuoteList = {};
-        data.forEach((quote: any) => {
-          getMessageListByQuoteId(quote.id).then((messageList) => {
-            quotes[quote.id] = {
+        const promises = data.map((quote: any) => {
+          const messageListPromise = getMessageListByQuoteId(quote.id);
+
+          return Promise.all([messageListPromise]).then((values) => {
+            const message = values[0];
+
+            const quoteObj = {
               id: quote.id,
               customer: quote.customer,
               shop: quote.shop,
               service: quote.service,
               createTime: quote.create_time,
               updateTime: quote.update_time,
-              messageList: messageList,
+              messageList: message,
             };
+            return quoteObj;
           });
         });
-        return quotes;
+        return Promise.all(promises)
+          .then((quoteList) => {
+            quoteList.forEach((quote) => (quotes[quote.id] = quote));
+          })
+          .then(() => {
+            return quotes;
+          });
       });
     } else {
       return {};
@@ -189,9 +209,7 @@ function* createQuote(
   };
 
   const data = yield call(postCreateQuote, body);
-  const existing = yield select(QuoteSelectors.getQuotes);
   if (data) {
-    console.log("saga", data, existing);
     yield put({
       type: QuoteTypes.ADD_QUOTE_TO_STATE,
       payload: { data },
@@ -207,17 +225,15 @@ function* createMessage(
   const quoteId = payload.quoteId;
 
   let body: IPostCreateMessageBody = {
-    customerId: null,
-    shopId: null,
     message: payload.message,
   };
   switch (userType) {
     case UserType.CUSTOMER:
-      body.customerId = (yield select(AuthSelectors.getUserId)) as string;
+      body.customer_id = (yield select(AuthSelectors.getUserId)) as string;
       break;
     case UserType.SHOP_OWNER:
     case UserType.EMPLOYEE:
-      body.shopId = (yield select(AuthSelectors.getShopId)) as string;
+      body.shop_id = (yield select(AuthSelectors.getShopId)) as string;
       break;
     default:
       break;

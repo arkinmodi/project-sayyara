@@ -9,7 +9,7 @@ export interface ICreateQuoteBody {
 }
 
 export interface IQuoteList {
-  [id: string]: IQuote;
+  [key: string]: IQuote;
 }
 
 export interface IQuotesState {

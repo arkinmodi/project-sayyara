@@ -1,3 +1,5 @@
+import { UserType } from "@prisma/client";
+import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/components/chat/ChatTitle.module.css";
 import Image from "next/image";
 import img from "public/icons/icon-192x192.png";
@@ -9,12 +11,16 @@ import { IQuote, IQuoteList } from "src/types/quotes";
 const ChatTitle = () => {
   let chatTitleContents = null;
 
+  const userType = useSelector(AuthSelectors.getUserType);
   const selectedChatId = useSelector(QuoteSelectors.getActiveChat);
   const quotes: IQuoteList = useSelector(QuoteSelectors.getQuotes);
 
   if (selectedChatId !== null) {
     const selectedChat: IQuote = quotes[selectedChatId]!;
-    let name: string = selectedChat.shopName + " - " + selectedChat.serviceName;
+    const name: string =
+      userType === UserType.CUSTOMER
+        ? `${selectedChat.shop.name} - ${selectedChat.service.name}`
+        : `${selectedChat.customer.first_name} - ${selectedChat.service.name}`;
     chatTitleContents = (
       <>
         {/* Conversation image */}

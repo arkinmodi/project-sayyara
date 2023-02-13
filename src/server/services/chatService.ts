@@ -2,8 +2,8 @@ import { prisma } from "@server/db/client";
 import { z } from "zod";
 
 export const createChatMessageSchema = z.object({
-  customer_id: z.string().optional(),
-  shop_id: z.string().optional(),
+  customer_id: z.string().optional().nullable(),
+  shop_id: z.string().optional().nullable(),
   message: z.string(),
 });
 

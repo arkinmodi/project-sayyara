@@ -4,7 +4,7 @@ import styles from "@styles/components/quotes/Conversations.module.css";
 import Image from "next/image";
 import { ListBox, ListBoxChangeParams } from "primereact/listbox";
 import image from "public/icons/icon-192x192.png";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCustomerQuotes,
@@ -18,18 +18,28 @@ const Conversations = () => {
   const userType = useSelector(AuthSelectors.getUserType);
   const dispatch = useDispatch();
 
+  const [quotesUpdate, setQuotesUpdate] = useState(0);
+  const [quotes, setQuotes] = useState<IQuote[]>([]);
+
   useEffect(() => {
     if (userType === UserType.CUSTOMER) {
       dispatch(getCustomerQuotes());
     } else {
       dispatch(getShopQuotes());
     }
-  }, [dispatch]);
+  }, [dispatch, userType]);
 
   const selectedChat = useSelector(QuoteSelectors.getActiveChat);
-  let quotes = Object.values(useSelector(QuoteSelectors.getQuotes));
+  const quoteObj = useSelector(QuoteSelectors.getQuotes);
 
-  console.log("From conversations", quotes);
+  useEffect(() => {
+    if (Object.keys(quoteObj).length > 0) {
+      const quotesList = Object.values({ ...quoteObj });
+      setQuotes(quotesList);
+      setQuotesUpdate((quotesUpdate + 1) % 2);
+    }
+  }, [quoteObj, setQuotes]);
+
   // Sets the selected chat via redux
   const setChat = (chatId: string) => {
     dispatch(setSelectedChat({ id: chatId }));

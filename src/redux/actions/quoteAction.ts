@@ -1,4 +1,4 @@
-import { IMessage, IQuote, IQuoteList } from "src/types/quotes";
+import { IMessage, IQuoteList } from "src/types/quotes";
 import QuoteTypes from "../types/quoteTypes";
 
 interface IQuoteActionBase {
@@ -14,7 +14,7 @@ export interface IQuoteActionGetShopQuotes extends IQuoteActionBase {
 }
 
 export interface IQuoteActionUpdateInitialState extends IQuoteActionBase {
-  payload: { quotesList: IQuote };
+  payload: { data: IQuoteList };
 }
 
 export interface IQuoteActionCreateQuote extends IQuoteActionBase {

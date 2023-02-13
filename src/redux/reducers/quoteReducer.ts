@@ -11,7 +11,7 @@ const quoteReducer = (
 ) => {
   switch (action.type) {
     case QuoteTypes.UPDATE_INITIAL_STATE:
-      return { ...state, quotes: action?.payload.data };
+      return { ...state, quotes: action?.payload?.data ?? {} };
     case QuoteTypes.ADD_QUOTE_TO_STATE:
       return {
         ...state,

@@ -17,9 +17,6 @@ const MessageList = () => {
   const getMessageItems = () => {
     if (messageList && messageList.length > 0) {
       let messageItems: any = [];
-      //   messageList.sort((a: IMessage, b: IMessage) =>
-      //     b.createdAt >= a.createdAt ? 0 : -1
-      //   );
       messageList.forEach((msg: IMessage) => {
         messageItems.push(<Message key={msg.id} msg={msg} />);
       });
