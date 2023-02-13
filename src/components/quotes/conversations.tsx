@@ -1,6 +1,7 @@
 import { UserType } from "@prisma/client";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/components/quotes/Conversations.module.css";
+import classnames from "classnames";
 import Image from "next/image";
 import { ListBox, ListBoxChangeParams } from "primereact/listbox";
 import image from "public/icons/icon-192x192.png";
@@ -59,7 +60,19 @@ const Conversations = (props: IConversationsProps) => {
     nextPage();
   };
 
+  const renderAddress = (option: IQuote, isCustomer: boolean) => {
+    if (isCustomer) {
+      return (
+        <div>
+          {option.shop.address} <br />
+        </div>
+      );
+    }
+  };
+
   const chatItem = (option: IQuote) => {
+    const isCustomer = userType === UserType.CUSTOMER;
+
     return (
       <div className={styles.chatItem}>
         <Image
@@ -69,8 +82,15 @@ const Conversations = (props: IConversationsProps) => {
           width={image.width * 0.3}
         />
         <div className={styles.chatText}>
-          <h4 className={styles.h3}>{option.shop.name}</h4>
-          {option.shop.address} <br />
+          <h4 className={styles.h4}>
+            {isCustomer
+              ? option.shop.name
+              : `${option.customer.first_name} ${option.customer.last_name}`}
+          </h4>
+          <h4 className={classnames(styles.h4, styles.service)}>
+            {option.service.name}
+          </h4>
+          {renderAddress(option, isCustomer)}
           {"Updated " + new Date(option.updateTime).toLocaleString("en-US")}
         </div>
       </div>
@@ -87,7 +107,7 @@ const Conversations = (props: IConversationsProps) => {
         onChange={(e: ListBoxChangeParams) => setChat(e.value.id)}
         filterBy="shopName"
         itemTemplate={chatItem}
-        listStyle={{ maxHeight: "32.5rem" }}
+        listStyle={{ maxHeight: "35rem" }}
       />
     </div>
   );
