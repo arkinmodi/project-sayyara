@@ -27,6 +27,9 @@ const ShopDashboard: NextPage = () => {
     setActiveIndex(e.index);
   };
 
+  const toggleActiveTab = () => {
+    setActiveIndex((activeIndex + 1) % 2);
+  };
   return (
     <div>
       <Head>
@@ -39,7 +42,7 @@ const ShopDashboard: NextPage = () => {
           <QuotesShell />
         </TabPanel>
         <TabPanel header="Service Requests">
-          <AppointmentsTabs />
+          <AppointmentsTabs toggleActiveTab={toggleActiveTab} />
         </TabPanel>
       </TabView>
     </div>

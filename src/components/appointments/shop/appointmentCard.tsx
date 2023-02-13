@@ -1,7 +1,8 @@
 import { setAppointmentStatus } from "@redux/actions/appointmentAction";
+import { setSelectedChat } from "@redux/actions/quoteAction";
 import styles from "@styles/pages/appointments/ShopAppointments.module.css";
 import classNames from "classnames";
-import Router from "next/router";
+import { default as Router } from "next/router";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import React from "react";
@@ -12,12 +13,14 @@ interface IAppointmentCardProps {
   appointment: IAppointment;
   appointmentProgress: AppointmentStatus;
   showToast: (status: AppointmentStatus) => void;
+  toggleActiveTab: () => void;
 }
 
 const AppointmentCard = (props: IAppointmentCardProps) => {
   const dispatch = useDispatch();
 
-  const { appointment, appointmentProgress, showToast } = props;
+  const { appointment, appointmentProgress, showToast, toggleActiveTab } =
+    props;
 
   const handleButtonClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -29,11 +32,33 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     dispatch(setAppointmentStatus({ id: appointment.id, status: status }));
   };
 
+  const viewQuoteClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    appointment: IAppointment
+  ): void => {
+    e.stopPropagation();
+    console.log(appointment.quoteId);
+    if (appointment.quoteId) {
+      dispatch(setSelectedChat({ id: appointment.quoteId }));
+    }
+    toggleActiveTab();
+  };
+
   const renderRequestedCardLeft = () => {
     return (
       <div className={styles.textAlign}>
-        {/* TODO: Link to quote and pass in quote id */}
-        <div className={styles.grayText}>View Quote </div>
+        <div
+          className={styles.grayText}
+          style={{
+            display:
+              appointment.quoteId == null || appointment.quoteId === ""
+                ? "none"
+                : "block",
+          }}
+          onClick={(e) => viewQuoteClick(e, appointment)}
+        >
+          View Quote
+        </div>
         <div>
           <Button
             label="Reject"
@@ -64,8 +89,18 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
   const renderScheduledCardLeft = () => {
     return (
       <div className={styles.textAlign}>
-        {/* TODO: Link to quote and pass in quote id */}
-        <div className={styles.grayText}>View Quote </div>
+        <div
+          className={styles.grayText}
+          style={{
+            display:
+              appointment.quoteId == null || appointment.quoteId === ""
+                ? "none"
+                : "block",
+          }}
+          onClick={(e) => viewQuoteClick(e, appointment)}
+        >
+          View Quote
+        </div>
         <div>
           <Button
             label="Cancel"

@@ -4,7 +4,12 @@ import React from "react";
 import { AppointmentStatus } from "../../../types/appointment";
 import ShopAppointments from "./shopAppointments";
 
-const AppointmentsTab = () => {
+interface IAppointmentTabsProps {
+  toggleActiveTab: () => void;
+}
+
+const AppointmentsTab = (props: IAppointmentTabsProps) => {
+  const { toggleActiveTab } = props;
   return (
     <div>
       <div className={styles.desktop}>
@@ -12,16 +17,26 @@ const AppointmentsTab = () => {
           <TabPanel header="Requested">
             <ShopAppointments
               appointmentTab={AppointmentStatus.PENDING_APPROVAL}
+              toggleActiveTab={toggleActiveTab}
             />
           </TabPanel>
           <TabPanel header="Scheduled">
-            <ShopAppointments appointmentTab={AppointmentStatus.ACCEPTED} />
+            <ShopAppointments
+              appointmentTab={AppointmentStatus.ACCEPTED}
+              toggleActiveTab={toggleActiveTab}
+            />
           </TabPanel>
           <TabPanel header="In Progress">
-            <ShopAppointments appointmentTab={AppointmentStatus.IN_PROGRESS} />
+            <ShopAppointments
+              appointmentTab={AppointmentStatus.IN_PROGRESS}
+              toggleActiveTab={toggleActiveTab}
+            />
           </TabPanel>
           <TabPanel header="Completed">
-            <ShopAppointments appointmentTab={AppointmentStatus.COMPLETED} />
+            <ShopAppointments
+              appointmentTab={AppointmentStatus.COMPLETED}
+              toggleActiveTab={toggleActiveTab}
+            />
           </TabPanel>
         </TabView>
       </div>
@@ -31,16 +46,26 @@ const AppointmentsTab = () => {
           <TabPanel header={<i className="pi pi-inbox"></i>}>
             <ShopAppointments
               appointmentTab={AppointmentStatus.PENDING_APPROVAL}
+              toggleActiveTab={toggleActiveTab}
             />
           </TabPanel>
           <TabPanel header={<i className="pi pi-calendar"></i>}>
-            <ShopAppointments appointmentTab={AppointmentStatus.ACCEPTED} />
+            <ShopAppointments
+              appointmentTab={AppointmentStatus.ACCEPTED}
+              toggleActiveTab={toggleActiveTab}
+            />
           </TabPanel>
           <TabPanel header={<i className="pi pi-clock"></i>}>
-            <ShopAppointments appointmentTab={AppointmentStatus.IN_PROGRESS} />
+            <ShopAppointments
+              appointmentTab={AppointmentStatus.IN_PROGRESS}
+              toggleActiveTab={toggleActiveTab}
+            />
           </TabPanel>
           <TabPanel header={<i className="pi pi-check-circle"></i>}>
-            <ShopAppointments appointmentTab={AppointmentStatus.COMPLETED} />
+            <ShopAppointments
+              appointmentTab={AppointmentStatus.COMPLETED}
+              toggleActiveTab={toggleActiveTab}
+            />
           </TabPanel>
         </TabView>
       </div>
