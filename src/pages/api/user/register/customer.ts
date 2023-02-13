@@ -27,7 +27,7 @@ const registerCustomerHandler = async (
       .json({ message: "User with email address already exists." });
   } else {
     await createCustomer(result.data);
-    res.redirect(req.body.callbackUrl ?? "/");
+    res.redirect(302, req.body.callbackUrl ?? "/");
   }
 };
 
