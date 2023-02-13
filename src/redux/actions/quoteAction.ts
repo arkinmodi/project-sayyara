@@ -26,7 +26,7 @@ export interface IQuoteActionAddQuoteToState extends IQuoteActionBase {
 }
 
 export interface IQuoteActionSetSelectedChat extends IQuoteActionBase {
-  payload: { id: string };
+  payload: { id: string | null };
 }
 
 export interface IQuoteActionCreateMessage extends IQuoteActionBase {
