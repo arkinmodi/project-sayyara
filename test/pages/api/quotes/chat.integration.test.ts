@@ -14,6 +14,7 @@ import {
   Employee,
   prisma,
   Quote,
+  QuoteStatus,
   Shop,
 } from "@server/db/client";
 import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
@@ -67,7 +68,11 @@ const testQuote: Quote = {
   update_time: new Date(),
   customer_id: "test_customer_id",
   shop_id: "test_shop_id",
-  service_id: null,
+  service_id: "test_service_id",
+  status: QuoteStatus.IN_PROGRESS,
+  estimated_price: null,
+  duration: null,
+  description: null,
 };
 
 const testChatMessage: ChatMessage = {

@@ -8,7 +8,15 @@ import quoteByCustomerIdHandler from "@pages/api/customer/[id]/quotes";
 import quoteHandler from "@pages/api/quotes";
 import quoteByIdHandler from "@pages/api/quotes/[id]";
 import quoteByShopIdHandler from "@pages/api/shop/[id]/quotes";
-import { Customer, prisma, Quote, Shop } from "@server/db/client";
+import {
+  Customer,
+  prisma,
+  Quote,
+  QuoteStatus,
+  Service,
+  ServiceType,
+  Shop,
+} from "@server/db/client";
 import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 import { Session } from "next-auth";
 
@@ -39,13 +47,38 @@ const testShop: Shop = {
   hours_of_operation: null,
 };
 
+const testService: Service = {
+  id: "test_service_id",
+  create_time: new Date(),
+  update_time: new Date(),
+  name: "test_service_name",
+  description: "test_service_description",
+  estimated_time: 1,
+  total_price: 25,
+  parts: [
+    {
+      cost: 1,
+      name: "1",
+      build: "AFTER_MARKET",
+      quantity: 5,
+      condition: "USED",
+    },
+  ],
+  type: ServiceType.CANNED,
+  shop_id: "test_shop_id",
+};
+
 const testQuote: Quote = {
   id: "",
   create_time: new Date(),
   update_time: new Date(),
-  service_id: null,
+  service_id: testService.id,
   customer_id: testCustomerUser.id,
   shop_id: testShop.id,
+  status: QuoteStatus.IN_PROGRESS,
+  estimated_price: null,
+  duration: null,
+  description: null,
 };
 
 jest.mock("@server/common/getServerAuthSession", () => ({
