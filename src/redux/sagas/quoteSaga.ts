@@ -208,8 +208,8 @@ function postCreateQuote(body: ICreateQuoteBody): Promise<IQuote | null> {
           price: data.estimated_price,
           duration: data.duration,
           description: data.description,
-          createTime: new Date(data.create_time),
-          updateTime: new Date(data.update_time),
+          createTime: new Date(data.create_time).toString(),
+          updateTime: new Date(data.update_time).toString(),
           messageList: [],
         };
       });

@@ -32,8 +32,8 @@ export interface IQuote {
   customer: ICustomer;
   shop: IShop;
   service: IService;
-  createTime: Date;
-  updateTime: Date;
+  createTime: string;
+  updateTime: string;
   status: QuoteStatus;
   price?: number;
   duration?: number;
