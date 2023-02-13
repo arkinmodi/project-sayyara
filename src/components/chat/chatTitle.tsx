@@ -1,5 +1,7 @@
 import { QuoteStatus, UserType } from "@prisma/client";
-import { inviteCustomer } from "@redux/actions/quoteAction";
+import { createAppointment } from "@redux/actions/appointmentAction";
+import { acceptQuote, inviteCustomer } from "@redux/actions/quoteAction";
+import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/components/chat/ChatTitle.module.css";
 import classnames from "classnames";
@@ -13,10 +15,27 @@ import {
 import { InputText } from "primereact/inputtext";
 import { Menu } from "primereact/menu";
 import img from "public/icons/icon-192x192.png";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ScheduleMeeting, StartTimeEventEmit } from "react-schedule-meeting";
 import { QuoteSelectors } from "src/redux/selectors/quoteSelectors";
+import { AppointmentStatus } from "src/types/appointment";
 import { IQuote, IQuoteList } from "src/types/quotes";
+import { IAvailabilitiesTime } from "src/types/shop";
+import { getAvailabilities } from "src/utils/shopUtil";
+
+interface ICreateAppointmentForm {
+  vehicleId: string;
+  year: number | string;
+  make: string;
+  model: string;
+  service: string;
+  startTime: Date | undefined;
+  endTime: Date | undefined;
+  cost: number;
+  time: number;
+  description: string;
+}
 
 const ChatTitle = () => {
   const dispatch = useDispatch();
@@ -25,19 +44,77 @@ const ChatTitle = () => {
   const userType = useSelector(AuthSelectors.getUserType);
   const selectedChatId = useSelector(QuoteSelectors.getActiveChat);
   const quotes: IQuoteList = useSelector(QuoteSelectors.getQuotes);
+  const customerAppointments = useSelector(
+    AppointmentSelectors.getAppointments
+  );
+  const vehicle = useSelector(AuthSelectors.getVehicleInfo);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [invitationIsOpen, setInvitationIsOpen] = useState(false);
   const [price, setPrice] = useState(0);
   const [time, setTime] = useState(0);
   const [description, setDescription] = useState("");
 
+  // step for creating appointment
+  const [step, setStep] = useState(0);
+  const [availableTimeslots, setAvailableTimeslots] = useState<
+    IAvailabilitiesTime[] | []
+  >([]);
+  const [startTime, setStartTime] = useState<Date>(new Date());
+  const [endTime, setEndTime] = useState<Date>(new Date());
+  const [allowSubmit, setAllowSubmit] = useState<boolean>(false);
+
   const menu = useRef<Menu>(null);
+
+  useEffect(() => {
+    if (selectedChatId) {
+      const selectedChat: IQuote = quotes[selectedChatId]!;
+      const startDate = new Date(new Date().setHours(0, 0, 0, 0));
+      const endDate = new Date(
+        new Date(new Date().setDate(startDate.getDate() + 30)).setHours(
+          23,
+          59,
+          59,
+          59
+        )
+      );
+      if (selectedChat.shop.id) {
+        getAvailabilities(
+          selectedChat.shop.id,
+          startDate,
+          endDate,
+          selectedChat.shop.hoursOfOperation ?? null
+        ).then((data) => {
+          if (data) {
+            setAvailableTimeslots(data);
+          }
+        });
+      }
+    }
+  }, [selectedChatId, customerAppointments]);
+
+  useEffect(() => {
+    // On render check if user is customer and has a invitation for the quote
+    if (selectedChatId) {
+      const selectedChat: IQuote = quotes[selectedChatId]!;
+      if (
+        selectedChat.status === QuoteStatus.INVITED &&
+        userType === UserType.CUSTOMER
+      ) {
+        setInvitationIsOpen(true);
+      }
+    }
+  }, [selectedChatId, userType]);
 
   const onHide = () => {
     setPrice(0);
     setTime(0);
     setDescription("");
     setIsOpen(false);
+  };
+
+  const invitationOnHide = () => {
+    setInvitationIsOpen(false);
   };
 
   const sendInvite = () => {
@@ -54,6 +131,14 @@ const ChatTitle = () => {
 
       onHide();
     }
+  };
+
+  const bookAppointment = () => {
+    setStep(step + 1);
+  };
+
+  const goBack = () => {
+    setStep(step - 1);
   };
 
   const checkFields = () => {
@@ -89,6 +174,50 @@ const ChatTitle = () => {
     setDescription(e.target.value);
   };
 
+  const onTimeSelect = (e: StartTimeEventEmit) => {
+    if (selectedChatId) {
+      const selectedChat = quotes[selectedChatId];
+      if (selectedChat && selectedChat.duration) {
+        const startTime = e.startTime;
+        const endTime = new Date(
+          e.startTime.getTime() + Math.ceil(selectedChat.duration * 60) * 60000
+        );
+
+        setStartTime(startTime);
+        setEndTime(endTime);
+        setAllowSubmit(true);
+      }
+    }
+  };
+
+  const onSubmitAppointment = () => {
+    if (selectedChatId) {
+      const selectedChat = quotes[selectedChatId];
+      if (selectedChat && selectedChat.shop.id) {
+        if (vehicle) {
+          const body = {
+            shopId: selectedChat.shop.id,
+            customerId: selectedChat.customer.id,
+            serviceId: selectedChat.service.id,
+            vehicleId: vehicle.id,
+            quoteId: selectedChatId,
+            price: price,
+            status: AppointmentStatus.PENDING_APPROVAL,
+            startTime: startTime.toString(),
+            endTime: endTime.toString(),
+          };
+
+          dispatch(createAppointment(body));
+
+          // Set quote status to accepted
+          dispatch(acceptQuote({ quoteId: selectedChatId }));
+        }
+      }
+
+      invitationOnHide();
+    }
+  };
+
   const items = [
     {
       label: "Invite to Schedule",
@@ -106,9 +235,109 @@ const ChatTitle = () => {
     }
   };
 
-  if (selectedChatId !== null) {
+  const renderInvitationDialog = (
+    availableTimeslots: IAvailabilitiesTime[]
+  ) => {
+    if (selectedChatId) {
+      const selectedChat: IQuote = quotes[selectedChatId]!;
+      if (
+        selectedChat.price &&
+        selectedChat.duration &&
+        selectedChat.description
+      ) {
+        switch (step) {
+          case 0:
+            return (
+              <div className={styles.dialogInputCol}>
+                <h4>Here are the service details:</h4>
+                <div className={styles.dialogInputRow}>
+                  <div className={styles.fill}>
+                    <p>Estimated Price ($)</p>
+                    <InputNumber
+                      disabled
+                      value={selectedChat.price}
+                      className={styles.maxWidth}
+                      mode="currency"
+                      currency="CAD"
+                    />
+                  </div>
+                  <div className={styles.fill}>
+                    <p>Estimated Time (Hours)</p>
+                    <InputNumber
+                      disabled
+                      value={selectedChat.duration}
+                      className={styles.maxWidth}
+                      mode="decimal"
+                      minFractionDigits={0}
+                      maxFractionDigits={2}
+                    />
+                  </div>
+                </div>
+                <div className={styles.dialogInputRow}>
+                  <div className={styles.maxWidth}>
+                    <p>Description of Service</p>
+                    <InputText
+                      disabled
+                      value={selectedChat.description}
+                      className={styles.maxWidth}
+                    />
+                  </div>
+                </div>
+                <div
+                  className={classnames(
+                    styles.dialogInputRow,
+                    styles.invitationButton
+                  )}
+                >
+                  <Button
+                    className="greenButton"
+                    label="Book Appointment"
+                    onClick={bookAppointment}
+                  />
+                </div>
+              </div>
+            );
+          case 1:
+            return (
+              <div className={styles.dialogInputCol}>
+                <ScheduleMeeting
+                  borderRadius={10}
+                  primaryColor="#436188"
+                  backgroundColor="#f7f7f7"
+                  eventDurationInMinutes={Math.ceil(selectedChat.duration * 60)}
+                  availableTimeslots={availableTimeslots}
+                  onStartTimeSelect={onTimeSelect}
+                />
+                <div
+                  className={classnames(
+                    styles.dialogInputRow,
+                    styles.buttonRow
+                  )}
+                >
+                  <Button
+                    className="blueButton"
+                    label="Back"
+                    onClick={goBack}
+                  />
+                  <Button
+                    className={classnames(styles.dialogButton, "greenButton")}
+                    label="Schedule Service"
+                    disabled={!allowSubmit}
+                    onClick={onSubmitAppointment}
+                  />
+                </div>
+              </div>
+            );
+          default:
+            return;
+        }
+      }
+    }
+  };
+
+  if (selectedChatId) {
     const selectedChat: IQuote = quotes[selectedChatId]!;
-    console.log(selectedChat);
+
     const name: string =
       userType === UserType.CUSTOMER
         ? `${selectedChat.shop.name} - ${selectedChat.service.name}`
@@ -192,6 +421,14 @@ const ChatTitle = () => {
             </div>
           </div>
         </div>
+      </Dialog>
+      <Dialog
+        header="Book Your Appointment"
+        visible={invitationIsOpen}
+        onHide={invitationOnHide}
+        className={styles.dialog}
+      >
+        {renderInvitationDialog(availableTimeslots)}
       </Dialog>
     </div>
   );

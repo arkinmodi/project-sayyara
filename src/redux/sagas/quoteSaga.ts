@@ -1,5 +1,6 @@
 import { ChatMessage, QuoteStatus, UserType } from "@prisma/client";
 import {
+  IQuoteActionAcceptQuote,
   IQuoteActionCreateMessage,
   IQuoteActionCreateQuote,
   IQuoteActionGetCustomerQuotes,
@@ -18,12 +19,15 @@ import {
   SelectEffect,
   takeEvery,
 } from "redux-saga/effects";
+import { ICustomer } from "src/types/customer";
 import {
   ICreateQuoteBody,
   IMessage,
   IQuote,
   IQuoteList,
 } from "src/types/quotes";
+import { IService } from "src/types/service";
+import { IShop } from "src/types/shop";
 import { getMessageListByQuoteId } from "src/utils/quotesUtil";
 
 interface IPostCreateMessageBody {
@@ -49,12 +53,44 @@ function getCustomerQuotesHandler(
           const messageListPromise = getMessageListByQuoteId(quote.id);
           return Promise.all([messageListPromise]).then((values) => {
             const message = values[0];
+            const customer: ICustomer = {
+              id: quote.customer.id,
+              first_name: quote.customer.first_name,
+              last_name: quote.customer.last_name,
+              phone_number: quote.customer.phone_number,
+              email: quote.customer.email,
+            };
+            const shop: IShop = {
+              id: quote.shop.id,
+              name: quote.shop.name,
+              address: quote.shop.address,
+              postalCode: quote.shop.postal_code,
+              city: quote.shop.city,
+              province: quote.shop.province,
+              phoneNumber: quote.shop.phone_number,
+              hoursOfOperation: quote.shop.hours_of_operation,
+              email: quote.shop.email,
+            };
+            const service: IService = {
+              id: quote.service.id,
+              name: quote.service.name,
+              description: quote.service.description,
+              estimatedTime: quote.service.estimated_time,
+              totalPrice: quote.service.total_price,
+              parts: quote.service.parts,
+              type: quote.service.type,
+              shopId: quote.service.shop_id,
+            };
+
             const quoteObj = {
               id: quote.id,
-              customer: quote.customer,
-              shop: quote.shop,
-              service: quote.service,
+              customer: customer,
+              shop: shop,
+              service: service,
               status: quote.status,
+              price: quote.estimated_price,
+              duration: quote.duration,
+              description: quote.description,
               createTime: quote.create_time,
               updateTime: quote.update_time,
               messageList: message,
@@ -93,13 +129,44 @@ function getShopQuotesHandler(shopId: string): Promise<IQuoteList | {}> {
 
           return Promise.all([messageListPromise]).then((values) => {
             const message = values[0];
+            const customer: ICustomer = {
+              id: quote.customer.id,
+              first_name: quote.customer.first_name,
+              last_name: quote.customer.last_name,
+              phone_number: quote.customer.phone_number,
+              email: quote.customer.email,
+            };
+            const shop: IShop = {
+              id: quote.shop.id,
+              name: quote.shop.name,
+              address: quote.shop.address,
+              postalCode: quote.shop.postal_code,
+              city: quote.shop.city,
+              province: quote.shop.province,
+              phoneNumber: quote.shop.phone_number,
+              hoursOfOperation: quote.shop.hours_of_operation,
+              email: quote.shop.email,
+            };
+            const service: IService = {
+              id: quote.service.id,
+              name: quote.service.name,
+              description: quote.service.description,
+              estimatedTime: quote.service.estimated_time,
+              totalPrice: quote.service.total_price,
+              parts: quote.service.parts,
+              type: quote.service.type,
+              shopId: quote.service.shop_id,
+            };
 
             const quoteObj = {
               id: quote.id,
-              customer: quote.customer,
-              shop: quote.shop,
-              service: quote.service,
+              customer: customer,
+              shop: shop,
+              service: service,
               status: quote.status,
+              price: quote.estimated_price,
+              duration: quote.duration,
+              description: quote.description,
               createTime: quote.create_time,
               updateTime: quote.update_time,
               messageList: message,
@@ -138,6 +205,9 @@ function postCreateQuote(body: ICreateQuoteBody): Promise<IQuote | null> {
           shop: data.shop,
           service: data.service,
           status: data.status,
+          price: data.estimated_price,
+          duration: data.duration,
+          description: data.description,
           createTime: new Date(data.create_time),
           updateTime: new Date(data.update_time),
           messageList: [],
@@ -197,11 +267,22 @@ function patchQuoteForInvite(
       status: QuoteStatus.INVITED,
     }),
   }).then((res) => {
-    if (res.status === 200) {
-      return true;
-    } else {
-      return false;
-    }
+    return res.status === 200;
+  });
+}
+
+function patchQuoteForAccept(id: string): Promise<boolean> {
+  return fetch(`/api/quotes/${id}`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      status: QuoteStatus.ACCEPTED,
+    }),
+  }).then((res) => {
+    return res.status === 200;
   });
 }
 
@@ -297,6 +378,19 @@ function* inviteCustomer(
   }
 }
 
+function* acceptQuote(
+  action: IQuoteActionAcceptQuote
+): Generator<CallEffect | PutEffect> {
+  const payload = action.payload;
+  const success = yield call(patchQuoteForAccept, payload.quoteId);
+
+  if (success) {
+    yield put({
+      type: QuoteTypes.GET_CUSTOMER_QUOTES,
+    });
+  }
+}
+
 export function* quoteSaga() {
   yield all([
     takeEvery(QuoteTypes.GET_CUSTOMER_QUOTES, getCustomerQuotes),
@@ -304,5 +398,6 @@ export function* quoteSaga() {
     takeEvery(QuoteTypes.CREATE_QUOTE, createQuote),
     takeEvery(QuoteTypes.CREATE_MESSAGE, createMessage),
     takeEvery(QuoteTypes.INVITE_CUSTOMER, inviteCustomer),
+    takeEvery(QuoteTypes.ACCEPT_QUOTE, acceptQuote),
   ]);
 }

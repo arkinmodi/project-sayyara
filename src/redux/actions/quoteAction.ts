@@ -46,13 +46,8 @@ export interface IQuoteActionInviteCustomer extends IQuoteActionBase {
   };
 }
 
-export interface IQuoteActionInviteUpdateState extends IQuoteActionBase {
-  payload: {
-    quoteId: string;
-    price: number;
-    duration: number;
-    description: string;
-  };
+export interface IQuoteActionAcceptQuote extends IQuoteActionBase {
+  payload: { quoteId: string };
 }
 
 export type IQuoteAction =
@@ -65,7 +60,7 @@ export type IQuoteAction =
   | IQuoteActionSetMessage
   | IQuoteActionCreateMessage
   | IQuoteActionInviteCustomer
-  | IQuoteActionInviteUpdateState;
+  | IQuoteActionAcceptQuote;
 
 export const getCustomerQuotes = (
   payload: IQuoteActionGetCustomerQuotes["payload"]
@@ -126,9 +121,7 @@ export const inviteCustomer = (
   payload,
 });
 
-export const inviteUpdateState = (
-  payload: IQuoteActionInviteUpdateState["payload"]
-) => ({
-  type: QuoteTypes.INVITE_UPDATE_STATE,
+export const acceptQuote = (payload: IQuoteActionAcceptQuote["payload"]) => ({
+  type: QuoteTypes.ACCEPT_QUOTE,
   payload,
 });

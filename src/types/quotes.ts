@@ -37,5 +37,6 @@ export interface IQuote {
   status: QuoteStatus;
   price?: number;
   duration?: number;
+  description?: string;
   messageList: IMessage[] | [];
 }

@@ -3,7 +3,7 @@ import { createQuote } from "@redux/actions/quoteAction";
 import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/components/shop/profile/appointment/RequestServiceDialog.module.css";
-import { default as classnames, default as classNames } from "classnames";
+import classnames from "classnames";
 import Router from "next/router";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
@@ -281,7 +281,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
               optionLabel="name"
             />
             <Button
-              className={classNames(styles.dialogButton, "greenButton")}
+              className={classnames(styles.dialogButton, "greenButton")}
               disabled={selectedService === ""}
               onClick={onSubmitStepOne}
             >
@@ -337,7 +337,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
               >
                 <Button className="blueButton" label="Back" onClick={goBack} />
                 <Button
-                  className={classNames(styles.dialogButton, "greenButton")}
+                  className={classnames(styles.dialogButton, "greenButton")}
                   label={displayButtonText()}
                   onClick={onSubmitStepTwo}
                 />
@@ -362,7 +362,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
               >
                 <Button className="blueButton" label="Back" onClick={goBack} />
                 <Button
-                  className={classNames(styles.dialogButton, "greenButton")}
+                  className={classnames(styles.dialogButton, "greenButton")}
                   label={displayButtonText()}
                   disabled={!allowSubmit}
                   onClick={onSubmitStepThree}
