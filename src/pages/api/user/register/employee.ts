@@ -27,7 +27,7 @@ const registerEmployeeHandler = async (
       .json({ message: "User with email address already exists." });
   } else {
     await createEmployee(result.data);
-    res.redirect(req.body.callbackUrl ?? "/");
+    res.redirect(302, req.body.callbackUrl ?? "/");
   }
 };
 
