@@ -15,6 +15,7 @@ import {
   prisma,
   Quote,
   QuoteStatus,
+  ServiceWithPartsType,
   Shop,
 } from "@server/db/client";
 import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
@@ -85,6 +86,19 @@ const testChatMessage: ChatMessage = {
   shop_id: null,
 };
 
+const testService: ServiceWithPartsType = {
+  id: "test_service_id",
+  create_time: new Date(),
+  update_time: new Date(),
+  name: "test_name",
+  description: "test_description",
+  estimated_time: 2,
+  total_price: 100,
+  parts: [],
+  type: "CANNED",
+  shop_id: testShop.id,
+};
+
 jest.mock("@server/common/getServerAuthSession", () => ({
   getServerAuthSession: jest.fn<Session, []>(() => ({
     expires: "1",
@@ -105,17 +119,13 @@ afterAll(async () => {
 });
 
 afterEach(async () => {
-  const deleteQuotes = prisma.quote.deleteMany();
-  const deleteChatMessages = prisma.chatMessage.deleteMany();
-  const deleteCustomerUsers = prisma.customer.deleteMany();
-  const deleteEmployeeUsers = prisma.employee.deleteMany();
-  const deleteShops = prisma.shop.deleteMany();
   await prisma.$transaction([
-    deleteChatMessages,
-    deleteQuotes,
-    deleteCustomerUsers,
-    deleteEmployeeUsers,
-    deleteShops,
+    prisma.chatMessage.deleteMany(),
+    prisma.quote.deleteMany(),
+    prisma.service.deleteMany(),
+    prisma.customer.deleteMany(),
+    prisma.employee.deleteMany(),
+    prisma.shop.deleteMany(),
   ]);
 });
 
@@ -125,6 +135,7 @@ describe("create chat messages", () => {
       await createCustomer();
       await createEmployee();
       await createShop();
+      await createService();
 
       const quoteId = await createQuote();
 
@@ -156,6 +167,7 @@ describe("get chat messages", () => {
       await createCustomer();
       await createEmployee();
       await createShop();
+      await createService();
       const quoteId = await createQuote();
 
       // Create Employee Chat Message
@@ -199,6 +211,7 @@ describe("get chat messages", () => {
       await createCustomer();
       await createEmployee();
       await createShop();
+      await createService();
       const quoteId = await createQuote();
 
       // Get Chat Messages
@@ -218,6 +231,7 @@ describe("delete quote and chat messages", () => {
       await createCustomer();
       await createEmployee();
       await createShop();
+      await createService();
       const quoteId = await createQuote();
 
       // Create Employee Chat Message
@@ -286,4 +300,19 @@ const createQuote = async () => {
   req.body = testQuote;
   await quoteHandler(req, res);
   return res._getJSONData()["id"] as string;
+};
+
+const createService = async () => {
+  return await prisma.service.create({
+    data: {
+      id: testService.id,
+      name: testService.name,
+      description: testService.description,
+      estimated_time: testService.estimated_time,
+      total_price: testService.total_price,
+      parts: testService.parts,
+      type: testService.type,
+      shop_id: testService.id,
+    },
+  });
 };

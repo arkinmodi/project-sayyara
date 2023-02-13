@@ -13,8 +13,7 @@ import {
   prisma,
   Quote,
   QuoteStatus,
-  Service,
-  ServiceType,
+  ServiceWithPartsType,
   Shop,
 } from "@server/db/client";
 import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
@@ -47,25 +46,17 @@ const testShop: Shop = {
   hours_of_operation: null,
 };
 
-const testService: Service = {
+const testService: ServiceWithPartsType = {
   id: "test_service_id",
   create_time: new Date(),
   update_time: new Date(),
-  name: "test_service_name",
-  description: "test_service_description",
-  estimated_time: 1,
-  total_price: 25,
-  parts: [
-    {
-      cost: 1,
-      name: "1",
-      build: "AFTER_MARKET",
-      quantity: 5,
-      condition: "USED",
-    },
-  ],
-  type: ServiceType.CANNED,
-  shop_id: "test_shop_id",
+  name: "test_name",
+  description: "test_description",
+  estimated_time: 2,
+  total_price: 100,
+  parts: [],
+  type: "CANNED",
+  shop_id: testShop.id,
 };
 
 const testQuote: Quote = {
@@ -101,15 +92,12 @@ afterAll(async () => {
 });
 
 afterEach(async () => {
-  const deleteQuotes = prisma.quote.deleteMany();
-  const deleteCustomerUsers = prisma.customer.deleteMany();
-  const deleteEmployeeUsers = prisma.employee.deleteMany();
-  const deleteShops = prisma.shop.deleteMany();
   await prisma.$transaction([
-    deleteQuotes,
-    deleteCustomerUsers,
-    deleteEmployeeUsers,
-    deleteShops,
+    prisma.quote.deleteMany(),
+    prisma.service.deleteMany(),
+    prisma.customer.deleteMany(),
+    prisma.employee.deleteMany(),
+    prisma.shop.deleteMany(),
   ]);
 });
 
@@ -118,12 +106,14 @@ describe("create quote", () => {
     it("should create new quote", async () => {
       await createCustomer();
       await createShop();
+      await createService();
 
       // Create Quote
       const { req, res } = createMockRequestResponse({ method: "POST" });
       req.body = {
         customer_id: testQuote.customer_id,
         shop_id: testQuote.shop_id,
+        service_id: testQuote.service_id,
       };
 
       await quoteHandler(req, res);
@@ -144,12 +134,14 @@ describe("get quote", () => {
     it("should return the quote", async () => {
       await createCustomer();
       await createShop();
+      await createService();
 
       // Create Quote
       const post = createMockRequestResponse({ method: "POST" });
       post.req.body = {
         customer_id: testQuote.customer_id,
         shop_id: testQuote.shop_id,
+        service_id: testQuote.service_id,
       };
       await quoteHandler(post.req, post.res);
       expect(post.res.statusCode).toBe(201);
@@ -174,12 +166,14 @@ describe("get quote", () => {
     it("should return all quotes under customer", async () => {
       await createCustomer();
       await createShop();
+      await createService();
 
       // Create Quote
       const post = createMockRequestResponse({ method: "POST" });
       post.req.body = {
         customer_id: testQuote.customer_id,
         shop_id: testQuote.shop_id,
+        service_id: testQuote.service_id,
       };
       await quoteHandler(post.req, post.res);
       expect(post.res.statusCode).toBe(201);
@@ -204,12 +198,14 @@ describe("get quote", () => {
     it("should return all quotes under shop", async () => {
       await createCustomer();
       await createShop();
+      await createService();
 
       // Create Quote
       const post = createMockRequestResponse({ method: "POST" });
       post.req.body = {
         customer_id: testQuote.customer_id,
         shop_id: testQuote.shop_id,
+        service_id: testQuote.service_id,
       };
       await quoteHandler(post.req, post.res);
       expect(post.res.statusCode).toBe(201);
@@ -236,12 +232,14 @@ describe("delete quote", () => {
     it("should delete quote", async () => {
       await createCustomer();
       await createShop();
+      await createService();
 
       // Create Quote
       const post = createMockRequestResponse({ method: "POST" });
       post.req.body = {
         customer_id: testQuote.customer_id,
         shop_id: testQuote.shop_id,
+        service_id: testQuote.service_id,
       };
       await quoteHandler(post.req, post.res);
       expect(post.res.statusCode).toBe(201);
@@ -278,6 +276,21 @@ const createShop = async () => {
       postal_code: testShop.postal_code,
       city: testShop.city,
       province: testShop.province,
+    },
+  });
+};
+
+const createService = async () => {
+  return await prisma.service.create({
+    data: {
+      id: testService.id,
+      name: testService.name,
+      description: testService.description,
+      estimated_time: testService.estimated_time,
+      total_price: testService.total_price,
+      parts: testService.parts,
+      type: testService.type,
+      shop_id: testService.id,
     },
   });
 };
