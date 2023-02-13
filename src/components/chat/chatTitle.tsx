@@ -172,7 +172,7 @@ const ChatTitle = (props: IChatTitleProps) => {
   const onSubmitAppointment = () => {
     if (selectedChatId) {
       const selectedChat = quotes[selectedChatId];
-      if (selectedChat && selectedChat.shop.id) {
+      if (selectedChat && selectedChat.shop.id && selectedChat.price) {
         if (vehicle) {
           const body = {
             shopId: selectedChat.shop.id,
@@ -180,7 +180,7 @@ const ChatTitle = (props: IChatTitleProps) => {
             serviceId: selectedChat.service.id,
             vehicleId: vehicle.id,
             quoteId: selectedChatId,
-            price: price,
+            price: selectedChat.price,
             status: AppointmentStatus.PENDING_APPROVAL,
             startTime: startTime.toString(),
             endTime: endTime.toString(),
