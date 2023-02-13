@@ -23,15 +23,23 @@ const WorkOrder: NextPage = () => {
   const { id } = router.query;
 
   const [workOrder, setWorkOrder] = useState<IWorkOrder | undefined>(undefined);
+  const userType = useSelector(AuthSelectors.getUserType);
 
   const toastRef = useRef<Toast>(null);
 
   const handleTabChange = (idx: number) => {
     if (idx !== 1) {
-      router.push({
-        pathname: "/shop/dashboard",
-        query: { tab: "quotes" },
-      });
+      if (userType !== UserType.CUSTOMER) {
+        router.push({
+          pathname: "/shop/dashboard",
+          query: { tab: "quotes" },
+        });
+      } else {
+        router.push({
+          pathname: "/dashboard",
+          query: { tab: "quotes" },
+        });
+      }
     }
   };
 
