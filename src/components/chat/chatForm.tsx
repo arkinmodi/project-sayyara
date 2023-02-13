@@ -11,7 +11,6 @@ const ChatForm = () => {
   const [textMessage, setTextMessage] = useState("");
   const dispatch = useDispatch();
 
-  // Sample function, will delete
   const submitMessage = () => {
     if (selectedChat && textMessage !== "") {
       dispatch(createMessage({ quoteId: selectedChat, message: textMessage }));
@@ -27,7 +26,6 @@ const ChatForm = () => {
         onChange={(e) => setTextMessage(e.target.value)}
         disabled={selectedChat === null}
       />
-      {/* TODO: Onclick functionality */}
       <Button
         icon="pi pi-send"
         className={styles.button}
