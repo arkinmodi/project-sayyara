@@ -35,8 +35,6 @@ const Conversations = (props: IConversationsProps) => {
       } else if (userType !== null) {
         dispatch(getShopQuotes());
       }
-
-      console.log("fetch");
     }
     getQuotes();
     setInterval(getQuotes, FETCH_INTERVAL);
