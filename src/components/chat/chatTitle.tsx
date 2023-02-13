@@ -1,4 +1,5 @@
-import { UserType } from "@prisma/client";
+import { QuoteStatus, UserType } from "@prisma/client";
+import { inviteCustomer } from "@redux/actions/quoteAction";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/components/chat/ChatTitle.module.css";
 import classnames from "classnames";
@@ -13,11 +14,12 @@ import { InputText } from "primereact/inputtext";
 import { Menu } from "primereact/menu";
 import img from "public/icons/icon-192x192.png";
 import { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { QuoteSelectors } from "src/redux/selectors/quoteSelectors";
 import { IQuote, IQuoteList } from "src/types/quotes";
 
 const ChatTitle = () => {
+  const dispatch = useDispatch();
   let chatTitleContents = null;
 
   const userType = useSelector(AuthSelectors.getUserType);
@@ -40,7 +42,18 @@ const ChatTitle = () => {
 
   const sendInvite = () => {
     // TODO
-    console.log(price, time, description);
+    if (selectedChatId) {
+      dispatch(
+        inviteCustomer({
+          quoteId: selectedChatId,
+          price,
+          duration: time,
+          description,
+        })
+      );
+
+      onHide();
+    }
   };
 
   const checkFields = () => {
@@ -83,7 +96,6 @@ const ChatTitle = () => {
       command: () => {
         // Opens a dialog to fill in estimated price, time and description
         setIsOpen(true);
-        // Adds information to the specified quote
       },
     },
   ];
@@ -96,6 +108,7 @@ const ChatTitle = () => {
 
   if (selectedChatId !== null) {
     const selectedChat: IQuote = quotes[selectedChatId]!;
+    console.log(selectedChat);
     const name: string =
       userType === UserType.CUSTOMER
         ? `${selectedChat.shop.name} - ${selectedChat.service.name}`
@@ -119,9 +132,14 @@ const ChatTitle = () => {
             className={classnames("blueButton", styles.inviteButton)}
             icon="pi pi-ellipsis-v"
             visible={
-              userType === UserType.SHOP_OWNER || userType === UserType.EMPLOYEE
+              (userType === UserType.SHOP_OWNER ||
+                userType === UserType.EMPLOYEE) &&
+              selectedChat.status === QuoteStatus.IN_PROGRESS
             }
-            disabled={userType === UserType.CUSTOMER}
+            disabled={
+              userType === UserType.CUSTOMER ||
+              selectedChat.status !== QuoteStatus.IN_PROGRESS
+            }
             onClick={toggleMenu}
           />
         </div>

@@ -1,4 +1,4 @@
-import { ChatMessage, UserType } from "@prisma/client";
+import { ChatMessage, QuoteStatus, UserType } from "@prisma/client";
 import {
   IQuoteActionCreateMessage,
   IQuoteActionCreateQuote,
@@ -54,6 +54,7 @@ function getCustomerQuotesHandler(
               customer: quote.customer,
               shop: quote.shop,
               service: quote.service,
+              status: quote.status,
               createTime: quote.create_time,
               updateTime: quote.update_time,
               messageList: message,
@@ -98,6 +99,7 @@ function getShopQuotesHandler(shopId: string): Promise<IQuoteList | {}> {
               customer: quote.customer,
               shop: quote.shop,
               service: quote.service,
+              status: quote.status,
               createTime: quote.create_time,
               updateTime: quote.update_time,
               messageList: message,
@@ -135,6 +137,7 @@ function postCreateQuote(body: ICreateQuoteBody): Promise<IQuote | null> {
           customer: data.customer,
           shop: data.shop,
           service: data.service,
+          status: data.status,
           createTime: new Date(data.create_time),
           updateTime: new Date(data.update_time),
           messageList: [],
@@ -171,6 +174,33 @@ function postCreateMessage(
       });
     } else {
       return null;
+    }
+  });
+}
+
+function patchQuoteForInvite(
+  id: string,
+  price: number,
+  duration: number,
+  description: string
+): Promise<boolean> {
+  return fetch(`/api/quotes/${id}`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      description,
+      duration,
+      estimated_price: price,
+      status: QuoteStatus.INVITED,
+    }),
+  }).then((res) => {
+    if (res.status === 200) {
+      return true;
+    } else {
+      return false;
     }
   });
 }
@@ -250,7 +280,22 @@ function* createMessage(
 
 function* inviteCustomer(
   action: IQuoteActionInviteCustomer
-): Generator<CallEffect | PutEffect> {}
+): Generator<CallEffect | PutEffect> {
+  const payload = action.payload;
+  const success = yield call(
+    patchQuoteForInvite,
+    payload.quoteId,
+    payload.price,
+    payload.duration,
+    payload.description
+  );
+
+  if (success) {
+    yield put({
+      type: QuoteTypes.GET_SHOP_QUOTES,
+    });
+  }
+}
 
 export function* quoteSaga() {
   yield all([

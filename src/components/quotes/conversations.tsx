@@ -65,7 +65,7 @@ const Conversations = () => {
         <div className={styles.chatText}>
           <h4 className={styles.h3}>{option.shop.name}</h4>
           {option.shop.address} <br />
-          {"Create " + new Date(option.createTime).toLocaleString("en-US")}
+          {"Updated " + new Date(option.updateTime).toLocaleString("en-US")}
         </div>
       </div>
     );

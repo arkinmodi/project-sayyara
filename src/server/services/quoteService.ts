@@ -1,5 +1,5 @@
 import exclude from "@server/common/excludeField";
-import { prisma } from "@server/db/client";
+import { prisma, QuoteStatus } from "@server/db/client";
 import { z } from "zod";
 
 export const createQuoteSchema = z.object({
@@ -68,4 +68,28 @@ export const deleteQuoteAndChatById = async (id: string) => {
   });
   const deleteQuote = prisma.quote.delete({ where: { id } });
   await prisma.$transaction([deleteChatMessages, deleteQuote]);
+};
+
+export const updateQuoteSchema = z.object({
+  description: z.string().optional(),
+  estimated_price: z.number().optional(), //float
+  duration: z.number().optional(), // float
+  status: z.nativeEnum(QuoteStatus).optional(), // enum of Quote status
+});
+export type UpdateQuoteType = z.infer<typeof updateQuoteSchema>;
+
+export const updateQuoteById = async (id: string, patch: UpdateQuoteType) => {
+  const quote = await getQuoteById(id);
+  if (!quote) return Promise.reject("Quote not found.");
+
+  return await prisma.quote.update({
+    where: { id },
+    data: {
+      description: patch.description,
+      estimated_price: patch.estimated_price,
+      duration: patch.duration,
+      status: patch.status,
+    },
+    include: { service: true, customer: true, shop: true },
+  });
 };

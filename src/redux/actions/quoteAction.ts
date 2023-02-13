@@ -51,7 +51,7 @@ export interface IQuoteActionInviteUpdateState extends IQuoteActionBase {
     quoteId: string;
     price: number;
     duration: number;
-    descripion: string;
+    description: string;
   };
 }
 

@@ -1,3 +1,4 @@
+import { QuoteStatus } from "@prisma/client";
 import { ICustomer } from "./customer";
 import { IService } from "./service";
 import { IShop } from "./shop";
@@ -33,6 +34,7 @@ export interface IQuote {
   service: IService;
   createTime: Date;
   updateTime: Date;
+  status: QuoteStatus;
   price?: number;
   duration?: number;
   messageList: IMessage[] | [];
