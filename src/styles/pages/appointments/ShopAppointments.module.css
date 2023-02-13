@@ -85,7 +85,8 @@
 }
 
 .grayText {
-  color: gray;
+  color: #a3a3a3;
+  cursor: pointer;
 }
 
 .grayText:hover {
