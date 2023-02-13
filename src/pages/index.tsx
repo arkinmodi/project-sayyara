@@ -18,7 +18,7 @@ import { IShop } from "src/types/shop";
 import { getFilteredShops } from "src/utils/shopUtil";
 import styles from "../styles/Home.module.css";
 
-const MAX_CHIP_MOBILE = 2;
+const MAX_CHIP_MOBILE = 0;
 const MAX_CHIP = 3;
 const filterByPartType = ["OEM", "AFTERMARKET"];
 const filterByPartCondition = ["NEW", "USED"];
@@ -269,14 +269,14 @@ const Home: NextPage = () => {
           label="See Full List"
         />
       );
-    } else {
-      serviceList.push(
-        <Chip
-          key={`${view}SeeFullListChip`}
-          className={styles.fullListChip}
-          label="..."
-        />
-      );
+      // } else {
+      // serviceList.push(
+      //   <Chip
+      //     key={`${view}SeeFullListChip`}
+      //     className={styles.fullListChip}
+      //     label="..."
+      //   />
+      // );
     }
 
     return serviceList;
