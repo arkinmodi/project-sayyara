@@ -14,7 +14,7 @@ import {
 import { QuoteSelectors } from "src/redux/selectors/quoteSelectors";
 import { IQuote } from "src/types/quotes";
 
-const FETCH_INTERVAL = 15 * 1000;
+const FETCH_INTERVAL = 15 * 1000; // Fetch every 15 seconds
 
 const Conversations = () => {
   const userType = useSelector(AuthSelectors.getUserType);
@@ -30,6 +30,7 @@ const Conversations = () => {
       } else if (userType !== null) {
         dispatch(getShopQuotes());
       }
+
       console.log("fetch");
     }
     getQuotes();
