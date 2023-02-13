@@ -5,7 +5,11 @@ import {
   setIsLoggedIn,
   setUserSession,
 } from "@redux/actions/authActions";
-import { getCustomerQuotes, getShopQuotes } from "@redux/actions/quoteAction";
+import {
+  getCustomerQuotes,
+  getShopQuotes,
+  setSelectedChat,
+} from "@redux/actions/quoteAction";
 import { setShopState } from "@redux/actions/shopActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import { initialShopState } from "@redux/state/shop/shopState";
@@ -37,6 +41,8 @@ const Header = () => {
       dispatch(getCustomerQuotes());
     } else if (userType !== null) {
       dispatch(getShopQuotes());
+    } else {
+      dispatch(setSelectedChat({ id: null }));
     }
   }, [userType]);
 
