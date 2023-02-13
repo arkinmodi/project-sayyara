@@ -85,19 +85,6 @@ const ChatTitle = (props: IChatTitleProps) => {
     }
   }, [selectedChatId, customerAppointments]);
 
-  useEffect(() => {
-    // On render check if user is customer and has a invitation for the quote
-    if (selectedChatId) {
-      const selectedChat: IQuote = quotes[selectedChatId]!;
-      if (
-        selectedChat.status === QuoteStatus.INVITED &&
-        userType === UserType.CUSTOMER
-      ) {
-        setInvitationIsOpen(true);
-      }
-    }
-  }, [selectedChatId, userType]);
-
   const onHide = () => {
     setPrice(0);
     setTime(0);
@@ -224,6 +211,18 @@ const ChatTitle = (props: IChatTitleProps) => {
   const toggleMenu = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (menu.current) {
       menu.current.toggle(e);
+    }
+  };
+
+  const openScheduleDialog = () => {
+    if (selectedChatId) {
+      const selectedChat: IQuote = quotes[selectedChatId]!;
+      if (
+        selectedChat.status === QuoteStatus.INVITED &&
+        userType === UserType.CUSTOMER
+      ) {
+        setInvitationIsOpen(true);
+      }
     }
   };
 
@@ -362,18 +361,22 @@ const ChatTitle = (props: IChatTitleProps) => {
         <div className={styles.inviteDiv}>
           <Menu model={items} popup ref={menu} id="invite menu" />
           <Button
-            className={classnames("blueButton", styles.inviteButton)}
-            icon="pi pi-ellipsis-v"
+            className={classnames("greenButton", styles.inviteButton)}
+            icon={
+              userType === UserType.CUSTOMER
+                ? "pi pi-calendar-plus"
+                : "pi pi-ellipsis-v"
+            }
             visible={
-              (userType === UserType.SHOP_OWNER ||
+              ((userType === UserType.SHOP_OWNER ||
                 userType === UserType.EMPLOYEE) &&
-              selectedChat.status === QuoteStatus.IN_PROGRESS
+                selectedChat.status === QuoteStatus.IN_PROGRESS) ||
+              (userType === UserType.CUSTOMER &&
+                selectedChat.status === QuoteStatus.INVITED)
             }
-            disabled={
-              userType === UserType.CUSTOMER ||
-              selectedChat.status !== QuoteStatus.IN_PROGRESS
+            onClick={
+              userType === UserType.CUSTOMER ? openScheduleDialog : toggleMenu
             }
-            onClick={toggleMenu}
           />
         </div>
       </>
