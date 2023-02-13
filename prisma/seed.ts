@@ -1,19 +1,54 @@
-import { PrismaClient } from "@prisma/client";
+import { AppointmentStatus, PrismaClient, ServiceType } from "@prisma/client";
 import bcrypt from "bcrypt";
-
 var md5 = require("md5-hash");
 
+import customerA from "./seedData/customerA.json";
+import customerB from "./seedData/customerB.json";
+
+import shopOwnerA from "./seedData/shopOwnerA.json";
+import shopOwnerB from "./seedData/shopOwnerB.json";
+import shopOwnerC from "./seedData/shopOwnerC.json";
+import shopOwnerD from "./seedData/shopOwnerD.json";
+import shopOwnerE from "./seedData/shopOwnerE.json";
+import shopOwnerF from "./seedData/shopOwnerF.json";
+import shopOwnerG from "./seedData/shopOwnerG.json";
+import shopOwnerH from "./seedData/shopOwnerH.json";
+import shopOwnerI from "./seedData/shopOwnerI.json";
+import shopOwnerJ from "./seedData/shopOwnerJ.json";
+
+import employeeA from "./seedData/employeeA.json";
+import employeeB from "./seedData/employeeB.json";
+import employeeC from "./seedData/employeeC.json";
+import employeeD from "./seedData/employeeD.json";
+import employeeE from "./seedData/employeeE.json";
+
+import customerAppointments from "./seedData/customerAppointments.json";
+import shopAppointments from "./seedData/shopAppointments.json";
+
+const customerSeedData = [customerA, customerB];
+
+const shopOwnerSeedData = [
+  shopOwnerA,
+  shopOwnerB,
+  shopOwnerC,
+  shopOwnerD,
+  shopOwnerE,
+  shopOwnerF,
+  shopOwnerG,
+  shopOwnerH,
+  shopOwnerI,
+  shopOwnerJ,
+];
+
+const employeeSeedData = [
+  employeeA,
+  employeeB,
+  employeeC,
+  employeeD,
+  employeeE,
+];
+
 const prisma = new PrismaClient();
-
-const shopOwnerCredentials = {
-  email: "shopOwner@sayyara.com",
-  password: "password",
-};
-
-const customerCredentials = {
-  email: "customer@sayyara.com",
-  password: "password",
-};
 
 const clearDatabase = async () => {
   await prisma.$transaction([
@@ -34,108 +69,161 @@ const md5Hash = (plaintext: string) => md5.default(plaintext);
 const seed = async () => {
   await clearDatabase();
 
-  // Create Shop Owner
-  const shopOwnerData = await prisma.employee.create({
-    data: {
-      email: shopOwnerCredentials.email,
-      password: bcryptHash(md5Hash(shopOwnerCredentials.password)),
-      first_name: "John",
-      last_name: "Stone",
-      phone_number: "9055259140",
-      type: "SHOP_OWNER",
-      shop: {
-        create: {
-          name: "Sayyara",
-          address: "1280 Main Street West",
-          phone_number: "9055259140",
-          email: "example@sayyara.com",
-          postal_code: "L8S 4L8",
-          city: "Hamilton",
-          province: "Ontario",
+  // Create Shop Owners
+  const shopIds: string[] = [];
+  for (const seedData of shopOwnerSeedData) {
+    const data = await prisma.employee.create({
+      data: {
+        email: seedData.shopOwner.email,
+        password: bcryptHash(md5Hash(seedData.shopOwner.password)),
+        first_name: seedData.shopOwner.firstName,
+        last_name: seedData.shopOwner.lastName,
+        phone_number: seedData.shopOwner.phoneNumber,
+        type: "SHOP_OWNER",
+        shop: {
+          create: {
+            name: seedData.shop.name,
+            address: seedData.shop.address,
+            phone_number: seedData.shop.phoneNumber,
+            email: seedData.shop.email,
+            postal_code: seedData.shop.postalCode,
+            city: seedData.shop.city,
+            province: seedData.shop.province,
+            hours_of_operation: seedData.shop.hoursOfOperation,
+          },
         },
       },
-    },
-  });
+    });
+    shopIds.push(data.shop_id);
+  }
+
+  // Add Employees to First Shop
+  for (const seedData of employeeSeedData) {
+    await prisma.employee.create({
+      data: {
+        email: seedData.employee.email,
+        password: bcryptHash(md5Hash(seedData.employee.password)),
+        first_name: seedData.employee.firstName,
+        last_name: seedData.employee.lastName,
+        phone_number: seedData.employee.phoneNumber,
+        type: "EMPLOYEE",
+        shop: { connect: { id: shopIds[0] } },
+      },
+    });
+  }
 
   // Create Customer and Vehicle
-  const customerData = await prisma.customer.create({
-    data: {
-      email: customerCredentials.email,
-      password: bcryptHash(md5Hash(customerCredentials.password)),
-      first_name: "Mia",
-      last_name: "Wong",
-      phone_number: "9055259140",
-      type: "CUSTOMER",
-      vehicles: {
-        create: [
-          {
-            year: 2013,
-            make: "Toyota",
-            model: "4Runner",
-            vin: "JF2SHADC3DG417185",
-            license_plate: "BPNW958",
-          },
-        ],
+  const customerIds: { customerId: string; vehicleId: string }[] = [];
+  for (const seedData of customerSeedData) {
+    const data = await prisma.customer.create({
+      data: {
+        email: seedData.customer.email,
+        password: bcryptHash(md5Hash(seedData.customer.password)),
+        first_name: seedData.customer.firstName,
+        last_name: seedData.customer.lastName,
+        phone_number: seedData.customer.phoneNumber,
+        type: "CUSTOMER",
+        vehicles: {
+          create: [
+            {
+              year: seedData.vehicle.year,
+              make: seedData.vehicle.make,
+              model: seedData.vehicle.model,
+              vin: seedData.vehicle.vin,
+              license_plate: seedData.vehicle.licensePlate,
+            },
+          ],
+        },
       },
-    },
-    include: {
-      vehicles: true,
-    },
-  });
+      include: {
+        vehicles: true,
+      },
+    });
+    customerIds.push({ customerId: data.id, vehicleId: data.vehicles[0]!.id });
+  }
 
   // Create Service
-  const serviceData = await prisma.service.create({
-    data: {
-      name: "Oil Change",
-      description: "Change the engine oil",
-      estimated_time: 2,
-      total_price: 30.55,
-      parts: [
-        {
-          quantity: 1,
-          condition: "NEW",
-          build: "OEM",
-          cost: 10.0,
-          name: "Engine Oil",
+  const serviceIds: { id: string; name: string }[] = [];
+  for (let i = 0; i < shopOwnerSeedData.length; i++) {
+    const seedData = shopOwnerSeedData[i]!;
+    const shopId = shopIds[i]!;
+    for (const serviceSeedData of seedData.services) {
+      const data = await prisma.service.create({
+        data: {
+          name: serviceSeedData.name,
+          description: serviceSeedData.description,
+          estimated_time: serviceSeedData.estimatedTime,
+          total_price: serviceSeedData.price,
+          parts: serviceSeedData.parts,
+          type: serviceSeedData.type as ServiceType,
+          shop: { connect: { id: shopId } },
         },
-      ],
-      type: "CANNED",
-      shop: { connect: { id: shopOwnerData.shop_id } },
-    },
-  });
+      });
+      serviceIds.push({ id: data.id, name: data.name });
+    }
+  }
 
   // Create Appointment and Work Order
-  const appointmentData = await prisma.appointment.create({
-    data: {
-      start_time: new Date("2023-11-09T02:00:00.000Z"),
-      end_time: new Date("2023-11-09T04:00:00.000Z"),
-      price: 30.55,
-      vehicle: { connect: { id: customerData.vehicles[0]?.id } },
-      customer: { connect: { id: customerData.id } },
-      shop: { connect: { id: shopOwnerData.shop_id } },
-      service: { connect: { id: serviceData.id } },
-      work_order: {
-        create: {
-          create_time: new Date(),
-          update_time: new Date(),
-          title: "Oil Change",
-          body: "",
-          customer: { connect: { id: customerData.id } },
-          vehicle: { connect: { id: customerData.vehicles[0]?.id } },
-          shop: { connect: { id: shopOwnerData.shop_id } },
+  for (const seedData of customerAppointments) {
+    await prisma.appointment.create({
+      data: {
+        start_time: new Date(seedData.start_time),
+        end_time: new Date(seedData.end_time),
+        price: seedData.price,
+        status: seedData.status as AppointmentStatus,
+        vehicle: { connect: { id: customerIds[0]?.vehicleId } },
+        customer: { connect: { id: customerIds[0]?.customerId } },
+        shop: { connect: { id: shopIds[0] } },
+        service: { connect: { id: serviceIds[0]?.id } },
+        work_order: {
+          create: {
+            create_time: new Date(),
+            update_time: new Date(),
+            title: serviceIds[0]!.name,
+            body: "",
+            customer: { connect: { id: customerIds[0]?.customerId } },
+            vehicle: { connect: { id: customerIds[0]?.vehicleId } },
+            shop: { connect: { id: shopIds[0] } },
+          },
         },
       },
-    },
-  });
+    });
+  }
 
-  // Log all IDs
-  console.log("Shop Owner ID: \t", shopOwnerData.id);
-  console.log("Shop ID: \t", shopOwnerData.shop_id);
-  console.log("Customer ID: \t", customerData.id);
-  console.log("Vehicle ID: \t", customerData.vehicles[0]?.id);
-  console.log("Service ID: \t", serviceData.id);
-  console.log("Appointment ID: ", appointmentData.id);
-  console.log("Work Order ID: \t", appointmentData.work_order_id);
+  for (const seedData of shopAppointments) {
+    await prisma.appointment.create({
+      data: {
+        start_time: new Date(seedData.start_time),
+        end_time: new Date(seedData.end_time),
+        price: seedData.price,
+        status: seedData.status as AppointmentStatus,
+        vehicle: { connect: { id: customerIds[1]?.vehicleId } },
+        customer: { connect: { id: customerIds[1]?.customerId } },
+        shop: { connect: { id: shopIds[0] } },
+        service: { connect: { id: serviceIds[0]?.id } },
+        work_order: {
+          create: {
+            create_time: new Date(),
+            update_time: new Date(),
+            title: serviceIds[0]!.name,
+            body: "",
+            customer: { connect: { id: customerIds[1]?.customerId } },
+            vehicle: { connect: { id: customerIds[1]?.vehicleId } },
+            shop: { connect: { id: shopIds[0] } },
+          },
+        },
+      },
+    });
+  }
+
+  console.log(
+    "\nShop Owner Credentials: \t",
+    `${shopOwnerA.shopOwner.email} / ${shopOwnerA.shopOwner.password}`
+  );
+  console.log(
+    "Customer Credentials: \t\t",
+    `${customerA.customer.email} / ${customerA.customer.password}`
+  );
 };
 
 seed()

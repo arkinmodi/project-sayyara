@@ -1,4 +1,3 @@
-import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import { Service, ServiceType } from "@server/db/client";
 import {
   getCannedServicesByShopId,
@@ -19,12 +18,6 @@ const serviceByShopIdHandler = async (
 
   if (type !== undefined && (typeof type === "string" || type.length > 1)) {
     res.status(400).json({ message: "Invalid Service Type." });
-    return;
-  }
-
-  const session = await getServerAuthSession({ req, res });
-  if (!session) {
-    res.status(403).json({ message: "Forbidden." });
     return;
   }
 

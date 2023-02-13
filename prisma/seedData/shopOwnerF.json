@@ -1,0 +1,96 @@
+{
+  "shopOwner": {
+    "email": "shop_f@sayyara.com",
+    "password": "password",
+    "firstName": "Matthew",
+    "lastName": "Wilson",
+    "phoneNumber": "(613) 555-0191"
+  },
+  "shop": {
+    "name": "Precision Auto Services",
+    "address": "101 Market Street",
+    "phoneNumber": "(613) 555-0191",
+    "email": "shop_f@sayyara.com",
+    "postalCode": "V6B 2P7",
+    "city": "Vancouver",
+    "province": "British Columbia",
+    "hoursOfOperation": {
+      "monday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "tuesday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "wednesday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "thursday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "friday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "saturday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      },
+      "sunday": {
+        "isOpen": true,
+        "openTime": "1970-01-01T14:00:00Z",
+        "closeTime": "1970-01-01T22:00:00Z"
+      }
+    }
+  },
+  "services": [
+    {
+      "name": "Oil Change",
+      "description": "",
+      "parts": [
+        {
+          "cost": 45,
+          "name": "Engine Oil",
+          "build": "AFTERMARKET",
+          "quantity": 1,
+          "condition": "NEW"
+        },
+        {
+          "cost": 10,
+          "name": "Oil filter",
+          "build": "OEM",
+          "quantity": 1,
+          "condition": "NEW"
+        }
+      ],
+      "price": 100,
+      "estimatedTime": 1,
+      "type": "CANNED"
+    },
+    {
+      "name": "Battery Change",
+      "description": "New battery",
+      "parts": [{ "build": "AFTERMARKET", "condition": "NEW" }],
+      "price": 0,
+      "estimatedTime": 0,
+      "type": "CUSTOM"
+    },
+    {
+      "name": "Power Window Switch Replacement",
+      "description": "New window switch",
+      "parts": [{ "build": "OEM", "condition": "USED" }],
+      "price": 0,
+      "estimatedTime": 0,
+      "type": "CUSTOM"
+    }
+  ]
+}

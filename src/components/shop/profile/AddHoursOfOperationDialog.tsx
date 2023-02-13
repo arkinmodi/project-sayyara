@@ -165,6 +165,7 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
    * We need this state change listener because React does not re-render the DOM after change in object (or non-primitive) state values
    */
   const [validationUpdateListener, setValidationUpdateListener] = useState(0);
+  const [formUpdateListener, setFormUpdateListener] = useState(0);
 
   useEffect(() => {
     if (shop.hoursOfOperation != null) {
@@ -209,9 +210,12 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
     }
   }, [shop]);
 
+  useEffect(() => {}, [formUpdateListener]);
+
   const renderDayForm = (
     d: string,
-    operatingTimeValid: IOperatingTimeValid
+    operatingTimeValid: IOperatingTimeValid,
+    formValues: IFormValues
   ) => {
     const day = d as keyof IShopHoursOfOperation;
     return (
@@ -286,6 +290,8 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
     setFormValues((formValues) => {
       return Object.assign(formValues, updatedFormValues);
     });
+
+    setFormUpdateListener((formUpdateListener + 1) % 2);
   };
 
   const handleCloseTimeInputChange = (e: CalendarChangeParams, d: string) => {
@@ -300,6 +306,8 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
     setFormValues((formValues) => {
       return Object.assign(formValues, updatedFormValues);
     });
+
+    setFormUpdateListener((formUpdateListener + 1) % 2);
   };
 
   const validateInputs = () => {
@@ -313,18 +321,8 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
          * String comparison of time should work here as timezone is restricted to UTC with precision 0.
          * See hoursOfOperationSchema for more details.
          */
-        formValues[day as keyof IFormValues].openTime.toLocaleTimeString(
-          "en-US",
-          { hour: "numeric", minute: "numeric", hour12: false }
-        ) >
-        formValues[day as keyof IFormValues].closeTime.toLocaleTimeString(
-          "en-US",
-          {
-            hour: "numeric",
-            minute: "numeric",
-            hour12: false,
-          }
-        )
+        formValues[day as keyof IFormValues].openTime.toTimeString() >
+        formValues[day as keyof IFormValues].closeTime.toTimeString()
       ) {
         updatedOperatingTimeValid[day as keyof IOperatingTimeValid] = false;
       } else {
@@ -409,7 +407,7 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
           Edit Hours of Operation
         </div>
         {Object.keys(formValues).map((day) =>
-          renderDayForm(day, operatingTimeValid)
+          renderDayForm(day, operatingTimeValid, formValues)
         )}
         <Button
           className={styles.submitHoursOfOperationButton}

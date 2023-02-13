@@ -11,12 +11,13 @@ import { AppointmentStatus, IAppointment } from "../../../types/appointment";
 interface IAppointmentCardProps {
   appointment: IAppointment;
   appointmentProgress: AppointmentStatus;
+  showToast: (status: AppointmentStatus) => void;
 }
 
 const AppointmentCard = (props: IAppointmentCardProps) => {
   const dispatch = useDispatch();
 
-  const { appointment, appointmentProgress } = props;
+  const { appointment, appointmentProgress, showToast } = props;
 
   const handleButtonClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -24,6 +25,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     status: AppointmentStatus
   ): void => {
     e.stopPropagation();
+    showToast(status);
     dispatch(setAppointmentStatus({ id: appointment.id, status: status }));
   };
 

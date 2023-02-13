@@ -1,0 +1,9 @@
+{
+  "employee": {
+    "email": "employee_e@sayyara.com",
+    "password": "password",
+    "firstName": "Elizabeth",
+    "lastName": "Martinez",
+    "phoneNumber": "(604) 321-0987"
+  }
+}
