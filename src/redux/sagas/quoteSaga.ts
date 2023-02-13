@@ -4,6 +4,7 @@ import {
   IQuoteActionCreateQuote,
   IQuoteActionGetCustomerQuotes,
   IQuoteActionGetShopQuotes,
+  IQuoteActionInviteCustomer,
 } from "@redux/actions/quoteAction";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import QuoteTypes from "@redux/types/quoteTypes";
@@ -247,11 +248,16 @@ function* createMessage(
   }
 }
 
+function* inviteCustomer(
+  action: IQuoteActionInviteCustomer
+): Generator<CallEffect | PutEffect> {}
+
 export function* quoteSaga() {
   yield all([
     takeEvery(QuoteTypes.GET_CUSTOMER_QUOTES, getCustomerQuotes),
     takeEvery(QuoteTypes.GET_SHOP_QUOTES, getShopQuotes),
     takeEvery(QuoteTypes.CREATE_QUOTE, createQuote),
     takeEvery(QuoteTypes.CREATE_MESSAGE, createMessage),
+    takeEvery(QuoteTypes.INVITE_CUSTOMER, inviteCustomer),
   ]);
 }

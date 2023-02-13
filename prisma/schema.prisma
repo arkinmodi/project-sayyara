@@ -92,6 +92,7 @@ model Quote {
   status          QuoteStatus @default(IN_PROGRESS)
   estimated_price Float?
   duration        Float?
+  description     String?
 
   customer      Customer      @relation(fields: [customer_id], references: [id])
   shop          Shop          @relation(fields: [shop_id], references: [id])

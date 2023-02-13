@@ -7,10 +7,59 @@
   margin-bottom: 20px;
 }
 
+.image {
+  min-width: fit-content;
+}
+
 .span {
   margin-left: 2rem;
   align-items: center;
   display: flex;
   font-size: large;
   font-weight: bold;
+  min-width: fit-content;
+}
+
+.inviteDiv {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding-right: 1rem;
+}
+
+.inviteButton {
+  padding: 0;
+  margin: 1rem;
+}
+
+.dialog {
+  width: 80vw;
+}
+
+.dialogInputCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.dialogInputRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media (min-width: 1001px) {
+  .fill {
+    flex-basis: 40%;
+  }
+
+  .maxWidth {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .dialogInputRow {
+    flex-direction: column;
+    align-self: center;
+  }
 }

@@ -14,6 +14,8 @@ import {
 import { QuoteSelectors } from "src/redux/selectors/quoteSelectors";
 import { IQuote } from "src/types/quotes";
 
+const FETCH_INTERVAL = 15 * 1000;
+
 const Conversations = () => {
   const userType = useSelector(AuthSelectors.getUserType);
   const dispatch = useDispatch();
@@ -22,11 +24,16 @@ const Conversations = () => {
   const [quotes, setQuotes] = useState<IQuote[]>([]);
 
   useEffect(() => {
-    if (userType === UserType.CUSTOMER) {
-      dispatch(getCustomerQuotes());
-    } else {
-      dispatch(getShopQuotes());
+    async function getQuotes() {
+      if (userType === UserType.CUSTOMER) {
+        dispatch(getCustomerQuotes());
+      } else if (userType !== null) {
+        dispatch(getShopQuotes());
+      }
+      console.log("fetch");
     }
+    getQuotes();
+    setInterval(getQuotes, FETCH_INTERVAL);
   }, [dispatch, userType]);
 
   const selectedChat = useSelector(QuoteSelectors.getActiveChat);

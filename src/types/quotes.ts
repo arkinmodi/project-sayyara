@@ -33,5 +33,7 @@ export interface IQuote {
   service: IService;
   createTime: Date;
   updateTime: Date;
+  price?: number;
+  duration?: number;
   messageList: IMessage[] | [];
 }

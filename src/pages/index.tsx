@@ -22,7 +22,7 @@ const MAX_CHIP_MOBILE = 2;
 const MAX_CHIP = 3;
 const filterByPartType = ["OEM", "AFTERMARKET"];
 const filterByPartCondition = ["NEW", "USED"];
-const searchFilterList = ["Service", "Shop Name"];
+const searchFilterList: string[] = ["Service", "Shop Name"];
 
 const Home: NextPage = () => {
   const [selectedTypeFilters, setSelectedTypeFilters] = useState<string[]>([]);
@@ -32,11 +32,11 @@ const Home: NextPage = () => {
   const [locationRange, setLocationRange] = useState<[number, number]>([1, 50]);
 
   const [searchString, setSearchString] = useState("");
+  const [searchFilter, setSearchFilter] = useState(searchFilterList[0]);
   const [lastSearch, setLastSearch] = useState<[string, string]>([
     "",
-    "Service",
+    searchFilterList[0] as string,
   ]);
-  const [searchFilter, setSearchFilter] = useState(searchFilterList[0]);
 
   const [shops, setShops] = useState<(IShop & { services: IService[] })[]>([]);
 
@@ -153,11 +153,30 @@ const Home: NextPage = () => {
     return false;
   };
 
-  const onSearch = (str: string, filter: string) => {
-    // Fetch via search parameters
-    if (filter) {
-      setLastSearch([str, filter]);
+  useEffect(() => {
+    onSearch("checkbox");
+  }, [selectedTypeFilters, selectedConditionFilters]);
 
+  const onSearch = (from: string) => {
+    // Two scenarios:
+    // 1. Input from search bar & search filter, on button press
+    // 2. Immediately after a checkbox change, use previous search values
+    let str, filter;
+    if (from === "button" && searchFilter) {
+      setLastSearch([searchString, searchFilter]);
+      str = searchString;
+      filter = searchFilter;
+    } else if (from === "checkbox") {
+      str = lastSearch[0];
+      filter = lastSearch[1];
+
+      // Reset search string to last query
+      setSearchString(str);
+      setSearchFilter(filter);
+    }
+
+    // Fetch via search parameters
+    if (typeof str === "string" && typeof filter === "string") {
       if (str !== "") {
         switch (filter) {
           case "Service":
@@ -197,12 +216,6 @@ const Home: NextPage = () => {
       }
     }
   };
-
-  useEffect(() => {
-    setSearchString(lastSearch[0]);
-    setSearchFilter(lastSearch[1]);
-    onSearch(lastSearch[0], lastSearch[1]);
-  }, [selectedTypeFilters, selectedConditionFilters]);
 
   const shopOnClick = (shop: IShop & { services: IService[] }) => {
     Router.push(`/shop/${shop.id}`);
@@ -439,7 +452,7 @@ const Home: NextPage = () => {
             <Button
               className={styles.searchButton}
               label="Search"
-              onClick={() => onSearch(searchString, searchFilter!)}
+              onClick={() => onSearch("button")}
             />
           </div>
           <div className={classNames(styles.search, styles.mobileSearch)}>
@@ -459,7 +472,7 @@ const Home: NextPage = () => {
             <Button
               className={styles.searchButton}
               label="Search"
-              onClick={() => onSearch(searchString, searchFilter!)}
+              onClick={() => onSearch("button")}
             />
           </div>
           <DataView

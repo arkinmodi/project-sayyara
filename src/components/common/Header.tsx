@@ -35,7 +35,7 @@ const Header = () => {
     if (userType === UserType.CUSTOMER) {
       dispatch(readCustomerVehicleInfo());
       dispatch(getCustomerQuotes());
-    } else {
+    } else if (userType !== null) {
       dispatch(getShopQuotes());
     }
   }, [userType]);
