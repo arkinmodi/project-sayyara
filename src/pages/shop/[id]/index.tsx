@@ -194,6 +194,9 @@ const Profile: NextPage = () => {
           onClick={() => {
             setRequestServiceDialogVisible(true);
           }}
+          style={{
+            display: userType === UserType.CUSTOMER ? "inline-flex" : "none",
+          }}
         >
           {userType === null ? "Login to Request Service" : "Request Service"}
         </Button>
