@@ -123,7 +123,7 @@ const CustomerAppointments = () => {
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
-  }, []);
+  }, [handleResize]);
 
   useEffect(() => {
     const appointmentValues = Object.values(appointments);

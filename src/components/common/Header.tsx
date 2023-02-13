@@ -5,6 +5,11 @@ import {
   setIsLoggedIn,
   setUserSession,
 } from "@redux/actions/authActions";
+import {
+  getCustomerQuotes,
+  getShopQuotes,
+  setSelectedChat,
+} from "@redux/actions/quoteAction";
 import { setShopState } from "@redux/actions/shopActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import { initialShopState } from "@redux/state/shop/shopState";
@@ -33,6 +38,11 @@ const Header = () => {
   useEffect(() => {
     if (userType === UserType.CUSTOMER) {
       dispatch(readCustomerVehicleInfo());
+      dispatch(getCustomerQuotes());
+    } else if (userType !== null) {
+      dispatch(getShopQuotes());
+    } else {
+      dispatch(setSelectedChat({ id: null }));
     }
   }, [userType]);
 

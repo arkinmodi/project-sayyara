@@ -10,6 +10,7 @@ import AppointmentCard from "./appointmentCard";
 
 interface IAppointmentsProps {
   appointmentTab: AppointmentStatus;
+  toggleActiveTab: () => void;
 }
 
 const ShopAppointments = (props: IAppointmentsProps) => {
@@ -17,7 +18,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
 
   const appointments = useSelector(ShopSelectors.getShopAppointments) ?? [];
 
-  const { appointmentTab } = props;
+  const { appointmentTab, toggleActiveTab } = props;
 
   const [appointmentsMap, setAppointmentsMap] = useState<{
     [key: string]: Array<IAppointment>;
@@ -103,6 +104,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
             appointment={appointment}
             appointmentProgress={appointmentTab}
             showToast={showToast}
+            toggleActiveTab={toggleActiveTab}
           />
         );
       });

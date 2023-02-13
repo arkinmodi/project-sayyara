@@ -1,0 +1,16 @@
+.chatItem {
+  display: flex;
+}
+
+.h4 {
+  color: #436188;
+  margin: 0px;
+}
+
+.service {
+  color: rgb(60, 60, 60);
+}
+
+.listBox {
+  height: 37rem;
+}

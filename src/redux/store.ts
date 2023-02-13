@@ -2,8 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Context, createWrapper } from "next-redux-wrapper";
 import { Store } from "redux";
 import createSagaMiddleware, { Task } from "redux-saga";
+import { IQuotesState } from "src/types/quotes";
 import { rootReducer } from "./reducers/rootReducer";
 import { rootSaga } from "./sagas/rootSaga";
+import { initialQuoteState } from "./state/quoteState";
 import {
   IAppointmentsState,
   initialAppointmentsState,
@@ -22,12 +24,14 @@ interface SagaStore extends Store {
 export interface RootState {
   auth: IAuthState;
   appointments: IAppointmentsState;
+  quotes: IQuotesState;
   shop: IShopState;
 }
 
 const initialState = {
   auth: initialAuthState,
   appointments: initialAppointmentsState,
+  quotes: initialQuoteState,
   shop: initialShopState,
 };
 

@@ -1,8 +1,10 @@
 import { createAppointment } from "@redux/actions/appointmentAction";
+import { createQuote } from "@redux/actions/quoteAction";
 import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/components/shop/profile/appointment/RequestServiceDialog.module.css";
-import { default as classnames, default as classNames } from "classnames";
+import classnames from "classnames";
+import Router from "next/router";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
@@ -212,7 +214,11 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
         <div className={styles.dialogInputRow}>
           <div className={styles.maxWidth}>
             <p>Description</p>
-            <InputText value={form.description} className={styles.maxWidth} />
+            <InputText
+              disabled={true}
+              value={form.description}
+              className={styles.maxWidth}
+            />
           </div>
         </div>
       );
@@ -223,8 +229,20 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     // Two cases:
     // 1. Service is a CANNED service, immediately go to step 3 for appointment scheduling
     // 2. Service is a CUSTOM service, create a quote and move to quotes page
-    setAllowSubmit(false);
-    setStep(3);
+    if (typeof selectedService !== "string") {
+      if (selectedService.type === ServiceType.CANNED) {
+        setAllowSubmit(false);
+        setStep(3);
+      } else {
+        // CUSTOM Service, create quote
+        if (customerId) {
+          dispatch(
+            createQuote({ customerId, shopId, serviceId: selectedService.id })
+          );
+          Router.push("/dashboard/");
+        }
+      }
+    }
   };
 
   const onSubmitStepThree = () => {
@@ -267,7 +285,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
               optionLabel="name"
             />
             <Button
-              className={classNames(styles.dialogButton, "greenButton")}
+              className={classnames(styles.dialogButton, "greenButton")}
               disabled={selectedService === ""}
               onClick={onSubmitStepOne}
             >
@@ -323,7 +341,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
               >
                 <Button className="blueButton" label="Back" onClick={goBack} />
                 <Button
-                  className={classNames(styles.dialogButton, "greenButton")}
+                  className={classnames(styles.dialogButton, "greenButton")}
                   label={displayButtonText()}
                   onClick={onSubmitStepTwo}
                 />
@@ -348,7 +366,7 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
               >
                 <Button className="blueButton" label="Back" onClick={goBack} />
                 <Button
-                  className={classNames(styles.dialogButton, "greenButton")}
+                  className={classnames(styles.dialogButton, "greenButton")}
                   label={displayButtonText()}
                   disabled={!allowSubmit}
                   onClick={onSubmitStepThree}

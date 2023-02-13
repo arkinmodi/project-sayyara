@@ -1,0 +1,47 @@
+.chat {
+  flex: 0 1 65%;
+}
+
+.chatForm {
+  position: absolute;
+  bottom: 0;
+  width: 65%;
+}
+
+.container {
+  display: flex;
+  position: relative;
+}
+
+.conversationList {
+  flex: 0 1 35%;
+}
+
+.h2 {
+  color: #436188;
+  margin: 0px;
+}
+
+.hr {
+  height: 3px;
+  background-color: #436188;
+}
+
+.mobileView {
+  display: none;
+}
+
+@media (max-width: 1000px) {
+  .mobileView {
+    display: block;
+  }
+
+  .desktopView {
+    display: none;
+  }
+
+  .chatForm {
+    position: relative;
+    width: 100%;
+  }
+}

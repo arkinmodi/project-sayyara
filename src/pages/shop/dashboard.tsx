@@ -1,4 +1,5 @@
 import AppointmentsTabs from "@components/appointments/shop/appointmentsTabs";
+import QuotesShell from "@components/quotes/shell";
 import { UserType } from "@prisma/client";
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import { GetServerSideProps, NextPage } from "next";
@@ -26,6 +27,9 @@ const ShopDashboard: NextPage = () => {
     setActiveIndex(e.index);
   };
 
+  const toggleActiveTab = () => {
+    setActiveIndex((activeIndex + 1) % 2);
+  };
   return (
     <div>
       <Head>
@@ -34,9 +38,11 @@ const ShopDashboard: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <TabView activeIndex={activeIndex} onTabChange={handleTabChange}>
-        <TabPanel header="Quotes"></TabPanel>
+        <TabPanel header="Quotes">
+          <QuotesShell />
+        </TabPanel>
         <TabPanel header="Service Requests">
-          <AppointmentsTabs />
+          <AppointmentsTabs toggleActiveTab={toggleActiveTab} />
         </TabPanel>
       </TabView>
     </div>

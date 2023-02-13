@@ -88,6 +88,10 @@
   color: gray;
 }
 
+.grayText:hover {
+  color: #3a3b3c;
+}
+
 .appointmentCard {
   border-style: solid;
   border-color: lightgray;
