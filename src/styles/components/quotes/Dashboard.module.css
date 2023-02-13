@@ -26,3 +26,22 @@
   height: 3px;
   background-color: #436188;
 }
+
+.mobileView {
+  display: none;
+}
+
+@media (max-width: 1000px) {
+  .mobileView {
+    display: block;
+  }
+
+  .desktopView {
+    display: none;
+  }
+
+  .chatForm {
+    position: relative;
+    width: 100%;
+  }
+}

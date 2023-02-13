@@ -55,3 +55,9 @@
   border: 1px solid #69ad96;
   border-radius: 14px 14px 0 14px;
 }
+
+@media (max-width: 1000px) {
+  .messageList {
+    height: 400px;
+  }
+}

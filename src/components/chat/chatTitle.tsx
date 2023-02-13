@@ -24,20 +24,12 @@ import { IQuote, IQuoteList } from "src/types/quotes";
 import { IAvailabilitiesTime } from "src/types/shop";
 import { getAvailabilities } from "src/utils/shopUtil";
 
-interface ICreateAppointmentForm {
-  vehicleId: string;
-  year: number | string;
-  make: string;
-  model: string;
-  service: string;
-  startTime: Date | undefined;
-  endTime: Date | undefined;
-  cost: number;
-  time: number;
-  description: string;
+interface IChatTitleProps {
+  prevPage: () => void;
 }
 
-const ChatTitle = () => {
+const ChatTitle = (props: IChatTitleProps) => {
+  const { prevPage } = props;
   const dispatch = useDispatch();
   let chatTitleContents = null;
 
@@ -335,6 +327,25 @@ const ChatTitle = () => {
     }
   };
 
+  const checkIfMobile = (selectedChat: IQuote, name: string) => {
+    return (
+      <>
+        <i
+          className={classnames("pi pi-angle-left", styles.mobileImage)}
+          onClick={prevPage}
+        ></i>
+        <Image
+          className={classnames(styles.image, styles.desktopImage)}
+          src={img}
+          alt={name}
+          // TODO Figure out height/width ratios
+          height={img.height * 0.25}
+          width={img.width * 0.4}
+        />
+      </>
+    );
+  };
+
   if (selectedChatId) {
     const selectedChat: IQuote = quotes[selectedChatId]!;
 
@@ -344,15 +355,8 @@ const ChatTitle = () => {
         : `${selectedChat.customer.first_name} - ${selectedChat.service.name}`;
     chatTitleContents = (
       <>
-        {/* Conversation image */}
-        <Image
-          className={styles.image}
-          src={img}
-          alt={name}
-          // TODO Figure out height/width ratios
-          height={img.height * 0.25}
-          width={img.width * 0.4}
-        />
+        {/* Conversation image or back button, if mobile*/}
+        {checkIfMobile(selectedChat, name)}
         {/* Conversation name */}
         <span className={styles.span}>{name}</span>
         <div className={styles.inviteDiv}>

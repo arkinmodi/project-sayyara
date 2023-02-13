@@ -51,6 +51,10 @@
   margin-top: 2rem;
 }
 
+.mobileImage {
+  display: none;
+}
+
 @media (min-width: 1001px) {
   .fill {
     flex-basis: 40%;
@@ -65,5 +69,35 @@
   .dialogInputRow {
     flex-direction: column;
     align-self: center;
+  }
+
+  .chatTitle {
+    padding: 0.5rem;
+  }
+
+  .span {
+    margin: 0;
+    font-size: medium;
+  }
+
+  .mobileImage {
+    align-self: center;
+    display: inline;
+    font-size: 2em;
+  }
+
+  .desktopImage {
+    display: none !important;
+  }
+
+  .inviteDiv {
+    padding-right: 0.5rem;
+    align-items: center;
+  }
+
+  .inviteButton {
+    margin: 0;
+    width: 1.5rem !important;
+    height: 2.2rem !important;
   }
 }

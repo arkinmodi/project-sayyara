@@ -153,10 +153,6 @@ const Home: NextPage = () => {
     return false;
   };
 
-  useEffect(() => {
-    onSearch("checkbox");
-  }, [selectedTypeFilters, selectedConditionFilters]);
-
   const onSearch = (from: string) => {
     // Two scenarios:
     // 1. Input from search bar & search filter, on button press
@@ -216,6 +212,10 @@ const Home: NextPage = () => {
       }
     }
   };
+
+  useEffect(() => {
+    onSearch("checkbox");
+  }, [selectedTypeFilters, selectedConditionFilters, onSearch]);
 
   const shopOnClick = (shop: IShop & { services: IService[] }) => {
     Router.push(`/shop/${shop.id}`);

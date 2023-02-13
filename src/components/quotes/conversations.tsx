@@ -16,7 +16,12 @@ import { IQuote } from "src/types/quotes";
 
 const FETCH_INTERVAL = 15 * 1000; // Fetch every 15 seconds
 
-const Conversations = () => {
+interface IConversationsProps {
+  nextPage: () => void;
+}
+
+const Conversations = (props: IConversationsProps) => {
+  const { nextPage } = props;
   const userType = useSelector(AuthSelectors.getUserType);
   const dispatch = useDispatch();
 
@@ -51,6 +56,9 @@ const Conversations = () => {
   // Sets the selected chat via redux
   const setChat = (chatId: string) => {
     dispatch(setSelectedChat({ id: chatId }));
+
+    // For mobile
+    nextPage();
   };
 
   const chatItem = (option: IQuote) => {
