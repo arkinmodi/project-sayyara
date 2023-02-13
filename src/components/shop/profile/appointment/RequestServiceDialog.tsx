@@ -214,7 +214,11 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
         <div className={styles.dialogInputRow}>
           <div className={styles.maxWidth}>
             <p>Description</p>
-            <InputText value={form.description} className={styles.maxWidth} />
+            <InputText
+              disabled={true}
+              value={form.description}
+              className={styles.maxWidth}
+            />
           </div>
         </div>
       );
