@@ -81,6 +81,7 @@ const quoteByIdHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       });
       if (quote) res.status(200).json(quote);
       break;
+
     default:
       res.status(405).json({ message: "Method not allowed." });
       break;

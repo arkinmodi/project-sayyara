@@ -42,6 +42,7 @@ const chatHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(400).json({ message: result.error.issues });
         return;
       }
+
       const newMessage = await createChatMessage(result.data, id).catch(
         (reason) => {
           if (reason === "Missing sender information.") res.status(400);
@@ -50,9 +51,7 @@ const chatHandler = async (req: NextApiRequest, res: NextApiResponse) => {
           return null;
         }
       );
-      if (newMessage) {
-        res.status(201).json(newMessage);
-      }
+      if (newMessage) res.status(201).json(newMessage);
       break;
 
     default:
