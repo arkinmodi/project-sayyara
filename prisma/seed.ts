@@ -53,6 +53,7 @@ const prisma = new PrismaClient();
 const clearDatabase = async () => {
   await prisma.$transaction([
     prisma.appointment.deleteMany(),
+    prisma.chatMessage.deleteMany(),
     prisma.quote.deleteMany(),
     prisma.vehicle.deleteMany(),
     prisma.workOrder.deleteMany(),
