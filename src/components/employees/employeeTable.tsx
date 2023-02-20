@@ -161,10 +161,7 @@ const EmployeeTable = () => {
       <Message
         className={styles.inviteEmployeeMessage}
         style={{
-          display:
-            userType === UserType.SHOP_OWNER && employeeList.length > 1
-              ? "inline-flex"
-              : "none",
+          display: userType === UserType.SHOP_OWNER ? "inline-flex" : "none",
         }}
         severity="info"
         text={`To invite an employee, please provide them with your shop ID: ${shopId}`}
