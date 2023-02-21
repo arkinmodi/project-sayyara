@@ -35,8 +35,8 @@ export const getWorkOrderById = async (
           data.appointment !== null
             ? {
                 id: data.appointment.id,
-                startTime: data.appointment.start_time,
-                endTime: data.appointment.end_time,
+                startTime: new Date(data.appointment.start_time),
+                endTime: new Date(data.appointment.end_time),
                 shopId: data.appointment.shop_id,
                 customer: data.appointment.customer_id,
                 quoteId: data.appointment.quote_id,
@@ -50,8 +50,8 @@ export const getWorkOrderById = async (
 
         return {
           id: data.id,
-          createTime: data.create_time,
-          updateTime: data.update_time,
+          createTime: new Date(data.create_time),
+          updateTime: new Date(data.update_time),
           title: data.title,
           customerId: data.customer_id,
           vehicleId: data.vehicle_id,

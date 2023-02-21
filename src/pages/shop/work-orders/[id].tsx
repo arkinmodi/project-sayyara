@@ -171,6 +171,14 @@ const WorkOrderPage: React.FC<{
     }
   };
 
+  const formatDate = (d: Date, showSeconds: boolean = false) => {
+    console.log();
+    return new Intl.DateTimeFormat("en-us", {
+      dateStyle: "medium",
+      timeStyle: showSeconds ? "medium" : "short",
+    }).format(d);
+  };
+
   return (
     <div className={styles.workOrderPageContainer}>
       <Head>
@@ -208,7 +216,7 @@ const WorkOrderPage: React.FC<{
             </p>
             <p>
               <b>Last Update: </b>
-              {new Date(workOrder.updateTime).toLocaleString()}
+              {formatDate(workOrder.updateTime)}
             </p>
             <p>
               <b>Customer: </b>
@@ -235,11 +243,11 @@ const WorkOrderPage: React.FC<{
               {`${
                 workOrder.appointment?.startTime === undefined
                   ? "Unknown Start Time"
-                  : new Date(workOrder.appointment?.startTime).toLocaleString()
+                  : formatDate(workOrder.appointment.startTime)
               } to ${
                 workOrder.appointment?.endTime === undefined
                   ? "Unknown End Time"
-                  : new Date(workOrder.appointment?.endTime).toLocaleString()
+                  : formatDate(workOrder.appointment.endTime)
               }`}
             </p>
             <p>
@@ -285,9 +293,7 @@ const WorkOrderPage: React.FC<{
             loadingIcon="pi pi-spin pi-spinner"
           />
 
-          {workOrder && (
-            <p>Last Saved: {new Date(workOrder.updateTime).toLocaleString()}</p>
-          )}
+          {workOrder && <p>Last Saved: {formatDate(workOrder.updateTime, true)}</p>}
         </div>
       )}
       <WorkOrderMetadataDialog
