@@ -51,20 +51,21 @@ model Customer {
 }
 
 model Appointment {
-  id            String            @id @default(cuid())
-  create_time   DateTime          @default(now())
-  update_time   DateTime          @updatedAt
-  quote_id      String?
-  work_order_id String            @unique
-  vehicle_id    String
-  price         Float
-  employee_id   String?
-  customer_id   String
-  status        AppointmentStatus @default(PENDING_APPROVAL)
-  start_time    DateTime
-  end_time      DateTime
-  shop_id       String
-  service_id    String
+  id                  String            @id @default(cuid())
+  create_time         DateTime          @default(now())
+  update_time         DateTime          @updatedAt
+  quote_id            String?
+  work_order_id       String            @unique
+  vehicle_id          String
+  price               Float
+  employee_id         String?
+  customer_id         String
+  status              AppointmentStatus @default(PENDING_APPROVAL)
+  start_time          DateTime
+  end_time            DateTime
+  shop_id             String
+  service_id          String
+  cancellation_reason String?
 
   vehicle    Vehicle   @relation(fields: [vehicle_id], references: [id])
   quote      Quote?    @relation(fields: [quote_id], references: [id])
@@ -222,6 +223,7 @@ enum AppointmentStatus {
   REJECTED
   IN_PROGRESS
   COMPLETED
+  CANCELLED
 }
 
 enum EmployeeStatus {
