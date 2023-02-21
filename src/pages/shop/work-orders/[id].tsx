@@ -1,5 +1,6 @@
 import WorkOrderEditor from "@components/workOrders/WorkOrderEditor";
 import WorkOrderMetadataDialog from "@components/workOrders/WorkOrderMetadataDialog";
+import WorkOrderSkeleton from "@components/workOrders/WorkOrderSkeleton";
 import { UserType } from "@prisma/client";
 import { readAppointments } from "@redux/actions/appointmentAction";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
@@ -104,12 +105,20 @@ const WorkOrder: NextPage = () => {
 
   return (
     <div>
+      <Head>
+        <title>
+          {workOrder !== undefined
+            ? `Work Order - ${workOrder.title}`
+            : "Sayyara"}
+        </title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <TabView activeIndex={1} onTabChange={(e) => handleTabChange(e.index)}>
         <TabPanel header="Quotes"></TabPanel>
         <TabPanel header="Service Requests">
           {workOrder === undefined ? (
-            // TODO: Create skeleton
-            <></>
+            <WorkOrderSkeleton />
           ) : (
             <WorkOrderPage
               workOrder={workOrder}
@@ -172,7 +181,6 @@ const WorkOrderPage: React.FC<{
   };
 
   const formatDate = (d: Date, showSeconds: boolean = false) => {
-    console.log();
     return new Intl.DateTimeFormat("en-us", {
       dateStyle: "medium",
       timeStyle: showSeconds ? "medium" : "short",
@@ -181,13 +189,6 @@ const WorkOrderPage: React.FC<{
 
   return (
     <div className={styles.workOrderPageContainer}>
-      <Head>
-        <title>
-          {workOrder !== null ? `Work Order - ${workOrder.title}` : "Sayyara"}
-        </title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <div className={styles.workOrderTitleContainer}>
         {isMobile ? (
           <Button
@@ -293,7 +294,9 @@ const WorkOrderPage: React.FC<{
             loadingIcon="pi pi-spin pi-spinner"
           />
 
-          {workOrder && <p>Last Saved: {formatDate(workOrder.updateTime, true)}</p>}
+          {workOrder && (
+            <p>Last Saved: {formatDate(workOrder.updateTime, true)}</p>
+          )}
         </div>
       )}
       <WorkOrderMetadataDialog
