@@ -1,3 +1,4 @@
+import { AppointmentStatus } from "@prisma/client";
 import { IAppointment } from "src/types/appointment";
 import { IEmployee } from "src/types/employee";
 import { IWorkOrder } from "src/types/workOrder";
@@ -114,6 +115,39 @@ export const patchWorkOrderById = async (
   }).then(async (res) => {
     if (res.ok) {
       return getWorkOrderById(id);
+    } else {
+      const data = (await res.json()) as { message: string };
+      data.message = JSON.stringify(data.message);
+      return {
+        success: false,
+        data,
+      };
+    }
+  });
+};
+
+export type PatchAppointmentByIdBody = {
+  status?: AppointmentStatus;
+};
+
+export const patchAppointmentById = async (
+  workOrderId: string,
+  appointmentId: string,
+  patch: PatchAppointmentByIdBody
+): Promise<
+  | { success: true; data: IWorkOrder }
+  | { success: false; data: { message: string } }
+> => {
+  return fetch(`/api/appointment/${appointmentId}`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(patch),
+  }).then(async (res) => {
+    if (res.ok) {
+      return getWorkOrderById(workOrderId);
     } else {
       const data = (await res.json()) as { message: string };
       data.message = JSON.stringify(data.message);

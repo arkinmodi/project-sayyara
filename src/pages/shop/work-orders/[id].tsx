@@ -1,6 +1,7 @@
 import WorkOrderEditor from "@components/workOrders/WorkOrderEditor";
 import WorkOrderMetadataDialog from "@components/workOrders/WorkOrderMetadataDialog";
 import { UserType } from "@prisma/client";
+import { readAppointments } from "@redux/actions/appointmentAction";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/pages/WorkOrders.module.css";
 import { NextPage } from "next";
@@ -10,10 +11,12 @@ import { Button } from "primereact/button";
 import { TabPanel, TabView } from "primereact/tabview";
 import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IWorkOrder } from "src/types/workOrder";
 import {
   getWorkOrderById,
+  patchAppointmentById,
+  PatchAppointmentByIdBody,
   patchWorkOrderById,
   PatchWorkOrderByIdBody,
 } from "src/utils/workOrderUtil";
@@ -21,6 +24,8 @@ import {
 const WorkOrder: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
+
+  const dispatch = useDispatch();
 
   const [workOrder, setWorkOrder] = useState<IWorkOrder | undefined>(undefined);
   const userType = useSelector(AuthSelectors.getUserType);
@@ -68,6 +73,23 @@ const WorkOrder: NextPage = () => {
     }
   };
 
+  const updateAppointment = async (patch: PatchAppointmentByIdBody) => {
+    if (typeof id === "string" && workOrder && workOrder.appointment) {
+      await patchAppointmentById(id, workOrder.appointment.id, patch).then(
+        (res) => {
+          if (res.success) {
+            setWorkOrder(res.data);
+            dispatch(readAppointments({ id: workOrder.customerId }));
+          } else {
+            showErrorToast(res.data.message);
+          }
+        }
+      );
+    } else {
+      showErrorToast("Invalid Work Order ID.");
+    }
+  };
+
   useEffect(() => {
     if (typeof id === "string") {
       getWorkOrderById(id).then((res) => {
@@ -92,6 +114,7 @@ const WorkOrder: NextPage = () => {
             <WorkOrderPage
               workOrder={workOrder}
               saveWorkOrder={updateWorkOrder}
+              saveAppointment={updateAppointment}
             />
           )}
         </TabPanel>
@@ -104,6 +127,7 @@ const WorkOrder: NextPage = () => {
 const WorkOrderPage: React.FC<{
   workOrder: IWorkOrder;
   saveWorkOrder: (patch: PatchWorkOrderByIdBody) => Promise<void>;
+  saveAppointment: (patch: PatchAppointmentByIdBody) => Promise<void>;
 }> = (props) => {
   const { workOrder } = props;
 
@@ -271,6 +295,7 @@ const WorkOrderPage: React.FC<{
         onHide={handleHideEditMetaDataDialog}
         workOrder={workOrder}
         saveWorkOrder={props.saveWorkOrder}
+        saveAppointment={props.saveAppointment}
       />
     </div>
   );

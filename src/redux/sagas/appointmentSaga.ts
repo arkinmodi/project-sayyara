@@ -59,7 +59,7 @@ function patchAppointmentStatus(
 function getCustomerAppointments(
   customerId: string
 ): Promise<ICustomerAppointments> {
-  return fetch(`/api/customer/${customerId}/appointments/`, {
+  return fetch(`/api/customer/${customerId}/appointments`, {
     method: "GET",
     headers: {
       Accept: "application/json",
