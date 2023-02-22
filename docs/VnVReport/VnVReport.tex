@@ -27,15 +27,17 @@
 
 \section{Revision History}
 
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-	\toprule {\bf Date} & {\bf Version} & {\bf Notes} \\
-	\midrule
-	Date 1              & 1.0           & Notes       \\
-	Date 2              & 1.1           & Notes       \\
-	\bottomrule
-\end{tabularx}
-
-~\newpage
+\begin{table}[hp]
+	\caption{Revision History} \label{TblRevisionHistory}
+	\begin{tabularx}{\textwidth}{llX}
+		\toprule
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}               \\
+		\midrule
+		February 22, 2023 & Arkin Modi            & Add Automated Testing Section \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+\newpage
 
 \section{Symbols, Abbreviations and Acronyms}
 
@@ -74,15 +76,19 @@ This document ...
 
 \subsection{etc.}
 
-\section{Comparison to Existing Implementation}
-
-This section will not be appropriate for every project.
-
 \section{Unit Testing}
 
 \section{Changes Due to Testing}
 
 \section{Automated Testing}
+
+% The automated testing section can summarize the experience with the use of automated testing tools.
+
+All automated testing was carried out by Jest, a JavaScript testing framework. Each module has its
+own corresponding test file located within the ``test'' folder. The ``test'' folder has the same
+structure as the ``src'' folder, creating a one-to-one mapping of a module and its corresponding
+test. For example, the module ``src/server/services/userService.ts'' has its tests located in
+``test/server/services/userService.ts''.
 
 \section{Trace to Requirements}
 
