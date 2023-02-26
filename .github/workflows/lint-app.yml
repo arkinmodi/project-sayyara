@@ -41,6 +41,12 @@ jobs:
       - name: 🧽 Run Typecheck
         run: npx tsc --project ./tsconfig.json
 
+      # Fails on validation errors (line 1) and formatting errors (line 2)
+      - name: 🧽 Run Prisma Validation
+        run: |
+          npx prisma format
+          if [[ -n $(git status --porcelain=v1) ]]; then echo 'Prisma Schema Formatting Error' && exit 1; fi
+
       - name: 🧽 Run Prettier
         run: npx prettier --check '**/*.{ts,tsx,json,js,mjs,css,yml,yaml}'
 
