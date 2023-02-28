@@ -1,3 +1,4 @@
+import { AppointmentStatus } from "@prisma/client";
 import { IAppointment } from "src/types/appointment";
 import { IEmployee } from "src/types/employee";
 import { IWorkOrder } from "src/types/workOrder";
@@ -34,8 +35,8 @@ export const getWorkOrderById = async (
           data.appointment !== null
             ? {
                 id: data.appointment.id,
-                startTime: data.appointment.start_time,
-                endTime: data.appointment.end_time,
+                startTime: new Date(data.appointment.start_time),
+                endTime: new Date(data.appointment.end_time),
                 shopId: data.appointment.shop_id,
                 customer: data.appointment.customer_id,
                 quoteId: data.appointment.quote_id,
@@ -49,8 +50,8 @@ export const getWorkOrderById = async (
 
         return {
           id: data.id,
-          createTime: data.create_time,
-          updateTime: data.update_time,
+          createTime: new Date(data.create_time),
+          updateTime: new Date(data.update_time),
           title: data.title,
           customerId: data.customer_id,
           vehicleId: data.vehicle_id,
@@ -114,6 +115,39 @@ export const patchWorkOrderById = async (
   }).then(async (res) => {
     if (res.ok) {
       return getWorkOrderById(id);
+    } else {
+      const data = (await res.json()) as { message: string };
+      data.message = JSON.stringify(data.message);
+      return {
+        success: false,
+        data,
+      };
+    }
+  });
+};
+
+export type PatchAppointmentByIdBody = {
+  status?: AppointmentStatus;
+};
+
+export const patchAppointmentById = async (
+  workOrderId: string,
+  appointmentId: string,
+  patch: PatchAppointmentByIdBody
+): Promise<
+  | { success: true; data: IWorkOrder }
+  | { success: false; data: { message: string } }
+> => {
+  return fetch(`/api/appointment/${appointmentId}`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(patch),
+  }).then(async (res) => {
+    if (res.ok) {
+      return getWorkOrderById(workOrderId);
     } else {
       const data = (await res.json()) as { message: string };
       data.message = JSON.stringify(data.message);

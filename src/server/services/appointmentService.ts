@@ -1,4 +1,5 @@
 import { Appointment, AppointmentStatus, prisma } from "@server/db/client";
+import { getServiceById } from "@server/services/serviceService";
 import { z } from "zod";
 
 export const createAppointmentSchema = z.object({
@@ -20,6 +21,8 @@ export const createAppointmentSchema = z.object({
 export type CreateAppointmentType = z.infer<typeof createAppointmentSchema>;
 
 export const createAppointment = async (appointment: CreateAppointmentType) => {
+  const service = await getServiceById(appointment.service_id);
+
   const now = new Date();
 
   // TODO: Do we want to only accept events that are in the future?
@@ -49,7 +52,7 @@ export const createAppointment = async (appointment: CreateAppointmentType) => {
         create: {
           create_time: now,
           update_time: now,
-          title: "New Work Order",
+          title: service.name,
           body: "",
           customer: { connect: { id: appointment.customer_id } },
           vehicle: { connect: { id: appointment.vehicle_id } },

@@ -1,29 +1,53 @@
+import { AppointmentStatus } from "@prisma/client";
 import styles from "@styles/components/workOrders/WorkOrderMetadataDialog.module.css";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
+import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import React, { useState } from "react";
 import { IWorkOrder } from "src/types/workOrder";
-import { PatchWorkOrderByIdBody } from "src/utils/workOrderUtil";
+import {
+  PatchAppointmentByIdBody,
+  PatchWorkOrderByIdBody,
+} from "src/utils/workOrderUtil";
 
 const WorkOrderMetadataDialog: React.FC<{
   isVisible: boolean;
   onHide: () => void;
   workOrder: IWorkOrder;
   saveWorkOrder: (patch: PatchWorkOrderByIdBody) => Promise<void>;
+  saveAppointment: (patch: PatchAppointmentByIdBody) => Promise<void>;
 }> = (props) => {
   const { workOrder } = props;
+
+  const [isSaving, setIsSaving] = useState<boolean>(false);
 
   const [workOrderTitle, setWorkOrderTitle] = useState<string>(workOrder.title);
   const [workOrderAssignedEmployeeEmail, setWorkOrderAssignedEmployeeEmail] =
     useState<string | undefined>(workOrder.employee?.email);
+  const [workOrderStatus, setWorkOrderStatus] = useState<
+    AppointmentStatus | undefined
+  >(workOrder.appointment?.status);
 
   const handleSave = async () => {
-    await props.saveWorkOrder({
-      title: workOrderTitle,
-      employee_email: workOrderAssignedEmployeeEmail,
-    });
+    setIsSaving(true);
+    if (
+      workOrderTitle !== workOrder.title ||
+      workOrderAssignedEmployeeEmail !== workOrder.employee?.email
+    ) {
+      await props.saveWorkOrder({
+        title: workOrderTitle,
+        employee_email: workOrderAssignedEmployeeEmail,
+      });
+    }
 
+    if (workOrderStatus !== workOrder.appointment?.status) {
+      await props.saveAppointment({
+        status: workOrderStatus,
+      });
+    }
+
+    setIsSaving(false);
     props.onHide();
   };
 
@@ -36,6 +60,9 @@ const WorkOrderMetadataDialog: React.FC<{
           label="Save"
           aria-label="Save"
           onClick={handleSave}
+          disabled={isSaving}
+          loading={isSaving}
+          loadingIcon="pi pi-spin pi-spinner"
         />
         <Button
           className={`p-button-danger blueButton ${styles.workOrderMetadataDialogFooterContainerButtons}`}
@@ -43,6 +70,7 @@ const WorkOrderMetadataDialog: React.FC<{
           label="Cancel"
           aria-label="Cancel"
           onClick={props.onHide}
+          disabled={isSaving}
         />
       </div>
     );
@@ -81,6 +109,18 @@ const WorkOrderMetadataDialog: React.FC<{
           className={styles.workOrderMetadataDialogEmployeeEmailTextBox}
         />
         <br />
+
+        <label htmlFor="workOrderStatus">Appointment Status</label>
+        <br />
+        <Dropdown
+          id="workOrderStatus"
+          name="status"
+          options={Object.values(AppointmentStatus)}
+          placeholder={workOrderStatus}
+          value={workOrderStatus}
+          onChange={(e) => setWorkOrderStatus(e.target.value)}
+          className={styles.workOrderMetadataDialogStatusSelector}
+        />
       </div>
     </Dialog>
   );
