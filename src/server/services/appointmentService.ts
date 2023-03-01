@@ -111,6 +111,7 @@ export const updateAppointmentSchema = z.object({
   status: z.nativeEnum(AppointmentStatus).optional(),
   start_time: z.date().optional(),
   end_time: z.date().optional(),
+  cancellation_reason: z.string().optional(),
 });
 
 export type UpdateAppointmentType = z.infer<typeof updateAppointmentSchema>;
@@ -157,6 +158,7 @@ export const updateAppointmentById = async (
       status: patch.status,
       start_time: patch.start_time,
       end_time: patch.end_time,
+      cancellation_reason: patch.cancellation_reason,
       ...workOrderUpdate,
       ...vehicleUpdate,
       ...employeeUpdate,
