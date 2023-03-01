@@ -27,7 +27,7 @@ const registerShopOwnerHandler = async (
       .json({ message: "User with email address already exists." });
   } else {
     await createShopOwner(result.data);
-    res.redirect(302, req.body.callbackUrl ?? "/");
+    res.redirect(302, "/");
   }
 };
 
