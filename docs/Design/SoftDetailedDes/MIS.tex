@@ -69,6 +69,7 @@
 		January 15, 2023  & Arkin Modi            & Create MIS of Quotes Module              \\
 		January 15, 2023  & Joy Xiao              & Create MIS of Employee Management Module \\
 		January 17, 2023  & Timothy Choy          & Add Shop Lookup to Shop Module           \\
+		March 1, 2023     & Arkin Modi            & Update Quote Request Bodies              \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -1439,6 +1440,8 @@ None
 		\hline
 		shop\_id             & String               & ID of Shop           \\
 		\hline
+		service\_id          & String               & ID of Service        \\
+		\hline
 	\end{tabular}
 \end{table}
 
@@ -1447,13 +1450,15 @@ None
 \begin{table}[H]
 	\begin{tabular}{|p{0.25\textwidth}|p{0.25\textwidth}|p{0.40\textwidth}|}
 		\hline
-		\textbf{Output Name} & \textbf{Output Type}    & \textbf{Description}                                    \\
+		\textbf{Output Name} & \textbf{Output Type}    & \textbf{Description}                                     \\
 		\hline
-		status               & Optional$<$String$>$    & Status indicating whether a invitation has been created \\
+		status               & Optional$<$String$>$    & Status indicating whether an invitation has been created \\
 		\hline
-		estimated\_price     & Optional$<\mathbb{R}+>$ & Estimated price of job                                  \\
+		estimated\_price     & Optional$<\mathbb{R}+>$ & Estimated price of job                                   \\
 		\hline
-		duration             & Optional$<\mathbb{R}+>$ & Estimated time need for job                             \\
+		duration             & Optional$<\mathbb{R}+>$ & Estimated time need for job                              \\
+		\hline
+		description          & Optional$<$String$>$    & Description of quote                                     \\
 		\hline
 	\end{tabular}
 \end{table}
