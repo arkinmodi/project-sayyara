@@ -68,6 +68,182 @@ This document ...
 
 \section{Functional Requirements Evaluation}
 
+\subsubsection{Services}
+
+This section will contains tests covering the ``Services'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE28-1}
+
+	      Initial State: Shop Owner has a shop profile
+
+	      Input: Shop Owner adds available services
+
+	      Expected Output: Shop services are sent to the database and displayed on the shop profile
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE29-1}
+
+	      Initial State: Active Customer Account
+
+	      Input: Enters specific auto service in the search bar
+
+	      Expected Output: Auto shops with relevant services displayed with service details
+
+	      Results: Fail (does not include service details)
+
+	\item \textbf{FRT-BE29-2}
+
+	      Initial State: Shop Owner/Shop Employee searches for auto repair or maintenance services
+
+	      Input: Enters specific auto service in the search bar
+
+	      Expected Output: Auto shops with relevant services displayed with service details
+
+	      Results: Fail (does not include service details)
+
+	\item \textbf{FRT-BE30-1}
+
+	      Initial State: Shop Owner with services listed on their shop profile
+
+	      Input: Updates the details of a service listed on their profile
+
+	      Expected Output: The service is updated with the entered details
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE31-1}
+
+	      Initial State: Shop Owner with services listed on their shop profile
+
+	      Input: Deletes a service listed on their shop profile
+
+	      Expected Output: Service is removed from the shop profile. Other services that were not deleted
+	      continue to be listed on the shop profile
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsubsection{Appointments}
+
+This section will contain tests covering the ``Appointments'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE4-1}
+
+	      Initial State: Customer account which received a quote from an auto shop
+
+	      Input: Enters service request information and selects an available appointment time slot
+
+	      Expected Output: A new appointment request is created with service details linked to the quote.
+	      Shop Owner/Employee Accounts will receive the appointment request
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE4-2}
+
+	      Initial State: Customer account selects a canned job at an auto shop
+
+	      Input: Enters service request information and selects an available appointment time slot
+
+	      Expected Output: A new appointment request is created with service details. Shop Owner/Employee
+	      Accounts will receive the appointment request
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE4-3}
+
+	      Initial State: Shop Owner/Employee Account with appointment to be scheduled
+
+	      Input: Enters customer information, service request information and selects an available
+	      appointment time slot
+
+	      Expected Output: A new appointment request is created with service details
+
+	      Results:  Failed (do not have this functionality)
+
+	\item \textbf{FRT-BE4-4}
+
+	      Initial State: Shop Owner/Employee Account with appointment requests
+
+	      Input: Accept an appointment request
+
+	      Expected Output: Appointment booking displayed in calendar for Shop Owner/Employee accounts and
+	      Customer account
+
+	      Results: Failed (no calendar but the appointment is displayed)
+
+	\item \textbf{FRT-BE5-1}
+
+	      Initial State: Customer Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit and selects a new available time slot for the appointment
+
+	      Expected Output: A new appointment request is made with the new time slot. Shop Owner/Employee
+	      Accounts will receive the appointment request
+
+	      Results: Failed (cannot edit an appointment but can cancel and reschedule)
+
+	\item \textbf{FRT-BE5-2}
+
+	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit and selects a new available time slot for the appointment
+
+	      Expected Output: The appointment booking is updated to the new time slot
+
+	      Results: Failed (cannot edit an appointment but can cancel and reschedule) 
+
+	\item \textbf{FRT-BE5-3}
+
+	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit service details
+
+	      Expected Output: The appointment booking is updated with the updated service details
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE6-1}
+
+	      Initial State: Customer Account has a service appointment scheduled
+
+	      Input: Selects an appointment to cancel
+
+	      Expected Output: The appointment booking is cancelled and removed from the customer and shop
+	      owner/employee schedules
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE6-2}
+
+	      Initial State: Shop Owner/Shop Employee has a service appointment scheduled
+
+	      Input: Selects an appointment to cancel
+
+	      Expected Output: The appointment booking is cancelled and removed from the customer and shop
+	      owner/employee schedules
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE7-1}
+
+	      Initial State: Shop Owner selects appointment availability
+
+	      Input: Sets appointment availabilities
+
+	      Expected Output: The appointment availability is updated in the database
+
+	      Results: Passed (shop hours)
+
+\end{enumerate}
+
 \section{Nonfunctional Requirements Evaluation}
 
 \subsection{Usability}
