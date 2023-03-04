@@ -1013,33 +1013,31 @@ This section will contain tests covering the ``Employee Management'' requirement
 
 	\item \textbf{FRT-BE24-1}
 
-	      Control: Manual
+	Type: Manual
 
-	      Initial State: Shop owner account with no employees invited to shop yet
+	Initial State: Shop Owner has a shop profile
 
-	      Input: Shop owner enters a list of employee emails to invite
+	Input: Employee signs up using valid information
 
-	      Output: System sends invitation to employee emails provided
+	Output: Employee account is created and associated with the shop ID that was entered
 
-	      Test Case Derivation: The system shall allow the user to enter employee email(s) to invite; the
-	      system shall send an invitation email to the invited employee(s)
+	Test Case Derivation: The system shall allow the employee to create an account with the information provided
 
-	      How test will be performed: The tester will use a shop owner account to send employee invitation
-	      emails
+	How test will be performed: The tester will use a shop ID displayed on the shop owner's employee profile page and go through the sign up flow as an employee. The tester will confirm that the employee account has the appropriate privileges
 
 	\item \textbf{FRT-BE24-2}
 
-	      Control: Manual
+	Type: Manual
 
-	      Initial State: Employee account with invitation email
+	Initial State: Shop Owner has a shop profile
 
-	      Input: Employee uses invitation email to sign up
+	Input: Employee signs up using invalid information
 
-	      Output: System displays employee sign up form
+	Output: Message indicating that the inputs are not valid
 
-	      Test Case Derivation: The system shall allow the user to accept an invitation
+	Test Case Derivation: The system shall not allow the employee to sign up with the information provided
 
-	      How test will be performed: The tester will attempt to accept an employee invitation email
+	How test will be performed: The tester will use invalid information to sign up as an employee
 
 	\item \textbf{FRT-BE25-1}
 
@@ -1058,21 +1056,6 @@ This section will contain tests covering the ``Employee Management'' requirement
 	      the shop and enter search text to search for an employee
 
 	\item \textbf{FRT-BE26-1}
-
-	      Control: Manual
-
-	      Initial State: Shop owner account with no employees
-
-	      Input: The user attempts to view the list of employees
-
-	      Output: Message indicating that there are currently no employees
-
-	      Test Case Derivation: The shop owner with no employees wants to view the list of employees
-
-	      How test will be performed: The tester will use a shop owner account with no employees listed under
-	      the shop and attempt to view the list of employees
-
-	\item \textbf{FRT-BE26-2}
 
 	      Control: Manual
 
@@ -1673,7 +1656,6 @@ This section will contain tests covering the ``Employee Profile'' requirements d
 		\textbf{FRT-BE24-2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE25-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE26-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE26-2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE27-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE28-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             \\
 		\textbf{FRT-BE29-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             \\
@@ -2499,6 +2481,98 @@ tests were chosen based on common user flows.
 \end{enumerate}
 
 \subsubsection{Employee Management Module}
+
+This section will contain tests covering the ``Employee Management'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}. These
+tests were chosen based on common user flows.
+
+\begin{enumerate}
+
+	\item \textbf{FRT-M7-1}
+		  
+		  Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop and a shop owner exist
+
+	      Input: Create employee account request with valid information
+
+	      Output: Create the employee account
+
+		  Test Case Derivation: Employee at a shop wants to sign up for an account
+
+	      How test will be performed: Jest will send a create employee account request with valid information
+
+	\item \textbf{FRT-M7-2}
+	
+	Type: Functional, Dynamic, Unit, Automated
+
+	Initial State: A shop and a shop owner exist
+
+	Input: Create employee account request with invalid information
+
+	Output: Request is rejected
+
+	Test Case Derivation: Employee at a shop wants to sign up for an account
+
+	How test will be performed: Jest will send a create employee account request with invalid information
+
+	\item \textbf{FRT-M7-3}
+
+	Type: Functional, Dynamic, Unit, Automated
+
+	Initial State: A shop account exists with employees 
+
+	Input: Get employees with a valid shop ID
+
+	Output: All employees associated with the shop
+
+	Test Case Derivation: A shop owner with employees wants to view the list of employees
+
+	How test will be performed: Jest will send a get employees request with a valid shop ID
+
+	\item \textbf{FRT-M7-4}
+
+	Type: Functional, Dynamic, Unit, Automated
+
+	Initial State: A shop account exists with employees
+
+	Input: Get employees with an invalid shop ID
+
+	Output: Request is rejected
+
+	Test Case Derivation: A shop owner with employees wants to view the list of employees
+
+	How test will be performed: Jest will send a get employees request with a invalid shop ID
+
+	\item \textbf{FRT-M7-5}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with employees
+
+	      Input: Update employee status from ``ACTIVE'' to ``SUSPENDED'' for a given employee ID
+
+	      Output: No operation
+
+	      Test Case Derivation: The shop owner with employees wants to remove an employee
+
+	      How test will be performed: Jest will send a delete employee request with a valid employee ID
+
+		  \item \textbf{FRT-M7-6}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with employees
+
+	      Input: Update employee status from ``ACTIVE'' to ``SUSPENDED'' for a given employee ID
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: The shop owner with employees wants to remove an employee
+
+	      How test will be performed: Jest will send a delete employee request with an invalid employee ID
+
+\end{enumerate}
 
 \subsubsection{Services Module}
 
