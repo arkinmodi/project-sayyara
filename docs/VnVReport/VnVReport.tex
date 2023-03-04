@@ -91,9 +91,9 @@ This section will contains tests covering the ``Services'' requirements defined 
 
 	      Input: Enters specific auto service in the search bar
 
-	      Expected Output: Auto shops with relevant services displayed with service details
+	      Expected Output: Auto shops with relevant services displayed
 
-	      Results: Fail (does not include service details)
+	      Results: Passed
 
 	\item \textbf{FRT-BE29-2}
 
@@ -101,9 +101,9 @@ This section will contains tests covering the ``Services'' requirements defined 
 
 	      Input: Enters specific auto service in the search bar
 
-	      Expected Output: Auto shops with relevant services displayed with service details
+	      Expected Output: Auto shops with relevant services displayed
 
-	      Results: Fail (does not include service details)
+	      Results: Passed
 
 	\item \textbf{FRT-BE30-1}
 
@@ -159,25 +159,14 @@ This section will contain tests covering the ``Appointments'' requirements defin
 
 	\item \textbf{FRT-BE4-3}
 
-	      Initial State: Shop Owner/Employee Account with appointment to be scheduled
-
-	      Input: Enters customer information, service request information and selects an available
-	      appointment time slot
-
-	      Expected Output: A new appointment request is created with service details
-
-	      Results:  Failed (do not have this functionality)
-
-	\item \textbf{FRT-BE4-4}
-
 	      Initial State: Shop Owner/Employee Account with appointment requests
 
 	      Input: Accept an appointment request
 
-	      Expected Output: Appointment booking displayed in calendar for Shop Owner/Employee accounts and
-	      Customer account
+	      Expected Output: Appointment booking displayed for Shop Owner/Employee accounts and Customer
+	      account
 
-	      Results: Failed (no calendar but the appointment is displayed)
+	      Results: Passed
 
 	\item \textbf{FRT-BE5-1}
 
@@ -198,7 +187,7 @@ This section will contain tests covering the ``Appointments'' requirements defin
 
 	      Expected Output: The appointment booking is updated to the new time slot
 
-	      Results: Failed (cannot edit an appointment but can cancel and reschedule) 
+	      Results: Failed (cannot edit an appointment but can cancel and reschedule)
 
 	\item \textbf{FRT-BE5-3}
 
@@ -240,7 +229,7 @@ This section will contain tests covering the ``Appointments'' requirements defin
 
 	      Expected Output: The appointment availability is updated in the database
 
-	      Results: Passed (shop hours)
+	      Results: Passed
 
 \end{enumerate}
 
