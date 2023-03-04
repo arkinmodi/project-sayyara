@@ -111,6 +111,10 @@
   display: none;
 }
 
+.loadingSpinner {
+  text-align: center;
+}
+
 @media (max-width: 500px) {
   .appointmentCardButton {
     width: 110px;

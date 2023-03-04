@@ -1,7 +1,9 @@
+import { usePrevious } from "@components/hooks/usePrevious";
 import { readShopAppointments } from "@redux/actions/shopActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import { ShopSelectors } from "@redux/selectors/shopSelector";
 import styles from "@styles/pages/appointments/ShopAppointments.module.css";
+import { ProgressSpinner } from "primereact/progressspinner";
 import { Toast } from "primereact/toast";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,13 +18,17 @@ interface IAppointmentsProps {
 const ShopAppointments = (props: IAppointmentsProps) => {
   const dispatch = useDispatch();
 
-  const appointments = useSelector(ShopSelectors.getShopAppointments) ?? [];
+  const appointments = useSelector(ShopSelectors.getShopAppointments);
 
   const { appointmentTab, toggleActiveTab } = props;
 
   const [appointmentsMap, setAppointmentsMap] = useState<{
     [key: string]: Array<IAppointment>;
   }>({});
+
+  const [loading, setLoading] = useState(true);
+
+  const prevAppointmentMap = usePrevious(appointmentsMap);
 
   const shopId = useSelector(AuthSelectors.getShopId);
 
@@ -66,33 +72,49 @@ const ShopAppointments = (props: IAppointmentsProps) => {
   };
 
   useEffect(() => {
-    dispatch(readShopAppointments());
+    if (shopId != null) {
+      dispatch(readShopAppointments());
+    }
   }, [dispatch, shopId]);
 
   useEffect(() => {
-    const appointmentsList = appointments
-      .filter(
-        (appointment: IAppointment) => appointment.status == appointmentTab
-      )
-      .sort((appointment1: IAppointment, appointment2: IAppointment) => {
-        return (
-          new Date(appointment1.startTime).getTime() -
-          new Date(appointment2.startTime).getTime()
-        );
-      });
+    if (appointments != null) {
+      const appointmentsList = [...appointments]
+        .filter(
+          (appointment: IAppointment) => appointment.status == appointmentTab
+        )
+        .sort((appointment1: IAppointment, appointment2: IAppointment) => {
+          return (
+            new Date(appointment1.startTime).getTime() -
+            new Date(appointment2.startTime).getTime()
+          );
+        });
 
-    //put the appointments in a map of lists depending on the date
-    var appointmentsMap: { [key: string]: IAppointment[] } = {};
+      //put the appointments in a map of lists depending on the date
+      var _appointmentsMap: { [key: string]: IAppointment[] } = {};
 
-    for (var appointment of appointmentsList) {
-      var date = new Date(appointment.startTime).toDateString();
-      if (!(date in appointmentsMap)) {
-        appointmentsMap[date] = [];
+      if (appointmentsList != null) {
+        for (var appointment of appointmentsList) {
+          var date = new Date(appointment.startTime).toDateString();
+          if (!(date in _appointmentsMap)) {
+            _appointmentsMap[date] = [];
+          }
+          _appointmentsMap[date]!.push(appointment);
+        }
+
+        if (
+          !prevAppointmentMap ||
+          JSON.stringify(prevAppointmentMap) != JSON.stringify(_appointmentsMap)
+        ) {
+          setAppointmentsMap((state) => ({
+            ...state,
+            ..._appointmentsMap,
+          }));
+        }
       }
-      appointmentsMap[date]!.push(appointment);
+      setLoading(false);
     }
-    setAppointmentsMap(appointmentsMap);
-  }, [appointments, setAppointmentsMap, appointmentTab]);
+  }, [appointments, appointmentTab, prevAppointmentMap, loading]);
 
   function listAppointmentCards(date: string) {
     let content: any = [];
@@ -144,11 +166,22 @@ const ShopAppointments = (props: IAppointmentsProps) => {
 
   return (
     <div>
-      <Toast ref={toast} />
-      {Object.entries(appointmentsMap).length > 0 ? (
-        listAllAppointments()
+      {loading ? (
+        <div className={styles.loadingSpinner}>
+          <ProgressSpinner strokeWidth="3" fill="var(--surface-ground)" />
+          <h2>Loading service requests...</h2>
+        </div>
       ) : (
-        <div className={styles.noAppointmentsText}>{noAppointmentsText()}</div>
+        <div>
+          <Toast ref={toast} />
+          {Object.entries(appointmentsMap).length > 0 ? (
+            listAllAppointments()
+          ) : (
+            <div className={styles.noAppointmentsText}>
+              {noAppointmentsText()}
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
