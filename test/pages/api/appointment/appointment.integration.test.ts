@@ -269,7 +269,7 @@ describe("update appointment", () => {
 });
 
 describe("Security Requirements", () => {
-  it("NFRT-SR1-1", async () => {
+  it("NFRT-SR1-1: fail to get appointment details for another customer", async () => {
     await createCustomer();
     await createVehicle();
     await createShop();
