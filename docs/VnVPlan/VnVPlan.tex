@@ -76,6 +76,7 @@
 	March 1, 2023    & Arkin Modi            & Add Unit Tests for Services Module                         \\
 	March 3, 2023    & Arkin Modi            & Add Unit Tests for Nonfunctional Requirements              \\
 	March 4, 2023    & Joy Xiao              & Update Employee Management System Tests and add Unit Tests \\
+	March 4, 2023    & Arkin Modi            & Update Security Requirements Tests                         \\
 	\bottomrule
 \end{longtable}
 
@@ -1501,19 +1502,6 @@ This section will contain tests covering the ``Employee Profile'' requirements d
 
 	\item \textbf{NFRT-SR1-1}
 
-	      Type: Dynamic, Manual
-
-	      Initial State: Two created accounts with both containing an appointment
-
-	      Input/Condition: The user searches for an appointment ID not belonging to the account
-
-	      Output/Result: An error message saying the appointment is not found
-
-	      How test will be performed: The tester will search for the appointment by appointment ID through
-	      the user interface
-
-	\item \textbf{NFRT-SR1-2}
-
 	      Type: Dynamic, Automatic
 
 	      Initial State: An account with a created appointment
@@ -1532,32 +1520,14 @@ This section will contain tests covering the ``Employee Profile'' requirements d
 	      Initial State: One Shop Owner account and two Customer accounts with one customer having an
 	      appointment at the shop registered under the same Shop Owner account
 
-	      Input/Condition: Request available time slots at the Shop Owner's store using both the Customer
-	      without an appointment's account and the Shop Owner's account
+	      Input/Condition: Request available time slots at the Shop Owner's store using the Customer without
+	      an appointment's account
 
-	      Output/Result: The Customer should only be able to view the time slot taken by the other customer,
-	      but the Shop Owner should be able to view all the information of the Customer that has taken the
-	      time slot
+	      Output/Result: The Customer should only be able to view the time slot taken by the other customer
+	      and no other extra information
 
-	      How test will be performed: The tester will view the available time slots page as both the Customer
-	      without an appointment and the Shop Owner
-
-	\item \textbf{NFRT-SR2-2}
-
-	      Type: Dynamic, Automatic
-
-	      Initial State: One Shop Owner account and two Customer accounts with one customer having an
-	      appointment at the shop registered under the same Shop Owner account
-
-	      Input/Condition: An HTTP request to the application's backend to get the available time slots using
-	      the Customer without an appointment's security token and again with the Shop Owner's security token
-
-	      Output/Result: The Customer should only be able to view the time slot taken by the other customer,
-	      but the Shop Owner should be able to view all the information of the Customer that has taken the
-	      time slot
-
-	      How test will be performed: Through Jest an HTTP request will be sent to the server as both the
-	      Customer without an appointment and the Shop Owner
+	      How test will be performed: The tester will view the available time slots page as the Customer
+	      without an appointment
 
 \end{enumerate}
 
@@ -1712,9 +1682,7 @@ This section will contain tests covering the ``Employee Profile'' requirements d
 		\textbf{NFRT-OE1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            \\
 		\textbf{NFRT-MS1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            \\
 		\textbf{NFRT-SR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-SR1-2} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            \\
 		\textbf{NFRT-SR2-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            \\
-		\textbf{NFRT-SR2-2} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            \\
 		\textbf{NFRT-CR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            \\
 		\textbf{NFRT-CR2-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            \\
 		\textbf{NFRT-LR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            \\
