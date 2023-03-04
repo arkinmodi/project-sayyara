@@ -18,7 +18,7 @@ interface IAppointmentsProps {
 const ShopAppointments = (props: IAppointmentsProps) => {
   const dispatch = useDispatch();
 
-  const appointments = useSelector(ShopSelectors.getShopAppointments) ?? [];
+  const appointments = useSelector(ShopSelectors.getShopAppointments);
 
   const { appointmentTab, toggleActiveTab } = props;
 
@@ -78,37 +78,39 @@ const ShopAppointments = (props: IAppointmentsProps) => {
   }, [dispatch, shopId]);
 
   useEffect(() => {
-    const appointmentsList = [...appointments]
-      .filter(
-        (appointment: IAppointment) => appointment.status == appointmentTab
-      )
-      .sort((appointment1: IAppointment, appointment2: IAppointment) => {
-        return (
-          new Date(appointment1.startTime).getTime() -
-          new Date(appointment2.startTime).getTime()
-        );
-      });
+    if (appointments != null) {
+      const appointmentsList = [...appointments]
+        .filter(
+          (appointment: IAppointment) => appointment.status == appointmentTab
+        )
+        .sort((appointment1: IAppointment, appointment2: IAppointment) => {
+          return (
+            new Date(appointment1.startTime).getTime() -
+            new Date(appointment2.startTime).getTime()
+          );
+        });
 
-    //put the appointments in a map of lists depending on the date
-    var _appointmentsMap: { [key: string]: IAppointment[] } = {};
+      //put the appointments in a map of lists depending on the date
+      var _appointmentsMap: { [key: string]: IAppointment[] } = {};
 
-    if (appointmentsList != null) {
-      for (var appointment of appointmentsList) {
-        var date = new Date(appointment.startTime).toDateString();
-        if (!(date in _appointmentsMap)) {
-          _appointmentsMap[date] = [];
+      if (appointmentsList != null) {
+        for (var appointment of appointmentsList) {
+          var date = new Date(appointment.startTime).toDateString();
+          if (!(date in _appointmentsMap)) {
+            _appointmentsMap[date] = [];
+          }
+          _appointmentsMap[date]!.push(appointment);
         }
-        _appointmentsMap[date]!.push(appointment);
-      }
 
-      if (
-        !prevAppointmentMap ||
-        JSON.stringify(prevAppointmentMap) != JSON.stringify(_appointmentsMap)
-      ) {
-        setAppointmentsMap((state) => ({
-          ...state,
-          ..._appointmentsMap,
-        }));
+        if (
+          !prevAppointmentMap ||
+          JSON.stringify(prevAppointmentMap) != JSON.stringify(_appointmentsMap)
+        ) {
+          setAppointmentsMap((state) => ({
+            ...state,
+            ..._appointmentsMap,
+          }));
+        }
       }
       setLoading(false);
     }
