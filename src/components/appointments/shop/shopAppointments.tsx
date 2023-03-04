@@ -165,7 +165,10 @@ const ShopAppointments = (props: IAppointmentsProps) => {
   return (
     <div>
       {loading ? (
-        <ProgressSpinner />
+        <div className={styles.loadingSpinner}>
+          <ProgressSpinner strokeWidth="3" fill="var(--surface-ground)" />
+          <h2>Loading service requests...</h2>
+        </div>
       ) : (
         <div>
           <Toast ref={toast} />
