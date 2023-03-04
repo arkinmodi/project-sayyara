@@ -37,7 +37,6 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     appointment: IAppointment
   ): void => {
     e.stopPropagation();
-    console.log(appointment.quoteId);
     if (appointment.quoteId) {
       dispatch(setSelectedChat({ id: appointment.quoteId }));
     }

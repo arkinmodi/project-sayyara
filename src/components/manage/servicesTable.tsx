@@ -98,29 +98,35 @@ const ServicesTable = (props: IServiceProps) => {
     );
   };
 
+  const partsTableHeader = (serviceData: IService) => {
+    return (
+      <div className={styles.servicesTableHeader}>
+        <h2>Parts</h2>
+        {userType === UserType.SHOP_OWNER ? (
+          <Button
+            label={"Add Part"}
+            icon="pi pi-plus"
+            className={styles.addServiceButtonGreen}
+            onClick={() => {
+              setServiceOnButtonClick(serviceData);
+              setAddPartDialogVisible(true);
+            }}
+          />
+        ) : (
+          <></>
+        )}
+      </div>
+    );
+  };
+
   const rowExpansionPartsTable = (serviceData: IService) => {
     const parts = serviceData.parts;
     return (
       <div className={styles.partsTable}>
-        <div className={styles.servicesTableHeader}>
-          <h2>Parts</h2>
-          {userType === UserType.SHOP_OWNER ? (
-            <Button
-              label={"Add Part"}
-              icon="pi pi-plus"
-              className={styles.addServiceButtonGreen}
-              onClick={() => {
-                setServiceOnButtonClick(serviceData);
-                setAddPartDialogVisible(true);
-              }}
-            />
-          ) : (
-            <></>
-          )}
-        </div>
         {parts.length > 0 ? (
           <DataTable
             value={parts}
+            header={partsTableHeader(serviceData)}
             responsiveLayout="scroll"
             paginator
             showGridlines
