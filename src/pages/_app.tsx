@@ -48,7 +48,7 @@ const MyApp: FC<
         detail: "Internet re-connected!",
       });
     }
-  }, [isOnline]);
+  }, [prevIsOnline, isOnline]);
 
   return (
     <Provider store={store}>
