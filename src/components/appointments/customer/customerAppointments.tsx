@@ -212,7 +212,7 @@ const CustomerAppointments = () => {
                     handleButtonClick(
                       e,
                       appointment as ICustomerAppointment,
-                      AppointmentStatus.REJECTED
+                      AppointmentStatus.CANCELLED
                     )
                   }
                 />

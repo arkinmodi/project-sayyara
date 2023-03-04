@@ -14,13 +14,26 @@ interface IAppointmentCardProps {
   appointmentProgress: AppointmentStatus;
   showToast: (status: AppointmentStatus) => void;
   toggleActiveTab: () => void;
+  onOpenCancelDialog: (id: string) => void;
 }
 
 const AppointmentCard = (props: IAppointmentCardProps) => {
   const dispatch = useDispatch();
 
-  const { appointment, appointmentProgress, showToast, toggleActiveTab } =
-    props;
+  const {
+    appointment,
+    appointmentProgress,
+    showToast,
+    toggleActiveTab,
+    onOpenCancelDialog,
+  } = props;
+
+  const hideDialog = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    e.stopPropagation();
+    onOpenCancelDialog(appointment.id);
+  };
 
   const handleButtonClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -107,9 +120,11 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
               styles.appointmentButtonRed,
               styles.appointmentCardButton
             )}
-            onClick={(e) =>
-              handleButtonClick(e, appointment, AppointmentStatus.REJECTED)
-            }
+            onClick={(e) => hideDialog(e)}
+
+            // onClick={(e) =>
+            //   handleButtonClick(e, appointment, AppointmentStatus.CANCELLED)
+            // }
           />
           <Button
             label="In Progress"
