@@ -189,19 +189,24 @@ intended use, and goals of stakeholders.
 
 \subsection{Legal Requirements}
 \begin{enumerate}
-\item \textbf{NFRT-LR1-1}
+	\item \textbf{NFRT-LR1-1}
 
-How test will be performed: The testers will go through the source code of the project and project
-documents to determine if any open source resources were used and check that appropriate credits
-and/or copyright licenses are used.
+	      How test will be performed: The testers will go through the source code of the project and project
+	      documents to determine if any open source resources were used and check that appropriate credits
+	      and/or copyright licenses are used.
 
-Results: Passed. Checked the MIT License requirements and that the project adhered to all the
-requirements.
+	      Results: Passed. Checked the MIT License requirements and that the project adhered to all the
+	      requirements.
 
-=======
+	      Results: Passed. Manually tested to verify that the application supports the above device
+	      dimensions.
+\end{enumerate}
+
 \subsection{Operational and Environmental Requirements}
 \begin{enumerate}
 	\item \textbf{NFRT-OE-1}
+
+	      Type: Dynamic, Manual
 
 	      How test will be performed: The testers will complete the manual system tests for functional
 	      requirements listed section \ref{Tests for Functional Requirements} on Google Chrome using various
@@ -210,8 +215,9 @@ requirements.
 		      \times 667$), and iPad Air ($820 \times 1180$). This set will provide a reasonable variety of
 	      different device dimensions.
 
-	      Results: Passed. Manually tested to verify that the application supports the above device
-	      dimensions. >>>>>>> 47f4060 (Add report for NFR operational and environmental testing)
+	      Results: Failed. Manually tested to verify whether the application supports the above device
+	      dimensions. Shop lookup page does not work on iPad Air ($820 \times 1180$) dimensions. Chat window
+	      does not work on iPhone SE ($375 \times 667$) dimensions.
 \end{enumerate}
 
 \section{Unit Testing}
