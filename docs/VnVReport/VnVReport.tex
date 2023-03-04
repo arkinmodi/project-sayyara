@@ -11,7 +11,6 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
-\usepackage{pdflscape}
 \usepackage{longtable}
 \usepackage{multirow}
 \usepackage{amsfonts}
@@ -40,6 +39,7 @@
 		February 22, 2023 & Arkin Modi            & Add Automated Testing Section                             \\
 		March 3, 2023     & Joy Xiao              & Add Tests Evaluations for Legal and Cultural Requirements \\
 		March 4, 2023     & Leon So               & Add Introduction                                          \\
+		March 4, 2023     & Arkin Modi            & Add Unit Testing Summary Table                            \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -145,21 +145,64 @@ intended use, and goals of stakeholders.
 
 \newpage
 
-\begin{landscape}
-	\section{Unit Testing}
+\section{Unit Testing}
 
-	\begin{longtable}{|c|c|c|c|c|c|c|c|c|c|}
-		\caption{Unit Tests Results Summary} \label{Table Unit Tests Result Summary}                                                                                                                                                                                           \\
-		\toprule
-        \textbf{Module} & \multicolumn{2}{c|}{\textbf{Create}} & \multicolumn{2}{c|}{\textbf{Get}} & \multicolumn{3}{c|}{\textbf{Update}} & \multicolumn{2}{c|}{\textbf{Delete}}                                                                                                             \\
-		~ & \textbf{Positive}                    & \textbf{Invalid Body}             & \textbf{Positive}                    & \textbf{Invalid ID}                  & \textbf{Positive} & \textbf{Invalid ID} & \textbf{Invalid Body} & \textbf{Positive} & \textbf{Invalid ID} \\
-		\midrule
-        User Module & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & ~ & ~ & ~ & ~ & ~ \\
-		\bottomrule
-        \multicolumn{10}{c}{$\checkmark$ = Pass, X = Fail, $\square$ = N/A} \\
-        \bottomrule
-	\end{longtable}
-\end{landscape}
+\begin{longtable}{|l|c|l|c|l|c|}
+	\caption{Unit Tests Results Summary} \label{Table Unit Tests Result Summary}                                 \\
+	\toprule
+	\multicolumn{6}{c}{$\checkmark$ = Pass, X = Fail}                                                            \\
+	\toprule
+	\textbf{Test ID} & \textbf{Result} & \textbf{Test ID} & \textbf{Result} & \textbf{Test ID} & \textbf{Result} \\
+	\midrule
+	FRT-M3-1         & $\checkmark$    & FRT-M3-2         & $\checkmark$    & FRT-M3-3         & $\checkmark$    \\
+	\midrule
+	FRT-M3-4         & $\checkmark$    & FRT-M3-5         & $\checkmark$    & FRT-M3-6         & $\checkmark$    \\
+	\midrule
+	FRT-M3-7         & $\checkmark$    & FRT-M3-8         & $\checkmark$    & FRT-M3-9         & $\checkmark$    \\
+	\midrule
+	FRT-M3-10        & $\checkmark$    & FRT-M4-1         & $\checkmark$    & FRT-M4-2         & $\checkmark$    \\
+	\midrule
+	FRT-M4-3         & $\checkmark$    & FRT-M4-4         & $\checkmark$    & FRT-M4-5         & $\checkmark$    \\
+	\midrule
+	FRT-M3-6         & $\checkmark$    & FRT-M4-7         & $\checkmark$    & FRT-M4-8         & $\checkmark$    \\
+	\midrule
+	FRT-M4-9         & $\checkmark$    & FRT-M4-10        & $\checkmark$    & FRT-M4-11        & $\checkmark$    \\
+	\midrule
+	FRT-M4-12        & $\checkmark$    & FRT-M4-13        & $\checkmark$    & FRT-M4-14        & $\checkmark$    \\
+	\midrule
+	FRT-M4-15        & $\checkmark$    & FRT-M4-16        & $\checkmark$    & FRT-M4-17        & $\checkmark$    \\
+	\midrule
+	FRT-M5-1         & $\checkmark$    & FRT-M5-2         & $\checkmark$    & FRT-M5-3         & $\checkmark$    \\
+	\midrule
+	FRT-M5-4         & $\checkmark$    & FRT-M5-5         & $\checkmark$    & FRT-M5-6         & $\checkmark$    \\
+	\midrule
+	FRT-M5-7         & $\checkmark$    & FRT-M5-8         & $\checkmark$    & FRT-M5-9         & $\checkmark$    \\
+	\midrule
+	FRT-M5-10        & $\checkmark$    & FRT-M5-11        & $\checkmark$    & FRT-M5-12        & $\checkmark$    \\
+	\midrule
+	FRT-M5-13        & $\checkmark$    & FRT-M5-14        & $\checkmark$    & FRT-M6-1         & $\checkmark$    \\
+	\midrule
+	FRT-M6-2         & $\checkmark$    & FRT-M6-3         & $\checkmark$    & FRT-M6-4         & $\checkmark$    \\
+	\midrule
+	FRT-M6-5         & $\checkmark$    & FRT-M6-6         & $\checkmark$    & FRT-M6-7         & $\checkmark$    \\
+	\midrule
+	FRT-M7-1         & $\checkmark$    & FRT-M7-2         & $\checkmark$    & FRT-M7-3         & $\checkmark$    \\
+	\midrule
+	FRT-M7-4         & $\checkmark$    & FRT-M7-5         & $\checkmark$    & FRT-M7-6         & $\checkmark$    \\
+	\midrule
+	FRT-M8-1         & $\checkmark$    & FRT-M8-2         & $\checkmark$    & FRT-M8-3         & $\checkmark$    \\
+	\midrule
+	FRT-M8-4         & $\checkmark$    & FRT-M8-5         & $\checkmark$    & FRT-M8-6         & $\checkmark$    \\
+	\midrule
+	FRT-M8-7         & $\checkmark$    & FRT-M8-8         & $\checkmark$    & FRT-M8-9         & $\checkmark$    \\
+	\midrule
+	FRT-M8-10        & $\checkmark$    & FRT-M8-11        & $\checkmark$    & FRT-M8-12        & $\checkmark$    \\
+	\midrule
+	FRT-M8-13        & $\checkmark$    & FRT-M8-14        & $\checkmark$    & FRT-M8-15        & $\checkmark$    \\
+	\midrule
+	FRT-M9-1         & ?               & ~                & ~               & ~                & ~               \\
+	\bottomrule
+\end{longtable}
 
 \newpage
 
