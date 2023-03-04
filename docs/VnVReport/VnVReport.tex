@@ -35,6 +35,7 @@
 		\midrule
 		February 22, 2023 & Arkin Modi            & Add Automated Testing Section                                \\
 		March 3, 2023     & Joy Xiao              & Add Tests Evaluations for Legal and Cultural Requirements    \\
+		March 4, 2023     & Leon So               & Add Introduction                                             \\
 		March 4, 2023     & Timothy Choy          & Add Test Evaluations for Usability and Humanity Requirements \\
 		\bottomrule
 	\end{tabularx}
@@ -46,11 +47,14 @@
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l}
 	\toprule
-	\textbf{symbol} & \textbf{description}   \\
+	\textbf{symbol} & \textbf{description}                \\
 	\midrule
-	T               & Test                   \\
-	CI              & Continuous Integration \\
-	CD              & Continuous Deployment  \\
+	CD              & Continuous Deployment               \\
+	CI              & Continuous Integration              \\
+	PWA             & Progressive Web Application         \\
+	SRS             & Software Requirements Specification \\
+	T               & Test                                \\
+	VnV             & Verification and Validation         \\
 	\bottomrule
 \end{tabular}\\
 
@@ -66,7 +70,35 @@
 
 \pagenumbering{arabic}
 
-This document ...
+\section{Introduction}
+
+\subsection{Project Summary}
+
+Sayyara is a Progressive Web Application (PWA) which acts as a single platform for independent auto
+repair shops and vehicle owners. This platform allows independent auto repair shops and vehicle
+owners to interact in various ways. Using Sayyara, vehicle owners can search for auto repair shops
+and services based on a variety of search filters; request quotes for service; book, view, and
+manage service appointments. On the application, auto repair shop owners have full shop management
+capabilities such as: adding and managing a list of employees; managing a list of service types and
+corresponding service appointment availabilities; managing store information such as location,
+hours of operation, and contact information. Auto repair shop owners and employees will be able to
+manage quotes, service appointments, and work orders from a single application.
+
+\subsection{Purpose of Document}
+This document outlines the validation and verification process for the application, Sayyara, and a
+detailed summary of results for the planned tests defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}.
+
+\subsection{Scope of Testing}
+As defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan},
+the tests reported aim to verify and validate functional and nonfunctional requirements listed in
+the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+In addition, the testing reported in this document aims to validate that the application provides
+adequate usability and to verify that system is in a functional state for the end users. The
+testing and validation will aid in ensuring that the product fulfills the system requirements,
+intended use, and goals of stakeholders.
 
 \section{Functional Requirements Evaluation}
 
