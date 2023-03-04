@@ -37,6 +37,7 @@
 		March 3, 2023     & Joy Xiao              & Add Tests Evaluations for Legal and Cultural Requirements \\
 		March 3, 2023     & Joy Xiao              & Add Services and Appointments Test Evaluations            \\
 		March 4, 2023     & Leon So               & Add Introduction                                          \\
+		March 4, 2023     & Arkin Modi            & Update Look and Feel Requirements Tests                   \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -269,9 +270,67 @@ This section will contain tests covering the ``Appointments'' requirements defin
 
 \section{Nonfunctional Requirements Evaluation}
 
-\subsection{Usability}
+\subsection{Look and Feel Requirements}
+\begin{enumerate}
 
-\subsection{Performance}
+	\item \textbf{NFRT-LF1-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the Google Chrome web browser
+
+	      Input/Condition: The window size is changed
+
+	      Output/Result: The application shall adjust and scale to fit the new window size
+
+	      How test will be performed: The tester will access the application through Google Chrome on their
+	      desktop/laptop and change the windows through the use of Google Chrome DevTools Device Toolbar
+
+	      Results: Passed
+
+	\item \textbf{NFRT-LF2-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the Google Chrome web browser
+
+	      Input: The application is opened in a full screened web browser window
+
+	      Output: All text on the screen shall be readable
+
+	      How test will be performed: The tester open the application in a full screened web browser window,
+	      navigate to all pages, and judge if all text on the screen is readable from sitting 50 centimeters
+	      away from the monitor
+
+	      Results: Passed
+
+	\item \textbf{NFRT-LF3-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the Google Chrome web browser and there is a
+	      completed work order and quote on the user's account
+
+	      Input: The user opens the work order details and the quote details
+
+	      Output: All currency shall be rounded to two decimal places
+
+	      How test will be performed: The tester will navigate to the work order and quote and verify that
+	      all values of currency are rounded to two decimal places
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsection{Usability and Humanity Requirements}
+
+\subsection{Performance Requirements}
+
+\subsection{Operational and Environmental Requirements}
+
+\subsection{Maintainability and Support Requirements}
+
+\subsection{Security Requirements}
 
 \subsection{Cultural Requirements}
 \begin{enumerate}
