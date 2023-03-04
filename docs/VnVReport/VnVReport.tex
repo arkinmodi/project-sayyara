@@ -31,12 +31,13 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                                           \\
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                                              \\
 		\midrule
-		February 22, 2023 & Arkin Modi            & Add Automated Testing Section                             \\
-		March 3, 2023     & Joy Xiao              & Add Tests Evaluations for Legal and Cultural Requirements \\
-		March 4, 2023     & Leon So               & Add Introduction                                          \\
-		March 4, 2023     & Arkin Modi            & Update Look and Feel Requirements Tests                   \\
+		February 22, 2023 & Arkin Modi            & Add Automated Testing Section                                \\
+		March 3, 2023     & Joy Xiao              & Add Tests Evaluations for Legal and Cultural Requirements    \\
+		March 4, 2023     & Leon So               & Add Introduction                                             \\
+		March 4, 2023     & Arkin Modi            & Update Look and Feel Requirements Tests                      \\
+		March 4, 2023     & Leon So               & Add NFR Tests for Operational and Environmental Requirements \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -149,6 +150,7 @@ intended use, and goals of stakeholders.
 
 	      Output: All currency shall be rounded to two decimal places
 
+	      <<<<<<< HEAD
 	      How test will be performed: The tester will navigate to the work order and quote and verify that
 	      all values of currency are rounded to two decimal places
 
@@ -187,15 +189,29 @@ intended use, and goals of stakeholders.
 
 \subsection{Legal Requirements}
 \begin{enumerate}
-	\item \textbf{NFRT-LR1-1}
+\item \textbf{NFRT-LR1-1}
 
-	      How test will be performed: The testers will go through the source code of the project and project
-	      documents to determine if any open source resources were used and check that appropriate credits
-	      and/or copyright licenses are used.
+How test will be performed: The testers will go through the source code of the project and project
+documents to determine if any open source resources were used and check that appropriate credits
+and/or copyright licenses are used.
 
-	      Results: Passed. Checked the MIT License requirements and that the project adhered to all the
-	      requirements.
+Results: Passed. Checked the MIT License requirements and that the project adhered to all the
+requirements.
 
+=======
+\subsection{Operational and Environmental Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-OE-1}
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements listed section \ref{Tests for Functional Requirements} on Google Chrome using various
+	      device dimension options listed in the Google DevTools Device Toolbar. At minimum, the testers will
+	      test with the following dimensions: Responsive, iPhone 12 Pro ($390 \times 844$), iPhone SE ($375
+		      \times 667$), and iPad Air ($820 \times 1180$). This set will provide a reasonable variety of
+	      different device dimensions.
+
+	      Results: Passed. Manually tested to verify that the application supports the above device
+	      dimensions. >>>>>>> 47f4060 (Add report for NFR operational and environmental testing)
 \end{enumerate}
 
 \section{Unit Testing}
