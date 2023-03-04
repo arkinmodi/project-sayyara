@@ -11,6 +11,10 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
+\usepackage{pdflscape}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{amsfonts}
 
 \input{../Comments}
 \input{../Common}
@@ -76,7 +80,25 @@ This document ...
 
 \subsection{etc.}
 
-\section{Unit Testing}
+\newpage
+
+\begin{landscape}
+	\section{Unit Testing}
+
+	\begin{longtable}{|c|c|c|c|c|c|c|c|c|c|}
+		\caption{Unit Tests Results Summary} \label{Table Unit Tests Result Summary}                                                                                                                                                                                           \\
+		\toprule
+        \textbf{Module} & \multicolumn{2}{c|}{\textbf{Create}} & \multicolumn{2}{c|}{\textbf{Get}} & \multicolumn{3}{c|}{\textbf{Update}} & \multicolumn{2}{c|}{\textbf{Delete}}                                                                                                             \\
+		~ & \textbf{Positive}                    & \textbf{Invalid Body}             & \textbf{Positive}                    & \textbf{Invalid ID}                  & \textbf{Positive} & \textbf{Invalid ID} & \textbf{Invalid Body} & \textbf{Positive} & \textbf{Invalid ID} \\
+		\midrule
+        User Module & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & ~ & ~ & ~ & ~ & ~ \\
+		\bottomrule
+        \multicolumn{10}{c}{$\checkmark$ = Pass, X = Fail, $\square$ = N/A} \\
+        \bottomrule
+	\end{longtable}
+\end{landscape}
+
+\newpage
 
 \section{Changes Due to Testing}
 
