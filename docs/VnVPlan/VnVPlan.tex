@@ -75,7 +75,7 @@
 	March 1, 2023    & Arkin Modi            & Add Unit Tests for Work Orders Module                      \\
 	March 1, 2023    & Arkin Modi            & Add Unit Tests for Services Module                         \\
 	March 3, 2023    & Arkin Modi            & Add Unit Tests for Nonfunctional Requirements              \\
-	March 4, 2023    & Arkin Modi            & Update Employee Management System Tests and add Unit Tests \\
+	March 4, 2023    & Joy Xiao              & Update Employee Management System Tests and add Unit Tests \\
 	\bottomrule
 \end{longtable}
 
@@ -1018,7 +1018,7 @@ This section will contain tests covering the ``Employee Management'' requirement
 
 	      Initial State: Shop Owner has a shop profile
 
-	      Input: Employee signs up using valid information
+	      Input: Employee signs up using valid user sign up information and shop ID
 
 	      Output: Employee account is created and associated with the shop ID that was entered
 
@@ -1026,7 +1026,7 @@ This section will contain tests covering the ``Employee Management'' requirement
 	      provided
 
 	      How test will be performed: The tester will use a shop ID displayed on the shop owner's employee
-	      profile page and go through the sign up flow as an employee. The tester will confirm that the
+	      management page and go through the sign up flow as an employee. The tester will confirm that the
 	      employee account has the appropriate privileges
 
 	\item \textbf{FRT-BE24-2}
@@ -1035,14 +1035,15 @@ This section will contain tests covering the ``Employee Management'' requirement
 
 	      Initial State: Shop Owner has a shop profile
 
-	      Input: Employee signs up using invalid information
+	      Input: Employee signs up using invalid user sign up information and shop ID
 
 	      Output: Message indicating that the inputs are not valid
 
 	      Test Case Derivation: The system shall not allow the employee to sign up with the information
 	      provided
 
-	      How test will be performed: The tester will use invalid information to sign up as an employee
+	      How test will be performed: The tester will use invalid user sign up information and invalid shop
+	      ID to sign up as an employee
 
 	\item \textbf{FRT-BE25-1}
 
@@ -2499,13 +2500,14 @@ were chosen based on common user flows.
 
 	      Initial State: A shop and a shop owner exist
 
-	      Input: Create employee account request with valid information
+	      Input: Create employee account request with valid user information and shop ID
 
 	      Output: Create the employee account
 
 	      Test Case Derivation: Employee at a shop wants to sign up for an account
 
-	      How test will be performed: Jest will send a create employee account request with valid information
+	      How test will be performed: Jest will send a create employee account request with valid user
+	      information and shop ID
 
 	\item \textbf{FRT-M7-2}
 
@@ -2513,14 +2515,14 @@ were chosen based on common user flows.
 
 	      Initial State: A shop and a shop owner exist
 
-	      Input: Create employee account request with invalid information
+	      Input: Create employee account request with invalid user information and shop ID
 
 	      Output: Request is rejected
 
 	      Test Case Derivation: Employee at a shop wants to sign up for an account
 
-	      How test will be performed: Jest will send a create employee account request with invalid
-	      information
+	      How test will be performed: Jest will send a create employee account request with invalid user
+	      information and shop ID
 
 	\item \textbf{FRT-M7-3}
 
@@ -2548,7 +2550,7 @@ were chosen based on common user flows.
 
 	      Test Case Derivation: A shop owner with employees wants to view the list of employees
 
-	      How test will be performed: Jest will send a get employees request with a invalid shop ID
+	      How test will be performed: Jest will send a get employees request with an invalid shop ID
 
 	\item \textbf{FRT-M7-5}
 

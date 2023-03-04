@@ -31,9 +31,11 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}               \\
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                                           \\
 		\midrule
-		February 22, 2023 & Arkin Modi            & Add Automated Testing Section \\
+		February 22, 2023 & Arkin Modi            & Add Automated Testing Section                             \\
+		March 3, 2023     & Joy Xiao              & Add Tests Evaluations for Legal and Cultural Requirements \\
+
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -74,7 +76,37 @@ This document ...
 
 \subsection{Performance}
 
-\subsection{etc.}
+\subsection{Cultural Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-CR1-1}
+
+	      How test will be performed: The testers will go through end to end tests for the entire program and
+	      will confirm that any texts or images are not offensive.
+
+	      Results: Passed. Manually tested to verify that there are no offensive images or text.
+
+	\item \textbf{NFRT-CR2-1}
+
+	      How test will be performed: The testers will go through end-to-end tests for the entire program and
+	      will confirm that the text displayed is in English.
+
+	      Results: Passed. Checked that everything is written in English in the implementation,
+	      documentation, and anything visible to the user.
+
+\end{enumerate}
+
+\subsection{Legal Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-LR1-1}
+
+	      How test will be performed: The testers will go through the source code of the project and project
+	      documents to determine if any open source resources were used and check that appropriate credits
+	      and/or copyright licenses are used.
+
+	      Results: Passed. Checked the MIT License requirements and that the project adhered to all the
+	      requirements.
+
+\end{enumerate}
 
 \section{Unit Testing}
 
