@@ -214,7 +214,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
     }
   };
 
-  const deleteProductDialogFooter = (
+  const cancelAppointmentDialogFooter = (
     <div>
       <Button
         label="No"
@@ -256,15 +256,11 @@ const ShopAppointments = (props: IAppointmentsProps) => {
             breakpoints={{ "960px": "75vw", "641px": "90vw" }}
             header="Confirm Cancellation"
             modal
-            footer={deleteProductDialogFooter}
+            footer={cancelAppointmentDialogFooter}
             onHide={hideCancelAppointmentDialog}
           >
-            <div>
-              <i
-                className="pi pi-exclamation-triangle"
-                style={{ fontSize: "2rem" }}
-              />
-              <label htmlFor="reason">
+            <div className={styles.cancelInputText}>
+              <label className={styles.cancelInputBox} htmlFor="reason">
                 Please enter a reason for cancellation:
               </label>
               <InputText
@@ -274,7 +270,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
                 onChange={onInputChange}
                 required
                 autoFocus
-                className={classNames({
+                className={classNames(styles.cancelInputBox, {
                   "p-invalid": submitted && cancellationReason === "",
                 })}
               />

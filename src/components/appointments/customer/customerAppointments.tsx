@@ -212,7 +212,7 @@ const CustomerAppointments = () => {
     setCancellationReason("");
   };
 
-  const openCancelAppointmentDialog = (
+  const cancelAppointmentDialogFooter = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     id: string
   ) => {
@@ -258,7 +258,7 @@ const CustomerAppointments = () => {
               <h2 className="mb-1">
                 {(appointment as ICustomerAppointment).shopName}
               </h2>
-              <h2
+              <h4
                 className="mb-1"
                 style={{
                   display:
@@ -267,13 +267,13 @@ const CustomerAppointments = () => {
                       : "none",
                 }}
               >
-                {`Cancellation reason: ${
+                {`Cancellation Reason: ${
                   (appointment as ICustomerAppointment).cancellationReason
                     ? (appointment as ICustomerAppointment).cancellationReason
                     : "cancelled"
                 }`}
-              </h2>
-              <h2
+              </h4>
+              <h4
                 className="mb-1"
                 style={{
                   display:
@@ -282,9 +282,18 @@ const CustomerAppointments = () => {
                       : "none",
                 }}
               >
-                Appointment request rejected
-              </h2>
-              <h2 className="mb-1">
+                Service Request Rejected
+              </h4>
+              <h2
+                className="mb-1"
+                style={{
+                  display:
+                    appointment.status === AppointmentStatus.CANCELLED ||
+                    appointment.status === AppointmentStatus.REJECTED
+                      ? "none"
+                      : "block",
+                }}
+              >
                 {(appointment as ICustomerAppointment).shopAddress}
               </h2>
               <h4 className="mb-1">
@@ -294,20 +303,14 @@ const CustomerAppointments = () => {
                 {new Date(appointment.startTime).toLocaleString()}
               </h4>
               {(appointment as ICustomerAppointment).status ===
-                AppointmentStatus.PENDING_APPROVAL ||
+                AppointmentStatus.ACCEPTED ||
               (appointment as ICustomerAppointment).status ===
-                AppointmentStatus.ACCEPTED ? (
+                AppointmentStatus.PENDING_APPROVAL ? (
                 <Button
                   label="Cancel"
                   className={styles.appointmentButtonRed}
-                  onClick={
-                    (e) => openCancelAppointmentDialog(e, appointment.id)
-                    // update with cancellation reason
-                    // handleButtonClick(
-                    //   e,
-                    //   appointment as ICustomerAppointment,
-                    //   AppointmentStatus.CANCELLED
-                    // )
+                  onClick={(e) =>
+                    cancelAppointmentDialogFooter(e, appointment.id)
                   }
                 />
               ) : (
@@ -412,12 +415,8 @@ const CustomerAppointments = () => {
         footer={deleteProductDialogFooter}
         onHide={hideCancelAppointmentDialog}
       >
-        <div>
-          <i
-            className="pi pi-exclamation-triangle"
-            style={{ fontSize: "2rem" }}
-          />
-          <label htmlFor="reason">
+        <div className={styles.cancelInputText}>
+          <label className={styles.cancelInputBox} htmlFor="reason">
             Please enter a reason for cancellation:
           </label>
           <InputText
@@ -427,7 +426,7 @@ const CustomerAppointments = () => {
             onChange={onInputChange}
             required
             autoFocus
-            className={classNames({
+            className={classNames(styles.cancelInputBox, {
               "p-invalid": submitted && cancellationReason === "",
             })}
           />
