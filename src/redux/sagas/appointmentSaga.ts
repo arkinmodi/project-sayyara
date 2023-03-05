@@ -17,6 +17,7 @@ import { getShopId } from "src/utils/shopUtil";
 import {
   IAppointmentActionCreateAppointment,
   IAppointmentActionSetAppointmentStatus,
+  IAppointmentActionSetCancelAppointment,
 } from "../actions/appointmentAction";
 import AppointmentTypes from "../types/appointmentTypes";
 
@@ -46,6 +47,29 @@ function patchAppointmentStatus(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ status: content.status }),
+  }).then((res) => {
+    if (res.status === 200) {
+      return true;
+    } else {
+      // TODO: check and handle errors
+      return false;
+    }
+  });
+}
+
+function patchCancelAppointment(
+  content: IAppointmentActionSetCancelAppointment["payload"]
+): Promise<boolean> {
+  return fetch(`/api/appointment/${content.id}`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      cancellation_reason: content.reason,
+      status: AppointmentStatus.CANCELLED,
+    }),
   }).then((res) => {
     if (res.status === 200) {
       return true;
@@ -93,6 +117,7 @@ function getCustomerAppointments(
                 price: appointment.price,
                 status: appointment.status,
                 workOrderId: appointment.work_order_id,
+                cancellationReason: appointment.cancellation_reason,
               };
 
               return customerAppointment;
@@ -123,6 +148,20 @@ function* setAppointmentStatus(
   const success = yield call(patchAppointmentStatus, action.payload);
   if (success) {
     if (userType === UserType.SHOP_OWNER || userType == UserType.EMPLOYEE) {
+      yield put({ type: ShopTypes.READ_SHOP_APPOINTMENTS });
+    } else {
+      yield call(readAppointments);
+    }
+  }
+}
+
+function* setCancelAppointment(
+  action: IAppointmentActionSetCancelAppointment
+): Generator<CallEffect | PutEffect | SelectEffect> {
+  const userType = yield select(AuthSelectors.getUserType);
+  const success = yield call(patchCancelAppointment, action.payload);
+  if (success) {
+    if (userType === UserType.SHOP_OWNER || userType === UserType.EMPLOYEE) {
       yield put({ type: ShopTypes.READ_SHOP_APPOINTMENTS });
     } else {
       yield call(readAppointments);
@@ -187,5 +226,6 @@ export function* appointmentSaga() {
     takeEvery(AppointmentTypes.SET_APPOINTMENT_STATUS, setAppointmentStatus),
     takeEvery(AppointmentTypes.READ_APPOINTMENTS, readAppointments),
     takeEvery(AppointmentTypes.CREATE_APPOINTMENT, createAppointment),
+    takeEvery(AppointmentTypes.SET_CANCEL_APPOINTMENT, setCancelAppointment),
   ]);
 }

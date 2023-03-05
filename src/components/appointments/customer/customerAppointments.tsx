@@ -1,16 +1,26 @@
 import { UserType } from "@prisma/client";
 import {
   readAppointments,
-  setAppointmentStatus,
+  setCancelAppointment,
 } from "@redux/actions/appointmentAction";
 import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/pages/appointments/CustomerAppointments.module.css";
+import classNames from "classnames";
 import Router from "next/router";
 import { Accordion, AccordionTab } from "primereact/accordion";
 import { Button } from "primereact/button";
 import { Carousel } from "primereact/carousel";
-import React, { useCallback, useEffect, useState } from "react";
+import { Dialog } from "primereact/dialog";
+import { InputText } from "primereact/inputtext";
+import { Toast } from "primereact/toast";
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ICustomerAppointment } from "src/types/appointment";
 import { AppointmentStatus } from "../../../types/appointment";
@@ -47,7 +57,16 @@ const CustomerAppointments = () => {
   const [pastAppointments, setPastAppointments] = useState<
     ICustomerAppointment[]
   >([]);
+  const [rejectedOrCancelledAppointments, setRejectedOrCancelledAppointments] =
+    useState<ICustomerAppointment[]>([]);
   const [_numItemVisible, setNumItemVisible] = useState(0);
+  const [cancellationReason, setCancellationReason] = useState("");
+  const [cancelAppointmentDialog, setCancelAppointmentDialog] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [cancelledAppointmentId, setCancelledAppointmentId] = useState<
+    string | null
+  >(null);
+  const toast = useRef<Toast>(null);
 
   /**
    * Carousel resizes items if there are less than numVisible items.
@@ -161,17 +180,75 @@ const CustomerAppointments = () => {
       (appointment: ICustomerAppointment) =>
         appointment.status == AppointmentStatus.COMPLETED
     );
-
     setPastAppointments(pastAppointmentsList);
+
+    const rejectedOrCancelledAppointmentsList = appointmentsList.filter(
+      (appointment: ICustomerAppointment) =>
+        appointment.status == AppointmentStatus.CANCELLED ||
+        appointment.status == AppointmentStatus.REJECTED
+    );
+    setRejectedOrCancelledAppointments(rejectedOrCancelledAppointmentsList);
   }, [appointments]);
 
-  const handleButtonClick = (
+  const showToast = () => {
+    if (toast.current) {
+      toast.current.show({
+        severity: "info",
+        detail: "Appointment cancelled",
+        sticky: true,
+      });
+    }
+  };
+
+  const cancelAppointment = () => {
+    setSubmitted(true);
+    if (cancellationReason.length > 0 && cancelledAppointmentId != null) {
+      dispatch(
+        setCancelAppointment({
+          id: cancelledAppointmentId,
+          reason: cancellationReason,
+        })
+      );
+      setCancelAppointmentDialog(false);
+      showToast();
+    }
+  };
+
+  const hideCancelAppointmentDialog = () => {
+    setSubmitted(false);
+    setCancelAppointmentDialog(false);
+    setCancellationReason("");
+  };
+
+  const cancelAppointmentDialogFooter = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    appointment: ICustomerAppointment,
-    status: AppointmentStatus
-  ): void => {
+    id: string
+  ) => {
     e.stopPropagation();
-    dispatch(setAppointmentStatus({ id: appointment.id, status: status }));
+    setCancelAppointmentDialog(true);
+    setCancelledAppointmentId(id);
+  };
+
+  const deleteProductDialogFooter = (
+    <div>
+      <Button
+        className={"blueButton"}
+        label="No"
+        icon="pi pi-times"
+        onClick={hideCancelAppointmentDialog}
+      />
+      <Button
+        className={"greenButton"}
+        label="Yes"
+        icon="pi pi-check"
+        onClick={cancelAppointment}
+      />
+    </div>
+  );
+
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value ?? "";
+    setCancellationReason(val);
   };
 
   const appointmentsCard = (appointment: ICustomerAppointment | null) => {
@@ -192,7 +269,42 @@ const CustomerAppointments = () => {
               <h2 className="mb-1">
                 {(appointment as ICustomerAppointment).shopName}
               </h2>
-              <h2 className="mb-1">
+              <h4
+                className="mb-1"
+                style={{
+                  display:
+                    appointment.status === AppointmentStatus.CANCELLED
+                      ? "block"
+                      : "none",
+                }}
+              >
+                {`Cancellation Reason: ${
+                  (appointment as ICustomerAppointment).cancellationReason
+                    ? (appointment as ICustomerAppointment).cancellationReason
+                    : "cancelled"
+                }`}
+              </h4>
+              <h4
+                className="mb-1"
+                style={{
+                  display:
+                    appointment.status === AppointmentStatus.REJECTED
+                      ? "block"
+                      : "none",
+                }}
+              >
+                Service Request Rejected
+              </h4>
+              <h2
+                className="mb-1"
+                style={{
+                  display:
+                    appointment.status === AppointmentStatus.CANCELLED ||
+                    appointment.status === AppointmentStatus.REJECTED
+                      ? "none"
+                      : "block",
+                }}
+              >
                 {(appointment as ICustomerAppointment).shopAddress}
               </h2>
               <h4 className="mb-1">
@@ -202,18 +314,14 @@ const CustomerAppointments = () => {
                 {new Date(appointment.startTime).toLocaleString()}
               </h4>
               {(appointment as ICustomerAppointment).status ===
-                AppointmentStatus.PENDING_APPROVAL ||
+                AppointmentStatus.ACCEPTED ||
               (appointment as ICustomerAppointment).status ===
-                AppointmentStatus.ACCEPTED ? (
+                AppointmentStatus.PENDING_APPROVAL ? (
                 <Button
                   label="Cancel"
                   className={styles.appointmentButtonRed}
                   onClick={(e) =>
-                    handleButtonClick(
-                      e,
-                      appointment as ICustomerAppointment,
-                      AppointmentStatus.REJECTED
-                    )
+                    cancelAppointmentDialogFooter(e, appointment.id)
                   }
                 />
               ) : (
@@ -230,7 +338,8 @@ const CustomerAppointments = () => {
 
   return (
     <div>
-      <Accordion multiple={true} activeIndex={[0, 1, 2, 3]}>
+      <Toast ref={toast} />
+      <Accordion multiple={true} activeIndex={[0, 1, 2, 3, 4]}>
         <AccordionTab header="Requested Services">
           <div className={styles.appointmentsCarousel}>
             {requestedAppointments.length > 0 ? (
@@ -291,7 +400,53 @@ const CustomerAppointments = () => {
             )}
           </div>
         </AccordionTab>
+        <AccordionTab header="Rejected/Cancelled Services">
+          <div className={styles.appointmentsCarousel}>
+            {rejectedOrCancelledAppointments.length > 0 ? (
+              <Carousel
+                value={getAppointmentsWithPlaceholders(
+                  rejectedOrCancelledAppointments
+                )}
+                numVisible={3}
+                numScroll={1}
+                responsiveOptions={responsiveOptions}
+                itemTemplate={appointmentsCard}
+              />
+            ) : (
+              <div> No rejected or cancelled services.</div>
+            )}
+          </div>
+        </AccordionTab>
       </Accordion>
+      <Dialog
+        visible={cancelAppointmentDialog}
+        style={{ width: "32rem" }}
+        breakpoints={{ "960px": "75vw", "641px": "90vw" }}
+        header="Confirm Cancellation"
+        modal
+        footer={deleteProductDialogFooter}
+        onHide={hideCancelAppointmentDialog}
+      >
+        <div className={styles.cancelInputText}>
+          <label className={styles.cancelInputBox} htmlFor="reason">
+            Please enter a reason for cancellation:
+          </label>
+          <InputText
+            id="reason"
+            name="reason"
+            value={cancellationReason}
+            onChange={onInputChange}
+            required
+            autoFocus
+            className={classNames(styles.cancelInputBox, {
+              "p-invalid": submitted && cancellationReason === "",
+            })}
+          />
+          {submitted && cancellationReason === "" && (
+            <small className="p-error">Cancellation reason required</small>
+          )}
+        </div>
+      </Dialog>
     </div>
   );
 };

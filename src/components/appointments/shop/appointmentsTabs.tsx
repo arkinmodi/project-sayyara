@@ -38,6 +38,12 @@ const AppointmentsTab = (props: IAppointmentTabsProps) => {
               toggleActiveTab={toggleActiveTab}
             />
           </TabPanel>
+          <TabPanel header="Cancelled">
+            <ShopAppointments
+              appointmentTab={AppointmentStatus.CANCELLED}
+              toggleActiveTab={toggleActiveTab}
+            />
+          </TabPanel>
         </TabView>
       </div>
 
@@ -64,6 +70,12 @@ const AppointmentsTab = (props: IAppointmentTabsProps) => {
           <TabPanel header={<i className="pi pi-check-circle"></i>}>
             <ShopAppointments
               appointmentTab={AppointmentStatus.COMPLETED}
+              toggleActiveTab={toggleActiveTab}
+            />
+          </TabPanel>
+          <TabPanel header={<i className="pi pi-times-circle"></i>}>
+            <ShopAppointments
+              appointmentTab={AppointmentStatus.CANCELLED}
               toggleActiveTab={toggleActiveTab}
             />
           </TabPanel>
