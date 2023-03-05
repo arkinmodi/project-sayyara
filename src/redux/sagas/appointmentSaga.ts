@@ -122,7 +122,7 @@ function* setAppointmentStatus(
   const userType = yield select(AuthSelectors.getUserType);
   const success = yield call(patchAppointmentStatus, action.payload);
   if (success) {
-    if (userType === UserType.SHOP_OWNER) {
+    if (userType === UserType.SHOP_OWNER || userType == UserType.EMPLOYEE) {
       yield put({ type: ShopTypes.READ_SHOP_APPOINTMENTS });
     } else {
       yield call(readAppointments);
