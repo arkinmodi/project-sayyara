@@ -217,11 +217,17 @@ const ShopAppointments = (props: IAppointmentsProps) => {
   const cancelAppointmentDialogFooter = (
     <div>
       <Button
+        className={"blueButton"}
         label="No"
         icon="pi pi-times"
         onClick={hideCancelAppointmentDialog}
       />
-      <Button label="Yes" icon="pi pi-check" onClick={cancelAppointment} />
+      <Button
+        className={"greenButton"}
+        label="Yes"
+        icon="pi pi-check"
+        onClick={cancelAppointment}
+      />
     </div>
   );
 

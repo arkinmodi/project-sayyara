@@ -179,7 +179,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
           <h3 className={styles.serviceNameHeaderText}>
             {appointment.serviceName}
           </h3>
-          <h2
+          <h4
             style={{
               display:
                 appointment.status === AppointmentStatus.CANCELLED
@@ -188,9 +188,11 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
             }}
           >
             Cancellation Reason: {appointment.cancellationReason}
-          </h2>
+          </h4>
           <div>
-            {`Customer Name: ${appointment.customer.first_name} ${appointment.customer.last_name}`}
+            <b>
+              {`Customer Name: ${appointment.customer.first_name} ${appointment.customer.last_name}`}
+            </b>
           </div>
           <div>Customer Phone Number: {appointment.customer.phone_number}</div>
           <div>
