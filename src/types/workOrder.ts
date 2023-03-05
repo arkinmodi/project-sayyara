@@ -17,4 +17,5 @@ export interface IWorkOrder {
   vehicle: IVehicle;
   employeeId: string | null;
   employee: IEmployee | null;
+  cancellationReason: string | null;
 }
