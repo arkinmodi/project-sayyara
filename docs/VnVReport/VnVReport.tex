@@ -39,6 +39,7 @@
 		March 4, 2023     & Arkin Modi            & Add Tests Evaluation for Security Requirements               \\
 		March 4, 2023     & Arkin Modi            & Update Look and Feel Requirements Tests                      \\
 		March 4, 2023     & Leon So               & Add NFR Tests for Operational and Environmental Requirements \\
+		March 4, 2023     & Timothy Choy          & Add Test Evaluations for Usability and Humanity Requirements \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -110,7 +111,6 @@ intended use, and goals of stakeholders.
 
 \subsection{Look and Feel Requirements}
 \begin{enumerate}
-
 	\item \textbf{NFRT-LF1-1}
 
 	      Type: Dynamic, Manual
@@ -161,6 +161,50 @@ intended use, and goals of stakeholders.
 \end{enumerate}
 
 \subsection{Usability and Humanity Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-UH1-1}
+
+	      Type: Dynamic, Manual
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements on a MacOS desktop/laptop device, a Windows desktop/laptop, an iOS mobile device, and
+	      an android mobile device.
+
+	      Results: Passed. Testers were asked to write down which device they used to test to ensure all
+	      devices and operating systems were covered.
+
+	\item \textbf{NFRT-UH2-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: Device is connected to the internet and application is not open.
+
+	      Input/Condition: The user launches the application on a web browser.
+
+	      Output/Result: The system can be assessed through the web browser.
+
+	      How test will be performed: The testers will attempt to launch the application on a web browser,
+	      using a device that is connected to the internet.
+
+	      Results: Passed. The testers were able to access the application using the web browser while
+	      connected to the internet.
+
+	\item \textbf{NFRT-UH3-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: Device is connected to the internet and application is open.
+
+	      Input/Condition: User disconnects from the internet.
+
+	      Output/Result: The system notifies the user that there is no network connection.
+
+	      How test will be performed: The testers disconnects from the internet while the application is
+	      open.
+
+	      Results: Passed. Testers were greeted with a toast when they disconnected from the internet.
+
+\end{enumerate}
 
 \subsection{Performance Requirements}
 
