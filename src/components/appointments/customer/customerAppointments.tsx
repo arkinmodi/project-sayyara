@@ -2,15 +2,19 @@ import { UserType } from "@prisma/client";
 import {
   readAppointments,
   setAppointmentStatus,
+  setCancelAppointment,
 } from "@redux/actions/appointmentAction";
 import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/pages/appointments/CustomerAppointments.module.css";
+import classNames from "classnames";
 import Router from "next/router";
 import { Accordion, AccordionTab } from "primereact/accordion";
 import { Button } from "primereact/button";
 import { Carousel } from "primereact/carousel";
-import React, { useCallback, useEffect, useState } from "react";
+import { Dialog } from "primereact/dialog";
+import { InputText } from "primereact/inputtext";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ICustomerAppointment } from "src/types/appointment";
 import { AppointmentStatus } from "../../../types/appointment";
@@ -50,6 +54,12 @@ const CustomerAppointments = () => {
   const [rejectedOrCancelledAppointments, setRejectedOrCancelledAppointments] =
     useState<ICustomerAppointment[]>([]);
   const [_numItemVisible, setNumItemVisible] = useState(0);
+  const [cancellationReason, setCancellationReason] = useState("");
+  const [cancelAppointmentDialog, setCancelAppointmentDialog] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [cancelledAppointmentId, setCancelledAppointmentId] = useState<
+    string | null
+  >(null);
 
   /**
    * Carousel resizes items if there are less than numVisible items.
@@ -183,6 +193,53 @@ const CustomerAppointments = () => {
     dispatch(setAppointmentStatus({ id: appointment.id, status: status }));
   };
 
+  const cancelAppointment = () => {
+    setSubmitted(true);
+    if (cancellationReason.length > 0 && cancelledAppointmentId != null) {
+      dispatch(
+        setCancelAppointment({
+          id: cancelledAppointmentId,
+          reason: cancellationReason,
+        })
+      );
+      setCancelAppointmentDialog(false);
+    }
+  };
+
+  const hideCancelAppointmentDialog = () => {
+    setSubmitted(false);
+    setCancelAppointmentDialog(false);
+    setCancellationReason("");
+  };
+
+  const openCancelAppointmentDialog = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: string
+  ) => {
+    e.stopPropagation();
+    setCancelAppointmentDialog(true);
+    setCancelledAppointmentId(id);
+  };
+
+  const deleteProductDialogFooter = (
+    <div>
+      <Button
+        label="No"
+        icon="pi pi-times"
+        onClick={hideCancelAppointmentDialog}
+      />
+      <Button label="Yes" icon="pi pi-check" onClick={cancelAppointment} />
+    </div>
+  );
+
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value ?? "";
+
+    setCancellationReason(val);
+
+    console.log(cancellationReason);
+  };
+
   const appointmentsCard = (appointment: ICustomerAppointment | null) => {
     return (
       <div className={styles.appointmentCarouselCardContainer}>
@@ -213,7 +270,7 @@ const CustomerAppointments = () => {
                 {`Cancellation reason: ${
                   (appointment as ICustomerAppointment).cancellationReason
                     ? (appointment as ICustomerAppointment).cancellationReason
-                    : "Cancelled"
+                    : "cancelled"
                 }`}
               </h2>
               <h2
@@ -243,12 +300,14 @@ const CustomerAppointments = () => {
                 <Button
                   label="Cancel"
                   className={styles.appointmentButtonRed}
-                  onClick={(e) =>
-                    handleButtonClick(
-                      e,
-                      appointment as ICustomerAppointment,
-                      AppointmentStatus.CANCELLED
-                    )
+                  onClick={
+                    (e) => openCancelAppointmentDialog(e, appointment.id)
+                    // update with cancellation reason
+                    // handleButtonClick(
+                    //   e,
+                    //   appointment as ICustomerAppointment,
+                    //   AppointmentStatus.CANCELLED
+                    // )
                   }
                 />
               ) : (
@@ -265,7 +324,7 @@ const CustomerAppointments = () => {
 
   return (
     <div>
-      <Accordion multiple={true} activeIndex={[0, 1, 2, 3]}>
+      <Accordion multiple={true} activeIndex={[0, 1, 2, 3, 4]}>
         <AccordionTab header="Requested Services">
           <div className={styles.appointmentsCarousel}>
             {requestedAppointments.length > 0 ? (
@@ -339,11 +398,44 @@ const CustomerAppointments = () => {
                 itemTemplate={appointmentsCard}
               />
             ) : (
-              <div> No past services.</div>
+              <div> No rejected or cancelled services.</div>
             )}
           </div>
         </AccordionTab>
       </Accordion>
+      <Dialog
+        visible={cancelAppointmentDialog}
+        style={{ width: "32rem" }}
+        breakpoints={{ "960px": "75vw", "641px": "90vw" }}
+        header="Confirm Cancellation"
+        modal
+        footer={deleteProductDialogFooter}
+        onHide={hideCancelAppointmentDialog}
+      >
+        <div>
+          <i
+            className="pi pi-exclamation-triangle"
+            style={{ fontSize: "2rem" }}
+          />
+          <label htmlFor="reason">
+            Please enter a reason for cancellation:
+          </label>
+          <InputText
+            id="reason"
+            name="reason"
+            value={cancellationReason}
+            onChange={onInputChange}
+            required
+            autoFocus
+            className={classNames({
+              "p-invalid": submitted && cancellationReason === "",
+            })}
+          />
+          {submitted && cancellationReason === "" && (
+            <small className="p-error">Cancellation reason required</small>
+          )}
+        </div>
+      </Dialog>
     </div>
   );
 };
