@@ -31,13 +31,14 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                                           \\
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                                              \\
 		\midrule
-		February 22, 2023 & Arkin Modi            & Add Automated Testing Section                             \\
-		March 3, 2023     & Joy Xiao              & Add Tests Evaluations for Legal and Cultural Requirements \\
-		March 4, 2023     & Leon So               & Add Introduction                                          \\
-		March 4, 2023     & Arkin Modi            & Add Tests Evaluation for Security Requirements            \\
-		March 4, 2023     & Arkin Modi            & Update Look and Feel Requirements Tests                   \\
+		February 22, 2023 & Arkin Modi            & Add Automated Testing Section                                \\
+		March 3, 2023     & Joy Xiao              & Add Tests Evaluations for Legal and Cultural Requirements    \\
+		March 4, 2023     & Leon So               & Add Introduction                                             \\
+		March 4, 2023     & Arkin Modi            & Add Tests Evaluation for Security Requirements               \\
+		March 4, 2023     & Arkin Modi            & Update Look and Feel Requirements Tests                      \\
+		March 4, 2023     & Leon So               & Add NFR Tests for Operational and Environmental Requirements \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -129,7 +130,7 @@ intended use, and goals of stakeholders.
 
 	      Type: Dynamic, Manual
 
-	      Initial State: The application is accessible through the Google Chrome web browser
+	      Initial State: The application is accessible through the web browser
 
 	      Input: The application is opened in a full screened web browser window
 
@@ -145,8 +146,8 @@ intended use, and goals of stakeholders.
 
 	      Type: Dynamic, Manual
 
-	      Initial State: The application is accessible through the Google Chrome web browser and there is a
-	      completed work order and quote on the user's account
+	      Initial State: The application is accessible through the web browser and there is a completed work
+	      order and quote on the user's account
 
 	      Input: The user opens the work order details and the quote details
 
@@ -164,6 +165,28 @@ intended use, and goals of stakeholders.
 \subsection{Performance Requirements}
 
 \subsection{Operational and Environmental Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-OE-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the Google Chrome web browser
+
+	      Input: The user navigates across all pages and dialogs, and performs all manual system tests for
+	      functional requirements
+
+	      Output: All pages and dialogs should be fully operational on the below listed device dimensions
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements on Google Chrome using various device dimension options listed in the Google DevTools
+	      Device Toolbar. At minimum, the testers will test with the following dimensions: Responsive, iPhone
+	      12 Pro ($390 \times 844$), iPhone SE ($375 \times 667$), and iPad Air ($820 \times 1180$). This set
+	      will provide a reasonable variety of different device dimensions.
+
+	      Results: Failed. Manually tested to verify whether the application supports the above device
+	      dimensions. Shop lookup page does not work on iPad Air ($820 \times 1180$) dimensions. Chat window
+	      does not work on iPhone SE ($375 \times 667$) dimensions.
+\end{enumerate}
 
 \subsection{Maintainability and Support Requirements}
 
@@ -210,12 +233,27 @@ intended use, and goals of stakeholders.
 \begin{enumerate}
 	\item \textbf{NFRT-CR1-1}
 
-	      How test will be performed: The testers will go through end to end tests for the entire program and
+	      Type: Static, Manual
+
+	      Initial State: The application is accessible through the web browser
+
+	      Input: The user navigates across all pages and dialogs, and performs all end-to-end tests
+
+	      Output: There should be no offensive texts or images
+
+	      How test will be performed: The testers will go through end-to-end tests for the entire program and
 	      will confirm that any texts or images are not offensive.
 
 	      Results: Passed. Manually tested to verify that there are no offensive images or text.
 
 	\item \textbf{NFRT-CR2-1}
+	      Type: Static, Manual
+
+	      Initial State: The application is accessible through the web browser
+
+	      Input: The user navigates across all pages and dialogs, and performs all end-to-end tests
+
+	      Output: All text should be displayed in English
 
 	      How test will be performed: The testers will go through end-to-end tests for the entire program and
 	      will confirm that the text displayed is in English.
@@ -228,6 +266,13 @@ intended use, and goals of stakeholders.
 \subsection{Legal Requirements}
 \begin{enumerate}
 	\item \textbf{NFRT-LR1-1}
+
+	      Type: Static, Manual
+
+	      Input: The user navigates all source code and project documents
+
+	      Output: Appropriate credits and/or copyright licenses are used, and MIT License requirements should
+	      be adhered to
 
 	      How test will be performed: The testers will go through the source code of the project and project
 	      documents to determine if any open source resources were used and check that appropriate credits
