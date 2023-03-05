@@ -235,8 +235,6 @@ const ShopAppointments = (props: IAppointmentsProps) => {
     const val = e.target.value ?? "";
 
     setCancellationReason(val);
-
-    console.log(cancellationReason);
   };
 
   return (

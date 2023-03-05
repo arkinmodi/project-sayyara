@@ -173,7 +173,6 @@ function* readAppointments(): Generator<CallEffect | PutEffect | SelectEffect> {
   const customerId = (yield select(AuthSelectors.getUserId)) as string;
   if (customerId) {
     const appointments = yield call(getCustomerAppointments, customerId);
-    console.log(appointments);
     yield put({
       type: AppointmentTypes.SET_APPOINTMENTS,
       payload: { customerId, appointments },

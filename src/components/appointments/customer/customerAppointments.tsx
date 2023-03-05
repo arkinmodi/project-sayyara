@@ -248,10 +248,7 @@ const CustomerAppointments = () => {
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value ?? "";
-
     setCancellationReason(val);
-
-    console.log(cancellationReason);
   };
 
   const appointmentsCard = (appointment: ICustomerAppointment | null) => {
