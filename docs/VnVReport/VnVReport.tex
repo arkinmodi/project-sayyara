@@ -60,8 +60,10 @@
 	FCP             & First Contentful Paint              \\
 	FID             & First Input Delay                   \\
 	LCP             & Largest Contentful Paint            \\
+	ms              & Milliseconds                        \\
 	PII             & Personal Identifiable Information   \\
 	PWA             & Progressive Web Application         \\
+	s               & seconds                             \\
 	SRS             & Software Requirements Specification \\
 	T               & Test                                \\
 	TTFB            & Time to First Byte                  \\
@@ -220,13 +222,14 @@ intended use, and goals of stakeholders.
 
 	      How test will be performed: A function will be added to the application which logs web metrics of
 	      the system. Testers will go through each of the pages and functions, making sure that the metrics
-	      meet current web standards. These criteria include:
+	      meet current web standards as stated \href{https://web.dev/vitals/}{in this article}. These
+	      criteria include:
 	      \begin{itemize}
-		      \item LCP < 2.5s
-		      \item FID < 100ms
-		      \item CLS < 0.1
-		      \item TTFB < 0.5s
-		      \item FCP < 1.8s
+		      \item LCP $<$ 2.5s
+		      \item FID $<$ 100ms
+		      \item CLS $<$ 0.1
+		      \item TTFB $<$ 0.5s
+		      \item FCP $<$ 1.8s
 	      \end{itemize}
 
 	      Results: Passed. Testers were able to view logs of their progress and record results which met or
