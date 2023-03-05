@@ -85,6 +85,7 @@ function getCustomerAppointments(
                 id: appointment.id,
                 startTime: appointment.start_time,
                 endTime: appointment.end_time,
+                shopId: shopId,
                 shopName: shop?.name,
                 shopAddress: shop?.address,
                 shopPhoneNumber: shop?.phoneNumber,

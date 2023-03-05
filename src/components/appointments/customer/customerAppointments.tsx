@@ -14,6 +14,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ICustomerAppointment } from "src/types/appointment";
 import { AppointmentStatus } from "../../../types/appointment";
+import EditAppointmentDialog from "./editAppointmentDialog";
 
 const responsiveOptions = [
   {
@@ -48,6 +49,9 @@ const CustomerAppointments = () => {
     ICustomerAppointment[]
   >([]);
   const [_numItemVisible, setNumItemVisible] = useState(0);
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] =
+    useState<ICustomerAppointment | null>(null);
 
   /**
    * Carousel resizes items if there are less than numVisible items.
@@ -174,6 +178,19 @@ const CustomerAppointments = () => {
     dispatch(setAppointmentStatus({ id: appointment.id, status: status }));
   };
 
+  const openEditAppointmentDialog = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    appointment: ICustomerAppointment
+  ) => {
+    e.stopPropagation();
+    setSelectedAppointment(appointment);
+    setOpenEditDialog(true);
+  };
+
+  const closeEditAppointmentDialog = () => {
+    setOpenEditDialog(false);
+  };
+
   const appointmentsCard = (appointment: ICustomerAppointment | null) => {
     return (
       <div className={styles.appointmentCarouselCardContainer}>
@@ -205,17 +222,29 @@ const CustomerAppointments = () => {
                 AppointmentStatus.PENDING_APPROVAL ||
               (appointment as ICustomerAppointment).status ===
                 AppointmentStatus.ACCEPTED ? (
-                <Button
-                  label="Cancel"
-                  className={styles.appointmentButtonRed}
-                  onClick={(e) =>
-                    handleButtonClick(
-                      e,
-                      appointment as ICustomerAppointment,
-                      AppointmentStatus.REJECTED
-                    )
-                  }
-                />
+                <div>
+                  <Button
+                    label="Cancel"
+                    className={styles.appointmentButtonRed}
+                    onClick={(e) =>
+                      handleButtonClick(
+                        e,
+                        appointment as ICustomerAppointment,
+                        AppointmentStatus.REJECTED
+                      )
+                    }
+                  />
+                  <Button
+                    label="Edit"
+                    className={styles.appointmentButtonGreen}
+                    onClick={(e) =>
+                      openEditAppointmentDialog(
+                        e,
+                        appointment as ICustomerAppointment
+                      )
+                    }
+                  />
+                </div>
               ) : (
                 <></>
               )}
@@ -292,6 +321,17 @@ const CustomerAppointments = () => {
           </div>
         </AccordionTab>
       </Accordion>
+      <div
+        style={{
+          display: openEditDialog ? "block" : "none",
+        }}
+      >
+        <EditAppointmentDialog
+          appointment={selectedAppointment!!}
+          visible={openEditDialog}
+          onHide={closeEditAppointmentDialog}
+        />
+      </div>
     </div>
   );
 };

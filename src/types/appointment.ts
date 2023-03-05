@@ -24,6 +24,7 @@ export interface ICustomerAppointment {
   id: string;
   startTime: Date;
   endTime: Date;
+  shopId: string;
   shopName: string;
   shopAddress: string;
   quoteId: string | null;
