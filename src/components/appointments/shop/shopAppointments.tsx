@@ -106,12 +106,10 @@ const ShopAppointments = (props: IAppointmentsProps) => {
           !prevAppointmentMap ||
           JSON.stringify(prevAppointmentMap) != JSON.stringify(_appointmentsMap)
         ) {
-          setAppointmentsMap((state) => ({
-            ...state,
-            ..._appointmentsMap,
-          }));
+          setAppointmentsMap(_appointmentsMap);
         }
       }
+
       setLoading(false);
     }
   }, [appointments, appointmentTab, prevAppointmentMap, loading]);
@@ -150,7 +148,9 @@ const ShopAppointments = (props: IAppointmentsProps) => {
     }
   }
 
-  function listAllAppointments() {
+  function listAllAppointments(appointmentsMap: {
+    [key: string]: Array<IAppointment>;
+  }) {
     let content: any = [];
     Object.keys(appointmentsMap).forEach((date) => {
       content.push(
@@ -175,7 +175,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
         <div>
           <Toast ref={toast} />
           {Object.entries(appointmentsMap).length > 0 ? (
-            listAllAppointments()
+            listAllAppointments(appointmentsMap)
           ) : (
             <div className={styles.noAppointmentsText}>
               {noAppointmentsText()}

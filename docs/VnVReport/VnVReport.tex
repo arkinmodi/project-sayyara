@@ -36,9 +36,10 @@
 		February 22, 2023 & Arkin Modi            & Add Automated Testing Section                                \\
 		March 3, 2023     & Joy Xiao              & Add Tests Evaluations for Legal and Cultural Requirements    \\
 		March 4, 2023     & Leon So               & Add Introduction                                             \\
+		March 4, 2023     & Arkin Modi            & Add Tests Evaluation for Security Requirements               \\
 		March 4, 2023     & Arkin Modi            & Update Look and Feel Requirements Tests                      \\
+		March 4, 2023     & Leon So               & Add NFR Tests for Operational and Environmental Requirements \\
 		March 4, 2023     & Timothy Choy          & Add Test Evaluations for Usability and Humanity Requirements \\
-
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -51,8 +52,10 @@
 	\toprule
 	\textbf{symbol} & \textbf{description}                \\
 	\midrule
+	API             & Application Programming Interface   \\
 	CD              & Continuous Deployment               \\
 	CI              & Continuous Integration              \\
+	PII             & Personal Identifiable Information   \\
 	PWA             & Progressive Web Application         \\
 	SRS             & Software Requirements Specification \\
 	T               & Test                                \\
@@ -127,7 +130,7 @@ intended use, and goals of stakeholders.
 
 	      Type: Dynamic, Manual
 
-	      Initial State: The application is accessible through the Google Chrome web browser
+	      Initial State: The application is accessible through the web browser
 
 	      Input: The application is opened in a full screened web browser window
 
@@ -143,8 +146,8 @@ intended use, and goals of stakeholders.
 
 	      Type: Dynamic, Manual
 
-	      Initial State: The application is accessible through the Google Chrome web browser and there is a
-	      completed work order and quote on the user's account
+	      Initial State: The application is accessible through the web browser and there is a completed work
+	      order and quote on the user's account
 
 	      Input: The user opens the work order details and the quote details
 
@@ -206,21 +209,95 @@ intended use, and goals of stakeholders.
 \subsection{Performance Requirements}
 
 \subsection{Operational and Environmental Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-OE-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the Google Chrome web browser
+
+	      Input: The user navigates across all pages and dialogs, and performs all manual system tests for
+	      functional requirements
+
+	      Output: All pages and dialogs should be fully operational on the below listed device dimensions
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements on Google Chrome using various device dimension options listed in the Google DevTools
+	      Device Toolbar. At minimum, the testers will test with the following dimensions: Responsive, iPhone
+	      12 Pro ($390 \times 844$), iPhone SE ($375 \times 667$), and iPad Air ($820 \times 1180$). This set
+	      will provide a reasonable variety of different device dimensions.
+
+	      Results: Failed. Manually tested to verify whether the application supports the above device
+	      dimensions. Shop lookup page does not work on iPad Air ($820 \times 1180$) dimensions. Chat window
+	      does not work on iPhone SE ($375 \times 667$) dimensions.
+\end{enumerate}
 
 \subsection{Maintainability and Support Requirements}
 
 \subsection{Security Requirements}
+\begin{enumerate}
+
+	\item \textbf{NFRT-SR1-1}
+
+	      Type: Dynamic, Automatic
+
+	      Initial State: An account with a created appointment
+
+	      Input/Condition: An HTTP request to the application's backend to get the appointment by appointment
+	      ID
+
+	      Output/Result: The request is rejected with a 403 Forbidden error message
+
+	      How test will be performed: Through Jest an HTTP request will be sent to the server
+
+	      Results: Passed.
+
+	\item \textbf{NFRT-SR2-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: One Shop Owner account and two Customer accounts with one customer having an
+	      appointment at the shop registered under the same Shop Owner account
+
+	      Input/Condition: Request available time slots at the Shop Owner's store using the Customer without
+	      an appointment's account
+
+	      Output/Result: The Customer should only be able to view the time slot taken by the other customer
+	      and no other extra information
+
+	      How test will be performed: The tester will view the available time slots page as the Customer
+	      without an appointment
+
+	      Results: Failed. Extra information is returned from the API call that is not needed for this
+	      endpoints and exposes data that does not belong to user. None of the data contains PII.
+
+\end{enumerate}
 
 \subsection{Cultural Requirements}
 \begin{enumerate}
 	\item \textbf{NFRT-CR1-1}
 
-	      How test will be performed: The testers will go through end to end tests for the entire program and
+	      Type: Static, Manual
+
+	      Initial State: The application is accessible through the web browser
+
+	      Input: The user navigates across all pages and dialogs, and performs all end-to-end tests
+
+	      Output: There should be no offensive texts or images
+
+	      How test will be performed: The testers will go through end-to-end tests for the entire program and
 	      will confirm that any texts or images are not offensive.
 
 	      Results: Passed. Manually tested to verify that there are no offensive images or text.
 
 	\item \textbf{NFRT-CR2-1}
+	      Type: Static, Manual
+
+	      Initial State: The application is accessible through the web browser
+
+	      Input: The user navigates across all pages and dialogs, and performs all end-to-end tests
+
+	      Output: All text should be displayed in English
 
 	      How test will be performed: The testers will go through end-to-end tests for the entire program and
 	      will confirm that the text displayed is in English.
@@ -233,6 +310,13 @@ intended use, and goals of stakeholders.
 \subsection{Legal Requirements}
 \begin{enumerate}
 	\item \textbf{NFRT-LR1-1}
+
+	      Type: Static, Manual
+
+	      Input: The user navigates all source code and project documents
+
+	      Output: Appropriate credits and/or copyright licenses are used, and MIT License requirements should
+	      be adhered to
 
 	      How test will be performed: The testers will go through the source code of the project and project
 	      documents to determine if any open source resources were used and check that appropriate credits
