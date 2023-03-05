@@ -47,6 +47,8 @@ const CustomerAppointments = () => {
   const [pastAppointments, setPastAppointments] = useState<
     ICustomerAppointment[]
   >([]);
+  const [rejectedOrCancelledAppointments, setRejectedOrCancelledAppointments] =
+    useState<ICustomerAppointment[]>([]);
   const [_numItemVisible, setNumItemVisible] = useState(0);
 
   /**
@@ -139,6 +141,7 @@ const CustomerAppointments = () => {
       }
     );
 
+    console.log(appointmentsList);
     const requestedAppointmentsList = appointmentsList.filter(
       (appointment: ICustomerAppointment) =>
         appointment.status == AppointmentStatus.PENDING_APPROVAL
@@ -161,8 +164,14 @@ const CustomerAppointments = () => {
       (appointment: ICustomerAppointment) =>
         appointment.status == AppointmentStatus.COMPLETED
     );
-
     setPastAppointments(pastAppointmentsList);
+
+    const rejectedOrCancelledAppointmentsList = appointmentsList.filter(
+      (appointment: ICustomerAppointment) =>
+        appointment.status == AppointmentStatus.CANCELLED ||
+        appointment.status == AppointmentStatus.REJECTED
+    );
+    setRejectedOrCancelledAppointments(rejectedOrCancelledAppointmentsList);
   }, [appointments]);
 
   const handleButtonClick = (
@@ -191,6 +200,32 @@ const CustomerAppointments = () => {
             <div>
               <h2 className="mb-1">
                 {(appointment as ICustomerAppointment).shopName}
+              </h2>
+              <h2
+                className="mb-1"
+                style={{
+                  display:
+                    appointment.status === AppointmentStatus.CANCELLED
+                      ? "block"
+                      : "none",
+                }}
+              >
+                {`Cancellation reason: ${
+                  (appointment as ICustomerAppointment).cancellationReason
+                    ? (appointment as ICustomerAppointment).cancellationReason
+                    : "Cancelled"
+                }`}
+              </h2>
+              <h2
+                className="mb-1"
+                style={{
+                  display:
+                    appointment.status === AppointmentStatus.REJECTED
+                      ? "block"
+                      : "none",
+                }}
+              >
+                Appointment request rejected
               </h2>
               <h2 className="mb-1">
                 {(appointment as ICustomerAppointment).shopAddress}
@@ -281,6 +316,23 @@ const CustomerAppointments = () => {
             {pastAppointments.length > 0 ? (
               <Carousel
                 value={getAppointmentsWithPlaceholders(pastAppointments)}
+                numVisible={3}
+                numScroll={1}
+                responsiveOptions={responsiveOptions}
+                itemTemplate={appointmentsCard}
+              />
+            ) : (
+              <div> No past services.</div>
+            )}
+          </div>
+        </AccordionTab>
+        <AccordionTab header="Rejected/Cancelled Services">
+          <div className={styles.appointmentsCarousel}>
+            {rejectedOrCancelledAppointments.length > 0 ? (
+              <Carousel
+                value={getAppointmentsWithPlaceholders(
+                  rejectedOrCancelledAppointments
+                )}
                 numVisible={3}
                 numScroll={1}
                 responsiveOptions={responsiveOptions}
