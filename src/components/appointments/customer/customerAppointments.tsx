@@ -1,7 +1,6 @@
 import { UserType } from "@prisma/client";
 import {
   readAppointments,
-  setAppointmentStatus,
   setCancelAppointment,
 } from "@redux/actions/appointmentAction";
 import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
@@ -14,7 +13,14 @@ import { Button } from "primereact/button";
 import { Carousel } from "primereact/carousel";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { Toast } from "primereact/toast";
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ICustomerAppointment } from "src/types/appointment";
 import { AppointmentStatus } from "../../../types/appointment";
@@ -60,6 +66,7 @@ const CustomerAppointments = () => {
   const [cancelledAppointmentId, setCancelledAppointmentId] = useState<
     string | null
   >(null);
+  const toast = useRef<Toast>(null);
 
   /**
    * Carousel resizes items if there are less than numVisible items.
@@ -151,7 +158,6 @@ const CustomerAppointments = () => {
       }
     );
 
-    console.log(appointmentsList);
     const requestedAppointmentsList = appointmentsList.filter(
       (appointment: ICustomerAppointment) =>
         appointment.status == AppointmentStatus.PENDING_APPROVAL
@@ -184,13 +190,14 @@ const CustomerAppointments = () => {
     setRejectedOrCancelledAppointments(rejectedOrCancelledAppointmentsList);
   }, [appointments]);
 
-  const handleButtonClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    appointment: ICustomerAppointment,
-    status: AppointmentStatus
-  ): void => {
-    e.stopPropagation();
-    dispatch(setAppointmentStatus({ id: appointment.id, status: status }));
+  const showToast = () => {
+    if (toast.current) {
+      toast.current.show({
+        severity: "info",
+        detail: "Appointment cancelled",
+        sticky: true,
+      });
+    }
   };
 
   const cancelAppointment = () => {
@@ -203,6 +210,7 @@ const CustomerAppointments = () => {
         })
       );
       setCancelAppointmentDialog(false);
+      showToast();
     }
   };
 
@@ -333,6 +341,7 @@ const CustomerAppointments = () => {
 
   return (
     <div>
+      <Toast ref={toast} />
       <Accordion multiple={true} activeIndex={[0, 1, 2, 3, 4]}>
         <AccordionTab header="Requested Services">
           <div className={styles.appointmentsCarousel}>
