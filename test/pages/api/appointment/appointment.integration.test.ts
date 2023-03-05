@@ -172,21 +172,14 @@ const notConflictingAppointments = [
 ];
 
 jest.mock("@server/common/getServerAuthSession", () => ({
-  getServerAuthSession: jest.fn<Promise<Session>, []>(async () => {
-    const customer = await prisma.customer.findUniqueOrThrow({
-      where: { email: testCustomerUser.email },
-    });
-    return {
-      expires: "1",
-      user: {
-        id: customer.id,
-        email: customer.email,
-        type: customer.type,
-        firstName: customer.first_name,
-        lastName: customer.last_name,
-      },
-    };
-  }),
+  getServerAuthSession: jest.fn<Session, []>(() => ({
+    expires: "1",
+    user: {
+      ...testCustomerUser,
+      firstName: testCustomerUser.first_name,
+      lastName: testCustomerUser.last_name,
+    },
+  })),
 }));
 
 beforeAll(async () => {
@@ -275,8 +268,45 @@ describe("update appointment", () => {
   });
 });
 
-const createCustomer = async () => {
-  return await prisma.customer.create({ data: testCustomerUser });
+describe("Security Requirements", () => {
+  it("NFRT-SR1-1: fail to get appointment details for another customer", async () => {
+    await createCustomer();
+    await createVehicle();
+    await createShop();
+    await createEmployee();
+    await createService();
+
+    await createCustomer({
+      ...testCustomerUser,
+      email: "customer_2@test.com",
+      id: "test_customer_id_2",
+    });
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      ...appointment,
+      vehicle_id: testVehicle.id,
+      customer_id: "test_customer_id_2",
+      shop_id: testShop.id,
+      service_id: testService.id,
+    };
+    await appointmentHandler(post.req, post.res);
+
+    expect(post.res.statusCode).toBe(201);
+
+    const appointmentId = post.res._getJSONData()["id"] as string;
+
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = { id: appointmentId };
+
+    await appointmentByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(403);
+  });
+});
+
+const createCustomer = async (customerData: Customer = testCustomerUser) => {
+  return await prisma.customer.create({ data: customerData });
 };
 
 const createEmployee = async () => {
