@@ -117,6 +117,7 @@ function getCustomerAppointments(
                 price: appointment.price,
                 status: appointment.status,
                 workOrderId: appointment.work_order_id,
+                cancellationReason: appointment.cancellation_reason,
               };
 
               return customerAppointment;

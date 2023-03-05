@@ -121,10 +121,6 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
               styles.appointmentCardButton
             )}
             onClick={(e) => hideDialog(e)}
-
-            // onClick={(e) =>
-            //   handleButtonClick(e, appointment, AppointmentStatus.CANCELLED)
-            // }
           />
           <Button
             label="In Progress"
@@ -183,6 +179,16 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
           <h3 className={styles.serviceNameHeaderText}>
             {appointment.serviceName}
           </h3>
+          <h2
+            style={{
+              display:
+                appointment.status === AppointmentStatus.CANCELLED
+                  ? "block"
+                  : "none",
+            }}
+          >
+            Cancellation Reason: {appointment.cancellationReason}
+          </h2>
           <div>
             {`Customer Name: ${appointment.customer.first_name} ${appointment.customer.last_name}`}
           </div>
