@@ -1,5 +1,5 @@
 import { usePrevious } from "@components/hooks/usePrevious";
-import { setAppointmentStatus } from "@redux/actions/appointmentAction";
+import { setCancelAppointment } from "@redux/actions/appointmentAction";
 import { readShopAppointments } from "@redux/actions/shopActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import { ShopSelectors } from "@redux/selectors/shopSelector";
@@ -204,9 +204,9 @@ const ShopAppointments = (props: IAppointmentsProps) => {
     setSubmitted(true);
     if (cancellationReason.length > 0 && cancelledAppointmentId != null) {
       dispatch(
-        setAppointmentStatus({
+        setCancelAppointment({
           id: cancelledAppointmentId,
-          status: AppointmentStatus.CANCELLED,
+          reason: cancellationReason,
         })
       );
       setCancelAppointmentDialog(false);
