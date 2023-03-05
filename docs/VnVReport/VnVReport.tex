@@ -150,7 +150,6 @@ intended use, and goals of stakeholders.
 
 	      Output: All currency shall be rounded to two decimal places
 
-	      <<<<<<< HEAD
 	      How test will be performed: The tester will navigate to the work order and quote and verify that
 	      all values of currency are rounded to two decimal places
 
@@ -163,6 +162,28 @@ intended use, and goals of stakeholders.
 \subsection{Performance Requirements}
 
 \subsection{Operational and Environmental Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-OE-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the Google Chrome web browser
+
+	      Input: The user navigates across all pages and dialogs, and performs all manual system tests for
+	      functional requirements.
+
+	      Output: All pages and dialogs should be fully operational on the below listed device dimensions.
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements on Google Chrome using various device dimension options listed in the Google DevTools
+	      Device Toolbar. At minimum, the testers will test with the following dimensions: Responsive, iPhone
+	      12 Pro ($390 \times 844$), iPhone SE ($375 \times 667$), and iPad Air ($820 \times 1180$). This set
+	      will provide a reasonable variety of different device dimensions.
+
+	      Results: Failed. Manually tested to verify whether the application supports the above device
+	      dimensions. Shop lookup page does not work on iPad Air ($820 \times 1180$) dimensions. Chat window
+	      does not work on iPhone SE ($375 \times 667$) dimensions.
+\end{enumerate}
 
 \subsection{Maintainability and Support Requirements}
 
@@ -200,24 +221,6 @@ intended use, and goals of stakeholders.
 
 	      Results: Passed. Manually tested to verify that the application supports the above device
 	      dimensions.
-\end{enumerate}
-
-\subsection{Operational and Environmental Requirements}
-\begin{enumerate}
-	\item \textbf{NFRT-OE-1}
-
-	      Type: Dynamic, Manual
-
-	      How test will be performed: The testers will complete the manual system tests for functional
-	      requirements listed section \ref{Tests for Functional Requirements} on Google Chrome using various
-	      device dimension options listed in the Google DevTools Device Toolbar. At minimum, the testers will
-	      test with the following dimensions: Responsive, iPhone 12 Pro ($390 \times 844$), iPhone SE ($375
-		      \times 667$), and iPad Air ($820 \times 1180$). This set will provide a reasonable variety of
-	      different device dimensions.
-
-	      Results: Failed. Manually tested to verify whether the application supports the above device
-	      dimensions. Shop lookup page does not work on iPad Air ($820 \times 1180$) dimensions. Chat window
-	      does not work on iPhone SE ($375 \times 667$) dimensions.
 \end{enumerate}
 
 \section{Unit Testing}
