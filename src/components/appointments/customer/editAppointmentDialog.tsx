@@ -47,17 +47,18 @@ const EditAppointmentDialog = (props: IEditAppointmentDialogProps) => {
     if (appointment) {
       getShopId(appointment.shopId).then((data) => {
         if (data?.hoursOfOperation) {
-          setShopHours(data.hoursOfOperation);
+          getAvailabilities(
+            appointment.shopId,
+            startDate,
+            endDate,
+            data.hoursOfOperation
+          ).then((data) => {
+            if (data) {
+              setAvailableTimeslots(data);
+            }
+          });
         }
       });
-
-      getAvailabilities(appointment.shopId, startDate, endDate, shopHours).then(
-        (data) => {
-          if (data) {
-            setAvailableTimeslots(data);
-          }
-        }
-      );
     }
   }, [appointment, customerAppointments]);
 
@@ -75,7 +76,7 @@ const EditAppointmentDialog = (props: IEditAppointmentDialogProps) => {
     setAllowSubmit(true);
   };
 
-  const onSubmitAppointment = () => {
+  const onSaveAppointment = () => {
     const body = {
       id: appointment.id,
       status: AppointmentStatus.PENDING_APPROVAL,
@@ -84,6 +85,7 @@ const EditAppointmentDialog = (props: IEditAppointmentDialogProps) => {
     };
     // TODO: Instead of create appointment need to call patchAppointment (might need to create this)
     // dispatch(createAppointment(body));
+    onHide();
   };
 
   const renderEditAppointmentDialog = () => {
@@ -105,9 +107,9 @@ const EditAppointmentDialog = (props: IEditAppointmentDialogProps) => {
         <div className={classnames(styles.dialogInputRow, styles.buttonRow)}>
           <Button
             className={classnames(styles.dialogButton, "greenButton")}
-            label="Save Service"
+            label="Save"
             disabled={!allowSubmit}
-            onClick={onSubmitAppointment}
+            onClick={onSaveAppointment}
           />
         </div>
       </div>

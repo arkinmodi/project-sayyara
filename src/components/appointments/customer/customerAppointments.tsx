@@ -323,7 +323,8 @@ const CustomerAppointments = () => {
       </Accordion>
       <div
         style={{
-          display: openEditDialog ? "block" : "none",
+          display:
+            openEditDialog && selectedAppointment != null ? "block" : "none",
         }}
       >
         <EditAppointmentDialog
