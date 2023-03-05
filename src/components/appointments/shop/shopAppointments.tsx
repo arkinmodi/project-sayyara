@@ -1,11 +1,16 @@
 import { usePrevious } from "@components/hooks/usePrevious";
+import { setCancelAppointment } from "@redux/actions/appointmentAction";
 import { readShopAppointments } from "@redux/actions/shopActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import { ShopSelectors } from "@redux/selectors/shopSelector";
 import styles from "@styles/pages/appointments/ShopAppointments.module.css";
+import classNames from "classnames";
+import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
+import { InputText } from "primereact/inputtext";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Toast } from "primereact/toast";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppointmentStatus, IAppointment } from "../../../types/appointment";
 import AppointmentCard from "./appointmentCard";
@@ -27,6 +32,14 @@ const ShopAppointments = (props: IAppointmentsProps) => {
   }>({});
 
   const [loading, setLoading] = useState(true);
+
+  const [cancellationReason, setCancellationReason] = useState("");
+
+  const [submitted, setSubmitted] = useState(false);
+
+  const [cancelledAppointmentId, setCancelledAppointmentId] = useState<
+    string | null
+  >(null);
 
   const prevAppointmentMap = usePrevious(appointmentsMap);
 
@@ -61,7 +74,14 @@ const ShopAppointments = (props: IAppointmentsProps) => {
         case AppointmentStatus.REJECTED:
           toast.current.show({
             severity: "info",
-            detail: "Appointment rejected/canceled",
+            detail: "Appointment rejected",
+            sticky: true,
+          });
+          break;
+        case AppointmentStatus.CANCELLED:
+          toast.current.show({
+            severity: "info",
+            detail: "Appointment cancelled",
             sticky: true,
           });
           break;
@@ -106,12 +126,10 @@ const ShopAppointments = (props: IAppointmentsProps) => {
           !prevAppointmentMap ||
           JSON.stringify(prevAppointmentMap) != JSON.stringify(_appointmentsMap)
         ) {
-          setAppointmentsMap((state) => ({
-            ...state,
-            ..._appointmentsMap,
-          }));
+          setAppointmentsMap(_appointmentsMap);
         }
       }
+
       setLoading(false);
     }
   }, [appointments, appointmentTab, prevAppointmentMap, loading]);
@@ -127,6 +145,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
             appointmentProgress={appointmentTab}
             showToast={showToast}
             toggleActiveTab={toggleActiveTab}
+            onOpenCancelDialog={confirmCancelSelected}
           />
         );
       });
@@ -145,12 +164,16 @@ const ShopAppointments = (props: IAppointmentsProps) => {
         return `No in progress appointments.`;
       case AppointmentStatus.COMPLETED:
         return `No completed appointments.`;
+      case AppointmentStatus.CANCELLED:
+        return `No cancelled appointments.`;
       default:
         return `No appointments.`;
     }
   }
 
-  function listAllAppointments() {
+  function listAllAppointments(appointmentsMap: {
+    [key: string]: Array<IAppointment>;
+  }) {
     let content: any = [];
     Object.keys(appointmentsMap).forEach((date) => {
       content.push(
@@ -164,6 +187,56 @@ const ShopAppointments = (props: IAppointmentsProps) => {
     return content;
   }
 
+  const [cancelAppointmentDialog, setCancelAppointmentDialog] = useState(false);
+
+  const hideCancelAppointmentDialog = () => {
+    setSubmitted(false);
+    setCancelAppointmentDialog(false);
+    setCancellationReason("");
+  };
+
+  const confirmCancelSelected = (id: string) => {
+    setCancelAppointmentDialog(true);
+    setCancelledAppointmentId(id);
+  };
+
+  const cancelAppointment = () => {
+    setSubmitted(true);
+    if (cancellationReason.length > 0 && cancelledAppointmentId != null) {
+      dispatch(
+        setCancelAppointment({
+          id: cancelledAppointmentId,
+          reason: cancellationReason,
+        })
+      );
+      setCancelAppointmentDialog(false);
+      showToast(AppointmentStatus.CANCELLED);
+    }
+  };
+
+  const cancelAppointmentDialogFooter = (
+    <div>
+      <Button
+        className={"blueButton"}
+        label="No"
+        icon="pi pi-times"
+        onClick={hideCancelAppointmentDialog}
+      />
+      <Button
+        className={"greenButton"}
+        label="Yes"
+        icon="pi pi-check"
+        onClick={cancelAppointment}
+      />
+    </div>
+  );
+
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value ?? "";
+
+    setCancellationReason(val);
+  };
+
   return (
     <div>
       {loading ? (
@@ -175,12 +248,41 @@ const ShopAppointments = (props: IAppointmentsProps) => {
         <div>
           <Toast ref={toast} />
           {Object.entries(appointmentsMap).length > 0 ? (
-            listAllAppointments()
+            listAllAppointments(appointmentsMap)
           ) : (
             <div className={styles.noAppointmentsText}>
               {noAppointmentsText()}
             </div>
           )}
+          <Dialog
+            visible={cancelAppointmentDialog}
+            style={{ width: "32rem" }}
+            breakpoints={{ "960px": "75vw", "641px": "90vw" }}
+            header="Confirm Cancellation"
+            modal
+            footer={cancelAppointmentDialogFooter}
+            onHide={hideCancelAppointmentDialog}
+          >
+            <div className={styles.cancelInputText}>
+              <label className={styles.cancelInputBox} htmlFor="reason">
+                Please enter a reason for cancellation:
+              </label>
+              <InputText
+                id="reason"
+                name="reason"
+                value={cancellationReason}
+                onChange={onInputChange}
+                required
+                autoFocus
+                className={classNames(styles.cancelInputBox, {
+                  "p-invalid": submitted && cancellationReason === "",
+                })}
+              />
+              {submitted && cancellationReason === "" && (
+                <small className="p-error">Cancellation reason required</small>
+              )}
+            </div>
+          </Dialog>
         </div>
       )}
     </div>

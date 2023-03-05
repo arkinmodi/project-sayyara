@@ -13,6 +13,7 @@ export interface IAppointment {
   status: AppointmentStatus;
   workOrderId: string;
   vehicle: IVehicle;
+  cancellationReason: string | null;
 }
 
 export interface IAppointmentTimes {
@@ -32,6 +33,7 @@ export interface ICustomerAppointment {
   price: number;
   status: AppointmentStatus;
   vehicle: IVehicle;
+  cancellationReason: string | null;
 }
 
 export enum AppointmentStatus {
@@ -40,4 +42,5 @@ export enum AppointmentStatus {
   IN_PROGRESS = "IN_PROGRESS",
   COMPLETED = "COMPLETED",
   REJECTED = "REJECTED",
+  CANCELLED = "CANCELLED",
 }
