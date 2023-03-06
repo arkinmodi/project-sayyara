@@ -124,181 +124,6 @@ intended use, and goals of stakeholders.
 
 \section{Functional Requirements Evaluation}
 
-\subsection{Services}
-
-\begin{enumerate}
-
-	\item \textbf{FRT-BE28-1}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner has a shop profile
-
-	      Input: Shop Owner adds available services
-
-	      Output: Shop services are sent to the database and displayed on the shop profile
-
-	      Results: Passed
-
-	\item \textbf{FRT-BE29-1}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Shop Employee searches for auto repair or maintenance services
-
-	      Input: Enters specific auto service in the search bar
-
-	      Output: Auto shops with relevant services displayed
-
-	      Results: Passed
-
-	\item \textbf{FRT-BE30-1}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner with services listed on their shop profile
-
-	      Input: Updates the details of a service listed on their profile
-
-	      Output: The service is updated with the entered details
-
-	      Results: Passed
-
-	\item \textbf{FRT-BE31-1}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner with services listed on their shop profile
-
-	      Input: Deletes a service listed on their shop profile
-
-	      Output: Service is removed from the shop profile. Other services that were not deleted
-	      continue to be listed on the shop profile
-
-	      Results: Passed
-
-\end{enumerate}
-
-\subsection{Appointments}
-
-\begin{enumerate}
-
-	\item \textbf{FRT-BE4-1}
-
-	      Control: Manual
-
-	      Initial State: Customer account which received a quote from an auto shop
-
-	      Input: Enters service request information and selects an available appointment time slot
-
-	      Output: A new appointment request is created with service details linked to the quote Shop
-	      Owner/Employee Accounts will receive the appointment request
-
-	      Results: Passed
-
-	\item \textbf{FRT-BE4-2}
-
-	      Control: Manual
-
-	      Initial State: Customer account selects a canned job at an auto shop
-
-	      Input: Enters service request information and selects an available appointment time slot
-
-	      Output: A new appointment request is created with service details. Shop Owner/Employee
-	      Accounts will receive the appointment request
-
-	      Results: Passed
-
-	\item \textbf{FRT-BE4-3}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Employee Account with appointment requests
-
-	      Input: Accept an appointment request
-
-	      Output: Appointment booking displayed for Shop Owner/Employee accounts and Customer
-	      account
-
-	      Results: Passed
-
-	\item \textbf{FRT-BE5-1}
-
-	      Control: Manual
-
-	      Initial State: Customer Account has a service appointment scheduled
-
-	      Input: Selects an appointment to edit and selects a new available time slot for the appointment
-
-	      Output: A new appointment request is made with the new time slot. Shop Owner/Employee
-	      Accounts will receive the appointment request
-
-	      Results: Failed. Cannot edit an appointment at the moment but can cancel and reschedule an
-	      appointment
-
-	\item \textbf{FRT-BE5-2}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
-
-	      Input: Selects an appointment to edit and selects a new available time slot for the appointment
-
-	      Output: The appointment booking is updated to the new time slot
-
-	      Results: Failed. Cannot edit an appointment at the moment but can cancel and reschedule an
-	      appointment.
-
-	\item \textbf{FRT-BE5-3}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
-
-	      Input: Selects an appointment to edit service details
-
-	      Output: The appointment booking is updated with the updated service details
-
-	      Results: Passed
-
-	\item \textbf{FRT-BE6-1}
-
-	      Control: Manual
-
-	      Initial State: Customer Account has a service appointment scheduled
-
-	      Input: Selects an appointment to cancel
-
-	      Output: The appointment booking is cancelled and removed from the customer and shop
-	      owner/employee schedules
-
-	      Results: Passed
-
-	\item \textbf{FRT-BE6-2}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Shop Employee has a service appointment scheduled
-
-	      Input: Selects an appointment to cancel
-
-	      Output: The appointment booking is cancelled and removed from the customer and shop
-	      owner/employee schedules
-
-	      Results: Passed
-
-	\item \textbf{FRT-BE7-1}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner selects appointment availability
-
-	      Input: Sets appointment availabilities
-
-	      Output: The appointment availability is updated in the database
-
-\end{enumerate}
-
 \subsection{Authentication}
 
 \begin{enumerate}
@@ -458,6 +283,175 @@ intended use, and goals of stakeholders.
 
 \end{enumerate}
 
+\subsection{Appointments}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE4-1}
+
+	      Control: Manual
+
+	      Initial State: Customer account which received a quote from an auto shop
+
+	      Input: Enters service request information and selects an available appointment time slot
+
+	      Output: A new appointment request is created with service details linked to the quote Shop
+	      Owner/Employee Accounts will receive the appointment request
+
+		  Test Case Derivation: The appointment will be requested with the details the user entered
+
+	      How test will be performed: The tester will go through the appointment booking process through the
+	      user interface through quotes
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE4-2}
+
+	      Control: Manual
+
+	      Initial State: Customer account selects a canned job at an auto shop
+
+	      Input: Enters service request information and selects an available appointment time slot
+
+	      Output: A new appointment request is created with service details. Shop Owner/Employee
+	      Accounts will receive the appointment request
+
+		  Test Case Derivation: The appointment will be requested with the canned job details as well as
+	      details the user entered
+
+	      How test will be performed: The tester will go through the appointment booking process through the
+	      user interface by selecting a canned job
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE4-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with appointment requests
+
+	      Input: Accept an appointment request
+
+	      Output: Appointment booking displayed for Shop Owner/Employee accounts and Customer
+	      account
+
+		  Test Case Derivation: The appointment request is accepted and appointment booking is completed
+
+	      How test will be performed: The tester will accept an appointment request through the user
+	      interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE5-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit and selects a new available time slot for the appointment
+
+	      Output: A new appointment request is made with the new time slot. Shop Owner/Employee
+	      Accounts will receive the appointment request
+
+		  Test Case Derivation: The user is able to change their appointment to any of the available time
+	      slots displayed
+
+	      How test will be performed: The tester will go through the user interface to edit an appointment
+	      booking
+
+	      Results: Failed. Cannot edit an appointment at the moment but can cancel and reschedule an
+	      appointment
+
+	\item \textbf{FRT-BE5-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit and selects a new available time slot for the appointment
+
+	      Output: The appointment booking is updated to the new time slot
+
+		  Test Case Derivation: The user is able to change their appointment to any of the available time
+	      slots displayed
+
+	      How test will be performed: The tester will go through the user interface to edit an appointment
+	      booking time slot
+
+	      Results: Failed. Cannot edit an appointment at the moment but can cancel and reschedule an
+	      appointment.
+
+	\item \textbf{FRT-BE5-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit service details
+
+	      Output: The appointment booking is updated with the updated service details
+
+		  Test Case Derivation: The user is able to update the appointment details
+
+	      How test will be performed: The tester will go through the user interface to edit appointment
+	      details
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE6-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account has a service appointment scheduled
+
+	      Input: Selects an appointment to cancel
+
+	      Output: The appointment booking is cancelled and removed from the customer and shop
+	      owner/employee schedules
+
+		  Test Case Derivation: The appointment should be removed from the calendar when it is cancelled
+
+	      How test will be performed: The tester will go through the user interface to cancel an appointment
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE6-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Shop Employee has a service appointment scheduled
+
+	      Input: Selects an appointment to cancel
+
+	      Output: The appointment booking is cancelled and removed from the customer and shop
+	      owner/employee schedules
+
+		  Test Case Derivation: The appointment should be removed from the calendar when it is cancelled
+
+	      How test will be performed: The tester will go through the user interface to cancel an appointment
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE7-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner selects appointment availability
+
+	      Input: Sets appointment availabilities
+
+	      Output: The appointment availability is updated in the database
+
+		  Test Case Derivation: The appointment availability will be saved and availability time slots to
+	      book appointments will be updated
+
+	      How test will be performed: The tester will go through the user interface to set appointment
+	      availabilities
+
+		  Results: Passed
+
+\end{enumerate}
+
 \subsection{Employee Management}
 
 \begin{enumerate}
@@ -603,6 +597,81 @@ intended use, and goals of stakeholders.
 	      Test Case Derivation: The system shall allow the shop owner to add/edit their hours of operation
 
 	      How test will be performed: The tester will go through the user interface to add/edit a shop
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsection{Services}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE28-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner has a shop profile
+
+	      Input: Shop Owner adds available services
+
+	      Output: Shop services are sent to the database and displayed on the shop profile
+
+		  Test Case Derivation: The user can add available auto shop services to their shop profile
+
+	      How test will be performed: The tester will add a service to the shop profile and confirms it shows
+	      on the shop profile
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE29-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Shop Employee searches for auto repair or maintenance services
+
+	      Input: Enters specific auto service in the search bar
+
+	      Output: Auto shops with relevant services displayed
+
+		  Test Case Derivation: Services corresponding to the auto shop will be displayed
+
+	      How test will be performed: The tester will search for shop services through the user interface and
+	      confirms that all of the shop's services matching the search criteria are listed
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE30-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner with services listed on their shop profile
+
+	      Input: Updates the details of a service listed on their profile
+
+	      Output: The service is updated with the entered details
+
+		  Test Case Derivation: The shop profile will list the service with the updated details
+
+	      How test will be performed: The tester will update the details of a shop service through the user
+	      interface and confirms that the shop profile is updated
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE31-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner with services listed on their shop profile
+
+	      Input: Deletes a service listed on their shop profile
+
+	      Output: Service is removed from the shop profile. Other services that were not deleted
+	      continue to be listed on the shop profile
+
+		  Test Case Derivation: The service that is deleted is removed from the shop profile
+
+	      How test will be performed: The tester will delete a shop service through the user interface and
+	      confirms that the shop profile is updated
 
 	      Results: Passed
 
