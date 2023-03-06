@@ -101,163 +101,430 @@ afterEach(async () => {
   ]);
 });
 
-describe("create quote", () => {
-  describe("given new quote", () => {
-    it("should create new quote", async () => {
-      await createCustomer();
-      await createShop();
-      await createService();
+describe("Quotes Module", () => {
+  it("FRT-M4-1: create quote request with valid information", async () => {
+    // Setup
+    await createCustomer();
+    await createShop();
+    await createService();
 
-      // Create Quote
-      const { req, res } = createMockRequestResponse({ method: "POST" });
-      req.body = {
-        customer_id: testQuote.customer_id,
-        shop_id: testQuote.shop_id,
-        service_id: testQuote.service_id,
-      };
+    // Create Quote
+    const { req, res } = createMockRequestResponse({ method: "POST" });
+    req.body = {
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+      service_id: testQuote.service_id,
+    };
 
-      await quoteHandler(req, res);
+    await quoteHandler(req, res);
 
-      expect(res.statusCode).toBe(201);
-      expect(res._getJSONData()).toMatchObject({
-        ...testQuote,
-        id: expect.any(String),
-        create_time: expect.any(String),
-        update_time: expect.any(String),
-      });
-    });
-  });
-});
-
-describe("get quote", () => {
-  describe("give a quote ID", () => {
-    it("should return the quote", async () => {
-      await createCustomer();
-      await createShop();
-      await createService();
-
-      // Create Quote
-      const post = createMockRequestResponse({ method: "POST" });
-      post.req.body = {
-        customer_id: testQuote.customer_id,
-        shop_id: testQuote.shop_id,
-        service_id: testQuote.service_id,
-      };
-      await quoteHandler(post.req, post.res);
-      expect(post.res.statusCode).toBe(201);
-      const quoteId = post.res._getJSONData()["id"];
-
-      // Get Quote
-      const { req, res } = createMockRequestResponse({ method: "GET" });
-      req.query = { ...req.query, id: quoteId };
-      await quoteByIdHandler(req, res);
-
-      expect(res.statusCode).toBe(200);
-      expect(res._getJSONData()).toMatchObject({
-        ...testQuote,
-        id: expect.any(String),
-        create_time: expect.any(String),
-        update_time: expect.any(String),
-      });
+    expect(res.statusCode).toBe(201);
+    expect(res._getJSONData()).toMatchObject({
+      id: expect.any(String),
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      service_id: testQuote.service_id,
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+      status: testQuote.status,
     });
   });
 
-  describe("given a customer ID", () => {
-    it("should return all quotes under customer", async () => {
-      await createCustomer();
-      await createShop();
-      await createService();
+  it("FRT-M4-2: create quote request with invalid information", async () => {
+    // Setup
+    await createCustomer();
+    await createShop();
+    await createService();
 
-      // Create Quote
-      const post = createMockRequestResponse({ method: "POST" });
-      post.req.body = {
-        customer_id: testQuote.customer_id,
-        shop_id: testQuote.shop_id,
-        service_id: testQuote.service_id,
-      };
-      await quoteHandler(post.req, post.res);
-      expect(post.res.statusCode).toBe(201);
+    // Create Quote
+    const { req, res } = createMockRequestResponse({ method: "POST" });
+    req.body = {
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+    };
 
-      // Get Quote
-      const { req, res } = createMockRequestResponse({ method: "GET" });
-      req.query = { ...req.query, id: testQuote.customer_id };
-      await quoteByCustomerIdHandler(req, res);
+    await quoteHandler(req, res);
 
-      expect(res.statusCode).toBe(200);
-      expect(res._getJSONData()["length"]).toBe(1);
-      expect(res._getJSONData()[0]).toMatchObject({
-        ...testQuote,
-        id: expect.any(String),
-        create_time: expect.any(String),
-        update_time: expect.any(String),
-      });
+    expect(res.statusCode).toBe(400);
+  });
+
+  it("FRT-M4-3: update quote request with a valid id and valid information", async () => {
+    // Setup
+    await createCustomer();
+    await createShop();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+      service_id: testQuote.service_id,
+    };
+    await quoteHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    const quoteId = post.res._getJSONData()["id"] as string;
+
+    // Update Quote
+    const { req, res } = createMockRequestResponse({ method: "PATCH" });
+    req.query = {
+      id: quoteId,
+    };
+    req.body = {
+      description: "test_patch_quote_description",
+    };
+
+    await quoteByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["description"]).toBe(
+      "test_patch_quote_description"
+    );
+  });
+
+  it("FRT-M4-4: update quote request with an invalid id and valid information", async () => {
+    // Setup
+    await createCustomer();
+    await createShop();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+      service_id: testQuote.service_id,
+    };
+    await quoteHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    // Update Quote
+    const { req, res } = createMockRequestResponse({ method: "PATCH" });
+    req.query = {
+      id: "quote_does_not_exist",
+    };
+    req.body = {
+      description: "test_patch_quote_description",
+    };
+
+    await quoteByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  it("FRT-M4-5: update quote request with a valid id and invalid information", async () => {
+    // Setup
+    await createCustomer();
+    await createShop();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+      service_id: testQuote.service_id,
+    };
+    await quoteHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    const quoteId = post.res._getJSONData()["id"] as string;
+
+    // Update Quote
+    const { req, res } = createMockRequestResponse({ method: "PATCH" });
+    req.query = {
+      id: quoteId,
+    };
+    req.body = {
+      status: "NOT_A_VALID_STATUS",
+    };
+
+    await quoteByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(400);
+  });
+
+  it("FRT-M4-6: get quote request with a valid quote id", async () => {
+    // Setup
+    await createCustomer();
+    await createShop();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+      service_id: testQuote.service_id,
+    };
+    await quoteHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    const quoteId = post.res._getJSONData()["id"] as string;
+
+    // Get Quote
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: quoteId,
+    };
+
+    await quoteByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()).toMatchObject({
+      id: expect.any(String),
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      service_id: testQuote.service_id,
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+      status: testQuote.status,
     });
   });
 
-  describe("given a shop ID", () => {
-    it("should return all quotes under shop", async () => {
-      await createCustomer();
-      await createShop();
-      await createService();
+  it("FRT-M4-7: get quote request with an invalid quote id", async () => {
+    // Setup
+    await createCustomer();
+    await createShop();
+    await createService();
 
-      // Create Quote
-      const post = createMockRequestResponse({ method: "POST" });
-      post.req.body = {
-        customer_id: testQuote.customer_id,
-        shop_id: testQuote.shop_id,
-        service_id: testQuote.service_id,
-      };
-      await quoteHandler(post.req, post.res);
-      expect(post.res.statusCode).toBe(201);
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+      service_id: testQuote.service_id,
+    };
+    await quoteHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
 
-      // Get Quote
-      const { req, res } = createMockRequestResponse({ method: "GET" });
-      req.query = { ...req.query, id: testQuote.shop_id };
-      await quoteByShopIdHandler(req, res);
+    // Get Quote
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: "quote_does_not_exist",
+    };
 
-      expect(res.statusCode).toBe(200);
-      expect(res._getJSONData()["length"]).toBe(1);
-      expect(res._getJSONData()[0]).toMatchObject({
-        ...testQuote,
+    await quoteByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  it("FRT-M4-8: get quote request with a valid customer id", async () => {
+    // Setup
+    await createCustomer();
+    await createShop();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+      service_id: testQuote.service_id,
+    };
+    await quoteHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    // Get Quote
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: testQuote.customer_id,
+    };
+
+    await quoteByCustomerIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(1);
+    expect(res._getJSONData()[0]).toMatchObject({
+      id: expect.any(String),
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      service_id: testQuote.service_id,
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+      status: testQuote.status,
+      customer: {
         id: expect.any(String),
         create_time: expect.any(String),
         update_time: expect.any(String),
-      });
+        email: testCustomerUser.email,
+        first_name: testCustomerUser.first_name,
+        last_name: testCustomerUser.last_name,
+        phone_number: testCustomerUser.phone_number,
+        type: testCustomerUser.type,
+      },
+      service: {
+        id: expect.any(String),
+        create_time: expect.any(String),
+        update_time: expect.any(String),
+        description: testService.description,
+        estimated_time: testService.estimated_time,
+        name: testService.name,
+        parts: testService.parts,
+        shop_id: expect.any(String),
+        total_price: testService.total_price,
+        type: testService.type,
+      },
+      shop: {
+        id: expect.any(String),
+        create_time: expect.any(String),
+        update_time: expect.any(String),
+        address: testShop.address,
+        city: testShop.city,
+        email: testShop.email,
+        hours_of_operation: testShop.hours_of_operation,
+        name: testShop.name,
+        phone_number: testShop.phone_number,
+        postal_code: testShop.postal_code,
+        province: testShop.province,
+      },
     });
   });
-});
 
-describe("delete quote", () => {
-  describe("given quote ID", () => {
-    it("should delete quote", async () => {
-      await createCustomer();
-      await createShop();
-      await createService();
+  it("FRT-M4-9: get quote request with an invalid customer id", async () => {
+    // Setup
+    await createCustomer();
+    await createShop();
+    await createService();
 
-      // Create Quote
-      const post = createMockRequestResponse({ method: "POST" });
-      post.req.body = {
-        customer_id: testQuote.customer_id,
-        shop_id: testQuote.shop_id,
-        service_id: testQuote.service_id,
-      };
-      await quoteHandler(post.req, post.res);
-      expect(post.res.statusCode).toBe(201);
-      const quoteId = post.res._getJSONData()["id"];
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+      service_id: testQuote.service_id,
+    };
+    await quoteHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
 
-      // Delete Quote
-      const { req, res } = createMockRequestResponse({ method: "DELETE" });
-      req.query = { ...req.query, id: quoteId };
-      await quoteByIdHandler(req, res);
+    // Get Quote
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: "customer_does_not_exist",
+    };
 
-      expect(res.statusCode).toBe(204);
+    await quoteByCustomerIdHandler(req, res);
 
-      // Confirm Quote is Deleted
-      const get = createMockRequestResponse({ method: "GET" });
-      get.req.query = { ...get.req.query, id: quoteId };
-      await quoteByIdHandler(get.req, get.res);
-      expect(get.res.statusCode).toBe(404);
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(0);
+  });
+
+  it("FRT-M4-10: get quote request with a valid shop id", async () => {
+    // Setup
+    await createCustomer();
+    await createShop();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+      service_id: testQuote.service_id,
+    };
+    await quoteHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    // Get Quote
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: testQuote.shop_id,
+    };
+
+    await quoteByShopIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(1);
+    expect(res._getJSONData()[0]).toMatchObject({
+      id: expect.any(String),
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      service_id: testQuote.service_id,
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+      status: testQuote.status,
+      customer: {
+        id: expect.any(String),
+        create_time: expect.any(String),
+        update_time: expect.any(String),
+        email: testCustomerUser.email,
+        first_name: testCustomerUser.first_name,
+        last_name: testCustomerUser.last_name,
+        phone_number: testCustomerUser.phone_number,
+        type: testCustomerUser.type,
+      },
+      service: {
+        id: expect.any(String),
+        create_time: expect.any(String),
+        update_time: expect.any(String),
+        description: testService.description,
+        estimated_time: testService.estimated_time,
+        name: testService.name,
+        parts: testService.parts,
+        shop_id: expect.any(String),
+        total_price: testService.total_price,
+        type: testService.type,
+      },
+      shop: {
+        id: expect.any(String),
+        create_time: expect.any(String),
+        update_time: expect.any(String),
+        address: testShop.address,
+        city: testShop.city,
+        email: testShop.email,
+        hours_of_operation: testShop.hours_of_operation,
+        name: testShop.name,
+        phone_number: testShop.phone_number,
+        postal_code: testShop.postal_code,
+        province: testShop.province,
+      },
     });
+  });
+
+  it("FRT-M4-11: get quote request with an invalid shop id", async () => {
+    // Setup
+    await createCustomer();
+    await createShop();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+      service_id: testQuote.service_id,
+    };
+    await quoteHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    // Get Quote
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: "shop_does_not_exist",
+    };
+
+    await quoteByShopIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(0);
+  });
+
+  it("FRT-M4-13: delete quote request with an invalid quote id", async () => {
+    // Setup
+    await createCustomer();
+    await createShop();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      customer_id: testQuote.customer_id,
+      shop_id: testQuote.shop_id,
+      service_id: testQuote.service_id,
+    };
+    await quoteHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    // Delete Quote
+    const { req, res } = createMockRequestResponse({ method: "DELETE" });
+    req.query = {
+      id: "quote_does_not_exist",
+    };
+
+    await quoteByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(404);
   });
 });
 
