@@ -6,7 +6,9 @@
  */
 import appointmentHandler from "@pages/api/appointment";
 import appointmentByIdHandler from "@pages/api/appointment/[id]";
+import appointmentByShopIdHandler from "@pages/api/shop/[id]/appointments";
 import {
+  Appointment,
   Customer,
   Employee,
   prisma,
@@ -82,6 +84,24 @@ const testService: ServiceWithPartsType = {
   parts: [],
   type: "CANNED",
   shop_id: testShop.id,
+};
+
+const testAppointment: Appointment = {
+  id: "test_appointment_id",
+  create_time: new Date(),
+  update_time: new Date(),
+  quote_id: null,
+  work_order_id: "test_work_order_id",
+  vehicle_id: testVehicle.id,
+  price: 100,
+  employee_id: null,
+  customer_id: testCustomerUser.id,
+  status: "PENDING_APPROVAL",
+  start_time: new Date("2023-11-09T02:00:00.000Z"),
+  end_time: new Date("2023-11-09T04:00:00.000Z"),
+  shop_id: testShop.id,
+  service_id: testService.id,
+  cancellation_reason: null,
 };
 
 //
@@ -202,69 +222,542 @@ afterEach(async () => {
   ]);
 });
 
-describe("update appointment", () => {
-  describe("given appointment has been accepted", () => {
-    it("should accept appointment and only reject conflicting appointments", async () => {
-      // Create Customer, Vehicle, Shop, Employee and Service
-      await createCustomer();
-      await createVehicle();
-      await createShop();
-      await createEmployee();
-      await createService();
+describe("Appointments Module", () => {
+  it("FRT-M5-1: create appointment request with valid information", async () => {
+    // Setup
+    await createCustomer();
+    await createVehicle();
+    await createShop();
+    await createEmployee();
+    await createService();
 
-      // Create Appointments
-      for (const ap of [
-        appointment,
-        ...conflictingAppointments,
-        ...notConflictingAppointments,
-      ]) {
-        const { req, res } = createMockRequestResponse({ method: "POST" });
-        req.body = {
-          ...ap,
-          vehicle_id: testVehicle.id,
-          customer_id: testCustomerUser.id,
-          shop_id: testShop.id,
-          service_id: testService.id,
-        };
-        await appointmentHandler(req, res);
+    // Create Appointment
+    const { req, res } = createMockRequestResponse({ method: "POST" });
+    req.body = {
+      price: testAppointment.price,
+      start_time: testAppointment.start_time,
+      end_time: testAppointment.end_time,
+      vehicle_id: testAppointment.vehicle_id,
+      customer_id: testAppointment.customer_id,
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    };
 
-        expect(res.statusCode).toBe(201);
-        expect(res._getJSONData()).toMatchObject({
-          status: "PENDING_APPROVAL",
-        });
+    await appointmentHandler(req, res);
 
-        ap.id = res._getJSONData()["id"];
-      }
-
-      // Accept Appointment
-      const { req, res } = createMockRequestResponse({ method: "PATCH" });
-      req.query = { id: appointment.id };
-      req.body = { status: "ACCEPTED" };
-      await appointmentByIdHandler(req, res);
-
-      expect(res.statusCode).toBe(200);
-      expect(res._getJSONData()).toMatchObject({ status: "ACCEPTED" });
-
-      // Check Conflict Appointments Have Been REJECTED
-      for (const ap of conflictingAppointments) {
-        const { req, res } = createMockRequestResponse({ method: "GET" });
-        req.query = { id: ap.id };
-        await appointmentByIdHandler(req, res);
-        expect(res.statusCode).toBe(200);
-        expect(res._getJSONData()).toMatchObject({ status: "REJECTED" });
-      }
-
-      // Check Not Conflict Appointments Have Not Been Changed
-      for (const ap of notConflictingAppointments) {
-        const { req, res } = createMockRequestResponse({ method: "GET" });
-        req.query = { id: ap.id };
-        await appointmentByIdHandler(req, res);
-        expect(res.statusCode).toBe(200);
-        expect(res._getJSONData()).toMatchObject({
-          status: "PENDING_APPROVAL",
-        });
-      }
+    expect(res.statusCode).toBe(201);
+    expect(res._getJSONData()).toMatchObject({
+      id: expect.any(String),
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      work_order_id: expect.any(String),
+      vehicle_id: testAppointment.vehicle_id,
+      price: testAppointment.price,
+      customer_id: testAppointment.customer_id,
+      status: "PENDING_APPROVAL",
+      start_time: testAppointment.start_time.toJSON(),
+      end_time: testAppointment.end_time.toJSON(),
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
     });
+  });
+
+  it("FRT-M5-2: create appointment request with missing information", async () => {
+    // Setup
+    await createCustomer();
+    await createVehicle();
+    await createShop();
+    await createEmployee();
+    await createService();
+
+    // Create Appointment
+    const { req, res } = createMockRequestResponse({ method: "POST" });
+    req.body = {
+      price: testAppointment.price,
+      end_time: testAppointment.end_time,
+      vehicle_id: testAppointment.vehicle_id,
+      customer_id: testAppointment.customer_id,
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    };
+
+    await appointmentHandler(req, res);
+
+    expect(res.statusCode).toBe(400);
+  });
+
+  it("FRT-M5-3: create appointment request with an end time before the start time", async () => {
+    // Setup
+    await createCustomer();
+    await createVehicle();
+    await createShop();
+    await createEmployee();
+    await createService();
+
+    // Create Appointment
+    const { req, res } = createMockRequestResponse({ method: "POST" });
+    req.body = {
+      price: testAppointment.price,
+      start_time: testAppointment.end_time,
+      end_time: testAppointment.start_time,
+      vehicle_id: testAppointment.vehicle_id,
+      customer_id: testAppointment.customer_id,
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    };
+
+    await appointmentHandler(req, res);
+
+    expect(res.statusCode).toBe(400);
+  });
+
+  it("FRT-M5-4: get appointment request with a valid appointment id", async () => {
+    // Setup
+    await createCustomer();
+    await createVehicle();
+    await createShop();
+    await createEmployee();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      price: testAppointment.price,
+      start_time: testAppointment.start_time,
+      end_time: testAppointment.end_time,
+      vehicle_id: testAppointment.vehicle_id,
+      customer_id: testAppointment.customer_id,
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    };
+    await appointmentHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    const appointmentId = post.res._getJSONData()["id"] as string;
+
+    // Get Appointment
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: appointmentId,
+    };
+
+    await appointmentByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()).toMatchObject({
+      id: expect.any(String),
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      work_order_id: expect.any(String),
+      vehicle_id: testAppointment.vehicle_id,
+      price: testAppointment.price,
+      customer_id: testAppointment.customer_id,
+      status: "PENDING_APPROVAL",
+      start_time: testAppointment.start_time.toJSON(),
+      end_time: testAppointment.end_time.toJSON(),
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    });
+  });
+
+  it("FRT-M5-5: get appointment request with an invalid appointment id", async () => {
+    // Setup
+    await createCustomer();
+    await createVehicle();
+    await createShop();
+    await createEmployee();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      price: testAppointment.price,
+      start_time: testAppointment.start_time,
+      end_time: testAppointment.end_time,
+      vehicle_id: testAppointment.vehicle_id,
+      customer_id: testAppointment.customer_id,
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    };
+    await appointmentHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    // Get Appointment
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: "appointment_does_not_exist",
+    };
+
+    await appointmentByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  it("FRT-M5-6: get appointments request with a valid shop id", async () => {
+    // Setup
+    await createCustomer();
+    await createVehicle();
+    await createShop();
+    await createEmployee();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      price: testAppointment.price,
+      start_time: testAppointment.start_time,
+      end_time: testAppointment.end_time,
+      vehicle_id: testAppointment.vehicle_id,
+      customer_id: testAppointment.customer_id,
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    };
+    await appointmentHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    // Get Appointment
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: testAppointment.shop_id,
+    };
+
+    await appointmentByShopIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(1);
+    expect(res._getJSONData()[0]).toMatchObject({
+      id: expect.any(String),
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      work_order_id: expect.any(String),
+      vehicle_id: testAppointment.vehicle_id,
+      price: testAppointment.price,
+      customer_id: testAppointment.customer_id,
+      status: "PENDING_APPROVAL",
+      start_time: testAppointment.start_time.toJSON(),
+      end_time: testAppointment.end_time.toJSON(),
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    });
+  });
+
+  it("FRT-M5-7: get appointments request with an invalid shop id", async () => {
+    // Setup
+    await createCustomer();
+    await createVehicle();
+    await createShop();
+    await createEmployee();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      price: testAppointment.price,
+      start_time: testAppointment.start_time,
+      end_time: testAppointment.end_time,
+      vehicle_id: testAppointment.vehicle_id,
+      customer_id: testAppointment.customer_id,
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    };
+    await appointmentHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    // Get Appointment
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: "shop_does_not_exist",
+    };
+
+    await appointmentByShopIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(0);
+  });
+
+  it("FRT-M5-8: update an appointment request with a valid appointment id and valid information", async () => {
+    // Setup
+    await createCustomer();
+    await createVehicle();
+    await createShop();
+    await createEmployee();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      price: testAppointment.price,
+      start_time: testAppointment.start_time,
+      end_time: testAppointment.end_time,
+      vehicle_id: testAppointment.vehicle_id,
+      customer_id: testAppointment.customer_id,
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    };
+    await appointmentHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    const appointmentId = post.res._getJSONData()["id"] as string;
+
+    // Update Appointment
+    const { req, res } = createMockRequestResponse({ method: "PATCH" });
+    req.query = {
+      id: appointmentId,
+    };
+    req.body = {
+      price: testAppointment.price + 1000,
+    };
+
+    await appointmentByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()).toMatchObject({
+      id: expect.any(String),
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      work_order_id: expect.any(String),
+      vehicle_id: testAppointment.vehicle_id,
+      price: testAppointment.price + 1000,
+      customer_id: testAppointment.customer_id,
+      status: "PENDING_APPROVAL",
+      start_time: testAppointment.start_time.toJSON(),
+      end_time: testAppointment.end_time.toJSON(),
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    });
+  });
+
+  it("FRT-M5-9: update an appointment request with an invalid appointment id and valid information", async () => {
+    // Setup
+    await createCustomer();
+    await createVehicle();
+    await createShop();
+    await createEmployee();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      price: testAppointment.price,
+      start_time: testAppointment.start_time,
+      end_time: testAppointment.end_time,
+      vehicle_id: testAppointment.vehicle_id,
+      customer_id: testAppointment.customer_id,
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    };
+    await appointmentHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    // Update Appointment
+    const { req, res } = createMockRequestResponse({ method: "PATCH" });
+    req.query = {
+      id: "appointment_does_not_exist",
+    };
+    req.body = {
+      price: testAppointment.price + 1000,
+    };
+
+    await appointmentByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  it("FRT-M5-10: update an appointment request with a valid appointment id and invalid information", async () => {
+    // Setup
+    await createCustomer();
+    await createVehicle();
+    await createShop();
+    await createEmployee();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      price: testAppointment.price,
+      start_time: testAppointment.start_time,
+      end_time: testAppointment.end_time,
+      vehicle_id: testAppointment.vehicle_id,
+      customer_id: testAppointment.customer_id,
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    };
+    await appointmentHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    const appointmentId = post.res._getJSONData()["id"] as string;
+
+    // Update Appointment
+    const { req, res } = createMockRequestResponse({ method: "PATCH" });
+    req.query = {
+      id: appointmentId,
+    };
+    req.body = {
+      price: -1,
+    };
+
+    await appointmentByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(400);
+  });
+
+  it("FRT-M5-11: update an appointment request with a valid appointment id and with an end time before the start time", async () => {
+    // Setup
+    await createCustomer();
+    await createVehicle();
+    await createShop();
+    await createEmployee();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      price: testAppointment.price,
+      start_time: testAppointment.start_time,
+      end_time: testAppointment.end_time,
+      vehicle_id: testAppointment.vehicle_id,
+      customer_id: testAppointment.customer_id,
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    };
+    await appointmentHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    const appointmentId = post.res._getJSONData()["id"] as string;
+
+    // Update Appointment
+    const { req, res } = createMockRequestResponse({ method: "PATCH" });
+    req.query = {
+      id: appointmentId,
+    };
+    req.body = {
+      start_time: testAppointment.end_time,
+      end_time: testAppointment.start_time,
+    };
+
+    await appointmentByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(400);
+  });
+
+  it("FRT-M5-12: accept appointment and reject conflicting appointments", async () => {
+    // Create Customer, Vehicle, Shop, Employee and Service
+    await createCustomer();
+    await createVehicle();
+    await createShop();
+    await createEmployee();
+    await createService();
+
+    // Create Appointments
+    for (const ap of [
+      appointment,
+      ...conflictingAppointments,
+      ...notConflictingAppointments,
+    ]) {
+      const { req, res } = createMockRequestResponse({ method: "POST" });
+      req.body = {
+        ...ap,
+        vehicle_id: testVehicle.id,
+        customer_id: testCustomerUser.id,
+        shop_id: testShop.id,
+        service_id: testService.id,
+      };
+      await appointmentHandler(req, res);
+
+      expect(res.statusCode).toBe(201);
+      expect(res._getJSONData()).toMatchObject({
+        status: "PENDING_APPROVAL",
+      });
+
+      ap.id = res._getJSONData()["id"];
+    }
+
+    // Accept Appointment
+    const { req, res } = createMockRequestResponse({ method: "PATCH" });
+    req.query = { id: appointment.id };
+    req.body = { status: "ACCEPTED" };
+    await appointmentByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()).toMatchObject({ status: "ACCEPTED" });
+
+    // Check Conflict Appointments Have Been REJECTED
+    for (const ap of conflictingAppointments) {
+      const { req, res } = createMockRequestResponse({ method: "GET" });
+      req.query = { id: ap.id };
+      await appointmentByIdHandler(req, res);
+      expect(res.statusCode).toBe(200);
+      expect(res._getJSONData()).toMatchObject({ status: "REJECTED" });
+    }
+
+    // Check Not Conflict Appointments Have Not Been Changed
+    for (const ap of notConflictingAppointments) {
+      const { req, res } = createMockRequestResponse({ method: "GET" });
+      req.query = { id: ap.id };
+      await appointmentByIdHandler(req, res);
+      expect(res.statusCode).toBe(200);
+      expect(res._getJSONData()).toMatchObject({
+        status: "PENDING_APPROVAL",
+      });
+    }
+  });
+
+  it("FRT-M5-13: delete appointment request with a valid appointment id", async () => {
+    // Setup
+    await createCustomer();
+    await createVehicle();
+    await createShop();
+    await createEmployee();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      price: testAppointment.price,
+      start_time: testAppointment.start_time,
+      end_time: testAppointment.end_time,
+      vehicle_id: testAppointment.vehicle_id,
+      customer_id: testAppointment.customer_id,
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    };
+    await appointmentHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    const appointmentId = post.res._getJSONData()["id"] as string;
+
+    // Delete Appointment
+    const { req, res } = createMockRequestResponse({ method: "DELETE" });
+    req.query = {
+      id: appointmentId,
+    };
+
+    await appointmentByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(204);
+  });
+
+  it("FRT-M5-14: delete appointment request with an invalid appointment id", async () => {
+    // Setup
+    await createCustomer();
+    await createVehicle();
+    await createShop();
+    await createEmployee();
+    await createService();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      price: testAppointment.price,
+      start_time: testAppointment.start_time,
+      end_time: testAppointment.end_time,
+      vehicle_id: testAppointment.vehicle_id,
+      customer_id: testAppointment.customer_id,
+      shop_id: testAppointment.shop_id,
+      service_id: testAppointment.service_id,
+    };
+    await appointmentHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    // Delete Appointment
+    const { req, res } = createMockRequestResponse({ method: "DELETE" });
+    req.query = {
+      id: "appointment_does_not_exist",
+    };
+
+    await appointmentByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(404);
   });
 });
 
