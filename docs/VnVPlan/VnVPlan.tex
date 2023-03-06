@@ -78,6 +78,7 @@
 	March 4, 2023    & Joy Xiao              & Update Employee Management System Tests and add Unit Tests \\
 	March 4, 2023    & Timothy Choy          & Update Usability and Humanity Tests                        \\
 	March 4, 2023    & Arkin Modi            & Update Security Requirements Tests                         \\
+	March 5, 2023    & Timothy Choy          & Update Performance Tests                                   \\
 	\bottomrule
 \end{longtable}
 
@@ -100,12 +101,19 @@
 	\textbf{symbol} & \textbf{description}                \\
 	\midrule
 	CI              & Continuous Integration              \\
+	CLS             & Cumulative Layout Shift             \\
+	FCP             & First Contentful Paint              \\
+	FID             & First Input Delay                   \\
 	HA              & Hazard Analysis                     \\
 	HTTP            & Hypertext Transfer Protocol         \\
+	LCP             & Largest Contentful Paint            \\
 	MG              & Module Guide                        \\
 	MIS             & Module Interface Specification      \\
+	ms              & Milliseconds                        \\
 	PWA             & Progressive Web Application         \\
+	s               & Seconds                             \\
 	SRS             & Software Requirements Specification \\
+	TTFB            & Time to First Byte                  \\
 	VnV             & Verification and Validation         \\
 	\bottomrule
 \end{tabular}\\
@@ -1464,9 +1472,17 @@ This section will contain tests covering the ``Employee Profile'' requirements d
 
 	      Type: Dynamic, Manual
 
-	      How test will be performed: The tester will additionally add a timer to every test listed in
-	      section \ref{Tests for Functional Requirements} to check if every user function responds within 0.5
-	      seconds.
+	      How test will be performed: A function will be added to the application which logs web metrics of
+	      the system. Testers will go through each of the pages and functions, making sure that the metrics
+	      meet current web standards as stated \href{https://web.dev/vitals/}{in this article}. These
+	      criteria include:
+	      \begin{itemize}
+		      \item LCP $<$ 2.5s
+		      \item FID $<$ 100ms
+		      \item CLS $<$ 0.1
+		      \item TTFP $<$ 0.5s
+		      \item FCP $<$ 1.8s
+	      \end{itemize}
 
 \end{enumerate}
 
