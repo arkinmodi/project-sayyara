@@ -11,6 +11,9 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{amsfonts}
 
 \input{../Comments}
 \input{../Common}
@@ -38,6 +41,7 @@
 		March 4, 2023     & Leon So               & Add Introduction                                             \\
 		March 4, 2023     & Arkin Modi            & Add Tests Evaluation for Security Requirements               \\
 		March 4, 2023     & Arkin Modi            & Update Look and Feel Requirements Tests                      \\
+		March 4, 2023     & Arkin Modi            & Add Unit Testing Summary Table                               \\
 		March 4, 2023     & Leon So               & Add NFR Tests for Operational and Environmental Requirements \\
 		March 4, 2023     & Timothy Choy          & Add Test Evaluations for Usability and Humanity Requirements \\
 		March 4, 2023     & Timothy Choy          & Add Test Evaluations for Performance Requirements            \\
@@ -575,7 +579,68 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 
 \end{enumerate}
 
+\newpage
+
 \section{Unit Testing}
+
+\begin{longtable}{|l|c|l|c|l|c|}
+	\caption{Unit Tests Results Summary} \label{Table Unit Tests Result Summary}                                 \\
+	\toprule
+	\multicolumn{6}{c}{$\checkmark$ = Pass, X = Fail}                                                            \\
+	\toprule
+	\textbf{Test ID} & \textbf{Result} & \textbf{Test ID} & \textbf{Result} & \textbf{Test ID} & \textbf{Result} \\
+	\midrule
+	FRT-M3-1         & $\checkmark$    & FRT-M3-2         & $\checkmark$    & FRT-M3-3         & $\checkmark$    \\
+	\midrule
+	FRT-M3-4         & $\checkmark$    & FRT-M3-5         & $\checkmark$    & FRT-M3-6         & $\checkmark$    \\
+	\midrule
+	FRT-M3-7         & $\checkmark$    & FRT-M3-8         & $\checkmark$    & FRT-M3-9         & $\checkmark$    \\
+	\midrule
+	FRT-M3-10        & $\checkmark$    & FRT-M4-1         & $\checkmark$    & FRT-M4-2         & $\checkmark$    \\
+	\midrule
+	FRT-M4-3         & $\checkmark$    & FRT-M4-4         & $\checkmark$    & FRT-M4-5         & $\checkmark$    \\
+	\midrule
+	FRT-M3-6         & $\checkmark$    & FRT-M4-7         & $\checkmark$    & FRT-M4-8         & $\checkmark$    \\
+	\midrule
+	FRT-M4-9         & $\checkmark$    & FRT-M4-10        & $\checkmark$    & FRT-M4-11        & $\checkmark$    \\
+	\midrule
+	FRT-M4-12        & $\checkmark$    & FRT-M4-13        & $\checkmark$    & FRT-M4-14        & $\checkmark$    \\
+	\midrule
+	FRT-M4-15        & $\checkmark$    & FRT-M4-16        & $\checkmark$    & FRT-M4-17        & $\checkmark$    \\
+	\midrule
+	FRT-M5-1         & $\checkmark$    & FRT-M5-2         & $\checkmark$    & FRT-M5-3         & $\checkmark$    \\
+	\midrule
+	FRT-M5-4         & $\checkmark$    & FRT-M5-5         & $\checkmark$    & FRT-M5-6         & $\checkmark$    \\
+	\midrule
+	FRT-M5-7         & $\checkmark$    & FRT-M5-8         & $\checkmark$    & FRT-M5-9         & $\checkmark$    \\
+	\midrule
+	FRT-M5-10        & $\checkmark$    & FRT-M5-11        & $\checkmark$    & FRT-M5-12        & $\checkmark$    \\
+	\midrule
+	FRT-M5-13        & $\checkmark$    & FRT-M5-14        & $\checkmark$    & FRT-M6-1         & $\checkmark$    \\
+	\midrule
+	FRT-M6-2         & $\checkmark$    & FRT-M6-3         & $\checkmark$    & FRT-M6-4         & $\checkmark$    \\
+	\midrule
+	FRT-M6-5         & $\checkmark$    & FRT-M6-6         & $\checkmark$    & FRT-M6-7         & $\checkmark$    \\
+	\midrule
+	FRT-M7-1         & $\checkmark$    & FRT-M7-2         & $\checkmark$    & FRT-M7-3         & $\checkmark$    \\
+	\midrule
+	FRT-M7-4         & $\checkmark$    & FRT-M7-5         & $\checkmark$    & FRT-M7-6         & $\checkmark$    \\
+	\midrule
+	FRT-M8-1         & $\checkmark$    & FRT-M8-2         & $\checkmark$    & FRT-M8-3         & $\checkmark$    \\
+	\midrule
+	FRT-M8-4         & $\checkmark$    & FRT-M8-5         & $\checkmark$    & FRT-M8-6         & $\checkmark$    \\
+	\midrule
+	FRT-M8-7         & $\checkmark$    & FRT-M8-8         & $\checkmark$    & FRT-M8-9         & $\checkmark$    \\
+	\midrule
+	FRT-M8-10        & $\checkmark$    & FRT-M8-11        & $\checkmark$    & FRT-M8-12        & $\checkmark$    \\
+	\midrule
+	FRT-M8-13        & $\checkmark$    & FRT-M8-14        & $\checkmark$    & FRT-M8-15        & $\checkmark$    \\
+	\midrule
+	FRT-M9-1         & ?               & ~                & ~               & ~                & ~               \\
+	\bottomrule
+\end{longtable}
+
+\newpage
 
 \section{Changes Due to Testing}
 
@@ -590,11 +655,11 @@ All automated testing was carried out by Jest, a JavaScript testing framework. E
 own corresponding test file located within the ``test'' folder. The ``test'' folder has the same
 structure as the ``src'' folder, creating a one-to-one mapping of a module and its corresponding
 test. For example, the module ``src/server/services/userService.ts'' has its tests located in
-``test/server/services/userService.ts''. There are two Jest test runs, with the only difference
-being whether the testing environment is connected to a real database or not (i.e., whether the
-database needs to be seeded or mocked in each test case). As part of the CI/CD pipeline, the full
-test suite is run and information regarding pass/fail and code coverage is reported on every pull
-request to the main branch and to every push to the main branch.
+``test/server/services/userService.test.ts''. There are two Jest test runs, with the only
+difference being whether the testing environment is connected to a real database or not (i.e.,
+whether the database needs to be seeded or mocked in each test case). As part of the CI/CD
+pipeline, the full test suite is run and information regarding pass/fail and code coverage is
+reported on every pull request to the main branch and to every push to the main branch.
 
 \section{Trace to Requirements}
 
