@@ -85,3 +85,23 @@ a {
 .p-carousel .p-carousel-indicators {
   padding: 0.5rem !important;
 }
+
+/**
+* Global override for loading spinner colour
+*/
+@keyframes p-progress-spinner-color {
+  100%,
+  0% {
+    stroke: #69ad96;
+  }
+  40% {
+    stroke: gray;
+  }
+  66% {
+    stroke: #436188;
+  }
+  80%,
+  90% {
+    stroke: lightgray;
+  }
+}

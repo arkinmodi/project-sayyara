@@ -1,9 +1,16 @@
+import { usePrevious } from "@components/hooks/usePrevious";
+import { setCancelAppointment } from "@redux/actions/appointmentAction";
 import { readShopAppointments } from "@redux/actions/shopActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import { ShopSelectors } from "@redux/selectors/shopSelector";
 import styles from "@styles/pages/appointments/ShopAppointments.module.css";
+import classNames from "classnames";
+import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
+import { InputText } from "primereact/inputtext";
+import { ProgressSpinner } from "primereact/progressspinner";
 import { Toast } from "primereact/toast";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppointmentStatus, IAppointment } from "../../../types/appointment";
 import AppointmentCard from "./appointmentCard";
@@ -16,13 +23,25 @@ interface IAppointmentsProps {
 const ShopAppointments = (props: IAppointmentsProps) => {
   const dispatch = useDispatch();
 
-  const appointments = useSelector(ShopSelectors.getShopAppointments) ?? [];
+  const appointments = useSelector(ShopSelectors.getShopAppointments);
 
   const { appointmentTab, toggleActiveTab } = props;
 
   const [appointmentsMap, setAppointmentsMap] = useState<{
     [key: string]: Array<IAppointment>;
   }>({});
+
+  const [loading, setLoading] = useState(true);
+
+  const [cancellationReason, setCancellationReason] = useState("");
+
+  const [submitted, setSubmitted] = useState(false);
+
+  const [cancelledAppointmentId, setCancelledAppointmentId] = useState<
+    string | null
+  >(null);
+
+  const prevAppointmentMap = usePrevious(appointmentsMap);
 
   const shopId = useSelector(AuthSelectors.getShopId);
 
@@ -55,7 +74,14 @@ const ShopAppointments = (props: IAppointmentsProps) => {
         case AppointmentStatus.REJECTED:
           toast.current.show({
             severity: "info",
-            detail: "Appointment rejected/canceled",
+            detail: "Appointment rejected",
+            sticky: true,
+          });
+          break;
+        case AppointmentStatus.CANCELLED:
+          toast.current.show({
+            severity: "info",
+            detail: "Appointment cancelled",
             sticky: true,
           });
           break;
@@ -66,33 +92,47 @@ const ShopAppointments = (props: IAppointmentsProps) => {
   };
 
   useEffect(() => {
-    dispatch(readShopAppointments());
+    if (shopId != null) {
+      dispatch(readShopAppointments());
+    }
   }, [dispatch, shopId]);
 
   useEffect(() => {
-    const appointmentsList = appointments
-      .filter(
-        (appointment: IAppointment) => appointment.status == appointmentTab
-      )
-      .sort((appointment1: IAppointment, appointment2: IAppointment) => {
-        return (
-          new Date(appointment1.startTime).getTime() -
-          new Date(appointment2.startTime).getTime()
-        );
-      });
+    if (appointments != null) {
+      const appointmentsList = [...appointments]
+        .filter(
+          (appointment: IAppointment) => appointment.status == appointmentTab
+        )
+        .sort((appointment1: IAppointment, appointment2: IAppointment) => {
+          return (
+            new Date(appointment1.startTime).getTime() -
+            new Date(appointment2.startTime).getTime()
+          );
+        });
 
-    //put the appointments in a map of lists depending on the date
-    var appointmentsMap: { [key: string]: IAppointment[] } = {};
+      //put the appointments in a map of lists depending on the date
+      var _appointmentsMap: { [key: string]: IAppointment[] } = {};
 
-    for (var appointment of appointmentsList) {
-      var date = new Date(appointment.startTime).toDateString();
-      if (!(date in appointmentsMap)) {
-        appointmentsMap[date] = [];
+      if (appointmentsList != null) {
+        for (var appointment of appointmentsList) {
+          var date = new Date(appointment.startTime).toDateString();
+          if (!(date in _appointmentsMap)) {
+            _appointmentsMap[date] = [];
+          }
+          _appointmentsMap[date]!.push(appointment);
+        }
+
+        if (
+          !prevAppointmentMap ||
+          JSON.stringify(prevAppointmentMap) != JSON.stringify(_appointmentsMap)
+        ) {
+          setAppointmentsMap(_appointmentsMap);
+        }
       }
-      appointmentsMap[date]!.push(appointment);
+
+      setLoading(false);
     }
-    setAppointmentsMap(appointmentsMap);
-  }, [appointments, setAppointmentsMap, appointmentTab]);
+  }, [appointments, appointmentTab, prevAppointmentMap, loading]);
 
   function listAppointmentCards(date: string) {
     let content: any = [];
@@ -105,6 +145,7 @@ const ShopAppointments = (props: IAppointmentsProps) => {
             appointmentProgress={appointmentTab}
             showToast={showToast}
             toggleActiveTab={toggleActiveTab}
+            onOpenCancelDialog={confirmCancelSelected}
           />
         );
       });
@@ -123,12 +164,16 @@ const ShopAppointments = (props: IAppointmentsProps) => {
         return `No in progress appointments.`;
       case AppointmentStatus.COMPLETED:
         return `No completed appointments.`;
+      case AppointmentStatus.CANCELLED:
+        return `No cancelled appointments.`;
       default:
         return `No appointments.`;
     }
   }
 
-  function listAllAppointments() {
+  function listAllAppointments(appointmentsMap: {
+    [key: string]: Array<IAppointment>;
+  }) {
     let content: any = [];
     Object.keys(appointmentsMap).forEach((date) => {
       content.push(
@@ -142,13 +187,103 @@ const ShopAppointments = (props: IAppointmentsProps) => {
     return content;
   }
 
+  const [cancelAppointmentDialog, setCancelAppointmentDialog] = useState(false);
+
+  const hideCancelAppointmentDialog = () => {
+    setSubmitted(false);
+    setCancelAppointmentDialog(false);
+    setCancellationReason("");
+  };
+
+  const confirmCancelSelected = (id: string) => {
+    setCancelAppointmentDialog(true);
+    setCancelledAppointmentId(id);
+  };
+
+  const cancelAppointment = () => {
+    setSubmitted(true);
+    if (cancellationReason.length > 0 && cancelledAppointmentId != null) {
+      dispatch(
+        setCancelAppointment({
+          id: cancelledAppointmentId,
+          reason: cancellationReason,
+        })
+      );
+      setCancelAppointmentDialog(false);
+      showToast(AppointmentStatus.CANCELLED);
+    }
+  };
+
+  const cancelAppointmentDialogFooter = (
+    <div>
+      <Button
+        className={"blueButton"}
+        label="No"
+        icon="pi pi-times"
+        onClick={hideCancelAppointmentDialog}
+      />
+      <Button
+        className={"greenButton"}
+        label="Yes"
+        icon="pi pi-check"
+        onClick={cancelAppointment}
+      />
+    </div>
+  );
+
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value ?? "";
+
+    setCancellationReason(val);
+  };
+
   return (
     <div>
-      <Toast ref={toast} />
-      {Object.entries(appointmentsMap).length > 0 ? (
-        listAllAppointments()
+      {loading ? (
+        <div className={styles.loadingSpinner}>
+          <ProgressSpinner strokeWidth="3" fill="var(--surface-ground)" />
+          <h2>Loading service requests...</h2>
+        </div>
       ) : (
-        <div className={styles.noAppointmentsText}>{noAppointmentsText()}</div>
+        <div>
+          <Toast ref={toast} />
+          {Object.entries(appointmentsMap).length > 0 ? (
+            listAllAppointments(appointmentsMap)
+          ) : (
+            <div className={styles.noAppointmentsText}>
+              {noAppointmentsText()}
+            </div>
+          )}
+          <Dialog
+            visible={cancelAppointmentDialog}
+            style={{ width: "32rem" }}
+            breakpoints={{ "960px": "75vw", "641px": "90vw" }}
+            header="Confirm Cancellation"
+            modal
+            footer={cancelAppointmentDialogFooter}
+            onHide={hideCancelAppointmentDialog}
+          >
+            <div className={styles.cancelInputText}>
+              <label className={styles.cancelInputBox} htmlFor="reason">
+                Please enter a reason for cancellation:
+              </label>
+              <InputText
+                id="reason"
+                name="reason"
+                value={cancellationReason}
+                onChange={onInputChange}
+                required
+                autoFocus
+                className={classNames(styles.cancelInputBox, {
+                  "p-invalid": submitted && cancellationReason === "",
+                })}
+              />
+              {submitted && cancellationReason === "" && (
+                <small className="p-error">Cancellation reason required</small>
+              )}
+            </div>
+          </Dialog>
+        </div>
       )}
     </div>
   );

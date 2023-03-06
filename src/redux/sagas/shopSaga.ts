@@ -103,6 +103,7 @@ function getAllAppointments(shopId: string): Promise<IAppointment[]> {
                   status: appointment.status,
                   workOrderId: appointment.work_order_id,
                   vehicle: vehicle,
+                  cancellationReason: appointment.cancellation_reason,
                 };
               });
             } else {

@@ -45,6 +45,7 @@ export const getWorkOrderById = async (
                 status: data.appointment.status,
                 workOrderId: data.appointment.work_order_id,
                 vehicle: data.appointment.vehicle_id,
+                cancellationReason: data.appointment.cancellation_reason,
               }
             : null;
 
@@ -58,6 +59,7 @@ export const getWorkOrderById = async (
           employeeId: data.employee_id,
           body: data.body,
           shopId: data.shop_id,
+          cancellationReason: data.cancellation_reason,
           customer: {
             id: data.customer.id,
             first_name: data.customer.first_name,

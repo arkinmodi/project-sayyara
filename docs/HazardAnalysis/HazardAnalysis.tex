@@ -49,6 +49,7 @@
 		October 17, 2022 & Timothy Choy          & Add Safety and Security Requirements                                           \\
 		October 18, 2022 & Arkin Modi            & Add Roadmap section                                                            \\
 		October 19, 2022 & Arkin Modi            & Add List of Figures, List of Tables, and Appendix                              \\
+		March 4, 2023    & Timothy Choy          & Update Effect Analysis table                                                   \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -181,11 +182,11 @@ The system consists of:
 		 & \begin{enumerate}[label=\alph*., leftmargin=*]
 			   \item Loss of internet
 			   \item Inactive or stale connection
-			   \item Web socket failure
+			         %    \item Web socket failure
 		   \end{enumerate}
 		 & \begin{enumerate}[label=\alph*., leftmargin=*]
-			   \item Notify user of chat disconnection
-			   \item Cache latest messages, disable send button
+			   \item Notify user of network/internet disconnection
+			         %    \item Cache latest messages, disable send button
 		   \end{enumerate}
 		 & \begin{enumerate}[label=\alph*., leftmargin=*]
 			   \item SR4
@@ -328,11 +329,9 @@ The system consists of:
 		to accept would remove the hazard of conflicting schedules.
 	\item[] \emph{Associated Hazards:} H3-1 \\
 
-	\item The system shall notify the user if there is no network connection, and prevent the user from using
-	      functions that require a connection when they have no connection
-	\item[] \emph{Rationale:} A web socket connection cannot be made if there is no network connection.
-		Letting the user know that they have no connection and disabling methods for them to use connections
-		would prevent any hazards.
+	\item The system shall notify the user if there is no network connection
+	\item[] \emph{Rationale:} A connection cannot be made to the application if there is no network connection.
+		Letting the user know that they have no connection would help prevent any hazards.
 	\item[] \emph{Associated Hazards:} H4-1, H7-1, H7-2 \\
 
 	\item The system shall cache recent chat messages

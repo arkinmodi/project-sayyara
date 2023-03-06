@@ -31,9 +31,15 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}               \\
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                                              \\
 		\midrule
-		February 22, 2023 & Arkin Modi            & Add Automated Testing Section \\
+		February 22, 2023 & Arkin Modi            & Add Automated Testing Section                                \\
+		March 3, 2023     & Joy Xiao              & Add Tests Evaluations for Legal and Cultural Requirements    \\
+		March 4, 2023     & Leon So               & Add Introduction                                             \\
+		March 4, 2023     & Arkin Modi            & Add Tests Evaluation for Security Requirements               \\
+		March 4, 2023     & Arkin Modi            & Update Look and Feel Requirements Tests                      \\
+		March 4, 2023     & Leon So               & Add NFR Tests for Operational and Environmental Requirements \\
+		March 4, 2023     & Timothy Choy          & Add Test Evaluations for Usability and Humanity Requirements \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -44,11 +50,16 @@
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l}
 	\toprule
-	\textbf{symbol} & \textbf{description}   \\
+	\textbf{symbol} & \textbf{description}                \\
 	\midrule
-	T               & Test                   \\
-	CI              & Continuous Integration \\
-	CD              & Continuous Deployment  \\
+	API             & Application Programming Interface   \\
+	CD              & Continuous Deployment               \\
+	CI              & Continuous Integration              \\
+	PII             & Personal Identifiable Information   \\
+	PWA             & Progressive Web Application         \\
+	SRS             & Software Requirements Specification \\
+	T               & Test                                \\
+	VnV             & Verification and Validation         \\
 	\bottomrule
 \end{tabular}\\
 
@@ -64,17 +75,257 @@
 
 \pagenumbering{arabic}
 
-This document ...
+\section{Introduction}
+
+\subsection{Project Summary}
+
+Sayyara is a Progressive Web Application (PWA) which acts as a single platform for independent auto
+repair shops and vehicle owners. This platform allows independent auto repair shops and vehicle
+owners to interact in various ways. Using Sayyara, vehicle owners can search for auto repair shops
+and services based on a variety of search filters; request quotes for service; book, view, and
+manage service appointments. On the application, auto repair shop owners have full shop management
+capabilities such as: adding and managing a list of employees; managing a list of service types and
+corresponding service appointment availabilities; managing store information such as location,
+hours of operation, and contact information. Auto repair shop owners and employees will be able to
+manage quotes, service appointments, and work orders from a single application.
+
+\subsection{Purpose of Document}
+This document outlines the validation and verification process for the application, Sayyara, and a
+detailed summary of results for the planned tests defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}.
+
+\subsection{Scope of Testing}
+As defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan},
+the tests reported aim to verify and validate functional and nonfunctional requirements listed in
+the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+In addition, the testing reported in this document aims to validate that the application provides
+adequate usability and to verify that system is in a functional state for the end users. The
+testing and validation will aid in ensuring that the product fulfills the system requirements,
+intended use, and goals of stakeholders.
 
 \section{Functional Requirements Evaluation}
 
 \section{Nonfunctional Requirements Evaluation}
 
-\subsection{Usability}
+\subsection{Look and Feel Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-LF1-1}
 
-\subsection{Performance}
+	      Type: Dynamic, Manual
 
-\subsection{etc.}
+	      Initial State: The application is accessible through the Google Chrome web browser
+
+	      Input/Condition: The window size is changed
+
+	      Output/Result: The application shall adjust and scale to fit the new window size
+
+	      How test will be performed: The tester will access the application through Google Chrome on their
+	      desktop/laptop and change the windows through the use of Google Chrome DevTools Device Toolbar
+
+	      Results: Passed
+
+	\item \textbf{NFRT-LF2-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the web browser
+
+	      Input: The application is opened in a full screened web browser window
+
+	      Output: All text on the screen shall be readable
+
+	      How test will be performed: The tester open the application in a full screened web browser window,
+	      navigate to all pages, and judge if all text on the screen is readable from sitting 50 centimeters
+	      away from the monitor
+
+	      Results: Passed
+
+	\item \textbf{NFRT-LF3-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the web browser and there is a completed work
+	      order and quote on the user's account
+
+	      Input: The user opens the work order details and the quote details
+
+	      Output: All currency shall be rounded to two decimal places
+
+	      How test will be performed: The tester will navigate to the work order and quote and verify that
+	      all values of currency are rounded to two decimal places
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsection{Usability and Humanity Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-UH1-1}
+
+	      Type: Dynamic, Manual
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements on a MacOS desktop/laptop device, a Windows desktop/laptop, an iOS mobile device, and
+	      an android mobile device.
+
+	      Results: Passed. Testers were asked to write down which device they used to test to ensure all
+	      devices and operating systems were covered.
+
+	\item \textbf{NFRT-UH2-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: Device is connected to the internet and application is not open.
+
+	      Input/Condition: The user launches the application on a web browser.
+
+	      Output/Result: The system can be assessed through the web browser.
+
+	      How test will be performed: The testers will attempt to launch the application on a web browser,
+	      using a device that is connected to the internet.
+
+	      Results: Passed. The testers were able to access the application using the web browser while
+	      connected to the internet.
+
+	\item \textbf{NFRT-UH3-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: Device is connected to the internet and application is open.
+
+	      Input/Condition: User disconnects from the internet.
+
+	      Output/Result: The system notifies the user that there is no network connection.
+
+	      How test will be performed: The testers disconnects from the internet while the application is
+	      open.
+
+	      Results: Passed. Testers were greeted with a toast when they disconnected from the internet.
+
+\end{enumerate}
+
+\subsection{Performance Requirements}
+
+\subsection{Operational and Environmental Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-OE-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the Google Chrome web browser
+
+	      Input: The user navigates across all pages and dialogs, and performs all manual system tests for
+	      functional requirements
+
+	      Output: All pages and dialogs should be fully operational on the below listed device dimensions
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements on Google Chrome using various device dimension options listed in the Google DevTools
+	      Device Toolbar. At minimum, the testers will test with the following dimensions: Responsive, iPhone
+	      12 Pro ($390 \times 844$), iPhone SE ($375 \times 667$), and iPad Air ($820 \times 1180$). This set
+	      will provide a reasonable variety of different device dimensions.
+
+	      Results: Failed. Manually tested to verify whether the application supports the above device
+	      dimensions. Shop lookup page does not work on iPad Air ($820 \times 1180$) dimensions. Chat window
+	      does not work on iPhone SE ($375 \times 667$) dimensions.
+\end{enumerate}
+
+\subsection{Maintainability and Support Requirements}
+
+\subsection{Security Requirements}
+\begin{enumerate}
+
+	\item \textbf{NFRT-SR1-1}
+
+	      Type: Dynamic, Automatic
+
+	      Initial State: An account with a created appointment
+
+	      Input/Condition: An HTTP request to the application's backend to get the appointment by appointment
+	      ID
+
+	      Output/Result: The request is rejected with a 403 Forbidden error message
+
+	      How test will be performed: Through Jest an HTTP request will be sent to the server
+
+	      Results: Passed.
+
+	\item \textbf{NFRT-SR2-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: One Shop Owner account and two Customer accounts with one customer having an
+	      appointment at the shop registered under the same Shop Owner account
+
+	      Input/Condition: Request available time slots at the Shop Owner's store using the Customer without
+	      an appointment's account
+
+	      Output/Result: The Customer should only be able to view the time slot taken by the other customer
+	      and no other extra information
+
+	      How test will be performed: The tester will view the available time slots page as the Customer
+	      without an appointment
+
+	      Results: Failed. Extra information is returned from the API call that is not needed for this
+	      endpoints and exposes data that does not belong to user. None of the data contains PII.
+
+\end{enumerate}
+
+\subsection{Cultural Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-CR1-1}
+
+	      Type: Static, Manual
+
+	      Initial State: The application is accessible through the web browser
+
+	      Input: The user navigates across all pages and dialogs, and performs all end-to-end tests
+
+	      Output: There should be no offensive texts or images
+
+	      How test will be performed: The testers will go through end-to-end tests for the entire program and
+	      will confirm that any texts or images are not offensive.
+
+	      Results: Passed. Manually tested to verify that there are no offensive images or text.
+
+	\item \textbf{NFRT-CR2-1}
+	      Type: Static, Manual
+
+	      Initial State: The application is accessible through the web browser
+
+	      Input: The user navigates across all pages and dialogs, and performs all end-to-end tests
+
+	      Output: All text should be displayed in English
+
+	      How test will be performed: The testers will go through end-to-end tests for the entire program and
+	      will confirm that the text displayed is in English.
+
+	      Results: Passed. Checked that everything is written in English in the implementation,
+	      documentation, and anything visible to the user.
+
+\end{enumerate}
+
+\subsection{Legal Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-LR1-1}
+
+	      Type: Static, Manual
+
+	      Input: The user navigates all source code and project documents
+
+	      Output: Appropriate credits and/or copyright licenses are used, and MIT License requirements should
+	      be adhered to
+
+	      How test will be performed: The testers will go through the source code of the project and project
+	      documents to determine if any open source resources were used and check that appropriate credits
+	      and/or copyright licenses are used.
+
+	      Results: Passed. Checked the MIT License requirements and that the project adhered to all the
+	      requirements.
+
+\end{enumerate}
 
 \section{Unit Testing}
 
