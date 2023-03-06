@@ -49,6 +49,15 @@
   color: gray;
 }
 
+.cancelInputBox {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.cancelInputText {
+  margin: 10px;
+}
+
 @media (max-width: 500px) {
   .appointmentCarouselCard {
     max-width: 300px;
