@@ -62,8 +62,13 @@ const appointmentByIdHandler = async (
 
       appointment = await updateAppointmentById(id, patch.data).catch(
         (reason) => {
-          if (reason === "Appointment not found.") res.status(404);
-          else res.status(500);
+          if (reason === "Appointment not found.") {
+            res.status(404);
+          } else if (reason === "Invalid start time and/or end time.") {
+            res.status(400);
+          } else {
+            res.status(500);
+          }
           res.json({ message: reason });
           return null;
         }
