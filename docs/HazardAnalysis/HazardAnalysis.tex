@@ -141,7 +141,7 @@ The system consists of:
 			   \item User inputted login credentials do not match the credentials in the database
 		   \end{enumerate}
 		 & \begin{enumerate}[label=\alph*., leftmargin=*]
-			   \item Allow user to reset password
+			   \item Allow system admin to reset password
 		   \end{enumerate}
 		 & \begin{enumerate}[label=\alph*., leftmargin=*]
 			   \item SR2
@@ -154,7 +154,7 @@ The system consists of:
 			   \item Malicious internal or external actors gains access to the user account
 		   \end{enumerate}
 		 & \begin{enumerate}[label=\alph*., leftmargin=*]
-			   \item Allow user to reset password
+			   \item Allow system admin to reset password
 			   \item System administrators to undo/revert unauthorized changes
 		   \end{enumerate}
 		 & \begin{enumerate}[label=\alph*., leftmargin=*]
@@ -317,10 +317,11 @@ The system consists of:
 	\item[] \emph{Rationale:} There are legal consequences associated with losing people's PPI.
 	\item[] \emph{Associated Hazards:} H1-1 \\
 
-	\item The system shall allow the user to reset their password
+	\item The system shall allow the system admin to reset a user's password
 	\item[] \emph{Rationale:} If a user forgets their password, they will be unable to access information
 		regarding their work. Furthermore, losing access to their account due to a malicious actor would
-		allow unauthorized people access to components that require a level of authorization.
+		allow unauthorized people access to components that require a level of authorization. To recover
+		their account, the user may request a password reset from a system admin.
 	\item[] \emph{Associated Hazards:} H2-1, H2-2 \\
 
 	\item The system shall allow the shop owner or employee to accept appointments before they are finalized
