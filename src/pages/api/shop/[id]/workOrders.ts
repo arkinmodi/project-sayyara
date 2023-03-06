@@ -19,7 +19,7 @@ const workOrdersByShopIdHandler = async (
   }
 
   const session = await getServerAuthSession({ req, res });
-  if (!session || !(await isAuthorized(session, id))) {
+  if (!session || !isAuthorized(session, id)) {
     res.status(403).json({ message: "Forbidden." });
     return;
   }
@@ -28,7 +28,7 @@ const workOrdersByShopIdHandler = async (
   res.status(200).json(workOrders);
 };
 
-const isAuthorized = async (session: Session, shopId: string) => {
+const isAuthorized = (session: Session, shopId: string) => {
   return session.user.shopId === shopId;
 };
 
