@@ -645,7 +645,7 @@ describe("Services Module", () => {
 
     const serviceId = post.res._getJSONData()["id"] as string;
 
-    // Update Service
+    // Delete Service
     const { req, res } = createMockRequestResponse({ method: "DELETE" });
     req.query = {
       id: serviceId,
@@ -673,7 +673,7 @@ describe("Services Module", () => {
     await serviceHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
 
-    // Update Service
+    // Delete Service
     const { req, res } = createMockRequestResponse({ method: "DELETE" });
     req.query = {
       id: "service_does_not_exist",
