@@ -79,6 +79,7 @@
 	March 4, 2023    & Timothy Choy          & Update Usability and Humanity Tests                        \\
 	March 4, 2023    & Arkin Modi            & Update Security Requirements Tests                         \\
 	March 5, 2023    & Timothy Choy          & Update Performance Tests                                   \\
+	March 5, 2023    & Leon So               & Update Shop Profile Tests \& Remove Employee Profile Tests \\
 	\bottomrule
 \end{longtable}
 
@@ -1226,7 +1227,8 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 
 	      Input: Request to view shop profile
 
-	      Output: Information regarding the shop, which includes the shop's address, phone number, and email
+	      Output: Information regarding the shop, which includes the shop's address, phone number, email, and
+	      hours of operation (if any)
 
 	      Test Case Derivation: The system shall display information about the shop upon request
 
@@ -1236,134 +1238,31 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 
 	      Control: Manual
 
-	      Initial State: Shop Owner Account with a registered shop
+	      Initial State: User wants to view a shop's profile
 
-	      Input: Request to update shop profile, with information which includes the shop's address, phone
-	      number, and email
+	      Input: Request to view shop profile
 
-	      Output: A shop profile update confirmation message, and updated shop details
+	      Output: Information regarding the shop, which includes the shop's address, phone number, email, and
+	      hours of operation (if any)
 
-	      Test Case Derivation: The system shall update a shop's information upon request
+	      Test Case Derivation: The system shall display information about the shop upon request
 
-	      How test will be performed: The tester will go through the user interface to update a shop profile,
-	      on a Shop Owner Account
+	      How test will be performed: The tester will go through the user interface to view a shop profile
 
-	\item \textbf{FRT-BE34-2}
-
-	      Control: Manual
-
-	      Initial State: Employee Account with a registered shop
-
-	      Input: Request to update shop profile
-
-	      Output: An error message regarding incorrect privilege
-
-	      Test Case Derivation: The system shall not let employees update the shop profile
-
-	      How test will be performed: The tester will attempt to update a shop profile on an Employee Account
-\end{enumerate}
-
-\subsubsection{Employee Profile}
-
-This section will contain tests covering the ``Employee Profile'' requirements defined in the
-\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
-
-\begin{enumerate}
 	\item \textbf{FRT-BE35-1}
 
 	      Control: Manual
 
-	      Initial State: Shop Owner account with employees listed on their shop profile, Employee account
-	      exists
+	      Initial State: Shop Owner wants to add/update hours of operation of their shop
 
-	      Input: An Employee account views their employee profile
+	      Input: Request to add and edit hours of operation with valid hours of operation
 
-	      Output: Displays the employee's name, phone number and email
+	      Output: Updated hours of operation
 
-	      Test Case Derivation: The system shall display the employee's profile when requested
+	      Test Case Derivation: The system shall allow the shop owner to add/edit their hours of operation
 
-	      How test will be performed: The tester will navigate the interface to view their own profile
-
-	\item \textbf{FRT-BE35-2}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner account with employees listed on their shop profile, multiple Employee
-	      accounts exist
-
-	      Input: An Employee account views another employee's profile
-
-	      Output: Does not display the information
-
-	      Test Case Derivation: The system shall not display other employee's profiles
-
-	      How test will be performed: The tester will navigate the interface to view another employee's
+	      How test will be performed: The tester will go through the user interface to add/edit a shop
 	      profile
-
-	\item \textbf{FRT-BE35-3}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner account with employees listed on their shop profile, Employee accounts
-	      exist
-
-	      Input: A Shop Owner account views an employee profile
-
-	      Output: Displays the employee's name, phone number and email
-
-	      Test Case Derivation: The system shall display the employee's profile to a Shop Owner when
-	      requested
-
-	      How test will be performed: The tester will navigate the interface to view many different employee
-	      profiles
-
-	\item \textbf{FRT-BE36-1}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner account with employees listed on their shop profile, Employee account
-	      exists
-
-	      Input: An Employee account attempts to edit their own profile, by providing an email and/or a phone
-	      number
-
-	      Output: A notification of a successful update and their profile is updated accordingly
-
-	      Test Case Derivation: The system shall allow the Employee account to edit their own profile
-
-	      How test will be performed: The tester will edit their own profile by updating the email and phone
-	      number fields
-
-	\item \textbf{FRT-BE36-2}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner account with employees listed on their shop profile, multiple Employee
-	      accounts exist
-
-	      Input: An Employee account attempts to update another employee's profile
-
-	      Output: Nothing happens
-
-	      Test Case Derivation: The system shall not allow Employee accounts to edit other employee profiles
-
-	      How test will be performed: The tester will attempt to edit another employee's profile
-
-	\item \textbf{FRT-BE36-3}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner account with employees listed on their shop profile, Employee account
-	      exists
-
-	      Input: A Shop Owner account attempts to update any employee profile, providing an email and/or
-	      phone number
-
-	      Output: A notification of a successful update and the profile is updated accordingly
-
-	      Test Case Derivation: The system shall allow Shop Owner accounts to update employee profiles
-
-	      How test will be performed: The tester will attempt to edit multiple employee profiles
 
 \end{enumerate}
 
@@ -1660,23 +1559,17 @@ This section will contain tests covering the ``Employee Profile'' requirements d
 
 	\newpage
 
-	\begin{longtable}{|l|ccccc|}
-		\caption{Traceability Between Functional Test Cases and Functional Requirements, BE32 to BE36}                                                 \\
+	\begin{longtable}{|l|cccc|}
+		\caption{Traceability Between Functional Test Cases and Functional Requirements, BE32 to 35}                                   \\
 		\hline
-		\textbf{Test IDs}   & \multicolumn{5}{c|}{\textbf{Functional Requirement IDs}}                                                                 \\
+		\textbf{Test IDs}   & \multicolumn{4}{c|}{\textbf{Functional Requirement IDs}}                                                 \\
 		\hline
-		~                   & \textbf{BE32}                                            & \textbf{BE33} & \textbf{BE34} & \textbf{BE35} & \textbf{BE36} \\
+		~                   & \textbf{BE32}                                            & \textbf{BE33} & \textbf{BE34} & \textbf{BE35} \\
 		\hline
-		\textbf{FRT-BE32-1} & X                                                        & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE33-1} & ~                                                        & X             & ~             & ~             & ~             \\
-		\textbf{FRT-BE34-1} & ~                                                        & ~             & X             & ~             & ~             \\
-		\textbf{FRT-BE34-2} & ~                                                        & ~             & X             & ~             & ~             \\
-		\textbf{FRT-BE35-1} & ~                                                        & ~             & ~             & X             & ~             \\
-		\textbf{FRT-BE35-2} & ~                                                        & ~             & ~             & X             & ~             \\
-		\textbf{FRT-BE35-3} & ~                                                        & ~             & ~             & X             & ~             \\
-		\textbf{FRT-BE36-1} & ~                                                        & ~             & ~             & ~             & X             \\
-		\textbf{FRT-BE36-2} & ~                                                        & ~             & ~             & ~             & X             \\
-		\textbf{FRT-BE36-3} & ~                                                        & ~             & ~             & ~             & X             \\
+		\textbf{FRT-BE32-1} & X                                                        & ~             & ~             & ~             \\
+		\textbf{FRT-BE33-1} & ~                                                        & X             & ~             & ~             \\
+		\textbf{FRT-BE34-1} & ~                                                        & ~             & X             & ~             \\
+		\textbf{FRT-BE35-1} & ~                                                        & ~             & ~             & X             \\
 		\hline
 	\end{longtable}
 

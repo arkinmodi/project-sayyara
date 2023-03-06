@@ -41,6 +41,7 @@
 		March 4, 2023     & Leon So               & Add NFR Tests for Operational and Environmental Requirements \\
 		March 4, 2023     & Timothy Choy          & Add Test Evaluations for Usability and Humanity Requirements \\
 		March 4, 2023     & Timothy Choy          & Add Test Evaluations for Performance Requirements            \\
+		March 5, 2023     & Leon So               & Add Functional Requirement Tests for Shop Profile            \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -114,6 +115,62 @@ testing and validation will aid in ensuring that the product fulfills the system
 intended use, and goals of stakeholders.
 
 \section{Functional Requirements Evaluation}
+
+\subsection{Shop Profile}
+This section will contain tests covering the ``Shop Profile'' requirements defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+\begin{enumerate}
+	\item \textbf{FRT-BE33-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop
+
+	      Input: Request to view shop profile
+
+	      Output: Information regarding the shop, which includes the shop's address, phone number, and email
+
+	      Test Case Derivation: The system shall display information about the shop upon request
+
+	      How test will be performed: The tester will go through the user interface to view a shop profile
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE34-1}
+
+	      Control: Manual
+
+	      Initial State: User wants to view a shop's profile
+
+	      Input: Request to view shop profile
+
+	      Output: Information regarding the shop, which includes the shop's address, phone number, email, and
+	      hours of operation (if any)
+
+	      Test Case Derivation: The system shall display information about the shop upon request
+
+	      How test will be performed: The tester will go through the user interface to view a shop profile
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE35-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner wants to add/update hours of operation of their shop
+
+	      Input: Request to add and edit hours of operation with valid hours of operation
+
+	      Output: Updated hours of operation
+
+	      Test Case Derivation: The system shall allow the shop owner to add/edit their hours of operation
+
+	      How test will be performed: The tester will go through the user interface to add/edit a shop
+
+	      Results: Passed
+
+\end{enumerate}
 
 \section{Nonfunctional Requirements Evaluation}
 
