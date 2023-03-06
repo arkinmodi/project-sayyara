@@ -191,7 +191,7 @@
 		October 5, 2022    & Timothy Choy          & Add reflection                                                                     \\
 		October 5, 2022    & Joy Xiao              & Add reflection                                                                     \\
 		October 19, 2022   & Timothy Choy          & Update requirements from Hazard Analysis                                           \\
-		March 6, 2022      & Joy Xiao              & Remove allowing shop to create appointment                                         \\
+		March 6, 2022      & Joy Xiao              & Update services and appointments requirements                                      \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -1420,25 +1420,25 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants to search for auto repair or maintenance services
+	\item The user wants to search for a service on their shop profile
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
-			            \item The system shall display the service details
+			            \item[] N/A
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
 			            \item The system shall display the service details
-			            \item The system shall allow the user to search for a specific service type
+			            \item The system shall allow the user to search by service name
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item The system shall display the service details
-			            \item The system shall allow the user to search for a specific service type
+			            \item The system shall allow the user to search by service name
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants to edit a service type
+	\item The user wants to edit a service
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
@@ -1454,7 +1454,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants to delete a service type
+	\item The user wants to delete a service
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
@@ -1462,7 +1462,8 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to delete the service from their shop page
+			            \item The system shall allow the user to delete the service from their shop page if there are no
+			                  scheduled appointments for that service
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
