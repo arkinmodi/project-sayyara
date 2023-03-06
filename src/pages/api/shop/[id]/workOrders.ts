@@ -1,5 +1,4 @@
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
-import { getEmployeeById } from "@server/services/userService";
 import { getWorkOrdersByShopId } from "@server/services/workOrderService";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Session } from "next-auth";
@@ -20,7 +19,7 @@ const workOrdersByShopIdHandler = async (
   }
 
   const session = await getServerAuthSession({ req, res });
-  if (!session || !(await isAuthorized(session, id))) {
+  if (!session || !isAuthorized(session, id)) {
     res.status(403).json({ message: "Forbidden." });
     return;
   }
@@ -29,9 +28,8 @@ const workOrdersByShopIdHandler = async (
   res.status(200).json(workOrders);
 };
 
-const isAuthorized = async (session: Session, shopId: string) => {
-  const employee = await getEmployeeById(session.user.id);
-  return employee && employee.shop_id === shopId;
+const isAuthorized = (session: Session, shopId: string) => {
+  return session.user.shopId === shopId;
 };
 
 export default workOrdersByShopIdHandler;
