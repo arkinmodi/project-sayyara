@@ -80,7 +80,11 @@
 	March 4, 2023    & Arkin Modi            & Update Security Requirements Tests                         \\
 	March 5, 2023    & Timothy Choy          & Update Performance Tests                                   \\
 	March 5, 2023    & Leon So               & Update Shop Profile Tests \& Remove Employee Profile Tests \\
+<<<<<<< HEAD
 	March 6, 2023    & Joy Xiao              & Remove shop being able to create appointment               \\
+=======
+	March 6, 2023    & Leon So               & Update Functional Requirement Tests for Authentication     \\
+>>>>>>> 2ad9e94 ([Rev 1 Docs] [VnV Report] [VnV Plan] [SRS] [Hazard Analysis] Update tests and requirements for auth; add test results (#607))
 	\bottomrule
 \end{longtable}
 
@@ -343,7 +347,7 @@ This section will contains tests covering the ``Authentication'' requirements de
 	      Initial State: Shop owner with no existing account
 
 	      Input: Shop owner submits sign up form with valid email, password, name, phone number, shop name,
-	      shop address, and shop phone number
+	      shop address, shop phone number, and shop email
 
 	      Output: Redirect to shop owner landing page upon successful registration
 
@@ -359,7 +363,7 @@ This section will contains tests covering the ``Authentication'' requirements de
 
 	      Initial State: Employee with no existing account
 
-	      Input: Employee submits sign up form with valid email, password, name, and phone number
+	      Input: Employee submits sign up form with valid email, password, name, phone number, and shop ID
 
 	      Output: Redirect to employee landing page upon successful registration
 
@@ -375,7 +379,7 @@ This section will contains tests covering the ``Authentication'' requirements de
 
 	      Initial State: Customer with existing account and not logged in
 
-	      Input: Customer submits login form with valid email and password
+	      Input: Customer submits login form with valid email, password, and vehicle information
 
 	      Output: Redirect to vehicle owner landing page upon successful login
 
@@ -418,49 +422,42 @@ This section will contains tests covering the ``Authentication'' requirements de
 
 	      Control: Manual
 
-	      Initial State: Customer with existing account and not logged in
+	      Initial State: Customer with existing account and logged in
 
-	      Input: Customer requests a password reset code to be sent to inputted email
+	      Input: Customer requests to logout
 
-	      Output: System sends password reset code to inputted email and displays a countdown for password
-	      reset expiration
+	      Output: System logs the user out and transitions to home page
 
-	      Test Case Derivation: Customer wants to reset password
+	      Test Case Derivation: Customer wants to logout
 
-	      How test will be performed: The tester will request a password reset with an email associated with
-	      an existing account
+	      How test will be performed: The tester will request to logout on a customer account
 
 	\item \textbf{FRT-BE3-2}
-
 	      Control: Manual
 
-	      Initial State: Shop owner with existing account and not logged in
+	      Initial State: Shop owner with existing account and logged in
 
-	      Input: Shop owner requests a password reset code to be sent to inputted email
+	      Input: Shop owner requests to logout
 
-	      Output: System sends password reset code to inputted email and displays a countdown for password
-	      reset expiration
+	      Output: System logs the user out and transitions to home page
 
-	      Test Case Derivation: Shop owner wants to reset password
+	      Test Case Derivation: Shop owner wants to logout
 
-	      How test will be performed: The tester will request a password reset with an email associated with
-	      an existing account
+	      How test will be performed: The tester will request to logout on a shop owner account
 
 	\item \textbf{FRT-BE3-3}
 
 	      Control: Manual
 
-	      Initial State: Employee with existing account and not logged in
+	      Initial State: Employee with existing account and logged in
 
-	      Input: Employee requests a password reset code to be sent to inputted email
+	      Input: Employee requests to logout
 
-	      Output: System sends password reset code to inputted email and displays a countdown for password
-	      reset expiration
+	      Output: System logs the user out and transitions to home page
 
-	      Test Case Derivation: Employee wants to reset password
+	      Test Case Derivation: Employee wants to logout
 
-	      How test will be performed: The tester will request a password reset with an email associated with
-	      an existing account
+	      How test will be performed: The tester will request to logout on an employee account
 
 \end{enumerate}
 

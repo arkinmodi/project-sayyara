@@ -43,6 +43,7 @@
 		March 4, 2023     & Timothy Choy          & Add Test Evaluations for Usability and Humanity Requirements \\
 		March 4, 2023     & Timothy Choy          & Add Test Evaluations for Performance Requirements            \\
 		March 5, 2023     & Leon So               & Add Functional Requirement Tests for Shop Profile            \\
+		March 6, 2023     & Leon So               & Add Functional Requirement Tests for Authentication          \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -289,6 +290,163 @@ intended use, and goals of stakeholders.
 	      Input: Sets appointment availabilities
 
 	      Expected Output: The appointment availability is updated in the database
+		  
+\subsection{Authentication}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE1-1}
+
+	      Control: Manual
+
+	      Initial State: Customer with no existing account
+
+	      Input: Customer submits sign up form with valid email, password, name, and phone number
+
+	      Output: Redirect to vehicle owner landing page upon successful registration
+
+	      Test Case Derivation: New customer wants to sign up for a new account with valid sign up
+	      information provided
+
+	      How test will be performed: The tester will register and sign up for a new customer account using
+	      valid sign up information
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE1-2}
+
+	      Control: Manual
+
+	      Initial State: Shop owner with no existing account
+
+	      Input: Shop owner submits sign up form with valid email, password, name, phone number, shop name,
+	      shop address, shop phone number, and shop email
+
+	      Output: Redirect to shop owner landing page upon successful registration
+
+	      Test Case Derivation: New shop owner user wants to sign up for a new account with valid sign up
+	      information provided
+
+	      How test will be performed: The tester will register and sign up for a new shop owner account using
+	      valid sign up information
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE1-3}
+
+	      Control: Manual
+
+	      Initial State: Employee with no existing account
+
+	      Input: Employee submits sign up form with valid email, password, name, phone number, and shop ID
+
+	      Output: Redirect to employee landing page upon successful registration
+
+	      Test Case Derivation: New employee user wants to sign up for a new account with valid sign up
+	      information provided
+
+	      How test will be performed: The tester will register and sign up for a new employee account using
+	      valid sign up information
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE2-1}
+
+	      Control: Manual
+
+	      Initial State: Customer with existing account and not logged in
+
+	      Input: Customer submits login form with valid email, password, and vehicle information
+
+	      Output: Redirect to vehicle owner landing page upon successful login
+
+	      Test Case Derivation: Customer wants to login to existing with valid login credentials provided
+
+	      How test will be performed: The tester will login to an existing customer account using valid login
+	      credentials
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE2-2}
+
+	      Control: Manual
+
+	      Initial State: Shop owner with existing account and not logged in
+
+	      Input: Shop owner submits login form with valid email and password
+
+	      Output: Redirect to shop owner landing page upon successful login
+
+	      Test Case Derivation: Shop owner wants to login to existing with valid login credentials provided
+
+	      How test will be performed: The tester will login to an existing shop owner account using valid
+	      login credentials
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE2-3}
+
+	      Control: Manual
+
+	      Initial State: Employee with existing account and not logged in
+
+	      Input: Employee submits login form with valid email and password
+
+	      Output: Redirect to employee landing page upon successful login
+
+	      Test Case Derivation: Employee wants to login to existing with valid login credentials provided
+
+	      How test will be performed: The tester will login to an existing employee account using valid login
+	      credentials
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE3-1}
+
+	      Control: Manual
+
+	      Initial State: Customer with existing account and logged in
+
+	      Input: Customer requests to logout
+
+	      Output: System logs the user out and transitions to home page
+
+	      Test Case Derivation: Customer wants to logout
+
+	      How test will be performed: The tester will request to logout on a customer account
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE3-2}
+	      Control: Manual
+
+	      Initial State: Shop owner with existing account and logged in
+
+	      Input: Shop owner requests to logout
+
+	      Output: System logs the user out and transitions to home page
+
+	      Test Case Derivation: Shop owner wants to logout
+
+	      How test will be performed: The tester will request to logout on a shop owner account
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE3-3}
+
+	      Control: Manual
+
+	      Initial State: Employee with existing account and logged in
+
+	      Input: Employee requests to logout
+
+	      Output: System logs the user out and transitions to home page
+
+	      Test Case Derivation: Employee wants to logout
+
+	      How test will be performed: The tester will request to logout on an employee account
+
+	      Results: Passed
 
 \end{enumerate}
 
