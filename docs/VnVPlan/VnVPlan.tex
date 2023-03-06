@@ -1692,7 +1692,7 @@ tests were chosen based on common user flows and internal execution patterns.
 
 	      Type: Functional, Dynamic, Unit, Automated
 
-	      Initial State: N/A
+	      Initial State: A shop exists
 
 	      Input: Create employee request received with valid information
 
@@ -1707,7 +1707,7 @@ tests were chosen based on common user flows and internal execution patterns.
 
 	      Type: Functional, Dynamic, Unit, Automated
 
-	      Initial State: N/A
+	      Initial State: A shop exists
 
 	      Input: Create employee request received with invalid information
 
@@ -1968,7 +1968,7 @@ tests were chosen based on common user flows.
 
 	      Input: Delete quote request with an invalid quote ID
 
-	      Output: No operation
+	      Output: Request is rejected
 
 	      Test Case Derivation: A shop owner/employee wants to view the quote
 
@@ -2239,7 +2239,7 @@ tests were chosen based on common user flows.
 
 	      Input: Delete appointment request with an invalid appointment ID
 
-	      Output: No operation
+	      Output: Request is rejected
 
 	      Test Case Derivation: A user wants to delete an appointment
 
@@ -2305,9 +2305,9 @@ tests were chosen based on common user flows.
 
 	      Input: Get work order request with an invalid shop ID
 
-	      Output: Empty list
+	      Output: Request is rejected
 
-	      Test Case Derivation: A user wants to view the work order
+	      Test Case Derivation: A shop owner/employee wants to view all the work orders for their shop
 
 	      How test will be performed: Jest will send a get work order request with an invalid shop ID
 
@@ -2540,7 +2540,7 @@ tests were chosen based on common user flows.
 
 	      Input: Get services request with an invalid shop ID
 
-	      Output: Request is rejected
+	      Output: Empty list
 
 	      Test Case Derivation: A user wants to view the services at a shop
 
