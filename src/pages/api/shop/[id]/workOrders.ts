@@ -1,5 +1,4 @@
 import { getServerAuthSession } from "@server/common/getServerAuthSession";
-import { getEmployeeById } from "@server/services/userService";
 import { getWorkOrdersByShopId } from "@server/services/workOrderService";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Session } from "next-auth";
@@ -30,8 +29,7 @@ const workOrdersByShopIdHandler = async (
 };
 
 const isAuthorized = async (session: Session, shopId: string) => {
-  const employee = await getEmployeeById(session.user.id);
-  return employee && employee.shop_id === shopId;
+  return session.user.shopId === shopId;
 };
 
 export default workOrdersByShopIdHandler;
