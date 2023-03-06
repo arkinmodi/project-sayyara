@@ -2682,6 +2682,87 @@ tests were chosen based on common user flows.
 
 \subsubsection{Shop Module}
 
+This section will contain tests covering the ``Shop Module'' defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MIS/MIS.pdf}{MIS}. These
+tests were chosen based on common user flows.
+
+\begin{enumerate}
+
+	\item \textbf{FRT-M9-1}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop exists
+
+	      Input: Get shop request with a valid shop ID
+
+	      Output: Shop data
+
+	      Test Case Derivation: A user wants to view the shop
+
+	      How test will be performed: Jest will send a get shop request with a valid shop ID
+
+	\item \textbf{FRT-M9-2}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop exists
+
+	      Input: Get shop request with an invalid shop ID
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A user wants to view the shop
+
+	      How test will be performed: Jest will send a get shop request with an invalid shop ID
+
+	\item \textbf{FRT-M9-3}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop exists
+
+	      Input: Update shop request with a valid shop ID and valid information
+
+	      Output: Update the shop information
+
+	      Test Case Derivation: A shop owner wants to update the shop data information
+
+	      How test will be performed: Jest will send an update shop request with a valid shop ID and valid
+	      information
+
+	\item \textbf{FRT-M9-4}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop exists
+
+	      Input: Update shop request with an invalid shop ID and valid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A shop owner/employee wants to update the shop
+
+	      How test will be performed: Jest will send an update shop request with an invalid shop ID and valid
+	      information
+
+	\item \textbf{FRT-M9-5}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop exists
+
+	      Input: Update work order request with a valid shop ID and invalid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A shop owner/employee wants to update the shop
+
+	      How test will be performed: Jest will send an update work order request with a valid shop ID and
+	      invalid information
+
+\end{enumerate}
+
 \subsection{Tests for Nonfunctional Requirements}
 
 The application will not have nonfunctional requirements tested for through the use of unit

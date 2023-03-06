@@ -62,146 +62,174 @@ afterEach(async () => {
   await prisma.$transaction([deleteShops]);
 });
 
-describe("get shop", () => {
-  describe("given shop does not exist", () => {
-    it("should return 404", async () => {
-      const { req, res } = createMockRequestResponse({ method: "GET" });
-      req.query = { ...req.query, id: "does_not_exist" };
-      await shopByIdHandler(req, res);
+describe("Shop Module", () => {
+  it("FRT-M9-1: Get shop request with an invalid shop ID", async () => {
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = { ...req.query, id: "does_not_exist" };
+    await shopByIdHandler(req, res);
 
-      expect(res.statusCode).toBe(404);
-      expect(res._getJSONData()).toMatchObject({
-        message: "Shop not found.",
-      });
+    expect(res.statusCode).toBe(404);
+    expect(res._getJSONData()).toMatchObject({
+      message: "Shop not found.",
     });
   });
 
-  describe("given shop does exist", () => {
-    it("should return shop", async () => {
-      // Create Shop
-      const shop = await createShop(testShop);
+  it("FRT-M9-2: Get shop request with an valid shop ID", async () => {
+    // Create Shop
+    const shop = await createShop(testShop);
 
-      // Get Shop
-      const get = createMockRequestResponse({ method: "GET" });
-      get.req.query = { ...get.req.query, id: shop.id };
-      await shopByIdHandler(get.req, get.res);
+    // Get Shop
+    const get = createMockRequestResponse({ method: "GET" });
+    get.req.query = { ...get.req.query, id: shop.id };
+    await shopByIdHandler(get.req, get.res);
 
-      expect(get.res.statusCode).toBe(200);
-      expect(get.res._getJSONData()).toMatchObject({
-        ...testShop,
-        id: shop.id,
-        create_time: expect.any(String),
-        update_time: expect.any(String),
-      });
+    expect(get.res.statusCode).toBe(200);
+    expect(get.res._getJSONData()).toMatchObject({
+      ...testShop,
+      id: shop.id,
+      create_time: expect.any(String),
+      update_time: expect.any(String),
     });
   });
 
-  describe("given no shop ID", () => {
-    it("should reject request", async () => {
-      const { req, res } = createMockRequestResponse({ method: "GET" });
-      await shopByIdHandler(req, res);
+  it("FRT-M9-3: Update shop request with a valid shop ID and valid information", async () => {
+    const hoursOfOperation = {
+      monday: {
+        isOpen: true,
+        openTime: "1970-01-01T09:00:00.000Z",
+        closeTime: "1970-01-01T17:00:00.000Z",
+      },
+      tuesday: {
+        isOpen: true,
+        openTime: "1970-01-01T09:00:00.000Z",
+        closeTime: "1970-01-01T17:00:00.000Z",
+      },
+      wednesday: {
+        isOpen: true,
+        openTime: "1970-01-01T09:00:00.000Z",
+        closeTime: "1970-01-01T17:00:00.000Z",
+      },
+      thursday: {
+        isOpen: true,
+        openTime: "1970-01-01T09:00:00.000Z",
+        closeTime: "1970-01-01T17:00:00.000Z",
+      },
+      friday: {
+        isOpen: true,
+        openTime: "1970-01-01T09:00:00.000Z",
+        closeTime: "1970-01-01T17:00:00.000Z",
+      },
+      saturday: {
+        isOpen: false,
+        openTime: "1970-01-01T09:00:00.000Z",
+        closeTime: "1970-01-01T17:00:00.000Z",
+      },
+      sunday: {
+        isOpen: false,
+        openTime: "1970-01-01T09:00:00.000Z",
+        closeTime: "1970-01-01T17:00:00.000Z",
+      },
+    };
 
-      expect(res.statusCode).toBe(400);
-      expect(res._getJSONData()).toMatchObject({
-        message: "Invalid Shop ID.",
-      });
+    const shop = await createShop(testShop);
+    const update = createMockRequestResponse({ method: "PATCH" });
+    update.req.query = { ...update.req.query, id: shop.id };
+    // Change name and hours of operation
+    update.req.body = {
+      name: "new_name",
+      hours_of_operation: hoursOfOperation,
+    };
+
+    await shopByIdHandler(update.req, update.res);
+
+    expect(update.res.statusCode).toBe(200);
+    expect(update.res._getJSONData()).toMatchObject({
+      name: "new_name",
+      hours_of_operation: hoursOfOperation,
+    });
+
+    const get = createMockRequestResponse({ method: "GET" });
+    get.req.query = { ...get.req.query, id: shop.id };
+    await shopByIdHandler(get.req, get.res);
+
+    expect(get.res.statusCode).toBe(200);
+    expect(get.res._getJSONData()).toMatchObject({
+      ...testShop,
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      id: shop.id,
+      name: "new_name",
+      hours_of_operation: hoursOfOperation,
     });
   });
-});
 
-describe("update shop", () => {
-  describe("given new name", () => {
-    it("should update name", async () => {
-      const shop = await createShop(testShop);
-      const update = createMockRequestResponse({ method: "PATCH" });
-      update.req.query = { ...update.req.query, id: shop.id };
-      update.req.body = { name: "new_name" };
+  it("FRT-M9-4: Update shop request with an invalid shop ID and valid information", async () => {
+    const hoursOfOperation = {
+      monday: {
+        isOpen: true,
+        openTime: "1970-01-01T09:00:00.000Z",
+        closeTime: "1970-01-01T17:00:00.000Z",
+      },
+      tuesday: {
+        isOpen: true,
+        openTime: "1970-01-01T09:00:00.000Z",
+        closeTime: "1970-01-01T17:00:00.000Z",
+      },
+      wednesday: {
+        isOpen: true,
+        openTime: "1970-01-01T09:00:00.000Z",
+        closeTime: "1970-01-01T17:00:00.000Z",
+      },
+      thursday: {
+        isOpen: true,
+        openTime: "1970-01-01T09:00:00.000Z",
+        closeTime: "1970-01-01T17:00:00.000Z",
+      },
+      friday: {
+        isOpen: true,
+        openTime: "1970-01-01T09:00:00.000Z",
+        closeTime: "1970-01-01T17:00:00.000Z",
+      },
+      saturday: {
+        isOpen: false,
+        openTime: "1970-01-01T09:00:00.000Z",
+        closeTime: "1970-01-01T17:00:00.000Z",
+      },
+      sunday: {
+        isOpen: false,
+        openTime: "1970-01-01T09:00:00.000Z",
+        closeTime: "1970-01-01T17:00:00.000Z",
+      },
+    };
 
-      await shopByIdHandler(update.req, update.res);
+    const shop = await createShop(testShop);
+    const update = createMockRequestResponse({ method: "PATCH" });
+    update.req.query = { ...update.req.query, id: "invalid_shop_id" };
+    // Change name and hours of operation
+    update.req.body = {
+      name: "new_name",
+      hours_of_operation: hoursOfOperation,
+    };
 
-      expect(update.res.statusCode).toBe(200);
-      expect(update.res._getJSONData()).toMatchObject({ name: "new_name" });
+    await shopByIdHandler(update.req, update.res);
 
-      const get = createMockRequestResponse({ method: "GET" });
-      get.req.query = { ...get.req.query, id: shop.id };
-      await shopByIdHandler(get.req, get.res);
-
-      expect(get.res.statusCode).toBe(200);
-      expect(get.res._getJSONData()).toMatchObject({
-        ...testShop,
-        create_time: expect.any(String),
-        update_time: expect.any(String),
-        id: shop.id,
-        name: "new_name",
-      });
+    expect(update.res.statusCode).toBe(404);
+    expect(update.res._getJSONData()).toMatchObject({
+      message: "Shop not found.",
     });
+  });
 
-    describe("given new hours of operation", () => {
-      it("should update hours of operation", async () => {
-        const hoursOfOperation = {
-          monday: {
-            isOpen: true,
-            openTime: "1970-01-01T09:00:00.000Z",
-            closeTime: "1970-01-01T17:00:00.000Z",
-          },
-          tuesday: {
-            isOpen: true,
-            openTime: "1970-01-01T09:00:00.000Z",
-            closeTime: "1970-01-01T17:00:00.000Z",
-          },
-          wednesday: {
-            isOpen: true,
-            openTime: "1970-01-01T09:00:00.000Z",
-            closeTime: "1970-01-01T17:00:00.000Z",
-          },
-          thursday: {
-            isOpen: true,
-            openTime: "1970-01-01T09:00:00.000Z",
-            closeTime: "1970-01-01T17:00:00.000Z",
-          },
-          friday: {
-            isOpen: true,
-            openTime: "1970-01-01T09:00:00.000Z",
-            closeTime: "1970-01-01T17:00:00.000Z",
-          },
-          saturday: {
-            isOpen: false,
-            openTime: "1970-01-01T09:00:00.000Z",
-            closeTime: "1970-01-01T17:00:00.000Z",
-          },
-          sunday: {
-            isOpen: false,
-            openTime: "1970-01-01T09:00:00.000Z",
-            closeTime: "1970-01-01T17:00:00.000Z",
-          },
-        };
-        const shop = await createShop(testShop);
-        const update = createMockRequestResponse({ method: "PATCH" });
-        update.req.query = { ...update.req.query, id: shop.id };
-        update.req.body = {
-          hours_of_operation: hoursOfOperation,
-        };
+  it("FRT-M9-5: Update shop request with an valid shop ID and invalid information", async () => {
+    const shop = await createShop(testShop);
+    const update = createMockRequestResponse({ method: "PATCH" });
+    update.req.query = { ...update.req.query, id: shop.id };
+    // Change name and hours of operation
+    update.req.body = {
+      email: "invalid_email",
+    };
 
-        await shopByIdHandler(update.req, update.res);
+    await shopByIdHandler(update.req, update.res);
 
-        expect(update.res.statusCode).toBe(200);
-        expect(update.res._getJSONData()).toMatchObject({
-          hours_of_operation: hoursOfOperation,
-        });
-
-        const get = createMockRequestResponse({ method: "GET" });
-        get.req.query = { ...get.req.query, id: shop.id };
-        await shopByIdHandler(get.req, get.res);
-
-        expect(get.res.statusCode).toBe(200);
-        expect(get.res._getJSONData()).toMatchObject({
-          ...testShop,
-          create_time: expect.any(String),
-          update_time: expect.any(String),
-          id: shop.id,
-          hours_of_operation: hoursOfOperation,
-        });
-      });
-    });
+    expect(update.res.statusCode).toBe(400);
   });
 });
