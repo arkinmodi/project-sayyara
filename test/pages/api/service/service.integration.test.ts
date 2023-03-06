@@ -31,8 +31,23 @@ const testShop: Shop = {
   hours_of_operation: null,
 };
 
-const testService: ServiceWithPartsType = {
-  id: "",
+const testEmployeeUser: Employee = {
+  id: "test_employee_id",
+  first_name: "first_name",
+  last_name: "last_name",
+  phone_number: "1234567890",
+  email: "employee@test.com",
+  password: "test_password",
+  image: null,
+  create_time: new Date(),
+  update_time: new Date(),
+  type: "SHOP_OWNER",
+  shop_id: testShop.id,
+  status: "ACTIVE",
+};
+
+const testCannedService: ServiceWithPartsType = {
+  id: "test_canned_service_id",
   create_time: new Date(),
   update_time: new Date(),
   name: "test_service_name",
@@ -49,31 +64,39 @@ const testService: ServiceWithPartsType = {
       build: "OEM",
     },
   ],
-  shop_id: "test_shop_id",
+  shop_id: testShop.id,
 };
 
-const testEmployeeUser: Employee = {
-  id: "test_id",
-  first_name: "first_name",
-  last_name: "last_name",
-  phone_number: "1234567890",
-  email: "user@test.com",
-  password: "test_password",
-  image: null,
+const testCustomService: ServiceWithPartsType = {
+  id: "test_custom_service_id",
   create_time: new Date(),
   update_time: new Date(),
-  type: "SHOP_OWNER",
-  shop_id: "shop_id",
-  status: "ACTIVE",
+  name: "test_service_name",
+  description: "test_service_description",
+  estimated_time: 2,
+  total_price: 100,
+  type: "CUSTOM",
+  parts: [
+    {
+      quantity: 2,
+      cost: 100.0,
+      name: "test_part",
+      condition: "NEW",
+      build: "OEM",
+    },
+  ],
+  shop_id: testShop.id,
 };
-
 jest.mock("@server/common/getServerAuthSession", () => ({
   getServerAuthSession: jest.fn<Session, []>(() => ({
     expires: "1",
     user: {
-      ...testEmployeeUser,
+      id: testEmployeeUser.id,
       firstName: testEmployeeUser.first_name,
       lastName: testEmployeeUser.last_name,
+      email: testEmployeeUser.email,
+      type: testEmployeeUser.type,
+      shopId: testEmployeeUser.shop_id,
     },
   })),
 }));
@@ -88,302 +111,603 @@ afterAll(async () => {
 
 afterEach(async () => {
   await prisma.$transaction([
-    prisma.service.deleteMany({}),
-    prisma.shop.deleteMany({}),
+    prisma.service.deleteMany(),
+    prisma.employee.deleteMany(),
+    prisma.shop.deleteMany(),
   ]);
 });
 
-describe("create service", () => {
-  describe("given new service", () => {
-    it("should create the service", async () => {
-      // Create Shop
-      const shop = await createShop();
+describe("Services Module", () => {
+  it("FRT-M8-1: create service request with valid information", async () => {
+    // Setup
+    await createEmployeeAndShop();
 
-      const { req, res } = createMockRequestResponse({ method: "POST" });
-      req.body = { ...testService, shop_id: shop.id };
-      await serviceHandler(req, res);
+    // Create Service
+    const { req, res } = createMockRequestResponse({ method: "POST" });
+    req.body = {
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    };
 
-      expect(res.statusCode).toBe(201);
-      expect(res._getJSONData()).toMatchObject({
-        ...testService,
-        id: expect.any(String),
-        create_time: expect.any(String),
-        update_time: expect.any(String),
-        shop_id: shop.id,
-      });
+    await serviceHandler(req, res);
+
+    expect(res.statusCode).toBe(201);
+    expect(res._getJSONData()).toMatchObject({
+      id: expect.any(String),
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
     });
   });
 
-  describe("given duplicate service", () => {
-    it("should create a duplicate service", async () => {
-      // Create Shop
-      const shop = await createShop();
+  it("FRT-M8-2: create service request with invalid information", async () => {
+    // Setup
+    await createEmployeeAndShop();
 
-      // Create First Service
-      const firstService = createMockRequestResponse({ method: "POST" });
-      firstService.req.body = { ...testService, shop_id: shop.id };
-      await serviceHandler(firstService.req, firstService.res);
+    // Create Service
+    const { req, res } = createMockRequestResponse({ method: "POST" });
+    req.body = {
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+    };
 
-      expect(firstService.res.statusCode).toBe(201);
-      expect(firstService.res._getJSONData()).toMatchObject({
-        ...testService,
-        id: expect.any(String),
-        create_time: expect.any(String),
-        update_time: expect.any(String),
-        shop_id: shop.id,
-      });
+    await serviceHandler(req, res);
 
-      // Create Duplicate Service
-      const duplicateService = createMockRequestResponse({ method: "POST" });
-      duplicateService.req.body = { ...testService, shop_id: shop.id };
-      await serviceHandler(duplicateService.req, duplicateService.res);
+    expect(res.statusCode).toBe(400);
+  });
 
-      expect(duplicateService.res.statusCode).toBe(201);
-      expect(duplicateService.res._getJSONData()).toMatchObject({
-        ...testService,
-        id: expect.any(String),
-        create_time: expect.any(String),
-        update_time: expect.any(String),
-        shop_id: shop.id,
-      });
+  it("FRT-M8-3: get service request with a valid service id", async () => {
+    // Setup
+    await createEmployeeAndShop();
 
-      expect(firstService.res._getJSONData()["id"]).not.toBe(
-        duplicateService.res._getJSONData()["id"]
-      );
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    };
+    await serviceHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    const serviceId = post.res._getJSONData()["id"] as string;
+
+    // Get Service
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: serviceId,
+    };
+
+    await serviceByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()).toMatchObject({
+      id: serviceId,
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
     });
+  });
+
+  it("FRT-M8-4: get service request with an invalid service id", async () => {
+    // Setup
+    await createEmployeeAndShop();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    };
+    await serviceHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    // Get Service
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: "service_does_not_exist",
+    };
+
+    await serviceByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  it("FRT-M8-5: get services request with a valid shop id", async () => {
+    // Setup
+    await createEmployeeAndShop();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    };
+    await serviceHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    const serviceId = post.res._getJSONData()["id"] as string;
+
+    // Get Service
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: testCannedService.shop_id,
+    };
+
+    await serviceByShopIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(1);
+    expect(res._getJSONData()[0]).toMatchObject({
+      id: serviceId,
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    });
+  });
+
+  it("FRT-M8-6: get services request with an invalid shop id", async () => {
+    // Setup
+    await createEmployeeAndShop();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    };
+    await serviceHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    // Get Service
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: "shop_does_not_exist",
+    };
+
+    await serviceByShopIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(0);
+  });
+
+  it("FRT-M8-7: get 'CANNED' services request with a valid shop id", async () => {
+    // Setup
+    await createEmployeeAndShop();
+
+    const createCannedService = createMockRequestResponse({ method: "POST" });
+    createCannedService.req.body = {
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    };
+    await serviceHandler(createCannedService.req, createCannedService.res);
+    expect(createCannedService.res.statusCode).toBe(201);
+
+    const cannedServiceId = createCannedService.res._getJSONData()[
+      "id"
+    ] as string;
+
+    const createCustomService = createMockRequestResponse({ method: "POST" });
+    createCustomService.req.body = {
+      name: testCustomService.name,
+      description: testCustomService.description,
+      estimated_time: testCustomService.estimated_time,
+      total_price: testCustomService.total_price,
+      parts: testCustomService.parts,
+      type: testCustomService.type,
+      shop_id: testCustomService.shop_id,
+    };
+    await serviceHandler(createCustomService.req, createCustomService.res);
+    expect(createCustomService.res.statusCode).toBe(201);
+
+    // Get Service
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: testCannedService.shop_id,
+      type: [testCannedService.type],
+    };
+
+    await serviceByShopIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(1);
+    expect(res._getJSONData()[0]).toMatchObject({
+      id: cannedServiceId,
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    });
+  });
+
+  it("FRT-M8-8: get 'CANNED' services request with an invalid shop id", async () => {
+    // Setup
+    await createEmployeeAndShop();
+
+    const createCannedService = createMockRequestResponse({ method: "POST" });
+    createCannedService.req.body = {
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    };
+    await serviceHandler(createCannedService.req, createCannedService.res);
+    expect(createCannedService.res.statusCode).toBe(201);
+
+    const createCustomService = createMockRequestResponse({ method: "POST" });
+    createCustomService.req.body = {
+      name: testCustomService.name,
+      description: testCustomService.description,
+      estimated_time: testCustomService.estimated_time,
+      total_price: testCustomService.total_price,
+      parts: testCustomService.parts,
+      type: testCustomService.type,
+      shop_id: testCustomService.shop_id,
+    };
+    await serviceHandler(createCustomService.req, createCustomService.res);
+    expect(createCustomService.res.statusCode).toBe(201);
+
+    // Get Service
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: "shop_does_not_exist",
+      type: [testCannedService.type],
+    };
+
+    await serviceByShopIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(0);
+  });
+
+  it("FRT-M8-9: get 'CUSTOM' services request with a valid shop id", async () => {
+    // Setup
+    await createEmployeeAndShop();
+
+    const createCannedService = createMockRequestResponse({ method: "POST" });
+    createCannedService.req.body = {
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    };
+    await serviceHandler(createCannedService.req, createCannedService.res);
+    expect(createCannedService.res.statusCode).toBe(201);
+
+    const createCustomService = createMockRequestResponse({ method: "POST" });
+    createCustomService.req.body = {
+      name: testCustomService.name,
+      description: testCustomService.description,
+      estimated_time: testCustomService.estimated_time,
+      total_price: testCustomService.total_price,
+      parts: testCustomService.parts,
+      type: testCustomService.type,
+      shop_id: testCustomService.shop_id,
+    };
+    await serviceHandler(createCustomService.req, createCustomService.res);
+    expect(createCustomService.res.statusCode).toBe(201);
+
+    const customServiceId = createCustomService.res._getJSONData()[
+      "id"
+    ] as string;
+
+    // Get Service
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: testCustomService.shop_id,
+      type: [testCustomService.type],
+    };
+
+    await serviceByShopIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(1);
+    expect(res._getJSONData()[0]).toMatchObject({
+      id: customServiceId,
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      name: testCustomService.name,
+      description: testCustomService.description,
+      estimated_time: testCustomService.estimated_time,
+      total_price: testCustomService.total_price,
+      parts: testCustomService.parts,
+      type: testCustomService.type,
+      shop_id: testCustomService.shop_id,
+    });
+  });
+
+  it("FRT-M8-10: get 'CUSTOM' services request with an invalid shop id", async () => {
+    // Setup
+    await createEmployeeAndShop();
+
+    const createCannedService = createMockRequestResponse({ method: "POST" });
+    createCannedService.req.body = {
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    };
+    await serviceHandler(createCannedService.req, createCannedService.res);
+    expect(createCannedService.res.statusCode).toBe(201);
+
+    const createCustomService = createMockRequestResponse({ method: "POST" });
+    createCustomService.req.body = {
+      name: testCustomService.name,
+      description: testCustomService.description,
+      estimated_time: testCustomService.estimated_time,
+      total_price: testCustomService.total_price,
+      parts: testCustomService.parts,
+      type: testCustomService.type,
+      shop_id: testCustomService.shop_id,
+    };
+    await serviceHandler(createCustomService.req, createCustomService.res);
+    expect(createCustomService.res.statusCode).toBe(201);
+
+    // Get Service
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: "shop_does_not_exist",
+      type: [testCustomService.type],
+    };
+
+    await serviceByShopIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(0);
+  });
+
+  it("FRT-M8-11: update a service request with a valid service id and valid information", async () => {
+    // Setup
+    await createEmployeeAndShop();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    };
+    await serviceHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    const serviceId = post.res._getJSONData()["id"] as string;
+
+    // Update Service
+    const { req, res } = createMockRequestResponse({ method: "PATCH" });
+    req.query = {
+      id: serviceId,
+    };
+    req.body = {
+      description: "Updated description",
+    };
+
+    await serviceByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()).toMatchObject({
+      id: serviceId,
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      name: testCannedService.name,
+      description: "Updated description",
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    });
+  });
+
+  it("FRT-M8-12: update a service request with an invalid service id and valid information", async () => {
+    // Setup
+    await createEmployeeAndShop();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    };
+    await serviceHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    // Update Service
+    const { req, res } = createMockRequestResponse({ method: "PATCH" });
+    req.query = {
+      id: "service_does_not_exist",
+    };
+    req.body = {
+      description: "Updated description",
+    };
+
+    await serviceByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  it("FRT-M8-13: update a service request with a valid service id and invalid information", async () => {
+    // Setup
+    await createEmployeeAndShop();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    };
+    await serviceHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    const serviceId = post.res._getJSONData()["id"] as string;
+
+    // Update Service
+    const { req, res } = createMockRequestResponse({ method: "PATCH" });
+    req.query = {
+      id: serviceId,
+    };
+    req.body = {
+      parts: [{ invalid: "schema" }],
+    };
+
+    await serviceByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(400);
+  });
+
+  it("FRT-M8-14: delete a service request with a valid service id", async () => {
+    // Setup
+    await createEmployeeAndShop();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    };
+    await serviceHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    const serviceId = post.res._getJSONData()["id"] as string;
+
+    // Update Service
+    const { req, res } = createMockRequestResponse({ method: "DELETE" });
+    req.query = {
+      id: serviceId,
+    };
+
+    await serviceByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(204);
+  });
+
+  it("FRT-M8-15: delete a service request with an invalid service id", async () => {
+    // Setup
+    await createEmployeeAndShop();
+
+    const post = createMockRequestResponse({ method: "POST" });
+    post.req.body = {
+      name: testCannedService.name,
+      description: testCannedService.description,
+      estimated_time: testCannedService.estimated_time,
+      total_price: testCannedService.total_price,
+      parts: testCannedService.parts,
+      type: testCannedService.type,
+      shop_id: testCannedService.shop_id,
+    };
+    await serviceHandler(post.req, post.res);
+    expect(post.res.statusCode).toBe(201);
+
+    // Update Service
+    const { req, res } = createMockRequestResponse({ method: "DELETE" });
+    req.query = {
+      id: "service_does_not_exist",
+    };
+
+    await serviceByIdHandler(req, res);
+
+    expect(res.statusCode).toBe(404);
   });
 });
 
-describe("get service", () => {
-  describe("given service does not exist", () => {
-    it("should return 404", async () => {
-      const { req, res } = createMockRequestResponse({ method: "GET" });
-      req.query = { ...req.query, id: "does_not_exist" };
-      await serviceByIdHandler(req, res);
-
-      expect(res.statusCode).toBe(404);
-      expect(res._getJSONData()).toMatchObject({
-        message: "Service not found.",
-      });
-    });
-  });
-
-  describe("given service does exist", () => {
-    it("should return service", async () => {
-      // Create Shop
-      const shop = await createShop();
-
-      // Create Service
-      const post = createMockRequestResponse({ method: "POST" });
-      post.req.body = { ...testService, shop_id: shop.id };
-      await serviceHandler(post.req, post.res);
-
-      expect(post.res.statusCode).toBe(201);
-
-      testService.id = post.res._getJSONData()["id"];
-
-      // Get Service
-      const get = createMockRequestResponse({ method: "GET" });
-      get.req.query = { ...get.req.query, id: testService.id };
-      await serviceByIdHandler(get.req, get.res);
-
-      expect(get.res.statusCode).toBe(200);
-      expect(get.res._getJSONData()).toMatchObject({
-        ...testService,
-        create_time: expect.any(String),
-        update_time: expect.any(String),
-        shop_id: shop.id,
-      });
-    });
-
-    describe("given a shop ID", () => {
-      it("should return all the services for the shop", async () => {
-        // Create Shop
-        const shop = await createShop();
-
-        // Create Service
-        const post = createMockRequestResponse({ method: "POST" });
-        post.req.body = { ...testService, shop_id: shop.id };
-        await serviceHandler(post.req, post.res);
-
-        expect(post.res.statusCode).toBe(201);
-
-        testService.id = post.res._getJSONData()["id"];
-
-        // Get Service
-        const get = createMockRequestResponse({ method: "GET" });
-        get.req.query = { ...get.req.query, id: shop.id };
-        await serviceByShopIdHandler(get.req, get.res);
-
-        expect(get.res.statusCode).toBe(200);
-        expect(get.res._getJSONData()["length"]).toBe(1);
-        expect(get.res._getJSONData()[0]).toMatchObject({
-          ...testService,
-          create_time: expect.any(String),
-          update_time: expect.any(String),
-          shop_id: shop.id,
-        });
-      });
-
-      it("should return all the services for the shop which are of type CANNED", async () => {
-        // Create Shop
-        const shop = await createShop();
-
-        // Create 2 Services
-        const cannedService = createMockRequestResponse({ method: "POST" });
-        cannedService.req.body = { ...testService, shop_id: shop.id };
-        await serviceHandler(cannedService.req, cannedService.res);
-        expect(cannedService.res.statusCode).toBe(201);
-
-        testService.type = "CUSTOM";
-        const customService = createMockRequestResponse({ method: "POST" });
-        customService.req.body = { ...testService, shop_id: shop.id };
-        await serviceHandler(customService.req, customService.res);
-        expect(customService.res.statusCode).toBe(201);
-
-        testService.id = cannedService.res._getJSONData()["id"];
-        testService.type = "CANNED";
-
-        // Get Service
-        const get = createMockRequestResponse({ method: "GET" });
-        get.req.query = {
-          ...get.req.query,
-          id: shop.id,
-          type: ["canned"],
-        };
-        await serviceByShopIdHandler(get.req, get.res);
-
-        expect(get.res.statusCode).toBe(200);
-        expect(get.res._getJSONData()["length"]).toBe(1);
-        expect(get.res._getJSONData()[0]).toMatchObject({
-          ...testService,
-          create_time: expect.any(String),
-          update_time: expect.any(String),
-          shop_id: shop.id,
-        });
-      });
-
-      it("should return all the services for the shop which are of type CUSTOM", async () => {
-        // Create Shop
-        const shop = await createShop();
-
-        // Create 2 Services
-        const cannedService = createMockRequestResponse({ method: "POST" });
-        cannedService.req.body = { ...testService, shop_id: shop.id };
-        await serviceHandler(cannedService.req, cannedService.res);
-        expect(cannedService.res.statusCode).toBe(201);
-
-        testService.type = "CUSTOM";
-        const customService = createMockRequestResponse({ method: "POST" });
-        customService.req.body = { ...testService, shop_id: shop.id };
-        await serviceHandler(customService.req, customService.res);
-        expect(customService.res.statusCode).toBe(201);
-
-        testService.id = customService.res._getJSONData()["id"];
-
-        // Get Service
-        const get = createMockRequestResponse({ method: "GET" });
-        get.req.query = {
-          ...get.req.query,
-          id: shop.id,
-          type: ["custom"],
-        };
-        await serviceByShopIdHandler(get.req, get.res);
-
-        expect(get.res.statusCode).toBe(200);
-        expect(get.res._getJSONData()["length"]).toBe(1);
-        expect(get.res._getJSONData()[0]).toMatchObject({
-          ...testService,
-          create_time: expect.any(String),
-          update_time: expect.any(String),
-          shop_id: shop.id,
-        });
-      });
-    });
-  });
-
-  describe("given no service ID", () => {
-    it("should reject request", async () => {
-      const { req, res } = createMockRequestResponse({ method: "GET" });
-      await serviceByIdHandler(req, res);
-
-      expect(res.statusCode).toBe(400);
-      expect(res._getJSONData()).toMatchObject({
-        message: "Invalid Service ID.",
-      });
-    });
-  });
-});
-
-describe("update service", () => {
-  describe("given new name", () => {
-    it("should update name", async () => {
-      const shop = await createShop();
-      const id = await createService(shop.id);
-      const update = createMockRequestResponse({ method: "PATCH" });
-      update.req.query = { ...update.req.query, id };
-      update.req.body = { name: "new_name" };
-
-      await serviceByIdHandler(update.req, update.res);
-
-      expect(update.res.statusCode).toBe(200);
-      expect(update.res._getJSONData()).toMatchObject({ name: "new_name" });
-
-      const get = createMockRequestResponse({ method: "GET" });
-      get.req.query = { ...get.req.query, id };
-      await serviceByIdHandler(get.req, get.res);
-
-      expect(get.res.statusCode).toBe(200);
-      expect(get.res._getJSONData()).toMatchObject({
-        ...testService,
-        create_time: expect.any(String),
-        update_time: expect.any(String),
-        id,
-        name: "new_name",
-        shop_id: shop.id,
-      });
-    });
-  });
-});
-
-describe("delete service", () => {
-  describe("given service ID", () => {
-    it("should delete service", async () => {
-      const shop = await createShop();
-      const id = await createService(shop.id);
-      const deleteMock = createMockRequestResponse({ method: "DELETE" });
-      deleteMock.req.query = { ...deleteMock.req.query, id };
-      await serviceByIdHandler(deleteMock.req, deleteMock.res);
-
-      expect(deleteMock.res.statusCode).toBe(204);
-
-      const get = createMockRequestResponse({ method: "GET" });
-      get.req.query = { ...get.req.query, id };
-      await serviceByIdHandler(get.req, get.res);
-
-      expect(get.res.statusCode).toBe(404);
-    });
-  });
-});
-
-const createService = async (shop_id: string) => {
-  const { req, res } = createMockRequestResponse({ method: "POST" });
-  req.body = { ...testService, shop_id };
-  await serviceHandler(req, res);
-  return res._getJSONData()["id"] as string;
-};
-
-const createShop = async () => {
-  return await prisma.shop.create({
+const createEmployeeAndShop = async () => {
+  return await prisma.employee.create({
     data: {
-      id: testShop.id,
-      phone_number: testShop.phone_number,
-      email: testShop.email,
-      name: testShop.name,
-      address: testShop.address,
-      postal_code: testShop.postal_code,
-      city: testShop.city,
-      province: testShop.province,
+      id: testEmployeeUser.id,
+      first_name: testEmployeeUser.first_name,
+      last_name: testEmployeeUser.last_name,
+      phone_number: testEmployeeUser.phone_number,
+      email: testEmployeeUser.email,
+      password: testEmployeeUser.password,
+      type: testEmployeeUser.type,
+      status: testEmployeeUser.status,
+      shop: {
+        create: {
+          id: testShop.id,
+          phone_number: testShop.phone_number,
+          email: testShop.email,
+          name: testShop.name,
+          address: testShop.address,
+          postal_code: testShop.postal_code,
+          city: testShop.city,
+          province: testShop.province,
+        },
+      },
     },
   });
 };
