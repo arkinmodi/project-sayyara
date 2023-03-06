@@ -194,6 +194,7 @@
 		March 4, 2023      & Timothy Choy          & Update Usability and Humanity Nonfunctional Requirements                           \\
 		March 5, 2023      & Timothy Choy          & Update Performance Nonfunctional Requirement                                       \\
 		March 5, 2023      & Leon So               & Remove Employee Profile requirements \& remove Shop Profile update requirements    \\
+		March 6, 2023      & Leon So               & Update Functional Requirements for Authentication                                  \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -512,39 +513,37 @@ external systems and services.
 		\hline
 		2                     & Login to account               & User           & Database           \\
 		\hline
-		3                     & Reset password                 & User           & Database           \\
+		3                     & Book appointment               & Database       & Database           \\
 		\hline
-		4                     & Book appointment               & Database       & Database           \\
+		4                     & Edit appointment               & Database       & Database           \\
 		\hline
-		5                     & Edit appointment               & Database       & Database           \\
+		5                     & Cancel appointment             & Database       & Database           \\
 		\hline
-		6                     & Cancel appointment             & Database       & Database           \\
+		6                     & Set appointment availability   & Database       & Database           \\
 		\hline
-		7                     & Set appointment availability   & Database       & Database           \\
+		7                     & View past quotes               & User           & Database           \\
 		\hline
-		8                     & View past quotes               & User           & Database           \\
+		8                     & View quote details             & User           & Database           \\
 		\hline
-		9                     & View quote details             & User           & Database           \\
+		9                     & Request a quote                & Web Socket     & Database           \\
 		\hline
-		10                    & Request a quote                & Web Socket     & Database           \\
+		10                    & Cancel quote request           & User           & Database           \\
 		\hline
-		11                    & Cancel quote request           & User           & Database           \\
+		11                    & Update quote request           & User           & Database/Websocket \\
 		\hline
-		12                    & Update quote request           & User           & Database/Websocket \\
+		12                    & Copy a quote request           & Database       & Database/Websocket \\
 		\hline
-		13                    & Copy a quote request           & Database       & Database/Websocket \\
+		13                    & Respond to quote request       & Websocket      & Database           \\
 		\hline
-		14                    & Respond to quote request       & Websocket      & Database           \\
+		14                    & Accept quote response          & Websocket      & Database           \\
 		\hline
-		15                    & Accept quote response          & Websocket      & Database           \\
+		15                    & Request additional information & Websocket      & Database           \\
 		\hline
-		16                    & Request additional information & Websocket      & Database           \\
+		16                    & Appointment scheduled          & User           & Database           \\
 		\hline
-		17                    & Appointment scheduled          & User           & Database           \\
+		17                    & Appointment cancelled          & User           & Database           \\
 		\hline
-		18                    & Appointment cancelled          & User           & Database           \\
-		\hline
-		19                    & Search for work order          & User           & Database           \\
+		18                    & Search for work order          & User           & Database           \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -618,15 +617,6 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 	\item System checks if the username and password match an account
 	\item If successful, system allows user to authenticate
 	\item If unsuccessful, system rejects authentication and shows an error message
-\end{enumerate}
-
-\textbf{Title:} Resetting a password\\
-\textbf{Trigger:} User clicks on ``forgot password'' in the login screen\\
-\textbf{Pre-condition:} Employee/shop account exists\\
-\textbf{Outcome:}
-\begin{enumerate}
-	\item User enters their email
-	\item System sends a code to their email, allowing them to reset their password
 \end{enumerate}
 
 \textbf{Title:} Creating a service\\
@@ -807,6 +797,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall allow the user to enter an email and password
 			            \item The system shall allow the user to enter their name
 			            \item The system shall allow the user to enter their phone number
+			            \item The system shall allow the user to enter vehicle information
 			            \item The system shall transition to the vehicle owner landing page after the registration process is
 			                  complete and successful
 			            \item The system shall allow the user to cancel and exit the registration process
@@ -820,6 +811,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall allow the user to enter the shop name
 			            \item The system shall allow the user to enter the shop address
 			            \item The system shall allow the user to enter the shop phone number
+			            \item The system shall allow the user to enter the shop email
 			            \item The system shall transition to the shop owner landing page after the registration process is
 			                  complete and successful
 			            \item The system shall allow the user to cancel and exit the registration process
@@ -830,6 +822,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall allow the user to enter an email and password
 			            \item The system shall allow the user to enter their name
 			            \item The system shall allow the user to enter their phone number
+			            \item The system shall allow the user to enter a shop ID
 			            \item The system shall transition to the employee landing page after the registration process is complete
 			                  and successful
 			            \item The system shall allow the user to cancel and exit the registration process
@@ -863,30 +856,21 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants to reset their password
+	\item The user wants to logout
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter their email
-			            \item The system shall send a password reset code to the email if the email is associated with an account
-			            \item The system shall display a countdown for the password reset code expiration
-			            \item The system shall ask the user for a new password if the code matches
+			            \item The system shall allow the user to logout
 		            \end{enumerate}
 
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter their email
-			            \item The system shall send a password reset code to the email if the email is associated with an account
-			            \item The system shall display a countdown for the password reset code expiration
-			            \item The system shall ask the user for a new password if the code matches
+			            \item The system shall allow the user to logout
 		            \end{enumerate}
 
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter their email
-			            \item The system shall send a password reset code to the email if the email is associated with an account
-			            \item The system shall display a countdown for the password reset code expiration
-			            \item The system shall ask the user for a new password if the code matches
+			            \item The system shall allow the user to logout
 		            \end{enumerate}
 	      \end{enumerate}
 \end{enumerate}
