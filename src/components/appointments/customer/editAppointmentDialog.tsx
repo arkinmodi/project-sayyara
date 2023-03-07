@@ -64,13 +64,12 @@ const EditAppointmentDialog = (props: IEditAppointmentDialogProps) => {
   }, [appointment, customerAppointments]);
 
   const onTimeSelect = (e: StartTimeEventEmit) => {
-    const duration =
-      Math.abs(
-        new Date(appointment.endTime).getTime() -
-          new Date(appointment.startTime).getTime()
-      ) / 3600000;
+    const duration = Math.abs(
+      new Date(appointment.endTime).getTime() -
+        new Date(appointment.startTime).getTime()
+    );
     const startTime = e.startTime;
-    const endTime = new Date(e.startTime.getTime() + duration * 60000);
+    const endTime = new Date(e.startTime.getTime() + duration);
 
     setStartTime(startTime);
     setEndTime(endTime);
