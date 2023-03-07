@@ -13,6 +13,11 @@ export interface IAppointmentActionSetAppointmentStatus
   payload: { id: string; status: AppointmentStatus };
 }
 
+export interface IAppointmentActionSetCancelAppointment
+  extends IAppointmentActionBase {
+  payload: { id: string; reason: string };
+}
+
 export interface IAppointmentActionReadAppointments
   extends IAppointmentActionBase {
   payload: { id: string };
@@ -41,6 +46,7 @@ export interface IAppointmentActionCreateAppointment
 export type IAppointmentAction =
   | IAppointmentActionSetAppointmentStatus
   | IAppointmentActionReadAppointments
+  | IAppointmentActionSetCancelAppointment
   | IAppointmentActionCreateAppointment;
 
 export const readAppointments = (
@@ -54,6 +60,13 @@ export const setAppointmentStatus = (
   payload: IAppointmentActionSetAppointmentStatus["payload"]
 ) => ({
   type: AppointmentTypes.SET_APPOINTMENT_STATUS,
+  payload,
+});
+
+export const setCancelAppointment = (
+  payload: IAppointmentActionSetCancelAppointment["payload"]
+) => ({
+  type: AppointmentTypes.SET_CANCEL_APPOINTMENT,
   payload,
 });
 
