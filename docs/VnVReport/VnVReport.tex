@@ -50,6 +50,7 @@
 		March 5, 2023     & Timothy Choy          & Add Test Evaluations for Maintainability and Support Requirements \\
 		March 6, 2023     & Leon So               & Add Functional Requirement Tests for Authentication               \\
 		March 6, 2023     & Leon So               & Add Functional Requirement Tests for Employee Management          \\
+		March 6, 2023     & Timothy Choy          & Add Functional Requirement Tests for Shop Lookup                  \\
 		March 6, 2023     & Arkin Modi            & Add Functional Requirement Tests for Quotes                       \\
 		\bottomrule
 	\end{tabularx}
@@ -807,6 +808,29 @@ intended use, and goals of stakeholders.
 
 	      How test will be performed: The tester will delete a shop service through the user interface and
 	      confirms that the shop profile is updated
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsection{Shop Lookup}
+
+\begin{enumerate}
+	\item \textbf{FRT-BE32-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, Customer account exists
+
+	      Input: The Customer account attempts to view a list of shops using the parameters of shop name,
+	      service name, part types and part conditions
+
+	      Output: A list of shops based on the input parameters
+
+	      Test Case Derivation: The system shall show a list of shops with the specified parameters provided
+
+	      How test will be performed: The tester will search for shops, and input various parameters to see
+	      if the shop list changes correctly
 
 	      Results: Passed
 
