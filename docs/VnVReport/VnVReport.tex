@@ -51,6 +51,7 @@
 		March 6, 2023     & Leon So               & Add Functional Requirement Tests for Authentication               \\
 		March 6, 2023     & Leon So               & Add Functional Requirement Tests for Employee Management          \\
 		March 6, 2023     & Arkin Modi            & Add Functional Requirement Tests for Quotes                       \\
+		March 7, 2023     & Arkin Modi            & Add Functional Requirement Tests for Work Orders                  \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -636,6 +637,98 @@ intended use, and goals of stakeholders.
 
 	      How test will be performed: The tester will accept an appointment invitation from a quote through
 	      the user interface
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsection{Work Orders}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE14-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and a quote
+
+	      Input: A new appointment created at the shop from the quote
+
+	      Output: A new work order is created with details from the quote
+
+	      Test Case Derivation: The system shall automatically create a work order for new appointment with
+	      information from the quote
+
+	      How test will be performed: The tester will create an appointment through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE14-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop
+
+	      Input: A new appointment created at the shop
+
+	      Output: A new work order is created
+
+	      Test Case Derivation: The system shall automatically create a work order for new appointment
+
+	      How test will be performed: The tester will create an appointment through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE15-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a vehicle, an upcoming appointment, and a work order
+	      associated to the appointment
+
+	      Input: A list of upcoming appointments is requested
+
+	      Output: The appointments in a table format with the associated work order attached to each
+	      appointment
+
+	      Test Case Derivation: The system shall display work order upon request
+
+	      How test will be performed: The tester will search for a work order through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE15-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: A list of upcoming appointments is requested
+
+	      Output: The appointments in a table format with the associated work order attached to each
+	      appointment
+
+	      Test Case Derivation: The system shall display work order upon request
+
+	      How test will be performed: The tester will search for a work order through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE16-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: Request to update a work order with new details
+
+	      Output: A work order updated confirmation message
+
+	      Test Case Derivation: The system shall update work order upon request
+
+	      How test will be performed: The tester will update a work order through the user interface
 
 	      Results: Passed
 
