@@ -11,6 +11,9 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{amsfonts}
 
 \input{../Comments}
 \input{../Common}
@@ -31,10 +34,26 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                   \\
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                                                   \\
 		\midrule
-		February 22, 2023 & Arkin Modi            & Add Automated Testing Section     \\
-		February 22, 2023 & Arkin Modi            & Add Code Coverage Metrics Section \\
+		February 22, 2023 & Arkin Modi            & Add Automated Testing Section                                     \\
+		March 3, 2023     & Joy Xiao              & Add Tests Evaluations for Legal and Cultural Requirements         \\
+		March 3, 2023     & Joy Xiao              & Add Services and Appointments Test Evaluations                    \\
+		March 4, 2023     & Leon So               & Add Introduction                                                  \\
+		March 4, 2023     & Arkin Modi            & Add Tests Evaluation for Security Requirements                    \\
+		March 4, 2023     & Arkin Modi            & Update Look and Feel Requirements Tests                           \\
+		March 4, 2023     & Arkin Modi            & Add Unit Testing Summary Table                                    \\
+		March 4, 2023     & Leon So               & Add NFR Tests for Operational and Environmental Requirements      \\
+		March 4, 2023     & Timothy Choy          & Add Test Evaluations for Usability and Humanity Requirements      \\
+		March 4, 2023     & Timothy Choy          & Add Test Evaluations for Performance Requirements                 \\
+		March 5, 2023     & Leon So               & Add Functional Requirement Tests for Shop Profile                 \\
+		March 5, 2023     & Timothy Choy          & Add Test Evaluations for Maintainability and Support Requirements \\
+		March 6, 2023     & Leon So               & Add Functional Requirement Tests for Authentication               \\
+		March 6, 2023     & Leon So               & Add Functional Requirement Tests for Employee Management          \\
+		March 6, 2023     & Timothy Choy          & Add Functional Requirement Tests for Shop Lookup                  \\
+		March 6, 2023     & Arkin Modi            & Add Functional Requirement Tests for Quotes                       \\
+		March 7, 2023     & Arkin Modi            & Add Functional Requirement Tests for Work Orders                  \\
+		March 7, 2023     & Arkin Modi            & Add Code Coverage Metrics Section                                 \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -45,12 +64,24 @@
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l}
 	\toprule
-	\textbf{symbol} & \textbf{description}      \\
+	\textbf{symbol} & \textbf{description}                \\
 	\midrule
-	T               & Test                      \\
-	CI              & Continuous Integration    \\
-	CD              & Continuous Deployment     \\
-	HTML            & HyperText Markup Language \\
+	API             & Application Programming Interface   \\
+	CD              & Continuous Deployment               \\
+	CI              & Continuous Integration              \\
+	CLS             & Cumulative Layout Shift             \\
+	FCP             & First Contentful Paint              \\
+	FID             & First Input Delay                   \\
+	HTML            & HyperText Markup Language           \\
+	LCP             & Largest Contentful Paint            \\
+	ms              & Milliseconds                        \\
+	PII             & Personal Identifiable Information   \\
+	PWA             & Progressive Web Application         \\
+	s               & seconds                             \\
+	SRS             & Software Requirements Specification \\
+	T               & Test                                \\
+	TTFB            & Time to First Byte                  \\
+	VnV             & Verification and Validation         \\
 	\bottomrule
 \end{tabular}\\
 
@@ -66,19 +97,1211 @@
 
 \pagenumbering{arabic}
 
-This document ...
+\section{Introduction}
+
+\subsection{Project Summary}
+
+Sayyara is a Progressive Web Application (PWA) which acts as a single platform for independent auto
+repair shops and vehicle owners. This platform allows independent auto repair shops and vehicle
+owners to interact in various ways. Using Sayyara, vehicle owners can search for auto repair shops
+and services based on a variety of search filters; request quotes for service; book, view, and
+manage service appointments. On the application, auto repair shop owners have full shop management
+capabilities such as: adding and managing a list of employees; managing a list of service types and
+corresponding service appointment availabilities; managing store information such as location,
+hours of operation, and contact information. Auto repair shop owners and employees will be able to
+manage quotes, service appointments, and work orders from a single application.
+
+\subsection{Purpose of Document}
+This document outlines the validation and verification process for the application, Sayyara, and a
+detailed summary of results for the planned tests defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}.
+
+\subsection{Scope of Testing}
+As defined in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan},
+the tests reported aim to verify and validate functional and nonfunctional requirements listed in
+the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
+
+In addition, the testing reported in this document aims to validate that the application provides
+adequate usability and to verify that system is in a functional state for the end users. The
+testing and validation will aid in ensuring that the product fulfills the system requirements,
+intended use, and goals of stakeholders.
 
 \section{Functional Requirements Evaluation}
 
+\subsection{Authentication}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE1-1}
+
+	      Control: Manual
+
+	      Initial State: Customer with no existing account
+
+	      Input: Customer submits sign up form with valid email, password, name, and phone number
+
+	      Output: Redirect to vehicle owner landing page upon successful registration
+
+	      Test Case Derivation: New customer wants to sign up for a new account with valid sign up
+	      information provided
+
+	      How test will be performed: The tester will register and sign up for a new customer account using
+	      valid sign up information
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE1-2}
+
+	      Control: Manual
+
+	      Initial State: Shop owner with no existing account
+
+	      Input: Shop owner submits sign up form with valid email, password, name, phone number, shop name,
+	      shop address, shop phone number, and shop email
+
+	      Output: Redirect to shop owner landing page upon successful registration
+
+	      Test Case Derivation: New shop owner user wants to sign up for a new account with valid sign up
+	      information provided
+
+	      How test will be performed: The tester will register and sign up for a new shop owner account using
+	      valid sign up information
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE1-3}
+
+	      Control: Manual
+
+	      Initial State: Employee with no existing account
+
+	      Input: Employee submits sign up form with valid email, password, name, phone number, and shop ID
+
+	      Output: Redirect to employee landing page upon successful registration
+
+	      Test Case Derivation: New employee user wants to sign up for a new account with valid sign up
+	      information provided
+
+	      How test will be performed: The tester will register and sign up for a new employee account using
+	      valid sign up information
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE2-1}
+
+	      Control: Manual
+
+	      Initial State: Customer with existing account and not logged in
+
+	      Input: Customer submits login form with valid email, password, and vehicle information
+
+	      Output: Redirect to vehicle owner landing page upon successful login
+
+	      Test Case Derivation: Customer wants to login to existing with valid login credentials provided
+
+	      How test will be performed: The tester will login to an existing customer account using valid login
+	      credentials
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE2-2}
+
+	      Control: Manual
+
+	      Initial State: Shop owner with existing account and not logged in
+
+	      Input: Shop owner submits login form with valid email and password
+
+	      Output: Redirect to shop owner landing page upon successful login
+
+	      Test Case Derivation: Shop owner wants to login to existing with valid login credentials provided
+
+	      How test will be performed: The tester will login to an existing shop owner account using valid
+	      login credentials
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE2-3}
+
+	      Control: Manual
+
+	      Initial State: Employee with existing account and not logged in
+
+	      Input: Employee submits login form with valid email and password
+
+	      Output: Redirect to employee landing page upon successful login
+
+	      Test Case Derivation: Employee wants to login to existing with valid login credentials provided
+
+	      How test will be performed: The tester will login to an existing employee account using valid login
+	      credentials
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE3-1}
+
+	      Control: Manual
+
+	      Initial State: Customer with existing account and logged in
+
+	      Input: Customer requests to logout
+
+	      Output: System logs the user out and transitions to home page
+
+	      Test Case Derivation: Customer wants to logout
+
+	      How test will be performed: The tester will request to logout on a customer account
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE3-2}
+	      Control: Manual
+
+	      Initial State: Shop owner with existing account and logged in
+
+	      Input: Shop owner requests to logout
+
+	      Output: System logs the user out and transitions to home page
+
+	      Test Case Derivation: Shop owner wants to logout
+
+	      How test will be performed: The tester will request to logout on a shop owner account
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE3-3}
+
+	      Control: Manual
+
+	      Initial State: Employee with existing account and logged in
+
+	      Input: Employee requests to logout
+
+	      Output: System logs the user out and transitions to home page
+
+	      Test Case Derivation: Employee wants to logout
+
+	      How test will be performed: The tester will request to logout on an employee account
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsection{Appointments}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE4-1}
+
+	      Control: Manual
+
+	      Initial State: Customer account which received a quote from an auto shop
+
+	      Input: Enters service request information and selects an available appointment time slot
+
+	      Output: A new appointment request is created with service details linked to the quote. Shop
+	      Owner/Employee Accounts will receive the appointment request
+
+	      Test Case Derivation: The appointment will be requested with the details the user entered
+
+	      How test will be performed: The tester will go through the appointment booking process through the
+	      user interface through quotes
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE4-2}
+
+	      Control: Manual
+
+	      Initial State: Customer account selects a canned job at an auto shop
+
+	      Input: Enters service request information and selects an available appointment time slot
+
+	      Output: A new appointment request is created with service details. Shop Owner/Employee Accounts
+	      will receive the appointment request
+
+	      Test Case Derivation: The appointment will be requested with the canned job details as well as
+	      details the user entered
+
+	      How test will be performed: The tester will go through the appointment booking process through the
+	      user interface by selecting a canned job
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE4-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with appointment requests
+
+	      Input: Accept an appointment request
+
+	      Output: Appointment booking displayed for Shop Owner/Employee accounts and Customer account
+
+	      Test Case Derivation: The appointment request is accepted and appointment booking is completed
+
+	      How test will be performed: The tester will accept an appointment request through the user
+	      interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE5-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit and selects a new available time slot for the appointment
+
+	      Output: A new appointment request is made with the new time slot. Shop Owner/Employee Accounts will
+	      receive the appointment request
+
+	      Test Case Derivation: The user is able to change their appointment to any of the available time
+	      slots displayed
+
+	      How test will be performed: The tester will go through the user interface to edit an appointment
+	      booking
+
+	      Results: Failed. Cannot edit an appointment at the moment but can cancel and reschedule an
+	      appointment
+
+	\item \textbf{FRT-BE5-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit and selects a new available time slot for the appointment
+
+	      Output: The appointment booking is updated to the new time slot
+
+	      Test Case Derivation: The user is able to change their appointment to any of the available time
+	      slots displayed
+
+	      How test will be performed: The tester will go through the user interface to edit an appointment
+	      booking time slot
+
+	      Results: Failed. Cannot edit an appointment at the moment but can cancel and reschedule an
+	      appointment.
+
+	\item \textbf{FRT-BE5-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
+
+	      Input: Selects an appointment to edit service details
+
+	      Output: The appointment booking is updated with the updated service details
+
+	      Test Case Derivation: The user is able to update the appointment details
+
+	      How test will be performed: The tester will go through the user interface to edit appointment
+	      details
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE6-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account has a service appointment scheduled
+
+	      Input: Selects an appointment to cancel
+
+	      Output: The appointment booking is cancelled and removed from the customer and shop owner/employee
+	      schedules
+
+	      Test Case Derivation: The appointment should be removed from the calendar when it is cancelled
+
+	      How test will be performed: The tester will go through the user interface to cancel an appointment
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE6-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Shop Employee has a service appointment scheduled
+
+	      Input: Selects an appointment to cancel
+
+	      Output: The appointment booking is cancelled and removed from the customer and shop owner/employee
+	      schedules
+
+	      Test Case Derivation: The appointment should be removed from the calendar when it is cancelled
+
+	      How test will be performed: The tester will go through the user interface to cancel an appointment
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE7-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner selects appointment availability
+
+	      Input: Sets appointment availabilities
+
+	      Output: The appointment availability is updated in the database
+
+	      Test Case Derivation: The appointment availability will be saved and availability time slots to
+	      book appointments will be updated
+
+	      How test will be performed: The tester will go through the user interface to set appointment
+	      availabilities
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsection{Quotes}
+
+\begin{enumerate}
+	\item \textbf{FRT-BE8-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with no quote requests initiated from the account
+
+	      Input: Request past quotes
+
+	      Output: A message saying there are no past quotes
+
+	      Test Case Derivation: There are no past quotes to display
+
+	      How test will be performed: The tester will request for past quotes through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE8-2}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with quotes requests which have been completed and were initiated
+	      by the account
+
+	      Input: Request all quotes
+
+	      Output: A table with all the quotes
+
+	      Test Case Derivation: There are past quotes to display
+
+	      How test will be performed: The tester will request for past quotes through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE8-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with no quotes requests assigned to the shop
+
+	      Input: Request all quotes
+
+	      Output: A message saying there are no past quotes
+
+	      Test Case Derivation: There are no past quotes to display
+
+	      How test will be performed: The tester will request for past quotes through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE8-4}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with completed quotes requests that were assigned to the
+	      shop
+
+	      Input: Request all quotes
+
+	      Output: A table with all the quotes
+
+	      Test Case Derivation: There are past quotes to display
+
+	      How test will be performed: The tester will request for past quotes through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE9-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with no quote requests initiated from the account
+
+	      Input: A filled in quote request form
+
+	      Output: A confirmation messaging indicating that the quote was requested
+
+	      Test Case Derivation: The system shall verify that the quote was created successfully
+
+	      How test will be performed: The tester will create a quote through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE10-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a completed quote
+
+	      Input: A quote's chat history is requested
+
+	      Output: The quote's chat history
+
+	      Test Case Derivation: There are chat messages to display
+
+	      How test will be performed: The tester will view a quote's chat messages through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE10-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and a completed quote
+
+	      Input: A quote's chat history is requested
+
+	      Output: The quote's chat history
+
+	      Test Case Derivation: There are chat messages to display
+
+	      How test will be performed: The tester will view a quote's chat messages through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE11-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a created quote
+
+	      Input: A chat message
+
+	      Output: A chat message is created and attached to the quote
+
+	      Test Case Derivation: The system shall send chat messages upon request
+
+	      How test will be performed: The tester will send a chat message within a quote through the user
+	      interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE11-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and a created quote
+
+	      Input: A chat message
+
+	      Output: A chat message is created and attached to the quote
+
+	      Test Case Derivation: The system shall send chat messages upon request
+
+	      How test will be performed: The tester will send a chat message within a quote through the user
+	      interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE12-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and a created quote
+
+	      Input: An filled in appointment invitation form
+
+	      Output: An appointment invitation is sent to the customer
+
+	      Test Case Derivation: The system shall verify that the appointment invitation was created
+	      successfully
+
+	      How test will be performed: The tester will send an appointment invitation from a quote through the
+	      user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE13-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a quote that has an appointment invitation
+
+	      Input: Accept an appointment request
+
+	      Output: The system shall request the user to create an appointment with the shop that responded
+
+	      Test Case Derivation: The system shall have the user create an appointment upon accepting an
+	      appointment invitation from a quote
+
+	      How test will be performed: The tester will accept an appointment invitation from a quote through
+	      the user interface
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsection{Work Orders}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE14-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and a quote
+
+	      Input: A new appointment created at the shop from the quote
+
+	      Output: A new work order is created with details from the quote
+
+	      Test Case Derivation: The system shall automatically create a work order for new appointment with
+	      information from the quote
+
+	      How test will be performed: The tester will create an appointment through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE14-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop
+
+	      Input: A new appointment created at the shop
+
+	      Output: A new work order is created
+
+	      Test Case Derivation: The system shall automatically create a work order for new appointment
+
+	      How test will be performed: The tester will create an appointment through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE15-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a vehicle, an upcoming appointment, and a work order
+	      associated to the appointment
+
+	      Input: A list of upcoming appointments is requested
+
+	      Output: The appointments in a table format with the associated work order attached to each
+	      appointment
+
+	      Test Case Derivation: The system shall display work order upon request
+
+	      How test will be performed: The tester will search for a work order through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE15-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: A list of upcoming appointments is requested
+
+	      Output: The appointments in a table format with the associated work order attached to each
+	      appointment
+
+	      Test Case Derivation: The system shall display work order upon request
+
+	      How test will be performed: The tester will search for a work order through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE16-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: Request to update a work order with new details
+
+	      Output: A work order updated confirmation message
+
+	      Test Case Derivation: The system shall update work order upon request
+
+	      How test will be performed: The tester will update a work order through the user interface
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsection{Employee Management}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE24-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner has a shop profile
+
+	      Input: Shop owner wants to retrieve shop ID to invite employee
+
+	      Output: Shop ID is displayed
+
+	      Test Case Derivation: The system shall allow the shop owner to retrieve their shop ID to invite
+	      their employee
+
+	      How test will be performed: The tester will use a shop ID displayed on the shop owner's employee
+	      management page and go through the sign up flow as an employee. The tester will verify that the
+	      shop ID is displayed and correct.
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE24-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner has a shop profile
+
+	      Input: Employee signs up using invalid user sign up information and shop ID
+
+	      Output: Message indicating that the inputs are not valid
+
+	      Test Case Derivation: The system shall not allow the employee to sign up with the information
+	      provided
+
+	      How test will be performed: The tester will use invalid user sign up information and invalid shop
+	      ID to sign up as an employee
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE25-1}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with employees listed under the shop
+
+	      Input: The user enters search text to search for an employee
+
+	      Output: System displays a list of employees whose name or email matches the search text
+
+	      Test Case Derivation: The system shall allow the user to enter search text to search for an
+	      employee; the system shall display a list of employees whose name or email matches the search text
+
+	      How test will be performed: The tester will use a shop owner account with employees listed under
+	      the shop and enter search text to search for an employee
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE26-1}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with employees
+
+	      Input: The user attempts to view the list of employees
+
+	      Output: Table of employees details and employee management options
+
+	      Test Case Derivation: The shop owner with employees wants to view the list of employees
+
+	      How test will be performed: The tester will use a shop owner account with employees listed under
+	      the shop and attempt to view the list of employees
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE27-1}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with employees
+
+	      Input: The user attempts to remove an employee
+
+	      Output: Table of employees details and employee management options updates with employee removed;
+	      the remove employee's access should be revoked
+
+	      Test Case Derivation: The shop owner with employees wants to remove an employee
+
+	      How test will be performed: The tester will use a shop owner account with employees listed under
+	      the shop and attempt to remove an employee
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsection{Services}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE28-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner has a shop profile
+
+	      Input: Shop Owner adds available services
+
+	      Output: Shop services are sent to the database and displayed on the shop profile
+
+	      Test Case Derivation: The user can add available auto shop services to their shop profile
+
+	      How test will be performed: The tester will add a service to the shop profile and confirms it shows
+	      up on the shop profile
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE29-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Shop Employee searches for auto repair or maintenance services
+
+	      Input: Enters specific auto service in the search bar
+
+	      Output: Auto shops with relevant services displayed
+
+	      Test Case Derivation: Services corresponding to the auto shop will be displayed
+
+	      How test will be performed: The tester will search for shop services through the user interface and
+	      confirms that all of the shop's services matching the search criteria are listed
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE30-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner with services listed on their shop profile
+
+	      Input: Updates the details of a service listed on their profile
+
+	      Output: The service is updated with the entered details
+
+	      Test Case Derivation: The shop profile will list the service with the updated details
+
+	      How test will be performed: The tester will update the details of a shop service through the user
+	      interface and confirms that the shop profile is updated
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE31-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner with services listed on their shop profile
+
+	      Input: Deletes a service listed on their shop profile
+
+	      Output: Service is removed from the shop profile. Other services that were not deleted continue to
+	      be listed on the shop profile
+
+	      Test Case Derivation: The service that is deleted is removed from the shop profile
+
+	      How test will be performed: The tester will delete a shop service through the user interface and
+	      confirms that the shop profile is updated
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsection{Shop Lookup}
+
+\begin{enumerate}
+	\item \textbf{FRT-BE32-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, Customer account exists
+
+	      Input: The Customer account attempts to view a list of shops using the parameters of shop name,
+	      service name, part types and part conditions
+
+	      Output: A list of shops based on the input parameters
+
+	      Test Case Derivation: The system shall show a list of shops with the specified parameters provided
+
+	      How test will be performed: The tester will search for shops, and input various parameters to see
+	      if the shop list changes correctly
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsection{Shop Profile}
+
+\begin{enumerate}
+	\item \textbf{FRT-BE33-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop
+
+	      Input: Request to view shop profile
+
+	      Output: Information regarding the shop, which includes the shop's address, phone number, and email
+
+	      Test Case Derivation: The system shall display information about the shop upon request
+
+	      How test will be performed: The tester will go through the user interface to view a shop profile
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE34-1}
+
+	      Control: Manual
+
+	      Initial State: User wants to view a shop's profile
+
+	      Input: Request to view shop profile
+
+	      Output: Information regarding the shop, which includes the shop's address, phone number, email, and
+	      hours of operation (if any)
+
+	      Test Case Derivation: The system shall display information about the shop upon request
+
+	      How test will be performed: The tester will go through the user interface to view a shop profile
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE35-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner wants to add/update hours of operation of their shop
+
+	      Input: Request to add and edit hours of operation with valid hours of operation
+
+	      Output: Updated hours of operation
+
+	      Test Case Derivation: The system shall allow the shop owner to add/edit their hours of operation
+
+	      How test will be performed: The tester will go through the user interface to add/edit a shop
+
+	      Results: Passed
+
+\end{enumerate}
+
 \section{Nonfunctional Requirements Evaluation}
 
-\subsection{Usability}
+\subsection{Look and Feel Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-LF1-1}
 
-\subsection{Performance}
+	      Type: Dynamic, Manual
 
-\subsection{etc.}
+	      Initial State: The application is accessible through the Google Chrome web browser
+
+	      Input/Condition: The window size is changed
+
+	      Output/Result: The application shall adjust and scale to fit the new window size
+
+	      How test will be performed: The tester will access the application through Google Chrome on their
+	      desktop/laptop and change the windows through the use of Google Chrome DevTools Device Toolbar
+
+	      Results: Passed
+
+	\item \textbf{NFRT-LF2-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the web browser
+
+	      Input: The application is opened in a full screened web browser window
+
+	      Output: All text on the screen shall be readable
+
+	      How test will be performed: The tester open the application in a full screened web browser window,
+	      navigate to all pages, and judge if all text on the screen is readable from sitting 50 centimeters
+	      away from the monitor
+
+	      Results: Passed
+
+	\item \textbf{NFRT-LF3-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the web browser and there is a completed work
+	      order and quote on the user's account
+
+	      Input: The user opens the work order details and the quote details
+
+	      Output: All currency shall be rounded to two decimal places
+
+	      How test will be performed: The tester will navigate to the work order and quote and verify that
+	      all values of currency are rounded to two decimal places
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsection{Usability and Humanity Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-UH1-1}
+
+	      Type: Dynamic, Manual
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements on a MacOS desktop/laptop device, a Windows desktop/laptop, an iOS mobile device, and
+	      an android mobile device.
+
+	      Results: Passed. Testers were asked to write down which device they used to test to ensure all
+	      devices and operating systems were covered.
+
+	\item \textbf{NFRT-UH2-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: Device is connected to the internet and application is not open.
+
+	      Input/Condition: The user launches the application on a web browser.
+
+	      Output/Result: The system can be assessed through the web browser.
+
+	      How test will be performed: The testers will attempt to launch the application on a web browser,
+	      using a device that is connected to the internet.
+
+	      Results: Passed. The testers were able to access the application using the web browser while
+	      connected to the internet.
+
+	\item \textbf{NFRT-UH3-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: Device is connected to the internet and application is open.
+
+	      Input/Condition: User disconnects from the internet.
+
+	      Output/Result: The system notifies the user that there is no network connection.
+
+	      How test will be performed: The testers disconnects from the internet while the application is
+	      open.
+
+	      Results: Passed. Testers were greeted with a toast when they disconnected from the internet.
+
+\end{enumerate}
+
+\subsection{Performance Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-PR1-1}
+
+	      Type: Dynamic, Manual
+
+	      How test will be performed: A function will be added to the application which logs web metrics of
+	      the system. Testers will go through each of the pages and functions, making sure that the metrics
+	      meet current web standards as stated \href{https://web.dev/vitals/}{in this article}. These
+	      criteria include:
+	      \begin{itemize}
+		      \item LCP $<$ 2.5s
+		      \item FID $<$ 100ms
+		      \item CLS $<$ 0.1
+		      \item TTFB $<$ 0.5s
+		      \item FCP $<$ 1.8s
+	      \end{itemize}
+
+	      Results: Passed. Testers were able to view logs of their progress and record results which met or
+	      exceeded current web standards for the metrics.
+
+\end{enumerate}
+
+\subsection{Operational and Environmental Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-OE-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: The application is accessible through the Google Chrome web browser
+
+	      Input: The user navigates across all pages and dialogs, and performs all manual system tests for
+	      functional requirements
+
+	      Output: All pages and dialogs should be fully operational on the below listed device dimensions
+
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements on Google Chrome using various device dimension options listed in the Google DevTools
+	      Device Toolbar. At minimum, the testers will test with the following dimensions: Responsive, iPhone
+	      12 Pro ($390 \times 844$), iPhone SE ($375 \times 667$), and iPad Air ($820 \times 1180$). This set
+	      will provide a reasonable variety of different device dimensions.
+
+	      Results: Failed. Manually tested to verify whether the application supports the above device
+	      dimensions. Shop lookup page does not work on iPad Air ($820 \times 1180$) dimensions. Chat window
+	      does not work on iPhone SE ($375 \times 667$) dimensions.
+\end{enumerate}
+
+\subsection{Maintainability and Support Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-MS1-1}
+
+	      Type: Manual
+
+	      How test will be performed: Every document will have to pass a review by every developer before the
+	      document is finalized. The review will include running through the system and linking every module
+	      to proper documentation.
+
+	      Results: Passed. This requirement has been maintained throughout the entire project.
+
+\end{enumerate}
+
+\subsection{Security Requirements}
+\begin{enumerate}
+
+	\item \textbf{NFRT-SR1-1}
+
+	      Type: Dynamic, Automatic
+
+	      Initial State: An account with a created appointment
+
+	      Input/Condition: An HTTP request to the application's backend to get the appointment by appointment
+	      ID
+
+	      Output/Result: The request is rejected with a 403 Forbidden error message
+
+	      How test will be performed: Through Jest an HTTP request will be sent to the server
+
+	      Results: Passed.
+
+	\item \textbf{NFRT-SR2-1}
+
+	      Type: Dynamic, Manual
+
+	      Initial State: One Shop Owner account and two Customer accounts with one customer having an
+	      appointment at the shop registered under the same Shop Owner account
+
+	      Input/Condition: Request available time slots at the Shop Owner's store using the Customer without
+	      an appointment's account
+
+	      Output/Result: The Customer should only be able to view the time slot taken by the other customer
+	      and no other extra information
+
+	      How test will be performed: The tester will view the available time slots page as the Customer
+	      without an appointment
+
+	      Results: Failed. Extra information is returned from the API call that is not needed for this
+	      endpoints and exposes data that does not belong to user. None of the data contains PII.
+
+\end{enumerate}
+
+\subsection{Cultural Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-CR1-1}
+
+	      Type: Static, Manual
+
+	      Initial State: The application is accessible through the web browser
+
+	      Input: The user navigates across all pages and dialogs, and performs all end-to-end tests
+
+	      Output: There should be no offensive texts or images
+
+	      How test will be performed: The testers will go through end-to-end tests for the entire program and
+	      will confirm that any texts or images are not offensive.
+
+	      Results: Passed. Manually tested to verify that there are no offensive images or text.
+
+	\item \textbf{NFRT-CR2-1}
+	      Type: Static, Manual
+
+	      Initial State: The application is accessible through the web browser
+
+	      Input: The user navigates across all pages and dialogs, and performs all end-to-end tests
+
+	      Output: All text should be displayed in English
+
+	      How test will be performed: The testers will go through end-to-end tests for the entire program and
+	      will confirm that the text displayed is in English.
+
+	      Results: Passed. Checked that everything is written in English in the implementation,
+	      documentation, and anything visible to the user.
+
+\end{enumerate}
+
+\subsection{Legal Requirements}
+\begin{enumerate}
+	\item \textbf{NFRT-LR1-1}
+
+	      Type: Static, Manual
+
+	      Input: The user navigates all source code and project documents
+
+	      Output: Appropriate credits and/or copyright licenses are used, and MIT License requirements should
+	      be adhered to
+
+	      How test will be performed: The testers will go through the source code of the project and project
+	      documents to determine if any open source resources were used and check that appropriate credits
+	      and/or copyright licenses are used.
+
+	      Results: Passed. Checked the MIT License requirements and that the project adhered to all the
+	      requirements.
+
+\end{enumerate}
+
+\newpage
 
 \section{Unit Testing}
+
+\begin{longtable}{|l|c|l|c|l|c|}
+	\caption{Unit Tests Results Summary} \label{Table Unit Tests Result Summary}                                 \\
+	\toprule
+	\multicolumn{6}{c}{$\checkmark$ = Pass, X = Fail}                                                            \\
+	\toprule
+	\textbf{Test ID} & \textbf{Result} & \textbf{Test ID} & \textbf{Result} & \textbf{Test ID} & \textbf{Result} \\
+	\midrule
+	FRT-M3-1         & $\checkmark$    & FRT-M3-2         & $\checkmark$    & FRT-M3-3         & $\checkmark$    \\
+	\midrule
+	FRT-M3-4         & $\checkmark$    & FRT-M3-5         & $\checkmark$    & FRT-M3-6         & $\checkmark$    \\
+	\midrule
+	FRT-M3-7         & $\checkmark$    & FRT-M3-8         & $\checkmark$    & FRT-M3-9         & $\checkmark$    \\
+	\midrule
+	FRT-M3-10        & $\checkmark$    & FRT-M4-1         & $\checkmark$    & FRT-M4-2         & $\checkmark$    \\
+	\midrule
+	FRT-M4-3         & $\checkmark$    & FRT-M4-4         & $\checkmark$    & FRT-M4-5         & $\checkmark$    \\
+	\midrule
+	FRT-M3-6         & $\checkmark$    & FRT-M4-7         & $\checkmark$    & FRT-M4-8         & $\checkmark$    \\
+	\midrule
+	FRT-M4-9         & $\checkmark$    & FRT-M4-10        & $\checkmark$    & FRT-M4-11        & $\checkmark$    \\
+	\midrule
+	FRT-M4-12        & $\checkmark$    & FRT-M4-13        & $\checkmark$    & FRT-M4-14        & $\checkmark$    \\
+	\midrule
+	FRT-M4-15        & $\checkmark$    & FRT-M4-16        & $\checkmark$    & FRT-M4-17        & $\checkmark$    \\
+	\midrule
+	FRT-M5-1         & $\checkmark$    & FRT-M5-2         & $\checkmark$    & FRT-M5-3         & $\checkmark$    \\
+	\midrule
+	FRT-M5-4         & $\checkmark$    & FRT-M5-5         & $\checkmark$    & FRT-M5-6         & $\checkmark$    \\
+	\midrule
+	FRT-M5-7         & $\checkmark$    & FRT-M5-8         & $\checkmark$    & FRT-M5-9         & $\checkmark$    \\
+	\midrule
+	FRT-M5-10        & $\checkmark$    & FRT-M5-11        & $\checkmark$    & FRT-M5-12        & $\checkmark$    \\
+	\midrule
+	FRT-M5-13        & $\checkmark$    & FRT-M5-14        & $\checkmark$    & FRT-M6-1         & $\checkmark$    \\
+	\midrule
+	FRT-M6-2         & $\checkmark$    & FRT-M6-3         & $\checkmark$    & FRT-M6-4         & $\checkmark$    \\
+	\midrule
+	FRT-M6-5         & $\checkmark$    & FRT-M6-6         & $\checkmark$    & FRT-M6-7         & $\checkmark$    \\
+	\midrule
+	FRT-M7-1         & $\checkmark$    & FRT-M7-2         & $\checkmark$    & FRT-M7-3         & $\checkmark$    \\
+	\midrule
+	FRT-M7-4         & $\checkmark$    & FRT-M7-5         & $\checkmark$    & FRT-M7-6         & $\checkmark$    \\
+	\midrule
+	FRT-M8-1         & $\checkmark$    & FRT-M8-2         & $\checkmark$    & FRT-M8-3         & $\checkmark$    \\
+	\midrule
+	FRT-M8-4         & $\checkmark$    & FRT-M8-5         & $\checkmark$    & FRT-M8-6         & $\checkmark$    \\
+	\midrule
+	FRT-M8-7         & $\checkmark$    & FRT-M8-8         & $\checkmark$    & FRT-M8-9         & $\checkmark$    \\
+	\midrule
+	FRT-M8-10        & $\checkmark$    & FRT-M8-11        & $\checkmark$    & FRT-M8-12        & $\checkmark$    \\
+	\midrule
+	FRT-M8-13        & $\checkmark$    & FRT-M8-14        & $\checkmark$    & FRT-M8-15        & $\checkmark$    \\
+	\midrule
+	FRT-M9-1         & $\checkmark$    & FRT-M9-2         & $\checkmark$    & FRT-M9-3         & $\checkmark$    \\
+	\midrule
+	FRT-M9-4         & $\checkmark$    & FRT-M9-5         & $\checkmark$    & ~                & ~               \\
+	\bottomrule
+\end{longtable}
+
+\newpage
 
 \section{Changes Due to Testing}
 
@@ -93,11 +1316,11 @@ All automated testing was carried out by Jest, a JavaScript testing framework. E
 own corresponding test file located within the ``test'' folder. The ``test'' folder has the same
 structure as the ``src'' folder, creating a one-to-one mapping of a module and its corresponding
 test. For example, the module ``src/server/services/userService.ts'' has its tests located in
-``test/server/services/userService.ts''. There are two Jest test runs, with the only difference
-being whether the testing environment is connected to a real database or not (i.e., whether the
-database needs to be seeded or mocked in each test case). As part of the CI/CD pipeline, the full
-test suite is run and information regarding pass/fail and code coverage is reported on every pull
-request to the main branch and to every push to the main branch.
+``test/server/services/userService.test.ts''. There are two Jest test runs, with the only
+difference being whether the testing environment is connected to a real database or not (i.e.,
+whether the database needs to be seeded or mocked in each test case). As part of the CI/CD
+pipeline, the full test suite is run and information regarding pass/fail and code coverage is
+reported on every pull request to the main branch and to every push to the main branch.
 
 \section{Trace to Requirements}
 

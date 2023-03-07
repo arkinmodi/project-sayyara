@@ -129,146 +129,204 @@ afterEach(async () => {
   ]);
 });
 
-describe("create chat messages", () => {
-  describe("given new chat message", () => {
-    it("should create new chat message", async () => {
-      await createCustomer();
-      await createEmployee();
-      await createShop();
-      await createService();
+describe("Quotes Module", () => {
+  it("FRT-M4-12: delete quote request with a valid quote id", async () => {
+    // Setup
+    await createCustomer();
+    await createEmployee();
+    await createShop();
+    await createService();
+    const quoteId = await createQuote();
 
-      const quoteId = await createQuote();
+    // Create Employee Chat Message
+    const employeePost = createMockRequestResponse({ method: "POST" });
+    employeePost.req.body = {
+      shop_id: testEmployeeUser.shop_id,
+      message: testChatMessage.message,
+    };
+    employeePost.req.query = {
+      id: quoteId,
+    };
+    await chatHandler(employeePost.req, employeePost.res);
+    expect(employeePost.res.statusCode).toBe(201);
 
-      const { req, res } = createMockRequestResponse({ method: "POST" });
-      req.body = {
-        shop_id: testEmployeeUser.shop_id,
-        message: testChatMessage.message,
-      };
-      req.query = { ...req.query, id: quoteId };
+    // Create Customer Chat Message
+    const customerPost = createMockRequestResponse({ method: "POST" });
+    customerPost.req.body = {
+      customer_id: testCustomerUser.id,
+      message: testChatMessage.message,
+    };
+    customerPost.req.query = {
+      id: quoteId,
+    };
+    await chatHandler(customerPost.req, customerPost.res);
+    expect(customerPost.res.statusCode).toBe(201);
 
-      await chatHandler(req, res);
+    // Delete Quote and Chat Messages
+    const { req, res } = createMockRequestResponse({ method: "DELETE" });
+    req.query = {
+      id: quoteId,
+    };
+    await quoteByIdHandler(req, res);
 
-      expect(res.statusCode).toBe(201);
-      expect(res._getJSONData()).toMatchObject({
-        ...testChatMessage,
-        id: expect.any(String),
-        create_time: expect.any(String),
-        update_time: expect.any(String),
-        shop_id: testEmployeeUser.shop_id,
-        quote_id: quoteId,
-      });
-    });
-  });
-});
+    expect(res.statusCode).toBe(204);
 
-describe("get chat messages", () => {
-  describe("given quote ID with messages", () => {
-    it("should return all messages related to the quote", async () => {
-      await createCustomer();
-      await createEmployee();
-      await createShop();
-      await createService();
-      const quoteId = await createQuote();
+    // Confirm Chat Messages are Deleted
+    const get = createMockRequestResponse({ method: "GET" });
+    get.req.query = {
+      id: quoteId,
+    };
+    await chatHandler(get.req, get.res);
 
-      // Create Employee Chat Message
-      const employeePost = createMockRequestResponse({ method: "POST" });
-      employeePost.req.body = {
-        shop_id: testEmployeeUser.shop_id,
-        message: testChatMessage.message,
-      };
-      employeePost.req.query = { ...employeePost.req.query, id: quoteId };
-      await chatHandler(employeePost.req, employeePost.res);
-      expect(employeePost.res.statusCode).toBe(201);
-
-      // Create Customer Chat Message
-      const customerPost = createMockRequestResponse({ method: "POST" });
-      customerPost.req.body = {
-        customer_id: testCustomerUser.id,
-        message: testChatMessage.message,
-      };
-      customerPost.req.query = { ...customerPost.req.query, id: quoteId };
-      await chatHandler(customerPost.req, customerPost.res);
-      expect(customerPost.res.statusCode).toBe(201);
-
-      // Get Chat Messages
-      const { req, res } = createMockRequestResponse({ method: "GET" });
-      req.query = { ...req.query, id: quoteId };
-      await chatHandler(req, res);
-
-      expect(res.statusCode).toBe(200);
-      expect(res._getJSONData()["length"]).toBe(2);
-
-      expect(res._getJSONData()[0]["customer_id"]).toBe(testCustomerUser.id);
-      expect(res._getJSONData()[0]["shop_id"]).toBeNull();
-
-      expect(res._getJSONData()[1]["shop_id"]).toBe(testEmployeeUser.shop_id);
-      expect(res._getJSONData()[1]["customer_id"]).toBeNull();
-    });
+    expect(get.res.statusCode).toBe(200);
+    expect(get.res._getJSONData()["length"]).toBe(0);
   });
 
-  describe("given quote ID with messages", () => {
-    it("should return an empty list", async () => {
-      await createCustomer();
-      await createEmployee();
-      await createShop();
-      await createService();
-      const quoteId = await createQuote();
+  it("FRT-M4-14: create a chat message request with valid information", async () => {
+    // Setup
+    await createCustomer();
+    await createEmployee();
+    await createShop();
+    await createService();
 
-      // Get Chat Messages
-      const { req, res } = createMockRequestResponse({ method: "GET" });
-      req.query = { ...req.query, id: quoteId };
-      await chatHandler(req, res);
+    const quoteId = await createQuote();
 
-      expect(res.statusCode).toBe(200);
-      expect(res._getJSONData()["length"]).toBe(0);
+    // Create Chat Message
+    const { req, res } = createMockRequestResponse({ method: "POST" });
+    req.body = {
+      shop_id: testEmployeeUser.shop_id,
+      message: testChatMessage.message,
+    };
+    req.query = {
+      id: quoteId,
+    };
+
+    await chatHandler(req, res);
+
+    expect(res.statusCode).toBe(201);
+    expect(res._getJSONData()).toMatchObject({
+      id: expect.any(String),
+      create_time: expect.any(String),
+      update_time: expect.any(String),
+      shop_id: testEmployeeUser.shop_id,
+      quote_id: quoteId,
+      message: testChatMessage.message,
     });
   });
-});
 
-describe("delete quote and chat messages", () => {
-  describe("given quote ID", () => {
-    it("should delete quote and all chat messages", async () => {
-      await createCustomer();
-      await createEmployee();
-      await createShop();
-      await createService();
-      const quoteId = await createQuote();
+  it("FRT-M4-15: create a chat message request with invalid information", async () => {
+    // Setup
+    await createCustomer();
+    await createEmployee();
+    await createShop();
+    await createService();
 
-      // Create Employee Chat Message
-      const employeePost = createMockRequestResponse({ method: "POST" });
-      employeePost.req.body = {
-        shop_id: testEmployeeUser.shop_id,
-        message: testChatMessage.message,
-      };
-      employeePost.req.query = { ...employeePost.req.query, id: quoteId };
-      await chatHandler(employeePost.req, employeePost.res);
-      expect(employeePost.res.statusCode).toBe(201);
+    const quoteId = await createQuote();
 
-      // Create Customer Chat Message
-      const customerPost = createMockRequestResponse({ method: "POST" });
-      customerPost.req.body = {
-        customer_id: testCustomerUser.id,
-        message: testChatMessage.message,
-      };
-      customerPost.req.query = { ...customerPost.req.query, id: quoteId };
-      await chatHandler(customerPost.req, customerPost.res);
-      expect(customerPost.res.statusCode).toBe(201);
+    // Create Chat Message
+    const { req, res } = createMockRequestResponse({ method: "POST" });
+    req.body = {
+      shop_id: testEmployeeUser.shop_id,
+    };
+    req.query = {
+      id: quoteId,
+    };
 
-      // Delete Quote and Chat Messages
-      const { req, res } = createMockRequestResponse({ method: "DELETE" });
-      req.query = { ...req.query, id: quoteId };
-      await quoteByIdHandler(req, res);
+    await chatHandler(req, res);
 
-      expect(res.statusCode).toBe(204);
+    expect(res.statusCode).toBe(400);
+  });
 
-      // Confirm Chat Messages are Deleted
-      const get = createMockRequestResponse({ method: "GET" });
-      get.req.query = { ...get.req.query, id: quoteId };
-      await chatHandler(get.req, get.res);
+  it("FRT-M4-16: get chat messages request with a valid quote id", async () => {
+    // Setup
+    await createCustomer();
+    await createEmployee();
+    await createShop();
+    await createService();
+    const quoteId = await createQuote();
 
-      expect(get.res.statusCode).toBe(200);
-      expect(get.res._getJSONData()["length"]).toBe(0);
-    });
+    // Create Employee Chat Message
+    const employeePost = createMockRequestResponse({ method: "POST" });
+    employeePost.req.body = {
+      shop_id: testEmployeeUser.shop_id,
+      message: testChatMessage.message,
+    };
+    employeePost.req.query = {
+      id: quoteId,
+    };
+    await chatHandler(employeePost.req, employeePost.res);
+    expect(employeePost.res.statusCode).toBe(201);
+
+    // Create Customer Chat Message
+    const customerPost = createMockRequestResponse({ method: "POST" });
+    customerPost.req.body = {
+      customer_id: testCustomerUser.id,
+      message: testChatMessage.message,
+    };
+    customerPost.req.query = {
+      id: quoteId,
+    };
+    await chatHandler(customerPost.req, customerPost.res);
+    expect(customerPost.res.statusCode).toBe(201);
+
+    // Get Chat Messages
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: quoteId,
+    };
+    await chatHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(2);
+
+    expect(res._getJSONData()[0]["customer_id"]).toBe(testCustomerUser.id);
+    expect(res._getJSONData()[0]["shop_id"]).toBeNull();
+
+    expect(res._getJSONData()[1]["shop_id"]).toBe(testEmployeeUser.shop_id);
+    expect(res._getJSONData()[1]["customer_id"]).toBeNull();
+  });
+
+  it("FRT-M4-17: get chat messages request with an invalid quote id", async () => {
+    // Setup
+    await createCustomer();
+    await createEmployee();
+    await createShop();
+    await createService();
+    const quoteId = await createQuote();
+
+    // Create Employee Chat Message
+    const employeePost = createMockRequestResponse({ method: "POST" });
+    employeePost.req.body = {
+      shop_id: testEmployeeUser.shop_id,
+      message: testChatMessage.message,
+    };
+    employeePost.req.query = {
+      id: quoteId,
+    };
+    await chatHandler(employeePost.req, employeePost.res);
+    expect(employeePost.res.statusCode).toBe(201);
+
+    // Create Customer Chat Message
+    const customerPost = createMockRequestResponse({ method: "POST" });
+    customerPost.req.body = {
+      customer_id: testCustomerUser.id,
+      message: testChatMessage.message,
+    };
+    customerPost.req.query = {
+      id: quoteId,
+    };
+    await chatHandler(customerPost.req, customerPost.res);
+    expect(customerPost.res.statusCode).toBe(201);
+
+    // Get Chat Messages
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = {
+      id: "quote_does_not_exist",
+    };
+    await chatHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(0);
   });
 });
 

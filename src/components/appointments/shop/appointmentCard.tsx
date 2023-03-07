@@ -14,13 +14,26 @@ interface IAppointmentCardProps {
   appointmentProgress: AppointmentStatus;
   showToast: (status: AppointmentStatus) => void;
   toggleActiveTab: () => void;
+  onOpenCancelDialog: (id: string) => void;
 }
 
 const AppointmentCard = (props: IAppointmentCardProps) => {
   const dispatch = useDispatch();
 
-  const { appointment, appointmentProgress, showToast, toggleActiveTab } =
-    props;
+  const {
+    appointment,
+    appointmentProgress,
+    showToast,
+    toggleActiveTab,
+    onOpenCancelDialog,
+  } = props;
+
+  const hideDialog = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    e.stopPropagation();
+    onOpenCancelDialog(appointment.id);
+  };
 
   const handleButtonClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -37,7 +50,6 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     appointment: IAppointment
   ): void => {
     e.stopPropagation();
-    console.log(appointment.quoteId);
     if (appointment.quoteId) {
       dispatch(setSelectedChat({ id: appointment.quoteId }));
     }
@@ -108,9 +120,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
               styles.appointmentButtonRed,
               styles.appointmentCardButton
             )}
-            onClick={(e) =>
-              handleButtonClick(e, appointment, AppointmentStatus.REJECTED)
-            }
+            onClick={(e) => hideDialog(e)}
           />
           <Button
             label="In Progress"
@@ -169,8 +179,20 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
           <h3 className={styles.serviceNameHeaderText}>
             {appointment.serviceName}
           </h3>
+          <h4
+            style={{
+              display:
+                appointment.status === AppointmentStatus.CANCELLED
+                  ? "block"
+                  : "none",
+            }}
+          >
+            Cancellation Reason: {appointment.cancellationReason}
+          </h4>
           <div>
-            {`Customer Name: ${appointment.customer.first_name} ${appointment.customer.last_name}`}
+            <b>
+              {`Customer Name: ${appointment.customer.first_name} ${appointment.customer.last_name}`}
+            </b>
           </div>
           <div>Customer Phone Number: {appointment.customer.phone_number}</div>
           <div>

@@ -2,7 +2,6 @@ import { getServerAuthSession } from "@server/common/getServerAuthSession";
 import {
   createAppointment,
   createAppointmentSchema,
-  getAllAppointments,
 } from "@server/services/appointmentService";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -24,14 +23,15 @@ const appointmentHandler = async (
         return;
       }
 
-      const newAppointment = await createAppointment(result.data);
-      res.status(201).json(newAppointment);
-      break;
+      const newAppointment = await createAppointment(result.data).catch(
+        (reason) => {
+          if (reason === "Invalid start time and/or end time.") res.status(400);
+          else res.status(500);
+          return null;
+        }
+      );
 
-    // TODO: Remove this GET method when shops are setup
-    case "GET":
-      const appointments = await getAllAppointments();
-      res.status(200).json(appointments);
+      if (newAppointment) res.status(201).json(newAppointment);
       break;
 
     default:

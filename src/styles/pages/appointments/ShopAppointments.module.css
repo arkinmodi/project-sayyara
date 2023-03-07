@@ -111,6 +111,19 @@
   display: none;
 }
 
+.loadingSpinner {
+  text-align: center;
+}
+
+.cancelInputBox {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.cancelInputText {
+  margin: 10px;
+}
+
 @media (max-width: 500px) {
   .appointmentCardButton {
     width: 110px;

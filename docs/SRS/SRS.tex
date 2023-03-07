@@ -85,7 +85,7 @@
 \newpage
 \noindent \rule{\textwidth}{0.5mm}
 
-\paragraph{RefName: } \textbf{#2} \phantomsection 
+\paragraph{RefName: } \textbf{#2} \phantomsection
 \label{#2}
 
 \paragraph{Label:} #3
@@ -149,51 +149,59 @@
 
 \newpage
 
-\begin{table}[H]
-	\caption{Revision History} \label{TblRevisionHistory}
-	\begin{tabularx}{\textwidth}{llX}
-		\toprule
-		\textbf{Date}      & \textbf{Developer(s)} & \textbf{Change}                                                                    \\
-		\midrule
-		September 30, 2022 & Leon So               & Add purpose of project                                                             \\
-		September 30, 2022 & Joy Xiao              & Add stakeholders                                                                   \\
-		September 30, 2022 & Leon So               & Add functional requirements for authentication                                     \\
-		September 30, 2022 & Arkin Modi            & Add open issues and new problems sections (effects on the current environment)     \\
-		October 1, 2022    & Timothy Choy          & Add mandated constraints                                                           \\
-		October 1, 2022    & Arkin Modi            & Add user documentation and training, waiting room and ideas for solutions sections \\
-		October 1, 2022    & Arkin Modi            & Add project planning, migration to the new product, risks, and costs sections      \\
-		October 2, 2022    & Leon So               & Add current situation and appointment diagram                                      \\
-		October 2, 2022    & Joy Xiao              & Add current situation quote and invitation diagram                                 \\
-		October 3, 2022    & Leon So               & Add current situation work order diagram                                           \\
-		October 3, 2022    & Leon So               & Add functional requirements for employees management                               \\
-		October 3, 2022    & Joy Xiao              & Add appointment FRs                                                                \\
-		October 3, 2022    & Arkin Modi            & Add planning of the development phases and new problems sections                   \\
-		October 3, 2022    & Arkin Modi            & Add off-the-shelf solutions sections                                               \\
-		October 3, 2022    & Arkin Modi            & Add functional requirements for work orders                                        \\
-		October 3, 2022    & Timothy Choy          & Add functional requirements for shop profile                                       \\
-		October 4, 2022    & Timothy Choy          & Add functional requirements for employee profile                                   \\
-		October 4, 2022    & Leon So               & Add context of work diagram                                                        \\
-		October 4, 2022    & Leon So               & Add SRS subtitle                                                                   \\
-		October 4, 2022    & Joy Xiao              & Add service functional requirements                                                \\
-		October 4, 2022    & Arkin Modi            & Add functional requirements for quotes                                             \\
-		October 4, 2022    & Joy Xiao              & Add non functional requirements                                                    \\
-		October 5, 2022    & Leon So               & Add functional requirements for password reset                                     \\
-		October 5, 2022    & Arkin Modi            & Add naming conventions and terminology section                                     \\
-		October 5, 2022    & Leon So               & Add reflection in Appendix                                                         \\
-		October 5, 2022    & Joy Xiao              & Add work partitioning                                                              \\
-		October 5, 2022    & Leon So               & Add personas                                                                       \\
-		October 5, 2022    & Timothy Choy          & Add functional requirements for shop lookup                                        \\
-		October 5, 2022    & Timothy Choy          & Add individual product use cases                                                   \\
-		October 5, 2022    & Timothy Choy          & Add formal specifications                                                          \\
-		October 5, 2022    & Leon So               & Add relevant facts and assumptions                                                 \\
-		October 5, 2022    & Arkin Modi            & Add reflection                                                                     \\
-		October 5, 2022    & Leon So               & Add reflection                                                                     \\
-		October 5, 2022    & Timothy Choy          & Add reflection                                                                     \\
-		October 5, 2022    & Joy Xiao              & Add reflection                                                                     \\
-		October 19, 2022   & Timothy Choy          & Update requirements from Hazard Analysis                                           \\
-		\bottomrule
-	\end{tabularx}
-\end{table}
+\begin{longtable}{p{0.2\textwidth} p{0.2\textwidth} p{0.5\textwidth}}
+	\caption{Revision History} \label{TblRevisionHistory}                                                                           \\
+	\toprule
+	\textbf{Date}      & \textbf{Developer(s)} & \textbf{Change}                                                                    \\
+	\midrule
+	September 30, 2022 & Leon So               & Add purpose of project                                                             \\
+	September 30, 2022 & Joy Xiao              & Add stakeholders                                                                   \\
+	September 30, 2022 & Leon So               & Add functional requirements for authentication                                     \\
+	September 30, 2022 & Arkin Modi            & Add open issues and new problems sections (effects on the current environment)     \\
+	October 1, 2022    & Timothy Choy          & Add mandated constraints                                                           \\
+	October 1, 2022    & Arkin Modi            & Add user documentation and training, waiting room and ideas for solutions sections \\
+	October 1, 2022    & Arkin Modi            & Add project planning, migration to the new product, risks, and costs sections      \\
+	October 2, 2022    & Leon So               & Add current situation and appointment diagram                                      \\
+	October 2, 2022    & Joy Xiao              & Add current situation quote and invitation diagram                                 \\
+	October 3, 2022    & Leon So               & Add current situation work order diagram                                           \\
+	October 3, 2022    & Leon So               & Add functional requirements for employees management                               \\
+	October 3, 2022    & Joy Xiao              & Add appointment FRs                                                                \\
+	October 3, 2022    & Arkin Modi            & Add planning of the development phases and new problems sections                   \\
+	October 3, 2022    & Arkin Modi            & Add off-the-shelf solutions sections                                               \\
+	October 3, 2022    & Arkin Modi            & Add functional requirements for work orders                                        \\
+	October 3, 2022    & Timothy Choy          & Add functional requirements for shop profile                                       \\
+	October 4, 2022    & Timothy Choy          & Add functional requirements for employee profile                                   \\
+	October 4, 2022    & Leon So               & Add context of work diagram                                                        \\
+	October 4, 2022    & Leon So               & Add SRS subtitle                                                                   \\
+	October 4, 2022    & Joy Xiao              & Add service functional requirements                                                \\
+	October 4, 2022    & Arkin Modi            & Add functional requirements for quotes                                             \\
+	October 4, 2022    & Joy Xiao              & Add non functional requirements                                                    \\
+	October 5, 2022    & Leon So               & Add functional requirements for password reset                                     \\
+	October 5, 2022    & Arkin Modi            & Add naming conventions and terminology section                                     \\
+	October 5, 2022    & Leon So               & Add reflection in Appendix                                                         \\
+	October 5, 2022    & Joy Xiao              & Add work partitioning                                                              \\
+	October 5, 2022    & Leon So               & Add personas                                                                       \\
+	October 5, 2022    & Timothy Choy          & Add functional requirements for shop lookup                                        \\
+	October 5, 2022    & Timothy Choy          & Add individual product use cases                                                   \\
+	October 5, 2022    & Timothy Choy          & Add formal specifications                                                          \\
+	October 5, 2022    & Leon So               & Add relevant facts and assumptions                                                 \\
+	October 5, 2022    & Arkin Modi            & Add reflection                                                                     \\
+	October 5, 2022    & Leon So               & Add reflection                                                                     \\
+	October 5, 2022    & Timothy Choy          & Add reflection                                                                     \\
+	October 5, 2022    & Joy Xiao              & Add reflection                                                                     \\
+	October 19, 2022   & Timothy Choy          & Update requirements from Hazard Analysis                                           \\
+	March 4, 2023      & Timothy Choy          & Update Usability and Humanity Nonfunctional Requirements                           \\
+	March 5, 2023      & Timothy Choy          & Update Performance Nonfunctional Requirement                                       \\
+	March 5, 2023      & Leon So               & Remove Employee Profile requirements \& remove Shop Profile update requirements    \\
+	March 6, 2023      & Leon So               & Update Functional Requirements for Authentication                                  \\
+	March 6, 2023      & Leon So               & Update Functional Requirements for Employee Management                             \\
+	March 6, 2023      & Timothy Choy          & Update Functional Requirements for Shop Lookup                                     \\
+	March 6, 2023      & Joy Xiao              & Update services and appointments requirements                                      \\
+	March 6, 2023      & Arkin Modi            & Update Functional Requirements for Quotes                                          \\
+	March 6, 2023      & Leon So               & Update to remove emails for employee sign up                                       \\
+	March 7, 2023      & Arkin Modi            & Update Functional Requirements for Work Orders                                     \\
+	\bottomrule
+\end{longtable}
 
 \newpage
 
@@ -441,11 +449,10 @@ may be used.
 
 \subsubsection{Employee Management}
 \begin{enumerate}
-	\item For the initial version of the application, employees can only sign up and complete registration
-	      after receiving an email invitation.
-	\item For the initial version of the application, only auto repair shop owners can send an invitation to
-	      employees.
-	\item It is assumed that only the auto repair shop owner can add and edit employees.
+	\item For the initial version of the application, employees can only sign up using a shop ID provided by
+	      the shop owner.
+	\item For the initial version of the application, only auto repair shop owners can access the shop ID.
+	\item It is assumed that only the auto repair shop owner can edit and remove employees.
 \end{enumerate}
 
 \subsubsection{Other}
@@ -509,39 +516,37 @@ external systems and services.
 		\hline
 		2                     & Login to account               & User           & Database           \\
 		\hline
-		3                     & Reset password                 & User           & Database           \\
+		3                     & Book appointment               & Database       & Database           \\
 		\hline
-		4                     & Book appointment               & Database       & Database           \\
+		4                     & Edit appointment               & Database       & Database           \\
 		\hline
-		5                     & Edit appointment               & Database       & Database           \\
+		5                     & Cancel appointment             & Database       & Database           \\
 		\hline
-		6                     & Cancel appointment             & Database       & Database           \\
+		6                     & Set appointment availability   & Database       & Database           \\
 		\hline
-		7                     & Set appointment availability   & Database       & Database           \\
+		7                     & View past quotes               & User           & Database           \\
 		\hline
-		8                     & View past quotes               & User           & Database           \\
+		8                     & View quote details             & User           & Database           \\
 		\hline
-		9                     & View quote details             & User           & Database           \\
+		9                     & Request a quote                & Web Socket     & Database           \\
 		\hline
-		10                    & Request a quote                & Web Socket     & Database           \\
+		10                    & Cancel quote request           & User           & Database           \\
 		\hline
-		11                    & Cancel quote request           & User           & Database           \\
+		11                    & Update quote request           & User           & Database/Websocket \\
 		\hline
-		12                    & Update quote request           & User           & Database/Websocket \\
+		12                    & Copy a quote request           & Database       & Database/Websocket \\
 		\hline
-		13                    & Copy a quote request           & Database       & Database/Websocket \\
+		13                    & Respond to quote request       & Websocket      & Database           \\
 		\hline
-		14                    & Respond to quote request       & Websocket      & Database           \\
+		14                    & Accept quote response          & Websocket      & Database           \\
 		\hline
-		15                    & Accept quote response          & Websocket      & Database           \\
+		15                    & Request additional information & Websocket      & Database           \\
 		\hline
-		16                    & Request additional information & Websocket      & Database           \\
+		16                    & Appointment scheduled          & User           & Database           \\
 		\hline
-		17                    & Appointment scheduled          & User           & Database           \\
+		17                    & Appointment cancelled          & User           & Database           \\
 		\hline
-		18                    & Appointment cancelled          & User           & Database           \\
-		\hline
-		19                    & Search for work order          & User           & Database           \\
+		18                    & Search for work order          & User           & Database           \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -596,14 +601,13 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 \end{enumerate}
 
 \textbf{Title:} Creating an employee account\\
-\textbf{Trigger:} Auto repair shop owner adds an employee to their shop\\
+\textbf{Trigger:} Employee signs up for an account\\
 \textbf{Pre-condition:} Auto repair shop account exists on Sayyara\\
 \textbf{Outcome:}
 \begin{enumerate}
 	\item User creates an employee account with the following fields: first and last name, phone number,
-	      email, username and password
+	      email, username, password, and shop ID
 	\item System creates an employee account with the information
-	\item System sends an invitation to the employee via the email provided
 \end{enumerate}
 
 \textbf{Title:} Logging into Sayyara\\
@@ -615,15 +619,6 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 	\item System checks if the username and password match an account
 	\item If successful, system allows user to authenticate
 	\item If unsuccessful, system rejects authentication and shows an error message
-\end{enumerate}
-
-\textbf{Title:} Resetting a password\\
-\textbf{Trigger:} User clicks on ``forgot password'' in the login screen\\
-\textbf{Pre-condition:} Employee/shop account exists\\
-\textbf{Outcome:}
-\begin{enumerate}
-	\item User enters their email
-	\item System sends a code to their email, allowing them to reset their password
 \end{enumerate}
 
 \textbf{Title:} Creating a service\\
@@ -677,28 +672,6 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 \begin{enumerate}
 	\item System displays information about the shop, such as the shop's name, address, phone number and
 	      email
-\end{enumerate}
-
-\textbf{Title:} Viewing an employee profile\\
-\textbf{Trigger:} User navigates to their employee profile\\
-\textbf{Pre-condition:} Auto repair shop and employee exist\\
-\textbf{Outcome:}
-\begin{enumerate}
-	\item System checks role of employee
-	\item If role of employee is owner, system will allow user to view all employees working in the shop
-	\item If role of employee is employee, system will allow user to view only their profile
-	\item System will display the name, phone number and email of the employee
-\end{enumerate}
-
-\textbf{Title:} Deleting an employee profile\\
-\textbf{Trigger:} Auto repair shop owner selects an employee and selects the delete option\\
-\textbf{Pre-condition:} Auto repair shop and employee exist\\
-\textbf{Outcome:}
-\begin{enumerate}
-	\item System prompts user if they want to delete the employee
-	\item User selects delete
-	\item System removes employee from list of employees of the shop and deletes all information about the
-	      employee
 \end{enumerate}
 
 \textbf{Title:} Creating appointment availabilities\\
@@ -771,13 +744,11 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 \end{enumerate}
 
 \textbf{Title:} Viewing appointments\\
-\textbf{Trigger:} Auto repair shop owner or employee navigates to list of appointments\\
-\textbf{Pre-condition:} Auto repair shop exists, employee account exists, services exist\\
+\textbf{Trigger:} User navigates to list of appointments\\
+\textbf{Pre-condition:} Account and appointments exist\\
 \textbf{Outcome:}
 \begin{enumerate}
-	\item User enters filters for the list of appointments, such as service type, customer name, employee
-	      assigned, or appointment time
-	\item System displays a list of appointments for the shop
+	\item System displays a list of appointments
 \end{enumerate}
 
 \textbf{Title:} Editing/updating appointments\\
@@ -826,6 +797,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall allow the user to enter an email and password
 			            \item The system shall allow the user to enter their name
 			            \item The system shall allow the user to enter their phone number
+			            \item The system shall allow the user to enter vehicle information
 			            \item The system shall transition to the vehicle owner landing page after the registration process is
 			                  complete and successful
 			            \item The system shall allow the user to cancel and exit the registration process
@@ -839,6 +811,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall allow the user to enter the shop name
 			            \item The system shall allow the user to enter the shop address
 			            \item The system shall allow the user to enter the shop phone number
+			            \item The system shall allow the user to enter the shop email
 			            \item The system shall transition to the shop owner landing page after the registration process is
 			                  complete and successful
 			            \item The system shall allow the user to cancel and exit the registration process
@@ -849,6 +822,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall allow the user to enter an email and password
 			            \item The system shall allow the user to enter their name
 			            \item The system shall allow the user to enter their phone number
+			            \item The system shall allow the user to enter a shop ID
 			            \item The system shall transition to the employee landing page after the registration process is complete
 			                  and successful
 			            \item The system shall allow the user to cancel and exit the registration process
@@ -882,30 +856,21 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants to reset their password
+	\item The user wants to logout
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter their email
-			            \item The system shall send a password reset code to the email if the email is associated with an account
-			            \item The system shall display a countdown for the password reset code expiration
-			            \item The system shall ask the user for a new password if the code matches
+			            \item The system shall allow the user to logout
 		            \end{enumerate}
 
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter their email
-			            \item The system shall send a password reset code to the email if the email is associated with an account
-			            \item The system shall display a countdown for the password reset code expiration
-			            \item The system shall ask the user for a new password if the code matches
+			            \item The system shall allow the user to logout
 		            \end{enumerate}
 
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter their email
-			            \item The system shall send a password reset code to the email if the email is associated with an account
-			            \item The system shall display a countdown for the password reset code expiration
-			            \item The system shall ask the user for a new password if the code matches
+			            \item The system shall allow the user to logout
 		            \end{enumerate}
 	      \end{enumerate}
 \end{enumerate}
@@ -921,27 +886,16 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall allow the user to filter available appointments times
 			            \item The system shall display dates and times where appointments are available
 			            \item The system shall allow the user to select an appointment time slot to book
-			            \item The system shall allow the user to sync the appointment time to their calendar
 			            \item The system shall transition to the view appointments page
 			            \item The system shall allow the user to cancel and exit the appointment process
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter a name
-			            \item The system shall allow the user to enter a phone number
-			            \item The system shall allow the user to enter service details
-			            \item The system shall allow the user to select an available time slot
-			            \item The system shall transition to the view appointments page
-			            \item The system shall allow the user to cancel and exit the appointment process
+			            \item[] N/A
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter a name
-			            \item The system shall allow the user to enter a phone number
-			            \item The system shall allow the user to enter service details
-			            \item The system shall allow the user to select an available time slot
-			            \item The system shall transition to the view appointments page
-			            \item The system shall allow the user to cancel and exit the appointment process
+			            \item[] N/A
 		            \end{enumerate}
 	      \end{enumerate}
 
@@ -995,7 +949,6 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \begin{enumerate}
 			            \item The system shall allow the user to set the days that appointments can be made
 			            \item The system shall allow the user to set the hours that appointments can be made
-			            \item The system shall allow the user to set the number of appointments that can be booked every hour
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
@@ -1006,7 +959,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 
 \subsubsection{Quotes}
 \begin{enumerate}[resume*=business_events]
-	\item The user wants view past quotes
+	\item The user wants to view all quotes
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
@@ -1014,147 +967,92 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter the quote ID, customer phone number, and customer name
-			            \item The system shall list all quotes matching the inputted criteria
+			            \item The system shall list all quotes
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter the quote ID, customer phone number, and customer name
-			            \item The system shall list all quotes matching the inputted criteria
+			            \item The system shall list all quotes
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants view details about a quote
-	      \begin{enumerate}[VP\arabic*.]
-		      \item Viewpoint: Vehicle Owner
-		            \begin{enumerate}
-			            \item The system shall allow the user to view the car details, contact details, desired services,
-			                  replacement parts condition and source, extra notes, file attachments and time availability from
-			                  the quote request
-			            \item The system shall allow the user to view the estimated price, a list of services, the estimated
-			                  time, a list of required parts, and discounts from the quote response
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Owner
-		            \begin{enumerate}
-			            \item The system shall allow the user to view the car details, contact details, desired services,
-			                  replacement parts condition and source, extra notes, file attachments and time availability from
-			                  the quote request
-			            \item The system shall allow the user to view the estimated price, a list of services, the estimated
-			                  time, a list of required parts, and discounts from the quote response
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Employee
-		            \begin{enumerate}
-			            \item The system shall allow the user to view the car details, contact details, desired services,
-			                  replacement parts condition and source, extra notes, file attachments and time availability from
-			                  the quote request
-			            \item The system shall allow the user to view the estimated price, a list of services, the estimated
-			                  time, a list of required parts, and discounts from the quote response
-		            \end{enumerate}
-	      \end{enumerate}
-\end{enumerate}
-
-\begin{enumerate}[resume*=business_events]
 	\item The user wants to request a quote
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
-			            \item The system shall automatically populate car details and contact details if present in the user's
-			                  profile
-			            \item The system shall allow the user to enter their car details, contact details, desired services,
-			                  replacement parts condition and source, extra notes, file attachments and time availability
+			            \item The system shall automatically populate car details and contact details in the user's profile
 			            \item The system shall confirm to the user that the request has been submitted
 			            \item The system shall generate a quote ID and assign it to the newly created quote
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item The system shall notify the user of the newly created quote request by the vehicle owner
+			            \item[] N/A
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
-			            \item The system shall notify the user of the newly created quote request by the vehicle owner
+			            \item[] N/A
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants cancel a quote request
+	\item The user wants view chat history about a quote
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to view all chat messages sent within the quote
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to view all chat messages sent within the quote
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall allow the user to view all chat messages sent within the quote
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to send a chat message in the quote
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
 			            \item The system shall list active quotes
-			            \item The system shall allow the user to cancel a quote
+			            \item The system shall allow the user to send a chat message within a quote
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
-		            \begin{enumerate}
-			            \item[] N/A
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Employee
-		            \begin{enumerate}
-			            \item[] N/A
-		            \end{enumerate}
-	      \end{enumerate}
-
-	\item The user wants update a quote request
-	      \begin{enumerate}[VP\arabic*.]
-		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
 			            \item The system shall list active quotes
-			            \item The system shall allow the user to update a quote
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Owner
-		            \begin{enumerate}
-			            \item The system shall notify the user of the updated quote request
+			            \item The system shall allow the user to send a chat message within a quote
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
-			            \item The system shall notify the user of the updated quote request
+			            \item The system shall list active quotes
+			            \item The system shall allow the user to send a chat message within a quote
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants to copy an existing quote request
+	\item The user wants to create an appointment invitation from a quote request
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
-		            \begin{enumerate}
-			            \item The system shall allow the user to create a new quote request using the data from an existing quote
-			                  request
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
 			            \item[] N/A
 		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Employee
-		            \begin{enumerate}
-			            \item[] N/A
-		            \end{enumerate}
-	      \end{enumerate}
-
-	\item The user wants to respond to a quote request
-	      \begin{enumerate}[VP\arabic*.]
-		      \item Viewpoint: Vehicle Owner
-		            \begin{enumerate}
-			            \item The system shall notify the user of the quote response from the automotive repair shop
-		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter the estimated price, a list of services, the estimated
-			                  time, a list of required parts, and discounts
-			            \item The system shall automatically apply local taxes
-			            \item The system shall send the quote to the customer
-			            \item The system shall send a notification to the customer
+			            \item The system shall allow the user to enter the estimated price, the estimated time, and a description
+			                  of the service being performed
+			            \item The system shall send the appointment invitation to the customer
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter the estimated price, a list of services, the estimated
-			                  time, a list of required parts, and discounts
-			            \item The system shall automatically apply local taxes
-			            \item The system shall send the quote to the customer
-			            \item The system shall send a notification to the customer
+			            \item The system shall allow the user to enter the estimated price, the estimated time, and a description
+			                  of the service being performed
+			            \item The system shall send the appointment invitation to the customer
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user would like to accept a quote response
+	\item The user would like to accept an appointment invitation from a quote
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to accept a quote response
+			            \item The system shall allow the user to accept an appointment invitation
 			            \item The system shall navigate the user to the appointment booking process
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
@@ -1164,25 +1062,6 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item[] N/A
-		            \end{enumerate}
-	      \end{enumerate}
-
-	\item The user would like to request additional information
-	      \begin{enumerate}[VP\arabic*.]
-		      \item Viewpoint: Vehicle Owner
-		            \begin{enumerate}
-			            \item The system shall allow the user to send messages to the automotive repair shop
-			            \item The system shall allow the user to receive messages from the automotive repair shop
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Owner
-		            \begin{enumerate}
-			            \item The system shall allow the user to send messages to the customer
-			            \item The system shall allow the user to receive messages from the customer
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Employee
-		            \begin{enumerate}
-			            \item The system shall allow the user to send messages to the customer
-			            \item The system shall allow the user to receive messages from the customer
 		            \end{enumerate}
 	      \end{enumerate}
 \end{enumerate}
@@ -1201,9 +1080,6 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall populate the customer data and vehicle data from the quote
 			            \item The system shall populate the customer data and vehicle data from the appointment if the quote is
 			                  not available
-			            \item The system shall populate expected services performed and parts needed from the quote
-			            \item The system shall populate expected services performed and parts needed from the appointment if the
-			                  quote not available
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
@@ -1211,45 +1087,6 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall populate the customer data and vehicle data from the quote
 			            \item The system shall populate the customer data and vehicle data from the appointment if the quote is
 			                  not available
-			            \item The system shall populate expected services performed and parts needed from the quote
-			            \item The system shall populate expected services performed and parts needed from the appointment if the
-			                  quote not available
-		            \end{enumerate}
-	      \end{enumerate}
-
-	\item An appointment has been cancelled
-	      \begin{enumerate}[VP\arabic*.]
-		      \item Viewpoint: Vehicle Owner
-		            \begin{enumerate}
-			            \item[] N/A
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Owner
-		            \begin{enumerate}
-			            \item The system shall delete the associated work order
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Employee
-		            \begin{enumerate}
-			            \item The system shall delete the associated work order
-		            \end{enumerate}
-	      \end{enumerate}
-
-	\item The user wants to search for a work order
-	      \begin{enumerate}[VP\arabic*.]
-		      \item Viewpoint: Vehicle Owner
-		            \begin{enumerate}
-			            \item[] N/A
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Owner
-		            \begin{enumerate}
-			            \item The system shall allow the user to enter the customer name, assigned employee, service type, and a
-			                  date range
-			            \item The system shall list the work order matching the inputted criteria
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Employee
-		            \begin{enumerate}
-			            \item The system shall allow the user to enter the customer name, assigned employee, service type, and a
-			                  date range
-			            \item The system shall list the work order matching the inputted criteria
 		            \end{enumerate}
 	      \end{enumerate}
 
@@ -1257,7 +1094,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
-			            \item[] N/A
+			            \item The system shall list the past work orders
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
@@ -1269,7 +1106,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants update an work order
+	\item The user wants to update a work order
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
@@ -1278,60 +1115,16 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
 			            \item The system shall list the open work orders
-			            \item The system shall allow the user to edit the services performed, parts required, odometer readings,
-			                  customer details, employee assigned, car details, discounts, digital vehicle inspection, and extra
-			                  notes
+			            \item The system shall allow the user to edit the employee assigned, appointment status, work order
+			                  title, and work order body
 			            \item The system shall update the work order with the entered values
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item The system shall list the open work orders
-			            \item The system shall allow the user to edit the services performed, parts required, odometer readings,
-			                  customer details, employee assigned, car details, discounts, digital vehicle inspection, and extra
-			                  notes
+			            \item The system shall allow the user to edit the employee assigned, appointment status, work order
+			                  title, and work order body
 			            \item The system shall update the work order with the entered values
-		            \end{enumerate}
-	      \end{enumerate}
-
-	\item The customer has paid for the work done on their vehicle
-	      \begin{enumerate}[VP\arabic*.]
-		      \item Viewpoint: Vehicle Owner
-		            \begin{enumerate}
-			            \item[] N/A
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Owner
-		            \begin{enumerate}
-			            \item The system shall send a copy of the work order to the assigned customer's email
-			            \item The system shall mark the work order as ``Completed''
-			            \item The system shall mark the associated appointment as ``Completed''
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Employee
-		            \begin{enumerate}
-			            \item The system shall send a copy of the work order to the assigned customer's email
-			            \item The system shall mark the work order as ``Completed''
-			            \item The system shall mark the associated appointment as ``Completed''
-		            \end{enumerate}
-	      \end{enumerate}
-
-	\item The user wants to view the details of a work order
-	      \begin{enumerate}[VP\arabic*.]
-		      \item Viewpoint: Vehicle Owner
-		            \begin{enumerate}
-			            \item[] N/A
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Owner
-		            \begin{enumerate}
-			            \item The system shall list the shop details, services to be performed with their individual bill rates
-			                  and expected number of hours for completion, parts required and their cost, odometer reading before
-			                  and after service, customer details, assigned employee, car details, any applied discounts, final
-			                  balance for the customer, warranty information, digital vehicle inspection, and any extra notes
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Employee
-		            \begin{enumerate}
-			            \item The system shall list the shop details, services to be performed with their individual bill rates
-			                  and expected number of hours for completion, parts required and their cost, odometer reading before
-			                  and after service, customer details, assigned employee, car details, any applied discounts, final
-			                  balance for the customer, warranty information, digital vehicle inspection, and any extra notes
 		            \end{enumerate}
 	      \end{enumerate}
 \end{enumerate}
@@ -1346,12 +1139,11 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter employee email(s) to invite
-			            \item The system shall send an invitation email to the invited employee(s)
+			            \item The system shall allow the shop owner to retrieve their shop ID to invite their employee
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
-			            \item The system shall allow the user to accept an invitation
+			            \item[] N/A
 		            \end{enumerate}
 	      \end{enumerate}
 
@@ -1429,25 +1221,25 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants to search for auto repair or maintenance services
+	\item The user wants to search for a service on their shop profile
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
-			            \item The system shall display the service details
+			            \item[] N/A
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
 			            \item The system shall display the service details
-			            \item The system shall allow the user to search for a specific service type
+			            \item The system shall allow the user to search by service name
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item The system shall display the service details
-			            \item The system shall allow the user to search for a specific service type
+			            \item The system shall allow the user to search by service name
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants to edit a service type
+	\item The user wants to edit a service
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
@@ -1463,7 +1255,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants to delete a service type
+	\item The user wants to delete a service
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
@@ -1471,7 +1263,8 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to delete the service from their shop page
+			            \item The system shall allow the user to delete the service from their shop page if there are no
+			                  scheduled appointments for that service
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
@@ -1486,12 +1279,9 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter a distance range
-			            \item The system shall allow the user to enter a postal code
-			            \item The system shall allow the user to enter a shop name
-			            \item The system shall display all auto repair shops within the distance provided, or any shops at a
-			                  postal code, or any shops which match the shop's name within the specified distance
-			            \item The system shall show the user's distance to each shop provided
+			            \item The system shall allow the user to enter a shop name or service name
+			            \item The system shall allow the user to filter by part type and part condition used in the service
+			            \item The system shall display all auto repair shops that match the filters selected above
 			            \item The system shall provide a method to quickly contact the shop
 			            \item The system shall allow the user to access additional information about a specific shop
 			            \item The system shall allow a method to quickly refresh the results list for the latest availability
@@ -1520,15 +1310,41 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall show the user the shop's address
 			            \item The system shall show the user the shop's phone number
 			            \item The system shall show the user the shop's email
+			            \item The system shall show the user the shop's hours of operations (if any)
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item The system shall show the user the shop's address
 			            \item The system shall show the user the shop's phone number
 			            \item The system shall show the user the shop's email
+			            \item The system shall show the user the shop's hours of operations (if any)
 		            \end{enumerate}
 	      \end{enumerate}
-	\item The user wants to add to, and update their shop's profile
+	\item The user wants to view a shop's profile
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item The system shall show the user the shop's address
+			            \item The system shall show the user the shop's phone number
+			            \item The system shall show the user the shop's email
+			            \item The system shall show the user the shop's hours of operations (if any)
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall show the user the shop's address
+			            \item The system shall show the user the shop's phone number
+			            \item The system shall show the user the shop's email
+			            \item The system shall show the user the shop's hours of operations (if any)
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item The system shall show the user the shop's address
+			            \item The system shall show the user the shop's phone number
+			            \item The system shall show the user the shop's email
+			            \item The system shall show the user the shop's hours of operations (if any)
+		            \end{enumerate}
+	      \end{enumerate}
+	\item The user wants to add or update hours of operations to their shop profile
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
@@ -1536,57 +1352,11 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to add and update the shop's address
-			            \item The system shall allow the user to add and update the shop's phone number
-			            \item The system shall allow the user to add and update the shop's email
+			            \item The system shall allow the user to add or update the shop's hour of operations
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item[] N/A
-		            \end{enumerate}
-	      \end{enumerate}
-\end{enumerate}
-
-\subsubsection{Employee Profile}
-\begin{enumerate}[resume*=business_events]
-	\item The user wants to view their employee profile
-	      \begin{enumerate}[VP\arabic*.]
-		      \item Viewpoint: Vehicle Owner
-		            \begin{enumerate}
-			            \item[] N/A
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Owner
-		            \begin{enumerate}
-			            \item The system shall show the user their name
-			            \item The system shall show the user their phone number
-			            \item The system shall show the user their email
-			            \item The system shall allow the user to view other employee's information, assuming the employee works
-			                  for the owner's shop
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Employee
-		            \begin{enumerate}
-			            \item The system shall show the user their name
-			            \item The system shall show the user their phone number
-			            \item The system shall show the user their email
-			            \item The system shall not show the user any other employee's information
-		            \end{enumerate}
-	      \end{enumerate}
-	\item The user wants to update an employee profile
-	      \begin{enumerate}[VP\arabic*.]
-		      \item Viewpoint: Vehicle Owner
-		            \begin{enumerate}
-			            \item[] N/A
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Owner
-		            \begin{enumerate}
-			            \item The system shall allow the user to change the email of any employee that works for their shop
-			            \item The system shall allow the user to change the phone number of any employee that works for their
-			                  shop
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Employee
-		            \begin{enumerate}
-			            \item The system shall allow the user to change the email of their own employee profile
-			            \item The system shall allow the user to change the phone number of their own employee profile
 		            \end{enumerate}
 	      \end{enumerate}
 \end{enumerate}
@@ -1619,12 +1389,13 @@ The requirements in \textbf{bold} are additional requirements from the Revision 
 \begin{enumerate}[UH\arabic*.]
 	\item The system shall accessible by any desktop or mobile device and any operating system
 	\item The system shall be accessible through the web browser and when the device is connected to internet
-	\item \textbf{The system shall notify the user if there is no network connection and prevent users from using functions that require a connection}
+	\item \textbf{The system shall notify the user if there is no network connection}
 \end{enumerate}
 
 \subsection{Performance Requirements}
 \begin{enumerate}[PR\arabic*.]
-	\item The system shall respond to the user's interactions within 0.5 seconds
+	\item The system shall respond to the user's interactions in a timely manner by following good web
+	      standards as stated \href{https://web.dev/vitals/}{here}.
 \end{enumerate}
 
 \subsection{Operational and Environmental Requirements}
