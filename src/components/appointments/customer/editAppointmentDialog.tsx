@@ -69,7 +69,7 @@ const EditAppointmentDialog = (props: IEditAppointmentDialogProps) => {
         new Date(appointment.startTime).getTime()
     );
     const startTime = e.startTime;
-    const endTime = new Date(e.startTime.getTime() + duration);
+    const endTime = new Date(e.startTime.getTime() + Math.ceil(duration));
 
     setStartTime(startTime);
     setEndTime(endTime);
