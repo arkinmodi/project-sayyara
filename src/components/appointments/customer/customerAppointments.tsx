@@ -337,7 +337,7 @@ const CustomerAppointments = () => {
               <h4 className="mb-1">
                 {`${formatDate(
                   new Date(appointment.startTime)
-                )} to ${formatDate(new Date(appointment.startTime))}`}
+                )} to ${formatDate(new Date(appointment.endTime))}`}
               </h4>
               {(appointment as ICustomerAppointment).status ===
                 AppointmentStatus.ACCEPTED ||
