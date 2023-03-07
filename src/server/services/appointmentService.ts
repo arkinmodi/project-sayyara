@@ -111,10 +111,10 @@ export const updateAppointmentSchema = z.object({
   status: z.nativeEnum(AppointmentStatus).optional(),
   start_time: z.preprocess((arg) => {
     if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
-  }, z.date()),
+  }, z.date().optional()),
   end_time: z.preprocess((arg) => {
     if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
-  }, z.date()),
+  }, z.date().optional()),
   cancellation_reason: z.string().optional(),
 });
 
