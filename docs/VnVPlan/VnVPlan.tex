@@ -84,6 +84,7 @@
 	March 6, 2023    & Leon So               & Update Functional Requirement Tests for Employee Management \\
 	March 6, 2023    & Joy Xiao              & Remove shop being able to create appointment                \\
 	March 6, 2023    & Timothy Choy          & Update Functional Requirement Tests for Shop Lookup         \\
+	March 6, 2023    & Joy Xiao              & Update employee management unit tests                       \\
 	\bottomrule
 \end{longtable}
 
@@ -2339,36 +2340,6 @@ were chosen based on common user flows.
 
 	      Type: Functional, Dynamic, Unit, Automated
 
-	      Initial State: A shop and a shop owner exist
-
-	      Input: Create employee account request with valid user information and shop ID
-
-	      Output: Create the employee account
-
-	      Test Case Derivation: Employee at a shop wants to sign up for an account
-
-	      How test will be performed: Jest will send a create employee account request with valid user
-	      information and shop ID
-
-	\item \textbf{FRT-M7-2}
-
-	      Type: Functional, Dynamic, Unit, Automated
-
-	      Initial State: A shop and a shop owner exist
-
-	      Input: Create employee account request with invalid user information and shop ID
-
-	      Output: Request is rejected
-
-	      Test Case Derivation: Employee at a shop wants to sign up for an account
-
-	      How test will be performed: Jest will send a create employee account request with invalid user
-	      information and shop ID
-
-	\item \textbf{FRT-M7-3}
-
-	      Type: Functional, Dynamic, Unit, Automated
-
 	      Initial State: A shop account exists with employees
 
 	      Input: Get employees with a valid shop ID
@@ -2379,7 +2350,7 @@ were chosen based on common user flows.
 
 	      How test will be performed: Jest will send a get employees request with a valid shop ID
 
-	\item \textbf{FRT-M7-4}
+	\item \textbf{FRT-M7-2}
 
 	      Type: Functional, Dynamic, Unit, Automated
 
@@ -2387,13 +2358,13 @@ were chosen based on common user flows.
 
 	      Input: Get employees with an invalid shop ID
 
-	      Output: Request is rejected
+	      Output: Empty list
 
 	      Test Case Derivation: A shop owner with employees wants to view the list of employees
 
 	      How test will be performed: Jest will send a get employees request with an invalid shop ID
 
-	\item \textbf{FRT-M7-5}
+	\item \textbf{FRT-M7-3}
 
 	      Control: Manual
 
@@ -2407,7 +2378,7 @@ were chosen based on common user flows.
 
 	      How test will be performed: Jest will send a delete employee request with a valid employee ID
 
-	\item \textbf{FRT-M7-6}
+	\item \textbf{FRT-M7-4}
 
 	      Control: Manual
 
