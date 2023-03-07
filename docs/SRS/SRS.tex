@@ -195,6 +195,7 @@
 	March 5, 2023      & Leon So               & Remove Employee Profile requirements \& remove Shop Profile update requirements    \\
 	March 6, 2023      & Leon So               & Update Functional Requirements for Authentication                                  \\
 	March 6, 2023      & Leon So               & Update Functional Requirements for Employee Management                             \\
+	March 6, 2022      & Joy Xiao              & Update services and appointments requirements                                      \\
 	\bottomrule
 \end{longtable}
 
@@ -741,13 +742,11 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 \end{enumerate}
 
 \textbf{Title:} Viewing appointments\\
-\textbf{Trigger:} Auto repair shop owner or employee navigates to list of appointments\\
-\textbf{Pre-condition:} Auto repair shop exists, employee account exists, services exist\\
+\textbf{Trigger:} User navigates to list of appointments\\
+\textbf{Pre-condition:} Account and appointments exist\\
 \textbf{Outcome:}
 \begin{enumerate}
-	\item User enters filters for the list of appointments, such as service type, customer name, employee
-	      assigned, or appointment time
-	\item System displays a list of appointments for the shop
+	\item System displays a list of appointments
 \end{enumerate}
 
 \textbf{Title:} Editing/updating appointments\\
@@ -885,27 +884,16 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall allow the user to filter available appointments times
 			            \item The system shall display dates and times where appointments are available
 			            \item The system shall allow the user to select an appointment time slot to book
-			            \item The system shall allow the user to sync the appointment time to their calendar
 			            \item The system shall transition to the view appointments page
 			            \item The system shall allow the user to cancel and exit the appointment process
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter a name
-			            \item The system shall allow the user to enter a phone number
-			            \item The system shall allow the user to enter service details
-			            \item The system shall allow the user to select an available time slot
-			            \item The system shall transition to the view appointments page
-			            \item The system shall allow the user to cancel and exit the appointment process
+			            \item[] N/A
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
-			            \item The system shall allow the user to enter a name
-			            \item The system shall allow the user to enter a phone number
-			            \item The system shall allow the user to enter service details
-			            \item The system shall allow the user to select an available time slot
-			            \item The system shall transition to the view appointments page
-			            \item The system shall allow the user to cancel and exit the appointment process
+			            \item[] N/A
 		            \end{enumerate}
 	      \end{enumerate}
 
@@ -959,7 +947,6 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \begin{enumerate}
 			            \item The system shall allow the user to set the days that appointments can be made
 			            \item The system shall allow the user to set the hours that appointments can be made
-			            \item The system shall allow the user to set the number of appointments that can be booked every hour
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
@@ -1392,25 +1379,25 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants to search for auto repair or maintenance services
+	\item The user wants to search for a service on their shop profile
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
-			            \item The system shall display the service details
+			            \item[] N/A
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
 			            \item The system shall display the service details
-			            \item The system shall allow the user to search for a specific service type
+			            \item The system shall allow the user to search by service name
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item The system shall display the service details
-			            \item The system shall allow the user to search for a specific service type
+			            \item The system shall allow the user to search by service name
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants to edit a service type
+	\item The user wants to edit a service
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
@@ -1426,7 +1413,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants to delete a service type
+	\item The user wants to delete a service
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
@@ -1434,7 +1421,8 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to delete the service from their shop page
+			            \item The system shall allow the user to delete the service from their shop page if there are no
+			                  scheduled appointments for that service
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}

@@ -82,6 +82,7 @@
 	March 5, 2023    & Leon So               & Update Shop Profile Tests \& Remove Employee Profile Tests  \\
 	March 6, 2023    & Leon So               & Update Functional Requirement Tests for Authentication      \\
 	March 6, 2023    & Leon So               & Update Functional Requirement Tests for Employee Management \\
+	March 6, 2023    & Joy Xiao              & Remove shop being able to create appointment                \\
 	\bottomrule
 \end{longtable}
 
@@ -502,28 +503,11 @@ This section will contain tests covering the ``Appointments'' requirements defin
 
 	      Control: Manual
 
-	      Initial State: Shop Owner/Employee Account with appointment to be scheduled
-
-	      Input: Enters customer information, service request information and selects an available
-	      appointment time slot
-
-	      Output: A new appointment request is created with service details
-
-	      Test Case Derivation: The appointment will be requested with the details the user entered
-
-	      How test will be performed: The tester will go through the appointment booking process through the
-	      user interface
-
-	\item \textbf{FRT-BE4-4}
-
-	      Control: Manual
-
 	      Initial State: Shop Owner/Employee Account with appointment requests
 
 	      Input: Accept an appointment request
 
-	      Output: Appointment booking displayed in calendar for Shop Owner/Employee accounts and Customer
-	      account
+	      Output: Appointment booking displayed for Shop Owner/Employee accounts and Customer account
 
 	      Test Case Derivation: The appointment request is accepted and appointment booking is completed
 
@@ -1126,31 +1110,16 @@ This section will contains tests covering the ``Services'' requirements defined 
 
 	      Control: Manual
 
-	      Initial State: Active Customer Account
+	      Initial State: Shop Owner/Shop Employee searches for a service
 
 	      Input: Enters specific auto service in the search bar
 
-	      Output: Auto shops with relevant services displayed with service details
-
-	      Test Case Derivation: Services and auto shops relevant to the search query will be displayed
-
-	      How test will be performed: The tester will search for shop services through the user interface and
-	      confirms that the appropriate results are displayed
-
-	\item \textbf{FRT-BE29-2}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Shop Employee searches for auto repair or maintenance services
-
-	      Input: Enters specific auto service in the search bar
-
-	      Output: Auto shops with relevant services displayed with service details
+	      Output: Services matching the search criteria displayed
 
 	      Test Case Derivation: Services corresponding to the auto shop will be displayed
 
 	      How test will be performed: The tester will search for shop services through the user interface and
-	      confirms that all of the shop's services are listed
+	      confirms that all of the shop's services matching the search criteria are listed
 
 	\item \textbf{FRT-BE30-1}
 
@@ -1495,7 +1464,6 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 		\textbf{FRT-BE4-1}  & ~                                                         & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE4-2}  & ~                                                         & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE4-3}  & ~                                                         & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE4-4}  & ~                                                         & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE5-1}  & ~                                                         & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE5-2}  & ~                                                         & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE5-3}  & ~                                                         & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
@@ -1546,7 +1514,6 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 		\textbf{FRT-BE27-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE28-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             \\
 		\textbf{FRT-BE29-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             \\
-		\textbf{FRT-BE29-2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             \\
 		\textbf{FRT-BE30-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             \\
 		\textbf{FRT-BE31-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             \\
 		\hline
