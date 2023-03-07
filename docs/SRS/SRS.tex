@@ -196,6 +196,7 @@
 	March 6, 2023      & Leon So               & Update Functional Requirements for Authentication                                  \\
 	March 6, 2023      & Leon So               & Update Functional Requirements for Employee Management                             \\
 	March 6, 2022      & Joy Xiao              & Update services and appointments requirements                                      \\
+	March 6, 2023      & Leon So               & Updates for employee sign up                                                       \\
 	\bottomrule
 \end{longtable}
 
@@ -445,11 +446,10 @@ may be used.
 
 \subsubsection{Employee Management}
 \begin{enumerate}
-	\item For the initial version of the application, employees can only sign up and complete registration
-	      after receiving an email invitation.
-	\item For the initial version of the application, only auto repair shop owners can send an invitation to
-	      employees.
-	\item It is assumed that only the auto repair shop owner can add and edit employees.
+	\item For the initial version of the application, employees can only sign up using a shop ID provided by
+	      the shop owner.
+	\item For the initial version of the application, only auto repair shop owners can access the shop ID.
+	\item It is assumed that only the auto repair shop owner can edit and remove employees.
 \end{enumerate}
 
 \subsubsection{Other}
@@ -598,14 +598,13 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 \end{enumerate}
 
 \textbf{Title:} Creating an employee account\\
-\textbf{Trigger:} Auto repair shop owner adds an employee to their shop\\
+\textbf{Trigger:} Employee signs up for an account\\
 \textbf{Pre-condition:} Auto repair shop account exists on Sayyara\\
 \textbf{Outcome:}
 \begin{enumerate}
 	\item User creates an employee account with the following fields: first and last name, phone number,
-	      email, username and password
+	      email, username, password, and shop ID
 	\item System creates an employee account with the information
-	\item System sends an invitation to the employee via the email provided
 \end{enumerate}
 
 \textbf{Title:} Logging into Sayyara\\
