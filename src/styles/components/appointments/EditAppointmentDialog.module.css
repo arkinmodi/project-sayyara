@@ -1,0 +1,35 @@
+.dialog {
+  width: 80vw;
+}
+
+.dialogInputCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.dialogInputRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.buttonRow {
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 1001px) {
+  .maxWidth {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .dialogInputRow {
+    flex-direction: column;
+    align-self: center;
+  }
+
+  .dialogButton {
+    margin-top: 10px !important;
+  }
+}

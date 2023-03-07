@@ -109,8 +109,12 @@ export const updateAppointmentSchema = z.object({
   price: z.number().min(0).optional(),
   employee_id: z.string().optional(),
   status: z.nativeEnum(AppointmentStatus).optional(),
-  start_time: z.date().optional(),
-  end_time: z.date().optional(),
+  start_time: z.preprocess((arg) => {
+    if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
+  }, z.date()),
+  end_time: z.preprocess((arg) => {
+    if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
+  }, z.date()),
   cancellation_reason: z.string().optional(),
 });
 

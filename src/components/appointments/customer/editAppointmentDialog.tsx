@@ -1,12 +1,13 @@
+import { setAppointmentTime } from "@redux/actions/appointmentAction";
 import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
-import styles from "@styles/components/chat/ChatTitle.module.css";
+import styles from "@styles/components/appointments/EditAppointmentDialog.module.css";
 import classnames from "classnames";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ScheduleMeeting, StartTimeEventEmit } from "react-schedule-meeting";
-import { AppointmentStatus, ICustomerAppointment } from "src/types/appointment";
+import { ICustomerAppointment } from "src/types/appointment";
 import { IAvailabilitiesTime, IShopHoursOfOperation } from "src/types/shop";
 import { getAvailabilities, getShopId } from "src/utils/shopUtil";
 
@@ -79,12 +80,10 @@ const EditAppointmentDialog = (props: IEditAppointmentDialogProps) => {
   const onSaveAppointment = () => {
     const body = {
       id: appointment.id,
-      status: AppointmentStatus.PENDING_APPROVAL,
-      startTime: startTime.toString(),
-      endTime: endTime.toString(),
+      startTime: startTime.toISOString(),
+      endTime: endTime.toISOString(),
     };
-    // TODO: Instead of create appointment need to call patchAppointment (might need to create this)
-    // dispatch(createAppointment(body));
+    dispatch(setAppointmentTime(body));
     onHide();
   };
 
@@ -105,6 +104,7 @@ const EditAppointmentDialog = (props: IEditAppointmentDialogProps) => {
           onStartTimeSelect={onTimeSelect}
         />
         <div className={classnames(styles.dialogInputRow, styles.buttonRow)}>
+          <Button className="blueButton" label="Cancel" onClick={onHide} />
           <Button
             className={classnames(styles.dialogButton, "greenButton")}
             label="Save"

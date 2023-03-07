@@ -204,6 +204,13 @@ const CustomerAppointments = () => {
     }
   };
 
+  const formatDate = (d: Date, showSeconds: boolean = false) => {
+    return new Intl.DateTimeFormat("en-us", {
+      dateStyle: "medium",
+      timeStyle: showSeconds ? "medium" : "short",
+    }).format(d);
+  };
+
   const cancelAppointment = () => {
     setSubmitted(true);
     if (cancellationReason.length > 0 && cancelledAppointmentId != null) {
@@ -234,7 +241,7 @@ const CustomerAppointments = () => {
   };
 
   const deleteProductDialogFooter = (
-    <div>
+    <div className={styles.buttonsDivStyle}>
       <Button
         className={"blueButton"}
         label="No"
@@ -328,13 +335,15 @@ const CustomerAppointments = () => {
                 {(appointment as ICustomerAppointment).serviceName}
               </h4>
               <h4 className="mb-1">
-                {new Date(appointment.startTime).toLocaleString()}
+                {`${formatDate(
+                  new Date(appointment.startTime)
+                )} to ${formatDate(new Date(appointment.startTime))}`}
               </h4>
               {(appointment as ICustomerAppointment).status ===
                 AppointmentStatus.ACCEPTED ||
               (appointment as ICustomerAppointment).status ===
                 AppointmentStatus.PENDING_APPROVAL ? (
-                <div>
+                <div className={styles.buttonsDivStyle}>
                   <Button
                     label="Cancel"
                     className={styles.appointmentButtonRed}
@@ -344,7 +353,7 @@ const CustomerAppointments = () => {
                   />
                   <Button
                     label="Edit"
-                    className={styles.appointmentButtonGreen}
+                    className={styles.appointmentButtonBlue}
                     onClick={(e) =>
                       openEditAppointmentDialog(
                         e,
