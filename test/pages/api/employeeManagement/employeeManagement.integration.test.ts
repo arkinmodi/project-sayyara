@@ -81,38 +81,38 @@ afterEach(async () => {
   ]);
 });
 
-describe("get all employees by shop ID", () => {
-  describe("given employee does not exist", () => {
-    it("should return empty list", async () => {
-      const { req, res } = createMockRequestResponse({ method: "GET" });
-      req.query = { ...req.query, id: "does_not_exist" };
-      await employeeByShopIdHandler(req, res);
+describe("Employee Management Module", () => {
+  it("FRT-M7-1: get all employees given valid shop ID", async () => {
+    // Create shop and employees
+    await createShop();
+    await createShopOwner();
+    await createEmployee();
 
-      expect(res.statusCode).toBe(200);
-      expect(res._getJSONData()["length"]).toBe(0);
-    });
+    // Get employee
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = { id: testEmployee.shop_id };
+    await employeeByShopIdHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(2);
   });
 
-  describe("given employee does exist", () => {
-    it("should return all employees", async () => {
-      // Create shop and employees
-      await createShop();
-      await createShopOwner();
-      await createEmployee();
+  it("FRT-M7-2: get all employees given invalid shop ID", async () => {
+    // Create shop and employees
+    await createShop();
+    await createShopOwner();
+    await createEmployee();
 
-      // Get employee
-      const { req, res } = createMockRequestResponse({ method: "GET" });
-      req.query = { ...req.query, id: testEmployee.shop_id };
-      await employeeByShopIdHandler(req, res);
+    // Get employee
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = { id: testEmployee.id };
+    await employeeByShopIdHandler(req, res);
 
-      expect(res.statusCode).toBe(200);
-      expect(res._getJSONData()["length"]).toBe(2);
-    });
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(0);
   });
-});
 
-describe("suspend employee", () => {
-  it("should update status", async () => {
+  it("FRT-M7-3: suspend employee for given valid employee ID", async () => {
     // Create shop and employees
     await createShop();
     await createShopOwner();
@@ -128,15 +128,21 @@ describe("suspend employee", () => {
     expect(patch.res._getJSONData()).toMatchObject({
       status: "SUSPENDED",
     });
+  });
 
-    const get = createMockRequestResponse({ method: "GET" });
-    get.req.query = { ...get.req.query, id: testEmployee.id };
-    await employeeByIdHandler(get.req, get.res);
+  it("FRT-M7-4: suspend employee for given invalid employee ID", async () => {
+    // Create shop and employees
+    await createShop();
+    await createShopOwner();
+    await createEmployee();
 
-    expect(get.res.statusCode).toBe(200);
-    expect(get.res._getJSONData()).toMatchObject({
-      status: "SUSPENDED",
-    });
+    const patch = createMockRequestResponse({ method: "PATCH" });
+    patch.req.query = { id: "employee_id_does_not_exist" };
+    patch.req.body = { status: "SUSPENDED" };
+
+    await employeeByIdHandler(patch.req, patch.res);
+
+    expect(patch.res.statusCode).toBe(403);
   });
 });
 

@@ -50,6 +50,9 @@
 		March 5, 2023     & Timothy Choy          & Add Test Evaluations for Maintainability and Support Requirements \\
 		March 6, 2023     & Leon So               & Add Functional Requirement Tests for Authentication               \\
 		March 6, 2023     & Leon So               & Add Functional Requirement Tests for Employee Management          \\
+		March 6, 2023     & Timothy Choy          & Add Functional Requirement Tests for Shop Lookup                  \\
+		March 6, 2023     & Arkin Modi            & Add Functional Requirement Tests for Quotes                       \\
+		March 7, 2023     & Arkin Modi            & Add Functional Requirement Tests for Work Orders                  \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -451,6 +454,287 @@ intended use, and goals of stakeholders.
 
 \end{enumerate}
 
+\subsection{Quotes}
+
+\begin{enumerate}
+	\item \textbf{FRT-BE8-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with no quote requests initiated from the account
+
+	      Input: Request past quotes
+
+	      Output: A message saying there are no past quotes
+
+	      Test Case Derivation: There are no past quotes to display
+
+	      How test will be performed: The tester will request for past quotes through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE8-2}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with quotes requests which have been completed and were initiated
+	      by the account
+
+	      Input: Request all quotes
+
+	      Output: A table with all the quotes
+
+	      Test Case Derivation: There are past quotes to display
+
+	      How test will be performed: The tester will request for past quotes through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE8-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with no quotes requests assigned to the shop
+
+	      Input: Request all quotes
+
+	      Output: A message saying there are no past quotes
+
+	      Test Case Derivation: There are no past quotes to display
+
+	      How test will be performed: The tester will request for past quotes through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE8-4}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with completed quotes requests that were assigned to the
+	      shop
+
+	      Input: Request all quotes
+
+	      Output: A table with all the quotes
+
+	      Test Case Derivation: There are past quotes to display
+
+	      How test will be performed: The tester will request for past quotes through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE9-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with no quote requests initiated from the account
+
+	      Input: A filled in quote request form
+
+	      Output: A confirmation messaging indicating that the quote was requested
+
+	      Test Case Derivation: The system shall verify that the quote was created successfully
+
+	      How test will be performed: The tester will create a quote through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE10-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a completed quote
+
+	      Input: A quote's chat history is requested
+
+	      Output: The quote's chat history
+
+	      Test Case Derivation: There are chat messages to display
+
+	      How test will be performed: The tester will view a quote's chat messages through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE10-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and a completed quote
+
+	      Input: A quote's chat history is requested
+
+	      Output: The quote's chat history
+
+	      Test Case Derivation: There are chat messages to display
+
+	      How test will be performed: The tester will view a quote's chat messages through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE11-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a created quote
+
+	      Input: A chat message
+
+	      Output: A chat message is created and attached to the quote
+
+	      Test Case Derivation: The system shall send chat messages upon request
+
+	      How test will be performed: The tester will send a chat message within a quote through the user
+	      interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE11-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and a created quote
+
+	      Input: A chat message
+
+	      Output: A chat message is created and attached to the quote
+
+	      Test Case Derivation: The system shall send chat messages upon request
+
+	      How test will be performed: The tester will send a chat message within a quote through the user
+	      interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE12-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and a created quote
+
+	      Input: An filled in appointment invitation form
+
+	      Output: An appointment invitation is sent to the customer
+
+	      Test Case Derivation: The system shall verify that the appointment invitation was created
+	      successfully
+
+	      How test will be performed: The tester will send an appointment invitation from a quote through the
+	      user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE13-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a quote that has an appointment invitation
+
+	      Input: Accept an appointment request
+
+	      Output: The system shall request the user to create an appointment with the shop that responded
+
+	      Test Case Derivation: The system shall have the user create an appointment upon accepting an
+	      appointment invitation from a quote
+
+	      How test will be performed: The tester will accept an appointment invitation from a quote through
+	      the user interface
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsection{Work Orders}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-BE14-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and a quote
+
+	      Input: A new appointment created at the shop from the quote
+
+	      Output: A new work order is created with details from the quote
+
+	      Test Case Derivation: The system shall automatically create a work order for new appointment with
+	      information from the quote
+
+	      How test will be performed: The tester will create an appointment through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE14-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop
+
+	      Input: A new appointment created at the shop
+
+	      Output: A new work order is created
+
+	      Test Case Derivation: The system shall automatically create a work order for new appointment
+
+	      How test will be performed: The tester will create an appointment through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE15-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a vehicle, an upcoming appointment, and a work order
+	      associated to the appointment
+
+	      Input: A list of upcoming appointments is requested
+
+	      Output: The appointments in a table format with the associated work order attached to each
+	      appointment
+
+	      Test Case Derivation: The system shall display work order upon request
+
+	      How test will be performed: The tester will search for a work order through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE15-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: A list of upcoming appointments is requested
+
+	      Output: The appointments in a table format with the associated work order attached to each
+	      appointment
+
+	      Test Case Derivation: The system shall display work order upon request
+
+	      How test will be performed: The tester will search for a work order through the user interface
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE16-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
+	      work order associated to the appointment
+
+	      Input: Request to update a work order with new details
+
+	      Output: A work order updated confirmation message
+
+	      Test Case Derivation: The system shall update work order upon request
+
+	      How test will be performed: The tester will update a work order through the user interface
+
+	      Results: Passed
+
+\end{enumerate}
+
 \subsection{Employee Management}
 
 \begin{enumerate}
@@ -617,6 +901,29 @@ intended use, and goals of stakeholders.
 
 	      How test will be performed: The tester will delete a shop service through the user interface and
 	      confirms that the shop profile is updated
+
+	      Results: Passed
+
+\end{enumerate}
+
+\subsection{Shop Lookup}
+
+\begin{enumerate}
+	\item \textbf{FRT-BE32-1}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop, Customer account exists
+
+	      Input: The Customer account attempts to view a list of shops using the parameters of shop name,
+	      service name, part types and part conditions
+
+	      Output: A list of shops based on the input parameters
+
+	      Test Case Derivation: The system shall show a list of shops with the specified parameters provided
+
+	      How test will be performed: The tester will search for shops, and input various parameters to see
+	      if the shop list changes correctly
 
 	      Results: Passed
 
@@ -987,6 +1294,7 @@ intended use, and goals of stakeholders.
 	FRT-M8-13        & $\checkmark$    & FRT-M8-14        & $\checkmark$    & FRT-M8-15        & $\checkmark$    \\
 	\midrule
 	FRT-M9-1         & $\checkmark$    & FRT-M9-2         & $\checkmark$    & FRT-M9-3         & $\checkmark$    \\
+	\midrule
 	FRT-M9-4         & $\checkmark$    & FRT-M9-5         & $\checkmark$    & ~                & ~               \\
 	\bottomrule
 \end{longtable}

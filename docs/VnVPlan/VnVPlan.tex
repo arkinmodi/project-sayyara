@@ -83,6 +83,10 @@
 	March 6, 2023    & Leon So               & Update Functional Requirement Tests for Authentication      \\
 	March 6, 2023    & Leon So               & Update Functional Requirement Tests for Employee Management \\
 	March 6, 2023    & Joy Xiao              & Remove shop being able to create appointment                \\
+	March 6, 2023    & Timothy Choy          & Update Functional Requirement Tests for Shop Lookup         \\
+	March 6, 2023    & Arkin Modi            & Update Functional Requirement Tests for Quotes              \\
+	March 6, 2023    & Joy Xiao              & Update employee management unit tests                       \\
+	March 7, 2023    & Arkin Modi            & Update Functional Requirement Tests for Work Orders         \\
 	\bottomrule
 \end{longtable}
 
@@ -602,7 +606,7 @@ This section will contain tests covering the ``Appointments'' requirements defin
 
 	      Output: The appointment availability is updated in the database
 
-	      Test Case Derivation: The appointment availability will be saved and availability time slots to
+	      Test Case Derivation: The appointment availability will be saved, and availability time slots to
 	      book appointments will be updated
 
 	      How test will be performed: The tester will go through the user interface to set appointment
@@ -633,10 +637,10 @@ This section will contain tests covering the ``Quotes'' requirements defined in 
 
 	      Control: Manual
 
-	      Initial State: Customer Account with quotes requests which have been closed and were initiated by
-	      the account
+	      Initial State: Customer Account with quotes requests which have been completed and were initiated
+	      by the account
 
-	      Input: Request past quotes
+	      Input: Request all quotes
 
 	      Output: A table with all the quotes
 
@@ -650,11 +654,11 @@ This section will contain tests covering the ``Quotes'' requirements defined in 
 
 	      Initial State: Shop Owner/Employee Account with no quotes requests assigned to the shop
 
-	      Input: Request past quotes with quote ID, customer phone number, and/or customer name
+	      Input: Request all quotes
 
 	      Output: A message saying there are no past quotes
 
-	      Test Case Derivation: There are no past quotes to display matching the inputted criteria
+	      Test Case Derivation: There are no past quotes to display
 
 	      How test will be performed: The tester will request for past quotes through the user interface
 
@@ -662,14 +666,14 @@ This section will contain tests covering the ``Quotes'' requirements defined in 
 
 	      Control: Manual
 
-	      Initial State: Shop Owner/Employee Account with closed quotes requests that were assigned to the
+	      Initial State: Shop Owner/Employee Account with completed quotes requests that were assigned to the
 	      shop
 
-	      Input: Request past quotes with quote ID, customer phone number, and/or customer name
+	      Input: Request all quotes
 
 	      Output: A table with all the quotes
 
-	      Test Case Derivation: There are past quotes to display matching the inputted criteria
+	      Test Case Derivation: There are past quotes to display
 
 	      How test will be performed: The tester will request for past quotes through the user interface
 
@@ -677,37 +681,7 @@ This section will contain tests covering the ``Quotes'' requirements defined in 
 
 	      Control: Manual
 
-	      Initial State: Customer Account with quotes requests which have been closed and were initiated by
-	      the account
-
-	      Input: Request quote details
-
-	      Output: The quote details
-
-	      Test Case Derivation: Display the quote details requested
-
-	      How test will be performed: The tester will request for quote details through the user interface
-
-	\item \textbf{FRT-BE9-2}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Employee Account with closed quotes requests that were assigned to the
-	      shop
-
-	      Input: Request quote details
-
-	      Output: The quote details
-
-	      Test Case Derivation: Display the quote details requested
-
-	      How test will be performed: The tester will request for quote details through the user interface
-
-	\item \textbf{FRT-BE10-1}
-
-	      Control: Manual
-
-	      Initial State: Customer Account
+	      Initial State: Customer Account with no quote requests initiated from the account
 
 	      Input: A filled in quote request form
 
@@ -717,19 +691,33 @@ This section will contain tests covering the ``Quotes'' requirements defined in 
 
 	      How test will be performed: The tester will create a quote through the user interface
 
+	\item \textbf{FRT-BE10-1}
+
+	      Control: Manual
+
+	      Initial State: Customer Account with a completed quote
+
+	      Input: A quote's chat history is requested
+
+	      Output: The quote's chat history
+
+	      Test Case Derivation: There are chat messages to display
+
+	      How test will be performed: The tester will view a quote's chat messages through the user interface
+
 	\item \textbf{FRT-BE10-2}
 
 	      Control: Manual
 
-	      Initial State: Shop Owner/Employee Account with a registered shop
+	      Initial State: Shop Owner/Employee Account with a registered shop and a completed quote
 
-	      Input: A quote is requested from the shop
+	      Input: A quote's chat history is requested
 
-	      Output: A notification for the open quote request
+	      Output: The quote's chat history
 
-	      Test Case Derivation: The system shall notify that a quote was created
+	      Test Case Derivation: There are chat messages to display
 
-	      How test will be performed: The tester will create a quote through the user interface
+	      How test will be performed: The tester will view a quote's chat messages through the user interface
 
 	\item \textbf{FRT-BE11-1}
 
@@ -737,129 +725,61 @@ This section will contain tests covering the ``Quotes'' requirements defined in 
 
 	      Initial State: Customer Account with a created quote
 
-	      Input: Request to delete quote with the quote's ID
+	      Input: A chat message
 
-	      Output: A quote deleted confirmation message
+	      Output: A chat message is created and attached to the quote
 
-	      Test Case Derivation: The system shall delete the quote upon request
+	      Test Case Derivation: The system shall send chat messages upon request
 
-	      How test will be performed: The tester will delete a quote through the user interface
+	      How test will be performed: The tester will send a chat message within a quote through the user
+	      interface
+
+	\item \textbf{FRT-BE11-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account with a registered shop and a created quote
+
+	      Input: A chat message
+
+	      Output: A chat message is created and attached to the quote
+
+	      Test Case Derivation: The system shall send chat messages upon request
+
+	      How test will be performed: The tester will send a chat message within a quote through the user
+	      interface
 
 	\item \textbf{FRT-BE12-1}
 
 	      Control: Manual
 
-	      Initial State: Customer Account with a created quote
+	      Initial State: Shop Owner/Employee Account with a registered shop and a created quote
 
-	      Input: Request to update quote with the quote's new details
+	      Input: An filled in appointment invitation form
 
-	      Output: A quote updated confirmation message
+	      Output: An appointment invitation is sent to the customer
 
-	      Test Case Derivation: The system shall update the quote upon request
+	      Test Case Derivation: The system shall verify that the appointment invitation was created
+	      successfully
 
-	      How test will be performed: The tester will update a quote through the user interface
-
-	\item \textbf{FRT-BE12-2}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Employee Account with a registered shop and an active quote
-
-	      Input: A quote's details are updated
-
-	      Output: A notification for the updated quote
-
-	      Test Case Derivation: The system shall notify that a quote was updated
-
-	      How test will be performed: The tester will update a quote through the user interface
+	      How test will be performed: The tester will send an appointment invitation from a quote through the
+	      user interface
 
 	\item \textbf{FRT-BE13-1}
 
 	      Control: Manual
 
-	      Initial State: Customer Account with a created quote
+	      Initial State: Customer Account with a quote that has an appointment invitation
 
-	      Input: A request to create a new quote using details from another quote which is identified by
-	      quote ID
-
-	      Output: A confirmation messaging indicating that the quote was requested
-
-	      Test Case Derivation: The system shall verify that the quote was created successfully with an
-	      existing quote's details
-
-	      How test will be performed: The tester will create a quote through the user interface
-
-	\item \textbf{FRT-BE14-1}
-
-	      Control: Manual
-
-	      Initial State: Customer Account with a created quote
-
-	      Input: A response to a quote
-
-	      Output: A notification for the responded to quote
-
-	      Test Case Derivation: The system shall notify that a quote was responded to
-
-	      How test will be performed: The tester will create a response to a quote through the user interface
-
-	\item \textbf{FRT-BE14-2}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Employee Account with a registered shop and an active quote
-
-	      Input: A response to a quote
-
-	      Output: A quote responded confirmation message
-
-	      Test Case Derivation: The system shall verify that the quote was responded to successfully
-
-	      How test will be performed: The tester will create a response to a quote through the user interface
-
-	\item \textbf{FRT-BE15-1}
-
-	      Control: Manual
-
-	      Initial State: Customer Account with a responded to quote
-
-	      Input: Accept a responded to quote
+	      Input: Accept an appointment request
 
 	      Output: The system shall request the user to create an appointment with the shop that responded
 
-	      Test Case Derivation: The system shall have the user create an appointment upon accepting a quote
+	      Test Case Derivation: The system shall have the user create an appointment upon accepting an
+	      appointment invitation from a quote
 
-	      How test will be performed: The tester will accept a quote through the user interface
-
-	\item \textbf{FRT-BE16-1}
-
-	      Control: Manual
-
-	      Initial State: Customer Account with a created quote
-
-	      Input: A message to request additional information
-
-	      Output: A message sent confirmation
-
-	      Test Case Derivation: The system shall confirm to the user that the message was sent
-
-	      How test will be performed: The tester will send a message for additional information through the
-	      user interface
-
-	\item \textbf{FRT-BE16-2}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Employee Account with a registered shop and an active quote
-
-	      Input: A message to request additional information
-
-	      Output: A message sent confirmation
-
-	      Test Case Derivation: The system shall confirm to the user that the message was sent
-
-	      How test will be performed: The tester will send a message for additional information through the
-	      user interface
+	      How test will be performed: The tester will accept an appointment invitation from a quote through
+	      the user interface
 \end{enumerate}
 
 \subsubsection{Work Orders}
@@ -869,7 +789,7 @@ This section will contain tests covering the ``Work Orders'' requirements define
 
 \begin{enumerate}
 
-	\item \textbf{FRT-BE17-1}
+	\item \textbf{FRT-BE14-1}
 
 	      Control: Manual
 
@@ -884,7 +804,7 @@ This section will contain tests covering the ``Work Orders'' requirements define
 
 	      How test will be performed: The tester will create an appointment through the user interface
 
-	\item \textbf{FRT-BE17-2}
+	\item \textbf{FRT-BE14-2}
 
 	      Control: Manual
 
@@ -898,54 +818,39 @@ This section will contain tests covering the ``Work Orders'' requirements define
 
 	      How test will be performed: The tester will create an appointment through the user interface
 
-	\item \textbf{FRT-BE18-1}
+	\item \textbf{FRT-BE15-1}
 
 	      Control: Manual
 
-	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
-	      work order associated to the appointment
+	      Initial State: Customer Account with a vehicle, an upcoming appointment, and a work order
+	      associated to the appointment
 
-	      Input: Appointment is deleted
+	      Input: A list of upcoming appointments is requested
 
-	      Output: Appointment and Work Order deleted confirmation message
-
-	      Test Case Derivation: The system shall delete appointment and the associated work order upon
-	      request
-
-	      How test will be performed: The tester will delete an appointment through the user interface
-
-	\item \textbf{FRT-BE19-1}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
-	      work order associated to the appointment
-
-	      Input: Work Order is searched by the customer name, assigned employee, service type, and/or a date
-	      range
-
-	      Output: The work orders matching the inputted criteria in a table format
+	      Output: The appointments in a table format with the associated work order attached to each
+	      appointment
 
 	      Test Case Derivation: The system shall display work order upon request
 
 	      How test will be performed: The tester will search for a work order through the user interface
 
-	\item \textbf{FRT-BE20-1}
+	\item \textbf{FRT-BE15-2}
 
 	      Control: Manual
 
 	      Initial State: Shop Owner/Employee Account with a registered shop, an upcoming appointment, and a
 	      work order associated to the appointment
 
-	      Input: Request to view past work orders
+	      Input: A list of upcoming appointments is requested
 
-	      Output: Past work orders in a table format
+	      Output: The appointments in a table format with the associated work order attached to each
+	      appointment
 
 	      Test Case Derivation: The system shall display work order upon request
 
-	      How test will be performed: The tester will search for past work orders through the user interface
+	      How test will be performed: The tester will search for a work order through the user interface
 
-	\item \textbf{FRT-BE21-1}
+	\item \textbf{FRT-BE16-1}
 
 	      Control: Manual
 
@@ -960,39 +865,6 @@ This section will contain tests covering the ``Work Orders'' requirements define
 
 	      How test will be performed: The tester will update a work order through the user interface
 
-	\item \textbf{FRT-BE22-1}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Employee Account with a registered shop, an appointment, and a work order
-	      associated to the appointment
-
-	      Input: A customer has paid for their appointment
-
-	      Output: The work order is emailed to the customer, and the appointment and work order are marked as
-	      ``completed''
-
-	      Test Case Derivation: The system shall mark work orders and appointments as completed when the
-	      customer has paid for the word done
-
-	      How test will be performed: The tester will mark a work order as completed through the user
-	      interface
-
-	\item \textbf{FRT-BE23-1}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Employee Account with a registered shop, an appointment, and a work order
-	      associated to the appointment
-
-	      Input: Request work order details
-
-	      Output: The work order details
-
-	      Test Case Derivation: The system shall display work orders details upon request
-
-	      How test will be performed: The tester will view a work order's details through the user interface
-
 \end{enumerate}
 
 \subsubsection{Employee Management}
@@ -1002,7 +874,7 @@ This section will contain tests covering the ``Employee Management'' requirement
 
 \begin{enumerate}
 
-	\item \textbf{FRT-BE24-1}
+	\item \textbf{FRT-BE17-1}
 
 	      Control: Manual
 
@@ -1016,10 +888,10 @@ This section will contain tests covering the ``Employee Management'' requirement
 	      their employee
 
 	      How test will be performed: The tester will use a shop ID displayed on the shop owner's employee
-	      management page and go through the sign up flow as an employee. The tester will verify that the
+	      management page and go through the sign-up flow as an employee. The tester will verify that the
 	      shop ID is displayed and correct.
 
-	\item \textbf{FRT-BE24-2}
+	\item \textbf{FRT-BE17-2}
 
 	      Control: Manual
 
@@ -1035,7 +907,7 @@ This section will contain tests covering the ``Employee Management'' requirement
 	      How test will be performed: The tester will use invalid user sign up information and invalid shop
 	      ID to sign up as an employee
 
-	\item \textbf{FRT-BE25-1}
+	\item \textbf{FRT-BE18-1}
 
 	      Control: Manual
 
@@ -1051,7 +923,7 @@ This section will contain tests covering the ``Employee Management'' requirement
 	      How test will be performed: The tester will use a shop owner account with employees listed under
 	      the shop and enter search text to search for an employee
 
-	\item \textbf{FRT-BE26-1}
+	\item \textbf{FRT-BE19-1}
 
 	      Control: Manual
 
@@ -1066,7 +938,7 @@ This section will contain tests covering the ``Employee Management'' requirement
 	      How test will be performed: The tester will use a shop owner account with employees listed under
 	      the shop and attempt to view the list of employees
 
-	\item \textbf{FRT-BE27-1}
+	\item \textbf{FRT-BE20-1}
 
 	      Control: Manual
 
@@ -1086,12 +958,12 @@ This section will contain tests covering the ``Employee Management'' requirement
 
 \subsubsection{Services}
 
-This section will contains tests covering the ``Services'' requirements defined in the
+This section will contain tests covering the ``Services'' requirements defined in the
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
 
-	\item \textbf{FRT-BE28-1}
+	\item \textbf{FRT-BE21-1}
 
 	      Control: Manual
 
@@ -1106,7 +978,7 @@ This section will contains tests covering the ``Services'' requirements defined 
 	      How test will be performed: The tester will add a service to the shop profile and confirms it shows
 	      on the shop profile
 
-	\item \textbf{FRT-BE29-1}
+	\item \textbf{FRT-BE22-1}
 
 	      Control: Manual
 
@@ -1119,9 +991,9 @@ This section will contains tests covering the ``Services'' requirements defined 
 	      Test Case Derivation: Services corresponding to the auto shop will be displayed
 
 	      How test will be performed: The tester will search for shop services through the user interface and
-	      confirms that all of the shop's services matching the search criteria are listed
+	      confirms that all the shop's services matching the search criteria are listed
 
-	\item \textbf{FRT-BE30-1}
+	\item \textbf{FRT-BE23-1}
 
 	      Control: Manual
 
@@ -1136,7 +1008,7 @@ This section will contains tests covering the ``Services'' requirements defined 
 	      How test will be performed: The tester will update the details of a shop service through the user
 	      interface and confirms that the shop profile is updated
 
-	\item \textbf{FRT-BE31-1}
+	\item \textbf{FRT-BE24-1}
 
 	      Control: Manual
 
@@ -1160,16 +1032,16 @@ This section will contain tests covering the ``Shop Lookup'' requirements define
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
-	\item \textbf{FRT-BE32-1}
+	\item \textbf{FRT-BE25-1}
 
 	      Control: Manual
 
 	      Initial State: Shop Owner/Employee Account with a registered shop, Customer Account exists
 
-	      Input: The Customer Account attempts to view a list of shops, using the parameters of distance,
-	      postal code, and/or shop name
+	      Input: The Customer account attempts to view a list of shops using the parameters of shop name,
+	      service name, part types and part conditions
 
-	      Output: An output list of shops based on the input parameters
+	      Output: A list of shops based on the input parameters
 
 	      Test Case Derivation: The system shall show a list of shops with the specified parameters provided
 
@@ -1183,7 +1055,7 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 \begin{enumerate}
-	\item \textbf{FRT-BE33-1}
+	\item \textbf{FRT-BE26-1}
 
 	      Control: Manual
 
@@ -1198,7 +1070,7 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 
 	      How test will be performed: The tester will go through the user interface to view a shop profile
 
-	\item \textbf{FRT-BE34-1}
+	\item \textbf{FRT-BE27-1}
 
 	      Control: Manual
 
@@ -1213,7 +1085,7 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 
 	      How test will be performed: The tester will go through the user interface to view a shop profile
 
-	\item \textbf{FRT-BE35-1}
+	\item \textbf{FRT-BE28-1}
 
 	      Control: Manual
 
@@ -1298,7 +1170,7 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 	      Type: Dynamic, Manual
 
 	      How test will be performed: The testers will complete the manual system tests for functional
-	      requirements listed section \ref{Tests for Functional Requirements} on a MacOS desktop/laptop
+	      requirements listed section \ref{Tests for Functional Requirements} on a macOS desktop/laptop
 	      device, a Windows desktop/laptop, an iOS mobile device, and an android mobile device.
 
 	\item \textbf{NFRT-UH2-1} % For UH2
@@ -1475,63 +1347,42 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 		\textbf{FRT-BE8-3}  & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE8-4}  & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE9-1}  & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE9-2}  & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE10-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE10-2} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE11-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & X             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE11-2} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & X             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE12-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE12-2} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE13-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & X             & ~             & ~             & ~             \\
 		\textbf{FRT-BE14-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & X             & ~             & ~             \\
 		\textbf{FRT-BE14-2} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & X             & ~             & ~             \\
 		\textbf{FRT-BE15-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & X             & ~             \\
+		\textbf{FRT-BE15-2} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & X             & ~             \\
 		\textbf{FRT-BE16-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & X             \\
-		\textbf{FRT-BE16-2} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & X             \\
 		\hline
 	\end{longtable}
 
 	\newpage
 
-	\begin{longtable}{|l|ccccccccccccccc|}
-		\caption{Traceability Between Functional Test Cases and Functional Requirements, BE17 to BE31}                                                                                                                                                                                                                  \\
+	\begin{longtable}{|l|cccccccccccc|}
+		\caption{Traceability Between Functional Test Cases and Functional Requirements, BE17 to BE28}                                                                                                                                                                  \\
 		\hline
-		\textbf{Test IDs}   & \multicolumn{15}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                                                                 \\
+		\textbf{Test IDs}   & \multicolumn{12}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                 \\
 		\hline
-		~                   & \textbf{BE17}                                             & \textbf{BE18} & \textbf{BE19} & \textbf{BE20} & \textbf{BE21} & \textbf{BE21} & \textbf{BE23} & \textbf{BE24} & \textbf{BE25} & \textbf{BE26} & \textbf{BE27} & \textbf{BE28} & \textbf{BE29} & \textbf{BE30} & \textbf{BE31} \\
+		~                   & \textbf{BE17}                                             & \textbf{BE18} & \textbf{BE19} & \textbf{BE20} & \textbf{BE21} & \textbf{BE21} & \textbf{BE23} & \textbf{BE24} & \textbf{BE25} & \textbf{BE26} & \textbf{BE27} & \textbf{BE28} \\
 		\hline
-		\textbf{FRT-BE17-1} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE17-2} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE18-1} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE19-1} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE20-1} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE21-1} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE22-1} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE23-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE24-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE24-2} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE25-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE26-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE27-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE28-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             \\
-		\textbf{FRT-BE29-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             \\
-		\textbf{FRT-BE30-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             \\
-		\textbf{FRT-BE31-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             \\
-		\hline
-	\end{longtable}
-
-	\newpage
-
-	\begin{longtable}{|l|cccc|}
-		\caption{Traceability Between Functional Test Cases and Functional Requirements, BE32 to 35}                                   \\
-		\hline
-		\textbf{Test IDs}   & \multicolumn{4}{c|}{\textbf{Functional Requirement IDs}}                                                 \\
-		\hline
-		~                   & \textbf{BE32}                                            & \textbf{BE33} & \textbf{BE34} & \textbf{BE35} \\
-		\hline
-		\textbf{FRT-BE32-1} & X                                                        & ~             & ~             & ~             \\
-		\textbf{FRT-BE33-1} & ~                                                        & X             & ~             & ~             \\
-		\textbf{FRT-BE34-1} & ~                                                        & ~             & X             & ~             \\
-		\textbf{FRT-BE35-1} & ~                                                        & ~             & ~             & X             \\
+		\textbf{FRT-BE17-1} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE17-2} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE18-1} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE19-1} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE20-1} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE21-1} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE22-1} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE23-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE24-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE25-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             \\
+		\textbf{FRT-BE26-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             \\
+		\textbf{FRT-BE27-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             \\
+		\textbf{FRT-BE28-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             \\
 		\hline
 	\end{longtable}
 
@@ -2338,36 +2189,6 @@ were chosen based on common user flows.
 
 	      Type: Functional, Dynamic, Unit, Automated
 
-	      Initial State: A shop and a shop owner exist
-
-	      Input: Create employee account request with valid user information and shop ID
-
-	      Output: Create the employee account
-
-	      Test Case Derivation: Employee at a shop wants to sign up for an account
-
-	      How test will be performed: Jest will send a create employee account request with valid user
-	      information and shop ID
-
-	\item \textbf{FRT-M7-2}
-
-	      Type: Functional, Dynamic, Unit, Automated
-
-	      Initial State: A shop and a shop owner exist
-
-	      Input: Create employee account request with invalid user information and shop ID
-
-	      Output: Request is rejected
-
-	      Test Case Derivation: Employee at a shop wants to sign up for an account
-
-	      How test will be performed: Jest will send a create employee account request with invalid user
-	      information and shop ID
-
-	\item \textbf{FRT-M7-3}
-
-	      Type: Functional, Dynamic, Unit, Automated
-
 	      Initial State: A shop account exists with employees
 
 	      Input: Get employees with a valid shop ID
@@ -2378,7 +2199,7 @@ were chosen based on common user flows.
 
 	      How test will be performed: Jest will send a get employees request with a valid shop ID
 
-	\item \textbf{FRT-M7-4}
+	\item \textbf{FRT-M7-2}
 
 	      Type: Functional, Dynamic, Unit, Automated
 
@@ -2386,13 +2207,13 @@ were chosen based on common user flows.
 
 	      Input: Get employees with an invalid shop ID
 
-	      Output: Request is rejected
+	      Output: Empty list
 
 	      Test Case Derivation: A shop owner with employees wants to view the list of employees
 
 	      How test will be performed: Jest will send a get employees request with an invalid shop ID
 
-	\item \textbf{FRT-M7-5}
+	\item \textbf{FRT-M7-3}
 
 	      Control: Manual
 
@@ -2406,7 +2227,7 @@ were chosen based on common user flows.
 
 	      How test will be performed: Jest will send a delete employee request with a valid employee ID
 
-	\item \textbf{FRT-M7-6}
+	\item \textbf{FRT-M7-4}
 
 	      Control: Manual
 
@@ -2780,11 +2601,11 @@ section \ref{System Tests for Nonfunctional Requirements}.
 	      \begin{enumerate}[\arabic*.]
 		      \item Domain knowledge and skills specific to testing of PWAs
 		      \item Acquire knowledge and skills related to testing tools: Jest, React Testing Library
-		      \item Gain an understanding of language specific typechecking (i.e., TypeScript)
+		      \item Gain an understanding of language specific type checking (i.e., TypeScript)
 		      \item Familiarize with Code Review process and best practices
 		      \item Develop a better understanding of dynamic and static testing methods pertaining to testing a full
 		            stack progressive web application
-		      \item Acquire knowledge relating to best industry practices and methodologies for manual integration
+		      \item Acquire knowledge relating to the best industry practices and methodologies for manual integration
 		            testing of progressive web applications
 	      \end{enumerate}
 
