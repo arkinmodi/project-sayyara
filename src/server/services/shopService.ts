@@ -39,7 +39,7 @@ export const updateShopSchema = z.object({
   province: z.string().optional(),
   phone_number: z.string().optional(),
   hours_of_operation: z.optional(hoursOfOperationSchema),
-  email: z.string().optional(),
+  email: z.string().email().optional(),
 });
 export type UpdateShopType = z.infer<typeof updateShopSchema>;
 
