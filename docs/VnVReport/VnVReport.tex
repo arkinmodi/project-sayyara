@@ -14,6 +14,7 @@
 \usepackage{longtable}
 \usepackage{multirow}
 \usepackage{amsfonts}
+\usepackage{float}
 
 \input{../Comments}
 \input{../Common}
@@ -446,7 +447,7 @@ intended use, and goals of stakeholders.
 
 	      Output: The appointment availability is updated in the database
 
-	      Test Case Derivation: The appointment availability will be saved and availability time slots to
+	      Test Case Derivation: The appointment availability will be saved, and availability time slots to
 	      book appointments will be updated
 
 	      How test will be performed: The tester will go through the user interface to set appointment
@@ -867,7 +868,7 @@ intended use, and goals of stakeholders.
 	      Test Case Derivation: Services corresponding to the auto shop will be displayed
 
 	      How test will be performed: The tester will search for shop services through the user interface and
-	      confirms that all of the shop's services matching the search criteria are listed
+	      confirms that all the shop's services matching the search criteria are listed
 
 	      Results: Passed
 
@@ -1045,7 +1046,7 @@ intended use, and goals of stakeholders.
 	      Type: Dynamic, Manual
 
 	      How test will be performed: The testers will complete the manual system tests for functional
-	      requirements on a MacOS desktop/laptop device, a Windows desktop/laptop, an iOS mobile device, and
+	      requirements on a macOS desktop/laptop device, a Windows desktop/laptop, an iOS mobile device, and
 	      an android mobile device.
 
 	      Results: Passed. Testers were asked to write down which device they used to test to ensure all
@@ -1179,7 +1180,7 @@ intended use, and goals of stakeholders.
 	      How test will be performed: The tester will view the available time slots page as the Customer
 	      without an appointment
 
-	      Results: Failed. Extra information is returned from the API call that is not needed for this
+	      Results: Failed. Extra information is returned from the API call that is not needed for these
 	      endpoints and exposes data that does not belong to user. None of the data contains PII.
 
 \end{enumerate}
@@ -1328,17 +1329,59 @@ reported on every pull request to the main branch and to every push to the main 
 
 \section{Code Coverage Metrics}
 
-% TODO: Discuss report results and include image of code coverage report
+Code coverage was calculated using Jest's built-in code coverage instrumentation. A tool by the
+name of ``nyc'' was used to merge the code coverage reports generated from the multiple runs and
+output a human-readable HTML report. The code coverage report is documented in Table \ref{Code
+	Coverage Report}. Code that was not checked by the automated testing was either tested manually or
+outside the scope of the requirements.
 
-Code coverage was calculated using Jest's built-in code coverage instrumentation. A tool by name of
-``nyc'' was used to merge the code coverage reports generated from the multiple runs and output a
-human readable HTML report. \dots
+\begin{table}[H]
+	\centering
+	\caption{Code Coverage Report} \label{Code Coverage Report}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Package}             & \textbf{Line Rate} & \textbf{Branch Rate} \\
+		\hline
+		pages.api.appointment        & 79\%               & 70\%                 \\
+		\hline
+		pages.api.auth               & 0\%                & 0\%                  \\
+		\hline
+		pages.api.customer.[id]      & 19\%               & 18\%                 \\
+		\hline
+		pages.api.employee           & 53\%               & 18\%                 \\
+		\hline
+		pages.api.quotes             & 77\%               & 33\%                 \\
+		\hline
+		pages.api.quotes.[id]        & 73\%               & 54\%                 \\
+		\hline
+		pages.api.service            & 74\%               & 61\%                 \\
+		\hline
+		pages.api.shop               & 0\%                & 0\%                  \\
+		\hline
+		pages.api.shop.[id]          & 61\%               & 43\%                 \\
+		\hline
+		pages.api.shop.[id].services & 65\%               & 71\%                 \\
+		\hline
+		pages.api.user.register      & 76\%               & 42\%                 \\
+		\hline
+		pages.api.vehicle            & 0\%                & 0\%                  \\
+		\hline
+		pages.api.work-order         & 65\%               & 47\%                 \\
+		\hline
+		server.services              & 90\%               & 69\%                 \\
+		\hline
+		Summary                      & 64\% (599 / 931)   & 47\% (160 / 338)     \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\newpage
 
 \bibliographystyle{plainnat}
 
 \bibliography{../../refs/References}
 
-\newpage{}
+\newpage
 
 \section{Appendix}
 \subsection{Reflection}
