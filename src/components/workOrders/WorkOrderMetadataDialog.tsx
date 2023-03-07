@@ -53,7 +53,7 @@ const WorkOrderMetadataDialog: React.FC<{
 
   const footer = () => {
     return (
-      <div>
+      <div className={styles.workOrderMetadataDialogFooterContainer}>
         <Button
           className={`p-button-success greenButton ${styles.workOrderMetadataDialogFooterContainerButtons}`}
           icon="pi pi-save"
@@ -83,7 +83,7 @@ const WorkOrderMetadataDialog: React.FC<{
       footer={footer}
       header="Edit Metadata"
     >
-      <div>
+      <div className={styles.workOrderMetadataDialogContainer}>
         <label htmlFor="workOrderTitle">Title</label>
         <br />
         <InputText
