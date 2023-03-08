@@ -7,7 +7,8 @@
 
 import shopLookupHandler from "@pages/api/shop/lookup";
 import shopByIdHandler from "@pages/api/shop/[id]";
-import { Employee, prisma } from "@server/db/client";
+import { Employee, prisma, ServiceType } from "@server/db/client";
+import { createService } from "@server/services/serviceService";
 import { createShop } from "@server/services/shopService";
 import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 import { Session } from "next-auth";
@@ -48,6 +49,18 @@ const testShop3 = {
   province: "test_province",
 };
 
+const testService = {
+  id: "test_service_id",
+  create_time: new Date(),
+  update_time: new Date(),
+  name: "test_service_name",
+  description: "test_service_description",
+  estimated_time: 2,
+  total_price: 100,
+  type: ServiceType.CANNED,
+  parts: [],
+};
+
 const testEmployeeUser: Employee = {
   id: "test_id",
   first_name: "first_name",
@@ -83,7 +96,9 @@ afterAll(async () => {
 });
 
 afterEach(async () => {
+  const deleteServices = prisma.service.deleteMany({});
   const deleteShops = prisma.shop.deleteMany({});
+  await prisma.$transaction([deleteServices]);
   await prisma.$transaction([deleteShops]);
 });
 
@@ -317,6 +332,43 @@ describe("Shop Module", () => {
 
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = { ...req.query, name: "asfasdf", shop: "true" };
+    await shopLookupHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()).toMatchObject([]);
+  });
+
+  it("FRT-M9-9: Get shop request with a service name", async () => {
+    const shop = await createShop(testShop);
+    const shop2 = await createShop(testShop2);
+    const shop3 = await createShop(testShop3);
+
+    const service = await createService({ ...testService, shop_id: shop.id });
+
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = { ...req.query, name: "test_service_name", shop: "false" };
+    await shopLookupHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()).toMatchObject([
+      {
+        ...testShop,
+        name: shop.name,
+        create_time: expect.any(String),
+        update_time: expect.any(String),
+      },
+    ]);
+  });
+
+  it("FRT-M9-10: Get shop request with a service name that does not exist in any shop", async () => {
+    const shop = await createShop(testShop);
+    const shop2 = await createShop(testShop2);
+    const shop3 = await createShop(testShop3);
+
+    const service = await createService({ ...testService, shop_id: shop.id });
+
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = { ...req.query, name: "asdf", shop: "false" };
     await shopLookupHandler(req, res);
 
     expect(res.statusCode).toBe(200);
