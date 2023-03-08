@@ -57,6 +57,7 @@
 	March 7, 2023     & Arkin Modi            & Add Code Coverage Metrics Section                                                                            \\
 	March 7, 2023     & Arkin Modi            & Add Changes Due to Testing Section                                                                           \\
 	March 7, 2023     & Timothy Choy          & Add Unit Test Evaluations for Shop                                                                           \\
+	March 8, 2023     & Timothy Choy          & Add Verification Table                                                                                       \\
 	March 8, 2023     & Joy Xiao              & Update editing appointments tests                                                                            \\
 	March 8, 2023     & Arkin Modi            & Add Unit Test Results                                                                                        \\
 	March 8, 2023     & Arkin Modi            & Add Traceability Between Test Cases and Requirements \& Traceability Between Test Cases and Modules Sections \\
@@ -1110,7 +1111,8 @@ intended use, and goals of stakeholders.
 	      document is finalized. The review will include running through the system and linking every module
 	      to proper documentation.
 
-	      Results: Passed. This requirement has been maintained throughout the entire project.
+	      Results: Passed. This requirement has been maintained throughout the entire project. A table
+	      containing the results can be found in section \ref{Verification and Validation Summary}.
 
 \end{enumerate}
 
@@ -1207,11 +1209,36 @@ intended use, and goals of stakeholders.
 
 \end{enumerate}
 
+\section{Verification and Validation Summary}
+
+It is assumed that the TA has validated our documents and implementation through marking our work
+throughout the course.
+
+\begin{table}[H]
+	\centering
+	\caption{Verification and Validation Summary} \label{Verification and Validation Summary}
+	\begin{tabular}{|l|c|c|c|c|c|c|}
+		\toprule
+		\multicolumn{7}{c}{$\checkmark$ = Pass, X = Fail}                                                                         \\
+		\toprule
+		\textbf{Verification} & \textbf{Arkin} & \textbf{Joy} & \textbf{Leon} & \textbf{Timothy} & \textbf{Nabeel} & \textbf{TA}  \\
+		\midrule
+		SRS                   & $\checkmark$   & $\checkmark$ & $\checkmark$  & $\checkmark$     & $\checkmark$    & $\checkmark$ \\
+		\midrule
+		Design                & $\checkmark$   & $\checkmark$ & $\checkmark$  & $\checkmark$     & $\checkmark$    & $\checkmark$ \\
+		\midrule
+		VnV Plan              & $\checkmark$   & $\checkmark$ & $\checkmark$  & $\checkmark$     & $\checkmark$    & $\checkmark$ \\
+		\midrule
+		Implementation        & $\checkmark$   & $\checkmark$ & $\checkmark$  & $\checkmark$     & $\checkmark$    & $\checkmark$ \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
 \newpage
 
 \section{Unit Testing}
 
-A summary of all the test results can be found in table \ref{Table Unit Tests Results Summary}.
+A summary of all the test results can be found in table \ref{Table Unit Tests Result Summary}.
 
 \begin{longtable}{|l|c|l|c|l|c|}
 	\caption{Unit Tests Results Summary} \label{Table Unit Tests Result Summary}                                 \\
