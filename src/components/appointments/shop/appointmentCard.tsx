@@ -56,6 +56,13 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     toggleActiveTab();
   };
 
+  const formatDate = (d: Date, showSeconds: boolean = false) => {
+    return new Intl.DateTimeFormat("en-us", {
+      dateStyle: "medium",
+      timeStyle: showSeconds ? "medium" : "short",
+    }).format(d);
+  };
+
   const renderRequestedCardLeft = () => {
     return (
       <div className={styles.textAlign}>
@@ -195,12 +202,8 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
             </b>
           </div>
           <div>Customer Phone Number: {appointment.customer.phone_number}</div>
-          <div>
-            Start time: {new Date(appointment.startTime).toLocaleString()}
-          </div>
-          <div>
-            End time: {String(new Date(appointment.endTime).toLocaleString())}
-          </div>
+          <div>Start time: {formatDate(new Date(appointment.startTime))}</div>
+          <div>End time: {formatDate(new Date(appointment.endTime))}</div>
           <br />
           <div>Vehicle Make: {appointment.vehicle?.make}</div>
           <div>Vehicle Model: {appointment.vehicle?.model}</div>

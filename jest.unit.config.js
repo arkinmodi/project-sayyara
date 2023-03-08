@@ -23,7 +23,19 @@ const customJestConfig = {
   collectCoverageFrom: ["./src/**"],
   clearMocks: true,
   runner: "groups",
-  coveragePathIgnorePatterns: ["<rootDir>/test/mocks/"],
+  coveragePathIgnorePatterns: [
+    ".tsx",
+    "<rootDir>/test/mocks/",
+    "middleware.ts",
+    "src/constants",
+    "src/pages/api/auth",
+    "src/redux",
+    "src/server/common",
+    "src/server/db",
+    "src/styles",
+    "src/types",
+    "src/util",
+  ],
   coverageDirectory: "coverage-unit",
 };
 
