@@ -14,6 +14,7 @@
 \usepackage{longtable}
 \usepackage{multirow}
 \usepackage{amsfonts}
+\usepackage{float}
 
 \input{../Comments}
 \input{../Common}
@@ -53,9 +54,11 @@
 		March 6, 2023     & Timothy Choy          & Add Functional Requirement Tests for Shop Lookup                  \\
 		March 6, 2023     & Arkin Modi            & Add Functional Requirement Tests for Quotes                       \\
 		March 7, 2023     & Arkin Modi            & Add Functional Requirement Tests for Work Orders                  \\
+		March 7, 2023     & Arkin Modi            & Add Code Coverage Metrics Section                                 \\
 		March 7, 2023     & Arkin Modi            & Add Changes Due to Testing Section                                \\
 		March 7, 2023     & Timothy Choy          & Add Unit Test Evaluations for Shop                                \\
 		March 8, 2023     & Joy Xiao              & Update editing appointments tests                                 \\
+		March 8, 2023     & Arkin Modi            & Add Unit Test Results                                             \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -74,6 +77,7 @@
 	CLS             & Cumulative Layout Shift             \\
 	FCP             & First Contentful Paint              \\
 	FID             & First Input Delay                   \\
+	HTML            & HyperText Markup Language           \\
 	LCP             & Largest Contentful Paint            \\
 	ms              & Milliseconds                        \\
 	PII             & Personal Identifiable Information   \\
@@ -410,7 +414,7 @@ intended use, and goals of stakeholders.
 
 	      Output: The appointment availability is updated in the database
 
-	      Test Case Derivation: The appointment availability will be saved and availability time slots to
+	      Test Case Derivation: The appointment availability will be saved, and availability time slots to
 	      book appointments will be updated
 
 	      How test will be performed: The tester will go through the user interface to set appointment
@@ -831,7 +835,7 @@ intended use, and goals of stakeholders.
 	      Test Case Derivation: Services corresponding to the auto shop will be displayed
 
 	      How test will be performed: The tester will search for shop services through the user interface and
-	      confirms that all of the shop's services matching the search criteria are listed
+	      confirms that all the shop's services matching the search criteria are listed
 
 	      Results: Passed
 
@@ -1009,7 +1013,7 @@ intended use, and goals of stakeholders.
 	      Type: Dynamic, Manual
 
 	      How test will be performed: The testers will complete the manual system tests for functional
-	      requirements on a MacOS desktop/laptop device, a Windows desktop/laptop, an iOS mobile device, and
+	      requirements on a macOS desktop/laptop device, a Windows desktop/laptop, an iOS mobile device, and
 	      an android mobile device.
 
 	      Results: Passed. Testers were asked to write down which device they used to test to ensure all
@@ -1143,7 +1147,7 @@ intended use, and goals of stakeholders.
 	      How test will be performed: The tester will view the available time slots page as the Customer
 	      without an appointment
 
-	      Results: Failed. Extra information is returned from the API call that is not needed for this
+	      Results: Failed. Extra information is returned from the API call that is not needed for these
 	      endpoints and exposes data that does not belong to user. None of the data contains PII.
 
 \end{enumerate}
@@ -1205,6 +1209,8 @@ intended use, and goals of stakeholders.
 \newpage
 
 \section{Unit Testing}
+
+A summary of all the test results can be found in table \ref{Table Unit Tests Results Summary}.
 
 \begin{longtable}{|l|c|l|c|l|c|}
 	\caption{Unit Tests Results Summary} \label{Table Unit Tests Result Summary}                                 \\
@@ -1269,9 +1275,9 @@ intended use, and goals of stakeholders.
 	\bottomrule
 \end{longtable}
 
-\newpage
+\subsection{User Module}
 
-\section{Changes Due to Testing}
+\begin{enumerate}
 
 During testing there were a few changes that were needed to be made to bring the application into
 alignment with the requirements defined in the SRS and the plan defined in the VnV Plan. Test cases
@@ -1279,6 +1285,1327 @@ alignment with the requirements defined in the SRS and the plan defined in the V
 Additionally, there were comments made regarding the lack of the ability to edit and cancel
 appointments in the user interface during the Revision 0 Demonstration. This feedback will also be
 addressed. All changes are planned to be completed before the Revision 1 Demonstration.
+
+\item \textbf{FRT-M3-1}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: N/A
+
+	      Input: Create customer request received with valid information
+
+	      Output: Customer and Vehicle are created
+
+	      Test Case Derivation: New customer wants to sign up for a new account with valid sign up
+	      information provided
+
+	      How test will be performed: Jest will send the create customer request with valid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M3-2}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: N/A
+
+	      Input: Create customer request received with invalid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: New customer wants to sign up for a new account but not all information is
+	      provided
+
+	      How test will be performed: Jest will send the create customer request with invalid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M3-3}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: N/A
+
+	      Input: Create shop owner request received with valid information
+
+	      Output: Shop Owner and Shop are created
+
+	      Test Case Derivation: New shop owner wants to sign up for a new account with valid sign up
+	      information provided
+
+	      How test will be performed: Jest will send the create shop owner request with valid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M3-4}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: N/A
+
+	      Input: Create shop owner request received with invalid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: New shop owner wants to sign up for a new account but not all information is
+	      provided
+
+	      How test will be performed: Jest will send the create shop owner request with invalid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M3-5}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop exists
+
+	      Input: Create employee request received with valid information
+
+	      Output: Employee is created and register to given shop
+
+	      Test Case Derivation: New employee wants to sign up for a new account with valid sign up
+	      information provided
+
+	      How test will be performed: Jest will send the create employee request with valid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M3-6}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop exists
+
+	      Input: Create employee request received with invalid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: New employee wants to sign up for a new account but not all information is
+	      provided
+
+	      How test will be performed: Jest will send the create employee request with invalid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M3-7}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A user exists
+
+	      Input: Get user by an email address for an existing user
+
+	      Output: The user
+
+	      Test Case Derivation: Need to look up user data by the user provided email address
+
+	      How test will be performed: Jest will call the internal command to get a user by email address
+
+	      Result: Passed
+
+	\item \textbf{FRT-M3-8}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A user exists
+
+	      Input: Get user by an email address for a user that does not exist
+
+	      Output: None
+
+	      Test Case Derivation: Need to look up user data by the user provided email address
+
+	      How test will be performed: Jest will call the internal command to get a user by email address
+
+	      Result: Passed
+
+	\item \textbf{FRT-M3-9}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A user exists
+
+	      Input: Authorize a user with a valid email and password
+
+	      Output: The user's data
+
+	      Test Case Derivation: A user wants to authorize themselves in order to view their data (e.g.,
+	      appointments, work orders, etc.)
+
+	      How test will be performed: Jest will call the internal command to authorize a user
+
+	      Result: Passed
+
+	\item \textbf{FRT-M3-10}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A user exists
+
+	      Input: Authorize a user with an invalid email and password
+
+	      Output: A unauthorized error message
+
+	      Test Case Derivation: A user wants to authorize themselves in order to view their data (e.g.,
+	      appointments, work orders, etc.)
+
+	      How test will be performed: Jest will call the internal command to authorize a user
+
+	      Result: Passed
+
+\end{enumerate}
+
+\subsection{Quotes Module}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-M4-1}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A customer, a vehicle, a shop, a shop owner, and a ``CUSTOM'' service exists
+
+	      Input: Create quote request with valid information
+
+	      Output: A quote is created
+
+	      Test Case Derivation: A customer wants to request a quote from a shop
+
+	      How test will be performed: Jest will send a create quote request with valid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-2}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A customer, a vehicle, a shop, a shop owner, and a ``CUSTOM'' service exists
+
+	      Input: Create quote request with invalid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A customer wants to request a quote from a shop
+
+	      How test will be performed: Jest will send a create quote request with invalid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-3}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A quote exists
+
+	      Input: Update quote request with a valid ID and valid information
+
+	      Output: The quote is updated
+
+	      Test Case Derivation: A shop owner/employee wants to invite the customer to book an appointment and
+	      need to prepopulate the booking with service information
+
+	      How test will be performed: Jest will send an update quote request with a valid ID and valid
+	      information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-4}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A quote exists
+
+	      Input: Update quote request with an invalid ID and valid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A shop owner/employee wants to invite the customer to book an appointment and
+	      need to prepopulate the booking with service information
+
+	      How test will be performed: Jest will send an update quote request with an invalid ID and valid
+	      information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-5}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A quote exists
+
+	      Input: Update quote request with a valid ID and invalid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A shop owner/employee wants to invite the customer to book an appointment and
+	      need to prepopulate the booking with service information
+
+	      How test will be performed: Jest will send an update quote request with a valid ID and invalid
+	      information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-6}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A quote exists
+
+	      Input: Get quote request with a valid quote ID
+
+	      Output: Quote data is returned
+
+	      Test Case Derivation: A shop owner/employee wants to view the quote
+
+	      How test will be performed: Jest will send a get quote request with a valid quote ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-7}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A quote exists
+
+	      Input: Get quote request with an invalid quote ID
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A shop owner/employee wants to view the quote
+
+	      How test will be performed: Jest will send a get quote request with an invalid quote ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-8}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A quote exists
+
+	      Input: Get quote request with a valid customer ID
+
+	      Output: List of quotes is returned
+
+	      Test Case Derivation: A shop owner/employee wants to view the quote
+
+	      How test will be performed: Jest will send a get quote request with a valid customer ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-9}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A quote exists
+
+	      Input: Get quote request with an invalid customer ID
+
+	      Output: Empty list
+
+	      Test Case Derivation: A shop owner/employee wants to view the quote
+
+	      How test will be performed: Jest will send a get quote request with an invalid customer ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-10}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A quote exists
+
+	      Input: Get quote request with a valid shop ID
+
+	      Output: List of quotes is returned
+
+	      Test Case Derivation: A shop owner/employee wants to view the quote
+
+	      How test will be performed: Jest will send a get quote request with a valid shop ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-11}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A quote exists
+
+	      Input: Get quote request with an invalid shop ID
+
+	      Output: Empty list
+
+	      Test Case Derivation: A shop owner/employee wants to view the quote
+
+	      How test will be performed: Jest will send a get quote request with an invalid shop ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-12}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A quote exists
+
+	      Input: Delete quote request with a valid quote ID
+
+	      Output: Quote and Chat Messages are deleted
+
+	      Test Case Derivation: A user want to delete a quote and all associated chat messages
+
+	      How test will be performed: Jest will send a delete quote request with a valid quote ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-13}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A quote exists
+
+	      Input: Delete quote request with an invalid quote ID
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A shop owner/employee wants to view the quote
+
+	      How test will be performed: Jest will send a delete quote request with an invalid quote ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-14}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A quote exists
+
+	      Input: Create a chat message request with valid information
+
+	      Output: A chat message is created
+
+	      Test Case Derivation: A user wants to send a chat message
+
+	      How test will be performed: Jest will send a create chat message request with valid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-15}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A quote exists
+
+	      Input: Create a chat message request with invalid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A user wants to send a chat message
+
+	      How test will be performed: Jest will send a create chat message request with invalid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-16}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A quote exists
+
+	      Input: Get chat messages request with a valid quote ID
+
+	      Output: List of chat messages is returned
+
+	      Test Case Derivation: A user want to see the previous chat messages
+
+	      How test will be performed: Jest will send a get chat messages request with a valid quote ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M4-17}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A quote exists
+
+	      Input: Get chat messages request with an invalid quote ID
+
+	      Output: Empty list
+
+	      Test Case Derivation: A user want to see the previous chat messages
+
+	      How test will be performed: Jest will send a get chat messages request with an invalid quote ID
+
+	      Result: Passed
+
+\end{enumerate}
+
+\subsection{Appointments Module}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-M5-1}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A customer, vehicle, shop, shop owner, and service exist
+
+	      Input: Create appointment request with valid information
+
+	      Output: An appointment and work order is created
+
+	      Test Case Derivation: A customer wants to create an appointment at a shop
+
+	      How test will be performed: Jest will send a create appointment request with valid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M5-2}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A customer, vehicle, shop, shop owner, and service exist
+
+	      Input: Create appointment request with missing information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A customer wants to create an appointment at a shop
+
+	      How test will be performed: Jest will send a create appointment request with missing information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M5-3}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A customer, vehicle, shop, shop owner, and service exist
+
+	      Input: Create appointment request with an end time before the start time
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A customer wants to create an appointment at a shop
+
+	      How test will be performed: Jest will send a create appointment request with invalid timing
+	      information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M5-4}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: An appointment exists
+
+	      Input: Get appointment request with a valid appointment ID
+
+	      Output: Appointment data is returned
+
+	      Test Case Derivation: A user wants to view an appointment
+
+	      How test will be performed: Jest will send a get appointment request with a valid appointment ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M5-5}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: An appointment exists
+
+	      Input: Get appointment request with an invalid appointment ID
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A user wants to view an appointment
+
+	      How test will be performed: Jest will send a get appointment request with an invalid appointment ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M5-6}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: An appointment exists
+
+	      Input: Get appointments request with a valid shop ID
+
+	      Output: List of appointments is returned
+
+	      Test Case Derivation: A shop owner/employee wants to view all appointments as their shop
+
+	      How test will be performed: Jest will send a get appointments request with a valid shop ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M5-7}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: An appointment exists
+
+	      Input: Get appointments request with an invalid shop ID
+
+	      Output: Empty list
+
+	      Test Case Derivation: A shop owner/employee wants to view all appointments as their shop
+
+	      How test will be performed: Jest will send a get appointments request with an invalid shop ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M5-8}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: An appointment exists
+
+	      Input: Update an appointment request with a valid appointment ID and valid information
+
+	      Output: The appointment is updated
+
+	      Test Case Derivation: A user wants to update the appointment
+
+	      How test will be performed: Jest will send an update appointment request with a valid appointment
+	      ID and valid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M5-9}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: An appointment exists
+
+	      Input: Update an appointment request with an invalid appointment ID and valid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A user wants to update the appointment
+
+	      How test will be performed: Jest will send an update appointment request with an invalid
+	      appointment ID and valid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M5-10}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: An appointment exists
+
+	      Input: Update an appointment request with a valid appointment ID and invalid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A user wants to update the appointment
+
+	      How test will be performed: Jest will send an update appointment request with a valid appointment
+	      ID and invalid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M5-11}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: An appointment exists
+
+	      Input: Update an appointment request with a valid appointment ID and with an end time before the
+	      start time
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A user wants to update the appointment
+
+	      How test will be performed: Jest will send an update appointment request with a valid appointment
+	      ID and invalid timing information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M5-12}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: Multiple appointment exists with some having overlapping time slots
+
+	      Input: Update an appointment request with a valid appointment ID and update status from
+	      ``PENDING\_APPROVAL'' to ``ACCEPTED''
+
+	      Output: The appointment is updated and all other overlapping appointment are updated to
+	      ``REJECTED''
+
+	      Test Case Derivation: A shop owner/employee wants to accept an appointment
+
+	      How test will be performed: Jest will send an update appointment request with a valid appointment
+	      ID and status as ``ACCEPTED''
+
+	      Result: Passed
+
+	\item \textbf{FRT-M5-13}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: An appointment exists
+
+	      Input: Delete appointment request with a valid appointment ID
+
+	      Output: The appointment and work order should be deleted
+
+	      Test Case Derivation: A user wants to delete an appointment
+
+	      How test will be performed: Jest will send a delete appointment request with a valid appointment ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M5-14}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: An appointment exists
+
+	      Input: Delete appointment request with an invalid appointment ID
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A user wants to delete an appointment
+
+	      How test will be performed: Jest will send a delete appointment request with a valid appointment ID
+
+	      Result: Passed
+
+\end{enumerate}
+
+\subsection{Work Orders Module}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-M6-1}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A work order exists
+
+	      Input: Get work order request with a valid work order ID
+
+	      Output: Work order data
+
+	      Test Case Derivation: A user wants to view the work order
+
+	      How test will be performed: Jest will send a get work order request with a valid work order ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M6-2}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A work order exists
+
+	      Input: Get work order request with an invalid work order ID
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A user wants to view the work order
+
+	      How test will be performed: Jest will send a get work order request with an invalid work order ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M6-3}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A work order exists
+
+	      Input: Get work order request with a valid shop ID
+
+	      Output: List of work orders
+
+	      Test Case Derivation: A shop owner/employee wants to view all the work orders for their shop
+
+	      How test will be performed: Jest will send a get work orders request with a valid shop ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M6-4}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A work order exists
+
+	      Input: Get work order request with an invalid shop ID
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A shop owner/employee wants to view all the work orders for their shop
+
+	      How test will be performed: Jest will send a get work order request with an invalid shop ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M6-5}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A work order exists
+
+	      Input: Update work order request with a valid work order ID and valid information
+
+	      Output: Update the work order
+
+	      Test Case Derivation: A shop owner/employee wants to update the work order
+
+	      How test will be performed: Jest will send an update work order request with a valid work order ID
+	      and valid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M6-6}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A work order exists
+
+	      Input: Update work order request with an invalid work order ID and valid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A shop owner/employee wants to update the work order
+
+	      How test will be performed: Jest will send an update work order request with an invalid work order
+	      ID and valid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M6-7}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A work order exists
+
+	      Input: Update work order request with a valid work order ID and invalid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A shop owner/employee wants to update the work order
+
+	      How test will be performed: Jest will send an update work order request with a valid work order ID
+	      and invalid information
+
+	      Result: Passed
+
+\end{enumerate}
+
+\subsection{Employee Management Module}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-M7-1}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop account exists with employees
+
+	      Input: Get employees with a valid shop ID
+
+	      Output: All employees associated with the shop
+
+	      Test Case Derivation: A shop owner with employees wants to view the list of employees
+
+	      How test will be performed: Jest will send a get employees request with a valid shop ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M7-2}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop account exists with employees
+
+	      Input: Get employees with an invalid shop ID
+
+	      Output: Empty list
+
+	      Test Case Derivation: A shop owner with employees wants to view the list of employees
+
+	      How test will be performed: Jest will send a get employees request with an invalid shop ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M7-3}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with employees
+
+	      Input: Update employee status from ``ACTIVE'' to ``SUSPENDED'' for a given employee ID
+
+	      Output: No operation
+
+	      Test Case Derivation: The shop owner with employees wants to remove an employee
+
+	      How test will be performed: Jest will send a delete employee request with a valid employee ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M7-4}
+
+	      Control: Manual
+
+	      Initial State: Shop owner account with employees
+
+	      Input: Update employee status from ``ACTIVE'' to ``SUSPENDED'' for a given employee ID
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: The shop owner with employees wants to remove an employee
+
+	      How test will be performed: Jest will send a delete employee request with an invalid employee ID
+
+	      Result: Passed
+
+\end{enumerate}
+
+\subsection{Services Module}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-M8-1}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop and a shop owner exist
+
+	      Input: Create service request with valid information
+
+	      Output: Create the service
+
+	      Test Case Derivation: A shop owner wants to create a service at their shop
+
+	      How test will be performed: Jest will send a create service request with valid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M8-2}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop and a shop owner exist
+
+	      Input: Create service request with invalid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A shop owner wants to create a service at their shop
+
+	      How test will be performed: Jest will send a create service request with invalid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M8-3}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A service exists
+
+	      Input: Get service request with a valid service ID
+
+	      Output: The service data
+
+	      Test Case Derivation: A user wants to view a service
+
+	      How test will be performed: Jest will send a get service request with a valid service ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M8-4}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A service exists
+
+	      Input: Get service request with an invalid service ID
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A user wants to view a service
+
+	      How test will be performed: Jest will send a get service request with an invalid service ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M8-5}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A service exists
+
+	      Input: Get services request with a valid shop ID
+
+	      Output: List of services
+
+	      Test Case Derivation: A user wants to view the services at a shop
+
+	      How test will be performed: Jest will send a get services request with a valid shop ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M8-6}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A service exists
+
+	      Input: Get services request with an invalid shop ID
+
+	      Output: Empty list
+
+	      Test Case Derivation: A user wants to view the services at a shop
+
+	      How test will be performed: Jest will send a get services request with an invalid shop ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M8-7}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A ``CANNED'' service exists
+
+	      Input: Get ``CANNED'' services request with a valid shop ID
+
+	      Output: List of ``CANNED'' services
+
+	      Test Case Derivation: A user wants to view the ``CANNED'' services at a shop
+
+	      How test will be performed: Jest will send a get ``CANNED'' services request with a valid shop ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M8-8}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A ``CANNED'' service exists
+
+	      Input: Get ``CANNED'' services request with an invalid shop ID
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A user wants to view the ``CANNED'' services at a shop
+
+	      How test will be performed: Jest will send a get ``CANNED'' services request with an invalid shop
+	      ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M8-9}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A ``CUSTOM'' service exists
+
+	      Input: Get ``CUSTOM'' services request with a valid shop ID
+
+	      Output: List of ``CUSTOM'' services
+
+	      Test Case Derivation: A user wants to view the ``CUSTOM'' services at a shop
+
+	      How test will be performed: Jest will send a get ``CUSTOM'' services request with a valid shop ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M8-10}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A ``CUSTOM'' service exists
+
+	      Input: Get ``CUSTOM'' services request with an invalid shop ID
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A user wants to view the ``CUSTOM'' services at a shop
+
+	      How test will be performed: Jest will send a get ``CUSTOM'' services request with an invalid shop
+	      ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M8-11}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A service exists
+
+	      Input: Update a service request with a valid service ID and valid information
+
+	      Output: The service is updated
+
+	      Test Case Derivation: A shop owner wants to update the details of their service
+
+	      How test will be performed: Jest will send an update service request with a valid service ID and
+	      valid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M8-12}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A service exists
+
+	      Input: Update a service request with an invalid service ID and valid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A shop owner wants to update the details of their service
+
+	      How test will be performed: Jest will send an update service request with an invalid service ID and
+	      valid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M8-13}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A service exists
+
+	      Input: Update a service request with a valid service ID and invalid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A shop owner wants to update the details of their service
+
+	      How test will be performed: Jest will send an update service request with a valid service ID and
+	      invalid information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M8-14}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A service exists
+
+	      Input: Delete a service request with a valid service ID
+
+	      Output: The service is deleted
+
+	      Test Case Derivation: A shop owner wants to delete their service
+
+	      How test will be performed: Jest will send a delete service request with a valid service ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M8-15}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A service exists
+
+	      Input: Delete a service request with an invalid service ID
+
+	      Output: No operation
+
+	      Test Case Derivation: A shop owner wants to delete their service
+
+	      How test will be performed: Jest will send a delete service request with an invalid service ID
+
+	      Result: Passed
+
+\end{enumerate}
+
+\subsection{Shop Module}
+
+\begin{enumerate}
+
+	\item \textbf{FRT-M9-1}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop exists
+
+	      Input: Get shop request with a valid shop ID
+
+	      Output: Shop data
+
+	      Test Case Derivation: A user wants to view the shop
+
+	      How test will be performed: Jest will send a get shop request with a valid shop ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M9-2}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop exists
+
+	      Input: Get shop request with an invalid shop ID
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A user wants to view the shop
+
+	      How test will be performed: Jest will send a get shop request with an invalid shop ID
+
+	      Result: Passed
+
+	\item \textbf{FRT-M9-3}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop exists
+
+	      Input: Update shop request with a valid shop ID and valid information
+
+	      Output: Update the shop information
+
+	      Test Case Derivation: A shop owner wants to update the shop data information
+
+	      How test will be performed: Jest will send an update shop request with a valid shop ID and valid
+	      information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M9-4}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop exists
+
+	      Input: Update shop request with an invalid shop ID and valid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A shop owner/employee wants to update the shop
+
+	      How test will be performed: Jest will send an update shop request with an invalid shop ID and valid
+	      information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M9-5}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: A shop exists
+
+	      Input: Update shop request with a valid shop ID and invalid information
+
+	      Output: Request is rejected
+
+	      Test Case Derivation: A shop owner/employee wants to update the shop
+
+	      How test will be performed: Jest will send an update shop request with a valid shop ID and invalid
+	      information
+
+	      Result: Passed
+
+	\item \textbf{FRT-M9-6}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: Multiple shops exist
+
+	      Input: Get shop request with a valid shop name
+
+	      Output: A shop that contains that shop name
+
+	      Test Case Derivation: A user wants to search for auto repair shops
+
+	      How test will be performed: Jest will send a get shop request with a name that exists in the list
+	      of shops
+
+	      Result: Passed
+
+	\item \textbf{FRT-M9-7}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: Multiple shops exist
+
+	      Input: Get shop request with a phrase that exists in multiple shop names
+
+	      Output: A list of shops that contain that phrase
+
+	      Test Case Derivation: A user wants to search for auto repair shops
+
+	      How test will be performed: Jest will send a get shop request with a phrase that exists in the list
+	      of shops
+
+	      Result: Passed
+
+	\item \textbf{FRT-M9-8}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: Multiple shops exist
+
+	      Input: Get shop request with a shop name that does not exist in the list of shop names
+
+	      Output: An empty list
+
+	      Test Case Derivation: A user wants to search for auto repair shops
+
+	      How test will be performed: Jest will send a get shop request with a name that does not exist in
+	      the list of shops
+
+	      Result: Passed
+
+	\item \textbf{FRT-M9-9}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: Multiple shops exist, shops have services
+
+	      Input: Get shop request with a service name
+
+	      Output: A list of shops that contain that service
+
+	      Test Case Derivation: A user wants to search for auto repair shops
+
+	      How test will be performed: Jest will send a get shop request with a service that exists in the
+	      list of shops
+
+	      Result: Passed
+
+	\item \textbf{FRT-M9-10}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: Multiple shops exist, shops have services
+
+	      Input: Get shop request with a service name that does not exist in any shop
+
+	      Output: An empty list
+
+	      Test Case Derivation: A user wants to search for auto repair shops
+
+	      How test will be performed: Jest will send a get shop request with a service that does not exist in
+	      the list of shops
+
+	      Result: Passed
+
+\end{enumerate}
+
+\newpage
+
+\section{Changes Due to Testing}
+
+During testing there were a few changes that were needed to be made to bring the application into
+alignment with the requirements defined in the SRS and the plan defined in the VnV Plan. Test cases
+``FRT-BE5-1'', ``FRT-BE5-2'', ``NFRT-OE-1'', and ``NFRT-SR2-1'' have failed and changes will be
+made to address them. Additionally, there were comments made regarding the lack of the ability to
+edit and cancel appointments in the user interface during the Revision 0 Demonstration. This
+feedback will also be addressed. All changes are planned to be completed before the Revision 1
+Demonstration.
 
 \section{Automated Testing}
 
@@ -1298,11 +2625,57 @@ reported on every pull request to the main branch and to every push to the main 
 
 \section{Code Coverage Metrics}
 
+Code coverage was calculated using Jest's built-in code coverage instrumentation. A tool by the
+name of ``nyc'' was used to merge the code coverage reports generated from the multiple runs and
+output a human-readable HTML report. The code coverage report is documented in Table \ref{Code
+	Coverage Report}. Code that was not checked by the automated testing was either tested manually or
+outside the scope of the requirements.
+
+\begin{table}[H]
+	\centering
+	\caption{Code Coverage Report} \label{Code Coverage Report}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Package}             & \textbf{Line Rate} & \textbf{Branch Rate} \\
+		\hline
+		pages.api.appointment        & 79\%               & 70\%                 \\
+		\hline
+		pages.api.customer.[id]      & 19\%               & 18\%                 \\
+		\hline
+		pages.api.employee           & 53\%               & 18\%                 \\
+		\hline
+		pages.api.quotes             & 77\%               & 33\%                 \\
+		\hline
+		pages.api.quotes.[id]        & 73\%               & 54\%                 \\
+		\hline
+		pages.api.service            & 74\%               & 61\%                 \\
+		\hline
+		pages.api.shop               & 73\%               & 71\%                 \\
+		\hline
+		pages.api.shop.[id]          & 61\%               & 43\%                 \\
+		\hline
+		pages.api.shop.[id].services & 65\%               & 71\%                 \\
+		\hline
+		pages.api.user.register      & 76\%               & 42\%                 \\
+		\hline
+		pages.api.vehicle            & 0\%                & 0\%                  \\
+		\hline
+		pages.api.work-order         & 65\%               & 47\%                 \\
+		\hline
+		server.services              & 92\%               & 72\%                 \\
+		\hline
+		Summary                      & 67\% (616 / 914)   & 51\% (171 / 338)     \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\newpage
+
 \bibliographystyle{plainnat}
 
 \bibliography{../../refs/References}
 
-\newpage{}
+\newpage
 
 \section{Appendix}
 \subsection{Reflection}
