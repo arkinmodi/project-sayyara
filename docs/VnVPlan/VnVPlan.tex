@@ -86,6 +86,7 @@
 	March 6, 2023    & Timothy Choy          & Update Functional Requirement Tests for Shop Lookup         \\
 	March 6, 2023    & Arkin Modi            & Update Functional Requirement Tests for Quotes              \\
 	March 6, 2023    & Joy Xiao              & Update employee management unit tests                       \\
+	March 7, 2023    & Timothy Choy          & Update Unit Tests for Shop Module                           \\
 	March 7, 2023    & Arkin Modi            & Update Functional Requirement Tests for Work Orders         \\
 	\bottomrule
 \end{longtable}
@@ -165,8 +166,8 @@ Below are the relevant documents that will be referred to in the VnV Plan.
 \begin{itemize}
 	\item \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/DevelopmentPlan/DevelopmentPlan.pdf}{Development Plan \citep*{DevPlan}}
 	\item \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/HazardAnalysis/HazardAnalysis.pdf}{Hazard Analysis \citep*{HA}}
-	\item \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MG/MG.pdf}{Module Guide \citep*{MG}}
-	\item \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MIS/MIS.pdf}{Module Interface Specification \citep*{MIS}}
+	\item \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/SoftArchitecture/MG.pdf}{Module Guide \citep*{MG}}
+	\item \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{Module Interface Specification \citep*{MIS}}
 	\item \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{Software Requirements Specification \citep*{SRS}}
 \end{itemize}
 
@@ -218,8 +219,9 @@ requirements from the
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS} and determining
 whether the outputs correspond with the expected inputs. The verification will also be done by
 going through the
-\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MG/MG.pdf}{MG} and
-\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MIS/MIS.pdf}{MIS}
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/SoftArchitecture/MG.pdf}{MG}
+and
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{MIS}
 checklist and ensure that all the modules are completed and fulfill the corresponding requirements.
 
 \subsection{Verification and Validation Plan Verification Plan}
@@ -228,9 +230,10 @@ The VnV Plan verification will be done by the core developers of the project, an
 course. To verify the plan, we will run through the requirements stated in the
 \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS} and match every
 requirement to at least one test. Regarding the unit tests, we will match each module stated in the
-\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MG/MG.pdf}{MG} and
-\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MIS/MIS.pdf}{MIS} to the
-tests written in the VnV plan.
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/SoftArchitecture/MG.pdf}{MG}
+and
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{MIS}
+to the tests written in the VnV plan.
 
 % \wss{The verification and validation plan is an artifact that should also be verified.}
 
@@ -1442,8 +1445,8 @@ shall not be tested.
 % tests were selected.}
 
 This section will contain tests covering the ``Users Module'' defined in the
-\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MIS/MIS.pdf}{MIS}. These
-tests were chosen based on common user flows and internal execution patterns.
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{MIS}.
+These tests were chosen based on common user flows and internal execution patterns.
 
 \begin{enumerate}
 
@@ -1600,8 +1603,8 @@ tests were chosen based on common user flows and internal execution patterns.
 \subsubsection{Quotes Module}
 
 This section will contain tests covering the ``Quotes Module'' defined in the
-\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MIS/MIS.pdf}{MIS}. These
-tests were chosen based on common user flows.
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{MIS}.
+These tests were chosen based on common user flows.
 
 \begin{enumerate}
 
@@ -1854,8 +1857,8 @@ tests were chosen based on common user flows.
 \subsubsection{Appointments Module}
 
 This section will contain tests covering the ``Appointments Module'' defined in the
-\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MIS/MIS.pdf}{MIS}. These
-tests were chosen based on common user flows.
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{MIS}.
+These tests were chosen based on common user flows.
 
 \begin{enumerate}
 
@@ -2069,8 +2072,8 @@ tests were chosen based on common user flows.
 \subsubsection{Work Orders Module}
 
 This section will contain tests covering the ``Work Orders Module'' defined in the
-\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MIS/MIS.pdf}{MIS}. These
-tests were chosen based on common user flows.
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{MIS}.
+These tests were chosen based on common user flows.
 
 \begin{enumerate}
 
@@ -2246,8 +2249,8 @@ were chosen based on common user flows.
 \subsubsection{Services Module}
 
 This section will contain tests covering the ``Services Module'' defined in the
-\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MIS/MIS.pdf}{MIS}. These
-tests were chosen based on common user flows.
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{MIS}.
+These tests were chosen based on common user flows.
 
 \begin{enumerate}
 
@@ -2471,8 +2474,8 @@ tests were chosen based on common user flows.
 \subsubsection{Shop Module}
 
 This section will contain tests covering the ``Shop Module'' defined in the
-\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/MIS/MIS.pdf}{MIS}. These
-tests were chosen based on common user flows.
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{MIS}.
+These tests were chosen based on common user flows.
 
 \begin{enumerate}
 
@@ -2548,6 +2551,81 @@ tests were chosen based on common user flows.
 
 	      How test will be performed: Jest will send an update shop request with a valid shop ID and invalid
 	      information
+
+	\item \textbf{FRT-M9-6}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: Multiple shops exist
+
+	      Input: Get shop request with a valid shop name
+
+	      Output: A shop that contains that shop name
+
+	      Test Case Derivation: A user wants to search for auto repair shops
+
+	      How test will be performed: Jest will send a get shop request with a name that exists in the list
+	      of shops
+
+	\item \textbf{FRT-M9-7}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: Multiple shops exist
+
+	      Input: Get shop request with a phrase that exists in multiple shop names
+
+	      Output: A list of shops that contain that phrase
+
+	      Test Case Derivation: A user wants to search for auto repair shops
+
+	      How test will be performed: Jest will send a get shop request with a phrase that exists in the list
+	      of shops
+
+	\item \textbf{FRT-M9-8}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: Multiple shops exist
+
+	      Input: Get shop request with a shop name that does not exist in the list of shop names
+
+	      Output: An empty list
+
+	      Test Case Derivation: A user wants to search for auto repair shops
+
+	      How test will be performed: Jest will send a get shop request with a name that does not exist in
+	      the list of shops
+
+	\item \textbf{FRT-M9-9}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: Multiple shops exist, shops have services
+
+	      Input: Get shop request with a service name
+
+	      Output: A list of shops that contain that service
+
+	      Test Case Derivation: A user wants to search for auto repair shops
+
+	      How test will be performed: Jest will send a get shop request with a service that exists in the
+	      list of shops
+
+	\item \textbf{FRT-M9-10}
+
+	      Type: Functional, Dynamic, Unit, Automated
+
+	      Initial State: Multiple shops exist, shops have services
+
+	      Input: Get shop request with a service name that does not exist in any shop
+
+	      Output: An empty list
+
+	      Test Case Derivation: A user wants to search for auto repair shops
+
+	      How test will be performed: Jest will send a get shop request with a service that does not exist in
+	      the list of shops
 
 \end{enumerate}
 
