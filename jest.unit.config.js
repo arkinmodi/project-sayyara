@@ -28,7 +28,7 @@ const customJestConfig = {
     "<rootDir>/test/mocks/",
     "middleware.ts",
     "src/constants",
-    "src/pages/api/auth/[.....nextauth].ts",
+    "src/pages/api/auth/[...nextauth].ts",
     "src/redux",
     "src/server/common",
     "src/server/db",
