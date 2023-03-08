@@ -24,6 +24,7 @@ import React, {
 import { useDispatch, useSelector } from "react-redux";
 import { ICustomerAppointment } from "src/types/appointment";
 import { AppointmentStatus } from "../../../types/appointment";
+import EditAppointmentDialog from "./editAppointmentDialog";
 
 const responsiveOptions = [
   {
@@ -60,6 +61,9 @@ const CustomerAppointments = () => {
   const [rejectedOrCancelledAppointments, setRejectedOrCancelledAppointments] =
     useState<ICustomerAppointment[]>([]);
   const [_numItemVisible, setNumItemVisible] = useState(0);
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] =
+    useState<ICustomerAppointment | null>(null);
   const [cancellationReason, setCancellationReason] = useState("");
   const [cancelAppointmentDialog, setCancelAppointmentDialog] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -200,6 +204,13 @@ const CustomerAppointments = () => {
     }
   };
 
+  const formatDate = (d: Date, showSeconds: boolean = false) => {
+    return new Intl.DateTimeFormat("en-us", {
+      dateStyle: "medium",
+      timeStyle: showSeconds ? "medium" : "short",
+    }).format(d);
+  };
+
   const cancelAppointment = () => {
     setSubmitted(true);
     if (cancellationReason.length > 0 && cancelledAppointmentId != null) {
@@ -230,7 +241,7 @@ const CustomerAppointments = () => {
   };
 
   const deleteProductDialogFooter = (
-    <div>
+    <div className={styles.buttonsDivStyle}>
       <Button
         className={"blueButton"}
         label="No"
@@ -249,6 +260,19 @@ const CustomerAppointments = () => {
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value ?? "";
     setCancellationReason(val);
+  };
+
+  const openEditAppointmentDialog = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    appointment: ICustomerAppointment
+  ) => {
+    e.stopPropagation();
+    setSelectedAppointment(appointment);
+    setOpenEditDialog(true);
+  };
+
+  const closeEditAppointmentDialog = () => {
+    setOpenEditDialog(false);
   };
 
   const appointmentsCard = (appointment: ICustomerAppointment | null) => {
@@ -311,19 +335,33 @@ const CustomerAppointments = () => {
                 {(appointment as ICustomerAppointment).serviceName}
               </h4>
               <h4 className="mb-1">
-                {new Date(appointment.startTime).toLocaleString()}
+                {`${formatDate(
+                  new Date(appointment.startTime)
+                )} to ${formatDate(new Date(appointment.endTime))}`}
               </h4>
               {(appointment as ICustomerAppointment).status ===
                 AppointmentStatus.ACCEPTED ||
               (appointment as ICustomerAppointment).status ===
                 AppointmentStatus.PENDING_APPROVAL ? (
-                <Button
-                  label="Cancel"
-                  className={styles.appointmentButtonRed}
-                  onClick={(e) =>
-                    cancelAppointmentDialogFooter(e, appointment.id)
-                  }
-                />
+                <div className={styles.buttonsDivStyle}>
+                  <Button
+                    label="Cancel"
+                    className={styles.appointmentButtonRed}
+                    onClick={(e) =>
+                      cancelAppointmentDialogFooter(e, appointment.id)
+                    }
+                  />
+                  <Button
+                    label="Edit"
+                    className={styles.appointmentButtonBlue}
+                    onClick={(e) =>
+                      openEditAppointmentDialog(
+                        e,
+                        appointment as ICustomerAppointment
+                      )
+                    }
+                  />
+                </div>
               ) : (
                 <></>
               )}
@@ -418,6 +456,18 @@ const CustomerAppointments = () => {
           </div>
         </AccordionTab>
       </Accordion>
+      <div
+        style={{
+          display:
+            openEditDialog && selectedAppointment != null ? "block" : "none",
+        }}
+      >
+        <EditAppointmentDialog
+          appointment={selectedAppointment!!}
+          visible={openEditDialog}
+          onHide={closeEditAppointmentDialog}
+        />
+      </div>
       <Dialog
         visible={cancelAppointmentDialog}
         style={{ width: "32rem" }}

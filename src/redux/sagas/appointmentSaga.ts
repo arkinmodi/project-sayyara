@@ -17,6 +17,7 @@ import { getShopId } from "src/utils/shopUtil";
 import {
   IAppointmentActionCreateAppointment,
   IAppointmentActionSetAppointmentStatus,
+  IAppointmentActionSetAppointmentTime,
   IAppointmentActionSetCancelAppointment,
 } from "../actions/appointmentAction";
 import AppointmentTypes from "../types/appointmentTypes";
@@ -47,6 +48,30 @@ function patchAppointmentStatus(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ status: content.status }),
+  }).then((res) => {
+    if (res.status === 200) {
+      return true;
+    } else {
+      // TODO: check and handle errors
+      return false;
+    }
+  });
+}
+
+function patchAppointmentTime(
+  content: IAppointmentActionSetAppointmentTime["payload"]
+): Promise<boolean> {
+  return fetch(`/api/appointment/${content.id}`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      start_time: content.startTime,
+      end_time: content.endTime,
+      status: AppointmentStatus.PENDING_APPROVAL,
+    }),
   }).then((res) => {
     if (res.status === 200) {
       return true;
@@ -109,6 +134,7 @@ function getCustomerAppointments(
                 id: appointment.id,
                 startTime: appointment.start_time,
                 endTime: appointment.end_time,
+                shopId: shopId,
                 shopName: shop?.name,
                 shopAddress: shop?.address,
                 shopPhoneNumber: shop?.phoneNumber,
@@ -150,6 +176,18 @@ function* setAppointmentStatus(
     if (userType === UserType.SHOP_OWNER || userType == UserType.EMPLOYEE) {
       yield put({ type: ShopTypes.READ_SHOP_APPOINTMENTS });
     } else {
+      yield call(readAppointments);
+    }
+  }
+}
+
+function* setAppointmentTime(
+  action: IAppointmentActionSetAppointmentTime
+): Generator<CallEffect | PutEffect | SelectEffect> {
+  const userType = yield select(AuthSelectors.getUserType);
+  if (userType == UserType.CUSTOMER) {
+    const success = yield call(patchAppointmentTime, action.payload);
+    if (success) {
       yield call(readAppointments);
     }
   }
@@ -224,6 +262,7 @@ function* createAppointment(
 export function* appointmentSaga() {
   yield all([
     takeEvery(AppointmentTypes.SET_APPOINTMENT_STATUS, setAppointmentStatus),
+    takeEvery(AppointmentTypes.SET_APPOINTMENT_TIME, setAppointmentTime),
     takeEvery(AppointmentTypes.READ_APPOINTMENTS, readAppointments),
     takeEvery(AppointmentTypes.CREATE_APPOINTMENT, createAppointment),
     takeEvery(AppointmentTypes.SET_CANCEL_APPOINTMENT, setCancelAppointment),

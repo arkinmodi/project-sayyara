@@ -178,7 +178,11 @@ const ShopAppointments = (props: IAppointmentsProps) => {
     Object.keys(appointmentsMap).forEach((date) => {
       content.push(
         <div key={date}>
-          <h4>{date}</h4>
+          <h4>
+            {new Intl.DateTimeFormat("en-US", {
+              dateStyle: "full",
+            }).format(new Date(date))}
+          </h4>
           {listAppointmentCards(date)}
         </div>
       );
