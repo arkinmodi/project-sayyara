@@ -16,7 +16,6 @@
 \usepackage{amsfonts}
 \usepackage{float}
 \usepackage{pdflscape}
-\usepackage[shortlabels]{enumitem}
 
 \input{../Comments}
 \input{../Common}
@@ -63,11 +62,7 @@
 	March 8, 2023     & Arkin Modi            & Add Unit Test Results                                                                                        \\
 	March 8, 2023     & Arkin Modi            & Add Traceability Between Test Cases and Requirements \& Traceability Between Test Cases and Modules Sections \\
 	March 8, 2023     & Timothy Choy          & Add Test Evaluation for Usability Survey                                                                     \\
-	March 8, 2023     & Arkin Modi            & Add Reflection                                                                                               \\
-	March 8, 2023     & Joy Xiao              & Add Reflection                                                                                               \\
-	March 8, 2023     & Leon So               & Add Reflection                                                                                               \\
-	March 8, 2023     & Timothy Choy          & Add Reflection                                                                                               \\
-
+	March 8, 2023    & Joy Xiao              & Fix some grammar                                            \\
 	\bottomrule
 \end{longtable}
 
@@ -137,7 +132,7 @@ the tests reported aim to verify and validate functional and nonfunctional requi
 the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
 In addition, the testing reported in this document aims to validate that the application provides
-adequate usability and to verify that system is in a functional state for the end users. The
+adequate usability and to verify that the system is in a functional state for the end users. The
 testing and validation will aid in ensuring that the product fulfills the system requirements,
 intended use, and goals of stakeholders.
 
@@ -212,9 +207,9 @@ intended use, and goals of stakeholders.
 
 	      Output: Redirect to vehicle owner landing page upon successful login
 
-	      Test Case Derivation: Customer wants to login to existing with valid login credentials provided
+	      Test Case Derivation: Customer wants to log in to existing with valid login credentials provided
 
-	      How test will be performed: The tester will login to an existing customer account using valid login
+	      How test will be performed: The tester will log in to an existing customer account using valid login
 	      credentials
 
 	      Results: Passed
@@ -229,9 +224,9 @@ intended use, and goals of stakeholders.
 
 	      Output: Redirect to shop owner landing page upon successful login
 
-	      Test Case Derivation: Shop owner wants to login to existing with valid login credentials provided
+	      Test Case Derivation: Shop owner wants to log in to existing with valid login credentials provided
 
-	      How test will be performed: The tester will login to an existing shop owner account using valid
+	      How test will be performed: The tester will log in to an existing shop owner account using valid
 	      login credentials
 
 	      Results: Passed
@@ -246,9 +241,9 @@ intended use, and goals of stakeholders.
 
 	      Output: Redirect to employee landing page upon successful login
 
-	      Test Case Derivation: Employee wants to login to existing with valid login credentials provided
+	      Test Case Derivation: Employee wants to log in to existing with valid login credentials provided
 
-	      How test will be performed: The tester will login to an existing employee account using valid login
+	      How test will be performed: The tester will log in to an existing employee account using valid login
 	      credentials
 
 	      Results: Passed
@@ -259,13 +254,13 @@ intended use, and goals of stakeholders.
 
 	      Initial State: Customer with existing account and logged in
 
-	      Input: Customer requests to logout
+	      Input: Customer requests to log out
 
 	      Output: System logs the user out and transitions to home page
 
-	      Test Case Derivation: Customer wants to logout
+	      Test Case Derivation: Customer wants to log out
 
-	      How test will be performed: The tester will request to logout on a customer account
+	      How test will be performed: The tester will request to log out on a customer account
 
 	      Results: Passed
 
@@ -274,13 +269,13 @@ intended use, and goals of stakeholders.
 
 	      Initial State: Shop owner with existing account and logged in
 
-	      Input: Shop owner requests to logout
+	      Input: Shop owner requests to log out
 
 	      Output: System logs the user out and transitions to home page
 
-	      Test Case Derivation: Shop owner wants to logout
+	      Test Case Derivation: Shop owner wants to log out
 
-	      How test will be performed: The tester will request to logout on a shop owner account
+	      How test will be performed: The tester will request to log out on a shop owner account
 
 	      Results: Passed
 
@@ -317,7 +312,7 @@ intended use, and goals of stakeholders.
 	      Output: A new appointment request is created with service details linked to the quote. Shop
 	      Owner/Employee Accounts will receive the appointment request
 
-	      Test Case Derivation: The appointment will be requested with the details the user entered
+	      Test Case Derivation: The appointment will be requested with the details entered by the user
 
 	      How test will be performed: The tester will go through the appointment booking process through the
 	      user interface through quotes
@@ -336,7 +331,7 @@ intended use, and goals of stakeholders.
 	      will receive the appointment request
 
 	      Test Case Derivation: The appointment will be requested with the canned job details as well as
-	      details the user entered
+	      details entered by the user
 
 	      How test will be performed: The tester will go through the appointment booking process through the
 	      user interface by selecting a canned job
@@ -377,7 +372,7 @@ intended use, and goals of stakeholders.
 	      How test will be performed: The tester will go through the user interface to edit an appointment
 	      booking
 
-	      Results: Pass
+	      Results: Passed
 
 	\item \textbf{FRT-BE6-1}
 
@@ -636,7 +631,7 @@ intended use, and goals of stakeholders.
 
 	      Output: A new work order is created with details from the quote
 
-	      Test Case Derivation: The system shall automatically create a work order for new appointment with
+	      Test Case Derivation: The system shall automatically create a work order for a new appointment with
 	      information from the quote
 
 	      How test will be performed: The tester will create an appointment through the user interface
@@ -653,7 +648,7 @@ intended use, and goals of stakeholders.
 
 	      Output: A new work order is created
 
-	      Test Case Derivation: The system shall automatically create a work order for new appointment
+	      Test Case Derivation: The system shall automatically create a work order for a new appointment
 
 	      How test will be performed: The tester will create an appointment through the user interface
 
@@ -732,7 +727,7 @@ intended use, and goals of stakeholders.
 	      their employee
 
 	      How test will be performed: The tester will use a shop ID displayed on the shop owner's employee
-	      management page and go through the sign up flow as an employee. The tester will verify that the
+	      management page and go through the sign-up flow as an employee. The tester will verify that the
 	      shop ID is displayed and correct.
 
 	      Results: Passed
@@ -1149,7 +1144,7 @@ intended use, and goals of stakeholders.
 
 	      Output/Result: The request is rejected with a 403 Forbidden error message
 
-	      How test will be performed: Through Jest an HTTP request will be sent to the server
+	      How test will be performed: Through Jest, an HTTP request will be sent to the server
 
 	      Results: Passed.
 
@@ -1157,7 +1152,7 @@ intended use, and goals of stakeholders.
 
 	      Type: Dynamic, Manual
 
-	      Initial State: One Shop Owner account and two Customer accounts with one customer having an
+	      Initial State: One Shop Owner account and two Customer accounts, with one customer having an
 	      appointment at the shop registered under the same Shop Owner account
 
 	      Input/Condition: Request available time slots at the Shop Owner's store using the Customer without
@@ -1192,6 +1187,7 @@ intended use, and goals of stakeholders.
 	      Results: Passed. Manually tested to verify that there are no offensive images or text.
 
 	\item \textbf{NFRT-CR2-1}
+
 	      Type: Static, Manual
 
 	      Initial State: The application is accessible through the web browser
@@ -1220,7 +1216,7 @@ intended use, and goals of stakeholders.
 	      be adhered to
 
 	      How test will be performed: The testers will go through the source code of the project and project
-	      documents to determine if any open source resources were used and check that appropriate credits
+	      documents to determine if any open source resources were used, and check that appropriate credits
 	      and/or copyright licenses are used.
 
 	      Results: Passed. Checked the MIT License requirements and that the project adhered to all the
@@ -1353,7 +1349,7 @@ A summary of all the test results can be found in table \ref{Table Unit Tests Re
 
 	      Output: Request is rejected
 
-	      Test Case Derivation: New customer wants to sign up for a new account but not all information is
+	      Test Case Derivation: New customer wants to sign up for a new account, but not all information is
 	      provided
 
 	      How test will be performed: Jest will send the create customer request with invalid information
@@ -1387,7 +1383,7 @@ A summary of all the test results can be found in table \ref{Table Unit Tests Re
 
 	      Output: Request is rejected
 
-	      Test Case Derivation: New shop owner wants to sign up for a new account but not all information is
+	      Test Case Derivation: New shop owner wants to sign up for a new account, but not all information is
 	      provided
 
 	      How test will be performed: Jest will send the create shop owner request with invalid information
@@ -2961,28 +2957,13 @@ the main points brought out through user testing
 The information in this section will be used to evaluate the team members on the graduate attribute
 of Reflection. Please answer the following question:
 
-\begin{enumerate}[\textbf{\arabic*.}]
-	\item \textbf{In what ways was the Verification and Validation (VnV) Plan different from the activities that were
-		      actually conducted for VnV? If there were differences, what changes required the modification in
-		      the plan? Why did these changes occur? Would you be able to anticipate these changes in future
-		      projects? If there weren't any differences, how was your team able to clearly predict a feasible
-		      amount of effort and the right tasks needed to build the evidence that demonstrates the required
-		      quality? (It is expected that most teams will have had to deviate from their original VnV Plan.)}
-
-	      There were some changes that we made due to changes in the requirements. There were some areas
-	      where we decided was out of scope and communicated with our supervisor. In addition, during
-	      implementation we found that some changes were necessary to achieve a desirable user flow and
-	      experience. This resulted in some changes in the requirements and testing plan. Since we had not
-	      anticipated these requirement changes, modifications were required to the VnV plan to appropriately
-	      reflect the changes in requirements. In addition, we decided to create and include a usability
-	      survey to gather feedback from users.
-
-	      We would be able to anticipate most of these changes in future projects. Some changes that are
-	      difficult to anticipate are stakeholders changing the requirements which would require updating the
-	      requirements documentation and consequently the testing plans. With regards to the usability
-	      survey, we would likely consider including a usability survey earlier in the process, and therefore
-	      we would likely be able to anticipate this component of the VnV plan in the future.
-
+\begin{enumerate}
+	\item In what ways was the Verification and Validation (VnV) Plan different from the activities that were
+	      actually conducted for VnV? If there were differences, what changes required the modification in
+	      the plan? Why did these changes occur? Would you be able to anticipate these changes in future
+	      projects? If there weren't any differences, how was your team able to clearly predict a feasible
+	      amount of effort and the right tasks needed to build the evidence that demonstrates the required
+	      quality? (It is expected that most teams will have had to deviate from their original VnV Plan.)
 \end{enumerate}
 
 \end{document}
