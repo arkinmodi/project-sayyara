@@ -88,6 +88,7 @@
 	March 6, 2023    & Joy Xiao              & Update employee management unit tests                       \\
 	March 7, 2023    & Timothy Choy          & Update Unit Tests for Shop Module                           \\
 	March 7, 2023    & Arkin Modi            & Update Functional Requirement Tests for Work Orders         \\
+	March 8, 2023    & Timothy Choy          & Add Usability Survey                                        \\
 	\bottomrule
 \end{longtable}
 
@@ -1202,6 +1203,14 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 	      How test will be performed: The testers disconnects from the internet while the application is
 	      open.
 
+	\item \textbf{NFRT-UH4-1}
+
+	      Type: Manual
+
+	      How test will be performed: A usability survey will be sent to a group of test users, and their
+	      responses will be recorded. The group of test users will include people from all user types of the
+	      application.
+
 \end{enumerate}
 
 \subsubsection{Performance Requirements}
@@ -1392,26 +1401,27 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 	\newpage
 
 	\begin{longtable}{|l|cccccccccccccc|}
-		\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements}                                                                                                                                                                                             \\
+		\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements}                                                                                                                                                                                                            \\
 		\hline
-		\textbf{Test IDs}   & \multicolumn{14}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                                    \\
+		\textbf{Test IDs}   & \multicolumn{14}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                                                   \\
 		\hline
-		~                   & \textbf{LF1}                                              & \textbf{LF2} & \textbf{LF3} & \textbf{UH1} & \textbf{UH2} & \textbf{UH3} & \textbf{PR1} & \textbf{OE1} & \textbf{MS1} & \textbf{SR1} & \textbf{SR2} & \textbf{CR1} & \textbf{CR2} & \textbf{LR1} \\
+		~                   & \textbf{LF1}                                              & \textbf{LF2} & \textbf{LF3} & \textbf{UH1} & \textbf{UH2} & \textbf{UH3} & \textbf{UH4} & \textbf{PR1} & \textbf{OE1} & \textbf{MS1} & \textbf{SR1} & \textbf{SR2} & \textbf{CR1} & \textbf{CR2} & \textbf{LR1} \\
 		\hline
-		\textbf{NFRT-LF1-1} & X                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-LF2-1} & ~                                                         & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-LF3-1} & ~                                                         & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-UH1-1} & ~                                                         & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-UH2-1} & ~                                                         & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-UH3-1} & ~                                                         & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-PR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-OE1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-MS1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-SR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-SR2-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            \\
-		\textbf{NFRT-CR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            \\
-		\textbf{NFRT-CR2-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            \\
-		\textbf{NFRT-LR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            \\
+		\textbf{NFRT-LF1-1} & X                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-LF2-1} & ~                                                         & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-LF3-1} & ~                                                         & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-UH1-1} & ~                                                         & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-UH2-1} & ~                                                         & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-UH3-1} & ~                                                         & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-UH4-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-PR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-OE1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-MS1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-SR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-SR2-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            \\
+		\textbf{NFRT-CR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            \\
+		\textbf{NFRT-CR2-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            \\
+		\textbf{NFRT-LR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            \\
 		\hline
 	\end{longtable}
 \end{landscape}
@@ -2654,9 +2664,23 @@ section \ref{System Tests for Nonfunctional Requirements}.
 % The definition of the test cases will call for SYMBOLIC\_CONSTANTS. Their values are defined in
 % this section for easy maintenance.
 
-% \subsection{Usability Survey Questions?}
+\subsection{Usability Survey Questions}
 
 % \wss{This is a section that would be appropriate for some projects.}
+\begin{enumerate}
+	\item Were there any bugs or issues you ran into?
+	\item What did you like the most or what stood out for you while using the application?
+	\item Please share what changes you'd like to see on our website.
+	\item How likely are you to recommend our application based on the user experience on a scale of 1 to 10?
+	\item Please share any challenges you experienced while using our application.
+	\item Please share any comments or suggestions you may have.
+	\item Which user account(s) did you test with? (i.e., CUSTOMER, EMPLOYEE, or SHOP OWNER)
+	\item Was the website intuitive, easy to learn to use and navigate?
+	\item When you made a mistake while navigating or using the application, was it easy to recover?
+	\item Were the fonts and colours used easy to read?
+	\item What device (e.g., brand, model, type) were you using? Did everything work as expected? If not,
+	      what did not work as expected?
+\end{enumerate}
 
 \subsection{Reflection}
 
