@@ -384,18 +384,18 @@ This section will contains tests covering the ``Authentication'' requirements de
 
 	\item \textbf{FRT-BE2-1}
 
-	Control: Manual
+	      Control: Manual
 
-	Initial State: Customer with existing account and not logged in
+	      Initial State: Customer with existing account and not logged in
 
-	Input: Customer submits login form with valid email, password, and vehicle information
+	      Input: Customer submits login form with valid email, password, and vehicle information
 
-	Output: Redirect to vehicle owner landing page upon successful login
+	      Output: Redirect to vehicle owner landing page upon successful login
 
-	Test Case Derivation: Customer wants to log in to existing with valid login credentials provided
+	      Test Case Derivation: Customer wants to log in to existing with valid login credentials provided
 
-	How test will be performed: The tester will log in to an existing customer account using valid login
-	credentials
+	      How test will be performed: The tester will log in to an existing customer account using valid
+	      login credentials
 
 	\item \textbf{FRT-BE2-2}
 
@@ -424,8 +424,8 @@ This section will contains tests covering the ``Authentication'' requirements de
 
 	      Test Case Derivation: Employee wants to log in to existing with valid login credentials provided
 
-	      How test will be performed: The tester will log in to an existing employee account using valid login
-	      credentials
+	      How test will be performed: The tester will log in to an existing employee account using valid
+	      login credentials
 
 	\item \textbf{FRT-BE3-1}
 
@@ -448,7 +448,7 @@ This section will contains tests covering the ``Authentication'' requirements de
 
 	      Initial State: Shop owner with existing account and logged in
 
-		  Input: Shop owner requests to log out
+	      Input: Shop owner requests to log out
 
 	      Output: System logs the user out and transitions to home page
 
@@ -954,17 +954,17 @@ This section will contain tests covering the ``Services'' requirements defined i
 	      Test Case Derivation: The user can add available auto shop services to their shop profile
 
 	      How test will be performed: The tester will add a service to the shop profile and confirms it shows
-	      on the shop profile
+	      up on the shop profile
 
 	\item \textbf{FRT-BE22-1}
 
 	      Control: Manual
 
-	      Initial State: Shop Owner/Shop Employee searches for a service
+	      Initial State: Shop Owner/Shop Employee searches for auto repair or maintenance services
 
 	      Input: Enters specific auto service in the search bar
 
-	      Output: Services matching the search criteria displayed
+	      Output: Auto shops with relevant services displayed
 
 	      Test Case Derivation: Services corresponding to the auto shop will be displayed
 
@@ -1014,7 +1014,7 @@ This section will contain tests covering the ``Shop Lookup'' requirements define
 
 	      Control: Manual
 
-	      Initial State: Shop Owner/Employee Account with a registered shop, Customer Account exists
+	      Initial State: Shop Owner/Employee Account with a registered shop, Customer account exists
 
 	      Input: The Customer account attempts to view a list of shops using the parameters of shop name,
 	      service name, part types and part conditions
@@ -1025,6 +1025,7 @@ This section will contain tests covering the ``Shop Lookup'' requirements define
 
 	      How test will be performed: The tester will search for shops, and input various parameters to see
 	      if the shop list changes correctly
+
 \end{enumerate}
 
 \subsubsection{Shop Profile}
@@ -1041,8 +1042,7 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 
 	      Input: Request to view shop profile
 
-	      Output: Information regarding the shop, which includes the shop's address, phone number, email, and
-	      hours of operation (if any)
+	      Output: Information regarding the shop, which includes the shop's address, phone number, and email
 
 	      Test Case Derivation: The system shall display information about the shop upon request
 
@@ -1212,20 +1212,20 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 
 	\item \textbf{NFRT-OE1-1} % For OE1
 
-	Type: Dynamic, Manual
+	      Type: Dynamic, Manual
 
-	Initial State: The application is accessible through the Google Chrome web browser
+	      Initial State: The application is accessible through the Google Chrome web browser
 
-	Input: The user navigates across all pages and dialogs, and performs all manual system tests for
-	functional requirements
+	      Input: The user navigates across all pages and dialogs, and performs all manual system tests for
+	      functional requirements
 
-	Output: All pages and dialogs should be fully operational on the below listed device dimensions
+	      Output: All pages and dialogs should be fully operational on the below listed device dimensions
 
-	How test will be performed: The testers will complete the manual system tests for functional
-	requirements on Google Chrome using various device dimension options listed in the Google DevTools
-	Device Toolbar. At minimum, the testers will test with the following dimensions: Responsive, iPhone
-	12 Pro ($390 \times 844$), iPhone SE ($375 \times 667$), and iPad Air ($820 \times 1180$). This set
-	will provide a reasonable variety of different device dimensions.
+	      How test will be performed: The testers will complete the manual system tests for functional
+	      requirements on Google Chrome using various device dimension options listed in the Google DevTools
+	      Device Toolbar. At minimum, the testers will test with the following dimensions: Responsive, iPhone
+	      12 Pro ($390 \times 844$), iPhone SE ($375 \times 667$), and iPad Air ($820 \times 1180$). This set
+	      will provide a reasonable variety of different device dimensions.
 
 \end{enumerate}
 
@@ -1279,29 +1279,29 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 \begin{enumerate}
 	\item \textbf{NFRT-CR1-1}
 
-	Type: Static, Manual
+	      Type: Static, Manual
 
-	Initial State: The application is accessible through the web browser
+	      Initial State: The application is accessible through the web browser
 
-	Input: The user navigates across all pages and dialogs, and performs all end-to-end tests
+	      Input: The user navigates across all pages and dialogs, and performs all end-to-end tests
 
-	Output: There should be no offensive texts or images
+	      Output: There should be no offensive texts or images
 
-	How test will be performed: The testers will go through end-to-end tests for the entire program and
-	will confirm that any texts or images are not offensive.
+	      How test will be performed: The testers will go through end-to-end tests for the entire program and
+	      will confirm that any texts or images are not offensive.
 
 	\item \textbf{NFRT-CR2-1}
 
-	Type: Static, Manual
+	      Type: Static, Manual
 
-	Initial State: The application is accessible through the web browser
+	      Initial State: The application is accessible through the web browser
 
-	Input: The user navigates across all pages and dialogs, and performs all end-to-end tests
+	      Input: The user navigates across all pages and dialogs, and performs all end-to-end tests
 
-	Output: All text should be displayed in English
+	      Output: All text should be displayed in English
 
-	How test will be performed: The testers will go through end-to-end tests for the entire program and
-	will confirm that the text displayed is in English.
+	      How test will be performed: The testers will go through end-to-end tests for the entire program and
+	      will confirm that the text displayed is in English.
 
 \end{enumerate}
 
@@ -1309,16 +1309,16 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 \begin{enumerate}
 	\item \textbf{NFRT-LR1-1}
 
-	Type: Static, Manual
+	      Type: Static, Manual
 
-	Input: The user navigates all source code and project documents
+	      Input: The user navigates all source code and project documents
 
-	Output: Appropriate credits and/or copyright licenses are used, and MIT License requirements should
-	be adhered to
+	      Output: Appropriate credits and/or copyright licenses are used, and MIT License requirements should
+	      be adhered to
 
-	How test will be performed: The testers will go through the source code of the project and project
-	documents to determine if any open source resources were used, and check that appropriate credits
-	and/or copyright licenses are used.
+	      How test will be performed: The testers will go through the source code of the project and project
+	      documents to determine if any open source resources were used, and check that appropriate credits
+	      and/or copyright licenses are used.
 
 \end{enumerate}
 
