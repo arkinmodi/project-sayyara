@@ -5,6 +5,7 @@
  * @group integration
  */
 
+import shopLookupHandler from "@pages/api/shop/lookup";
 import shopByIdHandler from "@pages/api/shop/[id]";
 import { Employee, prisma } from "@server/db/client";
 import { createShop } from "@server/services/shopService";
@@ -19,6 +20,30 @@ const testShop = {
   phone_number: "test_phone_number",
   email: "test@email.com",
   postal_code: "test_postal_code",
+  city: "test_city",
+  province: "test_province",
+};
+
+const testShop2 = {
+  create_time: new Date(),
+  update_time: new Date(),
+  name: "another_shop",
+  address: "test_address2",
+  phone_number: "test_phone_number2",
+  email: "test2@email.com",
+  postal_code: "test_postal_code2",
+  city: "test_city",
+  province: "test_province",
+};
+
+const testShop3 = {
+  create_time: new Date(),
+  update_time: new Date(),
+  name: "one_more_shop",
+  address: "test_address3",
+  phone_number: "test_phone_number3",
+  email: "test3@email.com",
+  postal_code: "test_postal_code3",
   city: "test_city",
   province: "test_province",
 };
@@ -231,5 +256,70 @@ describe("Shop Module", () => {
     await shopByIdHandler(update.req, update.res);
 
     expect(update.res.statusCode).toBe(400);
+  });
+
+  it("FRT-M9-6: Get shop request with a valid shop name", async () => {
+    const shop = await createShop(testShop);
+    const shop2 = await createShop(testShop2);
+    const shop3 = await createShop(testShop3);
+
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = { ...req.query, name: shop.name, shop: "true" };
+    await shopLookupHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()).toMatchObject([
+      {
+        ...testShop,
+        name: shop.name,
+        create_time: expect.any(String),
+        update_time: expect.any(String),
+      },
+    ]);
+  });
+
+  it("FRT-M9-7: Get shop request with a phrase that exists in multiple shop names", async () => {
+    const shop = await createShop(testShop);
+    const shop2 = await createShop(testShop2);
+    const shop3 = await createShop(testShop3);
+
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = { ...req.query, name: "shop", shop: "true" };
+    await shopLookupHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()).toMatchObject([
+      {
+        ...testShop,
+        name: shop.name,
+        create_time: expect.any(String),
+        update_time: expect.any(String),
+      },
+      {
+        ...testShop2,
+        name: shop2.name,
+        create_time: expect.any(String),
+        update_time: expect.any(String),
+      },
+      {
+        ...testShop3,
+        name: shop3.name,
+        create_time: expect.any(String),
+        update_time: expect.any(String),
+      },
+    ]);
+  });
+
+  it("FRT-M9-8: Get shop request with a shop name that does not exist in the list of shop names", async () => {
+    const shop = await createShop(testShop);
+    const shop2 = await createShop(testShop2);
+    const shop3 = await createShop(testShop3);
+
+    const { req, res } = createMockRequestResponse({ method: "GET" });
+    req.query = { ...req.query, name: "asfasdf", shop: "true" };
+    await shopLookupHandler(req, res);
+
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()).toMatchObject([]);
   });
 });
