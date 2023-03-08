@@ -91,6 +91,7 @@
 	March 7, 2023    & Arkin Modi            & Update Functional Requirement Tests for Work Orders         \\
 	March 8, 2023    & Timothy Choy          & Add Usability Survey                                        \\
 	March 8, 2023    & Joy Xiao              & Update editing appointments tests                           \\
+	March 8, 2023    & Joy Xiao              & Fix some grammar                                            \\
 	\bottomrule
 \end{longtable}
 
@@ -248,8 +249,8 @@ to the tests written in the VnV plan.
 
 Automated integration tests will be created to fulfill the system tests defined in section
 \ref{System Test Description} and automated unit tests will be created to fulfill the tests defined
-in section \ref{Unit Test Description}. Static analysis will be performed through code review by at
-least one core team member per pull request and automation tools as stated in \ref{Automated
+in section \ref{Unit Test Description}. Static analysis will be performed through code reviews by
+at least one core team member per pull request and automation tools as stated in \ref{Automated
 	Testing and Verification Tools}. A pull request will cover at most one module.
 
 Manual System Tests defined in section \ref{System Test Description} shall take place from January
@@ -306,7 +307,7 @@ to the pull request or the commit to the main branch using a pipeline.
 
 \subsection{Software Validation Plan}
 
-The plan for validating the software and the requirements shall be to conduct review session with
+The plan for validating the software and the requirements shall be to conduct review sessions with
 the stakeholders. These review sessions shall focus on the business events and user flows as
 defined in the \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}.
 
@@ -1405,7 +1406,7 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 % 	have a lower priority for verification than others.  If this is the case,
 % 	explain your rationale for the ranking of module importance.}
 
-All modules defined in the Module Interface Specification are within the scope testing with
+All modules defined in the Module Interface Specification are within the testing scope with the
 exception for the Database Driver Module. This module is largely composed of generated types and
 logic from a third party library, Prisma. It assumed that Prisma's logic is correct and therefore
 shall not be tested.
