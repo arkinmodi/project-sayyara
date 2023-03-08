@@ -384,18 +384,18 @@ This section will contains tests covering the ``Authentication'' requirements de
 
 	\item \textbf{FRT-BE2-1}
 
-	      Control: Manual
+	Control: Manual
 
-	      Initial State: Customer with existing account and not logged in
+	Initial State: Customer with existing account and not logged in
 
-	      Input: Customer submits login form with valid email, password, and vehicle information
+	Input: Customer submits login form with valid email, password, and vehicle information
 
-	      Output: Redirect to vehicle owner landing page upon successful login
+	Output: Redirect to vehicle owner landing page upon successful login
 
-	      Test Case Derivation: Customer wants to login to existing with valid login credentials provided
+	Test Case Derivation: Customer wants to log in to existing with valid login credentials provided
 
-	      How test will be performed: The tester will login to an existing customer account using valid login
-	      credentials
+	How test will be performed: The tester will log in to an existing customer account using valid login
+	credentials
 
 	\item \textbf{FRT-BE2-2}
 
@@ -407,9 +407,9 @@ This section will contains tests covering the ``Authentication'' requirements de
 
 	      Output: Redirect to shop owner landing page upon successful login
 
-	      Test Case Derivation: Shop owner wants to login to existing with valid login credentials provided
+	      Test Case Derivation: Shop owner wants to log in to existing with valid login credentials provided
 
-	      How test will be performed: The tester will login to an existing shop owner account using valid
+	      How test will be performed: The tester will log in to an existing shop owner account using valid
 	      login credentials
 
 	\item \textbf{FRT-BE2-3}
@@ -422,9 +422,9 @@ This section will contains tests covering the ``Authentication'' requirements de
 
 	      Output: Redirect to employee landing page upon successful login
 
-	      Test Case Derivation: Employee wants to login to existing with valid login credentials provided
+	      Test Case Derivation: Employee wants to log in to existing with valid login credentials provided
 
-	      How test will be performed: The tester will login to an existing employee account using valid login
+	      How test will be performed: The tester will log in to an existing employee account using valid login
 	      credentials
 
 	\item \textbf{FRT-BE3-1}
@@ -433,11 +433,13 @@ This section will contains tests covering the ``Authentication'' requirements de
 
 	      Initial State: Customer with existing account and logged in
 
-	      Input: Customer requests to logout
+	      Input: Customer requests to log out
 
 	      Output: System logs the user out and transitions to home page
 
-	      Test Case Derivation: Customer wants to logout
+	      Test Case Derivation: Customer wants to log out
+
+	      How test will be performed: The tester will request to log out on a customer account
 
 	      How test will be performed: The tester will request to logout on a customer account
 
@@ -446,13 +448,13 @@ This section will contains tests covering the ``Authentication'' requirements de
 
 	      Initial State: Shop owner with existing account and logged in
 
-	      Input: Shop owner requests to logout
+		  Input: Shop owner requests to log out
 
 	      Output: System logs the user out and transitions to home page
 
-	      Test Case Derivation: Shop owner wants to logout
+	      Test Case Derivation: Shop owner wants to log out
 
-	      How test will be performed: The tester will request to logout on a shop owner account
+	      How test will be performed: The tester will request to log out on a shop owner account
 
 	\item \textbf{FRT-BE3-3}
 
@@ -488,7 +490,7 @@ This section will contain tests covering the ``Appointments'' requirements defin
 	      Output: A new appointment request is created with service details linked to the quote. Shop
 	      Owner/Employee Accounts will receive the appointment request
 
-	      Test Case Derivation: The appointment will be requested with the details the user entered
+	      Test Case Derivation: The appointment will be requested with the details entered by the user
 
 	      How test will be performed: The tester will go through the appointment booking process through the
 	      user interface through quotes
@@ -505,7 +507,7 @@ This section will contain tests covering the ``Appointments'' requirements defin
 	      will receive the appointment request
 
 	      Test Case Derivation: The appointment will be requested with the canned job details as well as
-	      details the user entered
+	      details entered by the user
 
 	      How test will be performed: The tester will go through the appointment booking process through the
 	      user interface by selecting a canned job
@@ -775,7 +777,7 @@ This section will contain tests covering the ``Work Orders'' requirements define
 
 	      Output: A new work order is created with details from the quote
 
-	      Test Case Derivation: The system shall automatically create a work order for new appointment with
+	      Test Case Derivation: The system shall automatically create a work order for a new appointment with
 	      information from the quote
 
 	      How test will be performed: The tester will create an appointment through the user interface
@@ -790,7 +792,7 @@ This section will contain tests covering the ``Work Orders'' requirements define
 
 	      Output: A new work order is created
 
-	      Test Case Derivation: The system shall automatically create a work order for new appointment
+	      Test Case Derivation: The system shall automatically create a work order for a new appointment
 
 	      How test will be performed: The tester will create an appointment through the user interface
 
@@ -1210,14 +1212,20 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 
 	\item \textbf{NFRT-OE1-1} % For OE1
 
-	      Type: Dynamic, Manual
+	Type: Dynamic, Manual
 
-	      How test will be performed: The testers will complete the manual system tests for functional
-	      requirements listed in section \ref{Tests for Functional Requirements} on Google Chrome using
-	      various device dimension options listed in the Google DevTools Device Toolbar. At minimum, the
-	      testers will test with the following dimensions: Responsive, iPhone 12 Pro ($390 \times 844$),
-	      iPhone SE ($375 \times 667$), and iPad Air ($820 \times 1180$). This set will provide a reasonable
-	      variety of different device dimensions.
+	Initial State: The application is accessible through the Google Chrome web browser
+
+	Input: The user navigates across all pages and dialogs, and performs all manual system tests for
+	functional requirements
+
+	Output: All pages and dialogs should be fully operational on the below listed device dimensions
+
+	How test will be performed: The testers will complete the manual system tests for functional
+	requirements on Google Chrome using various device dimension options listed in the Google DevTools
+	Device Toolbar. At minimum, the testers will test with the following dimensions: Responsive, iPhone
+	12 Pro ($390 \times 844$), iPhone SE ($375 \times 667$), and iPad Air ($820 \times 1180$). This set
+	will provide a reasonable variety of different device dimensions.
 
 \end{enumerate}
 
@@ -1247,13 +1255,13 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 
 	      Output/Result: The request is rejected with a 403 Forbidden error message
 
-	      How test will be performed: Through Jest an HTTP request will be sent to the server
+	      How test will be performed: Through Jest, an HTTP request will be sent to the server
 
 	\item \textbf{NFRT-SR2-1}
 
 	      Type: Dynamic, Manual
 
-	      Initial State: One Shop Owner account and two Customer accounts with one customer having an
+	      Initial State: One Shop Owner account and two Customer accounts, with one customer having an
 	      appointment at the shop registered under the same Shop Owner account
 
 	      Input/Condition: Request available time slots at the Shop Owner's store using the Customer without
@@ -1271,17 +1279,29 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 \begin{enumerate}
 	\item \textbf{NFRT-CR1-1}
 
-	      Type: Static, Manual
+	Type: Static, Manual
 
-	      How test will be performed: The testers will go through end to end tests for the entire program and
-	      will confirm that any texts or images are not offensive.
+	Initial State: The application is accessible through the web browser
+
+	Input: The user navigates across all pages and dialogs, and performs all end-to-end tests
+
+	Output: There should be no offensive texts or images
+
+	How test will be performed: The testers will go through end-to-end tests for the entire program and
+	will confirm that any texts or images are not offensive.
 
 	\item \textbf{NFRT-CR2-1}
 
-	      Type: Static, Manual
+	Type: Static, Manual
 
-	      How test will be performed: The testers will go through end to end tests for the entire program and
-	      will confirm that the text displayed is in English.
+	Initial State: The application is accessible through the web browser
+
+	Input: The user navigates across all pages and dialogs, and performs all end-to-end tests
+
+	Output: All text should be displayed in English
+
+	How test will be performed: The testers will go through end-to-end tests for the entire program and
+	will confirm that the text displayed is in English.
 
 \end{enumerate}
 
@@ -1289,11 +1309,16 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 \begin{enumerate}
 	\item \textbf{NFRT-LR1-1}
 
-	      Type: Static, Manual
+	Type: Static, Manual
 
-	      How test will be performed: The testers will go through the source code of the project and project
-	      documents to determine if any open source resources were used and check that appropriate credits
-	      and/or copyright licenses are used.
+	Input: The user navigates all source code and project documents
+
+	Output: Appropriate credits and/or copyright licenses are used, and MIT License requirements should
+	be adhered to
+
+	How test will be performed: The testers will go through the source code of the project and project
+	documents to determine if any open source resources were used, and check that appropriate credits
+	and/or copyright licenses are used.
 
 \end{enumerate}
 
@@ -1455,7 +1480,7 @@ These tests were chosen based on common user flows and internal execution patter
 
 	      Output: Request is rejected
 
-	      Test Case Derivation: New customer wants to sign up for a new account but not all information is
+	      Test Case Derivation: New customer wants to sign up for a new account, but not all information is
 	      provided
 
 	      How test will be performed: Jest will send the create customer request with invalid information
@@ -1485,7 +1510,7 @@ These tests were chosen based on common user flows and internal execution patter
 
 	      Output: Request is rejected
 
-	      Test Case Derivation: New shop owner wants to sign up for a new account but not all information is
+	      Test Case Derivation: New shop owner wants to sign up for a new account, but not all information is
 	      provided
 
 	      How test will be performed: Jest will send the create shop owner request with invalid information
