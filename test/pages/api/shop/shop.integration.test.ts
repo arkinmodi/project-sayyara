@@ -96,10 +96,10 @@ afterAll(async () => {
 });
 
 afterEach(async () => {
-  const deleteServices = prisma.service.deleteMany({});
-  const deleteShops = prisma.shop.deleteMany({});
-  await prisma.$transaction([deleteServices]);
-  await prisma.$transaction([deleteShops]);
+  await prisma.$transaction([
+    prisma.service.deleteMany({}),
+    prisma.shop.deleteMany({}),
+  ]);
 });
 
 describe("Shop Module", () => {
@@ -283,6 +283,7 @@ describe("Shop Module", () => {
     await shopLookupHandler(req, res);
 
     expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(1);
     expect(res._getJSONData()).toMatchObject([
       {
         ...testShop,
@@ -303,6 +304,7 @@ describe("Shop Module", () => {
     await shopLookupHandler(req, res);
 
     expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(3);
     expect(res._getJSONData()).toMatchObject([
       {
         ...testShop,
@@ -335,6 +337,7 @@ describe("Shop Module", () => {
     await shopLookupHandler(req, res);
 
     expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(0);
     expect(res._getJSONData()).toMatchObject([]);
   });
 
@@ -350,6 +353,7 @@ describe("Shop Module", () => {
     await shopLookupHandler(req, res);
 
     expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(1);
     expect(res._getJSONData()).toMatchObject([
       {
         ...testShop,
@@ -372,6 +376,7 @@ describe("Shop Module", () => {
     await shopLookupHandler(req, res);
 
     expect(res.statusCode).toBe(200);
+    expect(res._getJSONData()["length"]).toBe(0);
     expect(res._getJSONData()).toMatchObject([]);
   });
 });
