@@ -55,6 +55,7 @@
 		March 7, 2023     & Arkin Modi            & Add Functional Requirement Tests for Work Orders                  \\
 		March 7, 2023     & Arkin Modi            & Add Changes Due to Testing Section                                \\
 		March 7, 2023     & Timothy Choy          & Add Unit Test Evaluations for Shop                                \\
+		March 8, 2023     & Joy Xiao              & Update editing appointments tests                                 \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -363,29 +364,9 @@ intended use, and goals of stakeholders.
 	      How test will be performed: The tester will go through the user interface to edit an appointment
 	      booking
 
-	      Results: Failed. Cannot edit an appointment at the moment but can cancel and reschedule an
-	      appointment
+	      Results: Pass
 
 	\item \textbf{FRT-BE5-2}
-
-	      Control: Manual
-
-	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
-
-	      Input: Selects an appointment to edit and selects a new available time slot for the appointment
-
-	      Output: The appointment booking is updated to the new time slot
-
-	      Test Case Derivation: The user is able to change their appointment to any of the available time
-	      slots displayed
-
-	      How test will be performed: The tester will go through the user interface to edit an appointment
-	      booking time slot
-
-	      Results: Failed. Cannot edit an appointment at the moment but can cancel and reschedule an
-	      appointment.
-
-	\item \textbf{FRT-BE5-3}
 
 	      Control: Manual
 
@@ -1311,11 +1292,10 @@ intended use, and goals of stakeholders.
 
 During testing there were a few changes that were needed to be made to bring the application into
 alignment with the requirements defined in the SRS and the plan defined in the VnV Plan. Test cases
-``FRT-BE5-1'', ``FRT-BE5-2'', ``NFRT-OE-1'', and ``NFRT-SR2-1'' have failed and changes will be
-made to address them. Additionally, there were comments made regarding the lack of the ability to
-edit and cancel appointments in the user interface during the Revision 0 Demonstration. This
-feedback will also be addressed. All changes are planned to be completed before the Revision 1
-Demonstration.
+``NFRT-OE-1'' and ``NFRT-SR2-1'' have failed and changes will be made to address them.
+Additionally, there were comments made regarding the lack of the ability to edit and cancel
+appointments in the user interface during the Revision 0 Demonstration. This feedback will also be
+addressed. All changes are planned to be completed before the Revision 1 Demonstration.
 
 \section{Automated Testing}
 
