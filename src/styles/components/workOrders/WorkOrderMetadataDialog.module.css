@@ -1,5 +1,14 @@
+.workOrderMetadataDialogContainer {
+  width: 30rem;
+}
+
+.workOrderMetadataDialogFooterContainer {
+  display: flex;
+  justify-content: center;
+}
+
 .workOrderMetadataDialogFooterContainerButtons {
-  width: 10rem !important;
+  min-width: 10rem !important;
 }
 
 .workOrderMetadataDialogTitleTextBox {
@@ -17,4 +26,19 @@
 .workOrderMetadataDialogStatusSelector {
   width: 100%;
   margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .workOrderMetadataDialogContainer {
+    width: 80vw;
+  }
+
+  .workOrderMetadataDialogFooterContainer {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+  .workOrderMetadataDialogFooterContainerButtons {
+    width: 100% !important;
+  }
 }
