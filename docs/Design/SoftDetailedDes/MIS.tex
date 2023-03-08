@@ -70,6 +70,7 @@
 		January 15, 2023  & Joy Xiao              & Create MIS of Employee Management Module \\
 		January 17, 2023  & Timothy Choy          & Add Shop Lookup to Shop Module           \\
 		March 1, 2023     & Arkin Modi            & Update Quote Request Bodies              \\
+		March 7, 2023     & Timothy Choy          & Update Shop Module MIS                   \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -625,12 +626,13 @@ None
 	\begin{adjustbox}{width=\textwidth}
 		\begin{tabular}{llll}
 			\hline
-			\textbf{Name}  & \textbf{In}                                                       & \textbf{Out}               & \textbf{Exceptions}                         \\
+			\textbf{Name}     & \textbf{In}            & \textbf{Out}           & \textbf{Exceptions}                         \\
 			\hline
-			createShop     & CreateShopType                                                    & Shop                       & ~                                           \\
-			getShopById    & String                                                            & Shop $\lor$ None           & ~                                           \\
-			filterShops    & String, tuple of (lat,long,distance:$\mathbb{R}$), String, String & List$<$Shop$>$ $\lor$ None & ~                                           \\
-			updateShopById & String, UpdateShopType                                            & Shop                       & ShopNotFoundException, InvalidTimeException \\
+			createShop        & CreateShopType         & Shop                   & ~                                           \\
+			getShopById       & String                 & Shop $\lor$ None       & ~                                           \\
+			updateShopById    & String, UpdateShopType & Shop                   & ShopNotFoundException, InvalidTimeException \\
+			getShopsByName    & String                 & List<Shop> $\lor$ None & ~                                           \\
+			getShopsByService & String                 & List<Shop> $\lor$ None & ~                                           \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -662,16 +664,6 @@ None
 	\item output: $out :=$ A Shop such that it contains the ID, $id$, from the shop database table else None.
 \end{itemize}
 
-\noindent filterShops($name, location, services, parts$):
-\begin{itemize}
-	\item output: A list of Shops from the database table, such that the Shops are filtered by each of the
-	      parameters as follows: \\ $a := (a \in \text{Shops} | \text{name} \in \text{a.name})$ \\ $b := (b
-		      \in \text{Shops} | \text{distance} \leq distance(\text{b.lat}, \text{b.long}, \text{lat},
-		      \text{long}))$ \\ $c := (c \in \text{Shops} | \text{services} \in \text{c.Services})$ \\ $d := (d
-		      \in \text{Shops} | \text{parts} \in \text{d.Parts})$ \\ $out := (s \in (a \land b \land c \land
-		      d))$
-\end{itemize}
-
 \noindent updateShopById($id, patch$):
 \begin{itemize}
 	\item transition: Update all fields of a Shop, with an ID equal to $id$, with fields in $patch$ in shop
@@ -684,18 +676,29 @@ None
 		      \text{InvalidTimeException}$
 \end{itemize}
 
+\noindent getShopsByName($name$):
+\begin{itemize}
+	\item output: $out := getShopsByName(name) = (\forall s \in Shops | s.name \in name)$
+\end{itemize}
+
+\noindent getShopsByService($service$):
+\begin{itemize}
+	\item output: $out := getShopsByService(service) = (\forall s \in Shops | \exists serv \in
+		      getServicesByShopId(s) | serv \in service)$
+\end{itemize}
+
 \subsubsection{Local Functions}
 
-distance: $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ $\rightarrow$ $\mathbb{R}$ \\
+% distance: $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ $\rightarrow$ $\mathbb{R}$ \\
 
-distance(shop\_lat, shop\_long, user\_lat, user\_long) $\equiv (3959 \cdot
-	\arccos(\cos(\text{shop\_lat})) \cdot \cos(\text{user\_lat}) + \cos(\text{shop\_long} -
-		\text{user\_long}) + \sin(\text{shop\_lat}) \cdot \sin(\text{user\_lat}))$
+% distance(shop\_lat, shop\_long, user\_lat, user\_long) $\equiv (3959 \cdot
+% 	\arccos(\cos(\text{shop\_lat})) \cdot \cos(\text{user\_lat}) + \cos(\text{shop\_long} -
+% 		\text{user\_long}) + \sin(\text{shop\_lat}) \cdot \sin(\text{user\_lat}))$
 
-getLatLong: String $\rightarrow$ $\mathbb{R}$, $\mathbb{R}$ \\
+% getLatLong: String $\rightarrow$ $\mathbb{R}$, $\mathbb{R}$ \\
 
-getLatLong(address) $\equiv$ the latitude and longitude of the address, as defined by the Google
-Maps API. \\ \newpage
+% getLatLong(address) $\equiv$ the latitude and longitude of the address, as defined by the Google
+% Maps API. \\ \newpage
 
 \section{MIS of Users Module} \label{mUsers}
 \subsection{Module}
