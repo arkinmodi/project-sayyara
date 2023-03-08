@@ -199,6 +199,7 @@
 	March 6, 2023      & Joy Xiao              & Update services and appointments requirements                                      \\
 	March 6, 2023      & Arkin Modi            & Update Functional Requirements for Quotes                                          \\
 	March 6, 2023      & Leon So               & Update to remove emails for employee sign up                                       \\
+	March 7, 2023      & Arkin Modi            & Update Functional Requirements for Work Orders                                     \\
 	\bottomrule
 \end{longtable}
 
@@ -1079,9 +1080,6 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall populate the customer data and vehicle data from the quote
 			            \item The system shall populate the customer data and vehicle data from the appointment if the quote is
 			                  not available
-			            \item The system shall populate expected services performed and parts needed from the quote
-			            \item The system shall populate expected services performed and parts needed from the appointment if the
-			                  quote not available
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
@@ -1089,45 +1087,6 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall populate the customer data and vehicle data from the quote
 			            \item The system shall populate the customer data and vehicle data from the appointment if the quote is
 			                  not available
-			            \item The system shall populate expected services performed and parts needed from the quote
-			            \item The system shall populate expected services performed and parts needed from the appointment if the
-			                  quote not available
-		            \end{enumerate}
-	      \end{enumerate}
-
-	\item An appointment has been cancelled
-	      \begin{enumerate}[VP\arabic*.]
-		      \item Viewpoint: Vehicle Owner
-		            \begin{enumerate}
-			            \item[] N/A
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Owner
-		            \begin{enumerate}
-			            \item The system shall delete the associated work order
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Employee
-		            \begin{enumerate}
-			            \item The system shall delete the associated work order
-		            \end{enumerate}
-	      \end{enumerate}
-
-	\item The user wants to search for a work order
-	      \begin{enumerate}[VP\arabic*.]
-		      \item Viewpoint: Vehicle Owner
-		            \begin{enumerate}
-			            \item[] N/A
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Owner
-		            \begin{enumerate}
-			            \item The system shall allow the user to enter the customer name, assigned employee, service type, and a
-			                  date range
-			            \item The system shall list the work order matching the inputted criteria
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Employee
-		            \begin{enumerate}
-			            \item The system shall allow the user to enter the customer name, assigned employee, service type, and a
-			                  date range
-			            \item The system shall list the work order matching the inputted criteria
 		            \end{enumerate}
 	      \end{enumerate}
 
@@ -1135,7 +1094,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
-			            \item[] N/A
+			            \item The system shall list the past work orders
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
@@ -1147,7 +1106,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \end{enumerate}
 	      \end{enumerate}
 
-	\item The user wants update an work order
+	\item The user wants to update a work order
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
@@ -1156,60 +1115,16 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
 			            \item The system shall list the open work orders
-			            \item The system shall allow the user to edit the services performed, parts required, odometer readings,
-			                  customer details, employee assigned, car details, discounts, digital vehicle inspection, and extra
-			                  notes
+			            \item The system shall allow the user to edit the employee assigned, appointment status, work order
+			                  title, and work order body
 			            \item The system shall update the work order with the entered values
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item The system shall list the open work orders
-			            \item The system shall allow the user to edit the services performed, parts required, odometer readings,
-			                  customer details, employee assigned, car details, discounts, digital vehicle inspection, and extra
-			                  notes
+			            \item The system shall allow the user to edit the employee assigned, appointment status, work order
+			                  title, and work order body
 			            \item The system shall update the work order with the entered values
-		            \end{enumerate}
-	      \end{enumerate}
-
-	\item The customer has paid for the work done on their vehicle
-	      \begin{enumerate}[VP\arabic*.]
-		      \item Viewpoint: Vehicle Owner
-		            \begin{enumerate}
-			            \item[] N/A
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Owner
-		            \begin{enumerate}
-			            \item The system shall send a copy of the work order to the assigned customer's email
-			            \item The system shall mark the work order as ``Completed''
-			            \item The system shall mark the associated appointment as ``Completed''
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Employee
-		            \begin{enumerate}
-			            \item The system shall send a copy of the work order to the assigned customer's email
-			            \item The system shall mark the work order as ``Completed''
-			            \item The system shall mark the associated appointment as ``Completed''
-		            \end{enumerate}
-	      \end{enumerate}
-
-	\item The user wants to view the details of a work order
-	      \begin{enumerate}[VP\arabic*.]
-		      \item Viewpoint: Vehicle Owner
-		            \begin{enumerate}
-			            \item[] N/A
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Owner
-		            \begin{enumerate}
-			            \item The system shall list the shop details, services to be performed with their individual bill rates
-			                  and expected number of hours for completion, parts required and their cost, odometer reading before
-			                  and after service, customer details, assigned employee, car details, any applied discounts, final
-			                  balance for the customer, warranty information, digital vehicle inspection, and any extra notes
-		            \end{enumerate}
-		      \item Viewpoint: Auto Repair Shop Employee
-		            \begin{enumerate}
-			            \item The system shall list the shop details, services to be performed with their individual bill rates
-			                  and expected number of hours for completion, parts required and their cost, odometer reading before
-			                  and after service, customer details, assigned employee, car details, any applied discounts, final
-			                  balance for the customer, warranty information, digital vehicle inspection, and any extra notes
 		            \end{enumerate}
 	      \end{enumerate}
 \end{enumerate}
