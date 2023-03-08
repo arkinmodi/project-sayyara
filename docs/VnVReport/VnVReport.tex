@@ -61,6 +61,7 @@
 	March 8, 2023     & Joy Xiao              & Update editing appointments tests                                                                            \\
 	March 8, 2023     & Arkin Modi            & Add Unit Test Results                                                                                        \\
 	March 8, 2023     & Arkin Modi            & Add Traceability Between Test Cases and Requirements \& Traceability Between Test Cases and Modules Sections \\
+	March 8, 2023     & Timothy Choy          & Add Test Evaluation for Usability Survey                                                                     \\
 	\bottomrule
 \end{longtable}
 
@@ -1051,6 +1052,18 @@ intended use, and goals of stakeholders.
 	      open.
 
 	      Results: Passed. Testers were greeted with a toast when they disconnected from the internet.
+
+	\item \textbf{NFRT-UH4-1}
+
+	      Type: Manual
+
+	      How test will be performed: A usability survey will be sent to a group of test users, and their
+	      responses will be recorded. The group of test users will include people from all user types of the
+	      application.
+
+	      Results: Failed. There were some critical issues and bugs found that affected the usability of the
+	      application. Users had trouble understanding some filters and were unable to recover from some
+	      errors. The full details of the survey are in section \ref{Usability Survey Results}.
 
 \end{enumerate}
 
@@ -2884,6 +2897,59 @@ outside the scope of the requirements.
 \newpage
 
 \section{Appendix}
+
+\subsection{Usability Survey Results} \label{Usability Survey Results}
+
+The following are the results of the usability survey. Four people were interviewed as CUSTOMER
+users, and several mechanics were interviewed as SHOP OWNER and EMPLOYEE users. The following were
+the main points brought out through user testing
+
+\begin{enumerate}
+	\item Were there any bugs or issues you ran into?
+
+	      \begin{itemize}
+		      \item Screen resizing issues when changing screen window size
+		      \item Scrolling while in a dropdown would move the dropdown unexpectedly
+	      \end{itemize}
+
+	\item What did you like the most or what stood out for you while using the application?
+
+	      \begin{itemize}
+		      \item Colour scheme is good
+		      \item The website works in dark mode
+	      \end{itemize}
+
+	\item Please share what changes you'd like to see on our website.
+
+	      \begin{itemize}
+		      \item Change the multiselect for parts into radio buttons, as they are confusing
+		      \item Customers may not know what OEM or AFTERMARKET stands for, clarification would be helpful
+		      \item Make the logo at the top left more reactive (let the mouse turn into a clickable icon to tell the
+		            user you can click on the logo)
+		      \item The logo seems a bit unrefined. A more professional logo would be nice
+		      \item The email address and phone numbers for each shop profile should allow customers to immediately
+		            navigate to them (either an email or phone call)
+		      \item There are few car companies to choose from
+	      \end{itemize}
+
+	\item Was the website intuitive, easy to learn to use and navigate?
+
+	      \begin{itemize}
+		      \item The website could be more clean, there are many steps need to reach tasks such as booking an
+		            appointment
+		      \item The route between booking a canned appointment and a custom appointment was slightly confusing,
+		            there is no way to create a quote from the chat page
+	      \end{itemize}
+
+	\item When you made a mistake while navigating or using the application, was it easy to recover?
+
+	      \begin{itemize}
+		      \item The website crashed once, and I was given a critical warning where I had to refresh the page to
+		            recover
+	      \end{itemize}
+
+\end{enumerate}
+
 \subsection{Reflection}
 
 The information in this section will be used to evaluate the team members on the graduate attribute
