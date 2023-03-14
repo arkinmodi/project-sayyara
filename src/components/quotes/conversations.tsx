@@ -26,6 +26,9 @@ const Conversations = (props: IConversationsProps) => {
   const userType = useSelector(AuthSelectors.getUserType);
   const dispatch = useDispatch();
 
+  const filterValue =
+    userType === UserType.CUSTOMER ? "shop.name" : "service.name";
+
   const [quotesUpdate, setQuotesUpdate] = useState(0);
   const [quotes, setQuotes] = useState<IQuote[]>([]);
 
@@ -105,7 +108,7 @@ const Conversations = (props: IConversationsProps) => {
         value={selectedChat}
         options={quotes}
         onChange={(e: ListBoxChangeParams) => setChat(e.value.id)}
-        filterBy="shopName"
+        filterBy={filterValue}
         itemTemplate={chatItem}
         listStyle={{ maxHeight: "35rem" }}
       />
