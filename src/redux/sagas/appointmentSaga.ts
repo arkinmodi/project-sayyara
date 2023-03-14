@@ -1,4 +1,4 @@
-import { Appointment, AppointmentStatus, UserType } from "@prisma/client";
+import { AppointmentStatus, UserType } from "@prisma/client";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import ShopTypes from "@redux/types/shopTypes";
 import {
@@ -12,8 +12,6 @@ import {
   takeEvery,
 } from "redux-saga/effects";
 import { ICustomerAppointment } from "src/types/appointment";
-import { getServiceById } from "src/utils/serviceUtil";
-import { getShopId } from "src/utils/shopUtil";
 import {
   IAppointmentActionCreateAppointment,
   IAppointmentActionSetAppointmentStatus,
@@ -118,48 +116,30 @@ function getCustomerAppointments(
     if (res.status === 200) {
       return res.json().then((data) => {
         const appointments: ICustomerAppointments = {};
-        const promises = data.map((appointment: Appointment) => {
-          const serviceId = appointment.service_id;
-          const shopId = appointment.shop_id;
-
-          if (shopId && serviceId) {
-            const shopPromise = getShopId(shopId);
-            const servicePromise = getServiceById(serviceId);
-
-            return Promise.all([shopPromise, servicePromise]).then((values) => {
-              const shop = values[0];
-              const service = values[1];
-
-              const customerAppointment = {
-                id: appointment.id,
-                startTime: appointment.start_time,
-                endTime: appointment.end_time,
-                shopId: shopId,
-                shopName: shop?.name,
-                shopAddress: shop?.address,
-                shopPhoneNumber: shop?.phoneNumber,
-                quoteId: appointment.quote_id,
-                serviceName: service?.name,
-                price: appointment.price,
-                status: appointment.status,
-                workOrderId: appointment.work_order_id,
-                cancellationReason: appointment.cancellation_reason,
-              };
-
-              return customerAppointment;
-            });
+        const appointmentsList: ICustomerAppointment[] = data.map(
+          (appointment: any) => {
+            return {
+              id: appointment.id,
+              startTime: appointment.start_time,
+              endTime: appointment.end_time,
+              shopId: appointment.shop_id,
+              shopName: appointment.shop.name,
+              shopAddress: appointment.shop.address,
+              shopPhoneNumber: appointment.shop.phone_number,
+              quoteId: appointment.quote_id,
+              serviceName: appointment.service.name,
+              price: appointment.price,
+              status: appointment.status,
+              workOrderId: appointment.work_order_id,
+              cancellationReason: appointment.cancellation_reason,
+            };
           }
-        });
+        );
 
-        return Promise.all(promises)
-          .then((appointmentList) => {
-            appointmentList.forEach(
-              (appointment) => (appointments[appointment.id] = appointment)
-            );
-          })
-          .then(() => {
-            return appointments;
-          });
+        appointmentsList.forEach(
+          (appointment) => (appointments[appointment.id] = appointment)
+        );
+        return appointments;
       });
     } else {
       return {};
