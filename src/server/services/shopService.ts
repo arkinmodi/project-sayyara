@@ -1,4 +1,8 @@
 import { hoursOfOperationSchema, prisma } from "@server/db/client";
+import {
+  PHONE_NUMBER_REGEX,
+  POSTAL_CODE_REGEX,
+} from "src/utils/formValidationUtil";
 import { z } from "zod";
 
 export const createShopSchema = z.object({
@@ -6,8 +10,8 @@ export const createShopSchema = z.object({
   address: z.string(),
   city: z.string(),
   province: z.string(),
-  postal_code: z.string(),
-  phone_number: z.string(),
+  postal_code: z.string().regex(POSTAL_CODE_REGEX),
+  phone_number: z.string().regex(PHONE_NUMBER_REGEX),
   email: z.string().email(),
 });
 
@@ -34,10 +38,10 @@ export const getShopById = async (id: string) => {
 export const updateShopSchema = z.object({
   name: z.string().optional(),
   address: z.string().optional(),
-  postal_code: z.string().optional(),
+  postal_code: z.string().regex(POSTAL_CODE_REGEX).optional(),
   city: z.string().optional(),
   province: z.string().optional(),
-  phone_number: z.string().optional(),
+  phone_number: z.string().regex(PHONE_NUMBER_REGEX).optional(),
   hours_of_operation: z.optional(hoursOfOperationSchema),
   email: z.string().email().optional(),
 });

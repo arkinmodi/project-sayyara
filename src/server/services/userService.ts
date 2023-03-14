@@ -3,14 +3,18 @@ import { createShopSchema, getShopById } from "@server/services/shopService";
 import { createVehicleSchema } from "@server/services/vehicleService";
 import bcrypt from "bcrypt";
 import { Session } from "next-auth";
+import {
+  PASSWORD_REGEX,
+  PHONE_NUMBER_REGEX,
+} from "src/utils/formValidationUtil";
 import { z } from "zod";
 
 export const createCustomerSchema = z.object({
   email: z.string().email(),
-  password: z.string(),
+  password: z.string().regex(PASSWORD_REGEX),
   first_name: z.string(),
   last_name: z.string(),
-  phone_number: z.string(),
+  phone_number: z.string().regex(PHONE_NUMBER_REGEX),
   vehicle: createVehicleSchema,
 });
 
@@ -32,10 +36,10 @@ export const createCustomer = async (customer: CreateCustomerType) => {
 
 export const createEmployeeSchema = z.object({
   email: z.string().email(),
-  password: z.string(),
+  password: z.string().regex(PASSWORD_REGEX),
   first_name: z.string(),
   last_name: z.string(),
-  phone_number: z.string(),
+  phone_number: z.string().regex(PHONE_NUMBER_REGEX),
   shop_id: z.string(),
 });
 
@@ -60,10 +64,10 @@ export const createEmployee = async (employee: CreateEmployeeType) => {
 
 export const createShopOwnerSchema = z.object({
   email: z.string().email(),
-  password: z.string(),
+  password: z.string().regex(PASSWORD_REGEX),
   first_name: z.string(),
   last_name: z.string(),
-  phone_number: z.string(),
+  phone_number: z.string().regex(PHONE_NUMBER_REGEX),
   shop: createShopSchema,
 });
 

@@ -5,6 +5,7 @@ import { InputText } from "primereact/inputtext";
 import React, { ChangeEvent, useState } from "react";
 import {
   validateEmail,
+  validatePassword,
   validatePhoneNumber,
 } from "src/utils/formValidationUtil";
 import {
@@ -43,7 +44,7 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
     const isValidPhoneNumber = validatePhoneNumber(formValues.phoneNumber);
     setIsPhoneNumberValid(isValidPhoneNumber);
 
-    const isValidPassword = formValues.password.length > 0;
+    const isValidPassword = validatePassword(formValues.password);
     setIsPasswordValid(isValidPassword);
 
     return (
@@ -168,7 +169,9 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
           id="passwordHelp"
           className={!isPasswordValid ? "p-error block" : "p-hidden"}
         >
-          Password is required
+          Password must be between 8 and 15 characters long, contain at least
+          one numeric digit, contain at least one uppercase letter, contain at
+          least one lowercase letter, and at least one special character.
         </small>
       </div>
       <div className={authStyles.authFormButtonGroup}>
