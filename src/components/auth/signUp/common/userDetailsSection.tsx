@@ -169,7 +169,9 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
           id="passwordHelp"
           className={!isPasswordValid ? "p-error block" : "p-hidden"}
         >
-          Password is invalid
+          Password must be between 8 and 15 characters long, contain at least
+          one numeric digit, contain at least one uppercase letter, contain at
+          least one lowercase letter, and at least one special character.
         </small>
       </div>
       <div className={authStyles.authFormButtonGroup}>
