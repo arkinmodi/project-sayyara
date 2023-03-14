@@ -71,6 +71,7 @@
 		January 17, 2023  & Timothy Choy          & Add Shop Lookup to Shop Module           \\
 		March 1, 2023     & Arkin Modi            & Update Quote Request Bodies              \\
 		March 7, 2023     & Timothy Choy          & Update Shop Module MIS                   \\
+		March 14, 2023    & Arkin Modi            & Update Appointments Module               \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -1229,13 +1230,14 @@ None
 	\begin{adjustbox}{width=\textwidth}
 		\begin{tabular}{llll}
 			\hline
-			\textbf{Name}           & \textbf{In}                   & \textbf{Out}            & \textbf{Exceptions}                                \\
+			\textbf{Name}               & \textbf{In}                   & \textbf{Out}            & \textbf{Exceptions}                                \\
 			\hline
-			createAppointment       & CreateAppointmentType         & Appointment             & InvalidTimeException, MissingDataException         \\
-			getAppointmentById      & String                        & Appointment $\lor$ None & ~                                                  \\
-			getAppointmentsByShopId & String                        & List$<$Appointment$>$   & ~                                                  \\
-			updateAppointmentById   & String, UpdateAppointmentType & Appointment             & AppointmentNotFoundException, InvalidTimeException \\
-			deleteAppointment       & String                        & ~                       & ~                                                  \\
+			createAppointment           & CreateAppointmentType         & Appointment             & InvalidTimeException, MissingDataException         \\
+			getAppointmentById          & String                        & Appointment $\lor$ None & ~                                                  \\
+			getAppointmentsByShopId     & String                        & List$<$Appointment$>$   & ~                                                  \\
+			getAppointmentsByCustomerId & String                        & List$<$Appointment$>$   & ~                                                  \\
+			updateAppointmentById       & String, UpdateAppointmentType & Appointment             & AppointmentNotFoundException, InvalidTimeException \\
+			deleteAppointment           & String                        & ~                       & ~                                                  \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -1279,6 +1281,12 @@ None
 \noindent getAppointmentsByShopId($shopId$):
 \begin{itemize}
 	\item output: $out :=$ A list of Appointments such that their shop ID matches $shopId$ from the
+	      appointment database table else an empty list.
+\end{itemize}
+
+\noindent getAppointmentsByCustomerId($customerId$):
+\begin{itemize}
+	\item output: $out :=$ A list of Appointments such that their customer ID matches $customerId$ from the
 	      appointment database table else an empty list.
 \end{itemize}
 
