@@ -1,3 +1,4 @@
+import exclude from "@server/common/excludeField";
 import { Appointment, AppointmentStatus, prisma } from "@server/db/client";
 import { getServiceById } from "@server/services/serviceService";
 import { z } from "zod";
@@ -78,7 +79,17 @@ export const getAppointmentById = async (id: string) => {
 };
 
 export const getAppointmentsByShopId = async (shop_id: string) => {
-  return await prisma.appointment.findMany({ where: { shop_id } });
+  const appointments = await prisma.appointment.findMany({
+    where: { shop_id },
+    include: {
+      vehicle: true,
+      customer: true,
+      service: true,
+    },
+  });
+
+  appointments.forEach((ap) => exclude(ap.customer, ["password"]));
+  return appointments;
 };
 
 export const getAvailabilitiesByShopId = async (
@@ -99,7 +110,13 @@ export const getAvailabilitiesByShopId = async (
 };
 
 export const getAppointmentsByCustomerId = async (customer_id: string) => {
-  return await prisma.appointment.findMany({ where: { customer_id } });
+  return await prisma.appointment.findMany({
+    where: { customer_id },
+    include: {
+      shop: true,
+      service: true,
+    },
+  });
 };
 
 export const updateAppointmentSchema = z.object({

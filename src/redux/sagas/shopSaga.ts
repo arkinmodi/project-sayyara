@@ -1,4 +1,4 @@
-import { Appointment, Employee } from "@prisma/client";
+import { Employee } from "@prisma/client";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import ShopTypes from "@redux/types/shopTypes";
 import {
@@ -12,11 +12,10 @@ import {
   takeEvery,
 } from "redux-saga/effects";
 import { IAppointment } from "src/types/appointment";
+import { ICustomer } from "src/types/customer";
 import { IEmployee } from "src/types/employee";
-import { getCustomerById } from "src/utils/customerUtil";
-import { getServiceById } from "src/utils/serviceUtil";
+import { IVehicle } from "src/types/vehicle";
 import { getServicesByShopId } from "src/utils/shopUtil";
-import { getVehicleById } from "src/utils/vehicleUtil";
 
 function getAllEmployees(shopId: string): Promise<IEmployee[] | null> {
   return fetch(`/api/shop/${shopId}/employees`, {
@@ -62,7 +61,7 @@ function* readShopEmployees(): Generator<
 }
 
 function getAllAppointments(shopId: string): Promise<IAppointment[]> {
-  return fetch(`/api/shop/${shopId}/appointments/`, {
+  return fetch(`/api/shop/${shopId}/appointments`, {
     method: "GET",
     headers: {
       Accept: "application/json",
@@ -71,53 +70,45 @@ function getAllAppointments(shopId: string): Promise<IAppointment[]> {
   }).then((res) => {
     if (res.status === 200) {
       return res.json().then((data) => {
-        const appointments = data
-          .map((appointment: Appointment) => {
-            const vehicleId = appointment.vehicle_id;
-            const customerId = appointment.customer_id;
-            const serviceId = appointment.service_id;
+        const appointments: IAppointment[] = data
+          .map((appointment: any) => {
+            const customer: ICustomer = {
+              id: appointment.customer_id,
+              first_name: appointment.customer.first_name,
+              last_name: appointment.customer.last_name,
+              phone_number: appointment.customer.phone_number,
+              email: appointment.customer.email,
+            };
 
-            if (vehicleId && customerId && serviceId) {
-              const vehiclePromise = getVehicleById(vehicleId);
-              const customerPromise = getCustomerById(customerId);
-              const servicePromise = getServiceById(serviceId);
+            const vehicle: IVehicle = {
+              id: appointment.vehicle_id,
+              make: appointment.vehicle.make,
+              model: appointment.vehicle.model,
+              year: appointment.vehicle.year,
+              vin: appointment.vehicle.vin,
+              license_plate: appointment.vehicle.license_plate,
+            };
 
-              return Promise.all([
-                vehiclePromise,
-                customerPromise,
-                servicePromise,
-              ]).then((values) => {
-                const vehicle = values[0];
-                const customer = values[1];
-                const service = values[2];
-
-                return {
-                  id: appointment.id,
-                  startTime: appointment.start_time,
-                  endTime: appointment.end_time,
-                  customer: customer,
-                  shopId: appointment.shop_id,
-                  quoteId: appointment.quote_id,
-                  serviceName: service?.name,
-                  price: appointment.price,
-                  status: appointment.status,
-                  workOrderId: appointment.work_order_id,
-                  vehicle: vehicle,
-                  cancellationReason: appointment.cancellation_reason,
-                };
-              });
-            } else {
-              // Return undefined if vehicle, customer, or service are null and filter out invalid appointments below
-              return;
-            }
+            return {
+              id: appointment.id,
+              startTime: appointment.start_time,
+              endTime: appointment.end_time,
+              customer: customer,
+              shopId: appointment.shop_id,
+              quoteId: appointment.quote_id,
+              serviceName: appointment.service.name,
+              price: appointment.price,
+              status: appointment.status,
+              workOrderId: appointment.work_order_id,
+              vehicle: vehicle,
+              cancellationReason: appointment.cancellation_reason,
+            };
           })
           .filter((appointment: IAppointment | undefined) => {
             return appointment !== undefined;
           });
 
-        return Promise.all(appointments).then((appointmentList) => {
-          return appointmentList;
-        });
+        return appointments;
       });
     } else {
       // TODO: check and handle errors
