@@ -112,7 +112,7 @@
   display: none;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 999px) {
   .main {
     flex-direction: column;
   }
@@ -168,7 +168,7 @@
   }
 }
 
-@media (min-width: 500px) {
+@media (min-width: 1000px) {
   .filter {
     flex: 0 1 28%;
     margin-right: 1rem;
