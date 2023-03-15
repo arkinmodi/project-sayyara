@@ -5,7 +5,6 @@ import { AppointmentSelectors } from "@redux/selectors/appointmentSelectors";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/components/chat/ChatTitle.module.css";
 import classnames from "classnames";
-import Image from "next/image";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import {
@@ -14,7 +13,6 @@ import {
 } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 import { Menu } from "primereact/menu";
-import img from "public/icons/icon-192x192.png";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ScheduleMeeting, StartTimeEventEmit } from "react-schedule-meeting";
@@ -333,14 +331,6 @@ const ChatTitle = (props: IChatTitleProps) => {
           className={classnames("pi pi-angle-left", styles.mobileImage)}
           onClick={prevPage}
         ></i>
-        <Image
-          className={classnames(styles.image, styles.desktopImage)}
-          src={img}
-          alt={name}
-          // TODO Figure out height/width ratios
-          height={img.height * 0.25}
-          width={img.width * 0.4}
-        />
       </>
     );
   };
@@ -353,7 +343,7 @@ const ChatTitle = (props: IChatTitleProps) => {
         ? `${selectedChat.shop.name} - ${selectedChat.service.name}`
         : `${selectedChat.customer.first_name} - ${selectedChat.service.name}`;
     chatTitleContents = (
-      <>
+      <div className={styles.chatContents}>
         {/* Conversation image or back button, if mobile*/}
         {checkIfMobile(selectedChat, name)}
         {/* Conversation name */}
@@ -379,7 +369,7 @@ const ChatTitle = (props: IChatTitleProps) => {
             }
           />
         </div>
-      </>
+      </div>
     );
   }
 

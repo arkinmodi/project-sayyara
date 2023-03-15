@@ -1,5 +1,6 @@
 .chatTitle {
   display: flex;
+  flex-direction: row;
   background-color: #cccccc;
   padding-left: 2rem;
   border-radius: 5px;
@@ -7,13 +8,15 @@
   margin-bottom: 20px;
 }
 
-.image {
-  min-width: fit-content;
+.chatContents {
+  display: flex;
+  flex-direction: row;
 }
 
 .span {
   margin-left: 2rem;
   align-items: center;
+  max-width: 60vw;
   display: flex;
   font-size: large;
   font-weight: bold;
@@ -55,7 +58,7 @@
   display: none;
 }
 
-@media (min-width: 1001px) {
+@media (min-width: 1000px) {
   .fill {
     flex-basis: 40%;
   }
@@ -65,7 +68,7 @@
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 999px) {
   .dialogInputRow {
     flex-direction: column;
     align-self: center;
@@ -84,10 +87,6 @@
     align-self: center;
     display: inline;
     font-size: 2em;
-  }
-
-  .desktopImage {
-    display: none !important;
   }
 
   .inviteDiv {
