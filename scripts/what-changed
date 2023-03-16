@@ -90,7 +90,10 @@ def main() -> int:
             doc
             for path in files
             for doc, info in BUILD_INFO.items()
-            if path.startswith(info['directory'])
+            if (
+                path.startswith(info['directory']) and
+                not path.endswith(info['filename'])
+            )
         ])
 
         if files & REFERENCES_DEPS:

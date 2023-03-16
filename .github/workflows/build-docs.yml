@@ -77,6 +77,27 @@ jobs:
         uses: actions/download-artifact@v3.0.2
 
       - name: 🚧 Move PDFs To Correct Directory
+        env:
+          MG_FILENAME: MG.pdf
+          MG_DIR: docs/Design/SoftArchitecture
+          MIS_FILENAME: MIS.pdf
+          MIS_DIR: docs/Design/SoftDetailedDes
+          SYSTDES_FILENAME: SystDes.pdf
+          SYSTDES_DIR: docs/Design/SystDesign
+          DEVP_FILENAME: DevelopmentPlan.pdf
+          DEVP_DIR: docs/DevelopmentPlan
+          HAZA_FILENAME: HazardAnalysis.pdf
+          HAZA_DIR: docs/HazardAnalysis
+          PS_FILENAME: ProblemStatement.pdf
+          PS_DIR: docs/ProblemStatementAndGoals
+          REFL_FILENAME: Reflection.pdf
+          REFL_DIR: docs/Reflection
+          SRS_FILENAME: SRS.pdf
+          SRS_DIR: docs/SRS
+          VNVP_FILENAME: VnVPlan.pdf
+          VNVP_DIR: docs/VnVPlan
+          VNVR_FILENAME: VnVReport.pdf
+          VNVR_DIR: docs/VnVReport
         run: |
           [ ! -e "$MG_FILENAME/$MG_FILENAME" ]            || mv -v "$MG_FILENAME/$MG_FILENAME" "$MG_DIR/$MG_FILENAME"
           [ ! -e "$MIS_FILENAME/$MIS_FILENAME" ]          || mv -v "$MIS_FILENAME/$MIS_FILENAME" "$MIS_DIR/$MIS_FILENAME"
@@ -86,7 +107,6 @@ jobs:
           [ ! -e "$PS_FILENAME/$PS_FILENAME" ]            || mv -v "$PS_FILENAME/$PS_FILENAME" "$PS_DIR/$PS_FILENAME"
           [ ! -e "$REFL_FILENAME/$REFL_FILENAME" ]        || mv -v "$REFL_FILENAME/$REFL_FILENAME" "$REFL_DIR/$REFL_FILENAME"
           [ ! -e "$SRS_FILENAME/$SRS_FILENAME" ]          || mv -v "$SRS_FILENAME/$SRS_FILENAME" "$SRS_DIR/$SRS_FILENAME"
-          [ ! -e "$UGDE_FILENAME/$UGDE_FILENAME" ]        || mv -v "$UGDE_FILENAME/$UGDE_FILENAME" "$UGDE_DIR/$UGDE_FILENAME"
           [ ! -e "$VNVP_FILENAME/$VNVP_FILENAME" ]        || mv -v "$VNVP_FILENAME/$VNVP_FILENAME" "$VNVP_DIR/$VNVP_FILENAME"
           [ ! -e "$VNVR_FILENAME/$VNVR_FILENAME" ]        || mv -v "$VNVR_FILENAME/$VNVR_FILENAME" "$VNVR_DIR/$VNVR_FILENAME"
 
