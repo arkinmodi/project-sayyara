@@ -73,6 +73,7 @@ REFERENCES_DEPS = frozenset((
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('--main', action='store_true')
+    parser.add_argument('--all', action='store_true')
     args = parser.parse_args()
 
     if args.main:
@@ -83,7 +84,7 @@ def main() -> int:
     files = set(subprocess.check_output(diff_cmd).decode().splitlines())
 
     # if a shared dependency is updated, everything should be rebuilt
-    if files & SHARED_DEPS:
+    if args.all or files & SHARED_DEPS:
         documents = set(BUILD_INFO.keys())
     else:
         documents = set([

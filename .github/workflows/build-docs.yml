@@ -31,7 +31,7 @@ jobs:
 
       - name: 🧞 Check What Changed
         id: filter
-        run: scripts/what-changed ${{ github.ref_name == 'main' && '--main' || '' }}
+        run: scripts/what-changed ${{ github.ref_name == 'main' && '--main' || '' }} ${{ github.event_name == 'workflow_dispatch' && '--all' || '' }}
 
   build_documentation:
     name: 🏗 Building ${{ matrix.filename }}
