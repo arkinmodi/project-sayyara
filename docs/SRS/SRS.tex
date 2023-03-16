@@ -202,6 +202,7 @@
 	March 7, 2023      & Arkin Modi            & Update Functional Requirements for Work Orders                                     \\
 	March 8, 2023      & Timothy Choy          & Update Usability Nonfunctional Requirement                                         \\
 	March 8, 2023      & Joy Xiao              & Remove requirements for shop/employee to edit appointment time                     \\
+	March 15, 2023     & Joy Xiao              & Update services and appointments requirements                                      \\
 	\bottomrule
 \end{longtable}
 
@@ -904,7 +905,8 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
 			            \item The system shall populate the service request information from the quote
-			            \item The system shall populate the service request information from the if a canned job is selected
+			            \item The system shall populate the service request information from the service if a canned job is
+			                  selected
 			            \item The system shall allow the user to filter available appointments times
 			            \item The system shall display dates and times where appointments are available
 			            \item The system shall allow the user to select an appointment time slot to book
@@ -1218,7 +1220,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 
 \subsubsection{Services}
 \begin{enumerate}[resume*=business_events]
-	\item The user wants to add available auto shop services to the shop profile
+	\item The user wants to add a basic auto shop service to the shop profile
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
@@ -1232,6 +1234,25 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall allow the user to enter the parts used for the service including quantity,
 			                  condition (new or used), build (OEM or aftermarket), and cost per part (before tax cost)
 			            \item The system shall allow the user to enter the total price for the service (before tax price)
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to add a custom auto shop service to the shop profile
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter the name of the service
+			            \item The system shall allow the user to enter a description for the service
+			            \item The system shall allow the user to enter the part condition (new or used), type (OEM or
+			                  aftermarket) for the parts used for the service
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
