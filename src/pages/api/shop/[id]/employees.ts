@@ -43,7 +43,7 @@ const isAuthorized = async (session: Session, shopId: string) => {
   const user = await getEmployeeById(session.user.id);
   if (!user) return false;
 
-  return user.shop_id === shopId;
+  return user.shopId === shopId;
 };
 
 export default employeeByShopIdHandler;

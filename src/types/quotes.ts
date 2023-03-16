@@ -4,9 +4,9 @@ import { IService } from "./service";
 import { IShop } from "./shop";
 
 export interface ICreateQuoteBody {
-  customer_id: string;
-  shop_id: string;
-  service_id: string;
+  customerId: string;
+  shopId: string;
+  serviceId: string;
 }
 
 export interface IQuoteList {

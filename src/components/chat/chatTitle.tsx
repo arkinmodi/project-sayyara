@@ -341,7 +341,7 @@ const ChatTitle = (props: IChatTitleProps) => {
     const name: string =
       userType === UserType.CUSTOMER
         ? `${selectedChat.shop.name} - ${selectedChat.service.name}`
-        : `${selectedChat.customer.first_name} - ${selectedChat.service.name}`;
+        : `${selectedChat.customer.firstName} - ${selectedChat.service.name}`;
     chatTitleContents = (
       <div className={styles.chatContents}>
         {/* Conversation image or back button, if mobile*/}

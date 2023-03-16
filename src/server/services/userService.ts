@@ -9,9 +9,9 @@ import { z } from "zod";
 export const createCustomerSchema = z.object({
   email: z.string().email(),
   password: z.string(),
-  first_name: z.string(),
-  last_name: z.string(),
-  phone_number: z.string().regex(PHONE_NUMBER_REGEX),
+  firstName: z.string(),
+  lastName: z.string(),
+  phoneNumber: z.string().regex(PHONE_NUMBER_REGEX),
   vehicle: createVehicleSchema,
 });
 
@@ -22,9 +22,9 @@ export const createCustomer = async (customer: CreateCustomerType) => {
     data: {
       email: customer.email,
       password: hash(customer.password),
-      first_name: customer.first_name,
-      last_name: customer.last_name,
-      phone_number: customer.phone_number,
+      firstName: customer.firstName,
+      lastName: customer.lastName,
+      phoneNumber: customer.phoneNumber,
       type: "CUSTOMER",
       vehicles: { create: { ...customer.vehicle } },
     },
@@ -34,27 +34,27 @@ export const createCustomer = async (customer: CreateCustomerType) => {
 export const createEmployeeSchema = z.object({
   email: z.string().email(),
   password: z.string(),
-  first_name: z.string(),
-  last_name: z.string(),
-  phone_number: z.string().regex(PHONE_NUMBER_REGEX),
-  shop_id: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
+  phoneNumber: z.string().regex(PHONE_NUMBER_REGEX),
+  shopId: z.string(),
 });
 
 export type CreateEmployeeType = z.infer<typeof createEmployeeSchema>;
 
 export const createEmployee = async (employee: CreateEmployeeType) => {
-  const shop = await getShopById(employee.shop_id);
+  const shop = await getShopById(employee.shopId);
   if (!shop) return Promise.reject("Shop not found.");
 
   return await prisma.employee.create({
     data: {
       email: employee.email,
       password: hash(employee.password),
-      first_name: employee.first_name,
-      last_name: employee.last_name,
-      phone_number: employee.phone_number,
+      firstName: employee.firstName,
+      lastName: employee.lastName,
+      phoneNumber: employee.phoneNumber,
       type: "EMPLOYEE",
-      shop: { connect: { id: employee.shop_id } },
+      shop: { connect: { id: employee.shopId } },
     },
   });
 };
@@ -62,9 +62,9 @@ export const createEmployee = async (employee: CreateEmployeeType) => {
 export const createShopOwnerSchema = z.object({
   email: z.string().email(),
   password: z.string(),
-  first_name: z.string(),
-  last_name: z.string(),
-  phone_number: z.string().regex(PHONE_NUMBER_REGEX),
+  firstName: z.string(),
+  lastName: z.string(),
+  phoneNumber: z.string().regex(PHONE_NUMBER_REGEX),
   shop: createShopSchema,
 });
 
@@ -75,9 +75,9 @@ export const createShopOwner = async (shopOwner: CreateShopOwnerType) => {
     data: {
       email: shopOwner.email,
       password: hash(shopOwner.password),
-      first_name: shopOwner.first_name,
-      last_name: shopOwner.last_name,
-      phone_number: shopOwner.phone_number,
+      firstName: shopOwner.firstName,
+      lastName: shopOwner.lastName,
+      phoneNumber: shopOwner.phoneNumber,
       type: "SHOP_OWNER",
       shop: { create: { ...shopOwner.shop } },
     },
@@ -116,14 +116,14 @@ export const authorize = async (
 
   const session: Session["user"] = {
     id: userData.id,
-    firstName: userData.first_name,
-    lastName: userData.last_name,
+    firstName: userData.firstName,
+    lastName: userData.lastName,
     email: userData.email,
     type: userData.type,
   };
 
   if (userData.type !== "CUSTOMER") {
-    session.shopId = (userData as Employee).shop_id;
+    session.shopId = (userData as Employee).shopId;
   }
 
   return session;

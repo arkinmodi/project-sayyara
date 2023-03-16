@@ -41,7 +41,7 @@ const isAuthorized = (session: Session, vehicles: Vehicle[]) => {
   return (
     session.user.type === "CUSTOMER" &&
     vehicles.every((vehicle) => {
-      return session.user.id === vehicle.customer_id;
+      return session.user.id === vehicle.customerId;
     })
   );
 };

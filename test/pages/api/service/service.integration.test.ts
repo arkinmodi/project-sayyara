@@ -18,85 +18,85 @@ import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 import { Session } from "next-auth";
 
 const testShop: Shop = {
-  id: "test_shop_id",
-  create_time: new Date(),
-  update_time: new Date(),
-  name: "test_shop_name",
-  address: "test_address",
-  phone_number: "test_phone_number",
+  id: "testShopId",
+  createTime: new Date(),
+  updateTime: new Date(),
+  name: "testShopName",
+  address: "testAddress",
+  phoneNumber: "testPhoneNumber",
   email: "test@email.com",
-  postal_code: "test_postal_code",
-  city: "test_city",
-  province: "test_province",
-  hours_of_operation: null,
+  postalCode: "testPostalCode",
+  city: "testCity",
+  province: "testProvince",
+  hoursOfOperation: null,
 };
 
 const testEmployeeUser: Employee = {
-  id: "test_employee_id",
-  first_name: "first_name",
-  last_name: "last_name",
-  phone_number: "1234567890",
+  id: "testEmployeeId",
+  firstName: "firstName",
+  lastName: "lastName",
+  phoneNumber: "1234567890",
   email: "employee@test.com",
-  password: "test_password",
+  password: "testPassword",
   image: null,
-  create_time: new Date(),
-  update_time: new Date(),
+  createTime: new Date(),
+  updateTime: new Date(),
   type: "SHOP_OWNER",
-  shop_id: testShop.id,
+  shopId: testShop.id,
   status: "ACTIVE",
 };
 
 const testCannedService: ServiceWithPartsType = {
-  id: "test_canned_service_id",
-  create_time: new Date(),
-  update_time: new Date(),
-  name: "test_service_name",
-  description: "test_service_description",
-  estimated_time: 2,
-  total_price: 100,
+  id: "testCannedServiceId",
+  createTime: new Date(),
+  updateTime: new Date(),
+  name: "testServiceName",
+  description: "testServiceDescription",
+  estimatedTime: 2,
+  totalPrice: 100,
   type: "CANNED",
   parts: [
     {
       quantity: 2,
       cost: 100.0,
-      name: "test_part",
+      name: "testPart",
       condition: "NEW",
       build: "OEM",
     },
   ],
-  shop_id: testShop.id,
+  shopId: testShop.id,
 };
 
 const testCustomService: ServiceWithPartsType = {
-  id: "test_custom_service_id",
-  create_time: new Date(),
-  update_time: new Date(),
-  name: "test_service_name",
-  description: "test_service_description",
-  estimated_time: 2,
-  total_price: 100,
+  id: "testCustomServiceId",
+  createTime: new Date(),
+  updateTime: new Date(),
+  name: "testServiceName",
+  description: "testServiceDescription",
+  estimatedTime: 2,
+  totalPrice: 100,
   type: "CUSTOM",
   parts: [
     {
       quantity: 2,
       cost: 100.0,
-      name: "test_part",
+      name: "testPart",
       condition: "NEW",
       build: "OEM",
     },
   ],
-  shop_id: testShop.id,
+  shopId: testShop.id,
 };
 jest.mock("@server/common/getServerAuthSession", () => ({
   getServerAuthSession: jest.fn<Session, []>(() => ({
     expires: "1",
     user: {
       id: testEmployeeUser.id,
-      firstName: testEmployeeUser.first_name,
-      lastName: testEmployeeUser.last_name,
+      firstName: testEmployeeUser.firstName,
+      lastName: testEmployeeUser.lastName,
       email: testEmployeeUser.email,
       type: testEmployeeUser.type,
-      shopId: testEmployeeUser.shop_id,
+      shopId: testEmployeeUser.shopId,
     },
   })),
 }));
@@ -127,11 +127,11 @@ describe("Services Module", () => {
     req.body = {
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     };
 
     await serviceHandler(req, res);
@@ -139,15 +139,15 @@ describe("Services Module", () => {
     expect(res.statusCode).toBe(201);
     expect(res._getJSONData()).toMatchObject({
       id: expect.any(String),
-      create_time: expect.any(String),
-      update_time: expect.any(String),
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     });
   });
 
@@ -160,8 +160,8 @@ describe("Services Module", () => {
     req.body = {
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
     };
@@ -179,11 +179,11 @@ describe("Services Module", () => {
     post.req.body = {
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     };
     await serviceHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -201,15 +201,15 @@ describe("Services Module", () => {
     expect(res.statusCode).toBe(200);
     expect(res._getJSONData()).toMatchObject({
       id: serviceId,
-      create_time: expect.any(String),
-      update_time: expect.any(String),
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     });
   });
 
@@ -221,11 +221,11 @@ describe("Services Module", () => {
     post.req.body = {
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     };
     await serviceHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -233,7 +233,7 @@ describe("Services Module", () => {
     // Get Service
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: "service_does_not_exist",
+      id: "serviceDoesNotExist",
     };
 
     await serviceByIdHandler(req, res);
@@ -249,11 +249,11 @@ describe("Services Module", () => {
     post.req.body = {
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     };
     await serviceHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -263,7 +263,7 @@ describe("Services Module", () => {
     // Get Service
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: testCannedService.shop_id,
+      id: testCannedService.shopId,
     };
 
     await serviceByShopIdHandler(req, res);
@@ -272,15 +272,15 @@ describe("Services Module", () => {
     expect(res._getJSONData()["length"]).toBe(1);
     expect(res._getJSONData()[0]).toMatchObject({
       id: serviceId,
-      create_time: expect.any(String),
-      update_time: expect.any(String),
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     });
   });
 
@@ -292,11 +292,11 @@ describe("Services Module", () => {
     post.req.body = {
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     };
     await serviceHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -304,7 +304,7 @@ describe("Services Module", () => {
     // Get Service
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: "shop_does_not_exist",
+      id: "shopDoesNotExist",
     };
 
     await serviceByShopIdHandler(req, res);
@@ -321,11 +321,11 @@ describe("Services Module", () => {
     createCannedService.req.body = {
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     };
     await serviceHandler(createCannedService.req, createCannedService.res);
     expect(createCannedService.res.statusCode).toBe(201);
@@ -338,11 +338,11 @@ describe("Services Module", () => {
     createCustomService.req.body = {
       name: testCustomService.name,
       description: testCustomService.description,
-      estimated_time: testCustomService.estimated_time,
-      total_price: testCustomService.total_price,
+      estimatedTime: testCustomService.estimatedTime,
+      totalPrice: testCustomService.totalPrice,
       parts: testCustomService.parts,
       type: testCustomService.type,
-      shop_id: testCustomService.shop_id,
+      shopId: testCustomService.shopId,
     };
     await serviceHandler(createCustomService.req, createCustomService.res);
     expect(createCustomService.res.statusCode).toBe(201);
@@ -350,7 +350,7 @@ describe("Services Module", () => {
     // Get Service
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: testCannedService.shop_id,
+      id: testCannedService.shopId,
       type: [testCannedService.type],
     };
 
@@ -360,15 +360,15 @@ describe("Services Module", () => {
     expect(res._getJSONData()["length"]).toBe(1);
     expect(res._getJSONData()[0]).toMatchObject({
       id: cannedServiceId,
-      create_time: expect.any(String),
-      update_time: expect.any(String),
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     });
   });
 
@@ -380,11 +380,11 @@ describe("Services Module", () => {
     createCannedService.req.body = {
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     };
     await serviceHandler(createCannedService.req, createCannedService.res);
     expect(createCannedService.res.statusCode).toBe(201);
@@ -393,11 +393,11 @@ describe("Services Module", () => {
     createCustomService.req.body = {
       name: testCustomService.name,
       description: testCustomService.description,
-      estimated_time: testCustomService.estimated_time,
-      total_price: testCustomService.total_price,
+      estimatedTime: testCustomService.estimatedTime,
+      totalPrice: testCustomService.totalPrice,
       parts: testCustomService.parts,
       type: testCustomService.type,
-      shop_id: testCustomService.shop_id,
+      shopId: testCustomService.shopId,
     };
     await serviceHandler(createCustomService.req, createCustomService.res);
     expect(createCustomService.res.statusCode).toBe(201);
@@ -405,7 +405,7 @@ describe("Services Module", () => {
     // Get Service
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: "shop_does_not_exist",
+      id: "shopDoesNotExist",
       type: [testCannedService.type],
     };
 
@@ -423,11 +423,11 @@ describe("Services Module", () => {
     createCannedService.req.body = {
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     };
     await serviceHandler(createCannedService.req, createCannedService.res);
     expect(createCannedService.res.statusCode).toBe(201);
@@ -436,11 +436,11 @@ describe("Services Module", () => {
     createCustomService.req.body = {
       name: testCustomService.name,
       description: testCustomService.description,
-      estimated_time: testCustomService.estimated_time,
-      total_price: testCustomService.total_price,
+      estimatedTime: testCustomService.estimatedTime,
+      totalPrice: testCustomService.totalPrice,
       parts: testCustomService.parts,
       type: testCustomService.type,
-      shop_id: testCustomService.shop_id,
+      shopId: testCustomService.shopId,
     };
     await serviceHandler(createCustomService.req, createCustomService.res);
     expect(createCustomService.res.statusCode).toBe(201);
@@ -452,7 +452,7 @@ describe("Services Module", () => {
     // Get Service
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: testCustomService.shop_id,
+      id: testCustomService.shopId,
       type: [testCustomService.type],
     };
 
@@ -462,15 +462,15 @@ describe("Services Module", () => {
     expect(res._getJSONData()["length"]).toBe(1);
     expect(res._getJSONData()[0]).toMatchObject({
       id: customServiceId,
-      create_time: expect.any(String),
-      update_time: expect.any(String),
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
       name: testCustomService.name,
       description: testCustomService.description,
-      estimated_time: testCustomService.estimated_time,
-      total_price: testCustomService.total_price,
+      estimatedTime: testCustomService.estimatedTime,
+      totalPrice: testCustomService.totalPrice,
       parts: testCustomService.parts,
       type: testCustomService.type,
-      shop_id: testCustomService.shop_id,
+      shopId: testCustomService.shopId,
     });
   });
 
@@ -482,11 +482,11 @@ describe("Services Module", () => {
     createCannedService.req.body = {
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     };
     await serviceHandler(createCannedService.req, createCannedService.res);
     expect(createCannedService.res.statusCode).toBe(201);
@@ -495,11 +495,11 @@ describe("Services Module", () => {
     createCustomService.req.body = {
       name: testCustomService.name,
       description: testCustomService.description,
-      estimated_time: testCustomService.estimated_time,
-      total_price: testCustomService.total_price,
+      estimatedTime: testCustomService.estimatedTime,
+      totalPrice: testCustomService.totalPrice,
       parts: testCustomService.parts,
       type: testCustomService.type,
-      shop_id: testCustomService.shop_id,
+      shopId: testCustomService.shopId,
     };
     await serviceHandler(createCustomService.req, createCustomService.res);
     expect(createCustomService.res.statusCode).toBe(201);
@@ -507,7 +507,7 @@ describe("Services Module", () => {
     // Get Service
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: "shop_does_not_exist",
+      id: "shopDoesNotExist",
       type: [testCustomService.type],
     };
 
@@ -525,11 +525,11 @@ describe("Services Module", () => {
     post.req.body = {
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     };
     await serviceHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -550,15 +550,15 @@ describe("Services Module", () => {
     expect(res.statusCode).toBe(200);
     expect(res._getJSONData()).toMatchObject({
       id: serviceId,
-      create_time: expect.any(String),
-      update_time: expect.any(String),
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
       name: testCannedService.name,
       description: "Updated description",
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     });
   });
 
@@ -570,11 +570,11 @@ describe("Services Module", () => {
     post.req.body = {
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     };
     await serviceHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -582,7 +582,7 @@ describe("Services Module", () => {
     // Update Service
     const { req, res } = createMockRequestResponse({ method: "PATCH" });
     req.query = {
-      id: "service_does_not_exist",
+      id: "serviceDoesNotExist",
     };
     req.body = {
       description: "Updated description",
@@ -601,11 +601,11 @@ describe("Services Module", () => {
     post.req.body = {
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     };
     await serviceHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -634,11 +634,11 @@ describe("Services Module", () => {
     post.req.body = {
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     };
     await serviceHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -664,11 +664,11 @@ describe("Services Module", () => {
     post.req.body = {
       name: testCannedService.name,
       description: testCannedService.description,
-      estimated_time: testCannedService.estimated_time,
-      total_price: testCannedService.total_price,
+      estimatedTime: testCannedService.estimatedTime,
+      totalPrice: testCannedService.totalPrice,
       parts: testCannedService.parts,
       type: testCannedService.type,
-      shop_id: testCannedService.shop_id,
+      shopId: testCannedService.shopId,
     };
     await serviceHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -676,7 +676,7 @@ describe("Services Module", () => {
     // Delete Service
     const { req, res } = createMockRequestResponse({ method: "DELETE" });
     req.query = {
-      id: "service_does_not_exist",
+      id: "serviceDoesNotExist",
     };
 
     await serviceByIdHandler(req, res);
@@ -689,9 +689,9 @@ const createEmployeeAndShop = async () => {
   return await prisma.employee.create({
     data: {
       id: testEmployeeUser.id,
-      first_name: testEmployeeUser.first_name,
-      last_name: testEmployeeUser.last_name,
-      phone_number: testEmployeeUser.phone_number,
+      firstName: testEmployeeUser.firstName,
+      lastName: testEmployeeUser.lastName,
+      phoneNumber: testEmployeeUser.phoneNumber,
       email: testEmployeeUser.email,
       password: testEmployeeUser.password,
       type: testEmployeeUser.type,
@@ -699,11 +699,11 @@ const createEmployeeAndShop = async () => {
       shop: {
         create: {
           id: testShop.id,
-          phone_number: testShop.phone_number,
+          phoneNumber: testShop.phoneNumber,
           email: testShop.email,
           name: testShop.name,
           address: testShop.address,
-          postal_code: testShop.postal_code,
+          postalCode: testShop.postalCode,
           city: testShop.city,
           province: testShop.province,
         },

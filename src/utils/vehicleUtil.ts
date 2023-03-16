@@ -16,7 +16,7 @@ export function getVehicleById(id: string): Promise<IVehicle | null> {
           model: data.model,
           year: data.year,
           vin: data.vin,
-          license_plate: data.license_plate,
+          licensePlate: data.licensePlate,
         };
         return vehicle;
       });
@@ -48,7 +48,7 @@ export function getVehicleByCustomerId(id: string): Promise<IVehicle | null> {
           model: data.model,
           year: data.year,
           vin: data.vin,
-          license_plate: data.license_plate,
+          licensePlate: data.licensePlate,
         };
         return vehicle;
       });

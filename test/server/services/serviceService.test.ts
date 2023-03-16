@@ -10,16 +10,16 @@ import { getServiceById } from "@server/services/serviceService";
 import { prismaMock } from "@test/mocks/prismaMock";
 
 const testService: Service = {
-  id: "test_service_id",
-  create_time: new Date(),
-  update_time: new Date(),
-  name: "test_service_name",
-  description: "test_service_description",
-  estimated_time: 2,
-  total_price: 100,
+  id: "testServiceId",
+  createTime: new Date(),
+  updateTime: new Date(),
+  name: "testServiceName",
+  description: "testServiceDescription",
+  estimatedTime: 2,
+  totalPrice: 100,
   parts: null,
   type: "CANNED",
-  shop_id: "shop_id",
+  shopId: "shopId",
 };
 
 describe("get service", () => {
@@ -27,7 +27,7 @@ describe("get service", () => {
     it("should return null", async () => {
       prismaMock.service.findUnique.mockResolvedValue(null);
 
-      await expect(getServiceById("does_not_exist")).resolves.toBeNull();
+      await expect(getServiceById("doesNotExist")).resolves.toBeNull();
     });
   });
 

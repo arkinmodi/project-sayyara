@@ -28,7 +28,7 @@ const quoteByIdHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     case "GET":
       quote = await getQuoteById(id);
       if (quote) {
-        if (await isAuthorized(session, quote.customer_id, quote.shop_id)) {
+        if (await isAuthorized(session, quote.customerId, quote.shopId)) {
           res.status(200).json(quote);
         } else {
           res.status(403).json({ message: "Forbidden." });
@@ -45,7 +45,7 @@ const quoteByIdHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         return;
       }
 
-      if (!(await isAuthorized(session, quote.customer_id, quote.shop_id))) {
+      if (!(await isAuthorized(session, quote.customerId, quote.shopId))) {
         res.status(403).json({ message: "Forbidden." });
         return;
       }
@@ -68,7 +68,7 @@ const quoteByIdHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         return;
       }
 
-      if (!(await isAuthorized(session, quote.customer_id, quote.shop_id))) {
+      if (!(await isAuthorized(session, quote.customerId, quote.shopId))) {
         res.status(403).json({ message: "Forbidden." });
         return;
       }
@@ -98,7 +98,7 @@ const isAuthorized = async (
   const user = await getEmployeeById(session.user.id);
   if (!user) return false;
 
-  return user.shop_id === shopId;
+  return user.shopId === shopId;
 };
 
 export default quoteByIdHandler;

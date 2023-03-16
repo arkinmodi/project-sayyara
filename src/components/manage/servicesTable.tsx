@@ -23,10 +23,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   IService,
-  parts_condition_basic,
-  parts_condition_custom,
-  parts_type_basic,
-  parts_type_custom,
+  partsConditionBasic,
+  partsConditionCustom,
+  partsTypeBasic,
+  partsTypeCustom,
   ServiceType,
 } from "src/types/service";
 import AddPartPopup from "./addPartPopup";
@@ -233,8 +233,8 @@ const ServicesTable = (props: IServiceProps) => {
         value={options.value}
         options={
           serviceType === ServiceType.CANNED
-            ? parts_condition_basic
-            : parts_condition_custom
+            ? partsConditionBasic
+            : partsConditionCustom
         }
         optionLabel="label"
         optionValue="value"
@@ -258,9 +258,7 @@ const ServicesTable = (props: IServiceProps) => {
       <Dropdown
         value={options.value}
         options={
-          serviceType === ServiceType.CANNED
-            ? parts_type_basic
-            : parts_type_custom
+          serviceType === ServiceType.CANNED ? partsTypeBasic : partsTypeCustom
         }
         optionLabel="label"
         optionValue="value"

@@ -2,8 +2,8 @@ import { prisma } from "@server/db/client";
 import { z } from "zod";
 
 export const createChatMessageSchema = z.object({
-  customer_id: z.string().optional().nullable(),
-  shop_id: z.string().optional().nullable(),
+  customerId: z.string().optional().nullable(),
+  shopId: z.string().optional().nullable(),
   message: z.string(),
 });
 
@@ -13,17 +13,17 @@ export const createChatMessage = async (
   message: CreateChatMessageType,
   quoteId: string
 ) => {
-  if (!message.customer_id && !message.shop_id) {
+  if (!message.customerId && !message.shopId) {
     Promise.reject("Missing sender information.");
     return;
   }
 
-  const customer = message.customer_id
-    ? { customer: { connect: { id: message.customer_id } } }
+  const customer = message.customerId
+    ? { customer: { connect: { id: message.customerId } } }
     : { customer: {} };
 
-  const shop = message.shop_id
-    ? { shop: { connect: { id: message.shop_id } } }
+  const shop = message.shopId
+    ? { shop: { connect: { id: message.shopId } } }
     : { shop: {} };
 
   return await prisma.chatMessage.create({
@@ -36,9 +36,9 @@ export const createChatMessage = async (
   });
 };
 
-export const getChatMessagesByQuoteId = async (quote_id: string) => {
+export const getChatMessagesByQuoteId = async (quoteId: string) => {
   return await prisma.chatMessage.findMany({
-    where: { quote_id },
-    orderBy: { create_time: "desc" },
+    where: { quoteId },
+    orderBy: { createTime: "desc" },
   });
 };

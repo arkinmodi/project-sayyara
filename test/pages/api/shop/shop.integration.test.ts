@@ -14,65 +14,65 @@ import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 import { Session } from "next-auth";
 
 const testShop = {
-  create_time: new Date(),
-  update_time: new Date(),
-  name: "test_shop_name",
-  address: "test_address",
-  phone_number: "test_phone_number",
+  createTime: new Date(),
+  updateTime: new Date(),
+  name: "testShopName",
+  address: "testAddress",
+  phoneNumber: "testPhoneNumber",
   email: "test@email.com",
-  postal_code: "test_postal_code",
-  city: "test_city",
-  province: "test_province",
+  postalCode: "testPostalCode",
+  city: "testCity",
+  province: "testProvince",
 };
 
 const testShop2 = {
-  create_time: new Date(),
-  update_time: new Date(),
-  name: "another_shop",
-  address: "test_address2",
-  phone_number: "test_phone_number2",
+  createTime: new Date(),
+  updateTime: new Date(),
+  name: "anotherShop",
+  address: "testAddress2",
+  phoneNumber: "testPhoneNumber2",
   email: "test2@email.com",
-  postal_code: "test_postal_code2",
-  city: "test_city",
-  province: "test_province",
+  postalCode: "testPostalCode2",
+  city: "testCity",
+  province: "testProvince",
 };
 
 const testShop3 = {
-  create_time: new Date(),
-  update_time: new Date(),
-  name: "one_more_shop",
-  address: "test_address3",
-  phone_number: "test_phone_number3",
+  createTime: new Date(),
+  updateTime: new Date(),
+  name: "oneMoreShop",
+  address: "testAddress3",
+  phoneNumber: "testPhoneNumber3",
   email: "test3@email.com",
-  postal_code: "test_postal_code3",
-  city: "test_city",
-  province: "test_province",
+  postalCode: "testPostalCode3",
+  city: "testCity",
+  province: "testProvince",
 };
 
 const testService = {
-  id: "test_service_id",
-  create_time: new Date(),
-  update_time: new Date(),
-  name: "test_service_name",
-  description: "test_service_description",
-  estimated_time: 2,
-  total_price: 100,
+  id: "testServiceId",
+  createTime: new Date(),
+  updateTime: new Date(),
+  name: "testServiceName",
+  description: "testServiceDescription",
+  estimatedTime: 2,
+  totalPrice: 100,
   type: ServiceType.CANNED,
   parts: [],
 };
 
 const testEmployeeUser: Employee = {
-  id: "test_id",
-  first_name: "first_name",
-  last_name: "last_name",
-  phone_number: "1234567890",
+  id: "testId",
+  firstName: "firstName",
+  lastName: "lastName",
+  phoneNumber: "1234567890",
   email: "user@test.com",
-  password: "test_password",
+  password: "testPassword",
   image: null,
-  create_time: new Date(),
-  update_time: new Date(),
+  createTime: new Date(),
+  updateTime: new Date(),
   type: "SHOP_OWNER",
-  shop_id: "shop_id",
+  shopId: "shopId",
   status: "ACTIVE",
 };
 
@@ -81,8 +81,8 @@ jest.mock("@server/common/getServerAuthSession", () => ({
     expires: "1",
     user: {
       ...testEmployeeUser,
-      firstName: testEmployeeUser.first_name,
-      lastName: testEmployeeUser.last_name,
+      firstName: testEmployeeUser.firstName,
+      lastName: testEmployeeUser.lastName,
     },
   })),
 }));
@@ -105,7 +105,7 @@ afterEach(async () => {
 describe("Shop Module", () => {
   it("FRT-M9-1: Get shop request with an invalid shop ID", async () => {
     const { req, res } = createMockRequestResponse({ method: "GET" });
-    req.query = { ...req.query, id: "does_not_exist" };
+    req.query = { ...req.query, id: "doesNotExist" };
     await shopByIdHandler(req, res);
 
     expect(res.statusCode).toBe(404);
@@ -127,8 +127,8 @@ describe("Shop Module", () => {
     expect(get.res._getJSONData()).toMatchObject({
       ...testShop,
       id: shop.id,
-      create_time: expect.any(String),
-      update_time: expect.any(String),
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
     });
   });
 
@@ -176,16 +176,16 @@ describe("Shop Module", () => {
     update.req.query = { ...update.req.query, id: shop.id };
     // Change name and hours of operation
     update.req.body = {
-      name: "new_name",
-      hours_of_operation: hoursOfOperation,
+      name: "newName",
+      hoursOfOperation: hoursOfOperation,
     };
 
     await shopByIdHandler(update.req, update.res);
 
     expect(update.res.statusCode).toBe(200);
     expect(update.res._getJSONData()).toMatchObject({
-      name: "new_name",
-      hours_of_operation: hoursOfOperation,
+      name: "newName",
+      hoursOfOperation: hoursOfOperation,
     });
 
     const get = createMockRequestResponse({ method: "GET" });
@@ -195,11 +195,11 @@ describe("Shop Module", () => {
     expect(get.res.statusCode).toBe(200);
     expect(get.res._getJSONData()).toMatchObject({
       ...testShop,
-      create_time: expect.any(String),
-      update_time: expect.any(String),
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
       id: shop.id,
-      name: "new_name",
-      hours_of_operation: hoursOfOperation,
+      name: "newName",
+      hoursOfOperation: hoursOfOperation,
     });
   });
 
@@ -244,11 +244,11 @@ describe("Shop Module", () => {
 
     const shop = await createShop(testShop);
     const update = createMockRequestResponse({ method: "PATCH" });
-    update.req.query = { ...update.req.query, id: "invalid_shop_id" };
+    update.req.query = { ...update.req.query, id: "invalidShopId" };
     // Change name and hours of operation
     update.req.body = {
-      name: "new_name",
-      hours_of_operation: hoursOfOperation,
+      name: "newName",
+      hoursOfOperation: hoursOfOperation,
     };
 
     await shopByIdHandler(update.req, update.res);
@@ -265,7 +265,7 @@ describe("Shop Module", () => {
     update.req.query = { ...update.req.query, id: shop.id };
     // Change name and hours of operation
     update.req.body = {
-      email: "invalid_email",
+      email: "invalidEmail",
     };
 
     await shopByIdHandler(update.req, update.res);
@@ -288,8 +288,8 @@ describe("Shop Module", () => {
       {
         ...testShop,
         name: shop.name,
-        create_time: expect.any(String),
-        update_time: expect.any(String),
+        createTime: expect.any(String),
+        updateTime: expect.any(String),
       },
     ]);
   });
@@ -309,20 +309,20 @@ describe("Shop Module", () => {
       {
         ...testShop,
         name: shop.name,
-        create_time: expect.any(String),
-        update_time: expect.any(String),
+        createTime: expect.any(String),
+        updateTime: expect.any(String),
       },
       {
         ...testShop2,
         name: shop2.name,
-        create_time: expect.any(String),
-        update_time: expect.any(String),
+        createTime: expect.any(String),
+        updateTime: expect.any(String),
       },
       {
         ...testShop3,
         name: shop3.name,
-        create_time: expect.any(String),
-        update_time: expect.any(String),
+        createTime: expect.any(String),
+        updateTime: expect.any(String),
       },
     ]);
   });
@@ -346,10 +346,10 @@ describe("Shop Module", () => {
     const shop2 = await createShop(testShop2);
     const shop3 = await createShop(testShop3);
 
-    const service = await createService({ ...testService, shop_id: shop.id });
+    const service = await createService({ ...testService, shopId: shop.id });
 
     const { req, res } = createMockRequestResponse({ method: "GET" });
-    req.query = { ...req.query, name: "test_service_name", shop: "false" };
+    req.query = { ...req.query, name: "testServiceName", shop: "false" };
     await shopLookupHandler(req, res);
 
     expect(res.statusCode).toBe(200);
@@ -358,8 +358,8 @@ describe("Shop Module", () => {
       {
         ...testShop,
         name: shop.name,
-        create_time: expect.any(String),
-        update_time: expect.any(String),
+        createTime: expect.any(String),
+        updateTime: expect.any(String),
       },
     ]);
   });
@@ -369,7 +369,7 @@ describe("Shop Module", () => {
     const shop2 = await createShop(testShop2);
     const shop3 = await createShop(testShop3);
 
-    const service = await createService({ ...testService, shop_id: shop.id });
+    const service = await createService({ ...testService, shopId: shop.id });
 
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = { ...req.query, name: "asdf", shop: "false" };

@@ -31,9 +31,9 @@ function getAllEmployees(shopId: string): Promise<IEmployee[] | null> {
           return {
             id: employee.id,
             email: employee.email,
-            firstName: employee.first_name,
-            lastName: employee.last_name,
-            phoneNumber: employee.phone_number,
+            firstName: employee.firstName,
+            lastName: employee.lastName,
+            phoneNumber: employee.phoneNumber,
             status: employee.status,
             type: employee.type,
           };
@@ -73,35 +73,35 @@ function getAllAppointments(shopId: string): Promise<IAppointment[]> {
         const appointments: IAppointment[] = data
           .map((appointment: any) => {
             const customer: ICustomer = {
-              id: appointment.customer_id,
-              first_name: appointment.customer.first_name,
-              last_name: appointment.customer.last_name,
-              phone_number: appointment.customer.phone_number,
+              id: appointment.customerId,
+              firstName: appointment.customer.firstName,
+              lastName: appointment.customer.lastName,
+              phoneNumber: appointment.customer.phoneNumber,
               email: appointment.customer.email,
             };
 
             const vehicle: IVehicle = {
-              id: appointment.vehicle_id,
+              id: appointment.vehicleId,
               make: appointment.vehicle.make,
               model: appointment.vehicle.model,
               year: appointment.vehicle.year,
               vin: appointment.vehicle.vin,
-              license_plate: appointment.vehicle.license_plate,
+              licensePlate: appointment.vehicle.licensePlate,
             };
 
             return {
               id: appointment.id,
-              startTime: appointment.start_time,
-              endTime: appointment.end_time,
+              startTime: appointment.startTime,
+              endTime: appointment.endTime,
               customer: customer,
-              shopId: appointment.shop_id,
-              quoteId: appointment.quote_id,
+              shopId: appointment.shopId,
+              quoteId: appointment.quoteId,
               serviceName: appointment.service.name,
               price: appointment.price,
               status: appointment.status,
-              workOrderId: appointment.work_order_id,
+              workOrderId: appointment.workOrderId,
               vehicle: vehicle,
-              cancellationReason: appointment.cancellation_reason,
+              cancellationReason: appointment.cancellationReason,
             };
           })
           .filter((appointment: IAppointment | undefined) => {

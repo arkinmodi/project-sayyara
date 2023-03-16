@@ -12,47 +12,47 @@ import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 import { Session } from "next-auth";
 
 const testShop: Shop = {
-  id: "test_shop_id",
-  create_time: new Date(),
-  update_time: new Date(),
-  name: "test_shop_name",
-  address: "test_address",
-  phone_number: "test_phone_number",
+  id: "testShopId",
+  createTime: new Date(),
+  updateTime: new Date(),
+  name: "testShopName",
+  address: "testAddress",
+  phoneNumber: "testPhoneNumber",
   email: "test@email.com",
-  postal_code: "test_postal_code",
-  city: "test_city",
-  province: "test_province",
-  hours_of_operation: null,
+  postalCode: "testPostalCode",
+  city: "testCity",
+  province: "testProvince",
+  hoursOfOperation: null,
 };
 
 const testEmployee: Employee = {
   id: "1",
-  create_time: new Date(),
-  update_time: new Date(),
-  first_name: "bob",
-  last_name: "ban",
-  phone_number: "4162342343",
+  createTime: new Date(),
+  updateTime: new Date(),
+  firstName: "bob",
+  lastName: "ban",
+  phoneNumber: "4162342343",
   email: "bob@gmail.com",
   password: "password",
   image: null,
   type: "EMPLOYEE",
-  shop_id: testShop.id,
+  shopId: testShop.id,
   status: "ACTIVE",
 };
 
 const testShopOwner: Employee = {
   id: "2",
-  first_name: "shop_owner_first_name",
-  last_name: "shop_owner_last_name",
-  phone_number: "1234567890",
-  email: "shop_owner@test.com",
-  password: "shop_owner_password",
+  firstName: "shopOwnerFirstName",
+  lastName: "shopOwnerLastName",
+  phoneNumber: "1234567890",
+  email: "shopOwner@test.com",
+  password: "shopOwnerPassword",
   image: null,
-  create_time: new Date(),
-  update_time: new Date(),
+  createTime: new Date(),
+  updateTime: new Date(),
   type: "SHOP_OWNER",
   status: "ACTIVE",
-  shop_id: testShop.id,
+  shopId: testShop.id,
 };
 
 jest.mock("@server/common/getServerAuthSession", () => ({
@@ -60,8 +60,8 @@ jest.mock("@server/common/getServerAuthSession", () => ({
     expires: "1",
     user: {
       ...testShopOwner,
-      firstName: testShopOwner.first_name,
-      lastName: testShopOwner.last_name,
+      firstName: testShopOwner.firstName,
+      lastName: testShopOwner.lastName,
     },
   })),
 }));
@@ -90,7 +90,7 @@ describe("Employee Management Module", () => {
 
     // Get employee
     const { req, res } = createMockRequestResponse({ method: "GET" });
-    req.query = { id: testEmployee.shop_id };
+    req.query = { id: testEmployee.shopId };
     await employeeByShopIdHandler(req, res);
 
     expect(res.statusCode).toBe(200);
@@ -137,7 +137,7 @@ describe("Employee Management Module", () => {
     await createEmployee();
 
     const patch = createMockRequestResponse({ method: "PATCH" });
-    patch.req.query = { id: "employee_id_does_not_exist" };
+    patch.req.query = { id: "employeeIdDoesNotExist" };
     patch.req.body = { status: "SUSPENDED" };
 
     await employeeByIdHandler(patch.req, patch.res);
@@ -150,11 +150,11 @@ const createShop = async () => {
   return await prisma.shop.create({
     data: {
       id: testShop.id,
-      phone_number: testShop.phone_number,
+      phoneNumber: testShop.phoneNumber,
       email: testShop.email,
       name: testShop.name,
       address: testShop.address,
-      postal_code: testShop.postal_code,
+      postalCode: testShop.postalCode,
       city: testShop.city,
       province: testShop.province,
     },

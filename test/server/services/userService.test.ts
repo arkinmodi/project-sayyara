@@ -13,17 +13,17 @@ const hashPassword = {
 };
 
 const testEmployeeUser: Employee = {
-  id: "test_id",
-  first_name: "first_name",
-  last_name: "last_name",
-  phone_number: "1234567890",
+  id: "testId",
+  firstName: "firstName",
+  lastName: "lastName",
+  phoneNumber: "1234567890",
   email: "user@test.com",
   password: hashPassword.hash,
   image: null,
-  create_time: new Date(),
-  update_time: new Date(),
+  createTime: new Date(),
+  updateTime: new Date(),
   type: "SHOP_OWNER",
-  shop_id: "shop_id",
+  shopId: "shopId",
   status: "ACTIVE",
 };
 
@@ -33,7 +33,7 @@ describe("get user", () => {
       prismaMock.employee.findUnique.mockResolvedValue(null);
 
       await expect(
-        getUserByEmail("does_not_exists@test.com")
+        getUserByEmail("doesNotExists@test.com")
       ).resolves.toBeNull();
     });
   });
@@ -65,11 +65,11 @@ describe("user authorization", () => {
         authorize(testEmployeeUser.email, hashPassword.plaintext)
       ).resolves.toEqual({
         id: testEmployeeUser.id,
-        firstName: testEmployeeUser.first_name,
-        lastName: testEmployeeUser.last_name,
+        firstName: testEmployeeUser.firstName,
+        lastName: testEmployeeUser.lastName,
         email: testEmployeeUser.email,
         type: testEmployeeUser.type,
-        shopId: testEmployeeUser.shop_id,
+        shopId: testEmployeeUser.shopId,
       });
     });
   });
@@ -79,7 +79,7 @@ describe("user authorization", () => {
       prismaMock.employee.findUnique.mockResolvedValue(null);
 
       await expect(
-        authorize("does_not_exists@test.com", hashPassword.plaintext)
+        authorize("doesNotExists@test.com", hashPassword.plaintext)
       ).rejects.toEqual("user not found");
     });
   });
@@ -90,7 +90,7 @@ describe("user authorization", () => {
       prismaMock.employee.findUnique.mockResolvedValue(testEmployeeUser);
 
       await expect(
-        authorize(testEmployeeUser.email, "wrong_password")
+        authorize(testEmployeeUser.email, "wrongPassword")
       ).rejects.toEqual("unauthorized");
     });
   });

@@ -75,7 +75,7 @@ const isGetAuthorized = async (session: Session, employee: Employee) => {
   if (!user) return false;
 
   return (
-    (user.type === "SHOP_OWNER" && user.shop_id === employee.shop_id) ||
+    (user.type === "SHOP_OWNER" && user.shopId === employee.shopId) ||
     user.id === employee.id
   );
 };
@@ -89,7 +89,7 @@ const isPatchAuthorized = async (session: Session, id: string) => {
   const employee = await getEmployeeById(id);
   if (!employee) return false;
 
-  return user.shop_id === employee.shop_id;
+  return user.shopId === employee.shopId;
 };
 
 export default employeeByIdHandler;

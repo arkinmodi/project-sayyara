@@ -22,17 +22,17 @@ import ServiceTypes from "../types/serviceTypes";
 interface IPatchServiceBody {
   name?: string;
   description?: string;
-  estimated_time?: number;
-  total_price?: number;
+  estimatedTime?: number;
+  totalPrice?: number;
   parts?: IParts[];
 }
 
 interface IPostServiceBody {
-  shop_id: string;
+  shopId: string;
   name: string;
   description: string;
-  estimated_time?: number;
-  total_price?: number;
+  estimatedTime?: number;
+  totalPrice?: number;
   parts: IParts[];
   type: ServiceType;
 }
@@ -65,8 +65,8 @@ function* updateService(
   const body: IPatchServiceBody = {
     name: patch.name,
     description: patch.description,
-    estimated_time: patch.estimatedTime,
-    total_price: patch.totalPrice,
+    estimatedTime: patch.estimatedTime,
+    totalPrice: patch.totalPrice,
     parts: patch.parts,
   };
   const success = yield call(patchService, action.payload.serviceId, body);
@@ -126,11 +126,11 @@ function* createService(
   if (shopId) {
     const payload = action.payload;
     const body: IPostServiceBody = {
-      shop_id: shopId,
+      shopId: shopId,
       name: payload.name,
       description: payload.description,
-      estimated_time: payload.estimatedTime,
-      total_price: payload.totalPrice,
+      estimatedTime: payload.estimatedTime,
+      totalPrice: payload.totalPrice,
       parts: payload.parts,
       type: payload.type,
     };

@@ -39,7 +39,7 @@ const vehicleByIdHandler = async (
 
 const isAuthorized = (session: Session, vehicle: Vehicle) => {
   return (
-    session.user.type !== "CUSTOMER" || session.user.id === vehicle.customer_id
+    session.user.type !== "CUSTOMER" || session.user.id === vehicle.customerId
   );
 };
 

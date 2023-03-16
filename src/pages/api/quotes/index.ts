@@ -23,7 +23,7 @@ const quoteHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (
-    !(await isAuthorized(session, result.data.customer_id, result.data.shop_id))
+    !(await isAuthorized(session, result.data.customerId, result.data.shopId))
   ) {
     res.status(403).json({ message: "Forbidden." });
     return;
@@ -43,7 +43,7 @@ const isAuthorized = async (
   const user = await getEmployeeById(session.user.id);
   if (!user) return false;
 
-  return user.shop_id === shopId;
+  return user.shopId === shopId;
 };
 
 export default quoteHandler;
