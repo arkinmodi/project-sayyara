@@ -6,7 +6,7 @@ export const createVehicleSchema = z.object({
   make: z.string(),
   model: z.string(),
   vin: z.string(),
-  license_plate: z.string(),
+  licensePlate: z.string(),
 });
 
 export type CreateVehicleType = z.infer<typeof createVehicleSchema>;
@@ -15,6 +15,6 @@ export const getVehicleById = async (id: string) => {
   return prisma.vehicle.findUnique({ where: { id } });
 };
 
-export const getVehicleByCustomerId = async (customer_id: string) => {
-  return prisma.vehicle.findMany({ where: { customer_id } });
+export const getVehicleByCustomerId = async (customerId: string) => {
+  return prisma.vehicle.findMany({ where: { customerId } });
 };

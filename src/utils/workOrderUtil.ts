@@ -22,9 +22,9 @@ export const getWorkOrderById = async (
           data.employee !== null
             ? {
                 id: data.employee.id,
-                firstName: data.employee.first_name,
-                lastName: data.employee.last_name,
-                phoneNumber: data.employee.phone_number,
+                firstName: data.employee.firstName,
+                lastName: data.employee.lastName,
+                phoneNumber: data.employee.phoneNumber,
                 email: data.employee.email,
                 type: data.employee.type,
                 status: data.employee.status,
@@ -35,36 +35,36 @@ export const getWorkOrderById = async (
           data.appointment !== null
             ? {
                 id: data.appointment.id,
-                startTime: new Date(data.appointment.start_time),
-                endTime: new Date(data.appointment.end_time),
-                shopId: data.appointment.shop_id,
-                customer: data.appointment.customer_id,
-                quoteId: data.appointment.quote_id,
-                serviceName: data.appointment.service_id,
+                startTime: new Date(data.appointment.startTime),
+                endTime: new Date(data.appointment.endTime),
+                shopId: data.appointment.shopId,
+                customer: data.appointment.customerId,
+                quoteId: data.appointment.quoteId,
+                serviceName: data.appointment.serviceId,
                 price: data.appointment.price,
                 status: data.appointment.status,
-                workOrderId: data.appointment.work_order_id,
-                vehicle: data.appointment.vehicle_id,
-                cancellationReason: data.appointment.cancellation_reason,
+                workOrderId: data.appointment.workOrderId,
+                vehicle: data.appointment.vehicleId,
+                cancellationReason: data.appointment.cancellationReason,
               }
             : null;
 
         return {
           id: data.id,
-          createTime: new Date(data.create_time),
-          updateTime: new Date(data.update_time),
+          createTime: new Date(data.createTime),
+          updateTime: new Date(data.updateTime),
           title: data.title,
-          customerId: data.customer_id,
-          vehicleId: data.vehicle_id,
-          employeeId: data.employee_id,
+          customerId: data.customerId,
+          vehicleId: data.vehicleId,
+          employeeId: data.employeeId,
           body: data.body,
-          shopId: data.shop_id,
-          cancellationReason: data.cancellation_reason,
+          shopId: data.shopId,
+          cancellationReason: data.cancellationReason,
           customer: {
             id: data.customer.id,
-            first_name: data.customer.first_name,
-            last_name: data.customer.last_name,
-            phone_number: data.customer.phone_number,
+            firstName: data.customer.firstName,
+            lastName: data.customer.lastName,
+            phoneNumber: data.customer.phoneNumber,
             email: data.customer.email,
           },
           vehicle: {
@@ -73,7 +73,7 @@ export const getWorkOrderById = async (
             model: data.vehicle.model,
             year: data.vehicle.year,
             vin: data.vehicle.vin,
-            license_plate: data.vehicle.license_plate,
+            licensePlate: data.vehicle.licensePlate,
           },
           employee,
           appointment,
@@ -96,8 +96,8 @@ export const getWorkOrderById = async (
 export type PatchWorkOrderByIdBody = {
   title?: string;
   body?: string;
-  employee_id?: string;
-  employee_email?: string;
+  employeeId?: string;
+  employeeEmail?: string;
 };
 
 export const patchWorkOrderById = async (

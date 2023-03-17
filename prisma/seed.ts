@@ -77,25 +77,25 @@ const seed = async () => {
       data: {
         email: seedData.shopOwner.email,
         password: bcryptHash(md5Hash(seedData.shopOwner.password)),
-        first_name: seedData.shopOwner.firstName,
-        last_name: seedData.shopOwner.lastName,
-        phone_number: seedData.shopOwner.phoneNumber,
+        firstName: seedData.shopOwner.firstName,
+        lastName: seedData.shopOwner.lastName,
+        phoneNumber: seedData.shopOwner.phoneNumber,
         type: "SHOP_OWNER",
         shop: {
           create: {
             name: seedData.shop.name,
             address: seedData.shop.address,
-            phone_number: seedData.shop.phoneNumber,
+            phoneNumber: seedData.shop.phoneNumber,
             email: seedData.shop.email,
-            postal_code: seedData.shop.postalCode,
+            postalCode: seedData.shop.postalCode,
             city: seedData.shop.city,
             province: seedData.shop.province,
-            hours_of_operation: seedData.shop.hoursOfOperation,
+            hoursOfOperation: seedData.shop.hoursOfOperation,
           },
         },
       },
     });
-    shopIds.push(data.shop_id);
+    shopIds.push(data.shopId);
   }
 
   // Add Employees to First Shop
@@ -104,9 +104,9 @@ const seed = async () => {
       data: {
         email: seedData.employee.email,
         password: bcryptHash(md5Hash(seedData.employee.password)),
-        first_name: seedData.employee.firstName,
-        last_name: seedData.employee.lastName,
-        phone_number: seedData.employee.phoneNumber,
+        firstName: seedData.employee.firstName,
+        lastName: seedData.employee.lastName,
+        phoneNumber: seedData.employee.phoneNumber,
         type: "EMPLOYEE",
         shop: { connect: { id: shopIds[0] } },
       },
@@ -120,9 +120,9 @@ const seed = async () => {
       data: {
         email: seedData.customer.email,
         password: bcryptHash(md5Hash(seedData.customer.password)),
-        first_name: seedData.customer.firstName,
-        last_name: seedData.customer.lastName,
-        phone_number: seedData.customer.phoneNumber,
+        firstName: seedData.customer.firstName,
+        lastName: seedData.customer.lastName,
+        phoneNumber: seedData.customer.phoneNumber,
         type: "CUSTOMER",
         vehicles: {
           create: [
@@ -131,7 +131,7 @@ const seed = async () => {
               make: seedData.vehicle.make,
               model: seedData.vehicle.model,
               vin: seedData.vehicle.vin,
-              license_plate: seedData.vehicle.licensePlate,
+              licensePlate: seedData.vehicle.licensePlate,
             },
           ],
         },
@@ -153,8 +153,8 @@ const seed = async () => {
         data: {
           name: serviceSeedData.name,
           description: serviceSeedData.description,
-          estimated_time: serviceSeedData.estimatedTime,
-          total_price: serviceSeedData.price,
+          estimatedTime: serviceSeedData.estimatedTime,
+          totalPrice: serviceSeedData.price,
           parts: serviceSeedData.parts,
           type: serviceSeedData.type as ServiceType,
           shop: { connect: { id: shopId } },
@@ -168,18 +168,18 @@ const seed = async () => {
   for (const seedData of customerAppointments) {
     await prisma.appointment.create({
       data: {
-        start_time: new Date(seedData.start_time),
-        end_time: new Date(seedData.end_time),
+        startTime: new Date(seedData.startTime),
+        endTime: new Date(seedData.endTime),
         price: seedData.price,
         status: seedData.status as AppointmentStatus,
         vehicle: { connect: { id: customerIds[0]?.vehicleId } },
         customer: { connect: { id: customerIds[0]?.customerId } },
         shop: { connect: { id: shopIds[0] } },
         service: { connect: { id: serviceIds[0]?.id } },
-        work_order: {
+        workOrder: {
           create: {
-            create_time: new Date(),
-            update_time: new Date(),
+            createTime: new Date(),
+            updateTime: new Date(),
             title: serviceIds[0]!.name,
             body: "",
             customer: { connect: { id: customerIds[0]?.customerId } },
@@ -194,18 +194,18 @@ const seed = async () => {
   for (const seedData of shopAppointments) {
     await prisma.appointment.create({
       data: {
-        start_time: new Date(seedData.start_time),
-        end_time: new Date(seedData.end_time),
+        startTime: new Date(seedData.startTime),
+        endTime: new Date(seedData.endTime),
         price: seedData.price,
         status: seedData.status as AppointmentStatus,
         vehicle: { connect: { id: customerIds[1]?.vehicleId } },
         customer: { connect: { id: customerIds[1]?.customerId } },
         shop: { connect: { id: shopIds[0] } },
         service: { connect: { id: serviceIds[0]?.id } },
-        work_order: {
+        workOrder: {
           create: {
-            create_time: new Date(),
-            update_time: new Date(),
+            createTime: new Date(),
+            updateTime: new Date(),
             title: serviceIds[0]!.name,
             body: "",
             customer: { connect: { id: customerIds[1]?.customerId } },

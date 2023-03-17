@@ -21,15 +21,15 @@ import {
 import AppointmentTypes from "../types/appointmentTypes";
 
 interface IPostCreateBody {
-  shop_id: string;
-  customer_id: string;
-  service_id: string;
-  vehicle_id: string;
-  quote_id?: string;
+  shopId: string;
+  customerId: string;
+  serviceId: string;
+  vehicleId: string;
+  quoteId?: string;
   price: number;
   status: AppointmentStatus;
-  start_time: string;
-  end_time: string;
+  startTime: string;
+  endTime: string;
 }
 
 interface ICustomerAppointments {
@@ -66,8 +66,8 @@ function patchAppointmentTime(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      start_time: content.startTime,
-      end_time: content.endTime,
+      startTime: content.startTime,
+      endTime: content.endTime,
       status: AppointmentStatus.PENDING_APPROVAL,
     }),
   }).then((res) => {
@@ -90,7 +90,7 @@ function patchCancelAppointment(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      cancellation_reason: content.reason,
+      cancellationReason: content.reason,
       status: AppointmentStatus.CANCELLED,
     }),
   }).then((res) => {
@@ -120,18 +120,18 @@ function getCustomerAppointments(
           (appointment: any) => {
             return {
               id: appointment.id,
-              startTime: appointment.start_time,
-              endTime: appointment.end_time,
-              shopId: appointment.shop_id,
+              startTime: appointment.startTime,
+              endTime: appointment.endTime,
+              shopId: appointment.shopId,
               shopName: appointment.shop.name,
               shopAddress: appointment.shop.address,
-              shopPhoneNumber: appointment.shop.phone_number,
-              quoteId: appointment.quote_id,
+              shopPhoneNumber: appointment.shop.phoneNumber,
+              quoteId: appointment.quoteId,
               serviceName: appointment.service.name,
               price: appointment.price,
               status: appointment.status,
-              workOrderId: appointment.work_order_id,
-              cancellationReason: appointment.cancellation_reason,
+              workOrderId: appointment.workOrderId,
+              cancellationReason: appointment.cancellationReason,
             };
           }
         );
@@ -220,15 +220,15 @@ function* createAppointment(
 ): Generator<CallEffect | PutEffect> {
   const payload = action.payload;
   const body: IPostCreateBody = {
-    shop_id: payload.shopId,
-    customer_id: payload.customerId,
-    service_id: payload.serviceId,
-    vehicle_id: payload.vehicleId,
-    quote_id: payload.quoteId,
+    shopId: payload.shopId,
+    customerId: payload.customerId,
+    serviceId: payload.serviceId,
+    vehicleId: payload.vehicleId,
+    quoteId: payload.quoteId,
     price: payload.price,
     status: payload.status,
-    start_time: payload.startTime,
-    end_time: payload.endTime,
+    startTime: payload.startTime,
+    endTime: payload.endTime,
   };
   yield call(postCreate, body);
   yield put({

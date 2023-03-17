@@ -16,23 +16,23 @@ export enum PartType {
   OEM_OR_AFTERMARKET = "OEM OR AFTERMARKET",
 }
 
-export const parts_condition_basic = [
+export const partsConditionBasic = [
   { label: "NEW", value: PartCondition.NEW },
   { label: "USED", value: PartCondition.USED },
 ];
 
-export const parts_condition_custom = [
+export const partsConditionCustom = [
   { label: "NEW", value: PartCondition.NEW },
   { label: "USED", value: PartCondition.USED },
   { label: "NEW OR USED", value: PartCondition.NEW_OR_USED },
 ];
 
-export const parts_type_basic = [
+export const partsTypeBasic = [
   { label: "OEM", value: PartType.OEM },
   { label: "AFTERMARKET", value: PartType.AFTERMARKET },
 ];
 
-export const parts_type_custom = [
+export const partsTypeCustom = [
   { label: "OEM", value: PartType.OEM },
   { label: "AFTERMARKET", value: PartType.AFTERMARKET },
   { label: "OEM OR AFTERMARKET", value: PartType.OEM_OR_AFTERMARKET },

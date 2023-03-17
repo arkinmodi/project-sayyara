@@ -25,10 +25,10 @@ var md5Hash = require("md5-hash");
 
 interface IPostSignUpBody {
   email: string;
-  phone_number: string;
+  phoneNumber: string;
   password: string;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
 }
 
 interface IPostCustomerSignUpBody extends IPostSignUpBody {
@@ -37,12 +37,12 @@ interface IPostCustomerSignUpBody extends IPostSignUpBody {
     make: string;
     model: string;
     vin: string;
-    license_plate: string;
+    licensePlate: string;
   };
 }
 
 interface IPostShopEmployeeSignUpBody extends IPostSignUpBody {
-  shop_id: string;
+  shopId: string;
 }
 
 interface IPostShopOwnerSignUpBody extends IPostSignUpBody {
@@ -51,8 +51,8 @@ interface IPostShopOwnerSignUpBody extends IPostSignUpBody {
     address: string;
     city: string;
     province: string;
-    postal_code: string;
-    phone_number: string;
+    postalCode: string;
+    phoneNumber: string;
     email: string;
   };
 }
@@ -158,15 +158,15 @@ function* customerSignUp(
   const payload = action.payload;
   const body: IPostCustomerSignUpBody = {
     email: payload.email,
-    phone_number: payload.phoneNumber,
+    phoneNumber: payload.phoneNumber,
     password: md5Hash.default(payload.password),
-    first_name: payload.firstName,
-    last_name: payload.lastName,
+    firstName: payload.firstName,
+    lastName: payload.lastName,
     vehicle: {
       make: payload.vehicleMake,
       model: payload.vehicleModel,
       year: payload.vehicleYear,
-      license_plate: payload.licensePlate,
+      licensePlate: payload.licensePlate,
       vin: payload.vin,
     },
   };
@@ -188,11 +188,11 @@ function* shopEmployeeSignUp(
   const payload = action.payload;
   const body: IPostShopEmployeeSignUpBody = {
     email: payload.email,
-    phone_number: payload.phoneNumber,
+    phoneNumber: payload.phoneNumber,
     password: md5Hash.default(payload.password),
-    first_name: payload.firstName,
-    last_name: payload.lastName,
-    shop_id: payload.shopId,
+    firstName: payload.firstName,
+    lastName: payload.lastName,
+    shopId: payload.shopId,
   };
   const success = yield call(postShopEmployeeSignUp, body);
   if (success) {
@@ -212,17 +212,17 @@ function* shopOwnerSignUp(
   const payload = action.payload;
   const body: IPostShopOwnerSignUpBody = {
     email: payload.email,
-    phone_number: payload.phoneNumber,
+    phoneNumber: payload.phoneNumber,
     password: md5Hash.default(payload.password),
-    first_name: payload.firstName,
-    last_name: payload.lastName,
+    firstName: payload.firstName,
+    lastName: payload.lastName,
     shop: {
       name: payload.shopName,
       address: payload.shopAddress,
       city: payload.shopCity,
       province: payload.shopProvince,
-      postal_code: payload.shopPostalCode,
-      phone_number: payload.shopPhoneNumber,
+      postalCode: payload.shopPostalCode,
+      phoneNumber: payload.shopPhoneNumber,
       email: payload.shopEmail,
     },
   };

@@ -13,10 +13,10 @@ import {
 
 interface IPatchEmployeeBody {
   email?: string;
-  phone_number?: string;
+  phoneNumber?: string;
   status?: EmployeeStatus;
-  first_name?: string;
-  last_name?: string;
+  firstName?: string;
+  lastName?: string;
 }
 
 function patchEmployeeStatus(

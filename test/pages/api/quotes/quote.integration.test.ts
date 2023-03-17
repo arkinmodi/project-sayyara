@@ -20,54 +20,54 @@ import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 import { Session } from "next-auth";
 
 const testCustomerUser: Customer = {
-  id: "test_customer_id",
-  create_time: new Date(),
-  update_time: new Date(),
-  first_name: "first_name",
-  last_name: "last_name",
-  phone_number: "1234567890",
+  id: "testCustomerId",
+  createTime: new Date(),
+  updateTime: new Date(),
+  firstName: "firstName",
+  lastName: "lastName",
+  phoneNumber: "1234567890",
   email: "customer@test.com",
-  password: "test_password",
+  password: "testPassword",
   image: null,
   type: "CUSTOMER",
 };
 
 const testShop: Shop = {
-  id: "test_shop_id",
-  create_time: new Date(),
-  update_time: new Date(),
-  name: "test_shop_name",
-  address: "test_address",
-  phone_number: "test_phone_number",
+  id: "testShopId",
+  createTime: new Date(),
+  updateTime: new Date(),
+  name: "testShopName",
+  address: "testAddress",
+  phoneNumber: "testPhoneNumber",
   email: "test@email.com",
-  postal_code: "test_postal_code",
-  city: "test_city",
-  province: "test_province",
-  hours_of_operation: null,
+  postalCode: "testPostalCode",
+  city: "testCity",
+  province: "testProvince",
+  hoursOfOperation: null,
 };
 
 const testService: ServiceWithPartsType = {
-  id: "test_service_id",
-  create_time: new Date(),
-  update_time: new Date(),
-  name: "test_name",
-  description: "test_description",
-  estimated_time: 2,
-  total_price: 100,
+  id: "testServiceId",
+  createTime: new Date(),
+  updateTime: new Date(),
+  name: "testName",
+  description: "testDescription",
+  estimatedTime: 2,
+  totalPrice: 100,
   parts: [],
   type: "CANNED",
-  shop_id: testShop.id,
+  shopId: testShop.id,
 };
 
 const testQuote: Quote = {
   id: "",
-  create_time: new Date(),
-  update_time: new Date(),
-  service_id: testService.id,
-  customer_id: testCustomerUser.id,
-  shop_id: testShop.id,
+  createTime: new Date(),
+  updateTime: new Date(),
+  serviceId: testService.id,
+  customerId: testCustomerUser.id,
+  shopId: testShop.id,
   status: QuoteStatus.IN_PROGRESS,
-  estimated_price: null,
+  estimatedPrice: null,
   duration: null,
   description: null,
 };
@@ -77,8 +77,8 @@ jest.mock("@server/common/getServerAuthSession", () => ({
     expires: "1",
     user: {
       ...testCustomerUser,
-      firstName: testCustomerUser.first_name,
-      lastName: testCustomerUser.last_name,
+      firstName: testCustomerUser.firstName,
+      lastName: testCustomerUser.lastName,
     },
   })),
 }));
@@ -111,9 +111,9 @@ describe("Quotes Module", () => {
     // Create Quote
     const { req, res } = createMockRequestResponse({ method: "POST" });
     req.body = {
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
-      service_id: testQuote.service_id,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
+      serviceId: testQuote.serviceId,
     };
 
     await quoteHandler(req, res);
@@ -121,11 +121,11 @@ describe("Quotes Module", () => {
     expect(res.statusCode).toBe(201);
     expect(res._getJSONData()).toMatchObject({
       id: expect.any(String),
-      create_time: expect.any(String),
-      update_time: expect.any(String),
-      service_id: testQuote.service_id,
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
+      serviceId: testQuote.serviceId,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
       status: testQuote.status,
     });
   });
@@ -139,8 +139,8 @@ describe("Quotes Module", () => {
     // Create Quote
     const { req, res } = createMockRequestResponse({ method: "POST" });
     req.body = {
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
     };
 
     await quoteHandler(req, res);
@@ -156,9 +156,9 @@ describe("Quotes Module", () => {
 
     const post = createMockRequestResponse({ method: "POST" });
     post.req.body = {
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
-      service_id: testQuote.service_id,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
+      serviceId: testQuote.serviceId,
     };
     await quoteHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -171,15 +171,13 @@ describe("Quotes Module", () => {
       id: quoteId,
     };
     req.body = {
-      description: "test_patch_quote_description",
+      description: "testPatchQuoteDescription",
     };
 
     await quoteByIdHandler(req, res);
 
     expect(res.statusCode).toBe(200);
-    expect(res._getJSONData()["description"]).toBe(
-      "test_patch_quote_description"
-    );
+    expect(res._getJSONData()["description"]).toBe("testPatchQuoteDescription");
   });
 
   it("FRT-M4-4: update quote request with an invalid id and valid information", async () => {
@@ -190,9 +188,9 @@ describe("Quotes Module", () => {
 
     const post = createMockRequestResponse({ method: "POST" });
     post.req.body = {
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
-      service_id: testQuote.service_id,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
+      serviceId: testQuote.serviceId,
     };
     await quoteHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -200,10 +198,10 @@ describe("Quotes Module", () => {
     // Update Quote
     const { req, res } = createMockRequestResponse({ method: "PATCH" });
     req.query = {
-      id: "quote_does_not_exist",
+      id: "quoteDoesNotExist",
     };
     req.body = {
-      description: "test_patch_quote_description",
+      description: "testPatchQuoteDescription",
     };
 
     await quoteByIdHandler(req, res);
@@ -219,9 +217,9 @@ describe("Quotes Module", () => {
 
     const post = createMockRequestResponse({ method: "POST" });
     post.req.body = {
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
-      service_id: testQuote.service_id,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
+      serviceId: testQuote.serviceId,
     };
     await quoteHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -250,9 +248,9 @@ describe("Quotes Module", () => {
 
     const post = createMockRequestResponse({ method: "POST" });
     post.req.body = {
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
-      service_id: testQuote.service_id,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
+      serviceId: testQuote.serviceId,
     };
     await quoteHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -270,11 +268,11 @@ describe("Quotes Module", () => {
     expect(res.statusCode).toBe(200);
     expect(res._getJSONData()).toMatchObject({
       id: expect.any(String),
-      create_time: expect.any(String),
-      update_time: expect.any(String),
-      service_id: testQuote.service_id,
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
+      serviceId: testQuote.serviceId,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
       status: testQuote.status,
     });
   });
@@ -287,9 +285,9 @@ describe("Quotes Module", () => {
 
     const post = createMockRequestResponse({ method: "POST" });
     post.req.body = {
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
-      service_id: testQuote.service_id,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
+      serviceId: testQuote.serviceId,
     };
     await quoteHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -297,7 +295,7 @@ describe("Quotes Module", () => {
     // Get Quote
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: "quote_does_not_exist",
+      id: "quoteDoesNotExist",
     };
 
     await quoteByIdHandler(req, res);
@@ -313,9 +311,9 @@ describe("Quotes Module", () => {
 
     const post = createMockRequestResponse({ method: "POST" });
     post.req.body = {
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
-      service_id: testQuote.service_id,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
+      serviceId: testQuote.serviceId,
     };
     await quoteHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -323,7 +321,7 @@ describe("Quotes Module", () => {
     // Get Quote
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: testQuote.customer_id,
+      id: testQuote.customerId,
     };
 
     await quoteByCustomerIdHandler(req, res);
@@ -332,45 +330,45 @@ describe("Quotes Module", () => {
     expect(res._getJSONData()["length"]).toBe(1);
     expect(res._getJSONData()[0]).toMatchObject({
       id: expect.any(String),
-      create_time: expect.any(String),
-      update_time: expect.any(String),
-      service_id: testQuote.service_id,
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
+      serviceId: testQuote.serviceId,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
       status: testQuote.status,
       customer: {
         id: expect.any(String),
-        create_time: expect.any(String),
-        update_time: expect.any(String),
+        createTime: expect.any(String),
+        updateTime: expect.any(String),
         email: testCustomerUser.email,
-        first_name: testCustomerUser.first_name,
-        last_name: testCustomerUser.last_name,
-        phone_number: testCustomerUser.phone_number,
+        firstName: testCustomerUser.firstName,
+        lastName: testCustomerUser.lastName,
+        phoneNumber: testCustomerUser.phoneNumber,
         type: testCustomerUser.type,
       },
       service: {
         id: expect.any(String),
-        create_time: expect.any(String),
-        update_time: expect.any(String),
+        createTime: expect.any(String),
+        updateTime: expect.any(String),
         description: testService.description,
-        estimated_time: testService.estimated_time,
+        estimatedTime: testService.estimatedTime,
         name: testService.name,
         parts: testService.parts,
-        shop_id: expect.any(String),
-        total_price: testService.total_price,
+        shopId: expect.any(String),
+        totalPrice: testService.totalPrice,
         type: testService.type,
       },
       shop: {
         id: expect.any(String),
-        create_time: expect.any(String),
-        update_time: expect.any(String),
+        createTime: expect.any(String),
+        updateTime: expect.any(String),
         address: testShop.address,
         city: testShop.city,
         email: testShop.email,
-        hours_of_operation: testShop.hours_of_operation,
+        hoursOfOperation: testShop.hoursOfOperation,
         name: testShop.name,
-        phone_number: testShop.phone_number,
-        postal_code: testShop.postal_code,
+        phoneNumber: testShop.phoneNumber,
+        postalCode: testShop.postalCode,
         province: testShop.province,
       },
     });
@@ -384,9 +382,9 @@ describe("Quotes Module", () => {
 
     const post = createMockRequestResponse({ method: "POST" });
     post.req.body = {
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
-      service_id: testQuote.service_id,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
+      serviceId: testQuote.serviceId,
     };
     await quoteHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -394,7 +392,7 @@ describe("Quotes Module", () => {
     // Get Quote
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: "customer_does_not_exist",
+      id: "customerDoesNotExist",
     };
 
     await quoteByCustomerIdHandler(req, res);
@@ -411,9 +409,9 @@ describe("Quotes Module", () => {
 
     const post = createMockRequestResponse({ method: "POST" });
     post.req.body = {
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
-      service_id: testQuote.service_id,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
+      serviceId: testQuote.serviceId,
     };
     await quoteHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -421,7 +419,7 @@ describe("Quotes Module", () => {
     // Get Quote
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: testQuote.shop_id,
+      id: testQuote.shopId,
     };
 
     await quoteByShopIdHandler(req, res);
@@ -430,45 +428,45 @@ describe("Quotes Module", () => {
     expect(res._getJSONData()["length"]).toBe(1);
     expect(res._getJSONData()[0]).toMatchObject({
       id: expect.any(String),
-      create_time: expect.any(String),
-      update_time: expect.any(String),
-      service_id: testQuote.service_id,
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
+      serviceId: testQuote.serviceId,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
       status: testQuote.status,
       customer: {
         id: expect.any(String),
-        create_time: expect.any(String),
-        update_time: expect.any(String),
+        createTime: expect.any(String),
+        updateTime: expect.any(String),
         email: testCustomerUser.email,
-        first_name: testCustomerUser.first_name,
-        last_name: testCustomerUser.last_name,
-        phone_number: testCustomerUser.phone_number,
+        firstName: testCustomerUser.firstName,
+        lastName: testCustomerUser.lastName,
+        phoneNumber: testCustomerUser.phoneNumber,
         type: testCustomerUser.type,
       },
       service: {
         id: expect.any(String),
-        create_time: expect.any(String),
-        update_time: expect.any(String),
+        createTime: expect.any(String),
+        updateTime: expect.any(String),
         description: testService.description,
-        estimated_time: testService.estimated_time,
+        estimatedTime: testService.estimatedTime,
         name: testService.name,
         parts: testService.parts,
-        shop_id: expect.any(String),
-        total_price: testService.total_price,
+        shopId: expect.any(String),
+        totalPrice: testService.totalPrice,
         type: testService.type,
       },
       shop: {
         id: expect.any(String),
-        create_time: expect.any(String),
-        update_time: expect.any(String),
+        createTime: expect.any(String),
+        updateTime: expect.any(String),
         address: testShop.address,
         city: testShop.city,
         email: testShop.email,
-        hours_of_operation: testShop.hours_of_operation,
+        hoursOfOperation: testShop.hoursOfOperation,
         name: testShop.name,
-        phone_number: testShop.phone_number,
-        postal_code: testShop.postal_code,
+        phoneNumber: testShop.phoneNumber,
+        postalCode: testShop.postalCode,
         province: testShop.province,
       },
     });
@@ -482,9 +480,9 @@ describe("Quotes Module", () => {
 
     const post = createMockRequestResponse({ method: "POST" });
     post.req.body = {
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
-      service_id: testQuote.service_id,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
+      serviceId: testQuote.serviceId,
     };
     await quoteHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -492,7 +490,7 @@ describe("Quotes Module", () => {
     // Get Quote
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: "shop_does_not_exist",
+      id: "shopDoesNotExist",
     };
 
     await quoteByShopIdHandler(req, res);
@@ -509,9 +507,9 @@ describe("Quotes Module", () => {
 
     const post = createMockRequestResponse({ method: "POST" });
     post.req.body = {
-      customer_id: testQuote.customer_id,
-      shop_id: testQuote.shop_id,
-      service_id: testQuote.service_id,
+      customerId: testQuote.customerId,
+      shopId: testQuote.shopId,
+      serviceId: testQuote.serviceId,
     };
     await quoteHandler(post.req, post.res);
     expect(post.res.statusCode).toBe(201);
@@ -519,7 +517,7 @@ describe("Quotes Module", () => {
     // Delete Quote
     const { req, res } = createMockRequestResponse({ method: "DELETE" });
     req.query = {
-      id: "quote_does_not_exist",
+      id: "quoteDoesNotExist",
     };
 
     await quoteByIdHandler(req, res);
@@ -536,11 +534,11 @@ const createShop = async () => {
   return await prisma.shop.create({
     data: {
       id: testShop.id,
-      phone_number: testShop.phone_number,
+      phoneNumber: testShop.phoneNumber,
       email: testShop.email,
       name: testShop.name,
       address: testShop.address,
-      postal_code: testShop.postal_code,
+      postalCode: testShop.postalCode,
       city: testShop.city,
       province: testShop.province,
     },
@@ -553,11 +551,11 @@ const createService = async () => {
       id: testService.id,
       name: testService.name,
       description: testService.description,
-      estimated_time: testService.estimated_time,
-      total_price: testService.total_price,
+      estimatedTime: testService.estimatedTime,
+      totalPrice: testService.totalPrice,
       parts: testService.parts,
       type: testService.type,
-      shop_id: testService.id,
+      shopId: testService.id,
     },
   });
 };

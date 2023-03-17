@@ -75,12 +75,12 @@ const workOrderByIdHandler = async (
 
 const isGetAuthorized = async (session: Session, workOrder: WorkOrder) => {
   return session.user.type === "CUSTOMER"
-    ? session.user.id === workOrder.customer_id
-    : session.user.shopId === workOrder.shop_id;
+    ? session.user.id === workOrder.customerId
+    : session.user.shopId === workOrder.shopId;
 };
 
 const isAuthorized = async (session: Session, workOrder: WorkOrder) => {
-  return session.user.shopId === workOrder.shop_id;
+  return session.user.shopId === workOrder.shopId;
 };
 
 export default workOrderByIdHandler;

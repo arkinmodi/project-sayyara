@@ -65,11 +65,11 @@ const isAuthorized = async (session: Session, quoteId: string) => {
   if (!quote) return false;
 
   if (session.user.type === "CUSTOMER") {
-    return session.user.id === quote.customer_id;
+    return session.user.id === quote.customerId;
   } else {
     const user = await getEmployeeById(session.user.id);
     if (!user) return false;
-    return user.shop_id === quote.shop_id;
+    return user.shopId === quote.shopId;
   }
 };
 

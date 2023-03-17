@@ -27,11 +27,11 @@ export function getShopId(id: string): Promise<IShop | null> {
           name: data.name,
           address: data.address,
           province: data.province,
-          postalCode: data.postal_code,
+          postalCode: data.postalCode,
           city: data.city,
-          phoneNumber: data.phone_number,
+          phoneNumber: data.phoneNumber,
           email: data.email,
-          hoursOfOperation: data.hours_of_operation,
+          hoursOfOperation: data.hoursOfOperation,
         };
         return shop;
       });
@@ -65,8 +65,8 @@ export function getServicesByShopId(
             id: service.id,
             name: service.name,
             description: service.description,
-            estimatedTime: service.estimated_time,
-            totalPrice: service.total_price,
+            estimatedTime: service.estimatedTime,
+            totalPrice: service.totalPrice,
             parts: service.parts,
             type: service.type,
           };
@@ -91,11 +91,11 @@ export function patchShop(shopId: string, patch: IShop): Promise<IShop | null> {
     body: JSON.stringify({
       name: patch.name,
       address: patch.address,
-      postal_code: patch.postalCode,
+      postalCode: patch.postalCode,
       city: patch.city,
       province: patch.province,
-      phone_number: patch.phoneNumber,
-      hours_of_operation:
+      phoneNumber: patch.phoneNumber,
+      hoursOfOperation:
         hoursOfOp != null
           ? {
               monday: {
@@ -144,11 +144,11 @@ export function patchShop(shopId: string, patch: IShop): Promise<IShop | null> {
           name: data.name,
           address: data.address,
           province: data.province,
-          postalCode: data.postal_code,
+          postalCode: data.postalCode,
           city: data.city,
-          phoneNumber: data.phone_number,
+          phoneNumber: data.phoneNumber,
           email: data.email,
-          hoursOfOperation: data.hours_of_operation,
+          hoursOfOperation: data.hoursOfOperation,
         };
         return shop;
       });
@@ -179,11 +179,11 @@ export function getFilteredShops(
             id: shop.id,
             name: shop.name,
             address: shop.address,
-            postalCode: shop.postal_code,
+            postalCode: shop.postalCode,
             city: shop.city,
             province: shop.province,
-            phoneNumber: shop.phone_number,
-            hoursOfOperation: shop.hours_of_operation,
+            phoneNumber: shop.phoneNumber,
+            hoursOfOperation: shop.hoursOfOperation,
             email: shop.email,
             services: shop.services,
           };
@@ -230,8 +230,8 @@ export function getAvailabilities(
             })
             .map((appointment: Appointment) => {
               return {
-                startTime: new Date(appointment.start_time),
-                endTime: new Date(appointment.end_time),
+                startTime: new Date(appointment.startTime),
+                endTime: new Date(appointment.endTime),
               };
             });
 

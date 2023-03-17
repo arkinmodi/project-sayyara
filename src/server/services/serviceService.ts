@@ -9,10 +9,10 @@ import { z } from "zod";
 export const createServiceSchema = z.object({
   name: z.string(),
   description: z.string(),
-  estimated_time: z.number(),
+  estimatedTime: z.number(),
   parts: z.array(partSchema).default([]),
-  total_price: z.number(),
-  shop_id: z.string(),
+  totalPrice: z.number(),
+  shopId: z.string(),
   type: z.nativeEnum(ServiceType),
 });
 export type CreateServiceType = z.infer<typeof createServiceSchema>;
@@ -22,11 +22,11 @@ export const createService = async (service: CreateServiceType) => {
     data: {
       name: service.name,
       description: service.description,
-      estimated_time: service.estimated_time,
-      total_price: service.total_price,
+      estimatedTime: service.estimatedTime,
+      totalPrice: service.totalPrice,
       parts: service.parts,
       type: service.type,
-      shop: { connect: { id: service.shop_id } },
+      shop: { connect: { id: service.shopId } },
     },
   })) as ServiceWithPartsType;
 };
@@ -38,18 +38,18 @@ export const getServiceById = async (id: string) => {
 };
 
 export const getServicesByShopId = async (shopId: string) => {
-  return await prisma.service.findMany({ where: { shop_id: shopId } });
+  return await prisma.service.findMany({ where: { shopId: shopId } });
 };
 
 export const getCannedServicesByShopId = async (shopId: string) => {
   return await prisma.service.findMany({
-    where: { shop_id: shopId, type: "CANNED" },
+    where: { shopId: shopId, type: "CANNED" },
   });
 };
 
 export const getCustomServicesByShopId = async (shopId: string) => {
   return await prisma.service.findMany({
-    where: { shop_id: shopId, type: "CUSTOM" },
+    where: { shopId: shopId, type: "CUSTOM" },
   });
 };
 
@@ -58,9 +58,9 @@ export const getCustomServicesByShopId = async (shopId: string) => {
 export const updateServiceSchema = z.object({
   name: z.string().optional(),
   description: z.string().optional(),
-  estimated_time: z.number().optional(),
+  estimatedTime: z.number().optional(),
   parts: z.array(partSchema).optional(),
-  total_price: z.number().optional(),
+  totalPrice: z.number().optional(),
 });
 export type UpdateServiceType = z.infer<typeof updateServiceSchema>;
 

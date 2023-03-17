@@ -4,66 +4,66 @@ import { getServiceById } from "@server/services/serviceService";
 import { z } from "zod";
 
 export const createAppointmentSchema = z.object({
-  quote_id: z.string().optional(),
+  quoteId: z.string().optional(),
   price: z.number().min(0),
-  employee_id: z.string().optional(),
-  start_time: z.preprocess((arg) => {
+  employeeId: z.string().optional(),
+  startTime: z.preprocess((arg) => {
     if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
   }, z.date()),
-  end_time: z.preprocess((arg) => {
+  endTime: z.preprocess((arg) => {
     if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
   }, z.date()),
-  vehicle_id: z.string(),
-  customer_id: z.string(),
-  shop_id: z.string(),
-  service_id: z.string(),
+  vehicleId: z.string(),
+  customerId: z.string(),
+  shopId: z.string(),
+  serviceId: z.string(),
 });
 
 export type CreateAppointmentType = z.infer<typeof createAppointmentSchema>;
 
 export const createAppointment = async (appointment: CreateAppointmentType) => {
-  const service = await getServiceById(appointment.service_id);
+  const service = await getServiceById(appointment.serviceId);
 
   const now = new Date();
 
   // TODO: Do we want to only accept events that are in the future?
   // Ensure start occurs before end
   if (
-    appointment.start_time > appointment.end_time
-    // || appointment.start_time < now ||
-    // appointment.end_time < now
+    appointment.startTime > appointment.endTime
+    // || appointment.startTime < now ||
+    // appointment.endTime < now
   ) {
     return Promise.reject("Invalid start time and/or end time.");
   }
 
-  const quote = appointment.quote_id
-    ? { quote: { connect: { id: appointment.quote_id } } }
+  const quote = appointment.quoteId
+    ? { quote: { connect: { id: appointment.quoteId } } }
     : { quote: {} };
 
-  const employee = appointment.employee_id
-    ? { employee: { connect: { id: appointment.employee_id } } }
+  const employee = appointment.employeeId
+    ? { employee: { connect: { id: appointment.employeeId } } }
     : { employee: {} };
 
   return await prisma.appointment.create({
     data: {
-      start_time: appointment.start_time,
-      end_time: appointment.end_time,
+      startTime: appointment.startTime,
+      endTime: appointment.endTime,
       price: appointment.price,
-      work_order: {
+      workOrder: {
         create: {
-          create_time: now,
-          update_time: now,
+          createTime: now,
+          updateTime: now,
           title: service.name,
           body: "",
-          customer: { connect: { id: appointment.customer_id } },
-          vehicle: { connect: { id: appointment.vehicle_id } },
-          shop: { connect: { id: appointment.shop_id } },
+          customer: { connect: { id: appointment.customerId } },
+          vehicle: { connect: { id: appointment.vehicleId } },
+          shop: { connect: { id: appointment.shopId } },
         },
       },
-      vehicle: { connect: { id: appointment.vehicle_id } },
-      customer: { connect: { id: appointment.customer_id } },
-      shop: { connect: { id: appointment.shop_id } },
-      service: { connect: { id: appointment.service_id } },
+      vehicle: { connect: { id: appointment.vehicleId } },
+      customer: { connect: { id: appointment.customerId } },
+      shop: { connect: { id: appointment.shopId } },
+      service: { connect: { id: appointment.serviceId } },
       ...quote,
       ...employee,
     },
@@ -78,9 +78,9 @@ export const getAppointmentById = async (id: string) => {
   return await prisma.appointment.findUnique({ where: { id } });
 };
 
-export const getAppointmentsByShopId = async (shop_id: string) => {
+export const getAppointmentsByShopId = async (shopId: string) => {
   const appointments = await prisma.appointment.findMany({
-    where: { shop_id },
+    where: { shopId },
     include: {
       vehicle: true,
       customer: true,
@@ -93,25 +93,25 @@ export const getAppointmentsByShopId = async (shop_id: string) => {
 };
 
 export const getAvailabilitiesByShopId = async (
-  shop_id: string,
-  start_date: Date,
-  end_date: Date
+  shopId: string,
+  startDate: Date,
+  endDate: Date
 ) => {
   return await prisma.appointment.findMany({
     where: {
       AND: [
-        { shop_id: { equals: shop_id } },
-        { start_time: { gte: start_date } },
-        { end_time: { lte: end_date } },
+        { shopId: { equals: shopId } },
+        { startTime: { gte: startDate } },
+        { endTime: { lte: endDate } },
       ],
     },
-    orderBy: { start_time: "asc" },
+    orderBy: { startTime: "asc" },
   });
 };
 
-export const getAppointmentsByCustomerId = async (customer_id: string) => {
+export const getAppointmentsByCustomerId = async (customerId: string) => {
   return await prisma.appointment.findMany({
-    where: { customer_id },
+    where: { customerId },
     include: {
       shop: true,
       service: true,
@@ -120,19 +120,19 @@ export const getAppointmentsByCustomerId = async (customer_id: string) => {
 };
 
 export const updateAppointmentSchema = z.object({
-  quote_id: z.string().optional(),
-  work_order_id: z.string().optional(),
-  vehicle_id: z.string().optional(),
+  quoteId: z.string().optional(),
+  workOrderId: z.string().optional(),
+  vehicleId: z.string().optional(),
   price: z.number().min(0).optional(),
-  employee_id: z.string().optional(),
+  employeeId: z.string().optional(),
   status: z.nativeEnum(AppointmentStatus).optional(),
-  start_time: z.preprocess((arg) => {
+  startTime: z.preprocess((arg) => {
     if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
   }, z.date().optional()),
-  end_time: z.preprocess((arg) => {
+  endTime: z.preprocess((arg) => {
     if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
   }, z.date().optional()),
-  cancellation_reason: z.string().optional(),
+  cancellationReason: z.string().optional(),
 });
 
 export type UpdateAppointmentType = z.infer<typeof updateAppointmentSchema>;
@@ -146,9 +146,9 @@ export const updateAppointmentById = async (
 
   const now = new Date();
   if (
-    (patch.start_time && patch.start_time < now) ||
-    (patch.end_time && patch.end_time < now) ||
-    (patch.start_time && patch.end_time && patch.start_time > patch.end_time)
+    (patch.startTime && patch.startTime < now) ||
+    (patch.endTime && patch.endTime < now) ||
+    (patch.startTime && patch.endTime && patch.startTime > patch.endTime)
   ) {
     return Promise.reject("Invalid start time and/or end time.");
   }
@@ -160,16 +160,16 @@ export const updateAppointmentById = async (
     await acceptAppointment(appointment);
   }
 
-  const workOrderUpdate = patch.work_order_id
-    ? { work_order: { connect: { id: patch.work_order_id } } }
+  const workOrderUpdate = patch.workOrderId
+    ? { workOrder: { connect: { id: patch.workOrderId } } }
     : {};
 
-  const vehicleUpdate = patch.vehicle_id
-    ? { vehicle: { connect: { id: patch.vehicle_id } } }
+  const vehicleUpdate = patch.vehicleId
+    ? { vehicle: { connect: { id: patch.vehicleId } } }
     : {};
 
-  const employeeUpdate = patch.employee_id
-    ? { employee: { connect: { id: patch.employee_id } } }
+  const employeeUpdate = patch.employeeId
+    ? { employee: { connect: { id: patch.employeeId } } }
     : {};
 
   return await prisma.appointment.update({
@@ -177,9 +177,9 @@ export const updateAppointmentById = async (
     data: {
       price: patch.price,
       status: patch.status,
-      start_time: patch.start_time,
-      end_time: patch.end_time,
-      cancellation_reason: patch.cancellation_reason,
+      startTime: patch.startTime,
+      endTime: patch.endTime,
+      cancellationReason: patch.cancellationReason,
       ...workOrderUpdate,
       ...vehicleUpdate,
       ...employeeUpdate,
@@ -201,15 +201,15 @@ const acceptAppointment = async (appointment: Appointment) => {
       where: {
         OR: [
           {
-            start_time: {
-              gte: appointment.start_time,
-              lt: appointment.end_time,
+            startTime: {
+              gte: appointment.startTime,
+              lt: appointment.endTime,
             },
           },
           {
-            end_time: {
-              gt: appointment.start_time,
-              lte: appointment.end_time,
+            endTime: {
+              gt: appointment.startTime,
+              lte: appointment.endTime,
             },
           },
         ],
@@ -226,8 +226,8 @@ const acceptAppointment = async (appointment: Appointment) => {
     prisma.appointment.updateMany({
       where: {
         AND: [
-          { start_time: { lte: appointment.start_time } },
-          { end_time: { gte: appointment.end_time } },
+          { startTime: { lte: appointment.startTime } },
+          { endTime: { gte: appointment.endTime } },
         ],
         NOT: [
           { id: { equals: appointment.id } },

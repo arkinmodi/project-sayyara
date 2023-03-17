@@ -19,69 +19,69 @@ import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 import { Session } from "next-auth";
 
 const testShop: Shop = {
-  id: "test_shop_id",
-  create_time: new Date(),
-  update_time: new Date(),
-  name: "test_shop_name",
-  address: "test_address",
-  phone_number: "test_phone_number",
+  id: "testShopId",
+  createTime: new Date(),
+  updateTime: new Date(),
+  name: "testShopName",
+  address: "testAddress",
+  phoneNumber: "testPhoneNumber",
   email: "test@email.com",
-  postal_code: "test_postal_code",
-  city: "test_city",
-  province: "test_province",
-  hours_of_operation: null,
+  postalCode: "testPostalCode",
+  city: "testCity",
+  province: "testProvince",
+  hoursOfOperation: null,
 };
 
 const testEmployeeUser: Employee = {
-  id: "test_employee_id",
-  first_name: "first_name",
-  last_name: "last_name",
-  phone_number: "1234567890",
+  id: "testEmployeeId",
+  firstName: "firstName",
+  lastName: "lastName",
+  phoneNumber: "1234567890",
   email: "employee@test.com",
-  password: "test_password",
+  password: "testPassword",
   image: null,
-  create_time: new Date(),
-  update_time: new Date(),
+  createTime: new Date(),
+  updateTime: new Date(),
   type: "SHOP_OWNER",
-  shop_id: testShop.id,
+  shopId: testShop.id,
   status: "ACTIVE",
 };
 
 const testVehicle: Vehicle = {
-  id: "test_customer_vehicle_id",
-  create_time: new Date(),
-  update_time: new Date(),
-  customer_id: "test_customer_id",
-  license_plate: "test_license_plate",
-  make: "test_make",
-  model: "test_model",
-  vin: "test_vin",
+  id: "testCustomerVehicleId",
+  createTime: new Date(),
+  updateTime: new Date(),
+  customerId: "testCustomerId",
+  licensePlate: "testLicensePlate",
+  make: "testMake",
+  model: "testModel",
+  vin: "testVin",
   year: 2017,
 };
 
 const testCustomerUser: Customer = {
-  id: "test_customer_id",
-  create_time: new Date(),
-  update_time: new Date(),
-  first_name: "first_name",
-  last_name: "last_name",
-  phone_number: "1234567890",
+  id: "testCustomerId",
+  createTime: new Date(),
+  updateTime: new Date(),
+  firstName: "firstName",
+  lastName: "lastName",
+  phoneNumber: "1234567890",
   email: "customer@test.com",
-  password: "test_password",
+  password: "testPassword",
   image: null,
   type: "CUSTOMER",
 };
 
 const testWorkOrder: WorkOrder = {
-  id: "test_work_order_id",
-  create_time: new Date(),
-  update_time: new Date(),
+  id: "testWorkOrderId",
+  createTime: new Date(),
+  updateTime: new Date(),
   title: "New Test Work Order",
-  customer_id: testCustomerUser.id,
-  vehicle_id: testVehicle.id,
+  customerId: testCustomerUser.id,
+  vehicleId: testVehicle.id,
   body: "Test Work Order Body",
-  shop_id: testShop.id,
-  employee_id: null,
+  shopId: testShop.id,
+  employeeId: null,
 };
 
 jest.mock("@server/common/getServerAuthSession", () => ({
@@ -89,11 +89,11 @@ jest.mock("@server/common/getServerAuthSession", () => ({
     expires: "1",
     user: {
       id: testEmployeeUser.id,
-      firstName: testEmployeeUser.first_name,
-      lastName: testEmployeeUser.last_name,
+      firstName: testEmployeeUser.firstName,
+      lastName: testEmployeeUser.lastName,
       email: testEmployeeUser.email,
       type: testEmployeeUser.type,
-      shopId: testEmployeeUser.shop_id,
+      shopId: testEmployeeUser.shopId,
     },
   })),
 }));
@@ -134,13 +134,13 @@ describe("Work Orders Module", () => {
     expect(res.statusCode).toBe(200);
     expect(res._getJSONData()).toMatchObject({
       id: testWorkOrder.id,
-      create_time: expect.any(String),
-      update_time: expect.any(String),
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
       title: testWorkOrder.title,
       body: testWorkOrder.body,
-      customer_id: testWorkOrder.customer_id,
-      vehicle_id: testWorkOrder.vehicle_id,
-      shop_id: testWorkOrder.shop_id,
+      customerId: testWorkOrder.customerId,
+      vehicleId: testWorkOrder.vehicleId,
+      shopId: testWorkOrder.shopId,
     });
   });
 
@@ -153,7 +153,7 @@ describe("Work Orders Module", () => {
     // Get Work Order
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: "work_order_does_not_exist",
+      id: "workOrderDoesNotExist",
     };
 
     await workOrderByIdHandler(req, res);
@@ -170,7 +170,7 @@ describe("Work Orders Module", () => {
     // Get Work Order
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: testWorkOrder.shop_id,
+      id: testWorkOrder.shopId,
     };
 
     await workOrdersByShopIdHandler(req, res);
@@ -179,13 +179,13 @@ describe("Work Orders Module", () => {
     expect(res._getJSONData()["length"]).toBe(1);
     expect(res._getJSONData()[0]).toMatchObject({
       id: testWorkOrder.id,
-      create_time: expect.any(String),
-      update_time: expect.any(String),
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
       title: testWorkOrder.title,
       body: testWorkOrder.body,
-      customer_id: testWorkOrder.customer_id,
-      vehicle_id: testWorkOrder.vehicle_id,
-      shop_id: testWorkOrder.shop_id,
+      customerId: testWorkOrder.customerId,
+      vehicleId: testWorkOrder.vehicleId,
+      shopId: testWorkOrder.shopId,
     });
   });
 
@@ -198,7 +198,7 @@ describe("Work Orders Module", () => {
     // Get Work Order
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: "shop_does_not_exist",
+      id: "shopDoesNotExist",
     };
 
     await workOrdersByShopIdHandler(req, res);
@@ -226,13 +226,13 @@ describe("Work Orders Module", () => {
     expect(res.statusCode).toBe(200);
     expect(res._getJSONData()).toMatchObject({
       id: testWorkOrder.id,
-      create_time: expect.any(String),
-      update_time: expect.any(String),
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
       title: testWorkOrder.title,
       body: "Updated Body",
-      customer_id: testWorkOrder.customer_id,
-      vehicle_id: testWorkOrder.vehicle_id,
-      shop_id: testWorkOrder.shop_id,
+      customerId: testWorkOrder.customerId,
+      vehicleId: testWorkOrder.vehicleId,
+      shopId: testWorkOrder.shopId,
     });
   });
 
@@ -245,7 +245,7 @@ describe("Work Orders Module", () => {
     // Update Work Order
     const { req, res } = createMockRequestResponse({ method: "PATCH" });
     req.query = {
-      id: "work_order_does_not_exist",
+      id: "workOrderDoesNotExist",
     };
     req.body = {
       body: "Updated Body",
@@ -268,7 +268,7 @@ describe("Work Orders Module", () => {
       id: testWorkOrder.id,
     };
     req.body = {
-      employee_email: "Not An Email Address",
+      employeeEmail: "Not An Email Address",
     };
 
     await workOrderByIdHandler(req, res);
@@ -281,9 +281,9 @@ const createCustomerAndVehicle = async () => {
   return await prisma.customer.create({
     data: {
       id: testCustomerUser.id,
-      first_name: testCustomerUser.first_name,
-      last_name: testCustomerUser.last_name,
-      phone_number: testCustomerUser.phone_number,
+      firstName: testCustomerUser.firstName,
+      lastName: testCustomerUser.lastName,
+      phoneNumber: testCustomerUser.phoneNumber,
       email: testCustomerUser.email,
       password: testCustomerUser.password,
       type: testCustomerUser.type,
@@ -294,7 +294,7 @@ const createCustomerAndVehicle = async () => {
           make: testVehicle.make,
           model: testVehicle.model,
           vin: testVehicle.vin,
-          license_plate: testVehicle.license_plate,
+          licensePlate: testVehicle.licensePlate,
         },
       },
     },
@@ -305,9 +305,9 @@ const createEmployeeAndShop = async () => {
   return await prisma.employee.create({
     data: {
       id: testEmployeeUser.id,
-      first_name: testEmployeeUser.first_name,
-      last_name: testEmployeeUser.last_name,
-      phone_number: testEmployeeUser.phone_number,
+      firstName: testEmployeeUser.firstName,
+      lastName: testEmployeeUser.lastName,
+      phoneNumber: testEmployeeUser.phoneNumber,
       email: testEmployeeUser.email,
       password: testEmployeeUser.password,
       type: testEmployeeUser.type,
@@ -315,11 +315,11 @@ const createEmployeeAndShop = async () => {
       shop: {
         create: {
           id: testShop.id,
-          phone_number: testShop.phone_number,
+          phoneNumber: testShop.phoneNumber,
           email: testShop.email,
           name: testShop.name,
           address: testShop.address,
-          postal_code: testShop.postal_code,
+          postalCode: testShop.postalCode,
           city: testShop.city,
           province: testShop.province,
         },
@@ -336,17 +336,17 @@ const createWorkOrder = async () => {
       body: testWorkOrder.body,
       customer: {
         connect: {
-          id: testWorkOrder.customer_id,
+          id: testWorkOrder.customerId,
         },
       },
       vehicle: {
         connect: {
-          id: testWorkOrder.vehicle_id,
+          id: testWorkOrder.vehicleId,
         },
       },
       shop: {
         connect: {
-          id: testWorkOrder.shop_id,
+          id: testWorkOrder.shopId,
         },
       },
     },

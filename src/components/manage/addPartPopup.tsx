@@ -13,8 +13,8 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   IService,
-  parts_condition_basic,
-  parts_type_basic,
+  partsConditionBasic,
+  partsTypeBasic,
 } from "src/types/service";
 
 interface IPartPopupProps {
@@ -177,7 +177,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
       <div className={styles.servicesFormFields}>Part Condition</div>
       <Dropdown
         value={formValues.condition}
-        options={parts_condition_basic}
+        options={partsConditionBasic}
         name="condition"
         optionLabel="label"
         optionValue="value"
@@ -200,7 +200,7 @@ const AddPartPopup = (props: IPartPopupProps) => {
       <div className={styles.servicesFormFields}>Part Type</div>
       <Dropdown
         value={formValues.build}
-        options={parts_type_basic}
+        options={partsTypeBasic}
         optionLabel="label"
         optionValue="value"
         name="build"

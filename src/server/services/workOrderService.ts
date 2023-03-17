@@ -5,27 +5,27 @@ import { z } from "zod";
 export const createWorkOrderSchema = z.object({
   title: z.string(),
   body: z.string(),
-  appointment_id: z.string().optional(),
-  customer_id: z.string(),
-  vehicle_id: z.string(),
-  employee_id: z.string().optional(),
-  shop_id: z.string(),
+  appointmentId: z.string().optional(),
+  customerId: z.string(),
+  vehicleId: z.string(),
+  employeeId: z.string().optional(),
+  shopId: z.string(),
 });
 
 export type CreateWorkOrderType = z.infer<typeof createWorkOrderSchema>;
 
 export const createWorkOrder = async (workOrder: CreateWorkOrderType) => {
-  const employee = workOrder.employee_id
-    ? { employee: { connect: { id: workOrder.employee_id } } }
+  const employee = workOrder.employeeId
+    ? { employee: { connect: { id: workOrder.employeeId } } }
     : { employee: {} };
 
   return await prisma.workOrder.create({
     data: {
       title: workOrder.title,
       body: workOrder.body,
-      shop: { connect: { id: workOrder.shop_id } },
-      customer: { connect: { id: workOrder.customer_id } },
-      vehicle: { connect: { id: workOrder.vehicle_id } },
+      shop: { connect: { id: workOrder.shopId } },
+      customer: { connect: { id: workOrder.customerId } },
+      vehicle: { connect: { id: workOrder.vehicleId } },
       ...employee,
     },
   });
@@ -49,7 +49,7 @@ export const getWorkOrderById = async (id: string) => {
 
 export const getWorkOrdersByShopId = async (shopId: string) => {
   const workOrders = await prisma.workOrder.findMany({
-    where: { shop_id: shopId },
+    where: { shopId: shopId },
     include: {
       customer: true,
       vehicle: true,
@@ -68,9 +68,9 @@ export const getWorkOrdersByShopId = async (shopId: string) => {
 export const updateWorkOrderSchema = z.object({
   title: z.string().optional(),
   body: z.string().optional(),
-  appointment_id: z.string().optional(),
-  employee_id: z.string().optional(),
-  employee_email: z.string().email().optional(),
+  appointmentId: z.string().optional(),
+  employeeId: z.string().optional(),
+  employeeEmail: z.string().email().optional(),
 });
 
 export type UpdateWorkOrderType = z.infer<typeof updateWorkOrderSchema>;
@@ -83,16 +83,16 @@ export const updateWorkOrderById = async (
   if (!workOrder) return Promise.reject("Work Order not found.");
 
   let employee: { connect: { id?: string; email?: string } } | undefined;
-  if (patch.employee_id) {
-    employee = { connect: { id: patch.employee_id } };
-  } else if (patch.employee_email) {
-    employee = { connect: { email: patch.employee_email } };
+  if (patch.employeeId) {
+    employee = { connect: { id: patch.employeeId } };
+  } else if (patch.employeeEmail) {
+    employee = { connect: { email: patch.employeeEmail } };
   } else {
     employee = undefined;
   }
 
-  const appointment = patch.appointment_id
-    ? { connect: { id: patch.appointment_id } }
+  const appointment = patch.appointmentId
+    ? { connect: { id: patch.appointmentId } }
     : undefined;
 
   return await prisma.workOrder.update({

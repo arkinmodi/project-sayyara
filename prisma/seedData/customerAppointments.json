@@ -2,37 +2,37 @@
   {
     "price": 200,
     "status": "PENDING_APPROVAL",
-    "start_time": "2023-11-12T02:45:00.000Z",
-    "end_time": "2023-11-12T03:15:00.000Z"
+    "startTime": "2023-11-12T02:45:00.000Z",
+    "endTime": "2023-11-12T03:15:00.000Z"
   },
   {
     "price": 200,
     "status": "PENDING_APPROVAL",
-    "start_time": "2023-11-13T02:45:00.000Z",
-    "end_time": "2023-11-13T03:15:00.000Z"
+    "startTime": "2023-11-13T02:45:00.000Z",
+    "endTime": "2023-11-13T03:15:00.000Z"
   },
   {
     "price": 200,
     "status": "ACCEPTED",
-    "start_time": "2023-05-12T02:45:00.000Z",
-    "end_time": "2023-05-12T03:15:00.000Z"
+    "startTime": "2023-05-12T02:45:00.000Z",
+    "endTime": "2023-05-12T03:15:00.000Z"
   },
   {
     "price": 200,
     "status": "ACCEPTED",
-    "start_time": "2023-05-13T02:45:00.000Z",
-    "end_time": "2023-05-13T03:15:00.000Z"
+    "startTime": "2023-05-13T02:45:00.000Z",
+    "endTime": "2023-05-13T03:15:00.000Z"
   },
   {
     "price": 200,
     "status": "IN_PROGRESS",
-    "start_time": "2023-02-13T01:45:00.000Z",
-    "end_time": "2023-02-13T02:15:00.000Z"
+    "startTime": "2023-02-13T01:45:00.000Z",
+    "endTime": "2023-02-13T02:15:00.000Z"
   },
   {
     "price": 200,
     "status": "COMPLETED",
-    "start_time": "2023-01-15T02:45:00.000Z",
-    "end_time": "2023-01-15T03:15:00.000Z"
+    "startTime": "2023-01-15T02:45:00.000Z",
+    "endTime": "2023-01-15T03:15:00.000Z"
   }
 ]

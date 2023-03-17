@@ -31,8 +31,8 @@ import { IShop } from "src/types/shop";
 import { getMessageListByQuoteId } from "src/utils/quotesUtil";
 
 interface IPostCreateMessageBody {
-  customer_id?: string;
-  shop_id?: string;
+  customerId?: string;
+  shopId?: string;
   message: string;
 }
 
@@ -55,31 +55,31 @@ function getCustomerQuotesHandler(
             const message = values[0];
             const customer: ICustomer = {
               id: quote.customer.id,
-              first_name: quote.customer.first_name,
-              last_name: quote.customer.last_name,
-              phone_number: quote.customer.phone_number,
+              firstName: quote.customer.firstName,
+              lastName: quote.customer.lastName,
+              phoneNumber: quote.customer.phoneNumber,
               email: quote.customer.email,
             };
             const shop: IShop = {
               id: quote.shop.id,
               name: quote.shop.name,
               address: quote.shop.address,
-              postalCode: quote.shop.postal_code,
+              postalCode: quote.shop.postalCode,
               city: quote.shop.city,
               province: quote.shop.province,
-              phoneNumber: quote.shop.phone_number,
-              hoursOfOperation: quote.shop.hours_of_operation,
+              phoneNumber: quote.shop.phoneNumber,
+              hoursOfOperation: quote.shop.hoursOfOperation,
               email: quote.shop.email,
             };
             const service: IService = {
               id: quote.service.id,
               name: quote.service.name,
               description: quote.service.description,
-              estimatedTime: quote.service.estimated_time,
-              totalPrice: quote.service.total_price,
+              estimatedTime: quote.service.estimatedTime,
+              totalPrice: quote.service.totalPrice,
               parts: quote.service.parts,
               type: quote.service.type,
-              shopId: quote.service.shop_id,
+              shopId: quote.service.shopId,
             };
 
             const quoteObj = {
@@ -88,11 +88,11 @@ function getCustomerQuotesHandler(
               shop: shop,
               service: service,
               status: quote.status,
-              price: quote.estimated_price,
+              price: quote.estimatedPrice,
               duration: quote.duration,
               description: quote.description,
-              createTime: quote.create_time,
-              updateTime: quote.update_time,
+              createTime: quote.createTime,
+              updateTime: quote.updateTime,
               messageList: message,
             };
             return quoteObj;
@@ -131,31 +131,31 @@ function getShopQuotesHandler(shopId: string): Promise<IQuoteList | {}> {
             const message = values[0];
             const customer: ICustomer = {
               id: quote.customer.id,
-              first_name: quote.customer.first_name,
-              last_name: quote.customer.last_name,
-              phone_number: quote.customer.phone_number,
+              firstName: quote.customer.firstName,
+              lastName: quote.customer.lastName,
+              phoneNumber: quote.customer.phoneNumber,
               email: quote.customer.email,
             };
             const shop: IShop = {
               id: quote.shop.id,
               name: quote.shop.name,
               address: quote.shop.address,
-              postalCode: quote.shop.postal_code,
+              postalCode: quote.shop.postalCode,
               city: quote.shop.city,
               province: quote.shop.province,
-              phoneNumber: quote.shop.phone_number,
-              hoursOfOperation: quote.shop.hours_of_operation,
+              phoneNumber: quote.shop.phoneNumber,
+              hoursOfOperation: quote.shop.hoursOfOperation,
               email: quote.shop.email,
             };
             const service: IService = {
               id: quote.service.id,
               name: quote.service.name,
               description: quote.service.description,
-              estimatedTime: quote.service.estimated_time,
-              totalPrice: quote.service.total_price,
+              estimatedTime: quote.service.estimatedTime,
+              totalPrice: quote.service.totalPrice,
               parts: quote.service.parts,
               type: quote.service.type,
-              shopId: quote.service.shop_id,
+              shopId: quote.service.shopId,
             };
 
             const quoteObj = {
@@ -164,11 +164,11 @@ function getShopQuotesHandler(shopId: string): Promise<IQuoteList | {}> {
               shop: shop,
               service: service,
               status: quote.status,
-              price: quote.estimated_price,
+              price: quote.estimatedPrice,
               duration: quote.duration,
               description: quote.description,
-              createTime: quote.create_time,
-              updateTime: quote.update_time,
+              createTime: quote.createTime,
+              updateTime: quote.updateTime,
               messageList: message,
             };
             return quoteObj;
@@ -205,11 +205,11 @@ function postCreateQuote(body: ICreateQuoteBody): Promise<IQuote | null> {
           shop: data.shop,
           service: data.service,
           status: data.status,
-          price: data.estimated_price,
+          price: data.estimatedPrice,
           duration: data.duration,
           description: data.description,
-          createTime: new Date(data.create_time).toString(),
-          updateTime: new Date(data.update_time).toString(),
+          createTime: new Date(data.createTime).toString(),
+          updateTime: new Date(data.updateTime).toString(),
           messageList: [],
         };
       });
@@ -236,10 +236,10 @@ function postCreateMessage(
         return {
           id: data.id,
           quoteId: quoteId,
-          customerId: data.customer_id,
-          shopId: data.shop_id,
+          customerId: data.customerId,
+          shopId: data.shopId,
           message: data.message,
-          createdAt: data.create_time,
+          createdAt: data.createTime,
         };
       });
     } else {
@@ -263,7 +263,7 @@ function patchQuoteForInvite(
     body: JSON.stringify({
       description,
       duration,
-      estimated_price: price,
+      estimatedPrice: price,
       status: QuoteStatus.INVITED,
     }),
   }).then((res) => {
@@ -315,9 +315,9 @@ function* createQuote(
 ): Generator<CallEffect | PutEffect | SelectEffect> {
   const payload = action.payload;
   const body: ICreateQuoteBody = {
-    customer_id: payload.customerId,
-    shop_id: payload.shopId,
-    service_id: payload.serviceId,
+    customerId: payload.customerId,
+    shopId: payload.shopId,
+    serviceId: payload.serviceId,
   };
 
   const data = yield call(postCreateQuote, body);
@@ -341,11 +341,11 @@ function* createMessage(
   };
   switch (userType) {
     case UserType.CUSTOMER:
-      body.customer_id = (yield select(AuthSelectors.getUserId)) as string;
+      body.customerId = (yield select(AuthSelectors.getUserId)) as string;
       break;
     case UserType.SHOP_OWNER:
     case UserType.EMPLOYEE:
-      body.shop_id = (yield select(AuthSelectors.getShopId)) as string;
+      body.shopId = (yield select(AuthSelectors.getShopId)) as string;
       break;
     default:
       break;

@@ -2,8 +2,8 @@ import { EmployeeStatus, prisma } from "@server/db/client";
 import { getEmployeeById } from "@server/services/userService";
 import { z } from "zod";
 
-export const getEmployeesByShopId = async (shop_id: string) => {
-  return await prisma.employee.findMany({ where: { shop_id } });
+export const getEmployeesByShopId = async (shopId: string) => {
+  return await prisma.employee.findMany({ where: { shopId } });
 };
 
 export const updateEmployeeSchema = z.object({

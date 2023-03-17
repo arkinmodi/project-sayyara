@@ -101,7 +101,7 @@ const appointmentByIdHandler = async (
 const isAuthorized = (session: Session, appointment: Appointment) => {
   return !(
     session.user.type === "CUSTOMER" &&
-    session.user.id !== appointment.customer_id
+    session.user.id !== appointment.customerId
   );
 };
 

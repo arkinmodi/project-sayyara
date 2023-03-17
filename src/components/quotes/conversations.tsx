@@ -88,7 +88,7 @@ const Conversations = (props: IConversationsProps) => {
           <h4 className={styles.h4}>
             {isCustomer
               ? option.shop.name
-              : `${option.customer.first_name} ${option.customer.last_name}`}
+              : `${option.customer.firstName} ${option.customer.lastName}`}
           </h4>
           <h4 className={classnames(styles.h4, styles.service)}>
             {option.service.name}

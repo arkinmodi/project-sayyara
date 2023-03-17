@@ -221,7 +221,7 @@ const WorkOrderPage: React.FC<{
             </p>
             <p>
               <b>Customer: </b>
-              {`${workOrder.customer.first_name} ${workOrder.customer.last_name}`}
+              {`${workOrder.customer.firstName} ${workOrder.customer.lastName}`}
             </p>
             <p>
               <b>Customer Email: </b>
@@ -229,7 +229,7 @@ const WorkOrderPage: React.FC<{
             </p>
             <p>
               <b>Customer Phone Number: </b>
-              {workOrder.customer.phone_number}
+              {workOrder.customer.phoneNumber}
             </p>
             <p>
               <b>Vehicle: </b>

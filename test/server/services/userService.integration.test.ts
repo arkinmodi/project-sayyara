@@ -13,25 +13,25 @@ const hashPassword = {
 
 const testCustomer: CustomerWithVehiclesType = {
   id: "",
-  first_name: "customer_first_name",
-  last_name: "customer_last_name",
-  phone_number: "1234567890",
+  firstName: "customerFirstName",
+  lastName: "customerLastName",
+  phoneNumber: "1234567890",
   email: "customer@test.com",
   password: hashPassword.hash,
   image: null,
-  create_time: new Date(),
-  update_time: new Date(),
+  createTime: new Date(),
+  updateTime: new Date(),
   type: "CUSTOMER",
   vehicles: [
     {
-      id: "test_customer_vehicle_id",
-      create_time: new Date(),
-      update_time: new Date(),
-      customer_id: "test_customer_id",
-      license_plate: "test_license_plate",
-      make: "test_make",
-      model: "test_model",
-      vin: "test_vin",
+      id: "testCustomerVehicleId",
+      createTime: new Date(),
+      updateTime: new Date(),
+      customerId: "testCustomerId",
+      licensePlate: "testLicensePlate",
+      make: "testMake",
+      model: "testModel",
+      vin: "testVin",
       year: 2017,
     },
   ],
@@ -59,14 +59,14 @@ describe("User Module", () => {
 
     await expect(getUserByEmail(testCustomer.email)).resolves.toEqual({
       id: expect.any(String),
-      create_time: expect.any(Date),
-      update_time: expect.any(Date),
+      createTime: expect.any(Date),
+      updateTime: expect.any(Date),
       email: testCustomer.email,
       password: testCustomer.password,
-      first_name: testCustomer.first_name,
-      last_name: testCustomer.last_name,
+      firstName: testCustomer.firstName,
+      lastName: testCustomer.lastName,
       image: null,
-      phone_number: testCustomer.phone_number,
+      phoneNumber: testCustomer.phoneNumber,
       type: testCustomer.type,
     });
   });
@@ -75,9 +75,7 @@ describe("User Module", () => {
     // Setup
     await createUser();
 
-    await expect(
-      getUserByEmail("does_not_exists@test.com")
-    ).resolves.toBeNull();
+    await expect(getUserByEmail("doesNotExists@test.com")).resolves.toBeNull();
     await expect(getUserByEmail("")).resolves.toBeNull();
   });
 
@@ -89,8 +87,8 @@ describe("User Module", () => {
       authorize(testCustomer.email, hashPassword.plaintext)
     ).resolves.toEqual({
       id: expect.any(String),
-      firstName: testCustomer.first_name,
-      lastName: testCustomer.last_name,
+      firstName: testCustomer.firstName,
+      lastName: testCustomer.lastName,
       email: testCustomer.email,
       type: testCustomer.type,
     });
@@ -101,10 +99,10 @@ describe("User Module", () => {
     await createUser();
 
     await expect(
-      authorize("does_not_exists@test.com", "fake_password")
+      authorize("doesNotExists@test.com", "fakePassword")
     ).rejects.toEqual("user not found");
     await expect(
-      authorize(testCustomer.email, "wrong_password")
+      authorize(testCustomer.email, "wrongPassword")
     ).rejects.toEqual("unauthorized");
   });
 });
@@ -112,15 +110,15 @@ describe("User Module", () => {
 const createUser = async () => {
   return await prisma.customer.create({
     data: {
-      first_name: testCustomer.first_name,
-      last_name: testCustomer.last_name,
-      phone_number: testCustomer.phone_number,
+      firstName: testCustomer.firstName,
+      lastName: testCustomer.lastName,
+      phoneNumber: testCustomer.phoneNumber,
       email: testCustomer.email,
       password: testCustomer.password,
       type: testCustomer.type,
       vehicles: {
         create: {
-          license_plate: testCustomer.vehicles[0]!.license_plate,
+          licensePlate: testCustomer.vehicles[0]!.licensePlate,
           make: testCustomer.vehicles[0]!.make,
           model: testCustomer.vehicles[0]!.model,
           vin: testCustomer.vehicles[0]!.vin,
