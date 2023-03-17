@@ -197,7 +197,7 @@ jobs:
           message: ${{ steps.comment-body.outputs.body }}
 
   collect_results:
-    name: 📋 Collect Results
+    name: 📋 Collect Test Results
     needs:
       - changes
       - app_tests

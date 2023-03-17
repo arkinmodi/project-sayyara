@@ -123,7 +123,7 @@ jobs:
           git push
 
   collect_results:
-    name: 📋 Collect Results
+    name: 📋 Collect Build Results
     needs:
       - changes
       - publish_pdfs
