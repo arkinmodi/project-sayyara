@@ -30,7 +30,7 @@ BUILD_INFO = {
     },
     'Hazard_Analysis': {
         'directory': 'docs/HazardAnalysis',
-        'filename': 'HazardAnalysis.pd',
+        'filename': 'HazardAnalysis.pdf',
         'make_cmd': 'HazA',
     },
     'Problem_Statement': {
@@ -58,11 +58,16 @@ BUILD_INFO = {
         'filename': 'VnVReport.pdf',
         'make_cmd': 'VnVR',
     },
+    'EXPO_Executive_Summary': {
+        'directory': 'docs/Presentations/EXPO',
+        'filename': 'ExecutiveSummary.pdf',
+        'make_cmd': 'ExpoES',
+    },
 }
 
 SHARED_DEPS = frozenset((
     'docs/Comments.tex',
-    'docs/Common.tex'
+    'docs/Common.tex',
 ))
 
 REFERENCES_DEPS = frozenset((
@@ -100,7 +105,7 @@ def main() -> int:
         if files & REFERENCES_DEPS:
             documents.update([
                 'SRS',
-                'VnV_Plan'
+                'VnV_Plan',
             ])
 
     matched = [BUILD_INFO[doc] for doc in documents]
