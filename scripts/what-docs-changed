@@ -30,7 +30,7 @@ BUILD_INFO = {
     },
     'Hazard_Analysis': {
         'directory': 'docs/HazardAnalysis',
-        'filename': 'HazardAnalysis.pd',
+        'filename': 'HazardAnalysis.pdf',
         'make_cmd': 'HazA',
     },
     'Problem_Statement': {
