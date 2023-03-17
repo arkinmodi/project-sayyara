@@ -65,7 +65,7 @@ jobs:
     name: 🚀 Publish Built LaTeX PDFs
     needs:
       - build_documentation
-    if: github.ref_name == 'main' && always() # runs even if job cancelled
+    if: needs.changes.outputs.documentation != '[]' && github.ref_name == 'main' && always() # runs even if job cancelled
     runs-on: ubuntu-latest
     steps:
       - name: 🛎 Checkout
@@ -98,6 +98,9 @@ jobs:
           VNVP_DIR: docs/VnVPlan
           VNVR_FILENAME: VnVReport.pdf
           VNVR_DIR: docs/VnVReport
+          EXPOES_DIR: docs/Presentations/EXPO
+          EXPOES_FILENAME: ExecutiveSummary.pdf
+
         run: |
           [ ! -e "$MG_FILENAME/$MG_FILENAME" ]            || mv -v "$MG_FILENAME/$MG_FILENAME" "$MG_DIR/$MG_FILENAME"
           [ ! -e "$MIS_FILENAME/$MIS_FILENAME" ]          || mv -v "$MIS_FILENAME/$MIS_FILENAME" "$MIS_DIR/$MIS_FILENAME"
@@ -109,6 +112,7 @@ jobs:
           [ ! -e "$SRS_FILENAME/$SRS_FILENAME" ]          || mv -v "$SRS_FILENAME/$SRS_FILENAME" "$SRS_DIR/$SRS_FILENAME"
           [ ! -e "$VNVP_FILENAME/$VNVP_FILENAME" ]        || mv -v "$VNVP_FILENAME/$VNVP_FILENAME" "$VNVP_DIR/$VNVP_FILENAME"
           [ ! -e "$VNVR_FILENAME/$VNVR_FILENAME" ]        || mv -v "$VNVR_FILENAME/$VNVR_FILENAME" "$VNVR_DIR/$VNVR_FILENAME"
+          [ ! -e "$EXPOES_FILENAME/$EXPOES_FILENAME" ]    || mv -v "$EXPOES_FILENAME/$EXPOES_FILENAME" "$EXPOES_DIR/$EXPOES_FILENAME"
 
       - name: 🚀 Add & Commit
         run: |
