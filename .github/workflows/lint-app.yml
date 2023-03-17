@@ -3,10 +3,7 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - src/**
-      - test/**
-      - prisma/**
+      - test-me-*
 
 jobs:
   lint_app:

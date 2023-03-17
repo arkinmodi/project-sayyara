@@ -1,26 +1,39 @@
 name: Application Tests
 on:
   pull_request:
-    branches:
-      - main
-    paths:
-      - src/**
-      - test/**
-      - package.json
-      - package-lock.json
   push:
     branches:
       - main
-    paths:
-      - src/**
-      - test/**
-      - package.json
-      - package-lock.json
+      - test-me-*
+  workflow_dispatch:
 
 jobs:
+  changes:
+    name: 🧞 Check What Changed
+    runs-on: ubuntu-latest
+    outputs:
+      run_tests: ${{ steps.filter.outputs.continue }}
+    steps:
+      - name: 🛎 Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: 🧞 Check What Changed
+        id: filter
+        run: scripts/what-code-changed ${{ github.ref_name == 'main' && '--main' || '' }} ${{ github.event_name == 'workflow_dispatch' && '--all' || '' }}
+
   app_tests:
     name: 🧪 Unit Tests
     runs-on: ubuntu-latest
+    needs:
+      - changes
+    if: needs.changes.outputs.run_tests == 'true'
     steps:
       - name: 🛎 Checkout
         uses: actions/checkout@v3
@@ -59,6 +72,9 @@ jobs:
   sys_tests:
     name: 🧪 Integration Tests
     runs-on: ubuntu-latest
+    needs:
+      - changes
+    if: needs.changes.outputs.run_tests == 'true'
     env:
       DATABASE_URL: mysql://root:password@localhost:3306/sayyara
     steps:
@@ -108,6 +124,8 @@ jobs:
     needs:
       - app_tests
       - sys_tests
+      - changes
+    if: needs.changes.outputs.run_tests == 'true'
     steps:
       - name: 🛎 Checkout
         uses: actions/checkout@v3
@@ -177,3 +195,17 @@ jobs:
         with:
           recreate: true
           message: ${{ steps.comment-body.outputs.body }}
+
+  collect_results:
+    name: 📋 Collect Test Results
+    needs:
+      - changes
+      - app_tests
+      - sys_tests
+      - coverage_report
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📋 Check for Failures
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: echo job failed && exit 1
