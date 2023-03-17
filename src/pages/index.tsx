@@ -1,3 +1,4 @@
+import styles from "@styles/Home.module.css";
 import classNames from "classnames";
 import type { NextPage } from "next";
 import Head from "next/head";
@@ -16,7 +17,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { IService } from "src/types/service";
 import { IShop } from "src/types/shop";
 import { getFilteredShops } from "src/utils/shopUtil";
-import styles from "../styles/Home.module.css";
+import ShopLookupSkeleton from "../components/lookup/ShopLookupSkeleton";
 
 const MAX_CHIP_MOBILE = 0;
 const MAX_CHIP = 3;
@@ -25,6 +26,8 @@ const filterByPartCondition = ["NEW", "USED"];
 const searchFilterList: string[] = ["Service", "Shop Name"];
 
 const Home: NextPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
   const [selectedTypeFilters, setSelectedTypeFilters] = useState<string[]>([]);
   const [selectedConditionFilters, setSelectedConditionFilters] = useState<
     string[]
@@ -47,6 +50,7 @@ const Home: NextPage = () => {
     getFilteredShops("", true).then((data) => {
       if (data) {
         setShops(data);
+        setIsLoading(false);
       }
     });
   }, []);
@@ -333,203 +337,207 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className={styles.main}>
-        <div className={styles.filter}>
-          <Panel className={styles.desktopFilter} header="Filter By">
-            <h5 className={styles.h5Top}>Part Type</h5>
-            {filterByPartType.map((category) => {
-              return (
-                <div key={category} className={styles.buttonList}>
-                  <Checkbox
-                    inputId={category}
-                    name="category"
-                    value={category}
-                    onChange={onTypeChange}
-                    checked={selectedTypeFilters.some(
-                      (item) => item === category
-                    )}
-                  />
-                  <label className={styles.label} htmlFor={category}>
-                    {category}
-                  </label>
-                </div>
-              );
-            })}
-            <h5>Part Condition</h5>
-            {filterByPartCondition.map((category) => {
-              return (
-                <div key={category} className={styles.buttonList}>
-                  <Checkbox
-                    inputId={category}
-                    name="category"
-                    value={category}
-                    onChange={onConditionChange}
-                    checked={selectedConditionFilters.some(
-                      (item) => item === category
-                    )}
-                  />
-                  <label className={styles.label} htmlFor={category}>
-                    {category}
-                  </label>
-                </div>
-              );
-            })}
-            <h5>
-              Location Range (km): [{locationRange[0]} - {locationRange[1]}]
-            </h5>
-            <Slider
-              value={locationRange}
-              min={1}
-              max={50}
-              onChange={setRange}
-              range
-              disabled
+      {!isLoading ? (
+        <div className={styles.main}>
+          <div className={styles.filter}>
+            <Panel className={styles.desktopFilter} header="Filter By">
+              <h5 className={styles.h5Top}>Part Type</h5>
+              {filterByPartType.map((category) => {
+                return (
+                  <div key={category} className={styles.buttonList}>
+                    <Checkbox
+                      inputId={category}
+                      name="category"
+                      value={category}
+                      onChange={onTypeChange}
+                      checked={selectedTypeFilters.some(
+                        (item) => item === category
+                      )}
+                    />
+                    <label className={styles.label} htmlFor={category}>
+                      {category}
+                    </label>
+                  </div>
+                );
+              })}
+              <h5>Part Condition</h5>
+              {filterByPartCondition.map((category) => {
+                return (
+                  <div key={category} className={styles.buttonList}>
+                    <Checkbox
+                      inputId={category}
+                      name="category"
+                      value={category}
+                      onChange={onConditionChange}
+                      checked={selectedConditionFilters.some(
+                        (item) => item === category
+                      )}
+                    />
+                    <label className={styles.label} htmlFor={category}>
+                      {category}
+                    </label>
+                  </div>
+                );
+              })}
+              <h5>
+                Location Range (km): [{locationRange[0]} - {locationRange[1]}]
+              </h5>
+              <Slider
+                value={locationRange}
+                min={1}
+                max={50}
+                onChange={setRange}
+                range
+                disabled
+              />
+              <Button className={styles.filterButton} onClick={resetFilters}>
+                Reset Filters
+              </Button>
+            </Panel>
+            <Panel
+              className={styles.mobileFilter}
+              header="Filter By"
+              toggleable
+              collapsed
+            >
+              <h5 className={styles.h5Top}>Part Type</h5>
+              {filterByPartType.map((category) => {
+                return (
+                  <div key={category} className={styles.buttonList}>
+                    <Checkbox
+                      inputId={category}
+                      name="category"
+                      value={category}
+                      onChange={onTypeChange}
+                      checked={selectedTypeFilters.some(
+                        (item) => item === category
+                      )}
+                    />
+                    <label className={styles.label} htmlFor={category}>
+                      {category}
+                    </label>
+                  </div>
+                );
+              })}
+              <h5>Part Condition</h5>
+              {filterByPartCondition.map((category) => {
+                return (
+                  <div key={category} className={styles.buttonList}>
+                    <Checkbox
+                      inputId={category}
+                      name="category"
+                      value={category}
+                      onChange={onConditionChange}
+                      checked={selectedConditionFilters.some(
+                        (item) => item === category
+                      )}
+                    />
+                    <label className={styles.label} htmlFor={category}>
+                      {category}
+                    </label>
+                  </div>
+                );
+              })}
+              <h5>
+                Location Range (km): [{locationRange[0]} - {locationRange[1]}]
+              </h5>
+              <Slider
+                value={locationRange}
+                min={1}
+                max={50}
+                onChange={setRange}
+                range
+                disabled
+              />
+              <Button className={styles.filterButton} onClick={resetFilters}>
+                Reset Filters
+              </Button>
+            </Panel>
+          </div>
+          <div className={styles.content}>
+            <div
+              className={classNames(
+                "p-inputgroup",
+                styles.search,
+                styles.desktopSearch
+              )}
+            >
+              <InputText
+                className={styles.searchInputText}
+                placeholder="Search"
+                value={searchString}
+                onChange={onChangeString}
+              />
+              <Dropdown
+                className={styles.dropdown}
+                value={searchFilter}
+                options={searchFilterList}
+                onChange={onChangeFilter}
+                placeholder="Service"
+              />
+              <Button
+                className={styles.searchButton}
+                label="Search"
+                onClick={() =>
+                  onSearch(
+                    searchString,
+                    searchFilter,
+                    selectedConditionFilters,
+                    selectedTypeFilters,
+                    true
+                  )
+                }
+              />
+            </div>
+            <div className={classNames(styles.search, styles.mobileSearch)}>
+              <InputText
+                className={styles.inputtext}
+                placeholder="Search"
+                value={searchString}
+                onChange={onChangeString}
+              />
+              <Dropdown
+                className={styles.dropdown}
+                value={searchFilter}
+                options={searchFilterList}
+                onChange={onChangeFilter}
+                placeholder="Service"
+              />
+              <Button
+                className={styles.searchButton}
+                label="Search"
+                onClick={() =>
+                  onSearch(
+                    searchString,
+                    searchFilter,
+                    selectedConditionFilters,
+                    selectedTypeFilters,
+                    true
+                  )
+                }
+              />
+            </div>
+            <DataView
+              className={styles.desktopData}
+              value={shops}
+              layout="list"
+              itemTemplate={(shop) => itemTemplate(shop, "desktop")}
+              paginator
+              rows={7}
             />
-            <Button className={styles.filterButton} onClick={resetFilters}>
-              Reset Filters
-            </Button>
-          </Panel>
-          <Panel
-            className={styles.mobileFilter}
-            header="Filter By"
-            toggleable
-            collapsed
-          >
-            <h5 className={styles.h5Top}>Part Type</h5>
-            {filterByPartType.map((category) => {
-              return (
-                <div key={category} className={styles.buttonList}>
-                  <Checkbox
-                    inputId={category}
-                    name="category"
-                    value={category}
-                    onChange={onTypeChange}
-                    checked={selectedTypeFilters.some(
-                      (item) => item === category
-                    )}
-                  />
-                  <label className={styles.label} htmlFor={category}>
-                    {category}
-                  </label>
-                </div>
-              );
-            })}
-            <h5>Part Condition</h5>
-            {filterByPartCondition.map((category) => {
-              return (
-                <div key={category} className={styles.buttonList}>
-                  <Checkbox
-                    inputId={category}
-                    name="category"
-                    value={category}
-                    onChange={onConditionChange}
-                    checked={selectedConditionFilters.some(
-                      (item) => item === category
-                    )}
-                  />
-                  <label className={styles.label} htmlFor={category}>
-                    {category}
-                  </label>
-                </div>
-              );
-            })}
-            <h5>
-              Location Range (km): [{locationRange[0]} - {locationRange[1]}]
-            </h5>
-            <Slider
-              value={locationRange}
-              min={1}
-              max={50}
-              onChange={setRange}
-              range
-              disabled
-            />
-            <Button className={styles.filterButton} onClick={resetFilters}>
-              Reset Filters
-            </Button>
-          </Panel>
-        </div>
-        <div className={styles.content}>
-          <div
-            className={classNames(
-              "p-inputgroup",
-              styles.search,
-              styles.desktopSearch
-            )}
-          >
-            <InputText
-              className={styles.searchInputText}
-              placeholder="Search"
-              value={searchString}
-              onChange={onChangeString}
-            />
-            <Dropdown
-              className={styles.dropdown}
-              value={searchFilter}
-              options={searchFilterList}
-              onChange={onChangeFilter}
-              placeholder="Service"
-            />
-            <Button
-              className={styles.searchButton}
-              label="Search"
-              onClick={() =>
-                onSearch(
-                  searchString,
-                  searchFilter,
-                  selectedConditionFilters,
-                  selectedTypeFilters,
-                  true
-                )
-              }
+            <DataView
+              className={styles.mobileData}
+              value={shops}
+              layout="list"
+              itemTemplate={(shop) => itemTemplate(shop, "mobile")}
+              paginator
+              rows={5}
             />
           </div>
-          <div className={classNames(styles.search, styles.mobileSearch)}>
-            <InputText
-              className={styles.inputtext}
-              placeholder="Search"
-              value={searchString}
-              onChange={onChangeString}
-            />
-            <Dropdown
-              className={styles.dropdown}
-              value={searchFilter}
-              options={searchFilterList}
-              onChange={onChangeFilter}
-              placeholder="Service"
-            />
-            <Button
-              className={styles.searchButton}
-              label="Search"
-              onClick={() =>
-                onSearch(
-                  searchString,
-                  searchFilter,
-                  selectedConditionFilters,
-                  selectedTypeFilters,
-                  true
-                )
-              }
-            />
-          </div>
-          <DataView
-            className={styles.desktopData}
-            value={shops}
-            layout="list"
-            itemTemplate={(shop) => itemTemplate(shop, "desktop")}
-            paginator
-            rows={7}
-          />
-          <DataView
-            className={styles.mobileData}
-            value={shops}
-            layout="list"
-            itemTemplate={(shop) => itemTemplate(shop, "mobile")}
-            paginator
-            rows={5}
-          />
         </div>
-      </div>
+      ) : (
+        <ShopLookupSkeleton />
+      )}
     </div>
   );
 };
