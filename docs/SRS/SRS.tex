@@ -202,6 +202,7 @@
 	March 7, 2023      & Arkin Modi            & Update Functional Requirements for Work Orders                                     \\
 	March 8, 2023      & Timothy Choy          & Update Usability Nonfunctional Requirement                                         \\
 	March 8, 2023      & Joy Xiao              & Remove requirements for shop/employee to edit appointment time                     \\
+	March 14, 2023     & Timothy Choy          & Update Work Partitioning for Quotes                                                \\
 	\bottomrule
 \end{longtable}
 
@@ -430,7 +431,7 @@ may be used.
 
 \textbf{Vehicle Owners}
 \begin{enumerate}
-	\item It is assumed that users looking for auto repair or maintenance own at least one vehicle.
+	\item It is assumed that users looking for auto repair or maintenance own one vehicle.
 \end{enumerate}
 
 \textbf{Auto Repair Shop Owners}
@@ -512,43 +513,43 @@ external systems and services.
 	\centering
 	\begin{tabular}{|c|p{3.5cm}|c|p{3.5cm}|}
 		\hline
-		\textbf{Event Number} & \centering\textbf{Event Name}  & \textbf{Input} & \textbf{Output}    \\
+		\textbf{Event Number} & \centering\textbf{Event Name}  & \textbf{Input} & \textbf{Output} \\
 		\hline
-		1                     & Sign up for account            & User           & Database           \\
+		1                     & Sign up for account            & User           & Database        \\
 		\hline
-		2                     & Login to account               & User           & Database           \\
+		2                     & Login to account               & User           & Database        \\
 		\hline
-		3                     & Book appointment               & Database       & Database           \\
+		3                     & Book appointment               & Database       & Database        \\
 		\hline
-		4                     & Edit appointment               & Database       & Database           \\
+		4                     & Edit appointment               & Database       & Database        \\
 		\hline
-		5                     & Cancel appointment             & Database       & Database           \\
+		5                     & Cancel appointment             & Database       & Database        \\
 		\hline
-		6                     & Set appointment availability   & Database       & Database           \\
+		6                     & Set appointment availability   & Database       & Database        \\
 		\hline
-		7                     & View past quotes               & User           & Database           \\
+		7                     & View past quotes               & User           & Database        \\
 		\hline
-		8                     & View quote details             & User           & Database           \\
+		8                     & View quote details             & User           & Database        \\
 		\hline
-		9                     & Request a quote                & Web Socket     & Database           \\
+		9                     & Request a quote                & User           & Database        \\
 		\hline
-		10                    & Cancel quote request           & User           & Database           \\
+		10                    & Cancel quote request           & User           & Database        \\
 		\hline
-		11                    & Update quote request           & User           & Database/Websocket \\
+		11                    & Update quote request           & User           & Database        \\
 		\hline
-		12                    & Copy a quote request           & Database       & Database/Websocket \\
+		12                    & Copy a quote request           & Database       & Database        \\
 		\hline
-		13                    & Respond to quote request       & Websocket      & Database           \\
+		13                    & Respond to quote request       & User           & Database        \\
 		\hline
-		14                    & Accept quote response          & Websocket      & Database           \\
+		14                    & Accept quote response          & User           & Database        \\
 		\hline
-		15                    & Request additional information & Websocket      & Database           \\
+		15                    & Request additional information & User           & Database        \\
 		\hline
-		16                    & Appointment scheduled          & User           & Database           \\
+		16                    & Appointment scheduled          & User           & Database        \\
 		\hline
-		17                    & Appointment cancelled          & User           & Database           \\
+		17                    & Appointment cancelled          & User           & Database        \\
 		\hline
-		18                    & Search for work order          & User           & Database           \\
+		18                    & Search for work order          & User           & Database        \\
 		\hline
 	\end{tabular}
 \end{table}
@@ -1507,10 +1508,10 @@ The database is not able to sustain the number of connections to serve all reque
 \subsubsection{Follow-Up Problems}
 
 Any failures or downtime of third-party integrations may impact the overall availability and
-operation of the application. These integrations include the database service provider, the email
-server, and websocket provider. Additionally, this application will be dealing with user data. As
-privacy laws around the world are getting stricter, there is a possibility application violates
-these future laws that do not currently exist.
+operation of the application. These integrations include the database service provider.
+Additionally, this application will be dealing with user data. As privacy laws around the world are
+getting stricter, there is a possibility application violates these future laws that do not
+currently exist.
 
 \subsection{Tasks}
 \subsubsection{Project Planning}
