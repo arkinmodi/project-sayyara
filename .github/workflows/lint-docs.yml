@@ -3,8 +3,7 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - docs/**
+      - test-me-*
 
 jobs:
   latex_indent:

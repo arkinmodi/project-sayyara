@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # exit 1 = build, exit 0 = skip build
 # https://vercel.com/docs/concepts/projects/overview#ignored-build-step

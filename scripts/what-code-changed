@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import subprocess
+
+
+TEST_DEPS = frozenset([
+    'jest.integration.config.js',
+    'jest.unit.config.js',
+    'package-lock.json',
+    'package.json',
+    'prisma',
+    'src',
+    'test',
+])
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--all', action='store_true')
+    parser.add_argument('--main', action='store_true')
+    args = parser.parse_args()
+
+    if args.main:
+        diff_cmd = ('git', 'diff', '--name-only', 'HEAD^...HEAD')
+    else:
+        diff_cmd = ('git', 'diff', '--name-only', 'origin/main...HEAD')
+
+    files = set(subprocess.check_output(diff_cmd).decode().splitlines())
+
+    if args.all:
+        run_tests = True
+    else:
+        run_tests = any(
+            path.startswith(prefix)
+            for path in files
+            for prefix in TEST_DEPS
+        )
+
+    print(f'running tests? {run_tests}')
+
+    with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+        f.write(f'continue={json.dumps(run_tests)}\n')
+
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
