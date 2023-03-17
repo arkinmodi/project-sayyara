@@ -1,0 +1,122 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import subprocess
+
+
+BUILD_INFO = {
+    'MG': {
+        'directory': 'docs/Design/SoftArchitecture',
+        'filename': 'MG.pdf',
+        'make_cmd': 'MG',
+    },
+    'MIS': {
+        'directory': 'docs/Design/SoftDetailedDes',
+        'filename': 'MIS.pdf',
+        'make_cmd': 'MIS',
+    },
+    'System_Design': {
+        'directory': 'docs/Design/SystDesign',
+        'filename': 'SystDes.pdf',
+        'make_cmd': 'SystDes',
+    },
+    'Development_Plan': {
+        'directory': 'docs/DevelopmentPlan',
+        'filename': 'DevelopmentPlan.pdf',
+        'make_cmd': 'DevP',
+    },
+    'Hazard_Analysis': {
+        'directory': 'docs/HazardAnalysis',
+        'filename': 'HazardAnalysis.pdf',
+        'make_cmd': 'HazA',
+    },
+    'Problem_Statement': {
+        'directory': 'docs/ProblemStatementAndGoals',
+        'filename': 'ProblemStatement.pdf',
+        'make_cmd': 'PS',
+    },
+    'Reflection': {
+        'directory': 'docs/Reflection',
+        'filename': 'Reflection.pdf',
+        'make_cmd': 'Refl',
+    },
+    'SRS': {
+        'directory': 'docs/SRS',
+        'filename': 'SRS.pdf',
+        'make_cmd': 'SRS',
+    },
+    'VnV_Plan': {
+        'directory': 'docs/VnVPlan',
+        'filename': 'VnVPlan.pdf',
+        'make_cmd': 'VnVP',
+    },
+    'VnV_Report': {
+        'directory': 'docs/VnVReport',
+        'filename': 'VnVReport.pdf',
+        'make_cmd': 'VnVR',
+    },
+    'EXPO_Executive_Summary': {
+        'directory': 'docs/Presentations/EXPO',
+        'filename': 'ExecutiveSummary.pdf',
+        'make_cmd': 'ExpoES',
+    },
+}
+
+SHARED_DEPS = frozenset((
+    'docs/Comments.tex',
+    'docs/Common.tex',
+))
+
+REFERENCES_DEPS = frozenset((
+    'refs/References.bib',
+))
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--main', action='store_true')
+    parser.add_argument('--all', action='store_true')
+    args = parser.parse_args()
+
+    if args.main:
+        diff_cmd = ('git', 'diff', '--name-only', 'HEAD^...HEAD')
+    else:
+        diff_cmd = ('git', 'diff', '--name-only', 'origin/main...HEAD')
+
+    files = set(subprocess.check_output(diff_cmd).decode().splitlines())
+
+    # if a shared dependency is updated, everything should be rebuilt
+    if args.all or files & SHARED_DEPS:
+        documents = set(BUILD_INFO.keys())
+    else:
+        documents = set([
+            doc
+            for path in files
+            for doc, info in BUILD_INFO.items()
+            if (
+                path.startswith(info['directory']) and
+                not path.endswith(info['filename'])
+            )
+        ])
+
+        if files & REFERENCES_DEPS:
+            documents.update([
+                'SRS',
+                'VnV_Plan',
+            ])
+
+    matched = [BUILD_INFO[doc] for doc in documents]
+
+    print(f'rebuilding: {documents}')
+
+    with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+        f.write(f'docs={json.dumps(matched)}\n')
+
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
