@@ -30,6 +30,7 @@
 		September 25, 2022 & Joy Xiao              & Add project goals                         \\
 		September 25, 2022 & Leon So               & Add problem statement section outline     \\
 		September 26, 2022 & Leon So               & Update inputs, outputs, goals             \\
+		March 14, 2023     & Joy Xiao              & Update problem                            \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -49,6 +50,18 @@ On the other hand, customers do not have an effective way to find and compare au
 Currently, one of the only ways to compare repair shops is by manually searching or reaching out to
 repair shops one-by-one. This process can often be repetitive and time-consuming.
 
+The purpose of this project is to create a progressive web application (PWA) to connect auto shops
+with vehicle owners (customers). This project will allow independent auto repair shops and vehicle
+owners to interact in a more efficient and effective manner. Vehicle owners will be able to search
+for auto repair shops and services based on a variety of search filters; request quotes for
+service; book, view, and manage service appointments. On the application, auto repair shop owners
+will have full shop management capabilities such as: adding and managing a list of employees;
+managing a list of service types and corresponding service appointment availabilities; managing
+store information such as location, hours of operation, and contact information. Auto repair shop
+owners and employees will be able to manage quotes, service appointments, and work orders from a
+single application. Ultimately, Sayyara will significantly improve the auto repair experience for
+both independent auto repair shops and vehicle owners.
+
 \subsection{Inputs and Outputs}
 \subsubsection{Inputs}
 \begin{enumerate}
@@ -56,8 +69,8 @@ repair shops one-by-one. This process can often be repetitive and time-consuming
 	      phone number, email, password, and hours of operation
 	\item Auto repair shop employee accounts including employee first and last name, phone number, email,
 	      password
-	\item Invitation details from auto repair shop account to employee account including a list of one or
-	      more employee emails
+	\item Shop ID given to an employee which is needed for employee to sign up and be associated with the
+	      auto shop
 	\item Customer information including full name, phone number, email, and password
 	\item List of available services for each auto repair shop, along with details for each service such as
 	      service type, type of parts used {(i.e., OEM, used, etc)}
@@ -76,9 +89,9 @@ repair shops one-by-one. This process can often be repetitive and time-consuming
 \subsubsection{Outputs}
 \begin{enumerate}
 	\item Profile view for auto repair shop and employee accounts
-	\item View of appointments booked for shop owners and employees
+	\item View of all appointments for shop owners and employees
 	\item View of quote request for shop owners and employees
-	\item View of appointments booked for customers
+	\item View of all appointments for customers
 	\item View of quote request submitted for customers
 	\item List of auto repair shops based on search keywords and filters inputted by customers
 	\item View of work orders and corresponding details for shop owners and employees
@@ -107,7 +120,7 @@ repair shops one-by-one. This process can often be repetitive and time-consuming
 \end{itemize}
 \subsubsection{Software}
 \begin{itemize}
-	\item The application will be supported on Google Chrome, Firefox, and Microsoft Edge.
+	\item The application will be supported on Google Chrome and Microsoft Edge.
 	\item The application will be supported on Windows and macOS.
 	\item The application will be supported on Android and iOS mobile devices and tablets.
 \end{itemize}
