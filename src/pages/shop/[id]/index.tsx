@@ -221,12 +221,12 @@ const Profile: NextPage = () => {
             <span className={styles.shopProfileSubHeaderText}>
               <i className="pi pi-phone"></i>
               <a
-                href={`tel: ${shop.phoneNumber.replace(/\D/g, "")}`}
+                href={`tel:+1${shop.phoneNumber.replace(/\D/g, "")}`}
               >{` ${shop.phoneNumber}`}</a>
             </span>
             <span className={styles.shopProfileSubHeaderText}>
               <i className="pi pi-envelope"></i>
-              <a href={`mailto: ${shop.email}`}>{` ${shop.email}`}</a>
+              <a href={`mailto:${shop.email}`}>{` ${shop.email}`}</a>
             </span>
           </div>
           {renderButton(shop)}
