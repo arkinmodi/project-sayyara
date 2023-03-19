@@ -13,7 +13,7 @@ jobs:
     name: 🧞 Check What Changed
     runs-on: ubuntu-latest
     outputs:
-      documentation: ${{ steps.filter.outputs.docs }}
+      build_code_docs: ${{ steps.filter.outputs.continue }}
     steps:
       - name: 🛎 Checkout
         uses: actions/checkout@v3
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - changes
-    if: needs.changes.outputs.run_tests == 'true'
+    if: needs.changes.outputs.build_code_docs == 'true'
     steps:
       - name: 🛎 Checkout
         uses: actions/checkout@v3
@@ -69,7 +69,6 @@ jobs:
         with:
           name: typedoc-report
           path: typedoc
-
 
   collect_results:
     name: 📋 Collect Build Results
