@@ -8,7 +8,7 @@
     "dev": "next dev",
     "build": "next build",
     "build:docs": "docker compose -f docker-compose-docs.yml run --rm docs",
-    "build:typedoc": "typedoc --out typedoc --readme README.md --entryPointStrategy expand --exclude '**/.prisma/client/index.d.ts' ./src",
+    "build:typedoc": "typedoc ./src",
     "start": "next start",
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
