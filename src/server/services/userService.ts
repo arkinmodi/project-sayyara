@@ -17,6 +17,14 @@ export const createCustomerSchema = z.object({
 
 export type CreateCustomerType = z.infer<typeof createCustomerSchema>;
 
+/**
+ *  Create a user of type customer
+ *
+ *  @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ *  @date 01/06/2023
+ *  @param {CreateCustomerType} customer - Customer data
+ *  @return Customer object
+ */
 export const createCustomer = async (customer: CreateCustomerType) => {
   return await prisma.customer.create({
     data: {
@@ -42,6 +50,14 @@ export const createEmployeeSchema = z.object({
 
 export type CreateEmployeeType = z.infer<typeof createEmployeeSchema>;
 
+/**
+ *  Create a user of type employee
+ *
+ *  @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ *  @date 01/06/2023
+ *  @param {CreateEmployeeType} employee - Employee data
+ *  @return Employee object
+ */
 export const createEmployee = async (employee: CreateEmployeeType) => {
   const shop = await getShopById(employee.shopId);
   if (!shop) return Promise.reject("Shop not found.");
@@ -70,6 +86,14 @@ export const createShopOwnerSchema = z.object({
 
 export type CreateShopOwnerType = z.infer<typeof createShopOwnerSchema>;
 
+/**
+ *  Create a user of type shop owner
+ *
+ *  @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ *  @date 01/06/2023
+ *  @param {CreateShopOwnerType} shopOwner - Shop owner data
+ *  @return Employee object
+ */
 export const createShopOwner = async (shopOwner: CreateShopOwnerType) => {
   return await prisma.employee.create({
     data: {
