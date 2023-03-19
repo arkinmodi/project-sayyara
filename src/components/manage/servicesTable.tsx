@@ -123,77 +123,73 @@ const ServicesTable = (props: IServiceProps) => {
     const parts = serviceData.parts;
     return (
       <div className={styles.partsTable}>
-        {parts.length > 0 ? (
-          <DataTable
-            value={parts}
-            header={partsTableHeader(serviceData)}
-            responsiveLayout="scroll"
-            paginator
-            showGridlines
-            stripedRows
-            rows={5}
-            size="small"
-            dataKey="name"
-            editMode="row"
-            onRowEditComplete={(params) => {
-              onPartsRowEditComplete(params, serviceData);
+        <DataTable
+          value={parts}
+          header={partsTableHeader(serviceData)}
+          responsiveLayout="scroll"
+          paginator
+          showGridlines
+          stripedRows
+          rows={5}
+          size="small"
+          dataKey="name"
+          editMode="row"
+          onRowEditComplete={(params) => {
+            onPartsRowEditComplete(params, serviceData);
+          }}
+        >
+          <Column
+            field="name"
+            header="Name"
+            editor={(options) => textEditor(options)}
+            sortable
+          ></Column>
+          <Column
+            field="quantity"
+            header="Quantity"
+            editor={(options) => quantityEditor(options)}
+            sortable
+          ></Column>
+          <Column
+            field="cost"
+            header="Cost Per Unit (CA$)"
+            editor={(options) => priceEditor(options)}
+            sortable
+          ></Column>
+          <Column
+            field="condition"
+            header="Condition"
+            editor={(options) => partsConditionEditor(options)}
+          ></Column>
+          <Column
+            field="build"
+            header="Type"
+            editor={(options) => partsTypeEditor(options)}
+          ></Column>
+          <Column
+            rowEditor
+            headerStyle={{ minWidth: "4rem" }}
+            bodyStyle={{ textAlign: "center" }}
+            style={{
+              display: displayColForShopOwnerOnly,
             }}
-          >
-            <Column
-              field="name"
-              header="Name"
-              editor={(options) => textEditor(options)}
-              sortable
-            ></Column>
-            <Column
-              field="quantity"
-              header="Quantity"
-              editor={(options) => quantityEditor(options)}
-              sortable
-            ></Column>
-            <Column
-              field="cost"
-              header="Cost Per Unit (CA$)"
-              editor={(options) => priceEditor(options)}
-              sortable
-            ></Column>
-            <Column
-              field="condition"
-              header="Condition"
-              editor={(options) => partsConditionEditor(options)}
-            ></Column>
-            <Column
-              field="build"
-              header="Type"
-              editor={(options) => partsTypeEditor(options)}
-            ></Column>
-            <Column
-              rowEditor
-              headerStyle={{ minWidth: "4rem" }}
-              bodyStyle={{ textAlign: "center" }}
-              style={{
-                display: displayColForShopOwnerOnly,
-              }}
-            ></Column>
-            <Column
-              body={(props) => (
-                <div>
-                  <Button
-                    icon="pi pi-trash"
-                    className="p-button-text p-button-danger p-button-rounded"
-                    onClick={() => handleDeletePartButton(props, serviceData)}
-                  />
-                </div>
-              )}
-              className={styles.servicesTableDeleteButton}
-              style={{
-                display: displayColForShopOwnerOnly,
-              }}
-            ></Column>
-          </DataTable>
-        ) : (
-          <div></div>
-        )}
+          ></Column>
+          <Column
+            body={(props) => (
+              <div>
+                <Button
+                  icon="pi pi-trash"
+                  className="p-button-text p-button-danger p-button-rounded"
+                  onClick={() => handleDeletePartButton(props, serviceData)}
+                />
+              </div>
+            )}
+            className={styles.servicesTableDeleteButton}
+            style={{
+              display: displayColForShopOwnerOnly,
+            }}
+          ></Column>
+        </DataTable>
       </div>
     );
   };
