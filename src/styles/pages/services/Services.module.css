@@ -35,6 +35,10 @@
   width: "450px";
 }
 
+.customServiceCheckbox {
+  margin-left: 5px;
+}
+
 @media (max-width: 600px) {
   .servicesTableHeader {
     justify-content: center;
