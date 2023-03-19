@@ -295,6 +295,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
               New
             </label>
             <Checkbox
+              className={styles.customServiceCheckbox}
               inputId="used"
               value="used"
               name="used"
@@ -331,6 +332,7 @@ const AddServicePopup = (props: IServicePopupProps) => {
               OEM
             </label>
             <Checkbox
+              className={styles.customServiceCheckbox}
               inputId="aftermarket"
               value="aftermarket"
               name="aftermarket"
