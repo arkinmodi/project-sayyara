@@ -71,7 +71,7 @@ jobs:
           path: typedoc
 
   collect_results:
-    name: 📋 Collect Build Results
+    name: 📋 Collect Code Docs Build Results
     needs:
       - changes
       - build_code_docs
