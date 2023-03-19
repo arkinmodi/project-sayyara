@@ -70,4 +70,4 @@ cleanRefl:
 	cd Reflection && make clean && cd ..
 
 cleanExpoES:
-	cd Presentation/EXPO && make clean && cd ../..
+	cd Presentations/EXPO && make clean && cd ../..
