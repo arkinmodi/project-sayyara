@@ -540,11 +540,64 @@ This section will contain tests covering the ``Appointments'' requirements defin
 	      Output: A new appointment request is made with the new time slot. Shop Owner/Employee Accounts will
 	      receive the appointment request
 
-	      Test Case Derivation: The user is able to change their appointment to any of the available time
-	      slots displayed
+	      Test Case Derivation: The customer user is able to change their appointment to any of the available
+	      time slots displayed.
 
 	      How test will be performed: The tester will go through the user interface to edit an appointment
 	      booking
+
+	\item \textbf{FRT-BE5-2}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account has a service appointment requested
+
+	      Input: Selects an appointment to move to scheduled
+
+	      Output: The appointment is moved to the scheduled appointments tab for the customer and the shop
+	      owner/employee. The user accepting the appointment will receive a notification that the appointment
+	      was accepted.
+
+	      Test Case Derivation: The shop owner/employee user is able accept an appointment request
+
+	      How test will be performed: The tester will go through the user interface to press "accept" on a
+	      request appointment and confirm the appointment is moved to the scheduled appointments tab
+
+	\item \textbf{FRT-BE5-3}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account has a service appointment scheduled
+
+	      Input: Selects an appointment to move to in progress
+
+	      Output: The appointment is moved to in progress appointments tab for the customer and the shop
+	      owner/employee. The user moving the appointment to in progress will receive a notification that the
+	      appointment was moved to in progress
+
+	      Test Case Derivation: The shop owner/employee user is able move a scheduled appointment to in
+	      progress
+
+	      How test will be performed: The tester will go through the user interface to press "in progress" on
+	      a scheduled appointment and confirm the appointment is moved to the in progress appointments tab
+
+	\item \textbf{FRT-BE5-4}
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Employee Account has an in progress appointment
+
+	      Input: Selects an appointment to move to completed
+
+	      Output: The appointment is moved to completed appointments tab for the customer and the shop
+	      owner/employee. The user moving the appointment to completed will receive a notification that the
+	      appointment was moved to completed
+
+	      Test Case Derivation: The shop owner/employee user is able move an in Progress appointment to
+	      completed
+
+	      How test will be performed: The tester will go through the user interface to press "completed" on
+	      an in progress appointment and confirm the appointment is moved to the completed appointments tab
 
 	\item \textbf{FRT-BE6-1}
 
@@ -557,7 +610,8 @@ This section will contain tests covering the ``Appointments'' requirements defin
 	      Output: The appointment booking is cancelled and removed from the customer and shop owner/employee
 	      schedules
 
-	      Test Case Derivation: The appointment should be removed from the calendar when it is cancelled
+	      Test Case Derivation: The appointment should be removed from the calendar when it is cancelled and
+	      receive a notification that the appointment was cancelled
 
 	      How test will be performed: The tester will go through the user interface to cancel an appointment
 
@@ -572,12 +626,26 @@ This section will contain tests covering the ``Appointments'' requirements defin
 	      Output: The appointment booking is cancelled and removed from the customer and shop owner/employee
 	      schedules
 
-	      Test Case Derivation: The appointment should be removed from the calendar when it is cancelled
+	      Test Case Derivation: The appointment should be removed from the calendar when it is cancelled and
+	      receive a notification that the appointment was cancelled
 
 	      How test will be performed: The tester will go through the user interface to cancel an appointment
 
 	\item \textbf{FRT-BE7-1}
-	      % TODO: 
+
+	      Control: Manual
+
+	      Initial State: Shop Owner/Shop Employee has a service appointment request
+
+	      Input: Selects reject on a requested appointment
+
+	      Output: The appointment booking is rejected and displayed under "rejected appointments" for the
+	      customer and removed from the shop owner/employee schedules. The user rejecting the appointment
+	      will receive a notification that the appointment was rejected.
+
+	      Test Case Derivation: The appointment should be removed from the calendar when it is rejected
+
+	      How test will be performed: The tester will go through the user interface to reject an appointment
 
 	\item \textbf{FRT-BE8-1}
 
@@ -1347,7 +1415,7 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 	\subsection{Traceability Between Test Cases and Requirements}
 
 	\begin{longtable}{|l|ccccccccccccccccc|}
-		\caption{Traceability Between Functional Test Cases and Functional Requirements, BE1 to BE16}                                                                                                                                                                                                                                           \\
+		\caption{Traceability Between Functional Test Cases and Functional Requirements, BE1 to BE17}                                                                                                                                                                                                                                           \\
 		\hline
 		\textbf{Test IDs}   & \multicolumn{17}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                                                                                         \\
 		\hline
@@ -1366,10 +1434,13 @@ This section will contain tests covering the ``Shop Profile'' requirements defin
 		\textbf{FRT-BE4-2}  & ~                                                         & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE4-3}  & ~                                                         & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE5-1}  & ~                                                         & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE5-2}  & ~                                                         & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE5-3}  & ~                                                         & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE5-4}  & ~                                                         & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE6-1}  & ~                                                         & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE6-2}  & ~                                                         & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		% TODO add BE 7
-		\textbf{FRT-BE8-1}  & ~                                                         & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE7-1}  & ~                                                         & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE8-1}  & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE9-1}  & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE9-2}  & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE9-3}  & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
