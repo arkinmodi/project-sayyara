@@ -27,7 +27,7 @@ const quoteByCustomerIdHandler = async (
 
   let quotes = await getQuotesByCustomerId(id);
   if (quotes.length > 0 && quotes[0]) {
-    if (await isAuthorized(session, quotes[0].customer_id, quotes[0].shop_id)) {
+    if (await isAuthorized(session, quotes[0].customerId, quotes[0].shopId)) {
       res.status(200).json(quotes);
     } else {
       res.status(403).json({ message: "Forbidden." });
@@ -47,7 +47,7 @@ const isAuthorized = async (
   const user = await getEmployeeById(session.user.id);
   if (!user) return false;
 
-  return user.shop_id === shopId;
+  return user.shopId === shopId;
 };
 
 export default quoteByCustomerIdHandler;

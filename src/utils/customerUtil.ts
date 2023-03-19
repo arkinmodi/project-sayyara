@@ -12,9 +12,9 @@ export function getCustomerById(id: string): Promise<ICustomer | null> {
       return res.json().then((data) => {
         const customer: ICustomer = {
           id: data.id,
-          first_name: data.first_name,
-          last_name: data.last_name,
-          phone_number: data.phone_number,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          phoneNumber: data.phoneNumber,
           email: data.email,
         };
         return customer;

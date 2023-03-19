@@ -19,7 +19,7 @@ const serviceHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const session = await getServerAuthSession({ req, res });
-  if (!session || !isAuthorized(session, result.data.shop_id)) {
+  if (!session || !isAuthorized(session, result.data.shopId)) {
     res.status(403).json({ message: "Forbidden." });
     return;
   }

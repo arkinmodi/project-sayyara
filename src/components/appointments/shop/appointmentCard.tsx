@@ -198,10 +198,10 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
           </h4>
           <div>
             <b>
-              {`Customer Name: ${appointment.customer.first_name} ${appointment.customer.last_name}`}
+              {`Customer Name: ${appointment.customer.firstName} ${appointment.customer.lastName}`}
             </b>
           </div>
-          <div>Customer Phone Number: {appointment.customer.phone_number}</div>
+          <div>Customer Phone Number: {appointment.customer.phoneNumber}</div>
           <div>Start time: {formatDate(new Date(appointment.startTime))}</div>
           <div>End time: {formatDate(new Date(appointment.endTime))}</div>
           <br />

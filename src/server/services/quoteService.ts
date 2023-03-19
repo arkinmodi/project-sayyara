@@ -3,9 +3,9 @@ import { prisma, QuoteStatus } from "@server/db/client";
 import { z } from "zod";
 
 export const createQuoteSchema = z.object({
-  customer_id: z.string(),
-  shop_id: z.string(),
-  service_id: z.string(),
+  customerId: z.string(),
+  shopId: z.string(),
+  serviceId: z.string(),
 });
 
 export type CreateQuoteType = z.infer<typeof createQuoteSchema>;
@@ -13,9 +13,9 @@ export type CreateQuoteType = z.infer<typeof createQuoteSchema>;
 export const createQuote = async (quote: CreateQuoteType) => {
   const data = await prisma.quote.create({
     data: {
-      customer: { connect: { id: quote.customer_id } },
-      shop: { connect: { id: quote.shop_id } },
-      service: { connect: { id: quote.service_id } },
+      customer: { connect: { id: quote.customerId } },
+      shop: { connect: { id: quote.shopId } },
+      service: { connect: { id: quote.serviceId } },
     },
     include: { service: true, customer: true, shop: true },
   });
@@ -36,11 +36,11 @@ export const getQuoteById = async (id: string) => {
   return data;
 };
 
-export const getQuotesByCustomerId = async (customer_id: string) => {
+export const getQuotesByCustomerId = async (customerId: string) => {
   const data = await prisma.quote.findMany({
-    where: { customer_id },
+    where: { customerId },
     include: { service: true, customer: true, shop: true },
-    orderBy: { update_time: "desc" },
+    orderBy: { updateTime: "desc" },
   });
 
   data.forEach((item) => {
@@ -49,11 +49,11 @@ export const getQuotesByCustomerId = async (customer_id: string) => {
   return data;
 };
 
-export const getQuotesByShopId = async (shop_id: string) => {
+export const getQuotesByShopId = async (shopId: string) => {
   const data = await prisma.quote.findMany({
-    where: { shop_id },
+    where: { shopId },
     include: { service: true, customer: true, shop: true },
-    orderBy: { update_time: "desc" },
+    orderBy: { updateTime: "desc" },
   });
 
   data.forEach((item) => {
@@ -64,7 +64,7 @@ export const getQuotesByShopId = async (shop_id: string) => {
 
 export const deleteQuoteAndChatById = async (id: string) => {
   const deleteChatMessages = prisma.chatMessage.deleteMany({
-    where: { quote_id: id },
+    where: { quoteId: id },
   });
   const deleteQuote = prisma.quote.delete({ where: { id } });
   await prisma.$transaction([deleteChatMessages, deleteQuote]);
@@ -72,7 +72,7 @@ export const deleteQuoteAndChatById = async (id: string) => {
 
 export const updateQuoteSchema = z.object({
   description: z.string().optional(),
-  estimated_price: z.number().optional(), //float
+  estimatedPrice: z.number().optional(), //float
   duration: z.number().optional(), // float
   status: z.nativeEnum(QuoteStatus).optional(), // enum of Quote status
 });
@@ -86,7 +86,7 @@ export const updateQuoteById = async (id: string, patch: UpdateQuoteType) => {
     where: { id },
     data: {
       description: patch.description,
-      estimated_price: patch.estimated_price,
+      estimatedPrice: patch.estimatedPrice,
       duration: patch.duration,
       status: patch.status,
     },

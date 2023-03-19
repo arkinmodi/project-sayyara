@@ -10,8 +10,8 @@ export const createShopSchema = z.object({
   address: z.string(),
   city: z.string(),
   province: z.string(),
-  postal_code: z.string().regex(POSTAL_CODE_REGEX),
-  phone_number: z.string().regex(PHONE_NUMBER_REGEX),
+  postalCode: z.string().regex(POSTAL_CODE_REGEX),
+  phoneNumber: z.string().regex(PHONE_NUMBER_REGEX),
   email: z.string().email(),
 });
 
@@ -24,8 +24,8 @@ export const createShop = async (shop: CreateShopType) => {
       address: shop.address,
       city: shop.city,
       province: shop.province,
-      postal_code: shop.postal_code,
-      phone_number: shop.phone_number,
+      postalCode: shop.postalCode,
+      phoneNumber: shop.phoneNumber,
       email: shop.email,
     },
   });
@@ -38,11 +38,11 @@ export const getShopById = async (id: string) => {
 export const updateShopSchema = z.object({
   name: z.string().optional(),
   address: z.string().optional(),
-  postal_code: z.string().regex(POSTAL_CODE_REGEX).optional(),
+  postalCode: z.string().regex(POSTAL_CODE_REGEX).optional(),
   city: z.string().optional(),
   province: z.string().optional(),
-  phone_number: z.string().regex(PHONE_NUMBER_REGEX).optional(),
-  hours_of_operation: z.optional(hoursOfOperationSchema),
+  phoneNumber: z.string().regex(PHONE_NUMBER_REGEX).optional(),
+  hoursOfOperation: z.optional(hoursOfOperationSchema),
   email: z.string().email().optional(),
 });
 export type UpdateShopType = z.infer<typeof updateShopSchema>;
@@ -55,7 +55,7 @@ export const updateShopById = async (id: string, patch: UpdateShopType) => {
     | {
         [key: string]: { [key: string]: string | boolean };
       }
-    | undefined = patch.hours_of_operation;
+    | undefined = patch.hoursOfOperation;
 
   if (hoursOfOperation) {
     Object.keys(hoursOfOperation).forEach((day) => {
@@ -86,11 +86,11 @@ export const updateShopById = async (id: string, patch: UpdateShopType) => {
     data: {
       name: patch.name,
       address: patch.address,
-      postal_code: patch.postal_code,
+      postalCode: patch.postalCode,
       city: patch.city,
       province: patch.province,
-      phone_number: patch.phone_number,
-      hours_of_operation: hoursOfOperation,
+      phoneNumber: patch.phoneNumber,
+      hoursOfOperation: hoursOfOperation,
       email: patch.email,
     },
   });

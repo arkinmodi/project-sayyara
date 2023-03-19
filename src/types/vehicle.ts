@@ -4,5 +4,5 @@ export interface IVehicle {
   model: string;
   year: number;
   vin: string;
-  license_plate: string;
+  licensePlate: string;
 }

@@ -18,68 +18,68 @@ import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 
 const testEmployee: Employee = {
   id: "",
-  first_name: "employee_first_name",
-  last_name: "employee_last_name",
-  phone_number: "1234567890",
+  firstName: "employeeFirstName",
+  lastName: "employeeLastName",
+  phoneNumber: "1234567890",
   email: "employee@test.com",
-  password: "test_PASSWORD11",
+  password: "testPASSWORD11",
   image: null,
-  create_time: new Date(),
-  update_time: new Date(),
+  createTime: new Date(),
+  updateTime: new Date(),
   type: "EMPLOYEE",
-  shop_id: "shop_id",
+  shopId: "shopId",
   status: "ACTIVE",
 };
 
 const testShopOwner: EmployeeWithShopType = {
   id: "",
-  first_name: "shop_owner_first_name",
-  last_name: "shop_owner_last_name",
-  phone_number: "1234567890",
-  email: "shop_owner@test.com",
-  password: "test_PASSWORD11",
+  firstName: "shopOwnerFirstName",
+  lastName: "shopOwnerLastName",
+  phoneNumber: "1234567890",
+  email: "shopOwner@test.com",
+  password: "testPASSWORD11",
   image: null,
-  create_time: new Date(),
-  update_time: new Date(),
+  createTime: new Date(),
+  updateTime: new Date(),
   type: "SHOP_OWNER",
   status: "ACTIVE",
-  shop_id: "shop_id",
+  shopId: "shopId",
   shop: {
-    id: "shop_id",
-    create_time: new Date(),
-    update_time: new Date(),
-    name: "test_shop_name",
-    address: "test_address",
-    phone_number: "1234567890",
+    id: "shopId",
+    createTime: new Date(),
+    updateTime: new Date(),
+    name: "testShopName",
+    address: "testAddress",
+    phoneNumber: "1234567890",
     email: "test@email.com",
-    postal_code: "A1A 1A1",
-    city: "test_city",
-    province: "test_province",
-    hours_of_operation: null,
+    postalCode: "A1A 1A1",
+    city: "testCity",
+    province: "testProvince",
+    hoursOfOperation: null,
   },
 };
 
 const testCustomer: CustomerWithVehiclesType = {
   id: "",
-  first_name: "customer_first_name",
-  last_name: "customer_last_name",
-  phone_number: "1234567890",
+  firstName: "customerFirstName",
+  lastName: "customerLastName",
+  phoneNumber: "1234567890",
   email: "customer@test.com",
-  password: "test_PASSWORD11",
+  password: "testPASSWORD11",
   image: null,
-  create_time: new Date(),
-  update_time: new Date(),
+  createTime: new Date(),
+  updateTime: new Date(),
   type: "CUSTOMER",
   vehicles: [
     {
-      id: "test_customer_vehicle_id",
-      create_time: new Date(),
-      update_time: new Date(),
-      customer_id: "test_customer_id",
-      license_plate: "test_license_plate",
-      make: "test_make",
-      model: "test_model",
-      vin: "test_vin",
+      id: "testCustomerVehicleId",
+      createTime: new Date(),
+      updateTime: new Date(),
+      customerId: "testCustomerId",
+      licensePlate: "testLicensePlate",
+      make: "testMake",
+      model: "testModel",
+      vin: "testVin",
       year: 2017,
     },
   ],
@@ -108,15 +108,15 @@ describe("User Module", () => {
     req.body = {
       email: testCustomer.email,
       password: testCustomer.password,
-      first_name: testCustomer.first_name,
-      last_name: testCustomer.last_name,
-      phone_number: testCustomer.phone_number,
+      firstName: testCustomer.firstName,
+      lastName: testCustomer.lastName,
+      phoneNumber: testCustomer.phoneNumber,
       vehicle: {
         year: testCustomer.vehicles[0]?.year,
         make: testCustomer.vehicles[0]?.make,
         model: testCustomer.vehicles[0]?.model,
         vin: testCustomer.vehicles[0]?.vin,
-        license_plate: testCustomer.vehicles[0]?.license_plate,
+        licensePlate: testCustomer.vehicles[0]?.licensePlate,
       },
     };
 
@@ -129,26 +129,26 @@ describe("User Module", () => {
     expect(res.statusCode).toBe(302);
     expect(newCustomer).toEqual({
       id: expect.any(String),
-      first_name: testCustomer.first_name,
-      last_name: testCustomer.last_name,
-      phone_number: testCustomer.phone_number,
+      firstName: testCustomer.firstName,
+      lastName: testCustomer.lastName,
+      phoneNumber: testCustomer.phoneNumber,
       email: testCustomer.email,
       password: expect.any(String),
       image: null,
-      create_time: expect.any(Date),
-      update_time: expect.any(Date),
+      createTime: expect.any(Date),
+      updateTime: expect.any(Date),
       type: "CUSTOMER",
       vehicles: [
         {
           id: expect.any(String),
-          create_time: expect.any(Date),
-          update_time: expect.any(Date),
+          createTime: expect.any(Date),
+          updateTime: expect.any(Date),
           year: testCustomer.vehicles[0]?.year,
           make: testCustomer.vehicles[0]?.make,
           model: testCustomer.vehicles[0]?.model,
           vin: testCustomer.vehicles[0]?.vin,
-          license_plate: testCustomer.vehicles[0]?.license_plate,
-          customer_id: expect.any(String),
+          licensePlate: testCustomer.vehicles[0]?.licensePlate,
+          customerId: expect.any(String),
         },
       ],
     });
@@ -159,9 +159,9 @@ describe("User Module", () => {
     req.body = {
       email: testCustomer.email,
       password: testCustomer.password,
-      first_name: testCustomer.first_name,
-      last_name: testCustomer.last_name,
-      phone_number: testCustomer.phone_number,
+      firstName: testCustomer.firstName,
+      lastName: testCustomer.lastName,
+      phoneNumber: testCustomer.phoneNumber,
     };
 
     await registerCustomerHandler(req, res);
@@ -174,9 +174,9 @@ describe("User Module", () => {
     req.body = {
       email: testShopOwner.email,
       password: testShopOwner.password,
-      first_name: testShopOwner.first_name,
-      last_name: testShopOwner.last_name,
-      phone_number: testShopOwner.phone_number,
+      firstName: testShopOwner.firstName,
+      lastName: testShopOwner.lastName,
+      phoneNumber: testShopOwner.phoneNumber,
       shop: testShopOwner.shop,
     };
 
@@ -188,16 +188,16 @@ describe("User Module", () => {
     expect(res.statusCode).toBe(302);
     expect(newShopOwner).toEqual({
       id: expect.any(String),
-      create_time: expect.any(Date),
-      update_time: expect.any(Date),
-      first_name: testShopOwner.first_name,
-      last_name: testShopOwner.last_name,
-      phone_number: testShopOwner.phone_number,
+      createTime: expect.any(Date),
+      updateTime: expect.any(Date),
+      firstName: testShopOwner.firstName,
+      lastName: testShopOwner.lastName,
+      phoneNumber: testShopOwner.phoneNumber,
       email: testShopOwner.email,
       password: expect.any(String),
       image: null,
       type: testShopOwner.type,
-      shop_id: expect.any(String),
+      shopId: expect.any(String),
       status: testEmployee.status,
     });
   });
@@ -207,9 +207,9 @@ describe("User Module", () => {
     req.body = {
       email: testShopOwner.email,
       password: testShopOwner.password,
-      first_name: testShopOwner.first_name,
-      last_name: testShopOwner.last_name,
-      phone_number: testShopOwner.phone_number,
+      firstName: testShopOwner.firstName,
+      lastName: testShopOwner.lastName,
+      phoneNumber: testShopOwner.phoneNumber,
     };
 
     await registerCustomerHandler(req, res);
@@ -220,16 +220,16 @@ describe("User Module", () => {
   it("FRT-M3-5: create employee request received with valid information", async () => {
     // Create Shop
     const shop = await createShop();
-    testEmployee.shop_id = shop.id;
+    testEmployee.shopId = shop.id;
 
     const { req, res } = createMockRequestResponse({ method: "POST" });
     req.body = {
       email: testEmployee.email,
       password: testEmployee.password,
-      first_name: testEmployee.first_name,
-      last_name: testEmployee.last_name,
-      phone_number: testEmployee.phone_number,
-      shop_id: testEmployee.shop_id,
+      firstName: testEmployee.firstName,
+      lastName: testEmployee.lastName,
+      phoneNumber: testEmployee.phoneNumber,
+      shopId: testEmployee.shopId,
     };
 
     await registerEmployeeHandler(req, res);
@@ -240,16 +240,16 @@ describe("User Module", () => {
     expect(res.statusCode).toBe(302);
     expect(newEmployee).toEqual({
       id: expect.any(String),
-      create_time: expect.any(Date),
-      update_time: expect.any(Date),
-      first_name: testEmployee.first_name,
-      last_name: testEmployee.last_name,
-      phone_number: testEmployee.phone_number,
+      createTime: expect.any(Date),
+      updateTime: expect.any(Date),
+      firstName: testEmployee.firstName,
+      lastName: testEmployee.lastName,
+      phoneNumber: testEmployee.phoneNumber,
       email: testEmployee.email,
       password: expect.any(String),
       image: null,
       type: testEmployee.type,
-      shop_id: testEmployee.shop_id,
+      shopId: testEmployee.shopId,
       status: testEmployee.status,
     });
   });
@@ -257,15 +257,15 @@ describe("User Module", () => {
   it("FRT-M3-6: create employee request received with invalid information", async () => {
     // Create Shop
     const shop = await createShop();
-    testEmployee.shop_id = shop.id;
+    testEmployee.shopId = shop.id;
 
     const { req, res } = createMockRequestResponse({ method: "POST" });
     req.body = {
       email: testEmployee.email,
       password: testEmployee.password,
-      first_name: testEmployee.first_name,
-      last_name: testEmployee.last_name,
-      shop_id: testEmployee.shop_id,
+      firstName: testEmployee.firstName,
+      lastName: testEmployee.lastName,
+      shopId: testEmployee.shopId,
     };
 
     await registerEmployeeHandler(req, res);
@@ -277,11 +277,11 @@ describe("User Module", () => {
 const createShop = async () => {
   return await prisma.shop.create({
     data: {
-      phone_number: testShopOwner.shop.phone_number,
+      phoneNumber: testShopOwner.shop.phoneNumber,
       email: testShopOwner.shop.email,
       name: testShopOwner.shop.name,
       address: testShopOwner.shop.address,
-      postal_code: testShopOwner.shop.postal_code,
+      postalCode: testShopOwner.shop.postalCode,
       city: testShopOwner.shop.city,
       province: testShopOwner.shop.province,
     },

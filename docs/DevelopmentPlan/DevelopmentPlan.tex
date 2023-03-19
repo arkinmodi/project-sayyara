@@ -32,11 +32,11 @@
 		September 25, 2022 & Timothy Choy          & Create proof of concept demo plan            \\
 		September 26, 2022 & Timothy Choy          & Add introductory blurb                       \\
 		March 8, 2023      & Joy Xiao              & Change component library                     \\
+		March 18, 2023     & Arkin Modi            & Update weekly meeting times                  \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
 
-% \wss{Put your introductory blurb here.}
 This document outlines the team's development plan moving forward. This document will include the
 plans for meeting, and communications between team members and the capstone project supervisor.
 Furthermore, this document also includes each members' roles and responsibilities. On the technical
@@ -45,13 +45,13 @@ Coders will be demonstrating in the proof of concept demo.
 
 \section{Team Meeting Plan}
 
-The team will have weekly team meetings, currently scheduled to recur every Friday at 10:00am. The
-weekly meeting time will remain flexible and will be subject to change in the winter semester.
-These meetings will be held on Discord. The purpose of these meetings are to realign the team to
-the current deliverables and to assign tasks to each team member. An agenda of every team meeting
-will be written as a GitHub issue, and tagged with the meeting number and meeting date. Each
-meeting will be archived and can be easily accessed by searching for issues with the ``meeting
-notes'' tag. Additional meetings with the supervisor will be held on an as-needed basis.
+The team will have weekly team meetings every Friday at 10:00am for the fall semester, and every
+Wednesday at 2:30pm for the winter semester. These meetings will be held on Discord. The purpose of
+these meetings are to realign the team to the current deliverables and to assign tasks to each team
+member. An agenda of every team meeting will be written as a GitHub issue, and tagged with the
+meeting number and meeting date. Each meeting will be archived and can be easily accessed by
+searching for issues with the ``meeting notes'' tag. Additional meetings with the supervisor will
+be held on an as-needed basis.
 
 \section{Team Communication Plan}
 
@@ -115,12 +115,6 @@ member to member.
 
 \section{Workflow Plan}
 
-% \begin{itemize}
-%   \item How will you be using git, including branches, pull request, etc.?
-%   \item How will you be managing issues, including template issues, issue
-%   classification, etc.?
-% \end{itemize}
-
 \subsection{Development Workflow}
 
 The team will be using Git as their version control system and the repository will be hosted
@@ -162,8 +156,8 @@ also be assigned to team member who will then assume responsibility for said iss
 be assigned to a GitHub Milestone. A milestone will represent a deliverable's deadline and will be
 an additional way to track progress towards a deadline.
 
-Labels, as described in Table \ref{issueLabels}, will used to organize issues. The GitHub Project
-board will be used to visualize the progress of each issue and track overall progress.
+Labels, as described in Table \ref{issueLabels}, will be used to organize issues. The GitHub
+Project board will be used to visualize the progress of each issue and track overall progress.
 
 \begin{table}[H]
 	\centering
@@ -171,20 +165,20 @@ board will be used to visualize the progress of each issue and track overall pro
 	\vspace{5pt}
 	\begin{tabular}{|p{0.2\textwidth}|p{0.7\textwidth}|}
 		\hline
-		\textbf{Name}   & \textbf{Description}                                                                    \\
+		\textbf{Name}   & \textbf{Description}                                                                       \\
 		\hline
-		documentation   & These issues are related to documentation or reports for course deliverables.           \\
+		documentation   & These issues are related to documentation or reports for course deliverables.              \\
 		\hline
-		Epic            & These issues are tracking a collection of other issues. For example, an issues a report
-		has sub-issues for each section.                                                                          \\
+		Epic            & These issues are tracking a collection of other issues. For example, an issue for a report
+		has sub-issues for each section.                                                                             \\
 		\hline
-		meeting needed  & A team meeting is needed to discuss details related to the issue.                       \\
+		meeting needed  & A team meeting is needed to discuss details related to the issue.                          \\
 		\hline
-		meeting notes   & This issue contains notes from a completed meeting.                                     \\
+		meeting notes   & This issue contains notes from a completed meeting.                                        \\
 		\hline
-		needs breakdown & This issue needs further breakdown into smaller issues/steps.                           \\
+		needs breakdown & This issue needs further breakdown into smaller issues/steps.                              \\
 		\hline
-		tech foundation & This issue is not contributing towards any course deliverables.                         \\
+		tech foundation & This issue is not directly contributing towards any course deliverables.                   \\
 		\hline
 	\end{tabular}
 
@@ -193,9 +187,6 @@ board will be used to visualize the progress of each issue and track overall pro
 
 \section{Proof of Concept Demonstration Plan}
 
-% What is the main risk, or risks, for the success of your project?  What will you
-% demonstrate during your proof of concept demonstration to convince yourself that
-% you will be able to overcome this risk?
 There are several risks that will determine the success or failure of the project. The main risks
 are:
 
@@ -220,19 +211,7 @@ will be showing several aspects in the proof of concept demo:
 
 \section{Technology}
 
-% \begin{itemize}
-%   \item Specific programming language
-%   \item Specific linter tool (if appropriate)
-%   \item Specific unit testing framework
-%   \item Investigation of code coverage measuring tools
-%   \item Specific plans for Continuous Integration (CI), or an explanation that CI is not being
-%   done
-%   \item Specific performance measuring tools (like Valgrind), if appropriate
-%   \item Libraries you will likely be using?
-%   \item Tools you will likely be using?
-% \end{itemize}
-
-The project will written in TypeScript using the Next.js framework. Next.js is a React framework
+The project will be written in TypeScript using the Next.js framework. Next.js is a React framework
 that provides both a frontend and a backend interface. The team is comfortable with React, and with
 both the core Next.js team and the core React team recommending Next.js for ``production-ready
 projects'', the team sees this as a good choice. Tiny Coders will be using NPM as the package
@@ -242,7 +221,7 @@ package to quickly enable the creating of Progressive Web App (PWA)'s in Next.js
 decided to create a PWA since this was one of the key application attributes that the supervisor
 required.
 
-For the user interface, the team has chosen to use PrimeReact as the component library along side
+For the user interface, the team has chosen to use PrimeReact as the component library alongside
 CSS. A team member has previous experience with this library and recommended using it.
 
 The team will be using Prisma for ORM (Object-relational mapping) and MySQL as the database
@@ -264,9 +243,9 @@ was chosen due to course requirements and past experience.
 
 Documentation will be written in a mix of \LaTeX{} and Markdown.
 
-With high performance not being a primary goal for this project, the team will not use using any
+With high performance not being a primary goal for this project, the team will not use be using any
 performance benchmarking tools. The team will be maintaining a Google Lighthouse score of greater
-than 90\%.
+than or equal to 90\%.
 
 All CI/CD pipelines will be created using GitHub Actions. This was chosen due to GitHub Actions
 having great integration with GitHub, a generous free and pro tier, past experience within the
@@ -292,13 +271,11 @@ capabilities to automatically apply fixes.
 
 \section{Project Scheduling}
 
-% \wss{How will the project be scheduled?}
-
 The project schedule will primarily follow the course calendar with development of the application
 starting in October 2022. Progress of the project will be tracked using a GitHub Project board. The
 deliverables due date will act as milestones and will be tracked with GitHub Milestones.
 
-Decomposition of large tasks into smaller tasks for documentation deliverables will done by
+Decomposition of large tasks into smaller tasks for documentation deliverables will be done by
 breaking down the reports by section. Sections will be determined by consulting provided templates,
 rubrics, and examples. Breaking large development tasks into smaller tasks will be done by first
 researching and scoping out how the task should be architected. Following this initial

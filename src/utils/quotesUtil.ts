@@ -15,11 +15,11 @@ export function getMessageListByQuoteId(id: string): Promise<IMessage[] | []> {
         data.forEach((chat) => {
           messageList.push({
             id: chat.id,
-            quoteId: chat.quote_id,
-            customerId: chat.customer_id,
-            shopId: chat.shop_id,
+            quoteId: chat.quoteId,
+            customerId: chat.customerId,
+            shopId: chat.shopId,
             message: chat.message,
-            createdAt: chat.create_time,
+            createdAt: chat.createTime,
           });
         });
         return messageList;

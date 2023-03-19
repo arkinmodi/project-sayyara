@@ -37,7 +37,7 @@ const WorkOrderMetadataDialog: React.FC<{
     ) {
       await props.saveWorkOrder({
         title: workOrderTitle,
-        employee_email: workOrderAssignedEmployeeEmail,
+        employeeEmail: workOrderAssignedEmployeeEmail,
       });
     }
 

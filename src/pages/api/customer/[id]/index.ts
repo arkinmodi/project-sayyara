@@ -30,11 +30,11 @@ const customerByIdHandler = async (
     if (isAuthorized(session, customer)) {
       res.status(200).json({
         id: customer.id,
-        create_time: customer.create_time,
-        update_time: customer.update_time,
-        first_name: customer.first_name,
-        last_name: customer.last_name,
-        phone_number: customer.phone_number,
+        createTime: customer.createTime,
+        updateTime: customer.updateTime,
+        firstName: customer.firstName,
+        lastName: customer.lastName,
+        phoneNumber: customer.phoneNumber,
         email: customer.email,
       });
     } else {

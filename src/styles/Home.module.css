@@ -176,3 +176,36 @@
     border-right: 2px solid #cccccc;
   }
 }
+
+/* Shop Lookup Skeleton CSS */
+.filterTitleSkeleton {
+  margin-bottom: 1rem;
+}
+
+.filterBodySkeleton {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.filterBodyLastSkeleton {
+  margin-bottom: 2rem !important;
+}
+
+.filterIconSkeleton {
+  margin-right: 1rem;
+}
+
+.bodySkeleton {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.bodyIconSkeleton {
+  margin-right: 2rem;
+}
+
+.columnSkeleton {
+  display: block !important;
+}

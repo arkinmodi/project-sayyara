@@ -22,81 +22,81 @@ import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 import type { Session } from "next-auth";
 
 const testEmployeeUser: Employee = {
-  id: "test_id",
-  first_name: "first_name",
-  last_name: "last_name",
-  phone_number: "1234567890",
+  id: "testId",
+  firstName: "firstName",
+  lastName: "lastName",
+  phoneNumber: "1234567890",
   email: "employee@test.com",
-  password: "test_password",
+  password: "testPassword",
   image: null,
-  create_time: new Date(),
-  update_time: new Date(),
+  createTime: new Date(),
+  updateTime: new Date(),
   type: "SHOP_OWNER",
-  shop_id: "test_shop_id",
+  shopId: "testShopId",
   status: "ACTIVE",
 };
 
 const testCustomerUser: Customer = {
-  id: "test_customer_id",
-  create_time: new Date(),
-  update_time: new Date(),
-  first_name: "first_name",
-  last_name: "last_name",
-  phone_number: "1234567890",
+  id: "testCustomerId",
+  createTime: new Date(),
+  updateTime: new Date(),
+  firstName: "firstName",
+  lastName: "lastName",
+  phoneNumber: "1234567890",
   email: "customer@test.com",
-  password: "test_password",
+  password: "testPassword",
   image: null,
   type: "CUSTOMER",
 };
 
 const testShop: Shop = {
-  id: "test_shop_id",
-  create_time: new Date(),
-  update_time: new Date(),
-  name: "test_shop_name",
-  address: "test_address",
-  phone_number: "test_phone_number",
+  id: "testShopId",
+  createTime: new Date(),
+  updateTime: new Date(),
+  name: "testShopName",
+  address: "testAddress",
+  phoneNumber: "testPhoneNumber",
   email: "test@email.com",
-  postal_code: "test_postal_code",
-  city: "test_city",
-  province: "test_province",
-  hours_of_operation: null,
+  postalCode: "testPostalCode",
+  city: "testCity",
+  province: "testProvince",
+  hoursOfOperation: null,
 };
 
 const testQuote: Quote = {
   id: "",
-  create_time: new Date(),
-  update_time: new Date(),
-  customer_id: "test_customer_id",
-  shop_id: "test_shop_id",
-  service_id: "test_service_id",
+  createTime: new Date(),
+  updateTime: new Date(),
+  customerId: "testCustomerId",
+  shopId: "testShopId",
+  serviceId: "testServiceId",
   status: QuoteStatus.IN_PROGRESS,
-  estimated_price: null,
+  estimatedPrice: null,
   duration: null,
   description: null,
 };
 
 const testChatMessage: ChatMessage = {
   id: "",
-  create_time: new Date(),
-  update_time: new Date(),
-  message: "test_message",
-  quote_id: "",
-  customer_id: null,
-  shop_id: null,
+  createTime: new Date(),
+  updateTime: new Date(),
+  message: "testMessage",
+  quoteId: "",
+  customerId: null,
+  shopId: null,
 };
 
 const testService: ServiceWithPartsType = {
-  id: "test_service_id",
-  create_time: new Date(),
-  update_time: new Date(),
-  name: "test_name",
-  description: "test_description",
-  estimated_time: 2,
-  total_price: 100,
+  id: "testServiceId",
+  createTime: new Date(),
+  updateTime: new Date(),
+  name: "testName",
+  description: "testDescription",
+  estimatedTime: 2,
+  totalPrice: 100,
   parts: [],
   type: "CANNED",
-  shop_id: testShop.id,
+  shopId: testShop.id,
 };
 
 jest.mock("@server/common/getServerAuthSession", () => ({
@@ -104,8 +104,8 @@ jest.mock("@server/common/getServerAuthSession", () => ({
     expires: "1",
     user: {
       ...testEmployeeUser,
-      firstName: testEmployeeUser.first_name,
-      lastName: testEmployeeUser.last_name,
+      firstName: testEmployeeUser.firstName,
+      lastName: testEmployeeUser.lastName,
     },
   })),
 }));
@@ -141,7 +141,7 @@ describe("Quotes Module", () => {
     // Create Employee Chat Message
     const employeePost = createMockRequestResponse({ method: "POST" });
     employeePost.req.body = {
-      shop_id: testEmployeeUser.shop_id,
+      shopId: testEmployeeUser.shopId,
       message: testChatMessage.message,
     };
     employeePost.req.query = {
@@ -153,7 +153,7 @@ describe("Quotes Module", () => {
     // Create Customer Chat Message
     const customerPost = createMockRequestResponse({ method: "POST" });
     customerPost.req.body = {
-      customer_id: testCustomerUser.id,
+      customerId: testCustomerUser.id,
       message: testChatMessage.message,
     };
     customerPost.req.query = {
@@ -194,7 +194,7 @@ describe("Quotes Module", () => {
     // Create Chat Message
     const { req, res } = createMockRequestResponse({ method: "POST" });
     req.body = {
-      shop_id: testEmployeeUser.shop_id,
+      shopId: testEmployeeUser.shopId,
       message: testChatMessage.message,
     };
     req.query = {
@@ -206,10 +206,10 @@ describe("Quotes Module", () => {
     expect(res.statusCode).toBe(201);
     expect(res._getJSONData()).toMatchObject({
       id: expect.any(String),
-      create_time: expect.any(String),
-      update_time: expect.any(String),
-      shop_id: testEmployeeUser.shop_id,
-      quote_id: quoteId,
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
+      shopId: testEmployeeUser.shopId,
+      quoteId: quoteId,
       message: testChatMessage.message,
     });
   });
@@ -226,7 +226,7 @@ describe("Quotes Module", () => {
     // Create Chat Message
     const { req, res } = createMockRequestResponse({ method: "POST" });
     req.body = {
-      shop_id: testEmployeeUser.shop_id,
+      shopId: testEmployeeUser.shopId,
     };
     req.query = {
       id: quoteId,
@@ -248,7 +248,7 @@ describe("Quotes Module", () => {
     // Create Employee Chat Message
     const employeePost = createMockRequestResponse({ method: "POST" });
     employeePost.req.body = {
-      shop_id: testEmployeeUser.shop_id,
+      shopId: testEmployeeUser.shopId,
       message: testChatMessage.message,
     };
     employeePost.req.query = {
@@ -260,7 +260,7 @@ describe("Quotes Module", () => {
     // Create Customer Chat Message
     const customerPost = createMockRequestResponse({ method: "POST" });
     customerPost.req.body = {
-      customer_id: testCustomerUser.id,
+      customerId: testCustomerUser.id,
       message: testChatMessage.message,
     };
     customerPost.req.query = {
@@ -279,11 +279,11 @@ describe("Quotes Module", () => {
     expect(res.statusCode).toBe(200);
     expect(res._getJSONData()["length"]).toBe(2);
 
-    expect(res._getJSONData()[0]["customer_id"]).toBe(testCustomerUser.id);
-    expect(res._getJSONData()[0]["shop_id"]).toBeNull();
+    expect(res._getJSONData()[0]["customerId"]).toBe(testCustomerUser.id);
+    expect(res._getJSONData()[0]["shopId"]).toBeNull();
 
-    expect(res._getJSONData()[1]["shop_id"]).toBe(testEmployeeUser.shop_id);
-    expect(res._getJSONData()[1]["customer_id"]).toBeNull();
+    expect(res._getJSONData()[1]["shopId"]).toBe(testEmployeeUser.shopId);
+    expect(res._getJSONData()[1]["customerId"]).toBeNull();
   });
 
   it("FRT-M4-17: get chat messages request with an invalid quote id", async () => {
@@ -297,7 +297,7 @@ describe("Quotes Module", () => {
     // Create Employee Chat Message
     const employeePost = createMockRequestResponse({ method: "POST" });
     employeePost.req.body = {
-      shop_id: testEmployeeUser.shop_id,
+      shopId: testEmployeeUser.shopId,
       message: testChatMessage.message,
     };
     employeePost.req.query = {
@@ -309,7 +309,7 @@ describe("Quotes Module", () => {
     // Create Customer Chat Message
     const customerPost = createMockRequestResponse({ method: "POST" });
     customerPost.req.body = {
-      customer_id: testCustomerUser.id,
+      customerId: testCustomerUser.id,
       message: testChatMessage.message,
     };
     customerPost.req.query = {
@@ -321,7 +321,7 @@ describe("Quotes Module", () => {
     // Get Chat Messages
     const { req, res } = createMockRequestResponse({ method: "GET" });
     req.query = {
-      id: "quote_does_not_exist",
+      id: "quoteDoesNotExist",
     };
     await chatHandler(req, res);
 
@@ -342,11 +342,11 @@ const createShop = async () => {
   return await prisma.shop.create({
     data: {
       id: testShop.id,
-      phone_number: testShop.phone_number,
+      phoneNumber: testShop.phoneNumber,
       email: testShop.email,
       name: testShop.name,
       address: testShop.address,
-      postal_code: testShop.postal_code,
+      postalCode: testShop.postalCode,
       city: testShop.city,
       province: testShop.province,
     },
@@ -366,11 +366,11 @@ const createService = async () => {
       id: testService.id,
       name: testService.name,
       description: testService.description,
-      estimated_time: testService.estimated_time,
-      total_price: testService.total_price,
+      estimatedTime: testService.estimatedTime,
+      totalPrice: testService.totalPrice,
       parts: testService.parts,
       type: testService.type,
-      shop_id: testService.id,
+      shopId: testService.id,
     },
   });
 };
