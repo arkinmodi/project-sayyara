@@ -203,6 +203,7 @@
 	March 8, 2023      & Timothy Choy          & Update Usability Nonfunctional Requirement                                         \\
 	March 8, 2023      & Joy Xiao              & Remove requirements for shop/employee to edit appointment time                     \\
 	March 14, 2023     & Timothy Choy          & Update Work Partitioning for Quotes                                                \\
+	March 15, 2023     & Joy Xiao              & Update services and appointments requirements                                      \\
 	\bottomrule
 \end{longtable}
 
@@ -624,16 +625,30 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 	\item If unsuccessful, system rejects authentication and shows an error message
 \end{enumerate}
 
-\textbf{Title:} Creating a service\\
-\textbf{Trigger:} Auto repair shop owner adds a service to the shop\\
+\textbf{Title:} Creating a basic service\\
+\textbf{Trigger:} Auto repair shop owner adds a basic service to the shop\\
 \textbf{Pre-condition:} Auto repair shop account exists\\
 \textbf{Outcome:}
 \begin{enumerate}
-	\item User enters the service name, either from a list or manually
+	\item User enters the service name
 	\item User enters a description
 	\item User enters the estimated time to complete the service
-	\item User enters the parts required or used in the service
-	\item System creates a service for the shop using the information provided above
+	\item User enters the part name, quantity, cost per unit, condition, and type of the parts required or
+	      used in the service
+	\item User enters the estimated cost of the service
+	\item System creates a basic service for the shop using the information provided above
+\end{enumerate}
+
+\textbf{Title:} Creating a custom service\\
+\textbf{Trigger:} Auto repair shop owner adds a custom service to the shop\\
+\textbf{Pre-condition:} Auto repair shop account exists\\
+\textbf{Outcome:}
+\begin{enumerate}
+	\item User enters the service name
+	\item User enters a description
+	\item User enters the part condition of the parts used in the service
+	\item User enters the part type of the parts used in the service
+	\item System creates a custom service for the shop using the information provided above
 \end{enumerate}
 
 \textbf{Title:} Viewing services\\
@@ -641,11 +656,11 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 \textbf{Pre-condition:} Auto repair shop exists\\
 \textbf{Outcome:}
 \begin{enumerate}
-	\item System shows a list of services that have been registered with the selected shop
-	\item If no services exist, a list of default services will be displayed
-	\item User clicks on specific service
-	\item System shows additional details of the service, including the description and estimated time to
-	      completion
+	\item System shows a list of basic services that have been registered with the selected shop
+	\item System shows a list of custom services that have been registered with the selected shop
+	\item If no services exist, an empty services table will be displayed
+	\item System shows additional details of the service, including the description, estimated time to
+	      completion, parts details, and estimated price if applicable
 \end{enumerate}
 
 \textbf{Title:} Editing a service\\
@@ -751,29 +766,35 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 \textbf{Pre-condition:} Account and appointments exist\\
 \textbf{Outcome:}
 \begin{enumerate}
-	\item System displays a list of appointments
+	\item System displays list of requested appointments
+	\item System displays list of scheduled appointments
+	\item System displays list of in progress appointments
+	\item System displays list of completed appointments
+	\item System displays list of cancelled appointments
+
 \end{enumerate}
 
 \textbf{Title:} Editing/updating appointments\\
-\textbf{Trigger:} User navigates to existing appointment and selects edit\\
+\textbf{Trigger:} User navigates to an existing requested or scheduled appointment and selects edit\\
 \textbf{Pre-condition:} Auto repair shop exists, service exists, appointment exists, selected time slot is available\\
 \textbf{Outcome:}
 \begin{enumerate}
-	\item User changes fields related to the existing appointment, such as time slot or service type
-	\item System updates the appointment with new information
-	\item System notifies the auto shop owner and employee assigned to the appointment about the changes
+	\item User changes the appointment time slot for the service
+	\item System updates the appointment with new time
+	\item System displays the updated appointment in the requested appointments tab for all users
 \end{enumerate}
 
-\textbf{Title:} Deleting an appointment\\
-\textbf{Trigger:} User navigates to an existing appointment and selects delete\\
+\textbf{Title:} Cancelling an appointment\\
+\textbf{Trigger:} User navigates to an existing requested or scheduled appointment and selects cancel\\
 \textbf{Pre-condition:} Auto repair shop exists, appointment exists
 \textbf{Outcome:}
 \begin{enumerate}
-	\item System prompts user if they want to delete the appointment
-	\item User selects delete
-	\item System deletes appointment, and updates the availabilities to match
+	\item System prompts user if they want to cancel the appointment
+	\item System prompts user to enter a cancellation reason
+	\item User confirms cancellation
+	\item System deletes appointment, and updates the shop appointment availabilities to match
 	\item System deletes related work order
-	\item System notifies auto shop owner and employee about the deletion of an appointment
+	\item System displays the cancelled appointment in the cancelled appointments tab for all users
 \end{enumerate}
 
 \textbf{Title:} Viewing a work order\\
@@ -885,7 +906,8 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
 			            \item The system shall populate the service request information from the quote
-			            \item The system shall populate the service request information from the if a canned job is selected
+			            \item The system shall populate the service request information from the service if a canned job is
+			                  selected
 			            \item The system shall allow the user to filter available appointments times
 			            \item The system shall display dates and times where appointments are available
 			            \item The system shall allow the user to select an appointment time slot to book
@@ -1199,7 +1221,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 
 \subsubsection{Services}
 \begin{enumerate}[resume*=business_events]
-	\item The user wants to add available auto shop services to the shop profile
+	\item The user wants to add a basic auto shop service to the shop profile
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
@@ -1213,6 +1235,25 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall allow the user to enter the parts used for the service including quantity,
 			                  condition (new or used), build (OEM or aftermarket), and cost per part (before tax cost)
 			            \item The system shall allow the user to enter the total price for the service (before tax price)
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to add a custom auto shop service to the shop profile
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to enter the name of the service
+			            \item The system shall allow the user to enter a description for the service
+			            \item The system shall allow the user to enter the part condition (new or used), type (OEM or
+			                  aftermarket) for the parts used for the service
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
