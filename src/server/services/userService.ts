@@ -108,8 +108,24 @@ export const createShopOwner = async (shopOwner: CreateShopOwnerType) => {
   });
 };
 
+/**
+ * Encryption function for encrypting sensitive data
+ *
+ *  @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ *  @date 01/06/2023
+ *  @param {string} plaintext - Data to be encrypted
+ *  @returns Encrypted data
+ */
 const hash = (plaintext: string) => bcrypt.hashSync(plaintext, 10);
 
+/**
+ *  Get user by email address
+ *
+ *  @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ *  @date 01/06/2023
+ *  @param {string} email - Email address of user
+ *  @returns User data (Customer, Employee, or null)
+ */
 export const getUserByEmail = async (
   email: string
 ): Promise<Customer | Employee | null> => {
@@ -118,14 +134,40 @@ export const getUserByEmail = async (
   return user ?? (await prisma.employee.findUnique({ where: { email } }));
 };
 
+/**
+ *  Get employee by ID
+ *
+ *  @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ *  @date 01/28/2023
+ *  @param {string} id - ID of employee
+ *  @returns Employee data or null
+ */
 export const getEmployeeById = async (id: string) => {
   return await prisma.employee.findUnique({ where: { id } });
 };
 
+/**
+ *  Get customer by ID
+ *
+ *  @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ *  @date 01/28/2023
+ *  @param {string} id - ID of customer
+ *  @returns Customer data or null
+ */
 export const getCustomerById = async (id: string) => {
   return await prisma.customer.findUnique({ where: { id } });
 };
 
+/**
+ *  Check if login credential are valid
+ *
+ *  @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ *  @date 02/02/2023
+ *  @param {string} email - Email of user
+ *  @param {string} password - Password of user
+ *  @throws User not found or not authorized
+ *  @returns User data
+ */
 export const authorize = async (
   email: string,
   password: string
