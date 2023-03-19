@@ -106,6 +106,11 @@ export const getAvailabilitiesByShopId = async (
       ],
     },
     orderBy: { startTime: "asc" },
+    select: {
+      startTime: true,
+      endTime: true,
+      status: true,
+    },
   });
 };
 

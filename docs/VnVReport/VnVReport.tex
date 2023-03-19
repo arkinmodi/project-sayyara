@@ -68,6 +68,7 @@
 	March 8, 2023     & Leon So               & Add Reflection                                                                                               \\
 	March 8, 2023     & Timothy Choy          & Add Reflection                                                                                               \\
 	March 8, 2023     & Joy Xiao              & Fix some grammar                                                                                             \\
+	March 15, 2023    & Joy Xiao              & Update service test due to update in SRS                                                                     \\
 	\bottomrule
 \end{longtable}
 
@@ -835,6 +836,23 @@ intended use, and goals of stakeholders.
 
 	      Control: Manual
 
+	      Initial State: Shop Owner has a shop profile
+
+	      Input: Shop Owner adds a custom service
+
+	      Output: Shop service is sent to the database and displayed on the shop profile
+
+	      Test Case Derivation: The user can add available auto shop services to their shop profile
+
+	      How test will be performed: The tester will add a custom service to the shop profile and confirms
+	      it shows up on the shop profile
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE23-1}
+
+	      Control: Manual
+
 	      Initial State: Shop Owner/Shop Employee searches for auto repair or maintenance services
 
 	      Input: Enters specific auto service in the search bar
@@ -848,7 +866,7 @@ intended use, and goals of stakeholders.
 
 	      Results: Passed
 
-	\item \textbf{FRT-BE23-1}
+	\item \textbf{FRT-BE24-1}
 
 	      Control: Manual
 
@@ -865,7 +883,7 @@ intended use, and goals of stakeholders.
 
 	      Results: Passed
 
-	\item \textbf{FRT-BE24-1}
+	\item \textbf{FRT-BE25-1}
 
 	      Control: Manual
 
@@ -888,7 +906,7 @@ intended use, and goals of stakeholders.
 \subsection{Shop Lookup}
 
 \begin{enumerate}
-	\item \textbf{FRT-BE25-1}
+	\item \textbf{FRT-BE26-1}
 
 	      Control: Manual
 
@@ -911,7 +929,7 @@ intended use, and goals of stakeholders.
 \subsection{Shop Profile}
 
 \begin{enumerate}
-	\item \textbf{FRT-BE26-1}
+	\item \textbf{FRT-BE27-1}
 
 	      Control: Manual
 
@@ -927,7 +945,7 @@ intended use, and goals of stakeholders.
 
 	      Results: Passed
 
-	\item \textbf{FRT-BE27-1}
+	\item \textbf{FRT-BE28-1}
 
 	      Control: Manual
 
@@ -944,7 +962,7 @@ intended use, and goals of stakeholders.
 
 	      Results: Passed
 
-	\item \textbf{FRT-BE28-1}
+	\item \textbf{FRT-BE29-1}
 
 	      Control: Manual
 
@@ -2708,52 +2726,54 @@ reported on every pull request to the main branch and to every push to the main 
 
 	\newpage
 
-	\begin{longtable}{|l|cccccccccccc|}
-		\caption{Traceability Between Functional Test Cases and Functional Requirements, BE17 to BE28}                                                                                                                                                                  \\
+	\begin{longtable}{|l|ccccccccccccc|}
+		\caption{Traceability Between Functional Test Cases and Functional Requirements, BE17 to BE28}                                                                                                                                                                                  \\
 		\hline
-		\textbf{Test IDs}   & \multicolumn{12}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                 \\
+		\textbf{Test IDs}   & \multicolumn{13}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                                 \\
 		\hline
-		~                   & \textbf{BE17}                                             & \textbf{BE18} & \textbf{BE19} & \textbf{BE20} & \textbf{BE21} & \textbf{BE21} & \textbf{BE23} & \textbf{BE24} & \textbf{BE25} & \textbf{BE26} & \textbf{BE27} & \textbf{BE28} \\
+		~                   & \textbf{BE17}                                             & \textbf{BE18} & \textbf{BE19} & \textbf{BE20} & \textbf{BE21} & \textbf{BE22} & \textbf{BE23} & \textbf{BE24} & \textbf{BE25} & \textbf{BE26} & \textbf{BE27} & \textbf{BE28} & \textbf{BE29} \\
 		\hline
-		\textbf{FRT-BE17-1} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE17-2} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE18-1} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE19-1} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE20-1} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE21-1} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE22-1} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE23-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE24-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
-		\textbf{FRT-BE25-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             \\
-		\textbf{FRT-BE26-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             \\
-		\textbf{FRT-BE27-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             \\
-		\textbf{FRT-BE28-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             \\
+		\textbf{FRT-BE17-1} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE17-2} & X                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE18-1} & ~                                                         & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE19-1} & ~                                                         & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE20-1} & ~                                                         & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE21-1} & ~                                                         & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE22-1} & ~                                                         & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE23-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE24-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE25-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE26-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             & ~             \\
+		\textbf{FRT-BE27-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             & ~             \\
+		\textbf{FRT-BE28-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             & ~             \\
+		\textbf{FRT-BE29-1} & ~                                                         & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & ~             & X             \\
 		\hline
 	\end{longtable}
 
 	\newpage
 
-	\begin{longtable}{|l|cccccccccccccc|}
-		\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements}                                                                                                                                                                                             \\
+	\begin{longtable}{|l|ccccccccccccccc|}
+		\caption{Traceability Between Nonfunctional Test Cases and Nonfunctional Requirements}                                                                                                                                                                                                            \\
 		\hline
-		\textbf{Test IDs}   & \multicolumn{14}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                                    \\
+		\textbf{Test IDs}   & \multicolumn{15}{c|}{\textbf{Functional Requirement IDs}}                                                                                                                                                                                                                   \\
 		\hline
-		~                   & \textbf{LF1}                                              & \textbf{LF2} & \textbf{LF3} & \textbf{UH1} & \textbf{UH2} & \textbf{UH3} & \textbf{PR1} & \textbf{OE1} & \textbf{MS1} & \textbf{SR1} & \textbf{SR2} & \textbf{CR1} & \textbf{CR2} & \textbf{LR1} \\
+		~                   & \textbf{LF1}                                              & \textbf{LF2} & \textbf{LF3} & \textbf{UH1} & \textbf{UH2} & \textbf{UH3} & \textbf{UH4} & \textbf{PR1} & \textbf{OE1} & \textbf{MS1} & \textbf{SR1} & \textbf{SR2} & \textbf{CR1} & \textbf{CR2} & \textbf{LR1} \\
 		\hline
-		\textbf{NFRT-LF1-1} & X                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-LF2-1} & ~                                                         & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-LF3-1} & ~                                                         & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-UH1-1} & ~                                                         & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-UH2-1} & ~                                                         & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-UH3-1} & ~                                                         & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-PR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-OE1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-MS1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-SR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            \\
-		\textbf{NFRT-SR2-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            \\
-		\textbf{NFRT-CR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            \\
-		\textbf{NFRT-CR2-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            \\
-		\textbf{NFRT-LR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            \\
+		\textbf{NFRT-LF1-1} & X                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-LF2-1} & ~                                                         & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-LF3-1} & ~                                                         & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-UH1-1} & ~                                                         & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-UH2-1} & ~                                                         & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-UH3-1} & ~                                                         & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-UH4-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-PR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-OE1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-MS1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-SR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            & ~            \\
+		\textbf{NFRT-SR2-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            & ~            \\
+		\textbf{NFRT-CR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            & ~            \\
+		\textbf{NFRT-CR2-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            & ~            \\
+		\textbf{NFRT-LR1-1} & ~                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & X            \\
 		\hline
 	\end{longtable}
 \end{landscape}
