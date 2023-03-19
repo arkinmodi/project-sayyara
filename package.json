@@ -8,7 +8,7 @@
     "dev": "next dev",
     "build": "next build",
     "build:docs": "docker compose -f docker-compose-docs.yml run --rm docs",
-    "build:typedoc": "typedoc --out typedoc --readme README.md --entryPointStrategy expand ./src",
+    "build:typedoc": "typedoc --out typedoc --readme README.md --entryPointStrategy expand --exclude '**/.prisma/client/index.d.ts' ./src",
     "start": "next start",
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
@@ -73,6 +73,8 @@
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
     "typedoc": "^0.23.27",
+    "typedoc-plugin-expand-object-like-types": "^0.1.2",
+    "typedoc-plugin-zod": "^1.0.1",
     "typescript": "4.9.3"
   },
   "prisma": {

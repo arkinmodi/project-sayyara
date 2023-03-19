@@ -23,7 +23,7 @@ export type CreateCustomerType = z.infer<typeof createCustomerSchema>;
  *  @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
  *  @date 01/06/2023
  *  @param {CreateCustomerType} customer - Customer data
- *  @return Customer object
+ *  @returns Customer object
  */
 export const createCustomer = async (customer: CreateCustomerType) => {
   return await prisma.customer.create({
@@ -56,7 +56,7 @@ export type CreateEmployeeType = z.infer<typeof createEmployeeSchema>;
  *  @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
  *  @date 01/06/2023
  *  @param {CreateEmployeeType} employee - Employee data
- *  @return Employee object
+ *  @returns Employee object
  */
 export const createEmployee = async (employee: CreateEmployeeType) => {
   const shop = await getShopById(employee.shopId);
@@ -92,7 +92,7 @@ export type CreateShopOwnerType = z.infer<typeof createShopOwnerSchema>;
  *  @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
  *  @date 01/06/2023
  *  @param {CreateShopOwnerType} shopOwner - Shop owner data
- *  @return Employee object
+ *  @returns Employee object
  */
 export const createShopOwner = async (shopOwner: CreateShopOwnerType) => {
   return await prisma.employee.create({
