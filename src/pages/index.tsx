@@ -5,12 +5,12 @@ import Head from "next/head";
 import Image from "next/image";
 import Router from "next/router";
 import { Button } from "primereact/button";
-import { Checkbox, CheckboxChangeParams } from "primereact/checkbox";
 import { Chip } from "primereact/chip";
 import { DataView } from "primereact/dataview";
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Panel } from "primereact/panel";
+import { RadioButton, RadioButtonChangeParams } from "primereact/radiobutton";
 import { Slider, SliderChangeParams } from "primereact/slider";
 import image from "public/icons/icon-192x192.png";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -21,17 +21,31 @@ import ShopLookupSkeleton from "../components/lookup/ShopLookupSkeleton";
 
 const MAX_CHIP_MOBILE = 0;
 const MAX_CHIP = 3;
-const filterByPartType = ["OEM", "AFTERMARKET"];
-const filterByPartCondition = ["NEW", "USED"];
+const partTypes: { key: string; value: string }[] = [
+  { key: "No Filter", value: "No Filter" },
+  { key: "OEM", value: "OEM Only" },
+  { key: "AFTERMARKET", value: "Aftermarket Only" },
+  { key: "OEM & AFTERMARKET", value: "OEM & Aftermarket" },
+];
+const partConditions = [
+  { key: "No Filter", value: "No Filter" },
+  { key: "NEW", value: "Only New Parts" },
+  { key: "USED", value: "Only Used Parts" },
+  { key: "NEW & USED", value: "New & Used Parts" },
+];
 const searchFilterList: string[] = ["Service", "Shop Name"];
 
 const Home: NextPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const [selectedTypeFilters, setSelectedTypeFilters] = useState<string[]>([]);
-  const [selectedConditionFilters, setSelectedConditionFilters] = useState<
-    string[]
-  >([]);
+  const [selectedTypeFilters, setSelectedTypeFilters] = useState<{
+    key: string;
+    value: string;
+  }>(partTypes[0]!);
+  const [selectedConditionFilters, setSelectedConditionFilters] = useState<{
+    key: string;
+    value: string;
+  }>(partConditions[0]!);
   const [locationRange, setLocationRange] = useState<[number, number]>([1, 50]);
 
   const [searchString, setSearchString] = useState("");
@@ -55,57 +69,27 @@ const Home: NextPage = () => {
     });
   }, []);
 
-  const onTypeChange = (e: CheckboxChangeParams) => {
-    const value = e.value;
-    const checked = e.checked;
-    let _selectedTypeFilters = [...selectedTypeFilters];
-
-    if (checked) {
-      _selectedTypeFilters.push(value);
-    } else {
-      for (let i = 0; i < _selectedTypeFilters.length; i++) {
-        const filter = _selectedTypeFilters[i];
-        if (filter && filter === value) {
-          _selectedTypeFilters.splice(i, 1);
-          break;
-        }
-      }
-    }
-    setSelectedTypeFilters(_selectedTypeFilters);
+  const onTypeChange = (e: RadioButtonChangeParams) => {
+    setSelectedTypeFilters(e.value);
 
     // Search with previous parameters and new filters
     onSearch(
       lastSearch[0],
       lastSearch[1],
-      selectedConditionFilters,
-      _selectedTypeFilters
+      selectedConditionFilters.key,
+      e.value.key
     );
   };
 
-  const onConditionChange = (e: CheckboxChangeParams) => {
-    const value = e.value;
-    const checked = e.checked;
-    let _selectedConditionFilters = [...selectedConditionFilters];
-
-    if (checked) {
-      _selectedConditionFilters.push(value);
-    } else {
-      for (let i = 0; i < _selectedConditionFilters.length; i++) {
-        const filter = _selectedConditionFilters[i];
-        if (filter && filter === value) {
-          _selectedConditionFilters.splice(i, 1);
-          break;
-        }
-      }
-    }
-    setSelectedConditionFilters(_selectedConditionFilters);
+  const onConditionChange = (e: RadioButtonChangeParams) => {
+    setSelectedConditionFilters(e.value);
 
     // Search with previous parameters and new filters
     onSearch(
       lastSearch[0],
       lastSearch[1],
-      _selectedConditionFilters,
-      selectedTypeFilters
+      e.value.key,
+      selectedTypeFilters.key
     );
   };
 
@@ -117,10 +101,15 @@ const Home: NextPage = () => {
 
   const resetFilters = () => {
     // Resets filters
-    setSelectedTypeFilters([]);
-    setSelectedConditionFilters([]);
+    setSelectedTypeFilters(partTypes[0]!);
+    setSelectedConditionFilters(partConditions[0]!);
 
-    onSearch(lastSearch[0], lastSearch[1], [], []);
+    onSearch(
+      lastSearch[0],
+      lastSearch[1],
+      partTypes[0]!.key,
+      partConditions[0]!.key
+    );
   };
 
   const onChangeString = (e: ChangeEvent<HTMLInputElement>) => {
@@ -133,20 +122,28 @@ const Home: NextPage = () => {
 
   const filterByPartsType = (
     shop: IShop & { services: IService[] },
-    types: string[]
+    filter: string
   ) => {
     // Filters parts by checking if any service in a shop has all parts that match any criteria
     // If any service contains all parts in the filter, then the shop is passed through
     // If there are no filters selected, skip this filter
-    if (types.length === 0) {
+    let types: string[] = [];
+    if (filter === partTypes[0]!.key) {
       return true;
+    } else if (filter === partTypes[3]!.key) {
+      types = ["OEM", "AFTERMARKET"];
+    } else {
+      types = [filter];
     }
+    console.log("IN FILTER: types=", types);
 
     const numServices = shop.services.length;
+    // For each service in a shop
     for (let i = 0; i < numServices; i++) {
       if (shop.services[i]) {
         const parts = shop.services[i]?.parts;
         if (parts && parts.length !== 0) {
+          // Every part must match the types
           const flag = parts.every((part) => {
             return types.includes(part.build);
           });
@@ -161,10 +158,16 @@ const Home: NextPage = () => {
 
   const filterByPartsCondition = (
     shop: IShop & { services: IService[] },
-    conditions: string[]
+    filter: string
   ) => {
-    if (conditions.length === 0) {
+    // Skip if no filters selected
+    let conditions: string[] = [];
+    if (filter === partConditions[0]!.key) {
       return true;
+    } else if (filter === partConditions[3]!.key) {
+      conditions = ["NEW", "USED"];
+    } else {
+      conditions = [filter];
     }
 
     const numServices = shop.services.length;
@@ -187,10 +190,14 @@ const Home: NextPage = () => {
   const onSearch = (
     str: string,
     filter: string,
-    conditions: string[],
-    types: string[],
+    conditions: string,
+    types: string,
     fromButton?: boolean
   ) => {
+    console.log("string: " + str);
+    console.log("filter: " + filter);
+    console.log("conditions: " + conditions);
+    console.log("types: " + types);
     // Two scenarios:
     // 1. Input from search bar & search filter, on button press
     // 2. Immediately after a checkbox change, use previous search values
@@ -273,14 +280,6 @@ const Home: NextPage = () => {
           label="See Full List"
         />
       );
-      // } else {
-      // serviceList.push(
-      //   <Chip
-      //     key={`${view}SeeFullListChip`}
-      //     className={styles.fullListChip}
-      //     label="..."
-      //   />
-      // );
     }
 
     return serviceList;
@@ -342,39 +341,35 @@ const Home: NextPage = () => {
           <div className={styles.filter}>
             <Panel className={styles.desktopFilter} header="Filter By">
               <h5 className={styles.h5Top}>Part Type</h5>
-              {filterByPartType.map((category) => {
+              {partTypes.map((category) => {
                 return (
-                  <div key={category} className={styles.buttonList}>
-                    <Checkbox
-                      inputId={category}
+                  <div key={category.key} className={styles.buttonList}>
+                    <RadioButton
+                      inputId={category.key}
                       name="category"
                       value={category}
                       onChange={onTypeChange}
-                      checked={selectedTypeFilters.some(
-                        (item) => item === category
-                      )}
+                      checked={selectedTypeFilters === category}
                     />
-                    <label className={styles.label} htmlFor={category}>
-                      {category}
+                    <label className={styles.label} htmlFor={category.key}>
+                      {category.value}
                     </label>
                   </div>
                 );
               })}
               <h5>Part Condition</h5>
-              {filterByPartCondition.map((category) => {
+              {partConditions.map((category) => {
                 return (
-                  <div key={category} className={styles.buttonList}>
-                    <Checkbox
-                      inputId={category}
+                  <div key={category.key} className={styles.buttonList}>
+                    <RadioButton
+                      inputId={category.key}
                       name="category"
                       value={category}
                       onChange={onConditionChange}
-                      checked={selectedConditionFilters.some(
-                        (item) => item === category
-                      )}
+                      checked={selectedConditionFilters === category}
                     />
-                    <label className={styles.label} htmlFor={category}>
-                      {category}
+                    <label className={styles.label} htmlFor={category.key}>
+                      {category.value}
                     </label>
                   </div>
                 );
@@ -401,39 +396,35 @@ const Home: NextPage = () => {
               collapsed
             >
               <h5 className={styles.h5Top}>Part Type</h5>
-              {filterByPartType.map((category) => {
+              {partTypes.map((category) => {
                 return (
-                  <div key={category} className={styles.buttonList}>
-                    <Checkbox
-                      inputId={category}
+                  <div key={category.key} className={styles.buttonList}>
+                    <RadioButton
+                      inputId={category.key}
                       name="category"
                       value={category}
                       onChange={onTypeChange}
-                      checked={selectedTypeFilters.some(
-                        (item) => item === category
-                      )}
+                      checked={selectedTypeFilters === category}
                     />
-                    <label className={styles.label} htmlFor={category}>
-                      {category}
+                    <label className={styles.label} htmlFor={category.key}>
+                      {category.value}
                     </label>
                   </div>
                 );
               })}
               <h5>Part Condition</h5>
-              {filterByPartCondition.map((category) => {
+              {partConditions.map((category) => {
                 return (
-                  <div key={category} className={styles.buttonList}>
-                    <Checkbox
-                      inputId={category}
+                  <div key={category.key} className={styles.buttonList}>
+                    <RadioButton
+                      inputId={category.key}
                       name="category"
                       value={category}
                       onChange={onConditionChange}
-                      checked={selectedConditionFilters.some(
-                        (item) => item === category
-                      )}
+                      checked={selectedConditionFilters === category}
                     />
-                    <label className={styles.label} htmlFor={category}>
-                      {category}
+                    <label className={styles.label} htmlFor={category.key}>
+                      {category.value}
                     </label>
                   </div>
                 );
@@ -482,8 +473,8 @@ const Home: NextPage = () => {
                   onSearch(
                     searchString,
                     searchFilter,
-                    selectedConditionFilters,
-                    selectedTypeFilters,
+                    selectedConditionFilters.key,
+                    selectedTypeFilters.key,
                     true
                   )
                 }
@@ -510,8 +501,8 @@ const Home: NextPage = () => {
                   onSearch(
                     searchString,
                     searchFilter,
-                    selectedConditionFilters,
-                    selectedTypeFilters,
+                    selectedConditionFilters.key,
+                    selectedTypeFilters.key,
                     true
                   )
                 }
