@@ -135,7 +135,6 @@ const Home: NextPage = () => {
     } else {
       types = [filter];
     }
-    console.log("IN FILTER: types=", types);
 
     const numServices = shop.services.length;
     // For each service in a shop
@@ -194,10 +193,6 @@ const Home: NextPage = () => {
     types: string,
     fromButton?: boolean
   ) => {
-    console.log("string: " + str);
-    console.log("filter: " + filter);
-    console.log("conditions: " + conditions);
-    console.log("types: " + types);
     // Two scenarios:
     // 1. Input from search bar & search filter, on button press
     // 2. Immediately after a checkbox change, use previous search values
