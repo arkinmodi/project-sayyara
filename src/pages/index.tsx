@@ -22,13 +22,13 @@ import ShopLookupSkeleton from "../components/lookup/ShopLookupSkeleton";
 const MAX_CHIP_MOBILE = 0;
 const MAX_CHIP = 3;
 const partTypes: { key: string; value: string }[] = [
-  { key: "No Filter", value: "No Filter" },
+  { key: "No Filter Type", value: "No Filter" },
   { key: "OEM", value: "OEM Only" },
   { key: "AFTERMARKET", value: "Aftermarket Only" },
   { key: "OEM & AFTERMARKET", value: "OEM & Aftermarket" },
 ];
 const partConditions = [
-  { key: "No Filter", value: "No Filter" },
+  { key: "No Filter Condition", value: "No Filter" },
   { key: "NEW", value: "Only New Parts" },
   { key: "USED", value: "Only Used Parts" },
   { key: "NEW & USED", value: "New & Used Parts" },
