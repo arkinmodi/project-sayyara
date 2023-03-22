@@ -19,7 +19,8 @@ Below you can find some guidance on how to work on our project.
 4. [Making Changes](#making-changes)
 5. [Testing](#testing)
 6. [Writing Docs](#writing-docs)
-7. [Code Reviews](#code-reviews)
+7. [Writing Code Docs](#writing-code-documentation-docstrings)
+8. [Code Reviews](#code-reviews)
 
 ## Getting Started
 
@@ -241,6 +242,14 @@ npm run build:docs -- Refl    # Reflection Report
 ```
 
 Upon opening of a pull request, the [GitHub Action](https://github.com/features/actions) pipeline will build the PDF. It is not required for you to commit a built PDF as part of your PR as the main branch pipeline will create one for you.
+
+## Writing Code Documentation (Docstrings)
+
+The code documentation is written using [TypeDoc](https://typedoc.org) and are written for all functions and classes. To build the HTML documentation run:
+
+```sh
+npm run build:typedoc
+```
 
 ## Code Reviews
 

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPointStrategy": "expand",
+  "exclude": ["**/.prisma/client/index.d.ts"],
+  "out": "typedoc",
+  "plugin": ["typedoc-plugin-zod", "typedoc-plugin-expand-object-like-types"],
+  "readme": "README.md"
+}

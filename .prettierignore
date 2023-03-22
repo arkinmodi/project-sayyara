@@ -6,3 +6,4 @@ coverage
 **/public/sw.js
 **/public/worker-*.js
 /coverage*
+/typedoc
