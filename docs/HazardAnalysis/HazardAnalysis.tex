@@ -9,6 +9,8 @@
 \usepackage{multirow}
 \usepackage{enumitem}
 \usepackage{longtable}
+\usepackage[round]{natbib}
+\usepackage[autostyle]{csquotes}
 
 \hypersetup{
 	colorlinks=true,		% false: boxed links; true: colored links
@@ -51,6 +53,7 @@
 		October 19, 2022 & Arkin Modi            & Add List of Figures, List of Tables, and Appendix                              \\
 		March 4, 2023    & Timothy Choy          & Update Effect Analysis table                                                   \\
 		March 6, 2023    & Timothy Choy          & Update FMEA table for password reset                                           \\
+		March 21, 2023   & Arkin Modi            & Add direct quotes from STPA Handbook in Introduction                           \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -70,11 +73,24 @@
 \pagenumbering{arabic}
 
 \section{Introduction}
-This document outlines the hazard analysis of Sayyara. The definition of hazard is any property or
-condition in the system along with conditions in the environment that may cause harm or damage.
-This definition is from Nancy Leveson's work. The hazards for Sayyara include security and usage
-hazards such as protecting personal information, database failures, and having no internet
-connection.
+This document outlines the hazard analysis of Sayyara. The following definitions come from the STPA
+Handbook \citep{Nancy2018}.
+
+\blockquote[\cite{Nancy2018}]{\underline{Definition}: A \textit{loss} involves something of value to
+	stakeholders. Losses may include a loss of human life or human injury, property damage, environmental
+	pollution, loss of mission, loss of reputation, loss or leak of sensitive information, or any other
+	loss that is unacceptable to the stakeholders.}
+
+\blockquote[\cite{Nancy2018}]{\underline{Definition}: A \textit{hazard} is a system state or set of
+	conditions that, together with a particular set of worst-case environmental conditions, will lead to
+	a loss.}
+
+\blockquote[\cite{Nancy2018}]{\underline{Definition}: A \textit{system} is a set of components that
+	act together as a whole to achieve some common goal, objective, or end. A system may contain
+	subsystems and may also be part of a larger system.}
+
+The hazards for Sayyara include security and usage hazards such as protecting personal information,
+database failures, and having no internet connection.
 
 \section{Scope and Purpose of Hazard Analysis}
 The scope of the hazard analysis is to identify any hazards that may arise when using the
@@ -290,7 +306,7 @@ The system consists of:
 		\cline{2-7}
 		~
 		 & An employee of the shop cannot be found
-		 & Shop owners will not be able view employee's details; Effected employee will not be able to be
+		 & Shop owners will not be able to view employee's details; Effected employee will not be able to be
 		assigned to work orders or view their profile details
 		 & \begin{enumerate}[label=\alph*., leftmargin=*]
 			   \item Database failure
@@ -372,6 +388,12 @@ be met by this application. Due to time constraints, not all of these requiremen
 fulfilled before the Revision 1 deadline in April 2023. The following requirements have been
 identified as higher priority as well as feasible within the time constraints and shall be
 completed within the initial timeline of the project: SR1, SR2, SR3, SR4.
+
+\newpage
+
+\bibliographystyle{plainnat}
+
+\bibliography{../../refs/References}
 
 \newpage
 
