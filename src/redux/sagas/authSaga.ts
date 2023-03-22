@@ -54,6 +54,8 @@ interface IPostShopOwnerSignUpBody extends IPostSignUpBody {
     postalCode: string;
     phoneNumber: string;
     email: string;
+    latitude: string;
+    longitude: string;
   };
 }
 
@@ -224,6 +226,8 @@ function* shopOwnerSignUp(
       postalCode: payload.shopPostalCode,
       phoneNumber: payload.shopPhoneNumber,
       email: payload.shopEmail,
+      latitude: "",
+      longitude: "",
     },
   };
   const success = yield call(postShopOwnerSignUp, body);

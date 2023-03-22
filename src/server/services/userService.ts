@@ -3,6 +3,8 @@ import { createShopSchema, getShopById } from "@server/services/shopService";
 import { createVehicleSchema } from "@server/services/vehicleService";
 import bcrypt from "bcrypt";
 import { Session } from "next-auth";
+import { LatLong } from "src/types/auth";
+import { getLatLongByAddress } from "src/utils/authUtil";
 import { PHONE_NUMBER_REGEX } from "src/utils/formValidationUtil";
 import { z } from "zod";
 
@@ -95,6 +97,17 @@ export type CreateShopOwnerType = z.infer<typeof createShopOwnerSchema>;
  *  @returns Employee object
  */
 export const createShopOwner = async (shopOwner: CreateShopOwnerType) => {
+  const latlong: LatLong | null = await getLatLongByAddress(
+    shopOwner.shop.address,
+    shopOwner.shop.postalCode,
+    shopOwner.shop.province,
+    shopOwner.shop.city
+  );
+
+  if (!latlong) {
+    return Promise.reject("Invalid Shop Location");
+  }
+
   return await prisma.employee.create({
     data: {
       email: shopOwner.email,
@@ -103,7 +116,13 @@ export const createShopOwner = async (shopOwner: CreateShopOwnerType) => {
       lastName: shopOwner.lastName,
       phoneNumber: shopOwner.phoneNumber,
       type: "SHOP_OWNER",
-      shop: { create: { ...shopOwner.shop } },
+      shop: {
+        create: {
+          ...shopOwner.shop,
+          latitude: latlong.latitude,
+          longitude: latlong.longitude,
+        },
+      },
     },
   });
 };

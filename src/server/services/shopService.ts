@@ -1,4 +1,6 @@
 import { hoursOfOperationSchema, prisma } from "@server/db/client";
+import { LatLong } from "src/types/auth";
+import { getLatLongByAddress } from "src/utils/authUtil";
 import {
   PHONE_NUMBER_REGEX,
   POSTAL_CODE_REGEX,
@@ -13,11 +15,24 @@ export const createShopSchema = z.object({
   postalCode: z.string().regex(POSTAL_CODE_REGEX),
   phoneNumber: z.string().regex(PHONE_NUMBER_REGEX),
   email: z.string().email(),
+  latitude: z.string(),
+  longitude: z.string(),
 });
 
 export type CreateShopType = z.infer<typeof createShopSchema>;
 
 export const createShop = async (shop: CreateShopType) => {
+  const latlong: LatLong | null = await getLatLongByAddress(
+    shop.address,
+    shop.postalCode,
+    shop.province,
+    shop.city
+  );
+
+  if (!latlong) {
+    return Promise.reject("Invalid Location");
+  }
+
   return await prisma.shop.create({
     data: {
       name: shop.name,
@@ -27,6 +42,8 @@ export const createShop = async (shop: CreateShopType) => {
       postalCode: shop.postalCode,
       phoneNumber: shop.phoneNumber,
       email: shop.email,
+      latitude: latlong.latitude,
+      longitude: latlong.longitude,
     },
   });
 };
