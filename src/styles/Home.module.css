@@ -19,6 +19,17 @@
   margin-left: 20px;
 }
 
+.filterTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.filterTitleText {
+  display: flex;
+  max-width: fit-content;
+}
+
 .filterButton {
   margin-top: 1.5rem;
   background-color: #436188;
@@ -40,10 +51,6 @@
   flex: 0 1 65%;
   height: 100%;
   border-color: black;
-}
-
-.h5Top {
-  margin-top: 0;
 }
 
 .search {
