@@ -348,7 +348,7 @@ const Home: NextPage = () => {
                     target=".desktopTypeInfo"
                     style={{ fontSize: "12px" }}
                   />
-                  Part Type{" "}
+                  <span style={{ marginRight: "0.5rem" }}>Part Type</span>
                   <i
                     className="pi pi-info-circle desktopTypeInfo"
                     data-pr-tooltip={`Select OEM to show OEM parts only, same applies to AFTERMARKET.\nSelecting both options will show OEM or AFTERMARKET parts.`}
@@ -381,7 +381,7 @@ const Home: NextPage = () => {
                     target=".desktopConditionInfo"
                     style={{ fontSize: "12px" }}
                   />
-                  Part Condition{" "}
+                  <span style={{ marginRight: "0.5rem" }}>Part Condition</span>
                   <i
                     className="pi pi-info-circle desktopConditionInfo"
                     data-pr-tooltip={`Select USED to show used parts only, same applies to NEW.\nSelecting both options will show new or used parts.`}
@@ -435,7 +435,7 @@ const Home: NextPage = () => {
                     target=".mobileTypeInfo"
                     style={{ fontSize: "12px" }}
                   />
-                  Part Type{" "}
+                  <span style={{ marginRight: "0.5rem" }}>Part Type</span>
                   <i
                     className="pi pi-info-circle mobileTypeInfo"
                     data-pr-tooltip={`Select OEM to show OEM parts only, same applies to AFTERMARKET.\nSelecting both options will show OEM or AFTERMARKET parts.`}
@@ -468,7 +468,7 @@ const Home: NextPage = () => {
                     target=".mobileConditionInfo"
                     style={{ fontSize: "12px" }}
                   />
-                  Part Condition{" "}
+                  <span style={{ marginRight: "0.5rem" }}>Part Condition</span>
                   <i
                     className="pi pi-info-circle mobileConditionInfo"
                     data-pr-tooltip={`Select USED to show used parts only, same applies to NEW.\nSelecting both options will show new or used parts.`}
