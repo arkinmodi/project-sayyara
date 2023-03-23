@@ -323,3 +323,6 @@ next-env.d.ts
 
 # Draw.io
 *.drawio.bkp
+
+# Typedoc
+/typedoc
