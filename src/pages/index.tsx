@@ -25,6 +25,7 @@ const MAX_CHIP = 3;
 const filterByPartType = ["OEM", "AFTERMARKET"];
 const filterByPartCondition = ["NEW", "USED"];
 const searchFilterList: string[] = ["Service", "Shop Name"];
+const filterRange: [number, number] = [1, 100];
 
 const Home: NextPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +34,8 @@ const Home: NextPage = () => {
   const [selectedConditionFilters, setSelectedConditionFilters] = useState<
     string[]
   >([]);
-  const [locationRange, setLocationRange] = useState<[number, number]>([1, 50]);
+  const [locationRange, setLocationRange] =
+    useState<[number, number]>(filterRange);
 
   const [searchString, setSearchString] = useState("");
   const [searchFilter, setSearchFilter] = useState<string>(
@@ -43,11 +45,39 @@ const Home: NextPage = () => {
     "",
     searchFilterList[0] as string,
   ]);
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(
+    null
+  );
 
   const [shops, setShops] = useState<(IShop & { services: IService[] })[]>([]);
 
   // Initial fetch
   useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        function success(position) {
+          console.log(
+            "latitude: ",
+            position.coords.latitude,
+            " longitude: ",
+            position.coords.longitude
+          );
+          setUserLocation([
+            position.coords.latitude,
+            position.coords.longitude,
+          ]);
+        },
+        function error(error_message) {
+          console.log(
+            "An error has occurred while retrieving location ",
+            error_message
+          );
+        }
+      );
+    } else {
+      console.log("Geolocation is not supported on this browser.");
+    }
+
     getFilteredShops("", true).then((data) => {
       if (data) {
         setShops(data);
@@ -413,11 +443,11 @@ const Home: NextPage = () => {
               </h5>
               <Slider
                 value={locationRange}
-                min={1}
-                max={50}
+                min={filterRange[0]}
+                max={filterRange[1]}
                 onChange={setRange}
                 range
-                disabled
+                disabled={!userLocation}
               />
               <Button className={styles.filterButton} onClick={resetFilters}>
                 Reset Filters
@@ -500,11 +530,11 @@ const Home: NextPage = () => {
               </h5>
               <Slider
                 value={locationRange}
-                min={1}
-                max={50}
+                min={filterRange[0]}
+                max={filterRange[1]}
                 onChange={setRange}
                 range
-                disabled
+                disabled={!userLocation}
               />
               <Button className={styles.filterButton} onClick={resetFilters}>
                 Reset Filters
