@@ -72,6 +72,7 @@
 		March 1, 2023     & Arkin Modi            & Update Quote Request Bodies              \\
 		March 7, 2023     & Timothy Choy          & Update Shop Module MIS                   \\
 		March 14, 2023    & Arkin Modi            & Update Appointments Module               \\
+		March 23, 2023    & Joy Xiao              & Update Employee Management Module        \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -942,12 +943,12 @@ None
 	\begin{adjustbox}{width=\textwidth}
 		\begin{tabular}{llll}
 			\hline
-			\textbf{Name}   & \textbf{In}                & \textbf{Out}       & \textbf{Exceptions}   \\
+			\textbf{Name}        & \textbf{In}                & \textbf{Out}       & \textbf{Exceptions}   \\
 			\hline
-			getEmployeeById & String                     & Employee           & ~                     \\
-			getAllEmployees & String                     & List$<$Employee$>$ & ~                     \\
-			updateEmployee  & String, UpdateEmployeeType & ~                  & UserNotFoundException \\
-			suspendEmployee & String                     & ~                  & ~                     \\
+			getEmployeeById      & String                     & Employee           & ~                     \\
+			getEmployeesByShopId & String                     & List$<$Employee$>$ & ~                     \\
+			updateEmployeeById   & String, UpdateEmployeeType & ~                  & UserNotFoundException \\
+			suspendEmployeeById  & String                     & ~                  & ~                     \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -975,13 +976,13 @@ None
 	      table else None.
 \end{itemize}
 
-\noindent getAllEmployees($shopId$):
+\noindent getEmployeesByShopId($shopId$):
 \begin{itemize}
 	\item output: $out :=$ List of employees from the shop database table associated with the $shopId$, else
 	      None.
 \end{itemize}
 
-\noindent updateEmployee($employeeId, patch$):
+\noindent updateEmployeeById($employeeId, patch$):
 \begin{itemize}
 	\item transition: Update all fields of Employee with fields in $patch$ in employee database table
 	\item output: $out := getEmployeeById(id) = \text{Employee} \Rightarrow (\text{Employee} = \text{None} $
@@ -990,7 +991,7 @@ None
 	\item exception: $exc := getEmployeeById(id) = None \Rightarrow \text{UserNotFoundException}$
 \end{itemize}
 
-\noindent suspendEmployee($employeeId$):
+\noindent suspendEmployeeById($employeeId$):
 \begin{itemize}
 	\item transition: Change the state of the employee to ``suspended" where their ID matches $employeeId$ in
 	      the employee database table.
