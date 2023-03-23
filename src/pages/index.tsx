@@ -12,6 +12,7 @@ import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Panel } from "primereact/panel";
 import { Slider, SliderChangeParams } from "primereact/slider";
+import { Tooltip } from "primereact/tooltip";
 import image from "public/icons/icon-192x192.png";
 import { ChangeEvent, useEffect, useState } from "react";
 import { IService } from "src/types/service";
@@ -341,7 +342,21 @@ const Home: NextPage = () => {
         <div className={styles.main}>
           <div className={styles.filter}>
             <Panel className={styles.desktopFilter} header="Filter By">
-              <h5 className={styles.h5Top}>Part Type</h5>
+              <div className={styles.filterTitles}>
+                <span>
+                  <Tooltip
+                    target=".desktopTypeInfo"
+                    style={{ fontSize: "12px" }}
+                  />
+                  <span style={{ marginRight: "0.5rem" }}>Part Type</span>
+                  <i
+                    className="pi pi-info-circle desktopTypeInfo"
+                    data-pr-tooltip={`Select OEM to show OEM parts only, same applies to AFTERMARKET.\nSelecting both options will show OEM or AFTERMARKET parts.`}
+                    data-pr-position="right"
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                </span>
+              </div>
               {filterByPartType.map((category) => {
                 return (
                   <div key={category} className={styles.buttonList}>
@@ -360,7 +375,21 @@ const Home: NextPage = () => {
                   </div>
                 );
               })}
-              <h5>Part Condition</h5>
+              <div className={styles.filterTitles}>
+                <span>
+                  <Tooltip
+                    target=".desktopConditionInfo"
+                    style={{ fontSize: "12px" }}
+                  />
+                  <span style={{ marginRight: "0.5rem" }}>Part Condition</span>
+                  <i
+                    className="pi pi-info-circle desktopConditionInfo"
+                    data-pr-tooltip={`Select USED to show used parts only, same applies to NEW.\nSelecting both options will show new or used parts.`}
+                    data-pr-position="right"
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                </span>
+              </div>
               {filterByPartCondition.map((category) => {
                 return (
                   <div key={category} className={styles.buttonList}>
@@ -400,7 +429,21 @@ const Home: NextPage = () => {
               toggleable
               collapsed
             >
-              <h5 className={styles.h5Top}>Part Type</h5>
+              <div className={styles.filterTitles}>
+                <span>
+                  <Tooltip
+                    target=".mobileTypeInfo"
+                    style={{ fontSize: "12px" }}
+                  />
+                  <span style={{ marginRight: "0.5rem" }}>Part Type</span>
+                  <i
+                    className="pi pi-info-circle mobileTypeInfo"
+                    data-pr-tooltip={`Select OEM to show OEM parts only, same applies to AFTERMARKET.\nSelecting both options will show OEM or AFTERMARKET parts.`}
+                    data-pr-position="right"
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                </span>
+              </div>
               {filterByPartType.map((category) => {
                 return (
                   <div key={category} className={styles.buttonList}>
@@ -419,7 +462,21 @@ const Home: NextPage = () => {
                   </div>
                 );
               })}
-              <h5>Part Condition</h5>
+              <div className={styles.filterTitles}>
+                <span>
+                  <Tooltip
+                    target=".mobileConditionInfo"
+                    style={{ fontSize: "12px" }}
+                  />
+                  <span style={{ marginRight: "0.5rem" }}>Part Condition</span>
+                  <i
+                    className="pi pi-info-circle mobileConditionInfo"
+                    data-pr-tooltip={`Select USED to show used parts only, same applies to NEW.\nSelecting both options will show new or used parts.`}
+                    data-pr-position="right"
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                </span>
+              </div>{" "}
               {filterByPartCondition.map((category) => {
                 return (
                   <div key={category} className={styles.buttonList}>
