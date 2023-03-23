@@ -112,6 +112,7 @@
 	March 14, 2023     & Timothy Choy          & Update Work Partitioning for Quotes                                                \\
 	March 15, 2023     & Joy Xiao              & Update services and appointments requirements                                      \\
 	March 18, 2023     & Arkin Modi            & Update Individual Product Use Cases from Quotes and Work Orders                    \\
+	March 19, 2023     & Joy Xiao              & Update NFRs with more details                                                      \\
 	\bottomrule
 \end{longtable}
 
@@ -1338,33 +1339,45 @@ The requirements in \textbf{bold} are additional requirements from the Revision 
 \begin{enumerate}[PR\arabic*.]
 	\item The system shall respond to the user's interactions in a timely manner by following good web
 	      standards as stated \href{https://web.dev/vitals/}{here}.
+	\item The system shall be available every day of the year with an allowable downtime of 60 minutes per
+	      week. The downtime will allow for any maintenance or system updates.
 \end{enumerate}
 
 \subsection{Operational and Environmental Requirements}
 \begin{enumerate}[OE\arabic*.]
-	\item The system shall be able to operate on desktops and mobile devices
+	\item The system shall be able to operate on desktops and mobile devices through Google Chrome and
+	      Microsoft Edge web browsers.
 \end{enumerate}
 
 \subsection{Maintainability and Support Requirements}
 \begin{enumerate}[MS\arabic*.]
-	\item The system shall be well documented
+	\item The system shall be well documented with up to date problem statement and goals, requirements
+	      specifications, hazard analysis, software design documents and testing documents. The system shall
+	      have appropriate comments to ensure maintainability of the system. Any source files will have the
+	      author of the file and date edited. Any methods within a file will have the author, edited date,
+	      param, and return values documented.
 \end{enumerate}
 
 \subsection{Security Requirements}
 \begin{enumerate}[SR\arabic*.]
-	\item The system shall keep user's data private
-	\item The system shall limit the data shown to user's on a needs to know basis
+	\item The system shall keep user's data private. User passwords will be hashed in transit and encrypted
+	      at rest to protect user accounts from being compromised.
+	\item The system shall limit the data shown to user's on a needs to know basis. Unnecessary data will not
+	      be displayed to the user or sent from the server to client side. This is to ensure that only the
+	      minimal amount of data is being shown in order to protect user and application details.
 \end{enumerate}
 
 \subsection{Cultural Requirements}
 \begin{enumerate}[CR\arabic*.]
-	\item The system shall not use any text or images that will offend anyone that will use it
+	\item The system shall not use any text or images that will offend anyone that will use it. Any offensive
+	      images from any culture or religion should not be allowed on the application.
 	\item The system will use Canadian English
 \end{enumerate}
 
 \subsection{Legal Requirements}
 \begin{enumerate}[LR\arabic*.]
-	\item The system shall not contain any assets which infringe on copyright claims
+	\item The system shall not contain any assets which infringe on copyright claims. The developers will
+	      abide by any copyrights and will give appropriate credit if using any open source resources.
 \end{enumerate}
 
 \subsection{Health and Safety Requirements}
