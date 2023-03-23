@@ -35,7 +35,7 @@ Refl:
 	cd Reflection && make && cd ..
 
 ExpoES:
-	cd Presentations/EXPO && make && cd ../..
+	cd Presentations/EXPO/ExecutiveSummary && make && cd ../../..
 
 clean:	cleanSRS cleanMG cleanMIS cleanSystDes cleanPS cleanVnVP cleanVnVR cleanDevP cleanHazA cleanRefl cleanExpoES
 
@@ -70,4 +70,4 @@ cleanRefl:
 	cd Reflection && make clean && cd ..
 
 cleanExpoES:
-	cd Presentations/EXPO && make clean && cd ../..
+	cd Presentations/EXPO/ExecutiveSummary && make clean && cd ../../..
