@@ -1,0 +1,63 @@
+\documentclass{article}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+\title{
+    McMaster Engineering Capstone Expo\\
+    Department of Computing and Software\\
+    Executive Summary\\
+    \progname
+}
+
+\author{\authname}
+
+\date{}
+
+\input{../../../Comments}
+\input{../../../Common}
+
+\begin{document}
+
+\maketitle
+
+Sayyara is a progressive web application (PWA) which will act as a single platform for independent
+automotive repair shops and vehicle owners. The application can be accessed by users through a web
+browser on both desktop and mobile devices. This platform will allow repair shops and vehicle
+owners to interact in a more efficient and effective manner. Vehicle owners can search for
+automotive repair shops and services based on a variety of search filters; request quotes for
+service; book, view, and manage service appointments. On the application, shop owners will have
+full shop management capabilities such as: adding and managing a list of employees; managing a list
+of service types and corresponding service appointment availabilities; managing store information
+such as location, hours of operation, and contact information. Automotive repair shop owners and
+employees will be able to manage quotes, service appointments, and work orders from a single
+application. Ultimately, Sayyara will significantly improve the auto repair experience for both
+independent automotive repair shops and vehicle owners.
+
+Sayyara is built using a variety of development tools and infrastructure. The website is a React
+application built using the Next.js framework for the front-end and back-end, Prisma for the object
+relational mapping (ORM) (i.e., database communications), and the Bing Maps API for powering the
+geolocation services. The website is hosted on Vercel using a serverless architecture and the Node
+16 runtime. The database chosen to hold all the data is MySQL, a relational database, and is hosted
+on PlanetScale. The code base is version controlled using Git and is hosted on GitHub. The
+continuous integration and continuous delivery (CI/CD) is run on the GitHub Actions platform, where
+all tests and code quality checks are run on all additions to the code base. All tests were written
+using the Jest testing framework.
+
+Sayyara is built using the culmination of all the software engineering design processes taught
+throughout the Software Engineering program. The process began with initial problem identification
+in the ``Problem Statement and Goals'' report. This outlined the problem proposed by the
+supervisor, Nabeel Ibrahim, at a high level. Details on how the team plans to effective work
+together were outlined in the ``Development Plan''. The problem was then broken down into a set of
+clearly defined requirements in the ``Software Requirements Specification''. Next, any potential
+hazards and risks were reviewed in the ``Hazard Analysis''. Following this, a plan was created for
+how the team will verify that the application meets the requirements in the ``Verification and
+Validation Plan''. Design plans on the concrete implementation of the solution were planned out in
+a set of three documents: ``Module Guide'', ``Module Interface Specification'', and ``System
+Design''. The solution was then built, and the verification plan was executed, with the results
+documents in the ``Verification and Validation Report''. While the engineering process outlined
+here is linear, in reality, moving to the next did not imply that the previous step was set in
+stone. As new information and ideas were discovered throughout the process, past documents would be
+revised and updated.
+
+\end{document}
