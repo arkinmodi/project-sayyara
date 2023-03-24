@@ -105,6 +105,7 @@ def main() -> int:
         if files & REFERENCES_DEPS:
             documents.update([
                 'Hazard_Analysis',
+                'MG',
                 'SRS',
                 'VnV_Plan',
             ])
