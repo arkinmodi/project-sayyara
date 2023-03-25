@@ -113,11 +113,11 @@ export const updateShopById = async (id: string, patch: UpdateShopType) => {
   });
 };
 
-export const getShopsByName = async (name: string) => {
+export const getShopsByName = async (shop: string) => {
   const shops = await prisma.shop.findMany({
     where: {
       name: {
-        contains: name,
+        contains: shop,
       },
     },
     include: {
