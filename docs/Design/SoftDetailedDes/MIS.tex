@@ -72,6 +72,7 @@
 		March 1, 2023     & Arkin Modi            & Update Quote Request Bodies              \\
 		March 7, 2023     & Timothy Choy          & Update Shop Module MIS                   \\
 		March 14, 2023    & Arkin Modi            & Update Appointments Module               \\
+		March 26, 2023    & Arkin Modi            & Remove createShop from Shop Module       \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -629,7 +630,6 @@ None
 			\hline
 			\textbf{Name}     & \textbf{In}            & \textbf{Out}           & \textbf{Exceptions}                         \\
 			\hline
-			createShop        & CreateShopType         & Shop                   & ~                                           \\
 			getShopById       & String                 & Shop $\lor$ None       & ~                                           \\
 			updateShopById    & String, UpdateShopType & Shop                   & ShopNotFoundException, InvalidTimeException \\
 			getShopsByName    & String                 & List<Shop> $\lor$ None & ~                                           \\
@@ -652,13 +652,6 @@ User's Display \\ Database
 None
 
 \subsubsection{Access Routine Semantics}
-
-\noindent createShop($shop$):
-\begin{itemize}
-	\item transition: new Shop(shop), the location field is defined by getLatLong(address), save shop to shop
-	      database table
-	\item output: $out := \text{new Shop(\emph{shop})}$
-\end{itemize}
 
 \noindent getShopById($id$):
 \begin{itemize}
