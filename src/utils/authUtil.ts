@@ -24,7 +24,6 @@ export function getLatLongByAddress(
           longitude:
             data.resourceSets[0].resources[0].point.coordinates[1].toString(),
         };
-        console.log(latLong);
         return latLong;
       });
     } else {
