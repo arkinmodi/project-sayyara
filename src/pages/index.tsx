@@ -265,8 +265,6 @@ const Home: NextPage = () => {
       longitude = userLocation[1];
     }
 
-    console.log("Location Range:", distanceRange);
-
     // Fetch via search parameters
     if (str !== "") {
       // Can filter by service name or shop name
