@@ -53,6 +53,7 @@
 		January 17, 2023  & Leon So               & Add Login \& Sign Up, Shop Owner/Employee Landing Page, Shop Profile, Employee Management Mockups \\
 		January 17, 2023  & Timothy Choy          & Add Customer Appointments, Quotes, Shop Lookup Mockups                                            \\
 		January 18, 2023  & Leon So               & Add team reflection                                                                               \\
+		March 25, 2023    & Joy Xiao              & Add Component Diagram Description                                                                 \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -177,6 +178,22 @@ validated on the server-side by parsing the input data using defined schemas. Th
 integrity and prevents the undesirable data from entering the workflows or database.
 
 \subsection{Component Diagram}
+
+The Database is always accessed through the Database Driver Module. All other modules would have to
+interface with this module for any reads or writes to the database. The application also requires
+authentication by having the user login to their account in order to perform tasks such as viewing
+their appointments from their Appointments Module. The Authentication checks with the database if
+the login credentials are correct, then the database will return the user data. The Shop Module is
+the shop system with information specific to each shop such as the shop name, address, phone
+number, store hours, etc. The Quotes Module is the quotes system with the shop and customer chats.
+Appointment Module has all of the appointment information and statuses where users can view their
+appointments, cancel appointments, and edit appointments. The Work Orders Module is where users can
+update the work order information such as the user assigned to the work order and update work order
+details. The Users Module stores all of the user's information such as name, email, phone number,
+etc. The Employee Management Module is for the shop owner to manage their employees by viewing
+employee information, getting the employee invitation code, and suspending employee accounts. The
+Services Module is where shop owners or employees can view their canned and custom services,
+add/update/delete services and add/update/delete parts used for each service.
 
 \begin{figure}[H]
 	\centering
