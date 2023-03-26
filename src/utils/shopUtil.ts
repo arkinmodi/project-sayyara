@@ -169,7 +169,7 @@ export function getFilteredShops(
   latitude: number | null,
   longitude: number | null
 ): Promise<(IShop & { services: IService[] } & { distance: number })[] | null> {
-  const url = `/api/shop/lookup?name=${name}&shop=${isShop}`;
+  const url = `/api/shop/lookup?searchStr=${name}&searchByShop=${isShop}`;
 
   return fetch(url, {
     method: "GET",
