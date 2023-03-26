@@ -7,13 +7,19 @@
 
 import shopLookupHandler from "@pages/api/shop/lookup";
 import shopByIdHandler from "@pages/api/shop/[id]";
-import { Employee, prisma, ServiceType } from "@server/db/client";
-import { createService } from "@server/services/serviceService";
-import { createShop } from "@server/services/shopService";
+import {
+  Employee,
+  prisma,
+  ServiceType,
+  ServiceWithPartsType,
+  Shop,
+} from "@server/db/client";
 import { createMockRequestResponse } from "@test/mocks/mockRequestResponse";
 import { Session } from "next-auth";
 
-const testShop = {
+const testShop: Shop = {
+  id: "testShop",
+  hoursOfOperation: null,
   createTime: new Date(),
   updateTime: new Date(),
   name: "testShopName",
@@ -27,7 +33,9 @@ const testShop = {
   longitude: "-79.0000",
 };
 
-const testShop2 = {
+const testShop2: Shop = {
+  id: "testShop2",
+  hoursOfOperation: null,
   createTime: new Date(),
   updateTime: new Date(),
   name: "anotherShop",
@@ -41,7 +49,9 @@ const testShop2 = {
   longitude: "-79.0000",
 };
 
-const testShop3 = {
+const testShop3: Shop = {
+  id: "testShop3",
+  hoursOfOperation: null,
   createTime: new Date(),
   updateTime: new Date(),
   name: "oneMoreShop",
@@ -55,7 +65,7 @@ const testShop3 = {
   longitude: "-79.0000",
 };
 
-const testService = {
+const testService: ServiceWithPartsType = {
   id: "testServiceId",
   createTime: new Date(),
   updateTime: new Date(),
@@ -65,6 +75,7 @@ const testService = {
   totalPrice: 100,
   type: ServiceType.CANNED,
   parts: [],
+  shopId: testShop.id,
 };
 
 const testEmployeeUser: Employee = {
@@ -248,7 +259,7 @@ describe("Shop Module", () => {
       },
     };
 
-    const shop = await createShop(testShop);
+    await createShop(testShop);
     const update = createMockRequestResponse({ method: "PATCH" });
     update.req.query = { ...update.req.query, id: "invalidShopId" };
     // Change name and hours of operation
@@ -281,11 +292,14 @@ describe("Shop Module", () => {
 
   it("FRT-M9-6: Get shop request with a valid shop name", async () => {
     const shop = await createShop(testShop);
-    const shop2 = await createShop(testShop2);
-    const shop3 = await createShop(testShop3);
+    await createShop(testShop2);
+    await createShop(testShop3);
 
     const { req, res } = createMockRequestResponse({ method: "GET" });
-    req.query = { ...req.query, name: shop.name, shop: "true" };
+    req.query = {
+      searchStr: shop.name,
+      searchByShop: "true",
+    };
     await shopLookupHandler(req, res);
 
     expect(res.statusCode).toBe(200);
@@ -306,7 +320,10 @@ describe("Shop Module", () => {
     const shop3 = await createShop(testShop3);
 
     const { req, res } = createMockRequestResponse({ method: "GET" });
-    req.query = { ...req.query, name: "shop", shop: "true" };
+    req.query = {
+      searchStr: "shop",
+      searchByShop: "true",
+    };
     await shopLookupHandler(req, res);
 
     expect(res.statusCode).toBe(200);
@@ -334,12 +351,15 @@ describe("Shop Module", () => {
   });
 
   it("FRT-M9-8: Get shop request with a shop name that does not exist in the list of shop names", async () => {
-    const shop = await createShop(testShop);
-    const shop2 = await createShop(testShop2);
-    const shop3 = await createShop(testShop3);
+    await createShop(testShop);
+    await createShop(testShop2);
+    await createShop(testShop3);
 
     const { req, res } = createMockRequestResponse({ method: "GET" });
-    req.query = { ...req.query, name: "asfasdf", shop: "true" };
+    req.query = {
+      searchStr: "asfasdf",
+      searchByShop: "true",
+    };
     await shopLookupHandler(req, res);
 
     expect(res.statusCode).toBe(200);
@@ -349,13 +369,16 @@ describe("Shop Module", () => {
 
   it("FRT-M9-9: Get shop request with a service name", async () => {
     const shop = await createShop(testShop);
-    const shop2 = await createShop(testShop2);
-    const shop3 = await createShop(testShop3);
+    await createShop(testShop2);
+    await createShop(testShop3);
 
-    const service = await createService({ ...testService, shopId: shop.id });
+    await createService({ ...testService, shopId: shop.id });
 
     const { req, res } = createMockRequestResponse({ method: "GET" });
-    req.query = { ...req.query, name: "testServiceName", shop: "false" };
+    req.query = {
+      searchStr: testService.name,
+      searchByShop: "false",
+    };
     await shopLookupHandler(req, res);
 
     expect(res.statusCode).toBe(200);
@@ -372,13 +395,16 @@ describe("Shop Module", () => {
 
   it("FRT-M9-10: Get shop request with a service name that does not exist in any shop", async () => {
     const shop = await createShop(testShop);
-    const shop2 = await createShop(testShop2);
-    const shop3 = await createShop(testShop3);
+    await createShop(testShop2);
+    await createShop(testShop3);
 
-    const service = await createService({ ...testService, shopId: shop.id });
+    await createService({ ...testService, shopId: shop.id });
 
     const { req, res } = createMockRequestResponse({ method: "GET" });
-    req.query = { ...req.query, name: "asdf", shop: "false" };
+    req.query = {
+      searchStr: "asdf",
+      searchByShop: "false",
+    };
     await shopLookupHandler(req, res);
 
     expect(res.statusCode).toBe(200);
@@ -386,3 +412,37 @@ describe("Shop Module", () => {
     expect(res._getJSONData()).toMatchObject([]);
   });
 });
+
+const createShop = async (shopData: Shop = testShop) => {
+  return await prisma.shop.create({
+    data: {
+      id: shopData.id,
+      phoneNumber: shopData.phoneNumber,
+      email: shopData.email,
+      name: shopData.name,
+      address: shopData.address,
+      postalCode: shopData.postalCode,
+      city: shopData.city,
+      province: shopData.province,
+      latitude: shopData.latitude,
+      longitude: shopData.longitude,
+    },
+  });
+};
+
+const createService = async (
+  serviceData: ServiceWithPartsType = testService
+) => {
+  return await prisma.service.create({
+    data: {
+      id: serviceData.id,
+      name: serviceData.name,
+      description: serviceData.description,
+      estimatedTime: serviceData.estimatedTime,
+      totalPrice: serviceData.totalPrice,
+      parts: serviceData.parts,
+      type: serviceData.type,
+      shop: { connect: { id: serviceData.shopId } },
+    },
+  });
+};

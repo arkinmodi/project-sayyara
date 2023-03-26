@@ -87,6 +87,28 @@ const testCustomer: CustomerWithVehiclesType = {
   ],
 };
 
+const MOCK_BING_MAPS_RESPONSE = {
+  resourceSets: [
+    {
+      resources: [
+        {
+          point: {
+            coordinates: [43.1, -79.1],
+          },
+        },
+      ],
+    },
+  ],
+};
+
+(global as any).fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve(MOCK_BING_MAPS_RESPONSE),
+    ok: true,
+    status: 200,
+  })
+);
+
 beforeAll(async () => {
   await prisma.$connect();
 });

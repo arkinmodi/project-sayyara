@@ -1,10 +1,12 @@
 import { Customer, Employee, prisma } from "@server/db/client";
-import { createShopSchema, getShopById } from "@server/services/shopService";
+import {
+  createShopSchema,
+  getLatLongByAddress,
+  getShopById,
+} from "@server/services/shopService";
 import { createVehicleSchema } from "@server/services/vehicleService";
 import bcrypt from "bcrypt";
 import { Session } from "next-auth";
-import { LatLong } from "src/types/auth";
-import { getLatLongByAddress } from "src/utils/authUtil";
 import { PHONE_NUMBER_REGEX } from "src/utils/formValidationUtil";
 import { z } from "zod";
 
@@ -92,12 +94,12 @@ export type CreateShopOwnerType = z.infer<typeof createShopOwnerSchema>;
  *  Create a user of type shop owner
  *
  *  @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
- *  @date 01/06/2023
+ *  @date 03/26/2023
  *  @param {CreateShopOwnerType} shopOwner - Shop owner data
  *  @returns Employee object
  */
 export const createShopOwner = async (shopOwner: CreateShopOwnerType) => {
-  const latlong: LatLong | null = await getLatLongByAddress(
+  const latlong = await getLatLongByAddress(
     shopOwner.shop.address,
     shopOwner.shop.postalCode,
     shopOwner.shop.province,
