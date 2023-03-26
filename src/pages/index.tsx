@@ -635,6 +635,7 @@ const Home: NextPage = () => {
                     searchFilter,
                     selectedConditionFilters,
                     selectedTypeFilters,
+                    locationRange,
                     true
                   )
                 }
@@ -663,6 +664,7 @@ const Home: NextPage = () => {
                     searchFilter,
                     selectedConditionFilters,
                     selectedTypeFilters,
+                    locationRange,
                     true
                   )
                 }
