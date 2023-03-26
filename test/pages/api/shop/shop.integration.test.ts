@@ -23,6 +23,8 @@ const testShop = {
   postalCode: "testPostalCode",
   city: "testCity",
   province: "testProvince",
+  latitude: "43.0000",
+  longitude: "-79.0000",
 };
 
 const testShop2 = {
@@ -35,6 +37,8 @@ const testShop2 = {
   postalCode: "testPostalCode2",
   city: "testCity",
   province: "testProvince",
+  latitude: "43.0000",
+  longitude: "-79.0000",
 };
 
 const testShop3 = {
@@ -47,6 +51,8 @@ const testShop3 = {
   postalCode: "testPostalCode3",
   city: "testCity",
   province: "testProvince",
+  latitude: "43.0000",
+  longitude: "-79.0000",
 };
 
 const testService = {

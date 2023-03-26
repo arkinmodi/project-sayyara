@@ -55,6 +55,8 @@ const testShopOwner: EmployeeWithShopType = {
     postalCode: "A1A 1A1",
     city: "testCity",
     province: "testProvince",
+    latitude: "43.0000",
+    longitude: "-79.0000",
     hoursOfOperation: null,
   },
 };
@@ -284,6 +286,8 @@ const createShop = async () => {
       postalCode: testShopOwner.shop.postalCode,
       city: testShopOwner.shop.city,
       province: testShopOwner.shop.province,
+      latitude: testShopOwner.shop.latitude,
+      longitude: testShopOwner.shop.longitude,
     },
   });
 };
