@@ -25,7 +25,7 @@ const MAX_CHIP = 3;
 const filterByPartType = ["OEM", "AFTERMARKET"];
 const filterByPartCondition = ["NEW", "USED"];
 const searchFilterList: string[] = ["Service", "Shop Name"];
-const filterRange: [number, number] = [1, 101];
+const filterRange: [number, number] = [0, 101];
 
 const Home: NextPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -59,12 +59,6 @@ const Home: NextPage = () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         function success(position) {
-          console.log(
-            "latitude: ",
-            position.coords.latitude,
-            " longitude: ",
-            position.coords.longitude
-          );
           setUserLocation([
             position.coords.latitude,
             position.coords.longitude,
@@ -112,7 +106,8 @@ const Home: NextPage = () => {
       lastSearch[0],
       lastSearch[1],
       selectedConditionFilters,
-      _selectedTypeFilters
+      _selectedTypeFilters,
+      locationRange
     );
   };
 
@@ -139,30 +134,34 @@ const Home: NextPage = () => {
       lastSearch[0],
       lastSearch[1],
       _selectedConditionFilters,
-      selectedTypeFilters
+      selectedTypeFilters,
+      locationRange
     );
   };
 
   const setRange = (e: SliderChangeParams) => {
     if (typeof e.value !== "number") {
-      setLocationRange(e.value);
-    }
+      let _locationRange = e.value;
+      setLocationRange(_locationRange);
 
-    // Update search with range filters
-    onSearch(
-      lastSearch[0],
-      lastSearch[1],
-      selectedConditionFilters,
-      selectedTypeFilters
-    );
+      // Update search with range filters
+      onSearch(
+        lastSearch[0],
+        lastSearch[1],
+        selectedConditionFilters,
+        selectedTypeFilters,
+        _locationRange
+      );
+    }
   };
 
   const resetFilters = () => {
     // Resets filters
     setSelectedTypeFilters([]);
     setSelectedConditionFilters([]);
+    setLocationRange(filterRange);
 
-    onSearch(lastSearch[0], lastSearch[1], [], []);
+    onSearch(lastSearch[0], lastSearch[1], [], [], filterRange);
   };
 
   const onChangeString = (e: ChangeEvent<HTMLInputElement>) => {
@@ -226,11 +225,24 @@ const Home: NextPage = () => {
     return false;
   };
 
+  const filterByDistance = (
+    shops: (IShop & { services: IService[] } & { distance: number })[],
+    minDistance: number,
+    maxDistance: number
+  ) => {
+    let filteredShops = shops.filter((shop) => {
+      return shop.distance >= minDistance && shop.distance <= maxDistance;
+    });
+
+    setShops(filteredShops);
+  };
+
   const onSearch = (
     str: string,
     filter: string,
     conditions: string[],
     types: string[],
+    distanceRange: [number, number],
     fromButton?: boolean
   ) => {
     // Two scenarios:
@@ -247,11 +259,13 @@ const Home: NextPage = () => {
     // Check for location filter
     let latitude: number | null = null;
     let longitude: number | null = null;
-    if (userLocation && locationRange[1] < 101) {
+    if (userLocation && distanceRange[1] < 101) {
       // Accept location filter if location exists and range is provided (not 101)
       latitude = userLocation[0];
       longitude = userLocation[1];
     }
+
+    console.log("Location Range:", distanceRange);
 
     // Fetch via search parameters
     if (str !== "") {
@@ -264,7 +278,17 @@ const Home: NextPage = () => {
               let filteredData = data
                 .filter((shop) => filterByPartsType(shop, types))
                 .filter((shop) => filterByPartsCondition(shop, conditions));
-              setShops(filteredData);
+
+              // Filter by distance here
+              if (latitude && longitude) {
+                filterByDistance(
+                  filteredData,
+                  distanceRange[0],
+                  distanceRange[1]
+                );
+              } else {
+                setShops(filteredData);
+              }
             }
           });
           break;
@@ -275,7 +299,17 @@ const Home: NextPage = () => {
               let filteredData = data
                 .filter((shop) => filterByPartsType(shop, types))
                 .filter((shop) => filterByPartsCondition(shop, conditions));
-              setShops(filteredData);
+
+              // Filter by distance here
+              if (latitude && longitude) {
+                filterByDistance(
+                  filteredData,
+                  distanceRange[0],
+                  distanceRange[1]
+                );
+              } else {
+                setShops(filteredData);
+              }
             }
           });
           break;
@@ -288,7 +322,13 @@ const Home: NextPage = () => {
           let filteredData = data
             .filter((shop) => filterByPartsType(shop, types))
             .filter((shop) => filterByPartsCondition(shop, conditions));
-          setShops(filteredData);
+
+          // Filter by distance here
+          if (latitude && longitude) {
+            filterByDistance(filteredData, distanceRange[0], distanceRange[1]);
+          } else {
+            setShops(filteredData);
+          }
         }
       });
     }
@@ -373,9 +413,7 @@ const Home: NextPage = () => {
           height={image.height * 0.17}
         />
         <div className={styles.itemText}>
-          <h4 className={styles.itemShopName}>
-            {shop.name + (shop.distance ? `\t\t${shop.distance}` : "")}
-          </h4>
+          <h4 className={styles.itemShopName}>{shop.name}</h4>
           <div>{renderAddress(shop, view)}</div>
           <div>{serviceList}</div>
         </div>
