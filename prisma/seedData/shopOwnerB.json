@@ -14,6 +14,8 @@
     "postalCode": "M5V 2B7",
     "city": "Toronto",
     "province": "Ontario",
+    "latitude": "43.647640",
+    "longitude": "-79.400710",
     "hoursOfOperation": {
       "monday": {
         "isOpen": true,

@@ -8,12 +8,14 @@
   },
   "shop": {
     "name": "Precision Auto Services",
-    "address": "101 Market Street",
+    "address": "600 Moberly Road",
     "phoneNumber": "(613) 555-0191",
     "email": "shop_f@sayyara.com",
-    "postalCode": "V6B 2P7",
+    "postalCode": "V5Z 4J1",
     "city": "Vancouver",
     "province": "British Columbia",
+    "latitude": "49.26659",
+    "longitude": "-123.11857",
     "hoursOfOperation": {
       "monday": {
         "isOpen": true,
