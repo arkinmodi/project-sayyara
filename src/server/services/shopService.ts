@@ -15,8 +15,6 @@ export const createShopSchema = z.object({
   postalCode: z.string().regex(POSTAL_CODE_REGEX),
   phoneNumber: z.string().regex(PHONE_NUMBER_REGEX),
   email: z.string().email(),
-  latitude: z.string(),
-  longitude: z.string(),
 });
 
 export type CreateShopType = z.infer<typeof createShopSchema>;
