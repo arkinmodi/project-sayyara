@@ -1,6 +1,4 @@
 import { hoursOfOperationSchema, prisma } from "@server/db/client";
-import { LatLong } from "src/types/auth";
-import { getLatLongByAddress } from "src/utils/authUtil";
 import {
   PHONE_NUMBER_REGEX,
   POSTAL_CODE_REGEX,
@@ -18,33 +16,6 @@ export const createShopSchema = z.object({
 });
 
 export type CreateShopType = z.infer<typeof createShopSchema>;
-
-export const createShop = async (shop: CreateShopType) => {
-  const latlong: LatLong | null = await getLatLongByAddress(
-    shop.address,
-    shop.postalCode,
-    shop.province,
-    shop.city
-  );
-
-  if (!latlong) {
-    return Promise.reject("Invalid Location");
-  }
-
-  return await prisma.shop.create({
-    data: {
-      name: shop.name,
-      address: shop.address,
-      city: shop.city,
-      province: shop.province,
-      postalCode: shop.postalCode,
-      phoneNumber: shop.phoneNumber,
-      email: shop.email,
-      latitude: latlong.latitude,
-      longitude: latlong.longitude,
-    },
-  });
-};
 
 export const getShopById = async (id: string) => {
   return await prisma.shop.findUnique({ where: { id } });
@@ -112,7 +83,7 @@ export const updateShopById = async (id: string, patch: UpdateShopType) => {
 };
 
 export const getShopsByName = async (shop: string) => {
-  const shops = await prisma.shop.findMany({
+  return await prisma.shop.findMany({
     where: {
       name: {
         contains: shop,
@@ -122,12 +93,10 @@ export const getShopsByName = async (shop: string) => {
       services: true,
     },
   });
-
-  return shops;
 };
 
 export const getShopsByService = async (service: string) => {
-  const shops = await prisma.shop.findMany({
+  return await prisma.shop.findMany({
     where: {
       services: {
         some: {
@@ -141,6 +110,51 @@ export const getShopsByService = async (service: string) => {
       services: true,
     },
   });
-
-  return shops;
 };
+
+export type LatLong = {
+  latitude: string;
+  longitude: string;
+};
+
+/**
+ * Get Longitude and Latitude from an Address
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 03/26/2023
+ * @param {string} address - Address to get coordinates of
+ * @param {string} postalCode - Postal Code to of address
+ * @param {string} adminDistrict
+ * @param {string} locality
+ * @returns Latitude and Longitude object
+ */
+export async function getLatLongByAddress(
+  address: string,
+  postalCode: string,
+  adminDistrict: string,
+  locality: string
+): Promise<LatLong | null> {
+  const res = await fetch(
+    `http://dev.virtualearth.net/REST/v1/Locations?key=${process.env.BING_API_KEY}&countryRegion=CA&addressLine=${address}&postalCode=${postalCode}&adminDistrict=${adminDistrict}&locality=${locality}`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  if (res.status === 200) {
+    return res.json().then((data: any) => {
+      const latLong: LatLong = {
+        latitude:
+          data.resourceSets[0].resources[0].point.coordinates[0].toString(),
+        longitude:
+          data.resourceSets[0].resources[0].point.coordinates[1].toString(),
+      };
+      return latLong;
+    });
+  } else {
+    return null;
+  }
+}
