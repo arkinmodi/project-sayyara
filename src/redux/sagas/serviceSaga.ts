@@ -14,7 +14,6 @@ import {
 import { IParts } from "src/types/service";
 import {
   IServiceActionCreateService,
-  IServiceActionDeleteService,
   IServiceActionSetService,
 } from "../actions/serviceAction";
 import ServiceTypes from "../types/serviceTypes";
@@ -75,16 +74,6 @@ function* updateService(
   }
 }
 
-function* deleteService(
-  action: IServiceActionDeleteService
-): Generator<CallEffect | PutEffect> {
-  const serviceId = action.payload.serviceId;
-  const success = yield call(deleteServiceById, serviceId);
-  if (success) {
-    yield put({ type: ShopTypes.READ_SHOP_SERVICES });
-  }
-}
-
 function postCreate(body: IPostServiceBody): Promise<boolean> {
   return fetch(`/api/service/`, {
     method: "POST",
@@ -95,22 +84,6 @@ function postCreate(body: IPostServiceBody): Promise<boolean> {
     body: JSON.stringify(body),
   }).then((res) => {
     if (res.status === 201) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-}
-
-function deleteServiceById(serviceId: string): Promise<boolean> {
-  return fetch(`/api/service/${serviceId}`, {
-    method: "DELETE",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  }).then((res) => {
-    if (res.status === 204) {
       return true;
     } else {
       return false;
@@ -148,6 +121,5 @@ export function* serviceSaga() {
   yield all([
     takeEvery(ServiceTypes.SET_SERVICE, updateService),
     takeEvery(ServiceTypes.CREATE_SERVICE, createService),
-    takeEvery(ServiceTypes.DELETE_SERVICE, deleteService),
   ]);
 }

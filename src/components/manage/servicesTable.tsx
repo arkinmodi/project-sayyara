@@ -1,5 +1,5 @@
 import { UserType } from "@prisma/client";
-import { deleteService, setService } from "@redux/actions/serviceAction";
+import { setService } from "@redux/actions/serviceAction";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/pages/services/Services.module.css";
 import { Button } from "primereact/button";
@@ -19,7 +19,8 @@ import {
   InputNumberValueChangeParams,
 } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
-import React, { useState } from "react";
+import { Toast } from "primereact/toast";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   IService,
@@ -29,6 +30,7 @@ import {
   partsTypeCustom,
   ServiceType,
 } from "src/types/service";
+import { deleteServiceById } from "src/utils/serviceUtil";
 import AddPartPopup from "./addPartPopup";
 import AddServicePopup from "./addServicePopup";
 
@@ -46,6 +48,8 @@ const ServicesTable = (props: IServiceProps) => {
   const [addPartDialogVisible, setAddPartDialogVisible] = useState(false);
   const [serviceOnButtonClick, setServiceOnButtonClick] =
     useState<IService | null>(null);
+
+  const toastRef = useRef<Toast>(null);
 
   const { serviceType, services, isLoading } = props;
   const userType = useSelector(AuthSelectors.getUserType);
@@ -391,8 +395,29 @@ const ServicesTable = (props: IServiceProps) => {
     deleteServiceEvent(service.id);
   };
 
-  const deleteServiceEvent = (serviceId: string) => {
-    dispatch(deleteService({ serviceId: serviceId }));
+  const deleteServiceEvent = async (serviceId: string) => {
+    if (typeof serviceId === "string") {
+      await deleteServiceById(serviceId).then((res) => {
+        if (!res) {
+          showErrorToast(
+            "Service could not be deleted due to having an active appointment for the service"
+          );
+        }
+      });
+    } else {
+      showErrorToast("Service could not be deleted.");
+    }
+  };
+
+  const showErrorToast = (msg: string) => {
+    if (toastRef.current) {
+      toastRef.current.show({
+        sticky: true,
+        severity: "error",
+        summary: "Error",
+        detail: msg,
+      });
+    }
   };
 
   const handleDeletePartButton = (
@@ -512,6 +537,7 @@ const ServicesTable = (props: IServiceProps) => {
       ) : (
         <></>
       )}
+      <Toast ref={toastRef} position="top-right" />
     </div>
   );
 };
