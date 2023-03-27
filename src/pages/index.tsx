@@ -11,7 +11,11 @@ import { DataView } from "primereact/dataview";
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Panel } from "primereact/panel";
-import { Slider, SliderChangeParams } from "primereact/slider";
+import {
+  Slider,
+  SliderChangeParams,
+  SliderSlideEndParams,
+} from "primereact/slider";
 import { Tooltip } from "primereact/tooltip";
 import image from "public/icons/icon-192x192.png";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -143,8 +147,13 @@ const Home: NextPage = () => {
     if (typeof e.value !== "number") {
       let _locationRange = e.value;
       setLocationRange(_locationRange);
+    }
+  };
 
-      // Update search with range filters
+  const searchWithRange = (e: SliderSlideEndParams) => {
+    if (typeof e.value !== "number") {
+      let _locationRange = e.value;
+
       onSearch(
         lastSearch[0],
         lastSearch[1],
@@ -508,6 +517,7 @@ const Home: NextPage = () => {
                 min={filterRange[0]}
                 max={filterRange[1]}
                 onChange={setRange}
+                onSlideEnd={searchWithRange}
                 range
                 disabled={!userLocation}
               />
@@ -595,6 +605,7 @@ const Home: NextPage = () => {
                 min={filterRange[0]}
                 max={filterRange[1]}
                 onChange={setRange}
+                onSlideEnd={searchWithRange}
                 range
                 disabled={!userLocation}
               />
