@@ -399,7 +399,9 @@ const ServicesTable = (props: IServiceProps) => {
   const deleteServiceEvent = async (serviceId: string) => {
     if (typeof serviceId === "string") {
       await deleteServiceById(serviceId).then((res) => {
-        if (!res) {
+        if (res) {
+          dispatch(readShopServices());
+        } else {
           showErrorToast(
             "Service could not be deleted due to having an active appointment for the service."
           );
@@ -408,7 +410,6 @@ const ServicesTable = (props: IServiceProps) => {
     } else {
       showErrorToast("Service could not be deleted.");
     }
-    dispatch(readShopServices());
   };
 
   const showErrorToast = (msg: string) => {
