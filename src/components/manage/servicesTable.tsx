@@ -1,5 +1,6 @@
 import { UserType } from "@prisma/client";
 import { setService } from "@redux/actions/serviceAction";
+import { readShopServices } from "@redux/actions/shopActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/pages/services/Services.module.css";
 import { Button } from "primereact/button";
@@ -407,6 +408,7 @@ const ServicesTable = (props: IServiceProps) => {
     } else {
       showErrorToast("Service could not be deleted.");
     }
+    dispatch(readShopServices());
   };
 
   const showErrorToast = (msg: string) => {
