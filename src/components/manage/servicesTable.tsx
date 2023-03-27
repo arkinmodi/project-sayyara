@@ -400,7 +400,7 @@ const ServicesTable = (props: IServiceProps) => {
       await deleteServiceById(serviceId).then((res) => {
         if (!res) {
           showErrorToast(
-            "Service could not be deleted due to having an active appointment for the service"
+            "Service could not be deleted due to having an active appointment for the service."
           );
         }
       });
