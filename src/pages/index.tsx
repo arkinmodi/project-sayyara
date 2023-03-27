@@ -11,7 +11,11 @@ import { DataView } from "primereact/dataview";
 import { Dropdown, DropdownChangeParams } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { Panel } from "primereact/panel";
-import { Slider, SliderChangeParams } from "primereact/slider";
+import {
+  Slider,
+  SliderChangeParams,
+  SliderSlideEndParams,
+} from "primereact/slider";
 import { Tooltip } from "primereact/tooltip";
 import image from "public/icons/icon-192x192.png";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -143,8 +147,13 @@ const Home: NextPage = () => {
     if (typeof e.value !== "number") {
       let _locationRange = e.value;
       setLocationRange(_locationRange);
+    }
+  };
 
-      // Update search with range filters
+  const searchWithRange = (e: SliderSlideEndParams) => {
+    if (typeof e.value !== "number") {
+      let _locationRange = e.value;
+
       onSearch(
         lastSearch[0],
         lastSearch[1],
@@ -497,17 +506,34 @@ const Home: NextPage = () => {
                   </div>
                 );
               })}
-              <h5>
-                Location Range (km):{" "}
-                {locationRange[1] === 101
-                  ? "Unlimited"
-                  : `[${locationRange[0]}, ${locationRange[1]}]`}
-              </h5>
+              <div
+                className={classNames(styles.filterTitles, styles.sliderTitle)}
+              >
+                <span>
+                  <Tooltip
+                    target=".desktopLocationRange"
+                    style={{ fontSize: "12px" }}
+                  />
+                  <span style={{ marginRight: "0.5rem" }}>
+                    Location Range (km):
+                    {locationRange[1] === 101
+                      ? " Unlimited"
+                      : ` [${locationRange[0]}, ${locationRange[1]}]`}
+                  </span>
+                  <i
+                    className="pi pi-info-circle desktopLocationRange"
+                    data-pr-tooltip={`If location permissions are not given, this field will be disabled.`}
+                    data-pr-position="right"
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                </span>
+              </div>
               <Slider
                 value={locationRange}
                 min={filterRange[0]}
                 max={filterRange[1]}
                 onChange={setRange}
+                onSlideEnd={searchWithRange}
                 range
                 disabled={!userLocation}
               />
@@ -587,14 +613,34 @@ const Home: NextPage = () => {
                   </div>
                 );
               })}
-              <h5>
-                Location Range (km): [{locationRange[0]} - {locationRange[1]}]
-              </h5>
+              <div
+                className={classNames(styles.filterTitles, styles.sliderTitle)}
+              >
+                <span>
+                  <Tooltip
+                    target=".mobileLocationRange"
+                    style={{ fontSize: "12px" }}
+                  />
+                  <span style={{ marginRight: "0.5rem" }}>
+                    Location Range (km):
+                    {locationRange[1] === 101
+                      ? " Unlimited"
+                      : ` [${locationRange[0]}, ${locationRange[1]}]`}
+                  </span>
+                  <i
+                    className="pi pi-info-circle mobileLocationRange"
+                    data-pr-tooltip={`If location permissions are not given, this field will be disabled.`}
+                    data-pr-position="top"
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                </span>
+              </div>
               <Slider
                 value={locationRange}
                 min={filterRange[0]}
                 max={filterRange[1]}
                 onChange={setRange}
+                onSlideEnd={searchWithRange}
                 range
                 disabled={!userLocation}
               />

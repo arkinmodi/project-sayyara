@@ -25,6 +25,10 @@
   align-items: center;
 }
 
+.sliderTitle {
+  margin-bottom: 1rem;
+}
+
 .filterTitleText {
   display: flex;
   max-width: fit-content;
