@@ -1,5 +1,6 @@
 import { UserType } from "@prisma/client";
 import { setService } from "@redux/actions/serviceAction";
+import { readShopServices } from "@redux/actions/shopActions";
 import { AuthSelectors } from "@redux/selectors/authSelectors";
 import styles from "@styles/pages/services/Services.module.css";
 import { Button } from "primereact/button";
@@ -398,7 +399,9 @@ const ServicesTable = (props: IServiceProps) => {
   const deleteServiceEvent = async (serviceId: string) => {
     if (typeof serviceId === "string") {
       await deleteServiceById(serviceId).then((res) => {
-        if (!res) {
+        if (res) {
+          dispatch(readShopServices());
+        } else {
           showErrorToast(
             "Service could not be deleted due to having an active appointment for the service."
           );
