@@ -25,6 +25,7 @@ const MAX_CHIP = 3;
 const filterByPartType = ["OEM", "AFTERMARKET"];
 const filterByPartCondition = ["NEW", "USED"];
 const searchFilterList: string[] = ["Service", "Shop Name"];
+const filterRange: [number, number] = [0, 101];
 
 const Home: NextPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +34,8 @@ const Home: NextPage = () => {
   const [selectedConditionFilters, setSelectedConditionFilters] = useState<
     string[]
   >([]);
-  const [locationRange, setLocationRange] = useState<[number, number]>([1, 50]);
+  const [locationRange, setLocationRange] =
+    useState<[number, number]>(filterRange);
 
   const [searchString, setSearchString] = useState("");
   const [searchFilter, setSearchFilter] = useState<string>(
@@ -43,12 +45,37 @@ const Home: NextPage = () => {
     "",
     searchFilterList[0] as string,
   ]);
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(
+    null
+  );
 
-  const [shops, setShops] = useState<(IShop & { services: IService[] })[]>([]);
+  const [shops, setShops] = useState<
+    (IShop & { services: IService[] } & { distance: number })[]
+  >([]);
 
   // Initial fetch
   useEffect(() => {
-    getFilteredShops("", true).then((data) => {
+    // Get user location
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        function success(position) {
+          setUserLocation([
+            position.coords.latitude,
+            position.coords.longitude,
+          ]);
+        },
+        function error(error_message) {
+          console.log(
+            "An error has occurred while retrieving location ",
+            error_message
+          );
+        }
+      );
+    } else {
+      console.log("Geolocation is not supported on this browser.");
+    }
+
+    getFilteredShops("", true, null, null).then((data) => {
       if (data) {
         setShops(data);
         setIsLoading(false);
@@ -79,7 +106,8 @@ const Home: NextPage = () => {
       lastSearch[0],
       lastSearch[1],
       selectedConditionFilters,
-      _selectedTypeFilters
+      _selectedTypeFilters,
+      locationRange
     );
   };
 
@@ -106,13 +134,24 @@ const Home: NextPage = () => {
       lastSearch[0],
       lastSearch[1],
       _selectedConditionFilters,
-      selectedTypeFilters
+      selectedTypeFilters,
+      locationRange
     );
   };
 
   const setRange = (e: SliderChangeParams) => {
     if (typeof e.value !== "number") {
-      setLocationRange(e.value);
+      let _locationRange = e.value;
+      setLocationRange(_locationRange);
+
+      // Update search with range filters
+      onSearch(
+        lastSearch[0],
+        lastSearch[1],
+        selectedConditionFilters,
+        selectedTypeFilters,
+        _locationRange
+      );
     }
   };
 
@@ -120,8 +159,9 @@ const Home: NextPage = () => {
     // Resets filters
     setSelectedTypeFilters([]);
     setSelectedConditionFilters([]);
+    setLocationRange(filterRange);
 
-    onSearch(lastSearch[0], lastSearch[1], [], []);
+    onSearch(lastSearch[0], lastSearch[1], [], [], filterRange);
   };
 
   const onChangeString = (e: ChangeEvent<HTMLInputElement>) => {
@@ -185,11 +225,24 @@ const Home: NextPage = () => {
     return false;
   };
 
+  const filterByDistance = (
+    shops: (IShop & { services: IService[] } & { distance: number })[],
+    minDistance: number,
+    maxDistance: number
+  ) => {
+    let filteredShops = shops.filter((shop) => {
+      return shop.distance >= minDistance && shop.distance <= maxDistance;
+    });
+
+    setShops(filteredShops);
+  };
+
   const onSearch = (
     str: string,
     filter: string,
     conditions: string[],
     types: string[],
+    distanceRange: [number, number],
     fromButton?: boolean
   ) => {
     // Two scenarios:
@@ -203,28 +256,58 @@ const Home: NextPage = () => {
       setSearchFilter(lastSearch[1]);
     }
 
+    // Check for location filter
+    let latitude: number | null = null;
+    let longitude: number | null = null;
+    if (userLocation && distanceRange[1] < 101) {
+      // Accept location filter if location exists and range is provided (not 101)
+      latitude = userLocation[0];
+      longitude = userLocation[1];
+    }
+
     // Fetch via search parameters
     if (str !== "") {
+      // Can filter by service name or shop name
       switch (filter) {
         case "Service":
-          getFilteredShops(str, false).then((data) => {
+          getFilteredShops(str, false, latitude, longitude).then((data) => {
             if (data) {
               // Filter by part type here
               let filteredData = data
                 .filter((shop) => filterByPartsType(shop, types))
                 .filter((shop) => filterByPartsCondition(shop, conditions));
-              setShops(filteredData);
+
+              // Filter by distance here
+              if (latitude && longitude) {
+                filterByDistance(
+                  filteredData,
+                  distanceRange[0],
+                  distanceRange[1]
+                );
+              } else {
+                setShops(filteredData);
+              }
             }
           });
           break;
         case "Shop Name":
-          getFilteredShops(str, true).then((data) => {
+          getFilteredShops(str, true, latitude, longitude).then((data) => {
             if (data) {
               // Filter by part type here
               let filteredData = data
                 .filter((shop) => filterByPartsType(shop, types))
                 .filter((shop) => filterByPartsCondition(shop, conditions));
-              setShops(filteredData);
+
+              // Filter by distance here
+              if (latitude && longitude) {
+                filterByDistance(
+                  filteredData,
+                  distanceRange[0],
+                  distanceRange[1]
+                );
+              } else {
+                setShops(filteredData);
+              }
             }
           });
           break;
@@ -232,12 +315,18 @@ const Home: NextPage = () => {
           break;
       }
     } else {
-      getFilteredShops("", true).then((data) => {
+      getFilteredShops("", true, latitude, longitude).then((data) => {
         if (data) {
           let filteredData = data
             .filter((shop) => filterByPartsType(shop, types))
             .filter((shop) => filterByPartsCondition(shop, conditions));
-          setShops(filteredData);
+
+          // Filter by distance here
+          if (latitude && longitude) {
+            filterByDistance(filteredData, distanceRange[0], distanceRange[1]);
+          } else {
+            setShops(filteredData);
+          }
         }
       });
     }
@@ -308,7 +397,7 @@ const Home: NextPage = () => {
   };
 
   const itemTemplate = (
-    shop: IShop & { services: IService[] },
+    shop: IShop & { services: IService[] } & { distance: number },
     view: string
   ) => {
     const serviceList = generateServiceList(shop, view);
@@ -409,15 +498,18 @@ const Home: NextPage = () => {
                 );
               })}
               <h5>
-                Location Range (km): [{locationRange[0]} - {locationRange[1]}]
+                Location Range (km):{" "}
+                {locationRange[1] === 101
+                  ? "Unlimited"
+                  : `[${locationRange[0]}, ${locationRange[1]}]`}
               </h5>
               <Slider
                 value={locationRange}
-                min={1}
-                max={50}
+                min={filterRange[0]}
+                max={filterRange[1]}
                 onChange={setRange}
                 range
-                disabled
+                disabled={!userLocation}
               />
               <Button className={styles.filterButton} onClick={resetFilters}>
                 Reset Filters
@@ -500,11 +592,11 @@ const Home: NextPage = () => {
               </h5>
               <Slider
                 value={locationRange}
-                min={1}
-                max={50}
+                min={filterRange[0]}
+                max={filterRange[1]}
                 onChange={setRange}
                 range
-                disabled
+                disabled={!userLocation}
               />
               <Button className={styles.filterButton} onClick={resetFilters}>
                 Reset Filters
@@ -541,6 +633,7 @@ const Home: NextPage = () => {
                     searchFilter,
                     selectedConditionFilters,
                     selectedTypeFilters,
+                    locationRange,
                     true
                   )
                 }
@@ -569,6 +662,7 @@ const Home: NextPage = () => {
                     searchFilter,
                     selectedConditionFilters,
                     selectedTypeFilters,
+                    locationRange,
                     true
                   )
                 }

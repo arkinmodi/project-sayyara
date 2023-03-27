@@ -8,12 +8,14 @@
   },
   "shop": {
     "name": "Rapid Repair",
-    "address": "123 Main Street",
+    "address": "845 Sherbrooke St W",
     "phoneNumber": "(613) 555-0109",
     "email": "shop_c@sayyara.com",
-    "postalCode": "H3Z 2Y7",
+    "postalCode": "H3A 0G4",
     "city": "Montreal",
     "province": "Quebec",
+    "latitude": "45.50484",
+    "longitude": "-73.57712",
     "hoursOfOperation": {
       "monday": {
         "isOpen": true,

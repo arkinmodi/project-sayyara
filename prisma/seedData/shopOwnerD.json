@@ -14,6 +14,8 @@
     "postalCode": "M5A 1L4",
     "city": "Toronto",
     "province": "Ontario",
+    "latitude": "43.65535",
+    "longitude": "-79.35927",
     "hoursOfOperation": {
       "monday": {
         "isOpen": true,

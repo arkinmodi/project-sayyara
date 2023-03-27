@@ -159,11 +159,17 @@ export function patchShop(shopId: string, patch: IShop): Promise<IShop | null> {
   });
 }
 
+const toRads = (num: number) => {
+  return (num * Math.PI) / 180;
+};
+
 export function getFilteredShops(
   name: string,
-  isShop: boolean
-): Promise<(IShop & { services: IService[] })[] | null> {
-  const url = `/api/shop/lookup?name=${name}&shop=${isShop}`;
+  isShop: boolean,
+  latitude: number | null,
+  longitude: number | null
+): Promise<(IShop & { services: IService[] } & { distance: number })[] | null> {
+  const url = `/api/shop/lookup?searchStr=${name}&searchByShop=${isShop}`;
 
   return fetch(url, {
     method: "GET",
@@ -174,20 +180,41 @@ export function getFilteredShops(
   }).then((res) => {
     if (res.status === 200) {
       return res.json().then((data) => {
-        const shops = data.map((shop: Shop & { services: Service }) => {
-          return {
-            id: shop.id,
-            name: shop.name,
-            address: shop.address,
-            postalCode: shop.postalCode,
-            city: shop.city,
-            province: shop.province,
-            phoneNumber: shop.phoneNumber,
-            hoursOfOperation: shop.hoursOfOperation,
-            email: shop.email,
-            services: shop.services,
-          };
-        });
+        const shops = data.map(
+          (
+            shop: Shop & { services: Service } & { distance: number | null }
+          ) => {
+            // Gets the distance between the user and the shop
+            const distance: number | null =
+              latitude && longitude
+                ? Math.acos(
+                    Math.sin(toRads(latitude)) *
+                      Math.sin(toRads(Number(shop.latitude))) +
+                      Math.cos(toRads(latitude)) *
+                        Math.cos(toRads(Number(shop.latitude))) *
+                        Math.cos(
+                          toRads(longitude) - toRads(Number(shop.longitude))
+                        )
+                  ) * 6371
+                : null;
+
+            return {
+              id: shop.id,
+              name: shop.name,
+              address: shop.address,
+              postalCode: shop.postalCode,
+              city: shop.city,
+              province: shop.province,
+              phoneNumber: shop.phoneNumber,
+              hoursOfOperation: shop.hoursOfOperation,
+              email: shop.email,
+              latitude: shop.latitude,
+              longitude: shop.longitude,
+              services: shop.services,
+              distance: distance,
+            };
+          }
+        );
         return shops;
       });
     } else {

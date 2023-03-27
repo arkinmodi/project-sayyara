@@ -8,12 +8,14 @@
   },
   "shop": {
     "name": "Engine Experts",
-    "address": "222 Bridge Street",
+    "address": "2800 Bridge Street",
     "phoneNumber": "(613) 555-0116",
     "email": "shop_g@sayyara.com",
-    "postalCode": "V6C 2T2",
-    "city": "Vancouver",
+    "postalCode": "V8T 4T3",
+    "city": "Victoria",
     "province": "British Columbia",
+    "latitude": "48.43797",
+    "longitude": "-123.37389",
     "hoursOfOperation": {
       "monday": {
         "isOpen": true,
