@@ -28,3 +28,19 @@ export function getServiceById(id: string): Promise<IService | null> {
     }
   });
 }
+
+export function deleteServiceById(serviceId: string): Promise<boolean> {
+  return fetch(`/api/service/${serviceId}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((res) => {
+    if (res.status === 204) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
