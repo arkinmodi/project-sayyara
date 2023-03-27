@@ -11,9 +11,11 @@
     "address": "1234 Yonge Street",
     "phoneNumber": "(613) 555-0120",
     "email": "shop_j@sayyara.com",
-    "postalCode": "M4N 2N5",
+    "postalCode": "M4T 1W3",
     "city": "Toronto",
     "province": "Ontario",
+    "latitude": "43.68260",
+    "longitude": "-79.39204",
     "hoursOfOperation": {
       "monday": {
         "isOpen": true,

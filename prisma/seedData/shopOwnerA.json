@@ -14,6 +14,8 @@
     "postalCode": "L8S 4L8",
     "city": "Hamilton",
     "province": "Ontario",
+    "latitude": "43.257980",
+    "longitude": "-79.917007",
     "hoursOfOperation": {
       "monday": {
         "isOpen": true,

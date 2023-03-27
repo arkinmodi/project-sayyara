@@ -55,6 +55,8 @@ const testShopOwner: EmployeeWithShopType = {
     postalCode: "A1A 1A1",
     city: "testCity",
     province: "testProvince",
+    latitude: "43.0000",
+    longitude: "-79.0000",
     hoursOfOperation: null,
   },
 };
@@ -84,6 +86,28 @@ const testCustomer: CustomerWithVehiclesType = {
     },
   ],
 };
+
+const MOCK_BING_MAPS_RESPONSE = {
+  resourceSets: [
+    {
+      resources: [
+        {
+          point: {
+            coordinates: [43.1, -79.1],
+          },
+        },
+      ],
+    },
+  ],
+};
+
+(global as any).fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve(MOCK_BING_MAPS_RESPONSE),
+    ok: true,
+    status: 200,
+  })
+);
 
 beforeAll(async () => {
   await prisma.$connect();
@@ -284,6 +308,8 @@ const createShop = async () => {
       postalCode: testShopOwner.shop.postalCode,
       city: testShopOwner.shop.city,
       province: testShopOwner.shop.province,
+      latitude: testShopOwner.shop.latitude,
+      longitude: testShopOwner.shop.longitude,
     },
   });
 };

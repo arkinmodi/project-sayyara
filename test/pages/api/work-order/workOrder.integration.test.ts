@@ -29,6 +29,8 @@ const testShop: Shop = {
   postalCode: "testPostalCode",
   city: "testCity",
   province: "testProvince",
+  latitude: "43.0000",
+  longitude: "-79.0000",
   hoursOfOperation: null,
 };
 
@@ -322,6 +324,8 @@ const createEmployeeAndShop = async () => {
           postalCode: testShop.postalCode,
           city: testShop.city,
           province: testShop.province,
+          latitude: testShop.latitude,
+          longitude: testShop.longitude,
         },
       },
     },

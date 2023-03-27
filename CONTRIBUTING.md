@@ -72,6 +72,8 @@ An `.env` file will need to be created. A template `.env.example` is available t
 openssl rand -base64 32
 ```
 
+This project uses [Bing Maps APIs](https://www.microsoft.com/en-us/maps/choose-your-bing-maps-api) and you will need to generate an API key.
+
 This project uses [Docker](https://www.docker.com/) to start up a local [MySQL](https://www.mysql.com/) database.
 
 ```sh

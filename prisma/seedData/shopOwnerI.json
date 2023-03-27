@@ -11,9 +11,11 @@
     "address": "678 Richmond Street West",
     "phoneNumber": "(613) 555-0183",
     "email": "shop_i@sayyara.com",
-    "postalCode": "M6J 1C9",
+    "postalCode": "M6J 1C3",
     "city": "Toronto",
     "province": "Ontario",
+    "latitude": "43.64621",
+    "longitude": "-79.40596",
     "hoursOfOperation": {
       "monday": {
         "isOpen": true,

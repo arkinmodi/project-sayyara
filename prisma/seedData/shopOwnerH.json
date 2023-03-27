@@ -11,9 +11,11 @@
     "address": "345 Water Street",
     "phoneNumber": "(613) 555-0144",
     "email": "shop_h@sayyara.com",
-    "postalCode": "V6B 1B6",
+    "postalCode": "V6B 1B8",
     "city": "Vancouver",
     "province": "British Columbia",
+    "latitude": "49.28464",
+    "longitude": "-123.10980",
     "hoursOfOperation": {
       "monday": {
         "isOpen": true,
