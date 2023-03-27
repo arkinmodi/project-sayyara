@@ -11,6 +11,8 @@
 .chatContents {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  min-width: 100%;
 }
 
 .span {
