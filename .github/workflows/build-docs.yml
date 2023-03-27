@@ -98,7 +98,7 @@ jobs:
           VNVP_DIR: docs/VnVPlan
           VNVR_FILENAME: VnVReport.pdf
           VNVR_DIR: docs/VnVReport
-          EXPOES_DIR: docs/Presentations/EXPO
+          EXPOES_DIR: docs/Presentations/EXPO/ExecutiveSummary
           EXPOES_FILENAME: ExecutiveSummary.pdf
 
         run: |

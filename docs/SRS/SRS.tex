@@ -112,6 +112,8 @@
 	March 14, 2023     & Timothy Choy          & Update Work Partitioning for Quotes                                                \\
 	March 15, 2023     & Joy Xiao              & Update services and appointments requirements                                      \\
 	March 18, 2023     & Arkin Modi            & Update Individual Product Use Cases from Quotes and Work Orders                    \\
+	March 19, 2023     & Joy Xiao              & Update NFRs with more details                                                      \\
+	March 19, 2023     & Joy Xiao              & Update services and appointments requirements to add more details                  \\
 	\bottomrule
 \end{longtable}
 
@@ -533,8 +535,8 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 	\item If unsuccessful, system rejects authentication and shows an error message
 \end{enumerate}
 
-\textbf{Title:} Creating a basic service\\
-\textbf{Trigger:} Auto repair shop owner adds a basic service to the shop\\
+\textbf{Title:} Creating a canned service\\
+\textbf{Trigger:} Auto repair shop owner adds a canned service to the shop\\
 \textbf{Pre-condition:} Auto repair shop account exists\\
 \textbf{Outcome:}
 \begin{enumerate}
@@ -544,7 +546,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 	\item User enters the part name, quantity, cost per unit, condition, and type of the parts required or
 	      used in the service
 	\item User enters the estimated cost of the service
-	\item System creates a basic service for the shop using the information provided above
+	\item System creates a canned service for the shop using the information provided above
 \end{enumerate}
 
 \textbf{Title:} Creating a custom service\\
@@ -564,7 +566,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 \textbf{Pre-condition:} Auto repair shop exists\\
 \textbf{Outcome:}
 \begin{enumerate}
-	\item System shows a list of basic services that have been registered with the selected shop
+	\item System shows a list of canned services that have been registered with the selected shop
 	\item System shows a list of custom services that have been registered with the selected shop
 	\item If no services exist, an empty services table will be displayed
 	\item System shows additional details of the service, including the description, estimated time to
@@ -829,12 +831,19 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to select a scheduled appointment
+			            \item The system shall allow the user to select a ``scheduled'' appointment
 			            \item The system shall allow the user to select another available time slot
+			            \item The system shall move the appointment to a ``requested'' state
+			            \item The system shall allow the user to cancel and exit the edit appointment process
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item[] N/A
+			            \item The system shall allow the user to accept an appointment and move the appointment to a
+			                  ``scheduled'' state and notify the user that the appointment was moved to ``scheduled''
+			            \item The system shall allow the user to move an appointment to an ``in progress'' state and notify the
+			                  user that the appointment was moved to ``in progress''
+			            \item The system shall allow the user to move an appointment to a ``completed'' state and notify the user
+			                  that the appointment was moved to ``completed''
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
@@ -846,18 +855,47 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to select a scheduled appointment
-			            \item The system shall allow the user to cancel the appointment
+			            \item The system shall allow the user to cancel a ``requested'' or ``scheduled'' appointment
+			            \item The system shall prompt the user for a cancellation reason
+			            \item The system shall allow the cancellation to be saved only when the cancellation reason not empty
+			            \item The system shall notify the user that the appointment was ``cancelled''
+			            \item The appointment status shall update and be moved to the ``rejected/cancelled'' section
+			            \item The system shall allow the user to exit the cancel appointment process
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
-			            \item The system shall allow the user to select a scheduled appointment
-			            \item The system shall allow the user to cancel the appointment
+			            \item The system shall allow the user to cancel a ``scheduled'' appointment
+			            \item The system shall prompt the user for a cancellation reason
+			            \item The system shall allow the cancellation to be saved only when the cancellation reason is not empty
+			            \item The system shall notify the user that the appointment was ``cancelled''
+			            \item The appointment status shall update and be moved to the ``cancelled'' section
+			            \item The system shall allow the user to exit the cancel appointment process
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
-			            \item The system shall allow the user to select a scheduled appointment
-			            \item The system shall allow the user to cancel the appointment
+			            \item The system shall allow the user to cancel a ``scheduled'' appointment
+			            \item The system shall prompt the user for a cancellation reason
+			            \item The system shall allow the cancellation to be saved only if the cancellation reason is not empty
+			            \item The system shall notify the user that the appointment was ``cancelled''
+			            \item The appointment status shall update and be moved to the ``cancelled'' section
+			            \item The system shall allow the user to exit the cancel appointment process
+		            \end{enumerate}
+	      \end{enumerate}
+
+	\item The user wants to reject an appointment
+	      \begin{enumerate}[VP\arabic*.]
+		      \item Viewpoint: Vehicle Owner
+		            \begin{enumerate}
+			            \item[] N/A
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Owner
+		            \begin{enumerate}
+			            \item The system shall allow the user to reject a requested appointment
+			            \item The system shall notify the user that the appointment was rejected
+		            \end{enumerate}
+		      \item Viewpoint: Auto Repair Shop Employee
+		            \begin{enumerate}
+			            \item[] N/A
 		            \end{enumerate}
 	      \end{enumerate}
 
@@ -1122,7 +1160,7 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 
 \subsubsection{Services}
 \begin{enumerate}[resume*=business_events]
-	\item The user wants to add a basic auto shop service to the shop profile
+	\item The user wants to add a canned auto shop service to the shop profile
 	      \begin{enumerate}[VP\arabic*.]
 		      \item Viewpoint: Vehicle Owner
 		            \begin{enumerate}
@@ -1136,6 +1174,10 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall allow the user to enter the parts used for the service including quantity,
 			                  condition (new or used), build (OEM or aftermarket), and cost per part (before tax cost)
 			            \item The system shall allow the user to enter the total price for the service (before tax price)
+			            \item The system shall allow the user to enter only numerical values for any costs or quantity fields
+			            \item The system shall prompt the user to fill in any missing fields when the user attempts to save the
+			                  service
+			            \item The system shall allow the user to save the service only when all form fields are filled
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
@@ -1155,6 +1197,10 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall allow the user to enter a description for the service
 			            \item The system shall allow the user to enter the part condition (new or used), type (OEM or
 			                  aftermarket) for the parts used for the service
+			            \item The system shall allow the user to enter only numerical values for any costs or quantity fields
+			            \item The system shall prompt the user to fill in any missing fields when the user attempts to save the
+			                  service
+			            \item The system shall allow the user to save the service only when all form fields are filled
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
@@ -1172,11 +1218,13 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		            \begin{enumerate}
 			            \item The system shall display the service details
 			            \item The system shall allow the user to search by service name
+			            \item The system shall display an empty table if the search criteria does not match any services
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
 			            \item The system shall display the service details
 			            \item The system shall allow the user to search by service name
+			            \item The system shall display an empty table if the search criteria does not match any services
 		            \end{enumerate}
 	      \end{enumerate}
 
@@ -1189,6 +1237,10 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 		      \item Viewpoint: Auto Repair Shop Owner
 		            \begin{enumerate}
 			            \item The system shall allow the user to update the details of a particular service
+			            \item The system shall allow the user to enter only numerical values for any costs or quantity fields
+			            \item The system shall prompt the user to fill in any missing fields when the user attempts to save the
+			                  service
+			            \item The system shall allow the user to save the service only when all form fields are filled
 		            \end{enumerate}
 		      \item Viewpoint: Auto Repair Shop Employee
 		            \begin{enumerate}
@@ -1338,33 +1390,45 @@ The requirements in \textbf{bold} are additional requirements from the Revision 
 \begin{enumerate}[PR\arabic*.]
 	\item The system shall respond to the user's interactions in a timely manner by following good web
 	      standards as stated \href{https://web.dev/vitals/}{here}.
+	\item The system shall be available every day of the year with an allowable downtime of 60 minutes per
+	      week. The downtime will allow for any maintenance or system updates.
 \end{enumerate}
 
 \subsection{Operational and Environmental Requirements}
 \begin{enumerate}[OE\arabic*.]
-	\item The system shall be able to operate on desktops and mobile devices
+	\item The system shall be able to operate on desktops and mobile devices through Google Chrome and
+	      Microsoft Edge web browsers.
 \end{enumerate}
 
 \subsection{Maintainability and Support Requirements}
 \begin{enumerate}[MS\arabic*.]
-	\item The system shall be well documented
+	\item The system shall be well documented with up to date problem statement and goals, requirements
+	      specifications, hazard analysis, software design documents and testing documents. The system shall
+	      have appropriate comments to ensure maintainability of the system. Any source files will have the
+	      author of the file and date edited. Any methods within a file will have the author, edited date,
+	      param, and return values documented.
 \end{enumerate}
 
 \subsection{Security Requirements}
 \begin{enumerate}[SR\arabic*.]
-	\item The system shall keep user's data private
-	\item The system shall limit the data shown to user's on a needs to know basis
+	\item The system shall keep user's data private. User passwords will be hashed in transit and encrypted
+	      at rest to protect user accounts from being compromised.
+	\item The system shall limit the data shown to user's on a needs to know basis. Unnecessary data will not
+	      be displayed to the user or sent from the server to client side. This is to ensure that only the
+	      minimal amount of data is being shown in order to protect user and application details.
 \end{enumerate}
 
 \subsection{Cultural Requirements}
 \begin{enumerate}[CR\arabic*.]
-	\item The system shall not use any text or images that will offend anyone that will use it
+	\item The system shall not use any text or images that will offend anyone that will use it. Any offensive
+	      images from any culture or religion should not be allowed on the application.
 	\item The system will use Canadian English
 \end{enumerate}
 
 \subsection{Legal Requirements}
 \begin{enumerate}[LR\arabic*.]
-	\item The system shall not contain any assets which infringe on copyright claims
+	\item The system shall not contain any assets which infringe on copyright claims. The developers will
+	      abide by any copyrights and will give appropriate credit if using any open source resources.
 \end{enumerate}
 
 \subsection{Health and Safety Requirements}
