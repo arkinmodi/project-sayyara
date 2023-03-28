@@ -179,21 +179,26 @@ integrity and prevents the undesirable data from entering the workflows or datab
 
 \subsection{Component Diagram}
 
-The Database is always accessed through the Database Driver Module. All other modules would have to
-interface with this module for any reads or writes to the database. The application also requires
-authentication by having the user login to their account in order to perform tasks such as viewing
-their appointments from their Appointments Module. The Authentication checks with the database if
-the login credentials are correct, then the database will return the user data. The Shop Module is
-the shop system with information specific to each shop such as the shop name, address, phone
-number, store hours, etc. The Quotes Module is the quotes system with the shop and customer chats.
-Appointment Module has all of the appointment information and statuses where users can view their
-appointments, cancel appointments, and edit appointments. The Work Orders Module is where users can
-update the work order information such as the user assigned to the work order and update work order
-details. The Users Module stores all of the user's information such as name, email, phone number,
-etc. The Employee Management Module is for the shop owner to manage their employees by viewing
-employee information, getting the employee invitation code, and suspending employee accounts. The
-Services Module is where shop owners or employees can view their canned and custom services,
-add/update/delete services and add/update/delete parts used for each service.
+The Authentication Module is responsible for ensuring users have the appropriate permissions to
+access resources and modules to perform specific actions. The Authentication Module is responsible
+for handling authentication for requests between the client and server, and providing mechanisms
+for authorizing access to requests resources. The Authentication Module will ensure that any
+actions and interactions between modules are authorized based on the user and their permissions.
+The Shop Module is responsible for handling requests associated with any shop entity, including
+handling requests for shop creation, update, and look up. The Quotes Module is responsible for
+handling requests and interactions for quotes, including the live chat module. The Appointments
+Module is responsible for handling any appointment creations, appointment status updates,
+appointment cancellations, and appointment edits. The Work Orders Module is responsible for
+handling requests regarding the work order of a service, including creating the work order and
+updating the work order. The Users Module is responsible for handling user account related requests
+such as retrieving user data and user account creation for the shop owner, employee, and customer.
+The Employee Management Module is responsible for handling employee requests such as getting all
+employees in a shop and updating the employee account status to suspend employees. The Services
+Module is responsible for handling requests to create, update, delete services and parts used for
+each service. The Database Driver Module is responsible for providing a standard interface for
+communication between the application and the database management system (DBMS). The database
+driver module acts as a mediator between the application and the DBMS, and provides mechanisms for
+the application to interact with the database.
 
 \begin{figure}[H]
 	\centering
