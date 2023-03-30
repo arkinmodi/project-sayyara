@@ -176,6 +176,8 @@ model Shop {
   postalCode       String
   city             String
   province         String
+  latitude         String
+  longitude        String
   hoursOfOperation Json?
 
   appointments Appointment[]

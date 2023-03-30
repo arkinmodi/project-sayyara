@@ -10,19 +10,19 @@ const shopLookupHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const { name, shop } = req.query;
+  const { searchStr, searchByShop } = req.query;
 
-  if (typeof name !== "string" || typeof shop !== "string") {
+  if (typeof searchStr !== "string" || typeof searchByShop !== "string") {
     res.status(400).json({ message: "Invalid input." });
     return;
+  }
+
+  if (searchByShop === "true") {
+    const result = await getShopsByName(searchStr);
+    res.status(200).json(result);
   } else {
-    if (shop === "true") {
-      const result = await getShopsByName(name);
-      res.status(200).json(result);
-    } else {
-      const result = await getShopsByService(name);
-      res.status(200).json(result);
-    }
+    const result = await getShopsByService(searchStr);
+    res.status(200).json(result);
   }
 };
 

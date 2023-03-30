@@ -8,12 +8,14 @@
   },
   "shop": {
     "name": "Car Care Center",
-    "address": "789 Park Avenue",
+    "address": "6011 Park Avenue",
     "phoneNumber": "(613) 555-0105",
     "email": "shop_e@sayyara.com",
-    "postalCode": "H2X 2L5",
+    "postalCode": "H2V 4H4",
     "city": "Montreal",
     "province": "Quebec",
+    "latitude": "45.52520",
+    "longitude": "-73.60851",
     "hoursOfOperation": {
       "monday": {
         "isOpen": true,

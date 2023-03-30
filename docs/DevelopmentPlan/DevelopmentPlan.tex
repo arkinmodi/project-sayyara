@@ -21,18 +21,19 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}      & \textbf{Developer(s)} & \textbf{Change}                              \\
+		\textbf{Date}      & \textbf{Developer(s)} & \textbf{Change}                                  \\
 		\midrule
-		September 23, 2022 & Timothy Choy          & Add roles and responsibilities               \\
-		September 23, 2022 & Arkin Modi            & Create project scheduling section            \\
-		September 23, 2022 & Arkin Modi            & Create workflow plan                         \\
-		September 23, 2022 & Arkin Modi            & Create technology and code standard sections \\
-		September 25, 2022 & Timothy Choy          & Create team meeting plan                     \\
-		September 25, 2022 & Timothy Choy          & Create team communication plan               \\
-		September 25, 2022 & Timothy Choy          & Create proof of concept demo plan            \\
-		September 26, 2022 & Timothy Choy          & Add introductory blurb                       \\
-		March 8, 2023      & Joy Xiao              & Change component library                     \\
-		March 18, 2023     & Arkin Modi            & Update weekly meeting times                  \\
+		September 23, 2022 & Timothy Choy          & Add roles and responsibilities                   \\
+		September 23, 2022 & Arkin Modi            & Create project scheduling section                \\
+		September 23, 2022 & Arkin Modi            & Create workflow plan                             \\
+		September 23, 2022 & Arkin Modi            & Create technology and code standard sections     \\
+		September 25, 2022 & Timothy Choy          & Create team meeting plan                         \\
+		September 25, 2022 & Timothy Choy          & Create team communication plan                   \\
+		September 25, 2022 & Timothy Choy          & Create proof of concept demo plan                \\
+		September 26, 2022 & Timothy Choy          & Add introductory blurb                           \\
+		March 8, 2023      & Joy Xiao              & Change component library                         \\
+		March 18, 2023     & Arkin Modi            & Update weekly meeting times                      \\
+		March 26, 2023     & Arkin Modi            & Add static analysis and code documentation tools \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -232,16 +233,18 @@ the assurances of ACID compliance, fewer consistency issues, and enforced field 
 use of Prisma is due to past experience within the team and a strong reputation within the web
 development world.
 
-Jest and React Testing Library will be used for unit tests, integration tests, and code coverage.
-Most of the team does not have much experience with frontend testing, therefore the team has
-decided to go with the libraries recommended by Next.js. The team have decided against using any
-end-to-end testing frameworks (e.g., Cypress, Playwright) due to lack of domain knowledge within
-the team and time constraints.
+The Jest Testing Framework and React Testing Library will be used for unit tests, integration
+tests, and code coverage. Most of the team does not have much experience with frontend testing,
+therefore the team has decided to go with the libraries recommended by Next.js. The team has
+decided against using any end-to-end testing frameworks (e.g., Cypress, Playwright) due to lack of
+domain knowledge within the team and time constraints.
 
 Git and GitHub will be used for version control and hosting a centralized online repository. This
 was chosen due to course requirements and past experience.
 
-Documentation will be written in a mix of \LaTeX{} and Markdown.
+Documentation will be written in a mix of \LaTeX{} and Markdown. Code documentation will be written
+inline with the source code as docstrings and will follow JSDoc annotations. The docstrings will be
+rendered into HTML documentation using TypeDoc.
 
 With high performance not being a primary goal for this project, the team will not use be using any
 performance benchmarking tools. The team will be maintaining a Google Lighthouse score of greater
@@ -255,14 +258,14 @@ The development environment for any developer is a highly personal decision and 
 not be enforcing the use any specific local dev tooling, the team will be recommending to all
 developers to use Visual Studio Code for easy interoperability between developers. The team will
 also have a list of recommended extensions and setting for Visual Studio Code available in the
-.vscode folder. The team will also be using Docker for easy setup of external dependencies (e.g.,
-TeX Live, MySQL).
+``.vscode'' folder. The team will also be using Docker for easy setup of external dependencies
+(e.g., TeX Live, MySQL).
 
 \section{Coding Standard}
 
 To ensure consistent code styling and code quality, the application code will be formatted using
-Prettier. Prettier is an industry standard code formatter and widely agreed upon default
-configuration.
+Prettier and ESLint. Prettier is an industry standard code formatter and widely agreed upon default
+configuration. ESLint is an industry standard static analysis tool for TypeScript.
 
 For \LaTeX{} docs, the team will be using latexindent.pl. latexindent.pl is a popular \LaTeX{} code
 formatter. The primary use will be for managing whitespace to ensure consistent readability in
