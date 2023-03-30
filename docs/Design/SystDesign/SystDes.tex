@@ -53,6 +53,7 @@
 		January 17, 2023  & Leon So               & Add Login \& Sign Up, Shop Owner/Employee Landing Page, Shop Profile, Employee Management Mockups \\
 		January 17, 2023  & Timothy Choy          & Add Customer Appointments, Quotes, Shop Lookup Mockups                                            \\
 		January 18, 2023  & Leon So               & Add team reflection                                                                               \\
+		March 25, 2023    & Joy Xiao              & Add Component Diagram Description                                                                 \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -177,6 +178,25 @@ validated on the server-side by parsing the input data using defined schemas. Th
 integrity and prevents the undesirable data from entering the workflows or database.
 
 \subsection{Component Diagram}
+
+The Authentication Module is responsible for ensuring users have the appropriate permissions to
+access resources and modules to perform specific actions. The Authentication Module is responsible
+for handling authentication for requests between the client and server, and providing mechanisms
+for authorizing access to requests resources. The Authentication Module will ensure that any
+actions and interactions between modules are authorized based on the user and their permissions.
+The Shop Module is responsible for handling requests associated with any shop entity, including
+handling requests for shop creation, update, and look up. The Quotes Module is responsible for
+handling requests and interactions for quotes, including the live chat module. The Appointments
+Module is responsible for handling any appointment creations, appointment status updates,
+appointment cancellations, and appointment edits. The Work Orders Module is responsible for
+handling requests regarding the work order of a service, including creating the work order and
+updating the work order. The Users Module is responsible for handling user account related requests
+such as retrieving user data and user account creation for the shop owner, employee, and customer.
+The Employee Management Module is responsible for handling employee requests such as getting all
+employees in a shop and updating the employee account status to suspend employees. The Services
+Module is responsible for handling requests to create, update, delete services and parts used for
+each service. The Database Driver Module is responsible for providing a standard interface for
+communication between the application and the database management system (DBMS).
 
 \begin{figure}[H]
 	\centering
