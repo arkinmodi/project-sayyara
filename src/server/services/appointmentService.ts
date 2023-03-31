@@ -21,6 +21,14 @@ export const createAppointmentSchema = z.object({
 
 export type CreateAppointmentType = z.infer<typeof createAppointmentSchema>;
 
+/**
+ * Create an appointment
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 11/12/2022
+ * @param {CreateAppointmentType} appointment - Appointment data
+ * @returns Appointment object
+ */
 export const createAppointment = async (appointment: CreateAppointmentType) => {
   const service = await getServiceById(appointment.serviceId);
 
@@ -70,14 +78,26 @@ export const createAppointment = async (appointment: CreateAppointmentType) => {
   });
 };
 
-export const getAllAppointments = async () => {
-  return await prisma.appointment.findMany({});
-};
-
+/**
+ * Get appointment by appointment ID
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 11/12/2022
+ * @param {string} id - Appointment ID
+ * @returns Appointment object
+ */
 export const getAppointmentById = async (id: string) => {
   return await prisma.appointment.findUnique({ where: { id } });
 };
 
+/**
+ * Get a list of appointments by shop ID with vehicle, customer, and service data
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 03/17/2023
+ * @param {string} shopId - Shop ID
+ * @returns List of appointment objects
+ */
 export const getAppointmentsByShopId = async (shopId: string) => {
   const appointments = await prisma.appointment.findMany({
     where: { shopId },
@@ -92,6 +112,16 @@ export const getAppointmentsByShopId = async (shopId: string) => {
   return appointments;
 };
 
+/**
+ * Get a list of appointments within a time period by shop ID
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 02/12/2023
+ * @param {string} shopId - Shop ID
+ * @param {Date} startDate - Start date and time
+ * @param {Date} endDate - End date and time
+ * @returns List of appointment objects
+ */
 export const getAvailabilitiesByShopId = async (
   shopId: string,
   startDate: Date,
@@ -114,6 +144,14 @@ export const getAvailabilitiesByShopId = async (
   });
 };
 
+/**
+ * Get a list of appointments by customer ID with vehicle and service data
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 03/17/2023
+ * @param {string} customerId - Customer ID
+ * @returns List of appointment objects
+ */
 export const getAppointmentsByCustomerId = async (customerId: string) => {
   return await prisma.appointment.findMany({
     where: { customerId },
@@ -142,6 +180,15 @@ export const updateAppointmentSchema = z.object({
 
 export type UpdateAppointmentType = z.infer<typeof updateAppointmentSchema>;
 
+/**
+ * Update an appointment by appointment ID
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 11/12/2022
+ * @param {string} id - Appointment ID
+ * @param {UpdateAppointmentType} patch - Update data
+ * @returns Appointment object
+ */
 export const updateAppointmentById = async (
   id: string,
   patch: UpdateAppointmentType
@@ -192,6 +239,13 @@ export const updateAppointmentById = async (
   });
 };
 
+/**
+ * Accpet an appointment and reject all other conflicting pending appointments
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 11/12/2022
+ * @param {Appointment} appointment - Appointment to accept
+ */
 const acceptAppointment = async (appointment: Appointment) => {
   await prisma.$transaction([
     prisma.appointment.update({
@@ -246,6 +300,14 @@ const acceptAppointment = async (appointment: Appointment) => {
   ]);
 };
 
+/**
+ * Delete appointment by appointment ID
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 11/12/2022
+ * @param {string} id - ID of appointment to delete
+ * @returns Appointment object
+ */
 export const deleteAppointment = async (id: string) => {
   return await prisma.appointment.delete({ where: { id } });
 };

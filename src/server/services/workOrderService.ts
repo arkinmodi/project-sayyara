@@ -14,6 +14,14 @@ export const createWorkOrderSchema = z.object({
 
 export type CreateWorkOrderType = z.infer<typeof createWorkOrderSchema>;
 
+/**
+ * Create work order
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 02/08/2023
+ * @param {CreateWorkOrderType} workOrder - Work order data
+ * @returns Work order object
+ */
 export const createWorkOrder = async (workOrder: CreateWorkOrderType) => {
   const employee = workOrder.employeeId
     ? { employee: { connect: { id: workOrder.employeeId } } }
@@ -31,6 +39,14 @@ export const createWorkOrder = async (workOrder: CreateWorkOrderType) => {
   });
 };
 
+/**
+ * Get work order by ID
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 02/08/2023
+ * @param {string} id - Work order ID
+ * @returns Work order object
+ */
 export const getWorkOrderById = async (id: string) => {
   const workOrder = await prisma.workOrder.findUnique({
     where: { id },
@@ -41,12 +57,23 @@ export const getWorkOrderById = async (id: string) => {
       employee: true,
     },
   });
-  if (workOrder && workOrder.employee) {
-    exclude(workOrder.employee, ["password"]);
+  if (workOrder) {
+    exclude(workOrder.customer, ["password"]);
+    if (workOrder.employee) {
+      exclude(workOrder.employee, ["password"]);
+    }
   }
   return workOrder;
 };
 
+/**
+ * Get list of work orders by shop ID
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 02/08/2023
+ * @param {string} shopId - Shop ID
+ * @returns List of work order objects
+ */
 export const getWorkOrdersByShopId = async (shopId: string) => {
   const workOrders = await prisma.workOrder.findMany({
     where: { shopId: shopId },
@@ -58,7 +85,8 @@ export const getWorkOrdersByShopId = async (shopId: string) => {
   });
 
   for (const workOrder of workOrders) {
-    if (workOrder && workOrder.employee) {
+    exclude(workOrder.customer, ["password"]);
+    if (workOrder.employee) {
       exclude(workOrder.employee, ["password"]);
     }
   }
@@ -75,6 +103,15 @@ export const updateWorkOrderSchema = z.object({
 
 export type UpdateWorkOrderType = z.infer<typeof updateWorkOrderSchema>;
 
+/**
+ * Update work order by ID
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 02/08/2023
+ * @param {string} id - Work order ID
+ * @param {UpdateWorkOrderType} patch - Update data
+ * @returns Work order object
+ */
 export const updateWorkOrderById = async (
   id: string,
   patch: UpdateWorkOrderType
@@ -106,6 +143,14 @@ export const updateWorkOrderById = async (
   });
 };
 
+/**
+ * Delete work order by ID
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 02/08/2023
+ * @param {string} id - Work order ID
+ * @returns Work order object
+ */
 export const deleteWorkOrderById = async (id: string) => {
   return await prisma.workOrder.delete({ where: { id } });
 };
