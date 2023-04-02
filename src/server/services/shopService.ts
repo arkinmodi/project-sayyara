@@ -17,6 +17,14 @@ export const createShopSchema = z.object({
 
 export type CreateShopType = z.infer<typeof createShopSchema>;
 
+/**
+ * Get shop by ID
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/01/2023
+ * @param {string} id - Shop ID
+ * @returns Shop object
+ */
 export const getShopById = async (id: string) => {
   return await prisma.shop.findUnique({ where: { id } });
 };
@@ -33,6 +41,15 @@ export const updateShopSchema = z.object({
 });
 export type UpdateShopType = z.infer<typeof updateShopSchema>;
 
+/**
+ * Update shop by ID
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/01/2023
+ * @param {string} id - Shop ID
+ * @param {UpdateShopType} patch - Update data
+ * @returns Shop object
+ */
 export const updateShopById = async (id: string, patch: UpdateShopType) => {
   const shop = await getShopById(id);
   if (!shop) return Promise.reject("Shop not found.");
@@ -82,6 +99,14 @@ export const updateShopById = async (id: string, patch: UpdateShopType) => {
   });
 };
 
+/**
+ * Get list of shops by shop name
+ *
+ * @author Tim Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 03/26/2023
+ * @param {string} shop - Shop name
+ * @returns List of shop objects
+ */
 export const getShopsByName = async (shop: string) => {
   return await prisma.shop.findMany({
     where: {
@@ -95,6 +120,14 @@ export const getShopsByName = async (shop: string) => {
   });
 };
 
+/**
+ * Get list of shops by service name
+ *
+ * @author Tim Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 03/26/2023
+ * @param {string} service - Service name
+ * @returns List of shop objects
+ */
 export const getShopsByService = async (service: string) => {
   return await prisma.shop.findMany({
     where: {
