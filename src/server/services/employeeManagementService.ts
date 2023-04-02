@@ -47,5 +47,5 @@ export const updateEmployeeById = async (
   });
 
   exclude(updatedEmployee, ["password"]);
-  return employee;
+  return updatedEmployee;
 };
