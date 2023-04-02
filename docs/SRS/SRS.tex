@@ -114,6 +114,7 @@
 	March 18, 2023     & Arkin Modi            & Update Individual Product Use Cases from Quotes and Work Orders                    \\
 	March 19, 2023     & Joy Xiao              & Update NFRs with more details                                                      \\
 	March 19, 2023     & Joy Xiao              & Update services and appointments requirements to add more details                  \\
+	April 1, 2023      & Leon So               & Update supported devices, update requirements for authentication                   \\
 	\bottomrule
 \end{longtable}
 
@@ -227,10 +228,7 @@ implementing the project.
 	\item iPad Mini
 	\item Surface Pro 7
 	\item Surface Duo
-	\item Galaxy Fold
 	\item Samsung Galaxy A51/71
-	\item Nest Hub
-	\item Nest Hub Max
 \end{itemize}
 
 However, due to timing constraints, testing will only be run on the most popular cases, which would
@@ -342,12 +340,12 @@ may be used.
 
 \textbf{Vehicle Owners}
 \begin{enumerate}
-	\item It is assumed that users looking for auto repair or maintenance own one vehicle.
+	\item It is assumed that users looking for auto repair or maintenance own only one vehicle.
 \end{enumerate}
 
 \textbf{Auto Repair Shop Owners}
 \begin{enumerate}
-	\item For the initial version of Sayyara, there can only be one owner account per auto repair shop.
+	\item For the initial version of Sayyara, there can only be only one owner account per auto repair shop.
 	\item It is assumed that the auto repair shop is located in Canada.
 \end{enumerate}
 
@@ -728,6 +726,12 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall transition to the vehicle owner landing page after the registration process is
 			                  complete and successful
 			            \item The system shall allow the user to cancel and exit the registration process
+			            \item The system shall validate email inputs to ensure the input is in a standard email format
+			            \item The system shall validate phone numbers to ensure the input is in a standard phone number format
+			            \item The system shall validate password inputs to ensure the input is between 8 and 15 characters long,
+			                  contain at least one numeric digit, contain at least one uppercase letter, contain at least one
+			                  lowercase letter, and at least one special character
+			            \item The system shall validate all sign up form values to ensure a value is provided
 		            \end{enumerate}
 
 		      \item Viewpoint: Auto Repair Shop Owner
@@ -742,6 +746,12 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall transition to the shop owner landing page after the registration process is
 			                  complete and successful
 			            \item The system shall allow the user to cancel and exit the registration process
+			            \item The system shall validate email inputs to ensure the input is in the correct form
+			            \item The system shall validate phone numbers to ensure the input is in a standard phone number format
+			            \item The system shall validate password inputs to ensure the input is between 8 and 15 characters long,
+			                  contain at least one numeric digit, contain at least one uppercase letter, contain at least one
+			                  lowercase letter, and at least one special character
+			            \item The system shall validate all sign up form values to ensure a value is provided
 		            \end{enumerate}
 
 		      \item Viewpoint: Auto Repair Shop Employee
@@ -753,6 +763,14 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall transition to the employee landing page after the registration process is complete
 			                  and successful
 			            \item The system shall allow the user to cancel and exit the registration process
+			            \item The system shall validate email inputs to ensure the input is in the correct form
+			            \item The system shall validate phone numbers to ensure the input is in a standard phone number format
+			            \item The system shall validate password inputs to ensure the input is between 8 and 15 characters long,
+			                  contain at least one numeric digit, contain at least one uppercase letter, contain at least one
+			                  lowercase letter, and at least one special character
+			            \item The system shall validate all sign up form values to ensure a value is provided
+			            \item The system shall validate that a valid shop ID is entered
+			            \item The system shall notify the user if an invalid shop ID is entered
 		            \end{enumerate}
 	      \end{enumerate}
 
@@ -764,6 +782,8 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall transition to the vehicle owner landing page after the login process is complete
 			                  and successful
 			            \item The system shall allow the user to cancel and exit the login process
+			            \item The system shall validate all login form values to ensure a value is provided
+			            \item The system shall notify the user if the login was unsuccessful
 		            \end{enumerate}
 
 		      \item Viewpoint: Auto Repair Shop Owner
@@ -772,6 +792,8 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall transition to the shop owner landing page after the login process is complete and
 			                  successful
 			            \item The system shall allow the user to cancel and exit the login process
+			            \item The system shall validate all login form values to ensure a value is provided
+			            \item The system shall notify the user if the login was unsuccessful
 		            \end{enumerate}
 
 		      \item Viewpoint: Auto Repair Shop Employee
@@ -780,6 +802,8 @@ Text marked in \textbf{bold} are additional information added from the Revision 
 			            \item The system shall transition to the employee landing page after the login process is complete and
 			                  successful
 			            \item The system shall allow the user to cancel and exit the login process
+			            \item The system shall validate all login form values to ensure a value is provided
+			            \item The system shall notify the user if the login was unsuccessful
 		            \end{enumerate}
 	      \end{enumerate}
 

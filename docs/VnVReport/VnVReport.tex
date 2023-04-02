@@ -70,6 +70,7 @@
 	March 8, 2023     & Joy Xiao              & Fix some grammar                                                                                             \\
 	March 15, 2023    & Joy Xiao              & Update service test due to update in SRS                                                                     \\
 	March 19, 2023    & Joy Xiao              & Update appointments tests due to update in SRS                                                               \\
+	April 1, 2023     & Leon So               & Update authentication tests due to update in SRS                                                             \\
 	\bottomrule
 \end{longtable}
 
@@ -204,6 +205,126 @@ intended use, and goals of stakeholders.
 
 	      Results: Passed
 
+	\item \textbf{FRT-BE1-4}
+
+	      Control: Manual
+
+	      Initial State: Customer with no existing account
+
+	      Input: Customer submits sign up form with invalid email, password, name, and phone number
+
+	      Output: Input validation messages should be shown indicating that provided inputs are invalid
+
+	      Test Case Derivation: New customer wants to sign up for a new account with invalid sign up
+	      information provided
+
+	      How test will be performed: The tester will register and sign up for a new customer account using
+	      invalid sign up information
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE1-5}
+
+	      Control: Manual
+
+	      Initial State: Customer with no existing account
+
+	      Input: Customer attempts to submit input validation form with empty inputs
+
+	      Output: Input validation messages should be shown indicating that provided inputs are invalid
+
+	      Test Case Derivation: New customer wants to sign up for a new account with empty fields provided
+
+	      How test will be performed: The tester will register and sign up for a new customer account with
+	      empty fields provided
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE1-6}
+
+	      Control: Manual
+
+	      Initial State: Shop owner with no existing account
+
+	      Input: Shop owner submits sign up form with invalid email, password, name, and phone number
+
+	      Output: Input validation messages should be shown indicating that provided inputs are invalid
+
+	      Test Case Derivation: New shop owner wants to sign up for a new account with invalid sign up
+	      information provided
+
+	      How test will be performed: The tester will register and sign up for a new shop owner account using
+	      invalid sign up information
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE1-7}
+
+	      Control: Manual
+
+	      Initial State: Shop owner with no existing account
+
+	      Input: Shop owner attempts to submit input validation form with empty inputs
+
+	      Output: Input validation messages should be shown indicating that provided inputs are invalid
+
+	      Test Case Derivation: New shop owner wants to sign up for a new account with empty fields provided
+
+	      How test will be performed: The tester will register and sign up for a new shop owner account with
+	      empty fields provided
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE1-8}
+
+	      Control: Manual
+
+	      Initial State: Employee with no existing account
+
+	      Input: Employee submits sign up form with invalid email, password, name, and phone number
+
+	      Output: Input validation messages should be shown indicating that provided inputs are invalid
+
+	      Test Case Derivation: New employee wants to sign up for a new account with invalid sign up
+	      information provided
+
+	      How test will be performed: The tester will register and sign up for a new employee account using
+	      invalid sign up information
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE1-9}
+
+	      Control: Manual
+
+	      Initial State: Employee with no existing account
+
+	      Input: Employee attempts to submit input validation form with empty inputs
+
+	      Output: Input validation messages should be shown indicating that provided inputs are invalid
+
+	      Test Case Derivation: New employee wants to sign up for a new account with empty fields provided
+
+	      How test will be performed: The tester will register and sign up for a new employee account with
+	      empty fields provided
+
+	\item \textbf{FRT-BE1-10}
+
+	      Control: Manual
+
+	      Initial State: Employee with no existing account
+
+	      Input: Employee submits sign up form with invalid shop ID
+
+	      Output: Notification should appear indicating that the provided shop ID is invalid
+
+	      Test Case Derivation: New employee wants to sign up for a new account with invalid shop ID provided
+
+	      How test will be performed: The tester will register and sign up for a new employee account using
+	      invalid shop ID
+
+	      Results: Passed
+
 	\item \textbf{FRT-BE2-1}
 
 	      Control: Manual
@@ -251,6 +372,58 @@ intended use, and goals of stakeholders.
 	      Test Case Derivation: Employee wants to log in to existing with valid login credentials provided
 
 	      How test will be performed: The tester will log in to an existing employee account using valid
+	      login credentials
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE2-4}
+
+	      Control: Manual
+
+	      Initial State: Customer with existing account and not logged in
+
+	      Input: Customer submits login form with invalid email and password
+
+	      Output: Notification should appear indicating that the login was unsuccessful
+
+	      Test Case Derivation: Customer wants to log in to existing with invalid login credentials provided
+
+	      How test will be performed: The tester will log in to an existing customer account using invalid
+	      login credentials
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE2-5}
+
+	      Control: Manual
+
+	      Initial State: Shop owner with existing account and not logged in
+
+	      Input: Shop owner submits login form with invalid email and password
+
+	      Output: Notification should appear indicating that the login was unsuccessful
+
+	      Test Case Derivation: Shop owner wants to log in to existing with invalid login credentials
+	      provided
+
+	      How test will be performed: The tester will log in to an existing shop owner account using invalid
+	      login credentials
+
+	      Results: Passed
+
+	\item \textbf{FRT-BE2-6}
+
+	      Control: Manual
+
+	      Initial State: Employee with existing account and not logged in
+
+	      Input: Employee submits login form with invalid email and password
+
+	      Output: Notification should appear indicating that the login was unsuccessful
+
+	      Test Case Derivation: Employee wants to log in to existing with invalid login credentials provided
+
+	      How test will be performed: The tester will log in to an existing employee account using invalid
 	      login credentials
 
 	      Results: Passed
@@ -2772,9 +2945,19 @@ reported on every pull request to the main branch and to every push to the main 
 		\textbf{FRT-BE1-1}  & X                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE1-2}  & X                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE1-3}  & X                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE1-4}  & X                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE1-5}  & X                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE1-6}  & X                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE1-7}  & X                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE1-8}  & X                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE1-9}  & X                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE1-10} & X                                                         & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE2-1}  & ~                                                         & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE2-2}  & ~                                                         & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE2-3}  & ~                                                         & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE2-4}  & ~                                                         & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE2-5}  & ~                                                         & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
+		\textbf{FRT-BE2-6}  & ~                                                         & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE3-1}  & ~                                                         & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE3-2}  & ~                                                         & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
 		\textbf{FRT-BE3-3}  & ~                                                         & ~            & X            & ~            & ~            & ~            & ~            & ~            & ~            & ~             & ~             & ~             & ~             & ~             & ~             & ~             \\
