@@ -1,6 +1,14 @@
 import { IService } from "src/types/service";
 
-export function getServiceById(id: string): Promise<IService | null> {
+/**
+ * Get service by service ID
+ *
+ * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+ * @date 01/30/2023
+ * @param {string} id - Service ID
+ * @returns A service object
+ */
+export async function getServiceById(id: string): Promise<IService | null> {
   return fetch(`/api/service/${id}`, {
     method: "GET",
     headers: {
@@ -23,13 +31,20 @@ export function getServiceById(id: string): Promise<IService | null> {
         return service;
       });
     } else {
-      // TODO: check and handle errors
       return null;
     }
   });
 }
 
-export function deleteServiceById(serviceId: string): Promise<boolean> {
+/**
+ * Deletes a service by given the service ID
+ *
+ * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+ * @date 03/26/2023
+ * @param {string} serviceId - Service ID
+ * @returns A boolean representing if the deletion was successful
+ */
+export async function deleteServiceById(serviceId: string): Promise<boolean> {
   return fetch(`/api/service/${serviceId}`, {
     method: "DELETE",
     headers: {

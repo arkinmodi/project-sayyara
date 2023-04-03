@@ -1,7 +1,18 @@
 import { ChatMessage } from "@prisma/client";
 import { IMessage } from "src/types/quotes";
 
-export function getMessageListByQuoteId(id: string): Promise<IMessage[] | []> {
+/**
+ * Get list of messages from a Quote
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 02/13/2023
+ * @param {string} id - Id of a Quote
+ * @returns A list of Messages
+ */
+
+export async function getMessageListByQuoteId(
+  id: string
+): Promise<IMessage[] | []> {
   return fetch(`/api/quotes/${id}/chat/`, {
     method: "GET",
     headers: {

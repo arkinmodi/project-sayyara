@@ -13,7 +13,15 @@ import {
   IShopHoursOfOperation,
 } from "src/types/shop";
 
-export function getShopId(id: string): Promise<IShop | null> {
+/**
+ * Get shop by shop ID
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/07/2023
+ * @param {string} id - Shop ID
+ * @returns A shop object
+ */
+export async function getShopId(id: string): Promise<IShop | null> {
   return fetch(`/api/shop/${id}`, {
     method: "GET",
     headers: {
@@ -36,13 +44,21 @@ export function getShopId(id: string): Promise<IShop | null> {
         return shop;
       });
     } else {
-      // TODO: check and handle errors
       return null;
     }
   });
 }
 
-export function getServicesByShopId(
+/**
+ * Get services by shop ID
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/07/2023
+ * @param {string} shopId - Shop ID
+ * @param {ServiceType} type - Type of service (CANNED, CUSTOM, REWORK)
+ * @returns A list of service objects
+ */
+export async function getServicesByShopId(
   shopId: string,
   type?: ServiceType
 ): Promise<IService[] | null> {
@@ -74,13 +90,24 @@ export function getServicesByShopId(
         return services;
       });
     } else {
-      // TODO: check and handle errors
       return null;
     }
   });
 }
 
-export function patchShop(shopId: string, patch: IShop): Promise<IShop | null> {
+/**
+ * Updates a shop and returns it
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/07/2023
+ * @param {string} shopId - Shop ID
+ * @param {IShop} patch - Updated shop object
+ * @returns A shop object
+ */
+export async function patchShop(
+  shopId: string,
+  patch: IShop
+): Promise<IShop | null> {
   const hoursOfOp = patch.hoursOfOperation;
   return fetch(`/api/shop/${shopId}`, {
     method: "PATCH",
@@ -153,17 +180,35 @@ export function patchShop(shopId: string, patch: IShop): Promise<IShop | null> {
         return shop;
       });
     } else {
-      // TODO: check and handle errors
       return null;
     }
   });
 }
 
+/**
+ * Helper function for converting degrees to radians
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 03/26/2023
+ * @param {number} num - Number to convert to radians
+ * @returns The number, in radians
+ */
 const toRads = (num: number) => {
   return (num * Math.PI) / 180;
 };
 
-export function getFilteredShops(
+/**
+ * Get filtered shops based on filter parameters
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 03/26/2023
+ * @param {string} name - Either a shop name or service name
+ * @param {boolean} isShop - Flag for if name is a shop name
+ * @param {number | null} latitude - (Optional) The latitude of the user
+ * @param {number | null} longitude - (Optional) The longitude of the user
+ * @returns A list of Shop objects with their Services and distance from user
+ */
+export async function getFilteredShops(
   name: string,
   isShop: boolean,
   latitude: number | null,
@@ -223,7 +268,7 @@ export function getFilteredShops(
   });
 }
 
-const mapDayToString: { [key: number]: string } = {
+const mapDayToString: { [id: number]: string } = {
   0: "sunday",
   1: "monday",
   2: "tuesday",
@@ -233,7 +278,18 @@ const mapDayToString: { [key: number]: string } = {
   6: "saturday",
 };
 
-export function getAvailabilities(
+/**
+ * Get availabilities of a shop for appointments
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 02/12/2023
+ * @param {string} shopId - Shop ID
+ * @param {Date} startDate - Start date and time of search range
+ * @param {Date} endDate - End date and time of search range
+ * @param {IShopHoursOfOperation | null} hoursOfOperation - The shop's hours of operation
+ * @returns A list of time ranges that mark the availabilities of the shop
+ */
+export async function getAvailabilities(
   shopId: string,
   startDate: Date,
   endDate: Date,
