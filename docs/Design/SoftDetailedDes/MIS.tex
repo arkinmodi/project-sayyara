@@ -631,12 +631,12 @@ None
 	\begin{adjustbox}{width=\textwidth}
 		\begin{tabular}{llll}
 			\hline
-			\textbf{Name}     & \textbf{In}                                        & \textbf{Out}               & \textbf{Exceptions}                         \\
+			\textbf{Name}     & \textbf{In}                                              & \textbf{Out}               & \textbf{Exceptions}                         \\
 			\hline
-			getShopById       & String                                             & Shop $\lor$ None           & ~                                           \\
-			updateShopById    & String, UpdateShopType                             & Shop                       & ShopNotFoundException, InvalidTimeException \\
-			getShopsByName    & String, Optional$<$String$>$, Optional$<$String$>$ & List$<$Shop$>$ $\lor$ None & ~                                           \\
-			getShopsByService & String, Optional$<$String$>$, Optional$<$String$>$ & List$<$Shop$>$ $\lor$ None & ~                                           \\
+			getShopById       & String                                                   & Shop $\lor$ None           & ~                                           \\
+			updateShopById    & String, UpdateShopType                                   & Shop                       & ShopNotFoundException, InvalidTimeException \\
+			getShopsByName    & String, Optional$<\mathbb{R}+>$, Optional$<\mathbb{R}+>$ & List$<$Shop$>$ $\lor$ None & ~                                           \\
+			getShopsByService & String, Optional$<\mathbb{R}+>$, Optional$<\mathbb{R}+>$ & List$<$Shop$>$ $\lor$ None & ~                                           \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -681,7 +681,7 @@ None
 
 \noindent getShopsByService($service, min\_distance, max\_distance$):
 \begin{itemize}
-	\item output: $out := getShopsByService(service) = (\forall s \in Shops | \exists serv \in
+	\item output: $out := getShopsByService(service)\\= (\forall s \in Shops | \exists serv \in
 		      getServicesByShopId(s) | serv \in service \land min\_distance \leq distance(s, user) \leq
 		      max\_distance)$
 \end{itemize}
