@@ -3,6 +3,14 @@ import { IAppointment } from "src/types/appointment";
 import { IEmployee } from "src/types/employee";
 import { IWorkOrder } from "src/types/workOrder";
 
+/**
+ * Get work order by work order ID
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 02/08/2023
+ * @param {string} id - Work order ID
+ * @returns A work order object
+ */
 export const getWorkOrderById = async (
   id: string
 ): Promise<
@@ -100,6 +108,15 @@ export type PatchWorkOrderByIdBody = {
   employeeEmail?: string;
 };
 
+/**
+ * Update work order by work order ID
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 02/08/2023
+ * @param {string} id - Work order ID
+ * @param {PatchWorkOrderByIdBody} patch - Work order object
+ * @returns A success flag and the updated work order, or error message
+ */
 export const patchWorkOrderById = async (
   id: string,
   patch: PatchWorkOrderByIdBody
@@ -132,6 +149,16 @@ export type PatchAppointmentByIdBody = {
   status?: AppointmentStatus;
 };
 
+/**
+ * Update appointment status through a work order
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 02/28/2023
+ * @param {string} workOrderId - Work order ID
+ * @param {string} appointmentId - Appointment ID
+ * @param {PatchAppointmentByIdBody} patch - Appointment status being updated
+ * @returns The updated work order
+ */
 export const patchAppointmentById = async (
   workOrderId: string,
   appointmentId: string,
