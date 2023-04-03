@@ -74,6 +74,8 @@
 		March 14, 2023    & Arkin Modi            & Update Appointments Module               \\
 		March 23, 2023    & Joy Xiao              & Update Employee Management Module        \\
 		March 26, 2023    & Arkin Modi            & Remove createShop from Shop Module       \\
+		April 2, 2023     & Timothy Choy          & Update createShopOwner from User Module  \\
+		April 3, 2023     & Timothy Choy          & Update getShops for location             \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -629,12 +631,12 @@ None
 	\begin{adjustbox}{width=\textwidth}
 		\begin{tabular}{llll}
 			\hline
-			\textbf{Name}     & \textbf{In}            & \textbf{Out}           & \textbf{Exceptions}                         \\
+			\textbf{Name}     & \textbf{In}                                              & \textbf{Out}               & \textbf{Exceptions}                         \\
 			\hline
-			getShopById       & String                 & Shop $\lor$ None       & ~                                           \\
-			updateShopById    & String, UpdateShopType & Shop                   & ShopNotFoundException, InvalidTimeException \\
-			getShopsByName    & String                 & List<Shop> $\lor$ None & ~                                           \\
-			getShopsByService & String                 & List<Shop> $\lor$ None & ~                                           \\
+			getShopById       & String                                                   & Shop $\lor$ None           & ~                                           \\
+			updateShopById    & String, UpdateShopType                                   & Shop                       & ShopNotFoundException, InvalidTimeException \\
+			getShopsByName    & String, Optional$<\mathbb{R}+>$, Optional$<\mathbb{R}+>$ & List$<$Shop$>$ $\lor$ None & ~                                           \\
+			getShopsByService & String, Optional$<\mathbb{R}+>$, Optional$<\mathbb{R}+>$ & List$<$Shop$>$ $\lor$ None & ~                                           \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -671,18 +673,28 @@ None
 		      \text{InvalidTimeException}$
 \end{itemize}
 
-\noindent getShopsByName($name$):
+\noindent getShopsByName($name, min\_distance, max\_distance$):
 \begin{itemize}
-	\item output: $out := getShopsByName(name) = (\forall s \in Shops | s.name \in name)$
+	\item output: $out := getShopsByName(name) = (\forall s \in Shops | s.name \in name \land min\_distance
+		      \leq distance(s, user) \leq max\_distance)$
 \end{itemize}
 
-\noindent getShopsByService($service$):
+\noindent getShopsByService($service, min\_distance, max\_distance$):
 \begin{itemize}
-	\item output: $out := getShopsByService(service) = (\forall s \in Shops | \exists serv \in
-		      getServicesByShopId(s) | serv \in service)$
+	\item output: $out := getShopsByService(service)\\= (\forall s \in Shops | \exists serv \in
+		      getServicesByShopId(s) | serv \in service \land min\_distance \leq distance(s, user) \leq
+		      max\_distance)$
 \end{itemize}
 
 \subsubsection{Local Functions}
+
+\noindent distance($shop, user$):
+
+\begin{itemize}
+	\item output: $out := \arccos(\sin(\text{user.latitude}) * \sin(\text{shop.latitude}) +
+		      \cos(\text{user.latitude}) * \cos(\text{shop.latitude}) * \cos(\text{user.longitude} -
+			      \text{shop.longitude})) * 6371$
+\end{itemize}
 
 % distance: $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ $\rightarrow$ $\mathbb{R}$ \\
 
@@ -785,6 +797,8 @@ None
 		\hline
 		shop.address         & String               & Address of Shop owned by Shop Owner      \\
 		\hline
+		shop.postal\_code    & String               & Postal Code of Shop owned by Shop Owner  \\
+		\hline
 		shop.city            & String               & City of Shop owned by Shop Owner         \\
 		\hline
 		shop.province        & String               & Province of Shop owned by Shop Owner     \\
@@ -870,9 +884,12 @@ None
 
 \noindent createShopOwner($shopOwner$):
 \begin{itemize}
-	\item transition: new Employee(shopOwner), save shop owner to employee database table
+	\item transition: new Employee(shopOwner), save shop owner to employee database table and creates a new
+	      shop
 	\item output: $out := (exc = \text{ShopOwnerAlreadyExistsException}$ \\ $\Rightarrow ``\text{User with
-			      email address already exists.}" |\ \neg exc \Rightarrow \text{new Employee(\emph{shopOwner})})$
+			      email address already exists.}" |\ \neg exc \Rightarrow \text{new Employee(\emph{shopOwner})} \land
+		      \text{new Shop}(shop.name, shop.address, shop.city, shop.province, shop.postal\_code,$ \\ $
+		      shop.email, shop.phone\_number))$
 	\item exception: $exc := getUserByEmail(shopOwner.email) \neq \text{None}$ \\ $\Rightarrow
 		      \text{ShopOwnerAlreadyExistsException}$
 \end{itemize}
@@ -892,6 +909,12 @@ None
 \end{itemize}
 
 \subsubsection{Local Functions}
+
+\noindent Shop($name, address, city, province, postal\_code, email, phone\_number$):
+\begin{itemize}
+	\item transition: Creates a new shop object with the following parameters: the provided name, address,
+	      city, province, postal code, email, and phone number.
+\end{itemize}
 
 \newpage
 
