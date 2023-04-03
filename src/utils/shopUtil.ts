@@ -268,7 +268,7 @@ export async function getFilteredShops(
   });
 }
 
-const mapDayToString: { [id: number]: string } = {
+const mapDayToString: { [key: number]: string } = {
   0: "sunday",
   1: "monday",
   2: "tuesday",
