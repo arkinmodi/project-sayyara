@@ -888,8 +888,8 @@ None
 	      shop
 	\item output: $out := (exc = \text{ShopOwnerAlreadyExistsException}$ \\ $\Rightarrow ``\text{User with
 			      email address already exists.}" |\ \neg exc \Rightarrow \text{new Employee(\emph{shopOwner})} \land
-		      \text{new Shop(\emph{shop.name, shop.address, shop.city, shop.province, shop.postal\_code,$ \\
-				      $shop.email, shop.phone\_number})})$
+		      \text{new Shop}(shop.name, shop.address, shop.city, shop.province, shop.postal\_code, shop.email,
+		      shop.phone\_number))$
 	\item exception: $exc := getUserByEmail(shopOwner.email) \neq \text{None}$ \\ $\Rightarrow
 		      \text{ShopOwnerAlreadyExistsException}$
 \end{itemize}
