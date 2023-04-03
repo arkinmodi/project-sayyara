@@ -55,25 +55,26 @@
 	\caption{Revision History} \label{TblRevisionHistory}
 	\begin{tabularx}{\textwidth}{llX}
 		\toprule
-		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                          \\
+		\textbf{Date}     & \textbf{Developer(s)} & \textbf{Change}                                      \\
 		\midrule
-		December 28, 2022 & Arkin Modi            & Create Revision History                  \\
-		January 7, 2023   & Joy Xiao              & Introduction                             \\
-		January 9, 2023   & Arkin Modi            & Add Module Hierarchy                     \\
-		January 11, 2023  & Arkin Modi            & Create MIS of Users Module               \\
-		January 14, 2023  & Arkin Modi            & Create MIS of Work Orders Module         \\
-		January 13, 2023  & Arkin Modi            & Create MIS of Database Driver Module     \\
-		January 13, 2023  & Arkin Modi            & Create MIS of Services Module            \\
-		January 15, 2023  & Arkin Modi            & Create MIS of Appointments Module        \\
-		January 15, 2023  & Leon So               & Create MIS of Shop Module                \\
-		January 15, 2023  & Arkin Modi            & Create MIS of Quotes Module              \\
-		January 15, 2023  & Joy Xiao              & Create MIS of Employee Management Module \\
-		January 17, 2023  & Timothy Choy          & Add Shop Lookup to Shop Module           \\
-		March 1, 2023     & Arkin Modi            & Update Quote Request Bodies              \\
-		March 7, 2023     & Timothy Choy          & Update Shop Module MIS                   \\
-		March 14, 2023    & Arkin Modi            & Update Appointments Module               \\
-		March 23, 2023    & Joy Xiao              & Update Employee Management Module        \\
-		March 26, 2023    & Arkin Modi            & Remove createShop from Shop Module       \\
+		December 28, 2022 & Arkin Modi            & Create Revision History                              \\
+		January 7, 2023   & Joy Xiao              & Introduction                                         \\
+		January 9, 2023   & Arkin Modi            & Add Module Hierarchy                                 \\
+		January 11, 2023  & Arkin Modi            & Create MIS of Users Module                           \\
+		January 14, 2023  & Arkin Modi            & Create MIS of Work Orders Module                     \\
+		January 13, 2023  & Arkin Modi            & Create MIS of Database Driver Module                 \\
+		January 13, 2023  & Arkin Modi            & Create MIS of Services Module                        \\
+		January 15, 2023  & Arkin Modi            & Create MIS of Appointments Module                    \\
+		January 15, 2023  & Leon So               & Create MIS of Shop Module                            \\
+		January 15, 2023  & Arkin Modi            & Create MIS of Quotes Module                          \\
+		January 15, 2023  & Joy Xiao              & Create MIS of Employee Management Module             \\
+		January 17, 2023  & Timothy Choy          & Add Shop Lookup to Shop Module                       \\
+		March 1, 2023     & Arkin Modi            & Update Quote Request Bodies                          \\
+		March 7, 2023     & Timothy Choy          & Update Shop Module MIS                               \\
+		March 14, 2023    & Arkin Modi            & Update Appointments Module                           \\
+		March 23, 2023    & Joy Xiao              & Update Employee Management Module                    \\
+		March 26, 2023    & Arkin Modi            & Remove createShop from Shop Module                   \\
+		April 2, 2023     & Timothy Choy          & Update createShopOwner to include creation of a shop \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -629,12 +630,12 @@ None
 	\begin{adjustbox}{width=\textwidth}
 		\begin{tabular}{llll}
 			\hline
-			\textbf{Name}     & \textbf{In}            & \textbf{Out}           & \textbf{Exceptions}                         \\
+			\textbf{Name}     & \textbf{In}            & \textbf{Out}               & \textbf{Exceptions}                         \\
 			\hline
-			getShopById       & String                 & Shop $\lor$ None       & ~                                           \\
-			updateShopById    & String, UpdateShopType & Shop                   & ShopNotFoundException, InvalidTimeException \\
-			getShopsByName    & String                 & List<Shop> $\lor$ None & ~                                           \\
-			getShopsByService & String                 & List<Shop> $\lor$ None & ~                                           \\
+			getShopById       & String                 & Shop $\lor$ None           & ~                                           \\
+			updateShopById    & String, UpdateShopType & Shop                       & ShopNotFoundException, InvalidTimeException \\
+			getShopsByName    & String                 & List$<$Shop$>$ $\lor$ None & ~                                           \\
+			getShopsByService & String                 & List$<$Shop$>$ $\lor$ None & ~                                           \\
 			\hline
 		\end{tabular}
 	\end{adjustbox}
@@ -683,6 +684,8 @@ None
 \end{itemize}
 
 \subsubsection{Local Functions}
+
+None
 
 % distance: $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ $\rightarrow$ $\mathbb{R}$ \\
 
@@ -785,6 +788,8 @@ None
 		\hline
 		shop.address         & String               & Address of Shop owned by Shop Owner      \\
 		\hline
+		shop.postal\_code    & String               & Postal Code of Shop owned by Shop Owner  \\
+		\hline
 		shop.city            & String               & City of Shop owned by Shop Owner         \\
 		\hline
 		shop.province        & String               & Province of Shop owned by Shop Owner     \\
@@ -870,9 +875,12 @@ None
 
 \noindent createShopOwner($shopOwner$):
 \begin{itemize}
-	\item transition: new Employee(shopOwner), save shop owner to employee database table
+	\item transition: new Employee(shopOwner), save shop owner to employee database table and creates a new
+	      shop
 	\item output: $out := (exc = \text{ShopOwnerAlreadyExistsException}$ \\ $\Rightarrow ``\text{User with
-			      email address already exists.}" |\ \neg exc \Rightarrow \text{new Employee(\emph{shopOwner})})$
+			      email address already exists.}" |\ \neg exc \Rightarrow \text{new Employee(\emph{shopOwner})} \land
+		      \text{new Shop(\emph{shop.name, shop.address, shop.city, shop.province, shop.postal\_code,
+				      shop.email, shop.phone\_number})})$
 	\item exception: $exc := getUserByEmail(shopOwner.email) \neq \text{None}$ \\ $\Rightarrow
 		      \text{ShopOwnerAlreadyExistsException}$
 \end{itemize}
@@ -892,6 +900,12 @@ None
 \end{itemize}
 
 \subsubsection{Local Functions}
+
+\noindent Shop($name, address, city, province, postal\_code, email, phone\_number$):
+\begin{itemize}
+	\item transition: Creates a new shop object with the following parameters: the provided name, address,
+	      city, province, postal code, email, and phone number.
+\end{itemize}
 
 \newpage
 
