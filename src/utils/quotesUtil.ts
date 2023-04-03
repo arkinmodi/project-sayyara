@@ -9,7 +9,6 @@ import { IMessage } from "src/types/quotes";
  * @param {string} id - Id of a Quote
  * @returns A list of Messages
  */
-
 export async function getMessageListByQuoteId(
   id: string
 ): Promise<IMessage[] | []> {
