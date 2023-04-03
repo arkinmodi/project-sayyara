@@ -687,7 +687,13 @@ None
 
 \subsubsection{Local Functions}
 
-None
+\noindent distance($shop, user$):
+
+\begin{itemize}
+	\item output: $out := \arccos(\sin(\text{user.latitude}) * \sin(\text{shop.latitude}) +
+		      \cos(\text{user.latitude}) * \cos(\text{shop.latitude}) * \cos(\text{user.longitude} -
+			      \text{shop.longitude})) * 6371$
+\end{itemize}
 
 % distance: $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ $\rightarrow$ $\mathbb{R}$ \\
 
