@@ -675,14 +675,15 @@ None
 
 \noindent getShopsByName($name, min\_distance, max\_distance$):
 \begin{itemize}
-	\item output: $out := getShopsByName(name) = (\forall s \in Shops | s.name \in name \land min\_distance <
-		      distance(s, user) < max\_distance)$
+	\item output: $out := getShopsByName(name) = (\forall s \in Shops | s.name \in name \land min\_distance
+		      \leq distance(s, user) \leq max\_distance)$
 \end{itemize}
 
 \noindent getShopsByService($service, min\_distance, max\_distance$):
 \begin{itemize}
 	\item output: $out := getShopsByService(service) = (\forall s \in Shops | \exists serv \in
-		      getServicesByShopId(s) | serv \in service \land min\_distance < distance(s, user) < max\_distance)$
+		      getServicesByShopId(s) | serv \in service \land min\_distance \leq distance(s, user) \leq
+		      max\_distance)$
 \end{itemize}
 
 \subsubsection{Local Functions}
