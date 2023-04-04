@@ -76,6 +76,7 @@
 		March 26, 2023    & Arkin Modi            & Remove createShop from Shop Module       \\
 		April 2, 2023     & Timothy Choy          & Update createShopOwner from User Module  \\
 		April 3, 2023     & Timothy Choy          & Update getShops for location             \\
+		April 4, 2023     & Arkin Modi            & Add descriptions for modules             \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -93,9 +94,10 @@ See SRS Documentation at
 	\toprule
 	\textbf{symbol} & \textbf{description}                \\
 	\midrule
-	\progname       & The name of the program being built \\
+	CRUD            & Create, Read, Update, Delete        \\
 	MIS             & Module Interface Specifications     \\
 	MG              & Module Guide                        \\
+	\progname       & The name of the program being built \\
 	\bottomrule
 \end{tabular}
 
@@ -202,6 +204,11 @@ The following table is taken directly from the Module Guide document for this pr
 \newpage
 
 \section{MIS of Database Driver Module} \label{mDBDriver}
+
+The Database Driver Module provides a collection of exported types representing the database's
+schema and handles communication with the database. This module is implemented in combination with
+the external library, Prisma.
+
 \subsection{Module}
 
 schema.prisma
@@ -557,6 +564,10 @@ None
 
 \newpage
 \section{MIS of Shop Module} \label{mShop}
+
+The Shop Module provides CRUD operations for shop objects and the ability to query for a list of
+shops by shop name, service name, distance, part types, and part conditions.
+
 \subsection{Module}
 
 shopService
@@ -705,9 +716,14 @@ None
 % getLatLong: String $\rightarrow$ $\mathbb{R}$, $\mathbb{R}$ \\
 
 % getLatLong(address) $\equiv$ the latitude and longitude of the address, as defined by the Google
-% Maps API. \\ \newpage
+% Maps API. \\
 
+\newpage
 \section{MIS of Users Module} \label{mUsers}
+
+The User Module provides CRUD operations for user objects, and the ability to verify a user's
+authorization.
+
 \subsection{Module}
 
 userService
@@ -919,6 +935,9 @@ None
 \newpage
 
 \section{MIS of Employee Management Module} \label{mEmployeeManagement}
+
+The Employee Management Module provides CRUD operations for managing employee’s relation with shop.
+
 \subsection{Module}
 
 employeeManagementService
@@ -1020,6 +1039,9 @@ None
 \newpage
 
 \section{MIS of Services Module} \label{mServices}
+
+The Services Module provides CRUD operations for service objects.
+
 \subsection{Module}
 
 serviceService
@@ -1169,6 +1191,11 @@ None
 \newpage
 
 \section{MIS of Appointments Module} \label{mAppointments}
+
+The Appointments Module provides CRUD operations for appointment objects, the ability to verify if
+an appointment is acceptable (i.e., is possible to fulfill), and the ability to accept an
+appointment and reject all conflicting appointments.
+
 \subsection{Module}
 
 appointmentService
@@ -1348,6 +1375,9 @@ None
 \newpage
 
 \section{MIS of Work Orders Module} \label{mWorkOrders}
+
+The Work Orders Module provides CRUD operations for work order objects.
+
 \subsection{Module}
 
 workOrderService
@@ -1441,6 +1471,9 @@ None
 \newpage
 
 \section{MIS of Quotes Module} \label{mQuotes}
+
+The Quotes Module provides CRUD operations for quote and chat message objects.
+
 \subsection{Module}
 
 quoteService \\ chatService
