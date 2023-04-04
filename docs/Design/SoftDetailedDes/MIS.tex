@@ -676,7 +676,8 @@ None
 \noindent updateShopById($id, patch$):
 \begin{itemize}
 	\item transition: Update all fields of a Shop, with an ID equal to $id$, with fields in $patch$ in shop
-	      database table. Location is updated locally through the getLatLong(address) local function.
+	      database table. Location is updated locally through the getLatLong(address, city, province,
+	      postal_code) local function.
 	\item output: $out := getShopById(id) = \text{Shop} \Rightarrow (\text{Shop} = \text{None} $ \\
 		      $\Rightarrow \text{ShopNotFoundException } |\ \text{Shop} \neq \text{None}$ \\ $\Rightarrow
 		      \text{update all fields of Shop with fields in } patch \text{ in shop database table})$
