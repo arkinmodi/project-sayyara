@@ -102,7 +102,7 @@ export const updateShopById = async (id: string, patch: UpdateShopType) => {
 /**
  * Get list of shops by shop name
  *
- * @author Tim Choy <32019738+TimChoy@users.noreply.github.com>
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
  * @date 03/26/2023
  * @param {string} shop - Shop name
  * @returns List of shop objects
@@ -123,7 +123,7 @@ export const getShopsByName = async (shop: string) => {
 /**
  * Get list of shops by service name
  *
- * @author Tim Choy <32019738+TimChoy@users.noreply.github.com>
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
  * @date 03/26/2023
  * @param {string} service - Service name
  * @returns List of shop objects
@@ -156,9 +156,9 @@ export type LatLong = {
  * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
  * @date 03/26/2023
  * @param {string} address - Address to get coordinates of
- * @param {string} postalCode - Postal Code to of address
- * @param {string} adminDistrict
- * @param {string} locality
+ * @param {string} postalCode - Postal Code of the address
+ * @param {string} adminDistrict - Administrative district of address (e.g., Ontario)
+ * @param {string} locality - City or neighbourhood of address (e.g., Hamilton)
  * @returns Latitude and Longitude object
  */
 export async function getLatLongByAddress(

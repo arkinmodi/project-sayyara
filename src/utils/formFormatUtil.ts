@@ -1,4 +1,11 @@
-// Format phone number input to (###) ###-####
+/**
+ * Formats phone number input to (###) ###-####
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/10/2023
+ * @param {string} phoneNumber - Phone number
+ * @returns Formatted phone number
+ */
 export const formatPhoneNumber = (phoneNumber: string) => {
   // If input is empty (e.g., user deletes the phone number)
   if (!phoneNumber) return phoneNumber;
@@ -24,6 +31,14 @@ export const formatPhoneNumber = (phoneNumber: string) => {
   )}-${phoneNumber.slice(6, 10)}`;
 };
 
+/**
+ * Formats name to proper case
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/10/2023
+ * @param {string} name - Name
+ * @returns Formatted name
+ */
 export const formatName = (name: string) => {
   // Restrict input to only characters
   var formattedName = name.replace(/[0-9]/g, "");
@@ -33,7 +48,14 @@ export const formatName = (name: string) => {
   return formattedName;
 };
 
-// Format postal code input to A#A #A#
+/**
+ * Format postal code input to A#A #A#
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/10/2023
+ * @param {string} postalCode - Postal code
+ * @returns Formatted postal code
+ */
 export const formatPostalCode = (postalCode: string) => {
   // If input is empty (e.g., user deletes the postal code)
   if (!postalCode) {

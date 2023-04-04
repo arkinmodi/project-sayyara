@@ -1,6 +1,14 @@
 import { ICustomer } from "src/types/customer";
 
-export function getCustomerById(id: string): Promise<ICustomer | null> {
+/**
+ * Get customer by customer ID
+ *
+ * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+ * @date 01/30/2023
+ * @param {string} id - Customer ID
+ * @returns A customer object
+ */
+export async function getCustomerById(id: string): Promise<ICustomer | null> {
   return fetch(`/api/customer/` + id, {
     method: "GET",
     headers: {
@@ -20,7 +28,6 @@ export function getCustomerById(id: string): Promise<ICustomer | null> {
         return customer;
       });
     } else {
-      // TODO: check and handle errors
       return null;
     }
   });
