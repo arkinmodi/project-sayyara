@@ -21,6 +21,14 @@ interface IConversationsProps {
   nextPage: () => void;
 }
 
+/**
+ * Renders the list of chats in the "My service requests" tab
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 03/14/2023
+ * @param {IConversationProps} props - Routing props for mobile
+ * @returns A react component for the list of chats
+ */
 const Conversations = (props: IConversationsProps) => {
   const { nextPage } = props;
   const userType = useSelector(AuthSelectors.getUserType);
@@ -55,7 +63,13 @@ const Conversations = (props: IConversationsProps) => {
     }
   }, [quoteObj, setQuotes]);
 
-  // Sets the selected chat via redux
+  /**
+   * Sets the selected chat using redux
+   *
+   * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+   * @date 02/13/2023
+   * @param {string} chatId - Chat ID
+   */
   const setChat = (chatId: string) => {
     dispatch(setSelectedChat({ id: chatId }));
 
@@ -63,6 +77,15 @@ const Conversations = (props: IConversationsProps) => {
     nextPage();
   };
 
+  /**
+   * Renders the address of the shop, if the user is a customer
+   *
+   * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+   * @date 02/13/2023
+   * @param {IQuote} option - A quote object
+   * @param {boolean} isCustomer - Flag if user is a customer
+   * @returns A react component of the shop's address
+   */
   const renderAddress = (option: IQuote, isCustomer: boolean) => {
     if (isCustomer) {
       return (
@@ -73,6 +96,16 @@ const Conversations = (props: IConversationsProps) => {
     }
   };
 
+  /**
+   * Renders a chat object, containing the information of the chat
+   * Information includes the chat name (either shop name or customer name)
+   * The service being provided and the chat update time
+   *
+   * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+   * @date 02/13/2023
+   * @param {IQuote} option - A quote object
+   * @returns A react component containing the chat details
+   */
   const chatItem = (option: IQuote) => {
     const isCustomer = userType === UserType.CUSTOMER;
 

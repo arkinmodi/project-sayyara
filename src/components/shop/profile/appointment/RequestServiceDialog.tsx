@@ -39,6 +39,17 @@ interface ICreateAppointmentForm {
   description: string;
 }
 
+/**
+ * Renders the dialog popup for creating a service request
+ * Popup is only for logged in customer users
+ * Contains the multi-stage dialog for selecting specific service
+ * and selecting appointment time, if applicable, or generates a new quote
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 02/13/2023
+ * @param {IRequestServiceDialog} props - Props for the dialog
+ * @returns The react dialog popup containing the forms for creating a service request
+ */
 const RequestServiceDialog = (props: IRequestServiceDialog) => {
   const dispatch = useDispatch();
 
@@ -82,20 +93,36 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     });
   }, [shop?.hoursOfOperation, customerAppointments]);
 
+  // Handles the closure of the dialog window
   const hideDialog = () => {
     setStep(1);
     onHide();
   };
 
+  // Handles moving back a step in the dialog window
   const goBack = () => {
     setStep(step - 1);
   };
 
+  /**
+   * Handles the changing of the service in the dropdown
+   *
+   * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+   * @date 02/12/2023
+   * @param {DropdownChangeParams} e - Primereact dropdown change parameters
+   */
   const onServiceChange = (e: DropdownChangeParams) => {
     const value = e.value;
     setSelectedService(value);
   };
 
+  /**
+   * Display text based on type of service for the submit button
+   *
+   * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+   * @date 02/12/2023
+   * @returns A string containing the text for the submit button
+   */
   const displayButtonText = () => {
     if (typeof selectedService === "string") {
       return "Schedule Service";
@@ -106,9 +133,15 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     }
   };
 
+  /**
+   * Handles the submission of the first step's form
+   * Create appointment, or create quote, based on service type
+   * Store information and move to next step
+   *
+   * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+   * @date 02/12/2023
+   */
   const onSubmitStepOne = () => {
-    // Create appointment, or create quote, based on service type
-    // Store information and move to next step
     if (typeof selectedService !== "string") {
       let form: ICreateAppointmentForm;
       if (vehicle) {
@@ -144,6 +177,15 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     }
   };
 
+  /**
+   * Sets form data with current customer's data
+   * Current customer data would include the car information linked to the customer user
+   *
+   * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+   * @date 02/12/2023
+   * @param {React.ChangeEvent<HTMLInputElement>} e - React change event parameter
+   * @param {string} field - The form field being set
+   */
   const setFormData = (
     e: React.ChangeEvent<HTMLInputElement>,
     field: string
@@ -163,6 +205,14 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     }
   };
 
+  /**
+   * Handles on selection of a timeslot in the appointments calendar
+   * Generates an end time based off of the appointment duration and given start time
+   *
+   * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+   * @date 02/12/2023
+   * @param {StartTimeEventEmit} e - React schedule meeting parameters
+   */
   const onTimeSelect = (e: StartTimeEventEmit) => {
     if (form) {
       let _form = form;
@@ -175,6 +225,14 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     }
   };
 
+  /**
+   * Renders the cost and time form fields of the service
+   * Can come preloaded if service already has existing information
+   *
+   * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+   * @date 02/12/2023
+   * @returns A react component for the form fields of cost and time of the service
+   */
   const renderCostAndTime = () => {
     if (
       form &&
@@ -204,6 +262,14 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     }
   };
 
+  /**
+   * Renders the form field of the description for the service
+   * Can come preloaded if service has existing description
+   *
+   * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+   * @date 02/13/2023
+   * @returns A react component for the description form field
+   */
   const renderDescription = () => {
     if (
       form &&
@@ -225,10 +291,16 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     }
   };
 
+  /**
+   * Handles the submission of the second step's form
+   * Two cases:
+   * 1. Service is a CANNED (basic) service, immediately go to step 3 for appointment scheduling
+   * 2. Service is a CUSTOM service, create a quote and move to quotes page
+   *
+   * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+   * @date 02/13/2023
+   */
   const onSubmitStepTwo = () => {
-    // Two cases:
-    // 1. Service is a CANNED service, immediately go to step 3 for appointment scheduling
-    // 2. Service is a CUSTOM service, create a quote and move to quotes page
     if (typeof selectedService !== "string") {
       if (selectedService.type === ServiceType.CANNED) {
         setAllowSubmit(false);
@@ -245,6 +317,14 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     }
   };
 
+  /**
+   * Handles the submission of the third step's form
+   * This step is only for basic/canned services
+   * Generates a appointment request with the given appointment time
+   *
+   * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+   * @date 02/12/2023
+   */
   const onSubmitStepThree = () => {
     if (
       form &&
@@ -271,6 +351,12 @@ const RequestServiceDialog = (props: IRequestServiceDialog) => {
     hideDialog();
   };
 
+  /**
+   * Renders the current step's form based on where the user is at in the service request flow
+   *
+   * @param {IAvailabilitiesTime[]} availableTimeslots - An array of available appointment timeslots
+   * @returns A react form
+   */
   const renderStep = (availableTimeslots: IAvailabilitiesTime[]) => {
     switch (step) {
       case 1:
