@@ -8,6 +8,15 @@ import React, { useEffect, useState } from "react";
 import EmployeeTable from "src/components/employees/employeeTable";
 import Services from "../../components/manage/services";
 
+/**
+ * Renders the manage shop page
+ * Found at route: "shop/manage"
+ * Contains the list of services (basic and custom) and employee management
+ *
+ * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+ * @date 02/12/2023
+ * @returns The react page for the route "shop/manage"
+ */
 const ManageShopTabs = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const router = useRouter();

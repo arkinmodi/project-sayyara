@@ -31,6 +31,14 @@ const filterByPartCondition = ["NEW", "USED"];
 const searchFilterList: string[] = ["Service", "Shop Name"];
 const filterRange: [number, number] = [0, 101];
 
+/**
+ * Renders the home page of Sayyara
+ * The shop lookup page
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 03/26/2023
+ * @returns The react page at route "/"
+ */
 const Home: NextPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 

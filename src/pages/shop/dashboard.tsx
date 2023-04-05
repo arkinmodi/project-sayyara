@@ -8,6 +8,16 @@ import { useRouter } from "next/router";
 import { TabPanel, TabView, TabViewTabChangeParams } from "primereact/tabview";
 import React, { useEffect, useState } from "react";
 
+/**
+ * Renders the shop dashboard page
+ * Found at route: "shop/dashboard"
+ * Contains the quotes (and chat conversations) as well as service requests
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 02/13/2023
+ * @returns The react page for the route "shop/dashboard"
+ */
 const ShopDashboard: NextPage = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const router = useRouter();
@@ -30,6 +40,7 @@ const ShopDashboard: NextPage = () => {
   const toggleActiveTab = () => {
     setActiveIndex((activeIndex + 1) % 2);
   };
+
   return (
     <div>
       <Head>
