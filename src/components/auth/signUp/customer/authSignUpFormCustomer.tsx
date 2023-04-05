@@ -22,6 +22,15 @@ const initialAuthSignUpFormCustomerValues: IAuthSignUpFormCustomerValues = {
   licensePlate: "",
 };
 
+/**
+ * Creates the sign up forms for a customer user
+ * Holds both the general user sign up and the specific customer sign up components
+ * User information, and car information
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/10/2023
+ * @returns A react form containing the two sign up forms related to customers
+ */
 const AuthSignUpFormCustomer = () => {
   const [formValues, setFormValues] = useState<IAuthSignUpFormCustomerValues>({
     ...initialAuthSignUpFormCustomerValues,
@@ -46,14 +55,17 @@ const AuthSignUpFormCustomer = () => {
 
   const dispatch = useDispatch();
 
+  // Moves back a step to the first form
   const prevStep = () => {
     setStep(step - 1);
   };
 
+  // Moves forward a step to the next form
   const nextStep = () => {
     setStep(step + 1);
   };
 
+  // Handles the sign up button click
   const handleSignUpButtonClick = (): void => {
     if (formValues.vehicleYear != null) {
       dispatch(
@@ -66,6 +78,15 @@ const AuthSignUpFormCustomer = () => {
     }
   };
 
+  /**
+   * Formats input values depending on the field
+   *
+   * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+   * @date 02/10/2023
+   * @param {string} name - The field name
+   * @param {any} value - The field value
+   * @returns A formatted value
+   */
   const formatValue = (name: string, value: any) => {
     switch (name) {
       case "email":
@@ -86,6 +107,13 @@ const AuthSignUpFormCustomer = () => {
     }
   };
 
+  /**
+   * Handles form input changes
+   *
+   * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+   * @date 02/10/2023
+   * @param {ChangeEvent<HTMLInputElement>} event - React change event
+   */
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
@@ -95,6 +123,13 @@ const AuthSignUpFormCustomer = () => {
     });
   };
 
+  /**
+   * Handles changes in form dropdown
+   *
+   * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+   * @date 01/09/2023
+   * @param dropdownParams
+   */
   const handleDropDownChange = (dropdownParams: DropdownChangeParams) => {
     const value = dropdownParams.value;
     const name = dropdownParams.target.name;
@@ -104,6 +139,14 @@ const AuthSignUpFormCustomer = () => {
     });
   };
 
+  /**
+   * Display current form section (either user details or vehicle details)
+   *
+   * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+   * @date 01/09/2023
+   * @param {number} currentStep - Current form step
+   * @returns A react form containing the current form section
+   */
   const getFormSection = (currentStep: number) => {
     switch (currentStep) {
       case 1:

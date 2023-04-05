@@ -9,6 +9,14 @@ interface IMessageProps {
   msg: IMessage;
 }
 
+/**
+ * Creates a component for a single chat message
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 02/13/2023
+ * @param {IMessageProps} props - Message props
+ * @returns A react component for a message
+ */
 const Message = (props: IMessageProps) => {
   const userType = useSelector(AuthSelectors.getUserType);
   const { msg } = props;

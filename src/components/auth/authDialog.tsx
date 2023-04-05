@@ -7,6 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { AuthDialogType } from "src/types/auth";
 import AuthFormTabs from "./authFormTabs";
 
+/**
+ * Creates the pop up dialog for sign up and login
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 01/09/2023
+ * @returns A primereact dialog component
+ */
 const AuthDialog = () => {
   const [displayDialog, setDisplayDialog] = useState(false);
   const [dialogType, setDialogType] = useState<AuthDialogType>(

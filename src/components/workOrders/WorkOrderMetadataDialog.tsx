@@ -11,13 +11,24 @@ import {
   PatchWorkOrderByIdBody,
 } from "src/utils/workOrderUtil";
 
-const WorkOrderMetadataDialog: React.FC<{
+interface IWorkOrderMetadataDialogProps {
   isVisible: boolean;
   onHide: () => void;
   workOrder: IWorkOrder;
   saveWorkOrder: (patch: PatchWorkOrderByIdBody) => Promise<void>;
   saveAppointment: (patch: PatchAppointmentByIdBody) => Promise<void>;
-}> = (props) => {
+}
+
+/**
+ * Creates and handles the work order "edit metadata" pop up dialog
+ * Form fields include title, assigned employee, and appointment status
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 02/28/2023
+ * @param {IWorkOrderMetadataDialogProps} props - Work order metadata dialog props
+ * @returns A react form to edit the metadata of the work order
+ */
+const WorkOrderMetadataDialog = (props: IWorkOrderMetadataDialogProps) => {
   const { workOrder } = props;
 
   const [isSaving, setIsSaving] = useState<boolean>(false);

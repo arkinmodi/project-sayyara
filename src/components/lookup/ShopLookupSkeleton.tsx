@@ -6,9 +6,23 @@ import { Panel } from "primereact/panel";
 import { Skeleton } from "primereact/skeleton";
 import React from "react";
 
+/**
+ * The shop lookup skeleton, rendered when the page is waiting for data from the database
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 03/18/2023
+ * @returns A react component of the shop lookup skeleton
+ */
 const ShopLookupSkeleton = () => {
   const rows = Array.from({ length: 6 });
 
+  /**
+   * Template for a skeleton of a shop in the shop lookup
+   *
+   * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+   * @date 03/18/2023
+   * @returns React component of a shop skeleton
+   */
   const bodyTemplate = () => {
     return (
       <div className={styles.bodySkeleton}>

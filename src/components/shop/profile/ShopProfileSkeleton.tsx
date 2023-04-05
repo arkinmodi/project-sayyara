@@ -2,7 +2,21 @@ import styles from "@styles/pages/shop/ShopProfile.module.css";
 import { Skeleton } from "primereact/skeleton";
 import React from "react";
 
+/**
+ * Renders the skeleton for the shop profile
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/07/2023
+ * @returns A react component for the skeleton of the shop profile
+ */
 const ShopProfileSkeleton = () => {
+  /**
+   * Renders the skeleton for the shop profile header
+   *
+   * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+   * @date 02/07/2023
+   * @returns A react component for the skeleton of the shop profile header
+   */
   const renderShopHeaderSkeleton = () => {
     return (
       <div className={styles.shopProfileHeader}>

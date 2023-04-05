@@ -20,6 +20,15 @@ interface IShopDetailsSectionProps {
   prevStep: () => void;
 }
 
+/**
+ * Handle the form for shop information for shop users
+ * Includes shop name, address, city, province, postal code, email and phone number
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/10/2023
+ * @param {IShopDetailsSectionProps} props - Shop details section props
+ * @returns A react form
+ */
 const ShopDetailsSection = (props: IShopDetailsSectionProps) => {
   const [isShopNameValid, setIsShopNameValid] = useState(true);
   const [isShopAddressValid, setIsShopAddressValid] = useState(true);

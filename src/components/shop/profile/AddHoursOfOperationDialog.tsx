@@ -77,6 +77,14 @@ const initialOperatingTimeValid = {
   sunday: true,
 };
 
+/**
+ * Renders a dialog popup for changing a shop's hours of operation
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/07/2023
+ * @param {IAddHoursOfOperationDialog} props - Props for the dialog
+ * @returns A react dialog containing the form for changing a shop's hours of operation
+ */
 const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
   const { visible, onHide, shopId, shop, updateShop } = props;
 
@@ -212,6 +220,17 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
 
   useEffect(() => {}, [formUpdateListener]);
 
+  /**
+   * Renders a form containing the current hours of operation
+   * Gives functionality to change it, using switches and time inputs
+   *
+   * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+   * @date 02/07/2023
+   * @param {string} d - Day of the week
+   * @param {IOperatingTimeValid} operatingTimeValid - Boolean flag to check if a day is open
+   * @param {IFormValues} formValues - Current hours of operation values
+   * @returns A react form containing the hours of operation
+   */
   const renderDayForm = (
     d: string,
     operatingTimeValid: IOperatingTimeValid,
@@ -278,6 +297,15 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
     );
   };
 
+  /**
+   * Handles open time changes on the hours of operation form
+   * Updates related state to equal new input
+   *
+   * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+   * @date 02/10/2023
+   * @param {CalendarChangeParams} e - Primereact calendar change parameters
+   * @param {string} d - Open time input value
+   */
   const handleOpenTimeInputChange = (e: CalendarChangeParams, d: string) => {
     const day = d as keyof IShopHoursOfOperation;
     const value = e.value;
@@ -294,6 +322,15 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
     setFormUpdateListener((formUpdateListener + 1) % 2);
   };
 
+  /**
+   * Handles close time changes on the hours of operation form
+   * Updates related state to equal new input
+   *
+   * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+   * @date 02/10/2023
+   * @param {CalendarChangeParams} e - Primereact calendar change parameters
+   * @param {string} d - Close time input value
+   */
   const handleCloseTimeInputChange = (e: CalendarChangeParams, d: string) => {
     const day = d as keyof IShopHoursOfOperation;
     const value = e.value;
@@ -310,6 +347,13 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
     setFormUpdateListener((formUpdateListener + 1) % 2);
   };
 
+  /**
+   * Validates form inputs to check if open time happens before close time
+   *
+   * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+   * @date 02/10/2023
+   * @returns Boolean flag if all inputs are valid
+   */
   const validateInputs = () => {
     const updatedOperatingTimeValid = {
       ...operatingTimeValid,
@@ -344,6 +388,12 @@ const AddHoursOfOperationDialog = (props: IAddHoursOfOperationDialog) => {
     return valid;
   };
 
+  /**
+   * Handles the submission of the form
+   *
+   * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+   * @date 02/10/2023
+   */
   const handleSubmit = () => {
     if (validateInputs()) {
       patchShop(shopId, {

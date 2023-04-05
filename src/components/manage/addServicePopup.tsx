@@ -62,6 +62,17 @@ const initialAddCustomServiceValues = {
   parts: [],
 };
 
+/**
+ * Creates and handles the pop up for adding a service
+ * Pop up is for both basic and custom services
+ * Form information includes name, description, estimated time, and price for basic
+ * Form information includes name, description, part condition and part type for custom
+ *
+ * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+ * @date 02/09/2023
+ * @param {IServicePopupProps} props - Service pop up props
+ * @returns A primereact dialog for adding a service
+ */
 const AddServicePopup = (props: IServicePopupProps) => {
   const { serviceType, visible, onHideDialog } = props;
   const [submitted, setSubmitted] = useState(false);

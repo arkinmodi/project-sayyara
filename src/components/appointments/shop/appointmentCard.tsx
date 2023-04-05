@@ -17,6 +17,17 @@ interface IAppointmentCardProps {
   onOpenCancelDialog: (id: string) => void;
 }
 
+/**
+ * Renders the appointment card for a shop user
+ * Contains details including the service, customer name, contact details, and car information
+ * as well as appointment times
+ * Also includes buttons to change appointment status
+ *
+ * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+ * @date 03/08/2023
+ * @param {IAppointmentCardProps} props - Appointment card props
+ * @returns A react component for an appointment
+ */
 const AppointmentCard = (props: IAppointmentCardProps) => {
   const dispatch = useDispatch();
 
@@ -28,13 +39,30 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     onOpenCancelDialog,
   } = props;
 
-  const hideDialog = (
+  /**
+   * Handles opening of the dialog related to cancelling an appointment
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/05/2023
+   * @param {React.MouseEvent<HTMLButtonElement, MouseEvent>} e - React mouse event
+   */
+  const openDialog = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     e.stopPropagation();
     onOpenCancelDialog(appointment.id);
   };
 
+  /**
+   * Handles the button to move the appointment to the next appointment status
+   * Next appointment depends on the specific button
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 01/30/2023
+   * @param {React.MouseEvent<HTMLButtonElement, MouseEvent>} e - React mouse event
+   * @param {IAppointment} appointment - Appointment object
+   * @param {AppointmentStatus} status - Appointment status
+   */
   const handleButtonClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     appointment: IAppointment,
@@ -45,6 +73,15 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     dispatch(setAppointmentStatus({ id: appointment.id, status: status }));
   };
 
+  /**
+   * Handles user click of "view quote"
+   * Redirects to the related quote
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 02/13/2023
+   * @param {React.MouseEvent<HTMLDivElement, MouseEvent>} e - React mouse event
+   * @param {IAppointment} appointment - Appointment object
+   */
   const viewQuoteClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     appointment: IAppointment
@@ -56,6 +93,16 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     toggleActiveTab();
   };
 
+  /**
+   * Function to format dates
+   * Format to the form: MMM DD, YYYY, HH:MM AM/PM
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/08/2023
+   * @param {Date} d - Date to be formatted
+   * @param {boolean} showSeconds - Boolean flag to show seconds in format
+   * @returns Formatted date
+   */
   const formatDate = (d: Date, showSeconds: boolean = false) => {
     return new Intl.DateTimeFormat("en-us", {
       dateStyle: "medium",
@@ -63,6 +110,13 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     }).format(d);
   };
 
+  /**
+   * Handles rendering the requested services' right components
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 01/30/2023
+   * @returns A react component containing the buttons and text
+   */
   const renderRequestedCardLeft = () => {
     return (
       <div className={styles.textAlign}>
@@ -105,6 +159,13 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     );
   };
 
+  /**
+   * Handles rendering the scheduled services' right components
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 01/30/2023
+   * @returns A react component containing the buttons and text
+   */
   const renderScheduledCardLeft = () => {
     return (
       <div className={styles.textAlign}>
@@ -127,7 +188,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
               styles.appointmentButtonRed,
               styles.appointmentCardButton
             )}
-            onClick={(e) => hideDialog(e)}
+            onClick={(e) => openDialog(e)}
           />
           <Button
             label="In Progress"
@@ -145,6 +206,13 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     );
   };
 
+  /**
+   * Handles rendering the in progress services' right components
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 01/30/2023
+   * @returns A react component containing the buttons and text
+   */
   const renderInProgressCardLeft = () => {
     return (
       <div className={styles.textAlign}>
@@ -162,6 +230,14 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
     );
   };
 
+  /**
+   * Renders the services' right components
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 01/30/2023
+   * @param appointmentProgress
+   * @returns A react component containing the buttons and text
+   */
   const renderCardLeft = (appointmentProgress: AppointmentStatus) => {
     switch (appointmentProgress) {
       case AppointmentStatus.PENDING_APPROVAL:

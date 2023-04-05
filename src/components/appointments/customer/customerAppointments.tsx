@@ -44,6 +44,16 @@ const responsiveOptions = [
   },
 ];
 
+/**
+ * Renders the appointments for a customer
+ * Found in the route: /dashboard or My Service Requests > Service Requests
+ * Contains the details of each appointment, such as their scheduled times, progression
+ * of appointment (requested, accepted, in progress, past, rejected/cancelled)
+ *
+ * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+ * @date 03/08/2023
+ * @returns A react component displaying the appointments of a customer
+ */
 const CustomerAppointments = () => {
   const appointments = useSelector(AppointmentSelectors.getAppointments);
   const [requestedAppointments, setRequestedAppointments] = useState<
@@ -75,6 +85,12 @@ const CustomerAppointments = () => {
   /**
    * Carousel resizes items if there are less than numVisible items.
    * To prevent undesirable resizing of cards, we add placeholder cards.
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 02/11/2023
+   * @param {ICustomerAppointment[]} appointments - A list of appointments
+   * @param {number} numItemVisible - The number of appointments visible in the carousel
+   * @returns An updated list of appointments
    */
   const addPlaceholderItems = (
     appointments: ICustomerAppointment[],
@@ -88,6 +104,15 @@ const CustomerAppointments = () => {
     return updatedItems;
   };
 
+  /**
+   * Renders the list of appointments for each carousel, with added placeholders
+   * to prevent undesirable resizing
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 02/11/2023
+   * @param {ICustomerAppointment[]} appointments - A list of appointments
+   * @returns A list of updated appointments
+   */
   const getAppointmentsWithPlaceholders = (
     appointments: ICustomerAppointment[]
   ) => {
@@ -113,6 +138,15 @@ const CustomerAppointments = () => {
     }
   }, [dispatch, customerId]);
 
+  /**
+   * Debounces resizing window to prevent overload
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 02/11/2023
+   * @param callback - Memoized function to debounce
+   * @param {number} wait - Wait time between reloads in milliseconds
+   * @returns A function with a timeout
+   */
   const debounce = (callback: () => void, wait: number) => {
     let timeout: NodeJS.Timeout;
     return (...args: []) => {
@@ -125,6 +159,9 @@ const CustomerAppointments = () => {
   /**
    * Listen to window size to trigger re-render of carousel.
    * Debounce window resize to prevent overload.
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 02/11/2023
    */
   const handleResize = useCallback(
     debounce(() => {
@@ -194,6 +231,7 @@ const CustomerAppointments = () => {
     setRejectedOrCancelledAppointments(rejectedOrCancelledAppointmentsList);
   }, [appointments]);
 
+  // Renders toast is toast is visible
   const showToast = () => {
     if (toast.current) {
       toast.current.show({
@@ -204,6 +242,16 @@ const CustomerAppointments = () => {
     }
   };
 
+  /**
+   * Function to format dates
+   * Format to the form: MMM DD, YYYY, HH:MM AM/PM
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/08/2023
+   * @param {Date} d - Date to be formatted
+   * @param {boolean} showSeconds - Flag to show seconds
+   * @returns A formatted date
+   */
   const formatDate = (d: Date, showSeconds: boolean = false) => {
     return new Intl.DateTimeFormat("en-us", {
       dateStyle: "medium",
@@ -211,6 +259,13 @@ const CustomerAppointments = () => {
     }).format(d);
   };
 
+  /**
+   * Handles cancellation of an appointment
+   * Displays cancellation toast
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/05/2023
+   */
   const cancelAppointment = () => {
     setSubmitted(true);
     if (cancellationReason.length > 0 && cancelledAppointmentId != null) {
@@ -225,12 +280,22 @@ const CustomerAppointments = () => {
     }
   };
 
+  // Hides cancel appointment dialog
   const hideCancelAppointmentDialog = () => {
     setSubmitted(false);
     setCancelAppointmentDialog(false);
     setCancellationReason("");
   };
 
+  /**
+   * Handles the button click of cancelling an appointment
+   * Opens the cancel appointment dialog
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/05/2023
+   * @param {React.MouseEvent<HTMLButtonElement, MouseEvent>} e - React mouse event
+   * @param {string} id - Appointment ID
+   */
   const cancelAppointmentDialogFooter = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     id: string
@@ -257,11 +322,27 @@ const CustomerAppointments = () => {
     </div>
   );
 
+  /**
+   * Handles input changes in the cancellation reason field
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/05/2023
+   * @param {ChangeEvent<HTMLInputElement>} e - React change event
+   */
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value ?? "";
     setCancellationReason(val);
   };
 
+  /**
+   * Handles the button click of editing an appointment
+   * Opens the edit appointment dialog
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/08/2023
+   * @param {React.MouseEvent<HTMLButtonElement, MouseEvent>} e - React mouse event
+   * @param {ICustomerAppointment} appointment - Appointment object
+   */
   const openEditAppointmentDialog = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     appointment: ICustomerAppointment
@@ -271,10 +352,22 @@ const CustomerAppointments = () => {
     setOpenEditDialog(true);
   };
 
+  // Hides edit appointment dialog
   const closeEditAppointmentDialog = () => {
     setOpenEditDialog(false);
   };
 
+  /**
+   * Renders an appointment card for a specific appointment
+   * Contains shop name and address, service name, and appointment time
+   * Routes to the specific appointment's work order
+   * Contains buttons to edit or cancel the appointment, depending on the status of the appointment
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/08/2023
+   * @param {ICustomerAppointment | null} appointment - Appointment object
+   * @returns A react component for a customer appointment
+   */
   const appointmentsCard = (appointment: ICustomerAppointment | null) => {
     return (
       <div className={styles.appointmentCarouselCardContainer}>

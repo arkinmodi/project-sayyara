@@ -41,6 +41,15 @@ interface IServiceProps {
   isLoading: boolean;
 }
 
+/**
+ * Creates and handles the table displaying all the services of a shop
+ * Renders both the basic and custom service tables
+ *
+ * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+ * @date 03/04/2023
+ * @param {IServiceProps} props - Service props
+ * @returns Primereact tables containing the services of a shop
+ */
 const ServicesTable = (props: IServiceProps) => {
   const [expandedRows, setExpandedRows] = useState<
     DataTableExpandedRows | undefined

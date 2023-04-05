@@ -9,6 +9,15 @@ import AuthSignUpFormShop from "./signUp/shop/authSignUpFormShop";
 interface IAuthFormTabsProps {
   dialogType: AuthDialogType;
 }
+
+/**
+ * Creates the react tabs that toggle between signing up and logging in for the dialog
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 01/09/2023
+ * @param {IAuthFormTabsProps} props - Authentication form tabs props
+ * @returns A primereact tab component
+ */
 const AuthFormTabs = (props: IAuthFormTabsProps) => {
   return (
     <div className={styles.authTabViewContainer}>

@@ -8,6 +8,15 @@ interface IAppointmentTabsProps {
   toggleActiveTab: () => void;
 }
 
+/**
+ * Renders the tabs that separate the appointments by their status
+ * Tab headers are: Requested, Scheduled, In Progress, Completed, Cancelled
+ *
+ * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+ * @date 03/05/2023
+ * @param {IAppointmentTabsProps} props - Appointment tabs props
+ * @returns
+ */
 const AppointmentsTab = (props: IAppointmentTabsProps) => {
   const { toggleActiveTab } = props;
   return (

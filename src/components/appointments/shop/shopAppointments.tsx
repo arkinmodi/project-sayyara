@@ -20,6 +20,15 @@ interface IAppointmentsProps {
   toggleActiveTab: () => void;
 }
 
+/**
+ * Renders the entire service requests tab for shop users
+ * Also includes all the success and failure toasts
+ *
+ * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+ * @date 03/08/2023
+ * @param {IAppointmentsProps} props - Appointment props
+ * @returns A react component containing all the service requests and tabs displayed for shop users
+ */
 const ShopAppointments = (props: IAppointmentsProps) => {
   const dispatch = useDispatch();
 
@@ -47,6 +56,14 @@ const ShopAppointments = (props: IAppointmentsProps) => {
 
   const toast = useRef<Toast>(null);
 
+  /**
+   * Handles display of a success toast, depending on appointment status
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/05/2023
+   * @param {AppointmentStatus} status - Appointment status
+   * @returns A toast displayed based on appointment status
+   */
   const showToast = (status: AppointmentStatus) => {
     if (toast.current) {
       switch (status) {
@@ -134,6 +151,14 @@ const ShopAppointments = (props: IAppointmentsProps) => {
     }
   }, [appointments, appointmentTab, prevAppointmentMap, loading]);
 
+  /**
+   * Lists all appointment cards
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 01/30/2023
+   * @param {string} date - Date
+   * @returns A list of AppointmentCard components
+   */
   function listAppointmentCards(date: string) {
     let content: any = [];
     {
@@ -154,6 +179,13 @@ const ShopAppointments = (props: IAppointmentsProps) => {
     return content;
   }
 
+  /**
+   * Handles the situation when there are no appointments of a specific appointment status
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/05/2023
+   * @returns A string stating there are no appointments
+   */
   function noAppointmentsText() {
     switch (appointmentTab) {
       case AppointmentStatus.PENDING_APPROVAL:
@@ -171,6 +203,14 @@ const ShopAppointments = (props: IAppointmentsProps) => {
     }
   }
 
+  /**
+   * Lists all appointments in sorted order by date (closest to furthest)
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/08/2023
+   * @param {Array<IAppointment>} appointmentsMap - A map of appointments, with the key value being the date
+   * @returns A react component of the list of appointments
+   */
   function listAllAppointments(appointmentsMap: {
     [key: string]: Array<IAppointment>;
   }) {
@@ -193,17 +233,31 @@ const ShopAppointments = (props: IAppointmentsProps) => {
 
   const [cancelAppointmentDialog, setCancelAppointmentDialog] = useState(false);
 
+  // Handles hiding the cancel appointment dialog
   const hideCancelAppointmentDialog = () => {
     setSubmitted(false);
     setCancelAppointmentDialog(false);
     setCancellationReason("");
   };
 
+  /**
+   * Checks if selected appointment has had the cancel button clicked
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/05/2023
+   * @param {string} id - Appointment ID
+   */
   const confirmCancelSelected = (id: string) => {
     setCancelAppointmentDialog(true);
     setCancelledAppointmentId(id);
   };
 
+  /**
+   * Handles cancellation of an appointment
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/05/2023
+   */
   const cancelAppointment = () => {
     setSubmitted(true);
     if (cancellationReason.length > 0 && cancelledAppointmentId != null) {
@@ -235,6 +289,13 @@ const ShopAppointments = (props: IAppointmentsProps) => {
     </div>
   );
 
+  /**
+   * Handles changes to the form field for cancellation reason
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/05/2023
+   * @param {ChangeEvent<HTMLInputElement>} e - React change event
+   */
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value ?? "";
 

@@ -17,6 +17,15 @@ interface IEditAppointmentDialogProps {
   onHide: () => void;
 }
 
+/**
+ * Renders a react dialog for editing an appointment
+ * Opens up a calendar of availabilities for the user to select a new timeslot
+ *
+ * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+ * @date 03/08/2023
+ * @param {IEditAppointmentDialogProps} props - Edit appointment dialog props
+ * @returns A react dialog of the appointment to be edited
+ */
 const EditAppointmentDialog = (props: IEditAppointmentDialogProps) => {
   const { appointment, visible, onHide } = props;
   const dispatch = useDispatch();
@@ -63,6 +72,14 @@ const EditAppointmentDialog = (props: IEditAppointmentDialogProps) => {
     }
   }, [appointment, customerAppointments]);
 
+  /**
+   * Handles on selection of a timeslot in the appointments calendar
+   * Generates an end time based off of the appointment duration and given start time
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/08/2023
+   * @param {StartTimeEventEmit} e - React schedule meeting parameters
+   */
   const onTimeSelect = (e: StartTimeEventEmit) => {
     const duration = Math.abs(
       new Date(appointment.endTime).getTime() -
@@ -76,6 +93,12 @@ const EditAppointmentDialog = (props: IEditAppointmentDialogProps) => {
     setAllowSubmit(true);
   };
 
+  /**
+   * Handles the button click of saving the new appointment timeslot
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/08/2023
+   */
   const onSaveAppointment = () => {
     const body = {
       id: appointment.id,
@@ -86,6 +109,14 @@ const EditAppointmentDialog = (props: IEditAppointmentDialogProps) => {
     onHide();
   };
 
+  /**
+   * Renders the calendar to display available timeslots
+   * Also renders the cancel and save buttons
+   *
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+   * @date 03/08/2023
+   * @returns A react component containing the react schedule meeting calendar and the button components
+   */
   const renderEditAppointmentDialog = () => {
     return (
       <div className={styles.dialogInputCol}>
