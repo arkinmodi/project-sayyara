@@ -71,6 +71,7 @@
 	March 15, 2023    & Joy Xiao              & Update service test due to update in SRS                                                                     \\
 	March 19, 2023    & Joy Xiao              & Update appointments tests due to update in SRS                                                               \\
 	April 1, 2023     & Leon So               & Update authentication tests due to update in SRS                                                             \\
+	April 5, 2023     & Leon So               & Update changes due to testing                                                                                \\
 	\bottomrule
 \end{longtable}
 
@@ -2914,9 +2915,17 @@ A summary of all the test results can be found in table \ref{Table Unit Tests Re
 During testing there were a few changes that were needed to be made to bring the application into
 alignment with the requirements defined in the SRS and the plan defined in the VnV Plan. Test cases
 ``NFRT-OE-1'' and ``NFRT-SR2-1'' have failed and changes will be made to address them.
-Additionally, there were comments made regarding the lack of the ability to edit and cancel
-appointments in the user interface during the Revision 0 Demonstration. This feedback will also be
-addressed. All changes are planned to be completed before the Revision 1 Demonstration.
+``NFRT-OE-1'' failed as some views and components did not scale as intended on some small and
+medium device dimensions (e.g., iPhone SE). The CSS has been updated accordingly to support all
+device dimensions listed in the
+\href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{SRS}. ``NFRT-SR2-1''
+failed because extra information was being returned from the API call that is not needed for these
+endpoints, thereby exposing data that does not belong to user. As a result, the endpoint has been
+revised to return an appropriate set of information that does not expose more information that
+needed and does not violate the security requirements. Additionally, there were comments made
+regarding the lack of the ability to edit and cancel appointments in the user interface during the
+Revision 0 Demonstration. This feedback will also be addressed. All changes are planned to be
+completed before the Revision 1 Demonstration.
 
 \section{Automated Testing}
 
