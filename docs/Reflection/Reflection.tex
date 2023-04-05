@@ -16,68 +16,128 @@
 
 \maketitle
 
-\plt{Reflection is an important component of getting the full benefits from a
-	learning experience.  Besides the intrinsic benefits of reflection, this
-	document will be used to help the TAs grade how well your team responded to
-	feedback.  In addition, several CEAB (Canadian Engineering Accreditation Board)
-	Learning Outcomes (LOs) will be assessed based on your reflections.}
-
 \section{Changes in Response to Feedback}
 
-\plt{Summarize the changes made over the course of the project in response to
-	feedback from TAs, the instructor, teammates, other teams, the project
-	supervisor (if present), and from user testers.}
-
-\plt{For those teams with an external supervisor, please highlight how the feedback
-	from the supervisor shaped your project.  In particular, you should highlight the
-	supervisor's response to your Rev 0 demonstration to them.}
-
 \subsection{SRS and Hazard Analysis}
+We received TA feedback to add more details to our requirements. This was updated for our
+functional and nonfunctional requirements to give more details, which makes our requirements more
+focused. We also had feedback to make our requirements more specific. For example, specifying
+constraints for inputs and adding a list/table of figures. As a result, we updated the SRS to
+address this feedback. After the Rev 0 Demo, we got TA feedback to add a cancellation reason when a
+customer or a shop cancels an appointment. This was added for our Rev 1 Demo and added as a
+requirement in the SRS. Another change we made was to reduce the scope of our project, which
+resulted in changing the SRS. The scope change was made in agreement with the project supervisor,
+and only features that were not necessarily essential for the application were taken out. We also
+improved the introduction for the Hazard Analysis in response to TA feedback.
 
 \subsection{Design and Design Documentation}
+Based on TA feedback, we have revised our System Design documentation to include descriptions for
+mock-ups and clarification on the system variables. Additionally, the Module Interface
+Specification document was updated to reflect changes during development and changes from feedback
+for the Verification and Validation Plan and Report.
 
 \subsection{VnV Plan and Report}
+The TA gave us feedback to add more details to our tests to make the tests more specific. We also
+conducted a usability survey with customers and auto shop owners. From doing the usability survey,
+there were a few feature requests from the test users which were some bug fixes, adding clickable
+links on the shop profile, password requirements, and filter buttons for the search page. We also
+demoed the project to our project supervisor, which was very impressed with our progress. Our
+project supervisor was also one of our test users for the project, and he thought the project was
+very well done. These upgrades were added for the Rev 1 Demo and updated in our VnV plan and
+report. We also updated the VnV report to include more specific changes due to testing. For
+example, we included the reason why the test failed and what changes were made to address the
+failing test case.
 
 \section{Design Iteration (LO11)}
-
-\plt{Explain how you arrived at your final design and implementation.  How did
-	the design evolve from the first version to the final version?}
+Initially, our team took the requirements provided by our project supervisor, Nabeel, and created
+formal specifications which were later translated to mock-ups. Our team took an incremental and
+iterative approach, where we would continuously collect feedback from our stakeholders, including
+the project supervisor, the course TA and instructor, auto repair shop mechanics, and other
+potential users. During implementation and prototyping (i.e., mockups), we realized critical flaws
+in the workflows and user experience envisioned by the project supervisor, and we made design
+changes to address these flaws. Examples include implementing a live quote system, adding a common
+landing page for the web application, and organizing features into dashboards. We also incorporated
+feedback from the Rev 0 demo. For example, we incorporated the ability to cancel appointments, the
+ability to edit appointments, and added notifications (in the form of toasts) to confirm various
+user actions have triggered an event.
 
 \section{Design Decisions (LO12)}
-
-\plt{Reflect and justify your design decisions.  How did limitations,
-	assumptions, and constraints influence your decisions?}
+Due to time limitations and resource limitations (i.e., our team only had 4 team members), we had
+to work with our project supervisor to determine an appropriate scope for the project. This led to
+the necessary sacrifice of some features we would have loved to design and implement. We also had
+to make critical assumptions due to time constraints, which would allow us to limit the scope. For
+example, we made the assumption that each vehicle owner would only have one vehicle. For the scope
+of this project, we simplified the scheduling process to only support one appointment at a time.
+However, in reality, a shop would likely have multiple service bays and employees, allowing for
+concurrent and parallel appointments. As a result, the product is missing some features necessary
+for commercialization of the product, such as an employee invitation process using email services,
+the ability to edit customer, vehicle, and shop metadata.
 
 \section{Economic Considerations (LO23)}
+Yes, there is certainly a market for our product. The market is segmented into two segments: (1)
+auto repair shop owners, and (2) anyone who owns a vehicle in Canada. This product provides many
+features and functionality which allow both vehicle owners and auto repair shops to more easily
+interact. Furthermore, this allows auto repair shops to streamline their administrative tasks and
+operations, allowing them to spend more time repairing cars to drive and generate revenue.
 
-\plt{Is there a market for your product? What would be involved in marketing your
-	product? What is your estimate of the cost to produce a version that you could
-	sell?  What would you charge for your product?  How many units would you have to
-	sell to make money? If your product isn't something that would be sold, like an
-	open source project, how would you go about attracting users?  How many potential
-	users currently exist?}
+In terms of marketing the product, various marketing campaigns and materials would be required. The
+content of these marketing materials should be tailored towards two main audiences: auto repair
+shop owners and vehicle owners. These are typically the decision makers who would decide whether to
+onboard to the application.
+
+The product would be free to use for vehicle owners. In the future, the application would process
+payments, which would allow for a revenue stream through transaction fees. For shop owners, there
+will be a subscription model with three tiers, each unlocking a separate set of features. The free
+tier will include a set of basic functionality, which includes the current set of features. The
+second tier would include additional features such as analytic dashboards to monitor work progress,
+appointments, quotes, etc. The second tier would cost \$5 per month. The third tier would include
+additional features which includes a set of advertising and marketing features within the platform,
+such as featured spotlight (to display the spot at the top of results for a specified number of
+days per month), in-app advertisements, email lists and campaigns features, and marketing analytics
+(e.g., number of clicks). The third tier would cost \$10 per month.
+
+There are currently no active users, as this product is scoped as an initial prototype for the
+project supervisor. It was built with the intention for the product to be extended further to
+support commercialization after the completion of this capstone project and course.
 
 \section{Reflection on Project Management (LO24)}
 
-\plt{This question focuses on processes and tools used for project management.}
-
 \subsection{How Does Your Project Management Compare to Your Development Plan}
-
-\plt{Did you follow your Development plan, with respect to the team meeting plan,
-	team communication plan, team member roles and workflow plan.  Did you use the
-	technology you planned on using?}
+Yes, we followed the development plan at met during the weekly meeting times. We followed the team
+communication plan as well. We used most of the technologies listed in the development plan. There
+was a component library mentioned in the development plan, which we had to switch to a different
+one after trying it for the proof of concept demo. The team chose a new component library and
+updated the development plan.
 
 \subsection{What Went Well?}
-
-\plt{What went well for your project management in terms of processes and
-	technology?}
+Having weekly meetings as stated on the development plan was very helpful for our project
+management. This made us set aside a dedicated time to figure out the next steps and work together
+as a group. Some technologies that worked well were our CI/CD pipeline for building documents, unit
+\& integration tests, and for performing code styling checks. This made processes more efficient
+when writing documents, ensured that there were no major issues with each change by running a
+testing check, and enforced specific code styling for consistency.
 
 \subsection{What Went Wrong?}
+Nothing major went wrong as all team members committed and followed through with the plan. All team
+members were also communicative when any issues had arisen. However, our team could have improved
+on the time management, specifically in the delivery and implementation of features for each
+milestone. This would have allowed for more time to polish the application, and iterate based on
+testing and feedback. In terms of technology, our team found the set of technologies used supported
+the project management processes well, and we did not experience any difficulty or challenges
+relating to technology.
 
-\plt{What went wrong in terms of processes and technology?}
-
-\subsection{What Would you Do Differently Next Time?}
-
-\plt{What will you do differently for your next project?}
+\subsection{What Would You Do Differently Next Time?}
+If given the opportunity, we would have loved to collect more user feedback to further improve our
+design and user experience. Next time, we would plan for more time in order to get iterative
+feedback from test users. We would also revise the scope by planning to include front-end
+integration tests in the scope, as well as refine the set of features for the initial project. This
+would entail reducing the set of features within the scope and punting some features as stretch
+goals. This would allow us to polish and refine the most critical features. To improve on time
+management, our team would set soft deadlines for every feature. This would allow our team to set
+expectations, leave a time buffer for polish, and allow the team to better coordinate tasks. One
+additional project management change we would make is to incorporate a more defined and strict
+style guide. Given that there are many ways to do things, for example, defining a function in
+TypeScript, structuring classes and components in React, etc., it would be beneficial to have an
+agreed upon style to enforce uniformity and consistency among code.
 
 \end{document}
