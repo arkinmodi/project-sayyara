@@ -35,6 +35,13 @@ const days = [
   "sunday",
 ];
 
+/**
+ * Renders the shop profile page of a specific shop given the shop ID
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 03/18/2023
+ * @returns The react page for the route "shop/{id}"
+ */
 const Profile: NextPage = () => {
   const [shop, setShop] = useState<IShop | null>();
   const [isLoading, setIsLoading] = useState(true);

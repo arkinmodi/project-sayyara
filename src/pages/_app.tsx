@@ -61,40 +61,47 @@ const MyApp: FC<
   );
 };
 
-// reportWebVitals is used for performance testing
-// For a good user experience, the following vitals should be met:
-// LCP < 2.5 seconds (1 second = 1000 ms)
-// FID < 100 ms
-// CLS < 0.1
-// TTFB < 0.5 seconds
-// FCP < 1.8 seconds
-// Other custom vitals include time to start and finish hydrating, and time for a page to start and finish
-// rendering after a route change.
-export function reportWebVitals(metric: NextWebVitalsMetric) {
-  switch (metric.name) {
-    case "FCP":
-      // First Contentful Paint
-      console.log("FCP: ", metric.value);
-      break;
-    case "LCP":
-      // Largest Contentful Paint
-      console.log("LCP: ", metric.value);
-      break;
-    case "CLS":
-      // Cumulative Layout Shift
-      console.log("CLS: ", metric.value);
-      break;
-    case "FID":
-      // First Input Delay
-      console.log("FID: ", metric.value);
-      break;
-    case "TTFB":
-      // Time to First Byte
-      console.log("TTFB: ", metric.value);
-      break;
-    default:
-      break;
-  }
-}
+/**
+ * reportWebVitals is used for performance testing
+ * For a good user experience, the following vitals should be met:
+ * LCP < 2.5 seconds (1 second = 1000 ms)
+ * FID < 100 ms
+ * CLS < 0.1
+ * TTFB < 0.5 seconds
+ * FCP < 1.8 seconds
+ * Other custom vitals include time to start and finish hydrating, and time for a page to start and finish
+ * rendering after a route change.
+ * Note: This function is commented out to prevent console.log spam in production
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 03/05/2023
+ * @param {NextWebVitalsMetric} metric - Next.js web vitals metrics
+ */
+// export function reportWebVitals(metric: NextWebVitalsMetric) {
+//   switch (metric.name) {
+//     case "FCP":
+//       // First Contentful Paint
+//       console.log("FCP: ", metric.value);
+//       break;
+//     case "LCP":
+//       // Largest Contentful Paint
+//       console.log("LCP: ", metric.value);
+//       break;
+//     case "CLS":
+//       // Cumulative Layout Shift
+//       console.log("CLS: ", metric.value);
+//       break;
+//     case "FID":
+//       // First Input Delay
+//       console.log("FID: ", metric.value);
+//       break;
+//     case "TTFB":
+//       // Time to First Byte
+//       console.log("TTFB: ", metric.value);
+//       break;
+//     default:
+//       break;
+//   }
+// }
 
 export default MyApp;

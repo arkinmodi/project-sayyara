@@ -10,6 +10,17 @@ import QuotesShell from "src/components/quotes/shell";
 
 import { useEffect, useState } from "react";
 
+/**
+ * Renders the customer dashboard page
+ * Found at route: "/dashboard"
+ * Contains the quotes (and chat conversations) as well as service requests
+ *
+ * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 02/13/2023
+ * @returns The react page for the route "/dashboard"
+ */
 const CustomerDashboard: NextPage = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const router = useRouter();

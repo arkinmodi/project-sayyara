@@ -22,6 +22,13 @@ import {
   PatchWorkOrderByIdBody,
 } from "src/utils/workOrderUtil";
 
+/**
+ * Renders the work order page of a specific work order given the work order ID
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 02/28/2023
+ * @returns The react page for the route "shop/work-orders/{id}"
+ */
 const WorkOrder: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
