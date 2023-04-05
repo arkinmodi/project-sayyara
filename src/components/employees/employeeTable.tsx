@@ -20,6 +20,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { ShopRoles } from "src/types/auth";
 import { IEmployee } from "src/types/employee";
 
+/**
+ * Creates and handles the table of employees of a shop
+ * Found in "Manage Shop" > "Employees"
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/04/2023
+ * @returns A primereact table component
+ */
 const EmployeeTable = () => {
   const [employeeList, setEmployeeList] = useState<IEmployee[]>([]);
   const [showSuspendEmployeeDialog, setShowSuspendEmployeeDialog] =

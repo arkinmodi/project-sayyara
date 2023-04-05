@@ -24,7 +24,6 @@ interface IAppointmentCardProps {
  * Also includes buttons to change appointment status
  *
  * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
- * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
  * @date 03/08/2023
  * @param {IAppointmentCardProps} props - Appointment card props
  * @returns A react component for an appointment
@@ -78,7 +77,7 @@ const AppointmentCard = (props: IAppointmentCardProps) => {
    * Handles user click of "view quote"
    * Redirects to the related quote
    *
-   * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+   * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
    * @date 02/13/2023
    * @param {React.MouseEvent<HTMLDivElement, MouseEvent>} e - React mouse event
    * @param {IAppointment} appointment - Appointment object

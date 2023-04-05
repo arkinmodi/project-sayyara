@@ -28,6 +28,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { AuthDialogType } from "src/types/auth";
 import AuthDialog from "../auth/authDialog";
 
+/**
+ * Creates and handles the header found across the entire website
+ * Content varies based on login state and user type
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/12/2023
+ * @returns The react component for the header
+ */
 const Header = () => {
   const { data: session } = useSession();
   const isLoggedIn = useSelector(AuthSelectors.getIsLoggedIn);
