@@ -77,6 +77,7 @@
 		April 2, 2023     & Timothy Choy          & Update createShopOwner from User Module  \\
 		April 3, 2023     & Timothy Choy          & Update getShops for location             \\
 		April 4, 2023     & Arkin Modi            & Add descriptions for modules             \\
+		April 4, 2023     & Timothy Choy          & Add local function in Shop Module        \\
 		April 4, 2023     & Arkin Modi            & Update modules to match source code      \\
 		\bottomrule
 	\end{tabularx}
@@ -702,7 +703,8 @@ None
 \noindent updateShopById($id, patch$):
 \begin{itemize}
 	\item transition: Update all fields of a Shop, with an ID equal to $id$, with fields in $patch$ in shop
-	      database table. Location is updated locally through the getLatLong(address) local function.
+	      database table. Location is updated locally through the getLatLong(address, city, province,
+	      postalCode) local function.
 	\item output: $out := getShopById(id) = \text{Shop} \Rightarrow (\text{Shop} = \text{None} $ \\
 		      $\Rightarrow \text{ShopNotFoundException } |\ \text{Shop} \neq \text{None}$ \\ $\Rightarrow
 		      \text{update all fields of Shop with fields in } patch \text{ in shop database table})$
@@ -734,16 +736,12 @@ None
 			      \text{shop.longitude})) * 6371$
 \end{itemize}
 
-% distance: $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$, $\mathbb{R}$ $\rightarrow$ $\mathbb{R}$ \\
+\noindent getLatLong($address, city, province, postalCode$):
 
-% distance(shop\_lat, shop\_long, user\_lat, user\_long) $\equiv (3959 \cdot
-% 	\arccos(\cos(\text{shop\_lat})) \cdot \cos(\text{user\_lat}) + \cos(\text{shop\_long} -
-% 		\text{user\_long}) + \sin(\text{shop\_lat}) \cdot \sin(\text{user\_lat}))$
-
-% getLatLong: String $\rightarrow$ $\mathbb{R}$, $\mathbb{R}$ \\
-
-% getLatLong(address) $\equiv$ the latitude and longitude of the address, as defined by the Google
-% Maps API. \\
+\begin{itemize}
+	\item output: The latitude and longitude of the address, as defined by the Bing Maps API. For accuracy,
+	      the city, province and postal codes are also used.
+\end{itemize}
 
 \newpage
 \section{MIS of Users Module} \label{mUsers}
