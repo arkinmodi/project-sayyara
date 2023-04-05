@@ -95,6 +95,7 @@
 	March 15, 2023   & Joy Xiao              & Update service test due to update in SRS                    \\
 	March 19, 2023   & Joy Xiao              & Update appointments tests due to update in SRS              \\
 	April 1, 2023    & Leon So               & Update authentication tests due to update in SRS            \\
+	April 5, 2023    & Timothy Choy          & Add relevance to relevant documentation                     \\
 	\bottomrule
 \end{longtable}
 
@@ -172,11 +173,39 @@ Below are the relevant documents that will be referred to in the VnV Plan.
 
 \begin{itemize}
 	\item \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/DevelopmentPlan/DevelopmentPlan.pdf}{Development Plan \citep*{SayyaraDevPlan}}
+\end{itemize}
+
+The Development Plan contains the roles and responsibilities of each member and the breakdown of
+testing roles. It also includes the tools and technologies that will be used to facilitate testing.
+
+\begin{itemize}
 	\item \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/HazardAnalysis/HazardAnalysis.pdf}{Hazard Analysis \citep*{SayyaraHA}}
+\end{itemize}
+
+The Hazard Analysis clarifies the failure modes and causes of failures, which are used in this VnV
+Plan to determine if the recommended action that should be taken to mitigate the failures are
+implemented properly. It also states the system boundaries and sets the scope of our project.
+
+\begin{itemize}
 	\item \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/SoftArchitecture/MG.pdf}{Module Guide \citep*{SayyaraMG}}
+\end{itemize}
+
+The Module Guide decomposes Sayyara into modules which are used in the VnV Plan to test specific
+modules.
+
+\begin{itemize}
 	\item \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{Module Interface Specification \citep*{SayyaraMIS}}
+\end{itemize}
+
+The MIS decomposes each module described in the MG into their constants, types and access programs,
+which are used in the VnV Plan to test if each function and routine works as intended.
+
+\begin{itemize}
 	\item \href{https://github.com/arkinmodi/project-sayyara/blob/main/docs/SRS/SRS.pdf}{Software Requirements Specification \citep*{SayyaraSRS}}
 \end{itemize}
+
+The SRS lists all the functional and non-functional requirements of Sayyara, which are each tested
+to see if every requirement is met.
 
 % \wss{Reference relevant documentation.  This will definitely include your SRS
 % 	and your other project documents (design documents, like MG, MIS, etc).  You
