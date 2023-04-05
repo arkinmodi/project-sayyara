@@ -31,6 +31,14 @@ const initialAuthSignUpFormShopOwnerValues: IAuthSignUpFormShopOwnerValues = {
   shopEmail: "",
 };
 
+/**
+ * Display current form section for shop owners (user details and shop information)
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/10/2023
+ * @param {IAuthSignUpFormShopOwnerProps} props - Shop owner sign up props
+ * @returns A react form containing the current form section
+ */
 const AuthSignUpFormShopOwner = (props: IAuthSignUpFormShopOwnerProps) => {
   const [formValues, setFormValues] = useState<IAuthSignUpFormShopOwnerValues>({
     ...initialAuthSignUpFormShopOwnerValues,

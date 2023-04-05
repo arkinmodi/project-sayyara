@@ -15,6 +15,15 @@ interface IUserDetailsSectionProps {
   prevStep: () => void;
 }
 
+/**
+ * Handle the form for vehicle information for customer users
+ * Includes vehicle make, model, year, the car's VIN and license plate
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/10/2023
+ * @param {IUserDetailsSectionProps} props - User details section props
+ * @returns A react form
+ */
 const UserDetailsSection = (props: IUserDetailsSectionProps) => {
   const [isVehicleMakeValid, setIsVehicleMakeValid] = useState(true);
   const [isVehicleModelValid, setIsVehicleModelValid] = useState(true);

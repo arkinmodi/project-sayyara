@@ -21,6 +21,14 @@ const initialAuthSignUpFormShopEmployeeValues: IAuthSignUpFormShopEmployeeValues
     shopId: "",
   };
 
+/**
+ * Display current form section for employees (user details and shop ID)
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/10/2023
+ * @param {IAuthSignUpFormShopEmployeeProps} props - Shop employee sign up props
+ * @returns A react form containing the current form section
+ */
 const AuthSignUpFormShopEmployee = (
   props: IAuthSignUpFormShopEmployeeProps
 ) => {

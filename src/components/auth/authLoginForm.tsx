@@ -17,6 +17,14 @@ const initialLoginFormValues: ILoginFormValues = {
   password: "",
 };
 
+/**
+ * Creates and handles the log in form for all users
+ * Form contains user email and password
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @date 02/10/2023
+ * @returns A react form for login
+ */
 const AuthLoginForm = () => {
   const [formValues, setFormValues] = useState<ILoginFormValues>({
     ...initialLoginFormValues,

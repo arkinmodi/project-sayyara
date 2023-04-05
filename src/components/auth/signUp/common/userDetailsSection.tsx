@@ -23,6 +23,18 @@ interface IUserDetailsSectionProps {
   nextStep: () => void;
   prevStep?: () => void;
 }
+
+/**
+ * Creates a form for registration
+ * Contains information for user details, including name, phone number, email and password
+ * Also checks if the inputs are valid
+ *
+ * @author Leon So <34189743+LeonSo7@users.noreply.github.com>
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 03/13/2023
+ * @param {IUserDetailsSectionProps} props - User details props
+ * @returns A react form containing the sign up details of a user
+ */
 const UserDetailsSection = (props: IUserDetailsSectionProps) => {
   const { formValues, handleInputChange, nextStep, prevStep } = props;
   const [isFirstNameValid, setIsFirstNameValid] = useState(true);
@@ -31,6 +43,7 @@ const UserDetailsSection = (props: IUserDetailsSectionProps) => {
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
 
+  // Validates all form inputs
   const validateInputs = () => {
     const isValidEmail = validateEmail(formValues.email);
     setIsEmailValid(isValidEmail);
