@@ -7,6 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { IService, ServiceType } from "src/types/service";
 import ServicesTable from "./servicesTable";
 
+/**
+ * Creates and handles the tabs to switch between basic and custom services
+ *
+ * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+ * @date 02/09/2023
+ * @returns Primereact tabs for switching between services
+ */
 const Services = () => {
   const [customServices, setCustomServices] = useState<IService[]>([]);
   const [basicServices, setBasicServices] = useState<IService[]>([]);

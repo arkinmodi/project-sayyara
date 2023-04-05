@@ -39,6 +39,15 @@ const initialPartValues = {
   build: "",
 };
 
+/**
+ * Creates and handles the pop up for adding a part to a basic service
+ * Form fields include part name, cost per part, quantity, part condition and part type
+ *
+ * @author Joy Xiao <34189744+joyxiao99@users.noreply.github.com>
+ * @date 02/09/2023
+ * @param {IPartPopupProps} props - Part pop up props
+ * @returns A primereact dialog for adding a part
+ */
 const AddPartPopup = (props: IPartPopupProps) => {
   const { service, visible, onHideDialog } = props;
   const [submitted, setSubmitted] = useState(false);

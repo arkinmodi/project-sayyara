@@ -4,10 +4,24 @@ import { Editor } from "primereact/editor";
 import React from "react";
 import { useSelector } from "react-redux";
 
-const WorkOrderEditor: React.FC<{
+interface IWorkOrderEditorProps {
   body: string;
   updateBody: (body: string) => void;
-}> = (props) => {
+}
+
+/**
+ * Creates and handles the work order
+ * Contains information about the work order such as the status, last updated time,
+ * customer name, email, phone number, and their car information, the appointment time,
+ * and who the work order is assigned to
+ * Also includes a text field for any custom documentation necessary
+ *
+ * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
+ * @date 02/08/2023
+ * @param {IWorkOrderEditorProps} props - Work order editor props
+ * @returns A react component for rendering a work order
+ */
+const WorkOrderEditor = (props: IWorkOrderEditorProps) => {
   const { body, updateBody } = props;
   const userType = useSelector(AuthSelectors.getUserType);
 
