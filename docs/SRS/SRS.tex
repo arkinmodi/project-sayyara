@@ -115,6 +115,7 @@
 	March 19, 2023     & Joy Xiao              & Update NFRs with more details                                                      \\
 	March 19, 2023     & Joy Xiao              & Update services and appointments requirements to add more details                  \\
 	April 1, 2023      & Leon So               & Update supported devices, update requirements for authentication                   \\
+	April 4, 2023      & Leon So               & Update context of work diagram, update events to remove email service              \\
 	\bottomrule
 \end{longtable}
 
@@ -468,31 +469,29 @@ external systems and services.
 	\centering
 	\begin{tabular}{|c|p{3.5cm}|c|p{3.5cm}|}
 		\hline
-		\textbf{Event Number} & \centering\textbf{Event Name}     & \textbf{Input} & \textbf{Output}        \\
+		\textbf{Event Number} & \centering\textbf{Event Name}     & \textbf{Input} & \textbf{Output} \\
 		\hline
-		20                    & View past work orders             & User           & Database               \\
+		20                    & View past work orders             & User           & Database        \\
 		\hline
-		21                    & Update work order                 & User           & Database               \\
+		21                    & Update work order                 & User           & Database        \\
 		\hline
-		22                    & Work order payment                & User           & Database/Email service \\
+		22                    & View work order details           & User           & Database        \\
 		\hline
-		23                    & View work order details           & User           & Database               \\
+		23                    & Invite employee to shop           & User           & Database        \\
 		\hline
-		24                    & Invite employee to shop           & User           & Database/Email service \\
+		24                    & Search for employee               & User           & Database        \\
 		\hline
-		25                    & Search for employee               & User           & Database               \\
+		25                    & View list of employees            & User           & Database        \\
 		\hline
-		26                    & View list of employees            & User           & Database               \\
+		26                    & Remove employee from shop         & User           & Database        \\
 		\hline
-		27                    & Remove employee from shop         & User           & Database               \\
+		27                    & Add shop services to shop profile & User           & Database        \\
 		\hline
-		28                    & Add shop services to shop profile & User           & Database               \\
+		28                    & Search for service                & User           & Database        \\
 		\hline
-		29                    & Search for service                & User           & Database               \\
+		29                    & Edit service type                 & User           & Database        \\
 		\hline
-		30                    & Edit service type                 & User           & Database               \\
-		\hline
-		31                    & Delete service type               & User           & Database               \\
+		30                    & Delete service type               & User           & Database        \\
 		\hline
 	\end{tabular}
 \end{table}
