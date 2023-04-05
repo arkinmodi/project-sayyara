@@ -6,6 +6,13 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { QuoteSelectors } from "src/redux/selectors/quoteSelectors";
 
+/**
+ * Creates and handles the chat form to enter a message
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 02/13/2023
+ * @returns A react component for the message bar
+ */
 const ChatForm = () => {
   const selectedChat = useSelector(QuoteSelectors.getActiveChat);
   const [textMessage, setTextMessage] = useState("");

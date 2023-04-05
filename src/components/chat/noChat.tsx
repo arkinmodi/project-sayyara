@@ -1,5 +1,12 @@
 import styles from "@styles/components/chat/NoChat.module.css";
 
+/**
+ * Displays when no chat is selected
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 02/13/2023
+ * @returns A react component
+ */
 const NoChat = () => {
   return (
     <div className={styles.noChatContainer}>

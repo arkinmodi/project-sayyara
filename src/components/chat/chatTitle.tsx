@@ -26,6 +26,17 @@ interface IChatTitleProps {
   prevPage: () => void;
 }
 
+/**
+ * Creates and handles the header component for a chat
+ * Header includes shop name and service name for customer users
+ * Header includes customer name and service name for shop users
+ * It also includes the button to invite a user to book an appointment, as well as the related dialog information
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 02/13/2023
+ * @param {IChatTitleProps} props - Chat title props
+ * @returns A react component
+ */
 const ChatTitle = (props: IChatTitleProps) => {
   const { prevPage } = props;
   const dispatch = useDispatch();

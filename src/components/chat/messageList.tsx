@@ -5,6 +5,14 @@ import { IMessage, IQuote } from "src/types/quotes";
 import Message from "./message";
 import NewChat from "./newChat";
 
+/**
+ * Creates the list of messages for a chat
+ * Will show an empty page if chat messages do not exist for the selected chat
+ *
+ * @author Timothy Choy <32019738+TimChoy@users.noreply.github.com>
+ * @date 02/13/2023
+ * @returns A react component for a list of chat messages
+ */
 const MessageList = () => {
   const selectedChatId = useSelector(QuoteSelectors.getActiveChat);
   const quoteList = useSelector(QuoteSelectors.getQuotes);
