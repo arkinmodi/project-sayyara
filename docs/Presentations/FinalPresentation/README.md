@@ -1,5 +1,5 @@
 # Final Presentation
 
-The folders and files for this folder are as follows:
+Document: [Rev1Presentation.pdf](Rev1Presentation.pdf)
 
-Describe ...
+This contains the slide set used for the Revision 1 Presentation (Final Presentation).

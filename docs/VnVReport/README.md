@@ -1,5 +1,3 @@
-# Test Report
+# Verification and Validation Report
 
-The folders and files for this folder are as follows:
-
-Describe ...
+This document outlines the validation and verification process for the application, Sayyara, and a detailed summary of results for the planned tests defined in the [Verification and Validation Plan](../VnVPlan/VnVPlan.pdf).

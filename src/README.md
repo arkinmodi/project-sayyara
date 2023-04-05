@@ -1,5 +1,3 @@
-# Project Name Source Code
+# Sayyara Source Code
 
-The folders and files for this project are as follows:
-
-...
+This folder contains all the source code for Sayyara. Sayyara is a [Next.js](https://nextjs.org/) application. All server-side code lives in the `server` folder. The client-side code is split among the remaining folders.
