@@ -54,6 +54,8 @@
 		January 17, 2023  & Timothy Choy          & Add Customer Appointments, Quotes, Shop Lookup Mockups                                            \\
 		January 18, 2023  & Leon So               & Add team reflection                                                                               \\
 		March 25, 2023    & Joy Xiao              & Add Component Diagram Description                                                                 \\
+		April 4, 2023     & Arkin Modi            & Add description for Work Orders Mockups                                                           \\
+		April 4, 2023     & Joy Xiao              & Add Descriptions to mock ups                                                                      \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -260,7 +262,11 @@ N/A
 % 	needed. Drawings, Sketches, Figma}
 
 \subsection{Home Page}
-
+The Home Page features all the auto repair shops that match the search criteria. Users can search
+by shop name or service name. By default, when no search criteria is entered, the Home Page will
+show all shops in a paginated list view. There are also filters for OEM parts or aftermarket parts,
+new parts or used parts, and also a location filter. Users can view the shop profile by clicking
+one of the search entries.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{mockups/Home Page (Logged In) (Desktop).png}
@@ -274,6 +280,9 @@ N/A
 \end{figure}
 
 \subsection{Manage Shop Employees}
+The Manage Shop Employees page is where shop owners and employee can view a tabular view of all
+shop employees. Shop owners can manage their employees by searching for their employee, suspend
+employees, and view employee details such as name, phone number, email, etc.
 
 \begin{figure}[H]
 	\centering
@@ -288,6 +297,9 @@ N/A
 \end{figure}
 
 \subsection{Manage Shop Details}
+The Manage Shop Details page is where shop owners can manage their shop services. Shop owners can
+manage their basic services, custom services, and add any information about the parts being used
+for the service.
 
 \begin{figure}[H]
 	\centering
@@ -302,6 +314,9 @@ N/A
 \end{figure}
 
 \subsection{Shop Profile}
+The Shop Profile page contains information about a shop such as location, contact information,
+hours of operation, and services offered. Vehicle owners, employees, and shop owners can view,
+however, only the shop employee has edit permission to edit the hours of operation.
 
 \begin{figure}[H]
 	\centering
@@ -322,6 +337,8 @@ N/A
 \end{figure}
 
 \subsection{Add Service to Shop}
+These popups show the form that shop owners need to complete to add a service to the shop. After
+the form is submitted, the service will be shown in the table on the manage shop details page.
 
 \begin{figure}[H]
 	\centering
@@ -336,6 +353,11 @@ N/A
 \end{figure}
 
 \subsection{Shop Owner/Employee Registration}
+These popups show the sign up form for shop owners and employees. The sign up has multiple steps
+which the user can access once completing the previous steps. When all fields are entered and
+validated, the user can successfully sign up. Depending on if the user is signing up as an employee
+or shop owner, they will be directed to different steps containing relevant fields required for
+registration of that specific role.
 
 \begin{figure}[H]
 	\centering
@@ -386,6 +408,8 @@ N/A
 \end{figure}
 
 \subsection{Vehicle Owner Registration}
+This shows the sign up process for vehicle owners. The form includes information about the vehicle
+owner's vehicle which will be used when booking appointments.
 
 \begin{figure}[H]
 	\centering
@@ -412,6 +436,8 @@ N/A
 \end{figure}
 
 \subsection{Vehicle Owner/Shop Owner/Employee Login}
+These popups show the login form for the application. Vehicle owners, shop owners, and employees
+use the same login flow.
 
 \begin{figure}[H]
 	\centering
@@ -426,7 +452,9 @@ N/A
 \end{figure}
 
 \subsection{Vehicle Owner Dashboard}
-\subsubsection{Service Requests}
+\subsubsection{Services}
+The Service page shows the all user's services. The services are split into the categories
+Requested, Scheduled, In-Progress, Completed and Cancelled/Rejected.
 
 \begin{figure}[H]
 	\centering
@@ -441,6 +469,9 @@ N/A
 \end{figure}
 
 \subsubsection{Quotes}
+The Quotes page displays any chats the vehicle owner has had with shop owners to receive a quote.
+Vehicle owners can send chat messages to shops using this page. Users can also query and search for
+a specific chat using the search bar.
 
 \begin{figure}[H]
 	\centering
@@ -455,6 +486,11 @@ N/A
 \end{figure}
 
 \subsection{Vehicle Owner Create Appointment}
+The popup to create an appointment contains various steps. The grey fields represent pre-filled
+fields that are read-only. These fields are populated using vehicle metadata associated with the
+user and service metadata associate with the service. The shop availabilities will be displayed
+according to their hours of operations and any hours that currently do not have a service
+requested, scheduled, or in-progress.
 
 \begin{figure}[H]
 	\centering
@@ -464,6 +500,10 @@ N/A
 
 \subsection{Shop Owner/Employee Dashboard}
 \subsubsection{Quotes Requests}
+The Quotes page displays any chats that have been initiated by vehicle owners. Shop owners and
+employees can send chat messages to vehicle owners on this page. Users can also query and search
+for a specific chat using the search bar. Shop owners can invite an employee to schedule an
+appointment once they are ready.
 
 \begin{figure}[H]
 	\centering
@@ -477,7 +517,9 @@ N/A
 	\caption{Shop Owner/Employee Dashboard \textemdash{} Quotes Requests \textemdash{} Invitation (Desktop)}
 \end{figure}
 
-\subsubsection{Service Requests \textemdash{} Requested}
+\subsubsection{Service Requests \textemdash{} Requested} The Requested Services are shown on this page. By clicking on an appointment, the work
+order for the appointment will be displayed. Requested Services can be rejected or accepted.
+Accepting an appointment will automatically reject all conflicting appointments.
 
 \begin{figure}[H]
 	\centering
@@ -491,7 +533,8 @@ N/A
 	\caption{Shop Owner/Employee Dashboard \textemdash{} Service \textemdash{} Requested (Mobile)}
 \end{figure}
 
-\subsubsection{Service Requests \textemdash{} Scheduled}
+\subsubsection{Service Requests \textemdash{} Scheduled} The Scheduled Services are shown on this page. By clicking on an appointment, the work
+order for the appointment will be displayed.
 
 \begin{figure}[H]
 	\centering
@@ -505,7 +548,8 @@ N/A
 	\caption{Shop Owner/Employee Dashboard \textemdash{} Service \textemdash{} Scheduled (Mobile)}
 \end{figure}
 
-\subsubsection{Service Requests \textemdash{} In Progress}
+\subsubsection{Service Requests \textemdash{} In Progress} The In Progress Services are shown on this page. By clicking on an appointment, the
+work order for the appointment will be displayed.
 
 \begin{figure}[H]
 	\centering
@@ -521,6 +565,13 @@ N/A
 
 \subsubsection{Service Requests \textemdash{} Work Orders}
 
+The Work Orders page features a list of information about the appointment and a rich text editor
+for any notes the shop would like to share with the customer. The appointment information can be
+edited from the Work Orders page by clicking the ``Edit Metadata'' button. The ``Save'' button can
+be used to save any changes. The ``Back'' button will take the user back to the Service Requests
+page. Customers will be presented a read-only version of this page, while Employees and Shop Owners
+will be able to make changes.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{mockups/Shop Owner-Employee Work Order (Desktop).png}
@@ -533,7 +584,8 @@ N/A
 	\caption{Shop Owner/Employee Dashboard \textemdash{} Service Requests \textemdash{} Work Orders (Mobile)}
 \end{figure}
 
-\subsubsection{Service Requests \textemdash{} Completed}
+\subsubsection{Service Requests \textemdash{} Completed} The Completed Services are shown on this page. By clicking on an appointment, the work
+order for the appointment will be displayed.
 
 \begin{figure}[H]
 	\centering
