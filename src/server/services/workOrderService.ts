@@ -2,43 +2,6 @@ import exclude from "@server/common/excludeField";
 import { prisma } from "@server/db/client";
 import { z } from "zod";
 
-export const createWorkOrderSchema = z.object({
-  title: z.string(),
-  body: z.string(),
-  appointmentId: z.string().optional(),
-  customerId: z.string(),
-  vehicleId: z.string(),
-  employeeId: z.string().optional(),
-  shopId: z.string(),
-});
-
-export type CreateWorkOrderType = z.infer<typeof createWorkOrderSchema>;
-
-/**
- * Create work order
- *
- * @author Arkin Modi <16737086+arkinmodi@users.noreply.github.com>
- * @date 02/08/2023
- * @param {CreateWorkOrderType} workOrder - Work order data
- * @returns Work order object
- */
-export const createWorkOrder = async (workOrder: CreateWorkOrderType) => {
-  const employee = workOrder.employeeId
-    ? { employee: { connect: { id: workOrder.employeeId } } }
-    : { employee: {} };
-
-  return await prisma.workOrder.create({
-    data: {
-      title: workOrder.title,
-      body: workOrder.body,
-      shop: { connect: { id: workOrder.shopId } },
-      customer: { connect: { id: workOrder.customerId } },
-      vehicle: { connect: { id: workOrder.vehicleId } },
-      ...employee,
-    },
-  });
-};
-
 /**
  * Get work order by ID
  *
@@ -96,7 +59,6 @@ export const getWorkOrdersByShopId = async (shopId: string) => {
 export const updateWorkOrderSchema = z.object({
   title: z.string().optional(),
   body: z.string().optional(),
-  appointmentId: z.string().optional(),
   employeeId: z.string().optional(),
   employeeEmail: z.string().email().optional(),
 });
@@ -128,17 +90,12 @@ export const updateWorkOrderById = async (
     employee = undefined;
   }
 
-  const appointment = patch.appointmentId
-    ? { connect: { id: patch.appointmentId } }
-    : undefined;
-
   return await prisma.workOrder.update({
     where: { id },
     data: {
       title: patch.title,
       body: patch.body,
       employee: employee,
-      appointment: appointment,
     },
   });
 };
