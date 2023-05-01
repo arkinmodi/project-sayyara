@@ -1,4 +1,4 @@
-FROM ghcr.io/xu-cheng/texlive-full:20230401
+FROM ghcr.io/xu-cheng/texlive-full:20230501
 WORKDIR /doc
 RUN apk update \
     && apk add git make \
